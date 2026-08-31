@@ -109,7 +109,10 @@ def audit(args: argparse.Namespace) -> dict[str, Any]:
             "CanBuy",
             "CanFavorite",
             "CanShare",
+            "EXIF",
             "External",
+            "Filenames",
+            "Geography",
             "HasDownloadPassword",
             "Protected",
         ):
@@ -139,12 +142,15 @@ def audit(args: argparse.Namespace) -> dict[str, Any]:
             for field in (
                 "ArchivedMD5",
                 "ArchivedUri",
+                "CanShare",
                 "Caption",
+                "Comments",
                 "Hidden",
                 "IsArchive",
                 "IsVideo",
                 "Keywords",
                 "Protected",
+                "ShowKeywords",
                 "Title",
                 "Watermarked",
             ):
