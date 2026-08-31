@@ -18,6 +18,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 from typing import Any, BinaryIO, Mapping, Sequence
 from urllib.error import HTTPError
 from urllib.parse import quote
@@ -253,9 +254,30 @@ def upload_media(
     env: Mapping[str, str],
     token: str,
 ) -> dict[str, Any]:
-    payload = run_emdash(
-        ["media", "upload", str(path), "--alt", alt], env, token=token
-    )
+    payload: dict[str, Any] | None = None
+    for attempt in range(1, 6):
+        try:
+            payload = run_emdash(
+                ["media", "upload", str(path), "--alt", alt], env, token=token
+            )
+            break
+        except AlbumMigrationError as exc:
+            transient = any(
+                marker in str(exc)
+                for marker in (
+                    "Service Unavailable",
+                    "HTTP 429",
+                    "HTTP 502",
+                    "HTTP 503",
+                    "HTTP 504",
+                    "Connection reset by peer",
+                )
+            )
+            if not transient or attempt == 5:
+                raise
+            time.sleep(min(2 ** (attempt - 1), 16))
+    if payload is None:
+        raise AlbumMigrationError("EmDash media upload retry loop exhausted")
     if not isinstance(payload.get("id"), str) or not isinstance(
         payload.get("storageKey"), str
     ):

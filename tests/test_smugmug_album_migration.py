@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 SCRIPT_ROOT = Path(__file__).parents[1] / "scripts/migration"
@@ -158,6 +159,27 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
                 album_id="album-id",
                 source_sha256="sha",
             )
+
+    def test_upload_media_retries_service_unavailable(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "source.jpg"
+            path.write_bytes(b"image")
+            with (
+                patch.object(
+                    module,
+                    "run_emdash",
+                    side_effect=[
+                        module.AlbumMigrationError("Service Unavailable"),
+                        {"id": "media-id", "storageKey": "object.jpg"},
+                    ],
+                ) as run,
+                patch.object(module.time, "sleep"),
+            ):
+                result = module.upload_media(
+                    path, alt="Alt", env={}, token="secret-token"
+                )
+        self.assertEqual(result["id"], "media-id")
+        self.assertEqual(run.call_count, 2)
 
 
 if __name__ == "__main__":
