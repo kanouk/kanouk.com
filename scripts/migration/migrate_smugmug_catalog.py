@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import os
 from pathlib import Path
@@ -32,6 +33,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--exclude-album-key", action="append", default=[])
     result.add_argument("--apply", action="store_true")
     result.add_argument("--continue-on-error", action="store_true")
+    result.add_argument("--concurrency", type=int, default=1)
     return result
 
 
@@ -44,8 +46,11 @@ def main() -> None:
         include=set(args.include_album_key),
         exclude=set(args.exclude_album_key),
     )
+    if args.concurrency < 1 or args.concurrency > 4:
+        raise SystemExit("--concurrency must be between 1 and 4")
     summary = {"albums_selected": len(rows), "albums_succeeded": 0, "albums_failed": 0}
-    for index, row in enumerate(rows, 1):
+
+    def migrate(index: int, row: dict[str, Any]) -> tuple[int, int]:
         manifest = catalog_path.parent / str(row["manifest"])
         print(
             f"album [{index}/{len(rows)}] {row['slug']} "
@@ -63,12 +68,23 @@ def main() -> None:
         if args.continue_on_error:
             command.append("--continue-on-error")
         result = subprocess.run(command, cwd=REPO_ROOT, env=os.environ, check=False)
-        if result.returncode == 0:
-            summary["albums_succeeded"] += 1
-            continue
-        summary["albums_failed"] += 1
-        if not args.continue_on_error:
-            raise SystemExit(result.returncode)
+        return index, result.returncode
+
+    with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+        futures = {
+            executor.submit(migrate, index, row): index
+            for index, row in enumerate(rows, 1)
+        }
+        for future in as_completed(futures):
+            _, returncode = future.result()
+            if returncode == 0:
+                summary["albums_succeeded"] += 1
+                continue
+            summary["albums_failed"] += 1
+            if not args.continue_on_error:
+                for pending in futures:
+                    pending.cancel()
+                raise SystemExit(returncode)
     print(json.dumps(summary, ensure_ascii=False), flush=True)
     if summary["albums_failed"]:
         raise SystemExit(1)
