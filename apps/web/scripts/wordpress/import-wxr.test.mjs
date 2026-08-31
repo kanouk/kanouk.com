@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { assignDestinationSlugs, extractModifiedDates } from "./import-wxr.mjs";
+import { assignDestinationSlugs, extractModifiedDates, shouldRetryRequest } from "./import-wxr.mjs";
 
 test("destination slugs preserve unique slugs and namespace collisions", () => {
 	const records = [
@@ -24,4 +24,16 @@ test("modified dates are preserved from WXR items", () => {
 		local: "2024-01-02 12:00:00",
 		gmt: "2024-01-02 03:00:00",
 	});
+});
+
+test("only transient HTTP responses and safe network failures are retried", () => {
+	for (const status of [429, 502, 503, 504]) {
+		assert.equal(shouldRetryRequest({ status, method: "POST" }), true);
+	}
+	for (const status of [400, 401, 403, 404, 409, 500]) {
+		assert.equal(shouldRetryRequest({ status, method: "GET" }), false);
+	}
+	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "GET" }), true);
+	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "PUT" }), true);
+	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "POST" }), false);
 });

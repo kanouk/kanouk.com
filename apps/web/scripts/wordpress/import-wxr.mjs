@@ -36,6 +36,26 @@ const TARGET_ORIGIN = "https://blog.kanouk.com";
 const DEFAULT_LEDGER = path.resolve("../../migration/wordpress/runtime/import-ledger.json");
 const PUBLISHED_STATUS = "publish";
 const CONTENT_TYPES = new Set(["post", "page"]);
+const TRANSIENT_HTTP_STATUSES = new Set([429, 502, 503, 504]);
+const MAX_REQUEST_ATTEMPTS = 5;
+
+export function shouldRetryRequest({ status, error, method = "GET" }) {
+	if (status !== undefined) return TRANSIENT_HTTP_STATUSES.has(status);
+	return Boolean(error) && ["GET", "HEAD", "PUT"].includes(method.toUpperCase());
+}
+
+function retryDelayMs(attempt, retryAfter) {
+	const retryAfterSeconds = Number(retryAfter);
+	if (Number.isFinite(retryAfterSeconds) && retryAfterSeconds >= 0) {
+		return Math.min(retryAfterSeconds * 1000, 10_000);
+	}
+	const exponential = Math.min(400 * 2 ** (attempt - 1), 6_400);
+	return exponential + Math.floor(Math.random() * 250);
+}
+
+function sleep(milliseconds) {
+	return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
 
 function parseArgs(argv) {
 	const args = { apply: false, concurrency: 6, ledger: DEFAULT_LEDGER, limit: undefined };
@@ -212,23 +232,38 @@ class ApiClient {
 	}
 
 	async request(pathname, options = {}, allowed = []) {
-		const response = await fetch(this.origin + pathname, {
-			...options,
-			headers: {
-				Authorization: `Bearer ${this.token}`,
-				Accept: "application/json",
-				...(options.body ? { "Content-Type": "application/json" } : {}),
-				...options.headers,
-			},
-		});
-		let payload;
-		try { payload = await response.json(); } catch { payload = undefined; }
-		if (!response.ok && !allowed.includes(response.status)) {
-			const code = payload?.error?.code || `HTTP_${response.status}`;
-			const message = payload?.error?.message || "Request failed";
-			throw new Error(`${code}: ${message}`);
+		const method = (options.method || "GET").toUpperCase();
+		for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt++) {
+			let response;
+			try {
+				response = await fetch(this.origin + pathname, {
+					...options,
+					headers: {
+						Authorization: `Bearer ${this.token}`,
+						Accept: "application/json",
+						...(options.body ? { "Content-Type": "application/json" } : {}),
+						...options.headers,
+					},
+				});
+			} catch (error) {
+				if (attempt === MAX_REQUEST_ATTEMPTS || !shouldRetryRequest({ error, method })) throw error;
+				await sleep(retryDelayMs(attempt));
+				continue;
+			}
+			let payload;
+			try { payload = await response.json(); } catch { payload = undefined; }
+			if (!response.ok && !allowed.includes(response.status)) {
+				if (attempt < MAX_REQUEST_ATTEMPTS && shouldRetryRequest({ status: response.status, method })) {
+					await sleep(retryDelayMs(attempt, response.headers.get("retry-after")));
+					continue;
+				}
+				const code = payload?.error?.code || `HTTP_${response.status}`;
+				const message = payload?.error?.message || "Request failed";
+				throw new Error(`${code}: ${message}`);
+			}
+			return { status: response.status, data: payload?.data, payload };
 		}
-		return { status: response.status, data: payload?.data, payload };
+		throw new Error("Request retry loop exhausted");
 	}
 
 	get(pathname, allowed) { return this.request(pathname, {}, allowed); }
