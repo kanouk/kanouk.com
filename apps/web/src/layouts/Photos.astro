@@ -1,6 +1,7 @@
 ---
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import "../styles/tokens.css";
 import "../styles/theme.css";
@@ -53,7 +54,10 @@ const pageCtx = createPublicPageContext({
 		<main id="photo-main"><slot /></main>
 		<footer class="photo-footer">
 			<p><span>kanouk.com / Photos</span>インターネットに公開する写真のための場所。</p>
-			<a href={blogUrl}>ブログを読む</a>
+			<div class="photo-footer__actions">
+				<a href={blogUrl}>ブログを読む</a>
+				<ThemeSwitcher />
+			</div>
 		</footer>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>

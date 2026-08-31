@@ -1,0 +1,30 @@
+<div class="theme-switcher" role="group" aria-label="表示テーマ">
+	<button type="button" class="theme-btn" data-theme="light" aria-label="ライト表示" title="ライト表示">明</button>
+	<button type="button" class="theme-btn" data-theme="dark" aria-label="ダーク表示" title="ダーク表示">暗</button>
+	<button type="button" class="theme-btn" data-theme="system" aria-label="端末の設定に合わせる" title="端末の設定に合わせる">自動</button>
+</div>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>(".theme-btn");
+	const root = document.documentElement;
+	const cookieTheme = document.cookie.match(/(?:^|; )theme=([^;]+)/)?.[1] || "system";
+	const renderThemeState = (theme: string) => {
+		buttons.forEach((button) => {
+			const active = button.dataset.theme === theme;
+			button.classList.toggle("is-active", active);
+			button.setAttribute("aria-pressed", String(active));
+		});
+	};
+	const setTheme = (theme: string) => {
+		if (theme === "system") {
+			delete root.dataset.theme;
+			document.cookie = "theme=; path=/; max-age=0; SameSite=Lax";
+		} else {
+			root.dataset.theme = theme;
+			document.cookie = `theme=${theme}; path=/; max-age=31536000; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
+		}
+		renderThemeState(theme);
+	};
+	renderThemeState(cookieTheme);
+	buttons.forEach((button) => button.addEventListener("click", () => setTheme(button.dataset.theme || "system")));
+</script>
