@@ -1,16 +1,23 @@
 ---
-import { getEmDashEntry, decodeSlug } from "emdash";
+import { getEmDashEntry } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
+import { routeSlugCandidates } from "../../utils/route-slug";
 
-const slug = decodeSlug(Astro.params.slug);
+const slugCandidates = routeSlugCandidates(Astro.params.slug);
+const slug = slugCandidates[0];
 
 if (!slug) {
 	return Astro.redirect("/404");
 }
 
-const { entry: page, cacheHint } = await getEmDashEntry("pages", slug);
+let pageResult = await getEmDashEntry("pages", slug);
+for (const legacySlug of slugCandidates.slice(1)) {
+	if (pageResult.entry) break;
+	pageResult = await getEmDashEntry("pages", legacySlug);
+}
+const { entry: page, cacheHint } = pageResult;
 
 if (!page) {
 	return Astro.redirect("/404");
@@ -21,7 +28,7 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 <Base
 	title={page.data.title}
-	content={{ collection: "pages", id: page.data.id, slug }}
+	content={{ collection: "pages", id: page.data.id, slug: page.id }}
 >
 	<article class="page-article">
 		<header class="page-header">

@@ -4,7 +4,6 @@ import {
 	getEmDashCollection,
 	getTermsForEntries,
 	getSeoMeta,
-	decodeSlug,
 	getSiteSettings,
 } from "emdash";
 import {
@@ -18,14 +17,21 @@ import YohakuImage from "../../components/YohakuImage.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
+import { routeSlugCandidates } from "../../utils/route-slug";
 
-const slug = decodeSlug(Astro.params.slug);
+const slugCandidates = routeSlugCandidates(Astro.params.slug);
+const slug = slugCandidates[0];
 
 if (!slug) {
 	return Astro.redirect("/404");
 }
 
-const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
+let postResult = await getEmDashEntry("posts", slug);
+for (const legacySlug of slugCandidates.slice(1)) {
+	if (postResult.entry) break;
+	postResult = await getEmDashEntry("posts", legacySlug);
+}
+const { entry: post, cacheHint } = postResult;
 
 if (!post) {
 	return Astro.redirect("/404");
@@ -61,7 +67,7 @@ const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 const seo = getSeoMeta(post, {
 	siteTitle,
 	siteUrl: Astro.url.origin,
-	path: `/posts/${slug}`,
+	path: `/posts/${post.id}`,
 	defaultOgImage: featuredImageUrl,
 });
 
@@ -113,7 +119,7 @@ const publishDate =
 	type="article"
 	publishedTime={post.data.publishedAt?.toISOString() ?? null}
 	modifiedTime={post.data.updatedAt.toISOString()}
-	content={{ collection: "posts", id: post.data.id, slug }}
+	content={{ collection: "posts", id: post.data.id, slug: post.id }}
 >
 	<article class="article">
 		{/* Hero: Full-width featured image */}

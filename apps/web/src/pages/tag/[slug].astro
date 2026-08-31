@@ -3,14 +3,18 @@ import {
 	getTerm,
 	getEmDashCollection,
 	getTermsForEntries,
-	decodeSlug,
 } from "emdash";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
+import { routeSlugCandidates } from "../../utils/route-slug";
 
-const slug = decodeSlug(Astro.params.slug);
-const term = slug ? await getTerm("tag", slug) : null;
+const slugCandidates = routeSlugCandidates(Astro.params.slug);
+let term = slugCandidates[0] ? await getTerm("tag", slugCandidates[0]) : null;
+for (const legacySlug of slugCandidates.slice(1)) {
+	if (term) break;
+	term = await getTerm("tag", legacySlug);
+}
 
 if (!term) {
 	return Astro.redirect("/404");
