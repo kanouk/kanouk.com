@@ -8,11 +8,11 @@ export const GET: APIRoute = async ({ params, url }) => {
 	if (!slug) return new Response("Not found", { status: 404 });
 
 	const { entry: photo } = await getEmDashEntry("photos", slug);
-	const image = photo?.data.image as
+	const media = (photo?.data.kind === "video" ? photo.data.video : photo?.data.image) as
 		| { meta?: { storageKey?: unknown } }
 		| null
 		| undefined;
-	const storageKey = image?.meta?.storageKey;
+	const storageKey = media?.meta?.storageKey;
 	if (typeof storageKey !== "string" || !storageKey) {
 		return new Response("Not found", { status: 404 });
 	}

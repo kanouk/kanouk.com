@@ -69,6 +69,19 @@
 			"fields": [
 				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
 				{ "slug": "image", "label": "Image", "type": "image", "required": true },
+				{
+					"slug": "kind",
+					"label": "Media Kind",
+					"type": "select",
+					"required": true,
+					"validation": { "options": ["image", "video"] }
+				},
+				{
+					"slug": "video",
+					"label": "Video",
+					"type": "file",
+					"options": { "allowedMimeTypes": ["video/"] }
+				},
 				{ "slug": "alt", "label": "Alternative Text", "type": "string", "required": true },
 				{ "slug": "caption", "label": "Caption", "type": "text", "searchable": true },
 				{
@@ -226,6 +239,7 @@
 				"status": "published",
 				"data": {
 					"title": "Staging image",
+					"kind": "image",
 					"image": {
 						"$media": {
 							"url": "https://raw.githubusercontent.com/kanouk/kanouk.com/main/avatar.png",

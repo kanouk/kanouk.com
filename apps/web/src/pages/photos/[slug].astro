@@ -17,6 +17,18 @@ const { entries: albums, cacheHint: albumCache } = await getEmDashCollection("al
 if (Astro.cache?.enabled) Astro.cache.set(albumCache);
 const album = albums.find((candidate) => candidate.data.id === photo.data.album);
 
+const { entries: albumPhotos, cacheHint: albumPhotosCache } = await getEmDashCollection("photos", {
+	status: "published",
+	where: { album: photo.data.album },
+	orderBy: { position: "asc" },
+	limit: 100,
+});
+if (Astro.cache?.enabled) Astro.cache.set(albumPhotosCache);
+const photoIndex = albumPhotos.findIndex((candidate) => candidate.data.id === photo.data.id);
+const previousPhoto = photoIndex > 0 ? albumPhotos[photoIndex - 1] : undefined;
+const nextPhoto = photoIndex >= 0 ? albumPhotos[photoIndex + 1] : undefined;
+const videoSource = photo.data.kind === "video" ? photo.data.video?.src || photo.data.video?.url : undefined;
+
 const capturedDate = photo.data.captured_at?.match(/^(\d{4})-(\d{2})-(\d{2})/);
 const formattedDate = capturedDate
 	? `${Number(capturedDate[1])}年${Number(capturedDate[2])}月${Number(capturedDate[3])}日`
@@ -66,13 +78,28 @@ const mapLinkUrl = hasLocation
 			← {album?.data.title || "Albums"}
 		</a>
 		<figure>
-			<div {...photo.edit.image}><Image image={photo.data.image} /></div>
+			<div class="media" {...photo.edit.image}>
+				{
+					videoSource ? (
+						<video controls playsinline preload="metadata" poster={photo.data.image?.src}>
+							<source src={videoSource} type={photo.data.video?.mimeType || "video/mp4"} />
+							動画を再生できないブラウザです。
+						</video>
+					) : (
+						<Image image={photo.data.image} />
+					)
+				}
+			</div>
 			<figcaption>
 				<h1 {...photo.edit.title}>{photo.data.title}</h1>
 				{photo.data.caption && <p {...photo.edit.caption}>{photo.data.caption}</p>}
 				{formattedDate && <time>{formattedDate}</time>}
 			</figcaption>
 		</figure>
+		<nav class="photo-navigation" aria-label="アルバム内の写真移動">
+			{previousPhoto ? <a href={`/photos/${previousPhoto.id}`}>← 前の写真</a> : <span />}
+			{nextPhoto ? <a href={`/photos/${nextPhoto.id}`}>次の写真 →</a> : <span />}
+		</nav>
 		{
 			mapEmbedUrl && mapLinkUrl && (
 				<section class="location" aria-labelledby="location-title">
@@ -98,12 +125,15 @@ const mapLinkUrl = hasLocation
 	.photo-page { max-width: 92rem; margin: 0 auto; padding: 3rem clamp(1rem, 4vw, 3rem); }
 	.back { color: var(--color-text-secondary); text-decoration: none; }
 	figure { margin: 3rem 0 0; }
-	figure > div { display: flex; justify-content: center; background: var(--color-bg-subtle); }
+	figure > .media { display: flex; justify-content: center; background: var(--color-bg-subtle); }
 	figure :global(img) { display: block; max-width: 100%; max-height: 82vh; width: auto; height: auto; object-fit: contain; }
+	figure video { display: block; max-width: 100%; max-height: 82vh; width: auto; height: auto; background: #000; }
 	figcaption { max-width: 48rem; margin: 1.5rem auto 0; }
 	h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.75rem); letter-spacing: -0.035em; }
 	figcaption p { color: var(--color-text-secondary); line-height: 1.75; }
 	time { color: var(--color-muted); font: 500 0.75rem/1 var(--font-mono), monospace; }
+	.photo-navigation { display: flex; justify-content: space-between; gap: 1rem; max-width: 48rem; margin: 2rem auto 0; }
+	.photo-navigation a { color: var(--color-text-secondary); text-decoration: none; }
 	.location { max-width: 48rem; margin: 4rem auto 0; }
 	.location-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
 	.location h2 { margin: 0; font-size: 1.1rem; }

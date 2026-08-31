@@ -18,7 +18,7 @@ DEFAULT_CREDENTIAL_FILE = Path(
     os.environ.get("KANOUK_PRIVATE_VAULT", "/Users/kanouk/Documents/Private")
 ) / "10_sensitive/api-keys/EmDash-kanouk.md"
 WEB_ROOT = Path(__file__).resolve().parents[2] / "apps/web"
-ALLOWED_COMMANDS = {"content", "media", "schema"}
+ALLOWED_COMMANDS = {"content", "media", "schema", "types"}
 
 
 class EmDashGuardError(RuntimeError):

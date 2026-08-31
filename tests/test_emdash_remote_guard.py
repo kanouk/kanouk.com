@@ -52,6 +52,10 @@ class EmDashRemoteGuardTests(unittest.TestCase):
 
     def test_only_allows_bounded_remote_commands(self) -> None:
         self.assertEqual(guard.normalized_args(["media", "list"]), ["media", "list"])
+        self.assertEqual(
+            guard.normalized_args(["types", "--output", "emdash-env.d.ts"]),
+            ["types", "--output", "emdash-env.d.ts"],
+        )
         for command in ("login", "logout", "seed", "migrate"):
             with self.subTest(command=command):
                 with self.assertRaisesRegex(guard.EmDashGuardError, "allowlisted"):
