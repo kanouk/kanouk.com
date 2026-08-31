@@ -20,8 +20,8 @@ import sys
 import tempfile
 import time
 from typing import Any, BinaryIO, Mapping, Sequence
-from urllib.error import HTTPError
-from urllib.parse import quote
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -44,6 +44,12 @@ from run_emdash_kanouk import (  # noqa: E402
     child_environment,
     load_credential,
     preflight,
+)
+from run_wrangler_kanouk import (  # noqa: E402
+    GuardError as CloudflareGuardError,
+    child_environment as cloudflare_environment,
+    load_credential as load_cloudflare_credential,
+    validate_whoami,
 )
 
 
@@ -253,12 +259,18 @@ def upload_media(
     alt: str,
     env: Mapping[str, str],
     token: str,
+    width: int | None = None,
+    height: int | None = None,
 ) -> dict[str, Any]:
     payload: dict[str, Any] | None = None
     for attempt in range(1, 6):
         try:
-            payload = run_emdash(
-                ["media", "upload", str(path), "--alt", alt], env, token=token
+            payload = direct_media_upload(
+                path,
+                alt=alt,
+                token=token,
+                width=width,
+                height=height,
             )
             break
         except AlbumMigrationError as exc:
@@ -283,6 +295,268 @@ def upload_media(
     ):
         raise AlbumMigrationError("EmDash media upload omitted id or storage key")
     return payload
+
+
+def media_api_json(
+    path: str,
+    *,
+    token: str,
+    method: str = "GET",
+    payload: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    body = json.dumps(payload, ensure_ascii=False).encode() if payload is not None else None
+    request = Request(
+        urljoin(EXPECTED_URL, path),
+        data=body,
+        method=method,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            **({"Content-Type": "application/json"} if body is not None else {}),
+            "User-Agent": "kanouk-smugmug-migration/2.0",
+        },
+    )
+    try:
+        with urlopen(request, timeout=180) as response:
+            result = json.loads(response.read())
+    except HTTPError as exc:
+        detail = exc.read(500).decode(errors="replace")
+        raise AlbumMigrationError(f"EmDash media HTTP {exc.code}: {detail}") from exc
+    except (TimeoutError, URLError) as exc:
+        raise AlbumMigrationError(f"EmDash media request failed: {exc}") from exc
+    if not isinstance(result, dict):
+        raise AlbumMigrationError("EmDash media API returned a non-object response")
+    data = result.get("data", result)
+    if not isinstance(data, dict):
+        raise AlbumMigrationError("EmDash media API returned invalid data")
+    return data
+
+
+def put_media_bytes(
+    upload_url: str,
+    headers: Mapping[str, Any],
+    data: bytes,
+    *,
+    token: str,
+) -> None:
+    target = urljoin(EXPECTED_URL, upload_url)
+    request_headers = {
+        str(key): str(value) for key, value in headers.items()
+    }
+    if urlparse(target).netloc == urlparse(EXPECTED_URL).netloc:
+        request_headers["Authorization"] = f"Bearer {token}"
+    request_headers.setdefault("Content-Length", str(len(data)))
+    request_headers.setdefault("User-Agent", "kanouk-smugmug-migration/2.0")
+    request = Request(target, data=data, method="PUT", headers=request_headers)
+    try:
+        with urlopen(request, timeout=300) as response:
+            response.read()
+    except HTTPError as exc:
+        detail = exc.read(500).decode(errors="replace")
+        raise AlbumMigrationError(f"EmDash media PUT HTTP {exc.code}: {detail}") from exc
+    except (TimeoutError, URLError) as exc:
+        raise AlbumMigrationError(f"EmDash media PUT failed: {exc}") from exc
+
+
+def direct_media_upload(
+    path: Path,
+    *,
+    alt: str,
+    token: str,
+    width: int | None = None,
+    height: int | None = None,
+) -> dict[str, Any]:
+    data = path.read_bytes()
+    mime_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+    upload_request: dict[str, Any] = {
+        "filename": path.name,
+        "contentType": mime_type,
+        "size": len(data),
+    }
+    if data and len(data) <= 8 * 1024 * 1024:
+        upload_request["contentHash"] = "sha1:" + hashlib.sha1(data).hexdigest()
+    upload = media_api_json(
+        "/_emdash/api/media/upload-url",
+        token=token,
+        method="POST",
+        payload=upload_request,
+    )
+    media_id = upload.get("mediaId")
+    if not isinstance(media_id, str):
+        raise AlbumMigrationError("EmDash upload target omitted media id")
+    if upload.get("existing") is not True:
+        upload_url = upload.get("uploadUrl")
+        if not isinstance(upload_url, str):
+            raise AlbumMigrationError("EmDash upload target omitted upload URL")
+        put_media_bytes(
+            upload_url,
+            upload.get("headers", {}),
+            data,
+            token=token,
+        )
+        confirmation: dict[str, Any] = {"size": len(data)}
+        if isinstance(width, int) and width > 0:
+            confirmation["width"] = width
+        if isinstance(height, int) and height > 0:
+            confirmation["height"] = height
+        try:
+            confirmed = media_api_json(
+                f"/_emdash/api/media/{quote(media_id, safe='')}/confirm",
+                token=token,
+                method="POST",
+                payload=confirmation,
+            )
+            item = confirmed.get("item")
+        except AlbumMigrationError as exc:
+            if "HTTP 503" not in str(exc) and "1102" not in str(exc):
+                raise
+            pending = media_api_json(
+                f"/_emdash/api/media/{quote(media_id, safe='')}", token=token
+            ).get("item")
+            if not isinstance(pending, dict):
+                raise AlbumMigrationError(
+                    "EmDash confirm fallback could not read pending media"
+                ) from exc
+            item = finalize_pending_media(
+                pending,
+                source_bytes=data,
+                alt=alt,
+                width=width,
+                height=height,
+                token=token,
+            )
+    else:
+        existing = media_api_json(
+            f"/_emdash/api/media/{quote(media_id, safe='')}", token=token
+        )
+        item = existing.get("item")
+    if not isinstance(item, dict):
+        raise AlbumMigrationError("EmDash media confirmation omitted item")
+    if alt:
+        updated = media_api_json(
+            f"/_emdash/api/media/{quote(media_id, safe='')}",
+            token=token,
+            method="PUT",
+            payload={"alt": alt},
+        )
+        item = updated.get("item", item)
+    if not isinstance(item.get("id"), str) or not isinstance(
+        item.get("storageKey"), str
+    ):
+        raise AlbumMigrationError("EmDash media item omitted id or storage key")
+    return item
+
+
+def sql_text(value: str) -> str:
+    return "'" + value.replace("'", "''") + "'"
+
+
+def guarded_cloudflare_environment() -> dict[str, str]:
+    credential = load_cloudflare_credential()
+    env = cloudflare_environment(credential)
+    result = subprocess.run(
+        ["bunx", "wrangler", "whoami", "--json"],
+        cwd=WEB_ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise AlbumMigrationError("Wrangler authentication preflight failed")
+    try:
+        validate_whoami(json.loads(result.stdout), credential)
+    except (json.JSONDecodeError, CloudflareGuardError) as exc:
+        raise AlbumMigrationError("Wrangler account validation failed") from exc
+    return env
+
+
+def finalize_pending_media(
+    item: Mapping[str, Any],
+    *,
+    source_bytes: bytes,
+    alt: str,
+    width: int | None,
+    height: int | None,
+    token: str,
+) -> dict[str, Any]:
+    """Finish a verified R2 upload when placeholder enrichment exhausts CPU."""
+    media_id = item.get("id")
+    storage_key = item.get("storageKey")
+    if item.get("status") == "ready" and isinstance(media_id, str):
+        return dict(item)
+    if (
+        item.get("status") != "pending"
+        or not isinstance(media_id, str)
+        or not isinstance(storage_key, str)
+        or item.get("size") != len(source_bytes)
+    ):
+        raise AlbumMigrationError("EmDash confirm fallback rejected pending media state")
+    expected_content_hash = "sha1:" + hashlib.sha1(source_bytes).hexdigest()
+    if item.get("contentHash") != expected_content_hash:
+        raise AlbumMigrationError("EmDash confirm fallback rejected content hash")
+    expected_sha256 = hashlib.sha256(source_bytes).hexdigest()
+    public_hash, public_bytes = public_sha256(storage_key)
+    if public_hash != expected_sha256 or public_bytes != len(source_bytes):
+        raise AlbumMigrationError("EmDash confirm fallback rejected R2 bytes")
+
+    assignments = [
+        "status='ready'",
+        f"size={len(source_bytes)}",
+        f"content_hash={sql_text(expected_content_hash)}",
+        f"alt={sql_text(alt)}" if alt else "alt=NULL",
+    ]
+    if isinstance(width, int) and width > 0:
+        assignments.append(f"width={width}")
+    if isinstance(height, int) and height > 0:
+        assignments.append(f"height={height}")
+    statement = (
+        f"UPDATE media SET {', '.join(assignments)} "
+        f"WHERE id={sql_text(media_id)} AND status='pending' "
+        f"AND storage_key={sql_text(storage_key)} AND size={len(source_bytes)}"
+    )
+    wrangler_env = guarded_cloudflare_environment()
+    result = subprocess.run(
+        [
+            "bunx",
+            "wrangler",
+            "d1",
+            "execute",
+            "kanouk-content-staging",
+            "--remote",
+            "--config",
+            "wrangler.jsonc",
+            "--command",
+            statement,
+            "--json",
+        ],
+        cwd=WEB_ROOT,
+        env=wrangler_env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise AlbumMigrationError("Cloudflare-guarded media finalization failed")
+    try:
+        rows = json.loads(result.stdout)
+        changes = rows[0]["meta"]["changes"]
+    except (json.JSONDecodeError, KeyError, IndexError, TypeError) as exc:
+        raise AlbumMigrationError("Media finalization returned invalid D1 results") from exc
+    if changes != 1:
+        raise AlbumMigrationError(
+            f"Media finalization changed {changes} rows instead of exactly one"
+        )
+    readback = media_api_json(
+        f"/_emdash/api/media/{quote(media_id, safe='')}", token=token
+    ).get("item")
+    if (
+        not isinstance(readback, dict)
+        or readback.get("status") != "ready"
+        or readback.get("storageKey") != storage_key
+    ):
+        raise AlbumMigrationError("Media finalization readback mismatch")
+    return readback
 
 
 def content_payload(
@@ -545,7 +819,15 @@ def replace_asset_media(
     if not isinstance(content_id, str):
         raise AlbumMigrationError("Cannot repair media without an EmDash content id")
     alt = str(asset.get("display", {}).get("alt") or "")
-    source_media = upload_media(source_file, alt=alt, env=env, token=token)
+    file_data = asset.get("file", {})
+    source_media = upload_media(
+        source_file,
+        alt=alt,
+        env=env,
+        token=token,
+        width=file_data.get("width") if isinstance(file_data.get("width"), int) else None,
+        height=file_data.get("height") if isinstance(file_data.get("height"), int) else None,
+    )
     poster_media: dict[str, Any] | None = None
     if asset.get("kind") == "video":
         poster = temp_root / "replacement-poster.jpg"
@@ -741,6 +1023,16 @@ def migrate_asset(
                 alt=str(asset.get("display", {}).get("alt") or ""),
                 env=env,
                 token=token,
+                width=(
+                    asset.get("file", {}).get("width")
+                    if isinstance(asset.get("file", {}).get("width"), int)
+                    else None
+                ),
+                height=(
+                    asset.get("file", {}).get("height")
+                    if isinstance(asset.get("file", {}).get("height"), int)
+                    else None
+                ),
             )
             poster_media: dict[str, Any] | None = None
             if asset.get("kind") == "video":

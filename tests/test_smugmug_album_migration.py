@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
+import json
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -167,7 +170,7 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
             with (
                 patch.object(
                     module,
-                    "run_emdash",
+                    "direct_media_upload",
                     side_effect=[
                         module.AlbumMigrationError("Service Unavailable"),
                         {"id": "media-id", "storageKey": "object.jpg"},
@@ -180,6 +183,67 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
                 )
         self.assertEqual(result["id"], "media-id")
         self.assertEqual(run.call_count, 2)
+
+    def test_finalize_pending_media_requires_hash_and_one_d1_change(self) -> None:
+        source = b"verified bytes"
+        pending = {
+            "id": "media-id",
+            "status": "pending",
+            "storageKey": "object.jpg",
+            "size": len(source),
+            "contentHash": "sha1:" + hashlib.sha1(source).hexdigest(),
+        }
+        with (
+            patch.object(
+                module,
+                "public_sha256",
+                return_value=(hashlib.sha256(source).hexdigest(), len(source)),
+            ),
+            patch.object(module, "guarded_cloudflare_environment", return_value={}),
+            patch.object(
+                module.subprocess,
+                "run",
+                return_value=subprocess.CompletedProcess(
+                    [], 0, stdout=json.dumps([{"meta": {"changes": 1}}]), stderr=""
+                ),
+            ),
+            patch.object(
+                module,
+                "media_api_json",
+                return_value={
+                    "item": {
+                        **pending,
+                        "status": "ready",
+                    }
+                },
+            ),
+        ):
+            result = module.finalize_pending_media(
+                pending,
+                source_bytes=source,
+                alt="Alt",
+                width=10,
+                height=20,
+                token="token",
+            )
+        self.assertEqual(result["status"], "ready")
+
+    def test_finalize_pending_media_rejects_wrong_hash_before_d1(self) -> None:
+        with self.assertRaises(module.AlbumMigrationError):
+            module.finalize_pending_media(
+                {
+                    "id": "media-id",
+                    "status": "pending",
+                    "storageKey": "object.jpg",
+                    "size": 3,
+                    "contentHash": "sha1:wrong",
+                },
+                source_bytes=b"abc",
+                alt="Alt",
+                width=None,
+                height=None,
+                token="token",
+            )
 
 
 if __name__ == "__main__":
