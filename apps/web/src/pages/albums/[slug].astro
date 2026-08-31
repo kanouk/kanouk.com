@@ -1,5 +1,7 @@
 ---
 import { getEmDashCollection, getEmDashEntry } from "emdash";
+import { ArrowLeft, Images } from "lucide-astro";
+import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 
@@ -16,6 +18,27 @@ const { entries: photos, cacheHint: photoCache } = await getEmDashCollection("ph
 	orderBy: { position: "asc" },
 });
 if (Astro.cache?.enabled) Astro.cache.set(photoCache);
+
+const locationPhotos = photos.flatMap((photo) => {
+	const latitude = photo.data.latitude;
+	const longitude = photo.data.longitude;
+	if (
+		typeof latitude !== "number" ||
+		!Number.isFinite(latitude) ||
+		latitude < -90 ||
+		latitude > 90 ||
+		typeof longitude !== "number" ||
+		!Number.isFinite(longitude) ||
+		longitude < -180 ||
+		longitude > 180
+	) return [];
+	return [{
+		latitude,
+		longitude,
+		title: photo.data.title || photo.data.alt || "写真を見る",
+		href: `/photos/${photo.id}`,
+	}];
+});
 ---
 
 <Photos
@@ -25,12 +48,19 @@ if (Astro.cache?.enabled) Astro.cache.set(photoCache);
 	content={{ collection: "albums", id: album.data.id, slug: album.id }}
 >
 	<article class="album-page">
-		<a class="back" href="/albums">← すべてのアルバム</a>
+		<a class="back" href="/albums">
+			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
+			<span>すべてのアルバム</span>
+		</a>
 		<header>
 			<h1 {...album.edit.title}>{album.data.title}</h1>
 			{album.data.description && <p {...album.edit.description}>{album.data.description}</p>}
-			<p class="count">{photos.length}点</p>
+			<p class="count">
+				<Images size={15} strokeWidth={1.75} aria-hidden="true" />
+				<span>{photos.length}点</span>
+			</p>
 		</header>
+		<AlbumMap markers={locationPhotos} />
 
 		<div class="photo-grid">
 			{photos.map((photo) => (

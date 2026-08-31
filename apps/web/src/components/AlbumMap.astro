@@ -1,0 +1,91 @@
+---
+import { MapPinned } from "lucide-astro";
+import "leaflet/dist/leaflet.css";
+
+interface Marker {
+	latitude: number;
+	longitude: number;
+	title: string;
+	href: string;
+}
+
+interface Props {
+	markers: Marker[];
+}
+
+const { markers } = Astro.props;
+---
+
+{
+	markers.length > 0 && (
+		<section class="album-map" data-album-map data-markers={JSON.stringify(markers)}>
+			<button type="button" class="album-map-toggle" aria-expanded="false">
+				<MapPinned size={17} strokeWidth={1.75} aria-hidden="true" />
+				<span>地図で見る</span>
+				<small>{markers.length.toLocaleString("ja-JP")}点に撮影場所あり</small>
+			</button>
+			<div class="album-map-panel" hidden>
+				<div class="album-map-canvas" aria-label="アルバム内の撮影場所" />
+			</div>
+		</section>
+	)
+}
+
+<script>
+	import L from "leaflet";
+
+	type Marker = {
+		latitude: number;
+		longitude: number;
+		title: string;
+		href: string;
+	};
+
+	document.querySelectorAll<HTMLElement>("[data-album-map]").forEach((shell) => {
+		if (shell.dataset.initialized === "true") return;
+		shell.dataset.initialized = "true";
+		const toggle = shell.querySelector<HTMLButtonElement>(".album-map-toggle");
+		const panel = shell.querySelector<HTMLElement>(".album-map-panel");
+		const canvas = shell.querySelector<HTMLElement>(".album-map-canvas");
+		if (!toggle || !panel || !canvas) return;
+
+		let map: L.Map | undefined;
+		const markers = JSON.parse(shell.dataset.markers || "[]") as Marker[];
+		const initializeMap = () => {
+			if (map || markers.length === 0) return;
+			map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
+			L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+				maxZoom: 19,
+			}).addTo(map);
+
+			const bounds = L.latLngBounds([]);
+			markers.forEach((marker) => {
+				const point = L.latLng(marker.latitude, marker.longitude);
+				bounds.extend(point);
+				const link = document.createElement("a");
+				link.href = marker.href;
+				link.textContent = marker.title;
+				L.circleMarker(point, {
+					radius: 5,
+					weight: 1.5,
+					color: "#fff",
+					fillColor: "#17658c",
+					fillOpacity: 0.88,
+				}).bindPopup(link).addTo(map!);
+			});
+			map.fitBounds(bounds, { padding: [28, 28], maxZoom: 15 });
+		};
+
+		toggle.addEventListener("click", () => {
+			const open = toggle.getAttribute("aria-expanded") !== "true";
+			toggle.setAttribute("aria-expanded", String(open));
+			panel.hidden = !open;
+			toggle.querySelector("span")!.textContent = open ? "地図を閉じる" : "地図で見る";
+			if (open) {
+				initializeMap();
+				window.setTimeout(() => map?.invalidateSize(), 0);
+			}
+		});
+	});
+</script>
