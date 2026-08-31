@@ -221,6 +221,14 @@ def extract_metadata(path: Path) -> dict[str, Any]:
             "-GPSLatitude",
             "-GPSLongitude",
             "-GPSAltitude",
+            "-Make",
+            "-Model",
+            "-LensModel",
+            "-FNumber",
+            "-ExposureTime",
+            "-ISO",
+            "-FocalLength",
+            "-ExposureCompensation",
             str(path),
         ],
         capture_output=True,
@@ -256,7 +264,21 @@ def extract_metadata(path: Path) -> dict[str, Any]:
                 captured_at += offset
         except ValueError:
             pass
-    return {"location": location, "captured_at": captured_at}
+    exif = {
+        key: row[key]
+        for key in (
+            "Make",
+            "Model",
+            "LensModel",
+            "FNumber",
+            "ExposureTime",
+            "ISO",
+            "FocalLength",
+            "ExposureCompensation",
+        )
+        if row.get(key) not in (None, "")
+    }
+    return {"location": location, "captured_at": captured_at, "exif": exif}
 
 
 def make_video_poster(source: Path, destination: Path) -> None:
@@ -630,6 +652,7 @@ def content_payload(
             "gps_exif_preserved": bool(metadata.get("location")),
             "gps_coordinates_stored": "emdash-fields" if metadata.get("location") else None,
             "public_metadata_policy": "Source EXIF retained",
+            "exif": metadata.get("exif") or None,
             "migration": "manifest-v1",
         },
     }

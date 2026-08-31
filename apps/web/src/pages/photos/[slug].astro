@@ -3,6 +3,7 @@ import { getEmDashCollection, getEmDashEntry } from "emdash";
 import {
 	ArrowLeft,
 	ArrowRight,
+	Camera,
 	Download,
 	ExternalLink,
 	Expand,
@@ -94,6 +95,46 @@ const mapEmbedUrl = hasLocation
 const mapLinkUrl = hasLocation
 	? `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=15/${latitude}/${longitude}`
 	: undefined;
+
+const sourceMetadata = photo.data.source_metadata;
+const exif = sourceMetadata && typeof sourceMetadata === "object"
+	? (sourceMetadata as Record<string, unknown>).exif
+	: undefined;
+const exifData = exif && typeof exif === "object" ? exif as Record<string, unknown> : {};
+const textValue = (value: unknown) =>
+	typeof value === "string" && value.trim() ? value.trim() : undefined;
+const numberValue = (value: unknown) =>
+	typeof value === "number" && Number.isFinite(value) ? value : undefined;
+const make = textValue(exifData.Make);
+const model = textValue(exifData.Model);
+const camera = make && model
+	? (model.toLowerCase().startsWith(make.toLowerCase()) ? model : `${make} ${model}`)
+	: model || make;
+const lens = textValue(exifData.LensModel);
+const fNumber = numberValue(exifData.FNumber);
+const exposureTime = numberValue(exifData.ExposureTime);
+const iso = numberValue(exifData.ISO);
+const focalLength = numberValue(exifData.FocalLength);
+const exposureCompensation = numberValue(exifData.ExposureCompensation);
+const exifDetails = [
+	{ label: "カメラ", value: camera },
+	{ label: "レンズ", value: lens },
+	{ label: "絞り", value: fNumber ? `f/${fNumber}` : undefined },
+	{
+		label: "シャッター速度",
+		value: exposureTime
+			? (exposureTime < 1 ? `1/${Math.round(1 / exposureTime)}秒` : `${exposureTime}秒`)
+			: undefined,
+	},
+	{ label: "ISO", value: iso ? String(iso) : undefined },
+	{ label: "焦点距離", value: focalLength ? `${focalLength} mm` : undefined },
+	{
+		label: "露出補正",
+		value: exposureCompensation !== undefined
+			? `${exposureCompensation > 0 ? "+" : ""}${exposureCompensation} EV`
+			: undefined,
+	},
+].filter((item): item is { label: string; value: string } => Boolean(item.value));
 ---
 
 <Photos
@@ -173,6 +214,24 @@ const mapLinkUrl = hasLocation
 				<span />
 			)}
 		</nav>
+		{
+			exifDetails.length > 0 && (
+				<section class="exif" aria-labelledby="exif-title">
+					<h2 id="exif-title">
+						<Camera size={17} strokeWidth={1.75} aria-hidden="true" />
+						<span>撮影情報</span>
+					</h2>
+					<dl>
+						{exifDetails.map((item) => (
+							<div>
+								<dt>{item.label}</dt>
+								<dd>{item.value}</dd>
+							</div>
+						))}
+					</dl>
+				</section>
+			)
+		}
 		{
 			mapEmbedUrl && mapLinkUrl && (
 				<section class="location" aria-labelledby="location-title">

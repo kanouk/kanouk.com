@@ -47,6 +47,7 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
             metadata={
                 "captured_at": "2024-06-01T09:00:00+09:00",
                 "location": {"latitude": 35.0, "longitude": 135.0},
+                "exif": {"Make": "Google", "Model": "Pixel"},
             },
             source_sha256="sha",
         )
@@ -55,6 +56,10 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertNotIn("video", payload)
         self.assertEqual(payload["latitude"], 35.0)
         self.assertNotIn("latitude", payload["source_metadata"])
+        self.assertEqual(
+            payload["source_metadata"]["exif"],
+            {"Make": "Google", "Model": "Pixel"},
+        )
 
     def test_video_payload_uses_poster_and_original_video(self) -> None:
         payload = module.content_payload(
@@ -77,6 +82,7 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
             metadata = module.extract_metadata(path)
         self.assertEqual(metadata["location"], {})
         self.assertIsNone(metadata["captured_at"])
+        self.assertEqual(metadata["exif"], {})
 
     def test_source_extension_is_stable(self) -> None:
         self.assertEqual(module.source_extension(asset()), ".jpg")
