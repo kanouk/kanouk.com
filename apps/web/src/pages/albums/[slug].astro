@@ -1,6 +1,6 @@
 ---
 import { getEmDashCollection, getEmDashEntry } from "emdash";
-import { Image } from "emdash/ui";
+import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 
 const { slug } = Astro.params;
@@ -35,7 +35,7 @@ if (Astro.cache?.enabled) Astro.cache.set(photoCache);
 		<div class="photo-grid">
 			{photos.map((photo) => (
 				<a class="photo-card" href={`/photos/${photo.id}`} aria-label={photo.data.alt || photo.data.title}>
-					<Image image={photo.data.image} />
+					<YohakuImage image={photo.data.image} />
 					{photo.data.kind === "video" && <span class="video-badge">動画</span>}
 					{photo.data.title && <span>{photo.data.title}</span>}
 				</a>

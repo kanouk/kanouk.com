@@ -8,13 +8,13 @@ import {
 	getSiteSettings,
 } from "emdash";
 import {
-	Image,
 	PortableText,
 	WidgetArea,
 } from "emdash/ui";
 import { Comments, CommentForm } from "emdash/ui/comments";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
+import YohakuImage from "../../components/YohakuImage.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 
@@ -119,7 +119,7 @@ const publishDate =
 		{
 			post.data.featured_image && (
 				<div class="article-hero" {...post.edit.featured_image}>
-					<Image image={post.data.featured_image} />
+					<YohakuImage image={post.data.featured_image} priority />
 				</div>
 			)
 		}

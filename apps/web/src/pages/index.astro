@@ -4,7 +4,7 @@ import {
 	getTermsForEntries,
 	getSiteSettings,
 } from "emdash";
-import { Image } from "emdash/ui";
+import YohakuImage from "../components/YohakuImage.astro";
 import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
@@ -96,7 +96,7 @@ function formatDate(date: Date | null | undefined) {
 									aria-label={`${featuredPost.data.title}を読む`}
 								>
 									<div class="featured-image">
-										<Image image={featuredPost.data.featured_image} />
+										<YohakuImage image={featuredPost.data.featured_image} priority crop />
 									</div>
 								</a>
 							) : (

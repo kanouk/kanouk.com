@@ -1,0 +1,45 @@
+---
+import type { MediaValue } from "emdash";
+
+interface Props {
+	image: MediaValue | string | null | undefined;
+	alt?: string;
+	class?: string;
+	priority?: boolean;
+	crop?: boolean;
+}
+
+const { image, alt, class: className, priority = false, crop = false } = Astro.props;
+const value = typeof image === "string" ? { id: "", src: image } : image;
+const width = value?.width;
+const height = value?.height;
+const storageKey = value?.meta?.storageKey;
+const legacyUrl = (value as (MediaValue & { url?: string }) | null | undefined)?.url;
+const src =
+	value?.src ||
+	legacyUrl ||
+	(typeof storageKey === "string"
+		? `/_emdash/api/media/file/${encodeURIComponent(storageKey)}`
+		: value?.id
+			? `/_emdash/api/media/file/${encodeURIComponent(value.id)}`
+			: undefined);
+const lowResolution = Boolean(width && height && (width < 640 || height < 480));
+const cropSafely = crop && !lowResolution;
+---
+
+{
+	src && (
+		<img
+			src={src}
+			alt={alt ?? value?.alt ?? ""}
+			width={width}
+			height={height}
+			loading={priority ? "eager" : "lazy"}
+			fetchpriority={priority ? "high" : undefined}
+			decoding="async"
+			class={className}
+			data-fit={cropSafely ? "crop" : "preserve"}
+			data-low-resolution={lowResolution ? "true" : undefined}
+		/>
+	)
+}

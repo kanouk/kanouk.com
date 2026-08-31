@@ -1,6 +1,6 @@
 ---
 import type { MediaValue, ContentBylineCredit } from "emdash";
-import { Image } from "emdash/ui";
+import YohakuImage from "./YohakuImage.astro";
 
 interface Props {
 	title: string;
@@ -38,7 +38,7 @@ const formattedDate = date
 		{
 			featuredImage ? (
 				<div class="card-image">
-					<Image image={featuredImage} />
+					<YohakuImage image={featuredImage} crop />
 				</div>
 			) : (
 				<div class="card-placeholder" />

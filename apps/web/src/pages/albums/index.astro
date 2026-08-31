@@ -1,6 +1,6 @@
 ---
 import { getEmDashCollection } from "emdash";
-import { Image } from "emdash/ui";
+import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 
 const { entries: albums, cacheHint } = await getEmDashCollection("albums", {
@@ -26,7 +26,7 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 				{albums.map((album) => (
 					<a class="album-card" href={`/albums/${album.id}`}>
 						{album.data.cover_image ? (
-							<div class="cover"><Image image={album.data.cover_image} /></div>
+							<div class="cover"><YohakuImage image={album.data.cover_image} crop /></div>
 						) : (
 							<div class="cover placeholder" aria-hidden="true" />
 						)}
