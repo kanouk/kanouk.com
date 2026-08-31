@@ -1,5 +1,16 @@
 ---
 import { getEmDashCollection, getEmDashEntry } from "emdash";
+import {
+	ArrowLeft,
+	ArrowRight,
+	Download,
+	ExternalLink,
+	Expand,
+	MapPin,
+	Pause,
+	Play,
+	Share2,
+} from "lucide-astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 
@@ -98,7 +109,8 @@ const mapLinkUrl = hasLocation
 		data-slideshow-next-url={slideshowNextUrl}
 	>
 		<a class="back" href={album ? `/albums/${album.id}` : "/albums"}>
-			← {album?.data.title || "すべてのアルバム"}
+			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
+			<span>{album?.data.title || "すべてのアルバム"}</span>
 		</a>
 		<figure>
 			<div class="media" {...photo.edit.image}>
@@ -120,23 +132,58 @@ const mapLinkUrl = hasLocation
 			</figcaption>
 		</figure>
 		<div class="photo-tools" role="group" aria-label="写真の表示と共有">
-			<button type="button" data-photo-fullscreen>全画面</button>
-			<button type="button" data-photo-share>共有</button>
-			{downloadUrl && <a href={downloadUrl} download>ダウンロード</a>}
-			{slideshowNextUrl && <button type="button" data-photo-slideshow aria-pressed="false">スライドショー</button>}
+			<button type="button" data-photo-fullscreen>
+				<Expand size={16} strokeWidth={1.75} aria-hidden="true" />
+				<span>全画面</span>
+			</button>
+			<button type="button" data-photo-share>
+				<Share2 size={16} strokeWidth={1.75} aria-hidden="true" />
+				<span>共有</span>
+			</button>
+			{downloadUrl && (
+				<a href={downloadUrl} download>
+					<Download size={16} strokeWidth={1.75} aria-hidden="true" />
+					<span>ダウンロード</span>
+				</a>
+			)}
+			{slideshowNextUrl && (
+				<button type="button" data-photo-slideshow aria-pressed="false">
+					<Play class="photo-tool-play" size={16} strokeWidth={1.75} aria-hidden="true" />
+					<Pause class="photo-tool-pause" size={16} strokeWidth={1.75} aria-hidden="true" />
+					<span data-photo-slideshow-label>スライドショー</span>
+				</button>
+			)}
 			<span class="photo-tool-status" role="status" aria-live="polite" />
 		</div>
 		<nav class="photo-navigation" aria-label="アルバム内の写真移動">
-			{previousPhoto ? <a href={`/photos/${previousPhoto.id}`}>← 前の写真</a> : <span />}
-			{nextPhoto ? <a href={`/photos/${nextPhoto.id}`}>次の写真 →</a> : <span />}
+			{previousPhoto ? (
+				<a href={`/photos/${previousPhoto.id}`}>
+					<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
+					<span>前の写真</span>
+				</a>
+			) : (
+				<span />
+			)}
+			{nextPhoto ? (
+				<a href={`/photos/${nextPhoto.id}`}>
+					<span>次の写真</span>
+					<ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+				</a>
+			) : (
+				<span />
+			)}
 		</nav>
 		{
 			mapEmbedUrl && mapLinkUrl && (
 				<section class="location" aria-labelledby="location-title">
 					<div class="location-heading">
-						<h2 id="location-title">撮影場所</h2>
+						<h2 id="location-title">
+							<MapPin size={17} strokeWidth={1.75} aria-hidden="true" />
+							<span>撮影場所</span>
+						</h2>
 						<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer">
-							OpenStreetMapで見る
+							<span>OpenStreetMapで見る</span>
+							<ExternalLink size={14} strokeWidth={1.75} aria-hidden="true" />
 						</a>
 					</div>
 					<iframe
@@ -159,6 +206,7 @@ const mapLinkUrl = hasLocation
 	const slideshowNextUrl = page?.dataset.slideshowNextUrl;
 	const status = page?.querySelector<HTMLElement>(".photo-tool-status");
 	const slideshowButton = page?.querySelector<HTMLButtonElement>("[data-photo-slideshow]");
+	const slideshowLabel = slideshowButton?.querySelector<HTMLElement>("[data-photo-slideshow-label]");
 	let slideshowTimer: number | undefined;
 
 	const announce = (message: string) => {
@@ -176,7 +224,7 @@ const mapLinkUrl = hasLocation
 		if (slideshowTimer) window.clearTimeout(slideshowTimer);
 		slideshowTimer = undefined;
 		slideshowButton?.setAttribute("aria-pressed", "false");
-		if (slideshowButton) slideshowButton.textContent = "スライドショー";
+		if (slideshowLabel) slideshowLabel.textContent = "スライドショー";
 		const current = new URL(window.location.href);
 		current.searchParams.delete("slideshow");
 		window.history.replaceState(null, "", current);
@@ -185,7 +233,7 @@ const mapLinkUrl = hasLocation
 	const startSlideshow = () => {
 		if (!slideshowNextUrl) return;
 		slideshowButton?.setAttribute("aria-pressed", "true");
-		if (slideshowButton) slideshowButton.textContent = "停止";
+		if (slideshowLabel) slideshowLabel.textContent = "停止";
 		announce("6秒ごとに次の写真へ進みます");
 		slideshowTimer = window.setTimeout(() => navigate(slideshowUrl(slideshowNextUrl)), 6000);
 	};

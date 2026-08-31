@@ -1,7 +1,17 @@
+---
+import { Monitor, Moon, Sun } from "lucide-astro";
+---
+
 <div class="theme-switcher" role="group" aria-label="表示テーマ">
-	<button type="button" class="theme-btn" data-theme="light" aria-label="ライト表示" title="ライト表示">明</button>
-	<button type="button" class="theme-btn" data-theme="dark" aria-label="ダーク表示" title="ダーク表示">暗</button>
-	<button type="button" class="theme-btn" data-theme="system" aria-label="端末の設定に合わせる" title="端末の設定に合わせる">自動</button>
+	<button type="button" class="theme-btn" data-theme="light" aria-label="ライト表示" title="ライト表示">
+		<Sun size={15} strokeWidth={1.75} aria-hidden="true" />
+	</button>
+	<button type="button" class="theme-btn" data-theme="dark" aria-label="ダーク表示" title="ダーク表示">
+		<Moon size={15} strokeWidth={1.75} aria-hidden="true" />
+	</button>
+	<button type="button" class="theme-btn" data-theme="system" aria-label="端末の設定に合わせる" title="端末の設定に合わせる">
+		<Monitor size={15} strokeWidth={1.75} aria-hidden="true" />
+	</button>
 </div>
 
 <script>

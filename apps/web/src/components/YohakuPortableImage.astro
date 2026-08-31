@@ -1,0 +1,44 @@
+---
+interface ImageNode {
+	asset?: {
+		_ref?: string;
+		url?: string;
+	};
+	alt?: string;
+	caption?: string;
+	width?: number;
+	height?: number;
+	alignment?: "left" | "center" | "right" | "wide" | "full";
+}
+
+interface Props {
+	node: ImageNode;
+}
+
+const { node } = Astro.props;
+const assetUrl = node?.asset?.url;
+const bareStorageKey = assetUrl && /^[A-Za-z0-9._-]+$/.test(assetUrl) ? assetUrl : undefined;
+const src = bareStorageKey
+	? `/_emdash/api/media/file/${encodeURIComponent(bareStorageKey)}`
+	: assetUrl ||
+		(node?.asset?._ref
+			? `/_emdash/api/media/file/${encodeURIComponent(node.asset._ref)}`
+			: undefined);
+---
+
+{
+	src && (
+		<figure class:list={["yohaku-portable-image", node.alignment && `align-${node.alignment}`]}>
+			<img
+				src={src}
+				alt={node.alt || ""}
+				width={node.width}
+				height={node.height}
+				loading="lazy"
+				decoding="async"
+				data-fit="preserve"
+			/>
+			{node.caption && <figcaption>{node.caption}</figcaption>}
+		</figure>
+	)
+}
