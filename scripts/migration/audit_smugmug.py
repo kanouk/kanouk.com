@@ -90,6 +90,10 @@ def audit(args: argparse.Namespace) -> dict[str, Any]:
     image_statuses: Counter[str] = Counter()
     album_flags: Counter[str] = Counter()
     image_flags: Counter[str] = Counter()
+    comment_fields: Counter[str] = Counter()
+    comment_statuses: Counter[str] = Counter()
+    comments_total = 0
+    albums_with_comments = 0
     total_source_bytes = 0
     total_archived_bytes = 0
     assets_with_nonzero_coordinates = 0
@@ -117,6 +121,19 @@ def audit(args: argparse.Namespace) -> dict[str, Any]:
             "Protected",
         ):
             album_flags[f"{field}={bool(album.get(field))}"] += 1
+
+        if args.include_comments:
+            comments_uri = ((album.get("Uris") or {}).get("AlbumComments") or {}).get(
+                "Uri"
+            )
+            album_comment_count = 0
+            if comments_uri:
+                for comment in client.paged(comments_uri, "Comment"):
+                    comments_total += 1
+                    album_comment_count += 1
+                    comment_fields.update(comment.keys())
+                    increment(comment_statuses, comment.get("Status"))
+            albums_with_comments += bool(album_comment_count)
 
         images_uri = ((album.get("Uris") or {}).get("AlbumImages") or {}).get("Uri")
         if not images_uri:
@@ -181,6 +198,11 @@ def audit(args: argparse.Namespace) -> dict[str, Any]:
         "image_statuses": sorted_counter(image_statuses),
         "album_flags": sorted_counter(album_flags),
         "image_flags": sorted_counter(image_flags),
+        "comments_audited": bool(args.include_comments),
+        "comments_total": comments_total if args.include_comments else None,
+        "albums_with_comments": albums_with_comments if args.include_comments else None,
+        "comment_fields_seen": sorted_counter(comment_fields),
+        "comment_statuses": sorted_counter(comment_statuses),
     }
 
 
@@ -193,6 +215,11 @@ def parser() -> argparse.ArgumentParser:
         help="Environment variable containing the public API key",
     )
     result.add_argument("--output", help="JSON output path (stdout when omitted)")
+    result.add_argument(
+        "--include-comments",
+        action="store_true",
+        help="Count public comments through each album's AlbumComments link",
+    )
     return result
 
 
