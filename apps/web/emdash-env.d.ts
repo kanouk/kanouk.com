@@ -69,6 +69,9 @@ export interface Photo {
   album: string;
   position: number;
   captured_at?: string;
+  latitude?: number;
+  longitude?: number;
+  altitude?: number;
   source_system: string;
   source_id: string;
   source_url?: string;

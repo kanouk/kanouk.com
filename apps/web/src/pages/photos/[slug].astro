@@ -21,6 +21,38 @@ const capturedDate = photo.data.captured_at?.match(/^(\d{4})-(\d{2})-(\d{2})/);
 const formattedDate = capturedDate
 	? `${Number(capturedDate[1])}年${Number(capturedDate[2])}月${Number(capturedDate[3])}日`
 	: undefined;
+
+const latitude = photo.data.latitude;
+const longitude = photo.data.longitude;
+const hasLocation =
+	typeof latitude === "number" &&
+	Number.isFinite(latitude) &&
+	latitude >= -90 &&
+	latitude <= 90 &&
+	typeof longitude === "number" &&
+	Number.isFinite(longitude) &&
+	longitude >= -180 &&
+	longitude <= 180;
+const mapEmbedUrl = hasLocation
+	? (() => {
+			const latitudeSpan = 0.008;
+			const longitudeSpan = 0.012;
+			const params = new URLSearchParams({
+				bbox: [
+					longitude - longitudeSpan,
+					latitude - latitudeSpan,
+					longitude + longitudeSpan,
+					latitude + latitudeSpan,
+				].join(","),
+				layer: "mapnik",
+				marker: `${latitude},${longitude}`,
+			});
+			return `https://www.openstreetmap.org/export/embed.html?${params}`;
+		})()
+	: undefined;
+const mapLinkUrl = hasLocation
+	? `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=15/${latitude}/${longitude}`
+	: undefined;
 ---
 
 <Photos
@@ -41,6 +73,24 @@ const formattedDate = capturedDate
 				{formattedDate && <time>{formattedDate}</time>}
 			</figcaption>
 		</figure>
+		{
+			mapEmbedUrl && mapLinkUrl && (
+				<section class="location" aria-labelledby="location-title">
+					<div class="location-heading">
+						<h2 id="location-title">撮影場所</h2>
+						<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer">
+							OpenStreetMapで見る
+						</a>
+					</div>
+					<iframe
+						src={mapEmbedUrl}
+						title={`${photo.data.title}の撮影場所`}
+						loading="lazy"
+						referrerpolicy="no-referrer"
+					/>
+				</section>
+			)
+		}
 	</article>
 </Photos>
 
@@ -54,4 +104,13 @@ const formattedDate = capturedDate
 	h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.75rem); letter-spacing: -0.035em; }
 	figcaption p { color: var(--color-text-secondary); line-height: 1.75; }
 	time { color: var(--color-muted); font: 500 0.75rem/1 var(--font-mono), monospace; }
+	.location { max-width: 48rem; margin: 4rem auto 0; }
+	.location-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+	.location h2 { margin: 0; font-size: 1.1rem; }
+	.location a { color: var(--color-text-secondary); font-size: 0.8rem; }
+	.location iframe { display: block; width: 100%; height: min(60vh, 26rem); border: 1px solid var(--color-border); border-radius: 0.75rem; }
+	@media (max-width: 36rem) {
+		.location-heading { align-items: flex-start; flex-direction: column; }
+		.location iframe { height: 20rem; }
+	}
 </style>

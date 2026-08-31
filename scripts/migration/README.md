@@ -76,4 +76,6 @@ After an account-guarded R2 upload and re-download, use `record_smugmug_r2_round
 
 `build_smugmug_url_ledger.py` extracts SmugMug page and rendition URLs from a local article, maps both to stable photo/media URLs, and optionally writes a transformed dry-run copy. It never edits the source article.
 
-Before an image is retained in the public-media R2 bucket, remove EXIF/XMP/IPTC while preserving its ICC color profile. `record_smugmug_public_derivative.py` refuses a derivative with GPS metadata and records its EmDash media ID, storage key, SHA-256, byte count, and color profile.
+Public SmugMug photos keep their source GPS EXIF so the replacement can preserve SmugMug's map feature. Exact coordinates are stored in EmDash number fields and are never written to the Git manifest, command output, or receipts. `record_smugmug_public_derivative.py` compares the source and public file internally, refuses removed or changed GPS, and records only the preservation result, EmDash IDs, storage key, hashes, byte count, and color profile.
+
+`apply_smugmug_pilot_gps.py` is fail-closed and dry-run by default. It checks the frozen source SHA-256 and GPS EXIF without printing coordinates. With `--apply`, it uses the account-guarded EmDash credential to upload the source bytes and update the existing photo's `latitude`, `longitude`, `altitude`, media reference, and non-coordinate source metadata. The `photos` schema must already contain those three number fields.

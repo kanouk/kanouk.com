@@ -73,8 +73,8 @@
         "photo_path": "/photos/kph_guqcn5jdumzbrzumkdl445sl2m",
         "media_path": "/media/kph_guqcn5jdumzbrzumkdl445sl2m",
         "emdash_content_id": "01M1BZNTEVB5F6M5QGA2YC2ZBB",
-        "emdash_media_id": "01M1BZDCXCVTWXDJ487SMMR3RA",
-        "r2_object_key": "01M1BZDCDEB02KC190X1M7P42G.jpg"
+        "emdash_media_id": "01M1C3VTGZBKFWYM4QJMX5ECP7",
+        "r2_object_key": "01M1C3VSX560WEC4B5R45SYKDW.jpg"
       },
       "verification": {
         "source_md5_verified": true,
@@ -90,13 +90,14 @@
           "object_key": "pilots/2024-06-kyoto/source-probe/kph_guqcn5jdumzbrzumkdl445sl2m.jpg",
           "deleted_after_verification": true
         },
-        "public_derivative": {
-          "sha256": "177f55c9040a75daef18ff8dff08de33183f32ed0be15f09d2f57f1c92f480c5",
-          "bytes": 4927697,
-          "gps_present": false,
+        "public_asset": {
+          "sha256": "7c72ed1a83649f0f6170182b063cf34bdeec11d415ea4d7ff36d7c01d0c70669",
+          "bytes": 5028400,
+          "gps_present": true,
+          "gps_preserved": true,
           "icc_profile": "sRGB IEC61966-2.1",
-          "metadata_policy": "EXIF/XMP/IPTC removed; ICC preserved",
-          "recorded_at": "2026-08-31T13:33:48+00:00"
+          "metadata_policy": "Source GPS EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T14:34:55+00:00"
         }
       }
     },

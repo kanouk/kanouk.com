@@ -18,7 +18,7 @@ module = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(module)
 
 
-class SmugMugPublicDerivativeTests(unittest.TestCase):
+class SmugMugPublicAssetTests(unittest.TestCase):
     def manifest(self) -> dict:
         return {
             "album": {"destination": {"emdash_content_id": None}},
@@ -35,7 +35,7 @@ class SmugMugPublicDerivativeTests(unittest.TestCase):
             ]
         }
 
-    def test_records_sanitized_derivative(self) -> None:
+    def test_records_matching_gps_without_persisting_coordinates(self) -> None:
         asset = module.record(
             self.manifest(),
             asset_id="kph_test",
@@ -45,13 +45,22 @@ class SmugMugPublicDerivativeTests(unittest.TestCase):
             storage_key="object.jpg",
             derivative_sha256="sha",
             derivative_bytes=10,
-            metadata={"gps_present": False, "icc_profile": "sRGB"},
+            source_metadata={"latitude": 35.0, "longitude": 135.0},
+            public_metadata={
+                "latitude": 35.0,
+                "longitude": 135.0,
+                "icc_profile": "sRGB",
+            },
         )
         self.assertEqual(asset["destination"]["emdash_media_id"], "media-id")
         self.assertEqual(asset["destination"]["emdash_content_id"], "photo-id")
-        self.assertFalse(asset["verification"]["public_derivative"]["gps_present"])
+        public_asset = asset["verification"]["public_asset"]
+        self.assertTrue(public_asset["gps_present"])
+        self.assertTrue(public_asset["gps_preserved"])
+        self.assertNotIn("latitude", public_asset)
+        self.assertNotIn("longitude", public_asset)
 
-    def test_rejects_gps_metadata(self) -> None:
+    def test_rejects_removed_gps_metadata(self) -> None:
         with self.assertRaisesRegex(ValueError, "GPS"):
             module.record(
                 self.manifest(),
@@ -62,8 +71,24 @@ class SmugMugPublicDerivativeTests(unittest.TestCase):
                 storage_key="object.jpg",
                 derivative_sha256="sha",
                 derivative_bytes=10,
-                metadata={"gps_present": True},
+                source_metadata={"latitude": 35.0, "longitude": 135.0},
+                public_metadata={"latitude": None, "longitude": None},
             )
+
+    def test_accepts_source_without_gps_when_public_is_also_without_gps(self) -> None:
+        asset = module.record(
+            self.manifest(),
+            asset_id="kph_test",
+            emdash_album_content_id="album-id",
+            emdash_photo_content_id="photo-id",
+            emdash_media_id="media-id",
+            storage_key="object.jpg",
+            derivative_sha256="sha",
+            derivative_bytes=10,
+            source_metadata={"latitude": None, "longitude": None},
+            public_metadata={"latitude": None, "longitude": None},
+        )
+        self.assertFalse(asset["verification"]["public_asset"]["gps_present"])
 
 
 if __name__ == "__main__":

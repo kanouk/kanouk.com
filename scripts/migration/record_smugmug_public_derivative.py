@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record a metadata-sanitized EmDash media derivative in a pilot manifest."""
+"""Record a public EmDash media file while preserving source GPS metadata."""
 
 from __future__ import annotations
 
@@ -22,10 +22,11 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def metadata_summary(path: Path) -> dict[str, Any]:
+def metadata(path: Path) -> dict[str, Any]:
     result = subprocess.run(
         [
             "exiftool",
+            "-n",
             "-j",
             "-GPSLatitude",
             "-GPSLongitude",
@@ -37,13 +38,34 @@ def metadata_summary(path: Path) -> dict[str, Any]:
         check=False,
     )
     if result.returncode != 0:
-        raise ValueError("Could not inspect public derivative metadata")
+        raise ValueError("Could not inspect public media metadata")
     rows = json.loads(result.stdout)
     row = rows[0] if rows else {}
     return {
-        "gps_present": bool(row.get("GPSLatitude") or row.get("GPSLongitude")),
+        "latitude": row.get("GPSLatitude"),
+        "longitude": row.get("GPSLongitude"),
         "icc_profile": row.get("ProfileDescription"),
     }
+
+
+def valid_coordinate(value: Any, minimum: float, maximum: float) -> bool:
+    return isinstance(value, (int, float)) and minimum <= float(value) <= maximum
+
+
+def gps_present(value: dict[str, Any]) -> bool:
+    return valid_coordinate(value.get("latitude"), -90, 90) and valid_coordinate(
+        value.get("longitude"), -180, 180
+    )
+
+
+def gps_matches(source: dict[str, Any], public: dict[str, Any]) -> bool:
+    if not gps_present(source):
+        return not gps_present(public)
+    if not gps_present(public):
+        return False
+    return abs(float(source["latitude"]) - float(public["latitude"])) <= 0.000001 and abs(
+        float(source["longitude"]) - float(public["longitude"])
+    ) <= 0.000001
 
 
 def record(
@@ -56,10 +78,11 @@ def record(
     storage_key: str,
     derivative_sha256: str,
     derivative_bytes: int,
-    metadata: dict[str, Any],
+    source_metadata: dict[str, Any],
+    public_metadata: dict[str, Any],
 ) -> dict[str, Any]:
-    if metadata.get("gps_present"):
-        raise ValueError("Public derivative still contains GPS metadata")
+    if not gps_matches(source_metadata, public_metadata):
+        raise ValueError("Public media does not preserve the source GPS metadata")
     try:
         asset = next(item for item in manifest["assets"] if item["id"] == asset_id)
     except StopIteration as exc:
@@ -70,12 +93,14 @@ def record(
     asset["destination"]["emdash_content_id"] = emdash_photo_content_id
     asset["destination"]["emdash_media_id"] = emdash_media_id
     asset["destination"]["r2_object_key"] = storage_key
-    asset["verification"]["public_derivative"] = {
+    asset["verification"].pop("public_derivative", None)
+    asset["verification"]["public_asset"] = {
         "sha256": derivative_sha256,
         "bytes": derivative_bytes,
-        "gps_present": False,
-        "icc_profile": metadata.get("icc_profile"),
-        "metadata_policy": "EXIF/XMP/IPTC removed; ICC preserved",
+        "gps_present": gps_present(public_metadata),
+        "gps_preserved": True,
+        "icc_profile": public_metadata.get("icc_profile"),
+        "metadata_policy": "Source GPS EXIF retained; coordinates stored outside Git",
         "recorded_at": now_iso(),
     }
     return asset
@@ -99,6 +124,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--emdash-photo-content-id", required=True)
     result.add_argument("--emdash-media-id", required=True)
     result.add_argument("--storage-key", required=True)
+    result.add_argument("--source-file", required=True)
     result.add_argument("--file", required=True)
     return result
 
@@ -117,7 +143,8 @@ def main() -> None:
         storage_key=args.storage_key,
         derivative_sha256=sha256_file(derivative_path),
         derivative_bytes=derivative_path.stat().st_size,
-        metadata=metadata_summary(derivative_path),
+        source_metadata=metadata(Path(args.source_file)),
+        public_metadata=metadata(derivative_path),
     )
     write_json_atomic(manifest_path, manifest)
     print(
@@ -128,7 +155,7 @@ def main() -> None:
                 "emdash_photo_content_id": asset["destination"]["emdash_content_id"],
                 "emdash_media_id": asset["destination"]["emdash_media_id"],
                 "r2_object_key": asset["destination"]["r2_object_key"],
-                "public_derivative": asset["verification"]["public_derivative"],
+                "public_asset": asset["verification"]["public_asset"],
             },
             ensure_ascii=False,
         )
