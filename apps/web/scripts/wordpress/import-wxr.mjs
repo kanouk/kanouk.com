@@ -34,6 +34,7 @@ const DEFAULT_SOURCES = [
 
 const TARGET_ORIGIN = "https://blog.kanouk.com";
 const DEFAULT_LEDGER = path.resolve("../../migration/wordpress/runtime/import-ledger.json");
+const DEFAULT_MEDIA_LEDGER = path.resolve("../../migration/wordpress/runtime/media-ledger.json");
 const PUBLISHED_STATUS = "publish";
 const CONTENT_TYPES = new Set(["post", "page"]);
 const TRANSIENT_HTTP_STATUSES = new Set([429, 502, 503, 504]);
@@ -58,7 +59,13 @@ function sleep(milliseconds) {
 }
 
 function parseArgs(argv) {
-	const args = { apply: false, concurrency: 6, ledger: DEFAULT_LEDGER, limit: undefined };
+	const args = {
+		apply: false,
+		concurrency: 6,
+		ledger: DEFAULT_LEDGER,
+		mediaLedger: DEFAULT_MEDIA_LEDGER,
+		limit: undefined,
+	};
 	for (let i = 0; i < argv.length; i++) {
 		const value = argv[i];
 		if (value === "--apply") args.apply = true;
@@ -66,6 +73,7 @@ function parseArgs(argv) {
 		else if (value === "--concurrency") args.concurrency = Number(argv[++i]);
 		else if (value === "--limit") args.limit = Number(argv[++i]);
 		else if (value === "--ledger") args.ledger = path.resolve(argv[++i]);
+		else if (value === "--media-ledger") args.mediaLedger = path.resolve(argv[++i]);
 		else throw new Error(`Unknown argument: ${value}`);
 	}
 	if (!Number.isInteger(args.concurrency) || args.concurrency < 1 || args.concurrency > 12) {
@@ -148,6 +156,92 @@ function buildAttachmentMap(wxr) {
 	return new Map(wxr.attachments.filter((item) => item.id && item.url).map((item) => [String(item.id), item.url]));
 }
 
+function normalizedMediaUrl(url) {
+	try {
+		const parsed = new URL(url);
+		parsed.search = "";
+		parsed.hash = "";
+		return parsed.toString();
+	} catch {
+		return String(url).split(/[?#]/, 1)[0];
+	}
+}
+
+function stripWordPressSize(url) {
+	return url.replace(/-\d+x\d+(?=\.[^./?#]+$)/, "");
+}
+
+export function buildMediaMappings(ledger = {}) {
+	const exact = new Map();
+	const normalized = new Map();
+	for (const item of Object.values(ledger.items || {})) {
+		if (!item || item.status !== "verified" || !item.public_path || !item.media_id) continue;
+		const mapping = {
+			publicPath: item.public_path,
+			mediaId: item.media_id,
+			alt: item.alt || item.title || "",
+		};
+		for (const sourceUrl of new Set([item.url, ...(item.aliases || [])])) {
+			if (typeof sourceUrl !== "string" || !sourceUrl) continue;
+			exact.set(sourceUrl, mapping);
+			const base = normalizedMediaUrl(sourceUrl);
+			normalized.set(base, mapping);
+			normalized.set(stripWordPressSize(base), mapping);
+		}
+	}
+	return { exact, normalized };
+}
+
+function findMediaMapping(url, mappings) {
+	return mappings.exact.get(url)
+		|| mappings.normalized.get(normalizedMediaUrl(url))
+		|| mappings.normalized.get(stripWordPressSize(normalizedMediaUrl(url)));
+}
+
+function rewriteStringMedia(value, mappings) {
+	let rewrites = 0;
+	const rewritten = value.replace(/https?:\/\/[^\s"'<>]+/g, (raw) => {
+		const trailing = raw.match(/[),.;:!?]+$/)?.[0] || "";
+		const candidate = trailing ? raw.slice(0, -trailing.length) : raw;
+		const mapping = findMediaMapping(candidate, mappings);
+		if (!mapping) return raw;
+		rewrites++;
+		return mapping.publicPath + trailing;
+	});
+	return { value: rewritten, rewrites };
+}
+
+export function rewriteMediaReferences(value, mappings) {
+	let rewrites = 0;
+	const visit = (node) => {
+		if (Array.isArray(node)) return node.map(visit);
+		if (!node || typeof node !== "object") return node;
+		const copy = Object.fromEntries(Object.entries(node).map(([key, child]) => [key, visit(child)]));
+		if (copy._type === "image" && copy.asset && typeof copy.asset === "object") {
+			const sourceUrl = typeof node.asset?.url === "string" ? node.asset.url : "";
+			const mapping = sourceUrl ? findMediaMapping(sourceUrl, mappings) : undefined;
+			if (mapping) {
+				copy.asset = { ...copy.asset, _type: "reference", _ref: mapping.mediaId, url: mapping.publicPath, provider: "local" };
+				rewrites++;
+			}
+		}
+		return copy;
+	};
+	const replaceStrings = (node) => {
+		if (typeof node === "string") {
+			const result = rewriteStringMedia(node, mappings);
+			rewrites += result.rewrites;
+			return result.value;
+		}
+		if (Array.isArray(node)) return node.map(replaceStrings);
+		if (node && typeof node === "object") {
+			return Object.fromEntries(Object.entries(node).map(([key, child]) => [key, replaceStrings(child)]));
+		}
+		return node;
+	};
+	return { value: replaceStrings(visit(value)), rewrites };
+}
+
 function countType(nodes, type) {
 	let total = 0;
 	const visit = (value) => {
@@ -161,16 +255,18 @@ function countType(nodes, type) {
 	return total;
 }
 
-function migrationData(record, taxonomySlugs) {
+function migrationData(record, taxonomySlugs, mediaMappings) {
 	const { post, source, wxr, modified } = record;
 	const reusableBlocks = new Map(
 		wxr.posts.filter((candidate) => candidate.postType === "wp_block").map((candidate) => [String(candidate.id), candidate]),
 	);
-	const content = convertPostContent(post, {
+	const convertedContent = convertPostContent(post, {
 		siteId: source.id,
 		products: buildProductMap(wxr.posts),
 		reusableBlocks,
 	});
+	const mediaRewrite = rewriteMediaReferences(convertedContent, mediaMappings);
+	const content = mediaRewrite.value;
 	const collection = post.postType === "page" ? "pages" : "posts";
 	const oldUrl = sourceUrl(record);
 	const targetUrl = TARGET_ORIGIN + targetPath(record);
@@ -190,6 +286,7 @@ function migrationData(record, taxonomySlugs) {
 		modified_local: modified?.local,
 		modified_gmt: modified?.gmt,
 		html_block_count: countType(content, "htmlBlock"),
+		media_rewrite_count: mediaRewrite.rewrites,
 	};
 	const data = {
 		title: post.title || "無題",
@@ -201,7 +298,12 @@ function migrationData(record, taxonomySlugs) {
 	if (collection === "posts") {
 		data.excerpt = post.excerpt || undefined;
 		const attachmentUrl = record.attachmentMap.get(String(post.meta.get("_thumbnail_id") || ""));
-		if (attachmentUrl) data.featured_image = attachmentUrl;
+		if (attachmentUrl) {
+			const mapping = findMediaMapping(attachmentUrl, mediaMappings);
+			data.featured_image = mapping
+				? { id: mapping.mediaId, provider: "local", alt: mapping.alt }
+				: attachmentUrl;
+		}
 	}
 	const taxonomies = collection === "posts" ? {
 		category: [...new Set((post.categories || []).map((slug) => taxonomySlugs.get(`category:${slug}`) || slug))],
@@ -466,6 +568,11 @@ async function main() {
 	}
 	const client = new ApiClient(origin, token);
 	const { loadedSources, records: allRecords } = await buildImportPlan();
+	let mediaLedger = {};
+	try { mediaLedger = JSON.parse(await fs.readFile(args.mediaLedger, "utf8")); } catch (error) {
+		if (error?.code !== "ENOENT") throw error;
+	}
+	const mediaMappings = buildMediaMappings(mediaLedger);
 	const records = args.limit ? allRecords.slice(0, args.limit) : allRecords;
 	await ensureSchema(client, args.apply);
 	const bylines = await ensureBylines(client, DEFAULT_SOURCES, args.apply);
@@ -475,7 +582,7 @@ async function main() {
 	const ledgerItems = [];
 	await mapLimit(records, args.concurrency, async (record, index) => {
 		try {
-			const desired = migrationData(record, taxonomySlugs);
+			const desired = migrationData(record, taxonomySlugs, mediaMappings);
 			const status = await upsertContent(client, record, desired, bylines.get(record.source.id), args.apply);
 			await upsertUrlMapping(client, desired, record, args.apply);
 			counts[status] = (counts[status] || 0) + 1;

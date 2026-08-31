@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { assignDestinationSlugs, extractModifiedDates, shouldRetryRequest } from "./import-wxr.mjs";
+import {
+	assignDestinationSlugs,
+	buildMediaMappings,
+	extractModifiedDates,
+	rewriteMediaReferences,
+	shouldRetryRequest,
+} from "./import-wxr.mjs";
 
 test("destination slugs preserve unique slugs and namespace collisions", () => {
 	const records = [
@@ -36,4 +42,30 @@ test("only transient HTTP responses and safe network failures are retried", () =
 	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "GET" }), true);
 	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "PUT" }), true);
 	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "POST" }), false);
+});
+
+test("verified WordPress media and derived sizes become local EmDash references", () => {
+	const mappings = buildMediaMappings({
+		items: {
+			"site:42": {
+				status: "verified",
+				url: "https://example.com/wp-content/uploads/hero.jpg",
+				aliases: ["https://example.com/wp-content/uploads/hero-300x200.jpg"],
+				public_path: "/_emdash/api/media/file/01ABC.jpg",
+				media_id: "01ABC",
+				alt: "Hero",
+			},
+		},
+	});
+	const result = rewriteMediaReferences([
+		{
+			_type: "image",
+			asset: { _type: "reference", _ref: "42", url: "https://example.com/wp-content/uploads/hero-300x200.jpg" },
+		},
+		{ _type: "htmlBlock", html: '<img src="https://example.com/wp-content/uploads/hero-640x480.jpg">' },
+	], mappings);
+	assert.equal(result.value[0].asset._ref, "01ABC");
+	assert.equal(result.value[0].asset.provider, "local");
+	assert.equal(result.value[1].html, '<img src="/_emdash/api/media/file/01ABC.jpg">');
+	assert.equal(result.rewrites, 2);
 });
