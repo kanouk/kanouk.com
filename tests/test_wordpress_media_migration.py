@@ -4,6 +4,7 @@ from pathlib import Path
 
 from scripts.migration.migrate_wordpress_media import (
     attachment_aliases,
+    network_url,
     parse_wxr_attachments,
     should_retry,
 )
@@ -35,6 +36,12 @@ class WordPressMediaMigrationTests(unittest.TestCase):
         self.assertTrue(should_retry(429))
         self.assertFalse(should_retry(500))
         self.assertFalse(should_retry(404))
+
+    def test_network_url_encodes_japanese_without_double_encoding(self):
+        self.assertEqual(
+            network_url("https://example.com/uploads/美術館%20写真.jpg?題=春"),
+            "https://example.com/uploads/%E7%BE%8E%E8%A1%93%E9%A4%A8%20%E5%86%99%E7%9C%9F.jpg?%E9%A1%8C=%E6%98%A5",
+        )
 
 
 if __name__ == "__main__":

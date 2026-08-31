@@ -23,7 +23,7 @@ import tempfile
 import time
 from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote, unquote, urljoin, urlparse
+from urllib.parse import quote, unquote, urljoin, urlparse, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 
@@ -167,6 +167,23 @@ def should_retry(status: int | None, error: Exception | None = None) -> bool:
     return status in TRANSIENT_STATUSES or isinstance(error, (TimeoutError, URLError))
 
 
+def network_url(url: str) -> str:
+    """Convert a WordPress IRI to an ASCII URL without double-encoding it."""
+    parts = urlsplit(url)
+    host = parts.hostname.encode("idna").decode("ascii") if parts.hostname else ""
+    if parts.port:
+        host = f"{host}:{parts.port}"
+    if parts.username:
+        credentials = quote(parts.username, safe="")
+        if parts.password:
+            credentials += ":" + quote(parts.password, safe="")
+        host = f"{credentials}@{host}"
+    path = quote(unquote(parts.path), safe="/:@-._~!$&'()*+,;=")
+    query = quote(unquote(parts.query), safe="=&?/:;+,%@-._~")
+    fragment = quote(unquote(parts.fragment), safe="?/:;+,%@-._~")
+    return urlunsplit((parts.scheme, host, path, query, fragment))
+
+
 def request_json(path: str, token: str, payload: dict[str, Any]) -> dict[str, Any]:
     body = json.dumps(payload, ensure_ascii=False).encode()
     for attempt in range(1, 6):
@@ -205,7 +222,7 @@ def remote_sha256(url: str, token: str | None = None) -> tuple[str, int, str]:
     headers = {"User-Agent": "kanouk-wordpress-media-migration/1.0"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
-    request = Request(url, headers=headers)
+    request = Request(network_url(url), headers=headers)
     digest = hashlib.sha256()
     size = 0
     with urlopen(request, timeout=300) as response:
@@ -227,6 +244,7 @@ def write_json_atomic(path: Path, value: dict[str, Any]) -> None:
 
 
 def migrate_one(asset: dict[str, Any], token: str) -> dict[str, Any]:
+    source_url = network_url(asset["url"])
     response = request_json(
         "/_emdash/api/import/wordpress/media",
         token,
@@ -235,7 +253,7 @@ def migrate_one(asset: dict[str, Any], token: str) -> dict[str, Any]:
                 {
                     "id": int(asset["source_id"]),
                     "title": asset["title"],
-                    "url": asset["url"],
+                    "url": source_url,
                     "filename": asset["filename"],
                     "mimeType": asset["mime_type"],
                 }
@@ -251,7 +269,7 @@ def migrate_one(asset: dict[str, Any], token: str) -> dict[str, Any]:
         raise MediaMigrationError(str(reason))
     item = imported[0]
     destination = urljoin(EXPECTED_URL, item["newUrl"])
-    source_hash, source_size, source_type = remote_sha256(asset["url"])
+    source_hash, source_size, source_type = remote_sha256(source_url)
     destination_hash, destination_size, destination_type = remote_sha256(destination, token)
     if source_hash != destination_hash or source_size != destination_size:
         raise MediaMigrationError("source and destination bytes do not match")
