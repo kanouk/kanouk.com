@@ -198,6 +198,13 @@ function findMediaMapping(url, mappings) {
 		|| mappings.normalized.get(stripWordPressSize(normalizedMediaUrl(url)));
 }
 
+export function featuredMediaValue(attachmentUrl, mappings) {
+	const mapping = findMediaMapping(attachmentUrl, mappings);
+	return mapping
+		? { id: mapping.mediaId, provider: "local", alt: mapping.alt }
+		: { id: "", provider: "external", src: attachmentUrl, alt: "" };
+}
+
 function rewriteStringMedia(value, mappings) {
 	let rewrites = 0;
 	const rewritten = value.replace(/https?:\/\/[^\s"'<>]+/g, (raw) => {
@@ -286,8 +293,8 @@ function migrationData(record, taxonomySlugs, mediaMappings) {
 		modified_local: modified?.local,
 		modified_gmt: modified?.gmt,
 		html_block_count: countType(content, "htmlBlock"),
-		media_rewrite_count: mediaRewrite.rewrites,
 	};
+	if (mediaRewrite.rewrites > 0) baseMetadata.media_rewrite_count = mediaRewrite.rewrites;
 	const data = {
 		title: post.title || "無題",
 		content,
@@ -298,12 +305,7 @@ function migrationData(record, taxonomySlugs, mediaMappings) {
 	if (collection === "posts") {
 		data.excerpt = post.excerpt || undefined;
 		const attachmentUrl = record.attachmentMap.get(String(post.meta.get("_thumbnail_id") || ""));
-		if (attachmentUrl) {
-			const mapping = findMediaMapping(attachmentUrl, mediaMappings);
-			data.featured_image = mapping
-				? { id: mapping.mediaId, provider: "local", alt: mapping.alt }
-				: attachmentUrl;
-		}
+		if (attachmentUrl) data.featured_image = featuredMediaValue(attachmentUrl, mediaMappings);
 	}
 	const taxonomies = collection === "posts" ? {
 		category: [...new Set((post.categories || []).map((slug) => taxonomySlugs.get(`category:${slug}`) || slug))],
@@ -361,7 +363,7 @@ class ApiClient {
 				}
 				const code = payload?.error?.code || `HTTP_${response.status}`;
 				const message = payload?.error?.message || "Request failed";
-				throw new Error(`${code}: ${message}`);
+				throw new Error(`${method} ${pathname} ${code}: ${message}`);
 			}
 			return { status: response.status, data: payload?.data, payload };
 		}
@@ -442,9 +444,28 @@ async function ensureTaxonomies(client, loadedSources, apply) {
 	return mapping;
 }
 
-async function getContent(client, collection, slug) {
-	const response = await client.get(`/_emdash/api/content/${collection}/${encodeURIComponent(slug)}`, [404]);
+async function getContent(client, collection, slug, contentIds) {
+	const id = contentIds?.get(`${collection}:${slug}`);
+	const identifier = id || slug;
+	const response = await client.get(`/_emdash/api/content/${collection}/${encodeURIComponent(identifier)}`, [404]);
 	return response.status === 404 ? null : response.data;
+}
+
+export async function loadContentIds(client, collections) {
+	const result = new Map();
+	for (const collection of collections) {
+		let cursor;
+		do {
+			const query = new URLSearchParams({ limit: "25" });
+			if (cursor) query.set("cursor", cursor);
+			const response = await client.get(`/_emdash/api/content/${collection}?${query}`);
+			for (const item of response.data?.items || []) {
+				if (item?.slug && item?.id) result.set(`${collection}:${item.slug}`, item.id);
+			}
+			cursor = response.data?.nextCursor || undefined;
+		} while (cursor);
+	}
+	return result;
 }
 
 function contentBody(desired, bylineId) {
@@ -460,13 +481,14 @@ function contentBody(desired, bylineId) {
 	};
 }
 
-async function upsertContent(client, record, desired, bylineId, apply) {
-	const current = await getContent(client, desired.collection, desired.slug);
+async function upsertContent(client, record, desired, bylineId, apply, contentIds) {
+	const current = await getContent(client, desired.collection, desired.slug, contentIds);
 	const currentFingerprint = current?.item?.data?.source_metadata?.migration_fingerprint;
 	if (currentFingerprint === desired.fingerprint && current.item.status === desired.status) return "skipped_verified";
 	if (!apply) return current ? "would_update" : "would_create";
 	if (!current) {
 		const created = await client.post(`/_emdash/api/content/${desired.collection}`, contentBody(desired, bylineId));
+		contentIds.set(`${desired.collection}:${desired.slug}`, created.data.item.id);
 		if (desired.status === "published") {
 			await client.post(
 				`/_emdash/api/content/${desired.collection}/${encodeURIComponent(created.data.item.id)}/publish`,
@@ -493,9 +515,9 @@ async function upsertContent(client, record, desired, bylineId, apply) {
 	return "updated";
 }
 
-async function upsertUrlMapping(client, desired, record, apply) {
+async function upsertUrlMapping(client, desired, record, apply, contentIds) {
 	const slug = `wp-${sha256(desired.oldUrl).slice(0, 24)}`;
-	const current = await getContent(client, "url_mappings", slug);
+	const current = await getContent(client, "url_mappings", slug, contentIds);
 	const data = {
 		source_url: desired.oldUrl,
 		target_url: desired.targetUrl,
@@ -509,6 +531,7 @@ async function upsertUrlMapping(client, desired, record, apply) {
 	if (!apply) return;
 	if (!current) {
 		const created = await client.post("/_emdash/api/content/url_mappings", { data, slug });
+		contentIds.set(`url_mappings:${slug}`, created.data.item.id);
 		await client.post(`/_emdash/api/content/url_mappings/${encodeURIComponent(created.data.item.id)}/publish`, {});
 	} else {
 		await client.put(`/_emdash/api/content/url_mappings/${encodeURIComponent(current.item.id)}`, { data, slug, _rev: current._rev });
@@ -563,10 +586,12 @@ async function main() {
 	const args = parseArgs(process.argv.slice(2));
 	const origin = process.env.EMDASH_URL;
 	const token = process.env.EMDASH_TOKEN;
-	if (!origin || !token || origin !== "https://kanouk-emdash-staging.kanouk.workers.dev" || !token.startsWith("ec_pat_")) {
-		throw new Error("Pinned EmDash URL and token are required through the guard wrapper");
+	const readToken = process.env.EMDASH_READ_TOKEN;
+	if (!origin || !token || !readToken || origin !== "https://kanouk-emdash-staging.kanouk.workers.dev" || !token.startsWith("ec_pat_") || !readToken.startsWith("ec_pat_")) {
+		throw new Error("Pinned EmDash URL and write/read tokens are required through the guard wrapper");
 	}
 	const client = new ApiClient(origin, token);
+	const readClient = new ApiClient(origin, readToken);
 	const { loadedSources, records: allRecords } = await buildImportPlan();
 	let mediaLedger = {};
 	try { mediaLedger = JSON.parse(await fs.readFile(args.mediaLedger, "utf8")); } catch (error) {
@@ -574,6 +599,7 @@ async function main() {
 	}
 	const mediaMappings = buildMediaMappings(mediaLedger);
 	const records = args.limit ? allRecords.slice(0, args.limit) : allRecords;
+	const contentIds = await loadContentIds(readClient, ["posts", "pages", "url_mappings"]);
 	await ensureSchema(client, args.apply);
 	const bylines = await ensureBylines(client, DEFAULT_SOURCES, args.apply);
 	const taxonomySlugs = await ensureTaxonomies(client, loadedSources, args.apply);
@@ -583,8 +609,8 @@ async function main() {
 	await mapLimit(records, args.concurrency, async (record, index) => {
 		try {
 			const desired = migrationData(record, taxonomySlugs, mediaMappings);
-			const status = await upsertContent(client, record, desired, bylines.get(record.source.id), args.apply);
-			await upsertUrlMapping(client, desired, record, args.apply);
+			const status = await upsertContent(client, record, desired, bylines.get(record.source.id), args.apply, contentIds);
+			await upsertUrlMapping(client, desired, record, args.apply, contentIds);
 			counts[status] = (counts[status] || 0) + 1;
 			ledgerItems[index] = {
 				source_site: record.source.id,

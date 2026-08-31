@@ -9,7 +9,13 @@ import re
 import subprocess
 import sys
 
-from run_emdash_kanouk import EXPECTED_EMAIL, EXPECTED_URL, EmDashGuardError, preflight
+from run_emdash_kanouk import (
+    EXPECTED_EMAIL,
+    EXPECTED_URL,
+    EmDashGuardError,
+    load_credential as load_regular_credential,
+    preflight,
+)
 
 
 PRIVATE_VAULT = Path(
@@ -43,6 +49,8 @@ def main() -> int:
         env["EMDASH_URL"] = EXPECTED_URL
         env["EMDASH_TOKEN"] = token
         preflight(env)
+        regular = load_regular_credential()
+        env["EMDASH_READ_TOKEN"] = regular["token"]
         print(
             "EmDash import guard passed: temporary admin token / pinned staging / "
             f"credential owner {EXPECTED_EMAIL}"

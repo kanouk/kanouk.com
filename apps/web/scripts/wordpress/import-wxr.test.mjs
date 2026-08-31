@@ -5,6 +5,8 @@ import {
 	assignDestinationSlugs,
 	buildMediaMappings,
 	extractModifiedDates,
+	featuredMediaValue,
+	loadContentIds,
 	rewriteMediaReferences,
 	shouldRetryRequest,
 } from "./import-wxr.mjs";
@@ -68,4 +70,31 @@ test("verified WordPress media and derived sizes become local EmDash references"
 	assert.equal(result.value[0].asset.provider, "local");
 	assert.equal(result.value[1].html, '<img src="/_emdash/api/media/file/01ABC.jpg">');
 	assert.equal(result.rewrites, 2);
+	assert.deepEqual(featuredMediaValue("https://example.com/wp-content/uploads/hero.jpg", mappings), {
+		id: "01ABC",
+		provider: "local",
+		alt: "Hero",
+	});
+	assert.deepEqual(featuredMediaValue("https://elsewhere.example/image.jpg", mappings), {
+		id: "",
+		provider: "external",
+		src: "https://elsewhere.example/image.jpg",
+		alt: "",
+	});
+});
+
+test("content index follows cursors and keys entries by stored slug", async () => {
+	const calls = [];
+	const client = {
+		async get(pathname) {
+			calls.push(pathname);
+			return calls.length === 1
+				? { data: { items: [{ id: "a", slug: "%e6%97%a5%e6%9c%ac%e8%aa%9e" }], nextCursor: "next" } }
+				: { data: { items: [{ id: "b", slug: "second" }] } };
+		},
+	};
+	const ids = await loadContentIds(client, ["posts"]);
+	assert.equal(ids.get("posts:%e6%97%a5%e6%9c%ac%e8%aa%9e"), "a");
+	assert.equal(ids.get("posts:second"), "b");
+	assert.match(calls[1], /cursor=next/);
 });
