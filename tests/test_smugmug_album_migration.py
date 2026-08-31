@@ -78,6 +78,12 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertEqual(module.source_extension(asset()), ".jpg")
         self.assertEqual(module.source_extension(asset("video")), ".mp4")
 
+    def test_public_media_path_uses_worker_route_and_escapes_storage_key(self) -> None:
+        self.assertEqual(
+            module.public_media_path("01ABC photo.jpg"),
+            "/_emdash/api/media/file/01ABC%20photo.jpg",
+        )
+
     def test_album_payload_uses_manifest_dates_and_source_identity(self) -> None:
         payload = module.album_content_payload(
             {

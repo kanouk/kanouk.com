@@ -4,10 +4,12 @@ import test from "node:test";
 import {
 	assignDestinationSlugs,
 	buildMediaMappings,
+	buildSmugMugMappings,
 	extractModifiedDates,
 	featuredMediaValue,
 	loadContentIds,
 	rewriteMediaReferences,
+	rewriteSmugMugReferences,
 	shouldRetryRequest,
 } from "./import-wxr.mjs";
 
@@ -97,4 +99,34 @@ test("content index follows cursors and keys entries by stored slug", async () =
 	assert.equal(ids.get("posts:%e6%97%a5%e6%9c%ac%e8%aa%9e"), "a");
 	assert.equal(ids.get("posts:second"), "b");
 	assert.match(calls[1], /cursor=next/);
+});
+
+test("verified SmugMug assets rewrite image, photo, and album URLs", () => {
+	const mappings = buildSmugMugMappings([{
+		album: {
+			slug: "stations",
+			source: { web_uri: "https://kanolog.smugmug.com/Stations" },
+			destination: { emdash_content_id: "album-id" },
+		},
+		assets: [{
+			source: { image_key: "abc123" },
+			destination: {
+				photo_path: "/photos/kph-stable",
+				emdash_content_id: "photo-id",
+				emdash_media_id: "media-id",
+				r2_object_key: "01ABC.jpg",
+			},
+			verification: { r2_roundtrip_verified: true },
+		}],
+	}]);
+	const result = rewriteSmugMugReferences([
+		{ _type: "image", asset: { url: "https://photos.smugmug.com/Stations/i-abc123/0/hash/M/file.jpg", _ref: "old" } },
+		{ _type: "htmlBlock", html: '<a href="https://kanolog.smugmug.com/Stations/i-abc123/A">photo</a>' },
+		{ _type: "htmlBlock", html: '<a href="https://kanolog.smugmug.com/Stations/">album</a>' },
+	], mappings);
+	assert.equal(result.value[0].asset._ref, "media-id");
+	assert.equal(result.value[0].asset.url, "/_emdash/api/media/file/01ABC.jpg");
+	assert.match(result.value[1].html, /https:\/\/photos\.kanouk\.com\/photos\/kph-stable/);
+	assert.match(result.value[2].html, /https:\/\/photos\.kanouk\.com\/albums\/stations/);
+	assert.equal(result.rewrites, 3);
 });

@@ -49,6 +49,10 @@ class AlbumMigrationError(RuntimeError):
     pass
 
 
+def public_media_path(storage_key: str) -> str:
+    return f"/_emdash/api/media/file/{quote(storage_key, safe='')}"
+
+
 def source_extension(asset: Mapping[str, Any]) -> str:
     filename = str(asset.get("source", {}).get("filename") or "")
     suffix = Path(filename).suffix.lower()
@@ -484,6 +488,13 @@ def migrate_asset(
     if asset.get("verification", {}).get("r2_roundtrip_verified") and asset.get(
         "destination", {}
     ).get("emdash_content_id"):
+        destination = asset["destination"]
+        storage_key = destination.get("r2_object_key")
+        if isinstance(storage_key, str):
+            expected_path = public_media_path(storage_key)
+            if destination.get("media_path") != expected_path:
+                destination["media_path"] = expected_path
+                checkpoint(manifest_path, manifest)
         return "skipped_verified"
     expected_md5 = str(asset.get("source", {}).get("archived_md5") or "").lower()
     with tempfile.TemporaryDirectory(prefix="kanouk-smugmug-") as directory:
@@ -536,6 +547,7 @@ def migrate_asset(
             destination["emdash_content_id"] = content["id"]
             destination["emdash_media_id"] = source_media["id"]
             destination["r2_object_key"] = source_media["storageKey"]
+            destination["media_path"] = public_media_path(str(source_media["storageKey"]))
             if poster_media:
                 destination["poster_media_id"] = poster_media["id"]
                 destination["poster_r2_object_key"] = poster_media["storageKey"]

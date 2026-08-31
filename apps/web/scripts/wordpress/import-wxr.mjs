@@ -35,6 +35,7 @@ const DEFAULT_SOURCES = [
 const TARGET_ORIGIN = "https://blog.kanouk.com";
 const DEFAULT_LEDGER = path.resolve("../../migration/wordpress/runtime/import-ledger.json");
 const DEFAULT_MEDIA_LEDGER = path.resolve("../../migration/wordpress/runtime/media-ledger.json");
+const DEFAULT_SMUGMUG_MANIFEST_ROOT = path.resolve("../../migration/smugmug");
 const PUBLISHED_STATUS = "publish";
 const CONTENT_TYPES = new Set(["post", "page"]);
 const TRANSIENT_HTTP_STATUSES = new Set([429, 502, 503, 504]);
@@ -218,6 +219,89 @@ function rewriteStringMedia(value, mappings) {
 	return { value: rewritten, rewrites };
 }
 
+function comparableUrl(url) {
+	try {
+		const parsed = new URL(url);
+		return `${parsed.hostname.toLowerCase()}${parsed.pathname.replace(/\/+$/, "").toLowerCase()}`;
+	} catch {
+		return "";
+	}
+}
+
+export function buildSmugMugMappings(manifests) {
+	const assets = new Map();
+	const albums = new Map();
+	for (const manifest of manifests) {
+		const album = manifest?.album;
+		const oldAlbumUrl = album?.source?.web_uri;
+		if (oldAlbumUrl && album?.slug && album?.destination?.emdash_content_id) {
+			albums.set(comparableUrl(oldAlbumUrl), {
+				target: `https://photos.kanouk.com/albums/${album.slug}`,
+				kind: "album",
+			});
+		}
+		for (const asset of manifest?.assets || []) {
+			const key = asset?.source?.image_key;
+			const destination = asset?.destination;
+			if (!key || !destination?.emdash_content_id || !destination?.emdash_media_id
+				|| !destination?.r2_object_key || !asset?.verification?.r2_roundtrip_verified) continue;
+			assets.set(String(key), {
+				photoTarget: `https://photos.kanouk.com${destination.photo_path}`,
+				mediaTarget: `https://photos.kanouk.com/_emdash/api/media/file/${encodeURIComponent(destination.r2_object_key)}`,
+				mediaPath: `/_emdash/api/media/file/${encodeURIComponent(destination.r2_object_key)}`,
+				mediaId: destination.emdash_media_id,
+			});
+		}
+	}
+	return { assets, albums };
+}
+
+function matchSmugMugUrl(value, mappings) {
+	let parsed;
+	try { parsed = new URL(value); } catch { return undefined; }
+	const host = parsed.hostname.toLowerCase();
+	if (host !== "kanolog.smugmug.com" && host !== "photos.smugmug.com") return undefined;
+	const key = parsed.pathname.match(/\/i-([A-Za-z0-9]+)(?:\/|$)/)?.[1];
+	if (key) {
+		const asset = mappings.assets.get(key);
+		if (!asset) return undefined;
+		const isMedia = host === "photos.smugmug.com"
+			|| /\.(?:avif|gif|jpe?g|png|webp|svg|mp4|mov|webm)$/i.test(parsed.pathname);
+		return isMedia
+			? { target: asset.mediaTarget, localPath: asset.mediaPath, mediaId: asset.mediaId, kind: "media" }
+			: { target: asset.photoTarget, kind: "photo" };
+	}
+	return mappings.albums.get(comparableUrl(value));
+}
+
+export function rewriteSmugMugReferences(value, mappings) {
+	let rewrites = 0;
+	const visit = (node) => {
+		if (typeof node === "string") {
+			return node.replace(/https?:\/\/(?:kanolog|photos)\.smugmug\.com[^\s"'<>]+/gi, (raw) => {
+				const trailing = raw.match(/[),.;:!?]+$/)?.[0] || "";
+				const candidate = trailing ? raw.slice(0, -trailing.length) : raw;
+				const match = matchSmugMugUrl(candidate, mappings);
+				if (!match) return raw;
+				rewrites++;
+				return match.target + trailing;
+			});
+		}
+		if (Array.isArray(node)) return node.map(visit);
+		if (!node || typeof node !== "object") return node;
+		const copy = Object.fromEntries(Object.entries(node).map(([key, child]) => [key, visit(child)]));
+		if (copy._type === "image" && copy.asset && typeof copy.asset === "object") {
+			const sourceUrl = typeof node.asset?.url === "string" ? node.asset.url : "";
+			const match = sourceUrl ? matchSmugMugUrl(sourceUrl, mappings) : undefined;
+			if (match?.kind === "media") {
+				copy.asset = { ...copy.asset, _type: "reference", _ref: match.mediaId, url: match.localPath, provider: "local" };
+			}
+		}
+		return copy;
+	};
+	return { value: visit(value), rewrites };
+}
+
 export function rewriteMediaReferences(value, mappings) {
 	let rewrites = 0;
 	const visit = (node) => {
@@ -262,7 +346,7 @@ function countType(nodes, type) {
 	return total;
 }
 
-function migrationData(record, taxonomySlugs, mediaMappings) {
+function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings) {
 	const { post, source, wxr, modified } = record;
 	const reusableBlocks = new Map(
 		wxr.posts.filter((candidate) => candidate.postType === "wp_block").map((candidate) => [String(candidate.id), candidate]),
@@ -273,7 +357,8 @@ function migrationData(record, taxonomySlugs, mediaMappings) {
 		reusableBlocks,
 	});
 	const mediaRewrite = rewriteMediaReferences(convertedContent, mediaMappings);
-	const content = mediaRewrite.value;
+	const smugMugRewrite = rewriteSmugMugReferences(mediaRewrite.value, smugMugMappings);
+	const content = smugMugRewrite.value;
 	const collection = post.postType === "page" ? "pages" : "posts";
 	const oldUrl = sourceUrl(record);
 	const targetUrl = TARGET_ORIGIN + targetPath(record);
@@ -295,6 +380,7 @@ function migrationData(record, taxonomySlugs, mediaMappings) {
 		html_block_count: countType(content, "htmlBlock"),
 	};
 	if (mediaRewrite.rewrites > 0) baseMetadata.media_rewrite_count = mediaRewrite.rewrites;
+	if (smugMugRewrite.rewrites > 0) baseMetadata.smugmug_rewrite_count = smugMugRewrite.rewrites;
 	const data = {
 		title: post.title || "無題",
 		content,
@@ -482,8 +568,8 @@ function contentBody(desired, bylineId) {
 }
 
 async function upsertContent(client, record, desired, bylineId, apply, contentIds) {
-	const current = await getContent(client, desired.collection, desired.slug, contentIds);
-	const currentFingerprint = current?.item?.data?.source_metadata?.migration_fingerprint;
+	let current = await getContent(client, desired.collection, desired.slug, contentIds);
+	let currentFingerprint = current?.item?.data?.source_metadata?.migration_fingerprint;
 	if (currentFingerprint === desired.fingerprint && current.item.status === desired.status) return "skipped_verified";
 	if (!apply) return current ? "would_update" : "would_create";
 	if (!current) {
@@ -497,16 +583,30 @@ async function upsertContent(client, record, desired, bylineId, apply, contentId
 		}
 		return "created";
 	}
-	await client.put(`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}`, {
-		data: desired.data,
-		slug: desired.slug,
-		...(desired.status === "draft" ? { status: "draft" } : {}),
-		...(bylineId ? { bylines: [{ bylineId }] } : {}),
-		...(Object.keys(desired.taxonomies).length ? { taxonomies: desired.taxonomies } : {}),
-		seo: desired.seo,
-		publishedAt: desired.publishedAt,
-		_rev: current._rev,
-	});
+	for (let attempt = 1; attempt <= 4; attempt++) {
+		try {
+			await client.put(`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}`, {
+				data: desired.data,
+				slug: desired.slug,
+				...(desired.status === "draft" ? { status: "draft" } : {}),
+				...(bylineId ? { bylines: [{ bylineId }] } : {}),
+				...(Object.keys(desired.taxonomies).length ? { taxonomies: desired.taxonomies } : {}),
+				seo: desired.seo,
+				publishedAt: desired.publishedAt,
+				_rev: current._rev,
+			});
+			break;
+		} catch (error) {
+			if (attempt === 4 || !String(error).includes("CONFLICT")) throw error;
+			await sleep(100 * attempt);
+			current = await getContent(client, desired.collection, desired.slug, contentIds);
+			if (!current) throw error;
+			currentFingerprint = current.item?.data?.source_metadata?.migration_fingerprint;
+			if (currentFingerprint === desired.fingerprint && current.item.status === desired.status) {
+				return "skipped_verified";
+			}
+		}
+	}
 	if (desired.status === "published" && current.item.status !== "published") {
 		await client.post(`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}/publish`, { publishedAt: desired.publishedAt });
 	} else if (desired.status === "draft" && current.item.status === "published") {
@@ -565,6 +665,15 @@ async function loadSources(sources = DEFAULT_SOURCES) {
 	return loaded;
 }
 
+async function loadSmugMugManifests(root = DEFAULT_SMUGMUG_MANIFEST_ROOT) {
+	const files = await fs.readdir(root, { recursive: true });
+	const manifests = [];
+	for (const relative of files.filter((file) => file.endsWith("manifest.json")).sort()) {
+		manifests.push(JSON.parse(await fs.readFile(path.join(root, relative), "utf8")));
+	}
+	return manifests;
+}
+
 export async function buildImportPlan(sources = DEFAULT_SOURCES) {
 	const loadedSources = await loadSources(sources);
 	const records = [];
@@ -598,6 +707,7 @@ async function main() {
 		if (error?.code !== "ENOENT") throw error;
 	}
 	const mediaMappings = buildMediaMappings(mediaLedger);
+	const smugMugMappings = buildSmugMugMappings(await loadSmugMugManifests());
 	const records = args.limit ? allRecords.slice(0, args.limit) : allRecords;
 	const contentIds = await loadContentIds(readClient, ["posts", "pages", "url_mappings"]);
 	await ensureSchema(client, args.apply);
@@ -608,7 +718,7 @@ async function main() {
 	const ledgerItems = [];
 	await mapLimit(records, args.concurrency, async (record, index) => {
 		try {
-			const desired = migrationData(record, taxonomySlugs, mediaMappings);
+			const desired = migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings);
 			const status = await upsertContent(client, record, desired, bylines.get(record.source.id), args.apply, contentIds);
 			await upsertUrlMapping(client, desired, record, args.apply, contentIds);
 			counts[status] = (counts[status] || 0) + 1;
