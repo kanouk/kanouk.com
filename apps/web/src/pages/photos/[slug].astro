@@ -26,6 +26,11 @@ if (Astro.cache?.enabled) Astro.cache.set(albumPhotosCache);
 const photoIndex = albumPhotos.findIndex((candidate) => candidate.data.id === photo.data.id);
 const previousPhoto = photoIndex > 0 ? albumPhotos[photoIndex - 1] : undefined;
 const nextPhoto = photoIndex >= 0 ? albumPhotos[photoIndex + 1] : undefined;
+const firstPhoto = albumPhotos[0];
+const previousUrl = previousPhoto ? `/photos/${previousPhoto.id}` : undefined;
+const nextUrl = nextPhoto ? `/photos/${nextPhoto.id}` : undefined;
+const slideshowNextUrl = nextUrl || (firstPhoto && firstPhoto.id !== photo.data.id ? `/photos/${firstPhoto.id}` : undefined);
+const downloadUrl = album?.data.allow_downloads ? `/media/${photo.id}` : undefined;
 const videoStorageKey = photo.data.video?.meta?.storageKey;
 const imageStorageKey = photo.data.image?.meta?.storageKey;
 const posterSource =
@@ -86,7 +91,12 @@ const mapLinkUrl = hasLocation
 	image={photo.data.image?.src}
 	content={{ collection: "photos", id: photo.data.id, slug: photo.id }}
 >
-	<article class="photo-page">
+	<article
+		class="photo-page"
+		data-previous-url={previousUrl}
+		data-next-url={nextUrl}
+		data-slideshow-next-url={slideshowNextUrl}
+	>
 		<a class="back" href={album ? `/albums/${album.id}` : "/albums"}>
 			← {album?.data.title || "すべてのアルバム"}
 		</a>
@@ -109,6 +119,13 @@ const mapLinkUrl = hasLocation
 				{formattedDate && <time>{formattedDate}</time>}
 			</figcaption>
 		</figure>
+		<div class="photo-tools" role="group" aria-label="写真の表示と共有">
+			<button type="button" data-photo-fullscreen>全画面</button>
+			<button type="button" data-photo-share>共有</button>
+			{downloadUrl && <a href={downloadUrl} download>ダウンロード</a>}
+			{slideshowNextUrl && <button type="button" data-photo-slideshow aria-pressed="false">スライドショー</button>}
+			<span class="photo-tool-status" role="status" aria-live="polite" />
+		</div>
 		<nav class="photo-navigation" aria-label="アルバム内の写真移動">
 			{previousPhoto ? <a href={`/photos/${previousPhoto.id}`}>← 前の写真</a> : <span />}
 			{nextPhoto ? <a href={`/photos/${nextPhoto.id}`}>次の写真 →</a> : <span />}
@@ -133,3 +150,95 @@ const mapLinkUrl = hasLocation
 		}
 	</article>
 </Photos>
+
+<script>
+	const page = document.querySelector<HTMLElement>(".photo-page");
+	const media = page?.querySelector<HTMLElement>(".media");
+	const previousUrl = page?.dataset.previousUrl;
+	const nextUrl = page?.dataset.nextUrl;
+	const slideshowNextUrl = page?.dataset.slideshowNextUrl;
+	const status = page?.querySelector<HTMLElement>(".photo-tool-status");
+	const slideshowButton = page?.querySelector<HTMLButtonElement>("[data-photo-slideshow]");
+	let slideshowTimer: number | undefined;
+
+	const announce = (message: string) => {
+		if (status) status.textContent = message;
+	};
+	const navigate = (url?: string) => {
+		if (url) window.location.assign(url);
+	};
+	const slideshowUrl = (url: string) => {
+		const destination = new URL(url, window.location.href);
+		destination.searchParams.set("slideshow", "1");
+		return destination.toString();
+	};
+	const stopSlideshow = () => {
+		if (slideshowTimer) window.clearTimeout(slideshowTimer);
+		slideshowTimer = undefined;
+		slideshowButton?.setAttribute("aria-pressed", "false");
+		if (slideshowButton) slideshowButton.textContent = "スライドショー";
+		const current = new URL(window.location.href);
+		current.searchParams.delete("slideshow");
+		window.history.replaceState(null, "", current);
+		announce("スライドショーを停止しました");
+	};
+	const startSlideshow = () => {
+		if (!slideshowNextUrl) return;
+		slideshowButton?.setAttribute("aria-pressed", "true");
+		if (slideshowButton) slideshowButton.textContent = "停止";
+		announce("6秒ごとに次の写真へ進みます");
+		slideshowTimer = window.setTimeout(() => navigate(slideshowUrl(slideshowNextUrl)), 6000);
+	};
+
+	page?.querySelector<HTMLButtonElement>("[data-photo-fullscreen]")?.addEventListener("click", async () => {
+		if (!media) return;
+		try {
+			if (document.fullscreenElement) await document.exitFullscreen();
+			else await media.requestFullscreen();
+		} catch {
+			announce("このブラウザでは全画面表示を開始できませんでした");
+		}
+	});
+	page?.querySelector<HTMLButtonElement>("[data-photo-share]")?.addEventListener("click", async () => {
+		try {
+			if (navigator.share) await navigator.share({ title: document.title, url: window.location.href });
+			else {
+				await navigator.clipboard.writeText(window.location.href);
+				announce("URLをコピーしました");
+			}
+		} catch (error) {
+			if ((error as DOMException).name !== "AbortError") announce("共有を開始できませんでした");
+		}
+	});
+	slideshowButton?.addEventListener("click", () => {
+		if (slideshowTimer) stopSlideshow();
+		else startSlideshow();
+	});
+
+	document.addEventListener("keydown", (event) => {
+		const target = event.target as HTMLElement | null;
+		if (target?.matches("input, textarea, select, [contenteditable=true]")) return;
+		if (event.key === "ArrowLeft" && previousUrl) navigate(previousUrl);
+		if (event.key === "ArrowRight" && nextUrl) navigate(nextUrl);
+		if (event.key === "Escape" && slideshowTimer) stopSlideshow();
+	});
+
+	let touchStartX: number | undefined;
+	let touchStartY: number | undefined;
+	media?.addEventListener("pointerdown", (event) => {
+		if ((event.target as HTMLElement).closest("video")) return;
+		touchStartX = event.clientX;
+		touchStartY = event.clientY;
+	});
+	media?.addEventListener("pointerup", (event) => {
+		if (touchStartX === undefined || touchStartY === undefined) return;
+		const deltaX = event.clientX - touchStartX;
+		const deltaY = event.clientY - touchStartY;
+		touchStartX = undefined;
+		touchStartY = undefined;
+		if (Math.abs(deltaX) < 56 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.25) return;
+		navigate(deltaX > 0 ? previousUrl : nextUrl);
+	});
+
+	if (new URL(window.location.href).searchParams.get("slideshow") === "1") startSlideshow();
+</script>
