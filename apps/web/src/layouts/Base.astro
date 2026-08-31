@@ -3,7 +3,7 @@ import { getEmDashCollection, getSiteSettings } from "emdash";
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import LiveSearch from "emdash/ui/search";
-import { Font } from "astro:assets";
+import YohakuHead from "../components/YohakuHead.astro";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import "../styles/tokens.css";
 import "../styles/theme.css";
@@ -68,19 +68,9 @@ const pageCtx = createPublicPageContext({
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#f5f2ea" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#151714" media="(prefers-color-scheme: dark)" />
-		<Font cssVariable="--font-body" preload />
-		<Font cssVariable="--font-mono" />
+		<YohakuHead />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
-		<script is:inline>
-			(function () {
-				var match = document.cookie.match(/(?:^|; )theme=([^;]+)/);
-				var theme = match ? match[1] : "";
-				if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
-			})();
-		</script>
 	</head>
 	<body class="site site--blog">
 		<EmDashBodyStart page={pageCtx} />

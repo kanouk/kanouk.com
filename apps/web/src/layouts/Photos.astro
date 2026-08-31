@@ -1,6 +1,7 @@
 ---
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
+import YohakuHead from "../components/YohakuHead.astro";
 import "../styles/tokens.css";
 import "../styles/theme.css";
 
@@ -34,8 +35,7 @@ const pageCtx = createPublicPageContext({
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#f5f2ea" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#151714" media="(prefers-color-scheme: dark)" />
+		<YohakuHead />
 		<title>{fullTitle}</title>
 		{description && <meta name="description" content={description} />}
 		<EmDashHead page={pageCtx} />

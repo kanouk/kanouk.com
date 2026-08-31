@@ -1,0 +1,15 @@
+---
+import { Font } from "astro:assets";
+---
+
+<meta name="theme-color" content="#f5f2ea" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#151714" media="(prefers-color-scheme: dark)" />
+<Font cssVariable="--font-body" preload />
+<Font cssVariable="--font-mono" />
+<script is:inline>
+	(function () {
+		var match = document.cookie.match(/(?:^|; )theme=([^;]+)/);
+		var theme = match ? match[1] : "";
+		if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
+	})();
+</script>
