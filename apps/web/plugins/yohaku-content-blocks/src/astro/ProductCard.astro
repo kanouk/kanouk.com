@@ -1,15 +1,30 @@
 ---
-const { id, url, title, imageUrl, label = "商品を見る" } = Astro.props.node;
+const { id, url, title, imageUrl, label = "商品を見る", links = [] } = Astro.props.node;
 const href = id || url;
+const actions = Array.isArray(links) && links.length > 0
+	? links.filter((link) => link && typeof link.url === "string" && link.url)
+	: href
+		? [{ label, url: href }]
+		: [];
 ---
 <aside class="yohaku-product-card">
 	{imageUrl && <img src={imageUrl} alt="" loading="lazy" />}
-	<div><p>{title || "商品情報"}</p>{href && <a href={href} rel="nofollow sponsored">{label} ↗</a>}</div>
+	<div>
+		<p>{title || "商品情報"}</p>
+		{actions.length > 0 && (
+			<ul aria-label="購入先">
+				{actions.map((action) => (
+					<li><a href={action.url} rel="nofollow sponsored">{action.label || label} ↗</a></li>
+				))}
+			</ul>
+		)}
+	</div>
 </aside>
 <style>
 	.yohaku-product-card { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.25rem; align-items: center; margin: 2.5rem 0; padding: 1.25rem 0; border-block: 1px solid var(--color-border); }
 	img { width: 7rem; height: 7rem; object-fit: contain; background: #fff; }
 	p { margin: 0 0 0.65rem; font-family: var(--font-heading); font-weight: 600; }
+	ul { display: flex; flex-wrap: wrap; gap: 0.55rem 1rem; margin: 0; padding: 0; list-style: none; }
 	a { font-size: 0.78rem; }
 	@media (max-width: 30rem) { .yohaku-product-card { grid-template-columns: 5rem minmax(0, 1fr); } img { width: 5rem; height: 5rem; } }
 </style>
