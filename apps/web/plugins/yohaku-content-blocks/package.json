@@ -1,0 +1,14 @@
+{
+	"name": "yohaku-content-blocks",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./astro": "./src/astro/index.ts"
+	},
+	"peerDependencies": {
+		"astro": "^7.0.0",
+		"emdash": "^0.35.0"
+	}
+}

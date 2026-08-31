@@ -38,13 +38,18 @@ const pageCtx = createPublicPageContext({
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
+		<a class="skip-link" href="#photo-main">本文へ移動</a>
 		<header class="photo-header">
-			<a class="photo-brand" href="/albums">Photos — kanouk.com</a>
-			<a class="blog-link" href="https://blog.kanouk.com">Blog</a>
+			<a class="photo-brand" href="/albums"><span>kanouk.com</span><small>Photos</small></a>
+			<nav class="site-switcher" aria-label="サイト切り替え">
+				<a aria-current="page" href="/albums">写真</a>
+				<a href="https://blog.kanouk.com">ブログ</a>
+			</nav>
 		</header>
-		<main><slot /></main>
+		<main id="photo-main"><slot /></main>
 		<footer class="photo-footer">
-			<p>インターネットに公開する写真のための場所です。</p>
+			<p><span>kanouk.com / Photos</span>インターネットに公開する写真のための場所。</p>
+			<a href="https://blog.kanouk.com">ブログを読む</a>
 		</footer>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
@@ -69,25 +74,64 @@ const pageCtx = createPublicPageContext({
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		border-bottom: 1px solid var(--color-border);
+		min-height: var(--nav-height);
+		border-bottom: 1px solid var(--color-border-subtle);
 	}
 
 	.photo-brand {
 		color: inherit;
-		font-size: 1.05rem;
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		font-size: 1rem;
 		font-weight: 650;
+		letter-spacing: -0.02em;
 		text-decoration: none;
 	}
 
-	.blog-link {
+	.photo-brand small {
+		font: 500 0.68rem/1 var(--font-mono), monospace;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+	}
+
+	.site-switcher {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	.site-switcher a {
 		color: var(--color-text-secondary);
+		font-size: 0.82rem;
+		letter-spacing: 0.04em;
 		text-decoration: none;
+	}
+
+	.site-switcher a[aria-current="page"] {
+		color: var(--color-text);
 	}
 
 	.photo-footer {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
 		margin-top: 4rem;
 		border-top: 1px solid var(--color-border);
 		color: var(--color-muted);
 		font-size: 0.85rem;
+	}
+
+	.photo-footer span {
+		margin-right: 1rem;
+		color: var(--color-text-secondary);
+	}
+
+	.photo-footer a { color: inherit; }
+
+	@media (max-width: 36rem) {
+		.photo-header, .photo-footer { padding-inline: 1rem; }
+		.photo-footer { align-items: flex-start; flex-direction: column; }
+		.photo-footer span { display: block; margin: 0 0 0.25rem; }
 	}
 </style>

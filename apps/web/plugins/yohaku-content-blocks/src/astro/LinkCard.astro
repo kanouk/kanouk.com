@@ -1,0 +1,18 @@
+---
+const { id, url, title, description } = Astro.props.node;
+const href = id || url;
+let host = "";
+try { host = href ? new URL(href).hostname.replace(/^www\./, "") : ""; } catch {}
+---
+{href && <a class="yohaku-link-card" href={href}>
+	<span><strong>{title || href}</strong>{description && <small>{description}</small>}</span>
+	<em>{host} ↗</em>
+</a>}
+<style>
+	.yohaku-link-card { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; margin: 2rem 0; padding: 1.1rem 0; border-block: 1px solid var(--color-border); color: inherit; text-decoration: none; }
+	strong, small { display: block; }
+	strong { font-family: var(--font-heading); font-size: 1.03rem; }
+	small { margin-top: 0.35rem; color: var(--color-text-secondary); line-height: 1.6; }
+	em { flex: none; color: var(--color-muted); font: 500 0.68rem/1 var(--font-mono), monospace; font-style: normal; }
+	@media (max-width: 34rem) { .yohaku-link-card { align-items: flex-start; flex-direction: column; gap: 0.75rem; } }
+</style>

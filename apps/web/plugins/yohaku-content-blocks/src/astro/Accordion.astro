@@ -1,0 +1,12 @@
+---
+import { PortableText } from "emdash/ui";
+const { title = "詳細", body, content } = Astro.props.node;
+---
+<details class="yohaku-accordion"><summary>{title}</summary><div>{Array.isArray(content) ? <PortableText value={content} /> : body && <p>{body}</p>}</div></details>
+<style>
+	.yohaku-accordion { margin: 2rem 0; border-block: 1px solid var(--color-border); }
+	summary { padding: 1rem 0; cursor: pointer; font-family: var(--font-heading); font-weight: 600; }
+	div { padding: 0 0 1rem; color: var(--color-text-secondary); }
+	div :global(p:first-child) { margin-top: 0; }
+	div :global(p:last-child) { margin-bottom: 0; }
+</style>

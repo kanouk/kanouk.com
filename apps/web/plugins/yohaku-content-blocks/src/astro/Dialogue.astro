@@ -1,0 +1,13 @@
+---
+const { speaker, body, text } = Astro.props.node;
+const value = body || text || "";
+---
+<figure class="yohaku-dialogue">
+	<blockquote>{value}</blockquote>
+	{speaker && <figcaption>— {speaker}</figcaption>}
+</figure>
+<style>
+	.yohaku-dialogue { margin: 2.25rem 0; padding-left: clamp(1rem, 5vw, 2.75rem); }
+	blockquote { margin: 0; font-family: var(--font-heading); font-size: 1.08rem; line-height: 1.85; }
+	figcaption { margin-top: 0.55rem; color: var(--color-muted); font-size: 0.75rem; letter-spacing: 0.04em; }
+</style>

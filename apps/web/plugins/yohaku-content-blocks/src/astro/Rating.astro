@@ -1,0 +1,11 @@
+---
+const score = Number(Astro.props.node.score || 0);
+const max = Number(Astro.props.node.max || 5);
+const label = Astro.props.node.label || "評価";
+---
+<p class="yohaku-rating" aria-label={`${label}: ${score}/${max}`}><span aria-hidden="true">{"●".repeat(Math.max(0, Math.min(score, max)))}{"○".repeat(Math.max(0, max - score))}</span><small>{label} {score}/{max}</small></p>
+<style>
+	.yohaku-rating { display: flex; align-items: center; gap: 0.75rem; margin: 1.5rem 0; color: var(--color-brand); }
+	span { letter-spacing: 0.15em; }
+	small { color: var(--color-muted); font-size: 0.72rem; }
+</style>
