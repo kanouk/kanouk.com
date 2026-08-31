@@ -142,22 +142,25 @@ def audit(args: argparse.Namespace) -> dict[str, Any]:
             for field in (
                 "ArchivedMD5",
                 "ArchivedUri",
-                "CanShare",
                 "Caption",
+                "Keywords",
+                "Title",
+            ):
+                image_flags[f"has_{field}"] += bool(image.get(field))
+            for field in (
+                "CanShare",
                 "Comments",
                 "Hidden",
                 "IsArchive",
                 "IsVideo",
-                "Keywords",
                 "Protected",
                 "ShowKeywords",
-                "Title",
                 "Watermarked",
             ):
-                image_flags[f"has_{field}"] += bool(image.get(field))
+                image_flags[f"{field}={bool(image.get(field))}"] += 1
 
     return {
-        "report_version": 1,
+        "report_version": 2,
         "source": "smugmug-public-api-v2",
         "generated_at": now_iso(),
         "user": args.user,
