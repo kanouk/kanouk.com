@@ -7,5 +7,10 @@ import { decodeSlug } from "emdash";
  */
 export function routeSlugCandidates(raw: string | undefined): string[] {
 	const decoded = decodeSlug(raw);
-	return [...new Set([decoded, raw].filter((value): value is string => Boolean(value)))];
+	const legacyEncoded = decoded ? encodeURIComponent(decoded).toLowerCase() : undefined;
+	return [
+		...new Set(
+			[decoded, raw, legacyEncoded].filter((value): value is string => Boolean(value)),
+		),
+	];
 }
