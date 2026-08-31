@@ -43,6 +43,8 @@ bun run deploy
 
 guard は `wrangler whoami --json` のアカウント集合が指定 Account ID の1件だけであることを確認します。`login` / `logout` は既存の `fragrance.radio@gmail.com` セッションを壊すため拒否します。
 
+Remote EmDash content/media operations use `scripts/cloudflare/run_emdash_kanouk.py`. It reads the scoped staging token only from `10_sensitive/api-keys/EmDash-kanouk.md`, pins the Workers.dev origin, proves access to the expected albums/photos/posts schema before every command, and does not use EmDash's global `~/.config` credential store. The token was issued by the signed-in `kanouk@gmail.com` admin; least-privilege tokens cannot call EmDash `whoami` because that route requires the broader `admin` scope.
+
 D1 migration の適用は、まず `bun run migrate:status` が表示する target fingerprint を確認し、同じ fingerprint を明示して実行します。これにより、別アカウントや別DBへの非対話適用を拒否します。
 
 ```bash

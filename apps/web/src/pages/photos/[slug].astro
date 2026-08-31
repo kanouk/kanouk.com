@@ -17,13 +17,9 @@ const { entries: albums, cacheHint: albumCache } = await getEmDashCollection("al
 if (Astro.cache?.enabled) Astro.cache.set(albumCache);
 const album = albums.find((candidate) => candidate.data.id === photo.data.album);
 
-const capturedAt = photo.data.captured_at ? new Date(photo.data.captured_at) : undefined;
-const formattedDate = capturedAt && !Number.isNaN(capturedAt.getTime())
-	? capturedAt.toLocaleDateString("ja-JP", {
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-		})
+const capturedDate = photo.data.captured_at?.match(/^(\d{4})-(\d{2})-(\d{2})/);
+const formattedDate = capturedDate
+	? `${Number(capturedDate[1])}年${Number(capturedDate[2])}月${Number(capturedDate[3])}日`
 	: undefined;
 ---
 
