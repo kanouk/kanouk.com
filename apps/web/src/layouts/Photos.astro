@@ -13,6 +13,8 @@ interface Props {
 
 const { title, description, image, content } = Astro.props;
 const fullTitle = `${title} — Photos — kanouk.com`;
+const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
+const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const pageCtx = createPublicPageContext({
 	Astro,
 	kind: content ? "content" : "custom",
@@ -31,107 +33,28 @@ const pageCtx = createPublicPageContext({
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#f5f2ea" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#151714" media="(prefers-color-scheme: dark)" />
 		<title>{fullTitle}</title>
 		{description && <meta name="description" content={description} />}
 		<EmDashHead page={pageCtx} />
 	</head>
-	<body>
+	<body class="site site--photos">
 		<EmDashBodyStart page={pageCtx} />
 		<a class="skip-link" href="#photo-main">本文へ移動</a>
 		<header class="photo-header">
 			<a class="photo-brand" href="/albums"><span>kanouk.com</span><small>Photos</small></a>
 			<nav class="site-switcher" aria-label="サイト切り替え">
 				<a aria-current="page" href="/albums">写真</a>
-				<a href="https://blog.kanouk.com">ブログ</a>
+				<a href={blogUrl}>ブログ</a>
 			</nav>
 		</header>
 		<main id="photo-main"><slot /></main>
 		<footer class="photo-footer">
 			<p><span>kanouk.com / Photos</span>インターネットに公開する写真のための場所。</p>
-			<a href="https://blog.kanouk.com">ブログを読む</a>
+			<a href={blogUrl}>ブログを読む</a>
 		</footer>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
 </html>
-
-<style>
-	:global(body) {
-		margin: 0;
-		background: var(--color-bg);
-		color: var(--color-text);
-		font-family: var(--font-body), sans-serif;
-	}
-
-	.photo-header,
-	.photo-footer {
-		max-width: 80rem;
-		margin: 0 auto;
-		padding: 1.25rem clamp(1rem, 4vw, 3rem);
-	}
-
-	.photo-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		min-height: var(--nav-height);
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.photo-brand {
-		color: inherit;
-		display: flex;
-		align-items: baseline;
-		gap: 0.75rem;
-		font-size: 1rem;
-		font-weight: 650;
-		letter-spacing: -0.02em;
-		text-decoration: none;
-	}
-
-	.photo-brand small {
-		font: 500 0.68rem/1 var(--font-mono), monospace;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--color-muted);
-	}
-
-	.site-switcher {
-		display: flex;
-		gap: 1.5rem;
-	}
-
-	.site-switcher a {
-		color: var(--color-text-secondary);
-		font-size: 0.82rem;
-		letter-spacing: 0.04em;
-		text-decoration: none;
-	}
-
-	.site-switcher a[aria-current="page"] {
-		color: var(--color-text);
-	}
-
-	.photo-footer {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-top: 4rem;
-		border-top: 1px solid var(--color-border);
-		color: var(--color-muted);
-		font-size: 0.85rem;
-	}
-
-	.photo-footer span {
-		margin-right: 1rem;
-		color: var(--color-text-secondary);
-	}
-
-	.photo-footer a { color: inherit; }
-
-	@media (max-width: 36rem) {
-		.photo-header, .photo-footer { padding-inline: 1rem; }
-		.photo-footer { align-items: flex-start; flex-direction: column; }
-		.photo-footer span { display: block; margin: 0 0 0.25rem; }
-	}
-</style>

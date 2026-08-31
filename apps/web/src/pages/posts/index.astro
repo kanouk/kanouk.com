@@ -27,26 +27,26 @@ const postsWithTags = posts.map((post) => ({
 }));
 
 const formatDate = (date: Date) =>
-	date.toLocaleDateString("en-US", {
+	date.toLocaleDateString("ja-JP", {
 		year: "numeric",
-		month: "long",
-		day: "numeric",
+		month: "2-digit",
+		day: "2-digit",
 	});
 ---
 
-<Base title="All Posts" description="Browse all blog posts">
+<Base title="すべての記事" description="公開している記事の一覧">
 	<div class="posts-page">
 		<header class="page-header">
-			<h1 class="page-title">All Posts</h1>
+			<p class="eyebrow">ARCHIVE</p>
+			<h1 class="page-title">すべての記事</h1>
 			<p class="page-description">
-				{posts.length}
-				{posts.length === 1 ? "article" : "articles"}
+				{posts.length.toLocaleString("ja-JP")}件
 			</p>
 		</header>
 
 		{
 			posts.length === 0 ? (
-				<p class="empty">No posts yet.</p>
+				<p class="empty">公開中の記事はまだありません。</p>
 			) : (
 				<div class="posts-list">
 					{postsWithTags.map(({ post, tags, bylines }) => (
@@ -84,7 +84,7 @@ const formatDate = (date: Date) =>
 										<time>{formatDate(post.data.publishedAt)}</time>
 									)}
 									{post.data.publishedAt && <span class="meta-dot" />}
-									<span>{getReadingTime(post.data.content)} min read</span>
+									<span>{getReadingTime(post.data.content)}分</span>
 								</div>
 								<h2 class="post-title">{post.data.title}</h2>
 								{post.data.excerpt && (
@@ -107,166 +107,3 @@ const formatDate = (date: Date) =>
 		}
 	</div>
 </Base>
-
-<style>
-	.posts-page {
-		max-width: var(--content-width);
-		margin: 0 auto;
-		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
-	}
-
-	.page-header {
-		margin-bottom: var(--spacing-12);
-	}
-
-	.page-title {
-		font-size: var(--font-size-4xl);
-		font-weight: var(--font-weight-display);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--spacing-2);
-	}
-
-	.page-description {
-		font-size: var(--font-size-lg);
-		color: var(--color-muted);
-	}
-
-	.empty {
-		color: var(--color-muted);
-		font-size: var(--font-size-lg);
-	}
-
-	.posts-list {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.post-item {
-		padding: var(--spacing-8) 0;
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.post-item:first-child {
-		padding-top: 0;
-	}
-
-	.post-item:last-child {
-		border-bottom: none;
-	}
-
-	.post-link {
-		display: block;
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.post-meta {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-3);
-		font-size: var(--font-size-sm);
-		color: var(--color-muted);
-		margin-bottom: var(--spacing-2);
-	}
-
-	.meta-dot {
-		width: 3px;
-		height: 3px;
-		border-radius: 50%;
-		background: var(--color-muted);
-	}
-
-	/* Post bylines */
-	.post-bylines {
-		display: flex;
-		align-items: center;
-		gap: 2px;
-	}
-
-	.post-byline {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-1);
-	}
-
-	.post-byline-avatar {
-		width: var(--avatar-size-sm);
-		height: var(--avatar-size-sm);
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	.post-byline-name {
-		font-weight: 500;
-		color: var(--color-text-secondary);
-	}
-
-	.byline-sep {
-		color: var(--color-muted);
-		margin-right: 2px;
-	}
-
-	.byline-more {
-		font-size: var(--font-size-xs);
-		color: var(--color-muted);
-		margin-left: 2px;
-	}
-
-	.post-title {
-		font-size: var(--font-size-2xl);
-		font-weight: var(--font-weight-heading);
-		line-height: var(--leading-snug);
-		letter-spacing: var(--tracking-snug);
-		margin-bottom: var(--spacing-2);
-		transition: color var(--transition-fast);
-	}
-
-	.post-link:hover .post-title {
-		color: var(--color-brand);
-	}
-
-	.post-excerpt {
-		font-size: var(--font-size-lg);
-		line-height: var(--leading-relaxed);
-		color: var(--color-text-secondary);
-	}
-
-	.post-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--spacing-2);
-		margin-top: var(--spacing-4);
-	}
-
-	.post-tag {
-		display: inline-block;
-		padding: var(--tag-padding-y) var(--spacing-2);
-		font-size: var(--font-size-xs);
-		color: var(--color-text-secondary);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		text-decoration: none;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast);
-	}
-
-	.post-tag:hover {
-		color: var(--color-text);
-		background: var(--color-border);
-	}
-
-	@media (max-width: 600px) {
-		.posts-page {
-			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
-		}
-
-		.page-title {
-			font-size: var(--font-size-3xl);
-		}
-
-		.post-title {
-			font-size: var(--font-size-xl);
-		}
-	}
-</style>

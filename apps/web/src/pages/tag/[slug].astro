@@ -37,22 +37,21 @@ const filteredPosts = posts.map((post) => ({
 ---
 
 <Base
-	title={`Posts tagged "${term.label}"`}
-	description={`All posts tagged with ${term.label}`}
+	title={`${term.label}の記事`}
+	description={`${term.label}タグの記事一覧`}
 >
 	<section class="archive-section">
 		<header class="archive-header">
-			<span class="archive-label">Tag</span>
+			<span class="archive-label">タグ</span>
 			<h1 class="archive-title">{term.label}</h1>
 			<p class="archive-count">
-				{filteredPosts.length}
-				{filteredPosts.length === 1 ? "post" : "posts"}
+				{filteredPosts.length.toLocaleString("ja-JP")}件
 			</p>
 		</header>
 
 		{
 			filteredPosts.length === 0 ? (
-				<p class="no-posts">No posts with this tag yet.</p>
+				<p class="no-posts">このタグの記事はまだありません。</p>
 			) : (
 				<div class="posts-grid">
 					{filteredPosts.map(({ post, tags }) => (
@@ -71,61 +70,3 @@ const filteredPosts = posts.map((post) => ({
 		}
 	</section>
 </Base>
-
-<style>
-	.archive-section {
-		max-width: var(--wide-width);
-		margin: 0 auto;
-		padding: var(--spacing-12) var(--spacing-6);
-	}
-
-	.archive-header {
-		margin-bottom: var(--spacing-12);
-		padding-bottom: var(--spacing-8);
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.archive-label {
-		display: block;
-		font-size: var(--font-size-xs);
-		font-weight: 500;
-		color: var(--color-brand);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wider);
-		margin-bottom: var(--spacing-2);
-	}
-
-	.archive-title {
-		font-size: var(--font-size-4xl);
-		font-weight: var(--font-weight-display);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--spacing-2);
-	}
-
-	.archive-count {
-		font-size: var(--font-size-sm);
-		color: var(--color-muted);
-	}
-
-	.posts-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--spacing-12) var(--spacing-8);
-	}
-
-	.no-posts {
-		color: var(--color-muted);
-	}
-
-	@media (max-width: 900px) {
-		.posts-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	@media (max-width: 600px) {
-		.posts-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

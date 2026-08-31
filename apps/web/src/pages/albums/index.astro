@@ -11,11 +11,11 @@ const { entries: albums, cacheHint } = await getEmDashCollection("albums", {
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 ---
 
-<Photos title="Albums" description="kanouk.com の公開写真アルバム">
+<Photos title="アルバム" description="kanouk.com の公開写真アルバム">
 	<section class="albums-page">
 		<header class="page-header">
 			<p class="eyebrow">PUBLIC PHOTO ARCHIVE</p>
-			<h1>Albums</h1>
+			<h1>アルバム</h1>
 			<p>ブログから参照する写真と、まとまりとして見せる公開アルバム。</p>
 		</header>
 
@@ -40,20 +40,3 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 		)}
 	</section>
 </Photos>
-
-<style>
-	.albums-page { max-width: 80rem; margin: 0 auto; padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 4vw, 3rem); }
-	.page-header { max-width: 46rem; margin-bottom: 3rem; }
-	.eyebrow { color: var(--color-muted); font: 500 0.72rem/1 var(--font-mono), monospace; letter-spacing: 0.16em; }
-	h1 { margin: 0.35rem 0 1rem; font-size: clamp(3rem, 8vw, 6.5rem); letter-spacing: -0.055em; }
-	.page-header > p:last-child { color: var(--color-text-secondary); font-size: 1.08rem; line-height: 1.8; }
-	.album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 2rem; }
-	.album-card { color: inherit; text-decoration: none; }
-	.cover { aspect-ratio: 4 / 3; overflow: hidden; background: var(--color-surface); }
-	.cover :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 250ms ease; }
-	.album-card:hover .cover :global(img) { transform: scale(1.02); }
-	.placeholder { background: linear-gradient(135deg, var(--color-surface), var(--color-bg-subtle)); }
-	.album-copy { padding: 1rem 0; }
-	h2 { margin: 0; font-size: 1.25rem; }
-	.album-copy p, .empty { color: var(--color-text-secondary); line-height: 1.7; }
-</style>

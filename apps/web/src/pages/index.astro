@@ -30,7 +30,7 @@ const visiblePosts = posts.slice(0, POSTS_PER_PAGE);
 const hasMorePosts = posts.length > POSTS_PER_PAGE;
 
 // Find the first post with a featured image for the hero
-const featuredPost = visiblePosts.find((p) => p.data.featured_image);
+const featuredPost = visiblePosts.find((p) => p.data.featured_image) ?? visiblePosts[0];
 const featuredIndex = featuredPost ? visiblePosts.indexOf(featuredPost) : -1;
 
 // Get remaining posts (exclude featured if found, limit to 6 for grid)
@@ -65,10 +65,10 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 // Format date helper
 function formatDate(date: Date | null | undefined) {
 	if (!date) return null;
-	return date.toLocaleDateString("en-US", {
+	return date.toLocaleDateString("ja-JP", {
 		year: "numeric",
-		month: "long",
-		day: "numeric",
+		month: "2-digit",
+		day: "2-digit",
 	});
 }
 ---
@@ -77,10 +77,10 @@ function formatDate(date: Date | null | undefined) {
 	{
 		posts.length === 0 ? (
 			<section class="empty-state">
-				<h2>No posts yet</h2>
-				<p>Create your first post in the admin panel.</p>
+				<h2>記事はまだありません</h2>
+				<p>公開された記事がここに並びます。</p>
 				<a href="/_emdash/admin/content/posts/new" class="btn">
-					Create a post
+					記事を作成
 				</a>
 			</section>
 		) : (
@@ -89,11 +89,21 @@ function formatDate(date: Date | null | undefined) {
 				{featuredPost && (
 					<section class="featured-section">
 						<div class="featured-grid">
-							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
-								<div class="featured-image">
-									<Image image={featuredPost.data.featured_image} />
+							{featuredPost.data.featured_image ? (
+								<a
+									href={`/posts/${featuredPost.id}`}
+									class="featured-image-link"
+									aria-label={`${featuredPost.data.title}を読む`}
+								>
+									<div class="featured-image">
+										<Image image={featuredPost.data.featured_image} />
+									</div>
+								</a>
+							) : (
+								<div class="featured-image featured-image--empty" aria-hidden="true">
+									<span>Yohaku</span>
 								</div>
-							</a>
+							)}
 							<div class="featured-content">
 								<div class="featured-meta">
 									{featuredBylines.length > 0 && (
@@ -130,7 +140,7 @@ function formatDate(date: Date | null | undefined) {
 									)}
 									<span class="meta-dot" />
 									<span>
-										{getReadingTime(featuredPost.data.content)} min read
+										{getReadingTime(featuredPost.data.content)}分
 									</span>
 								</div>
 								<a
@@ -160,17 +170,17 @@ function formatDate(date: Date | null | undefined) {
 				{gridPostsWithTags.length > 0 && (
 					<section class="posts-section">
 						<header class="section-header">
-							<h2 class="section-title">Latest</h2>
+							<h2 class="section-title">新しい記事</h2>
 							{hasMorePosts && (
 								<a href="/posts" class="section-link">
-									View all
+									すべての記事
 								</a>
 							)}
 						</header>
 						<div class="posts-grid">
 							{gridPostsWithTags.map(({ post, tags, bylines }) => (
 								<PostCard
-									title={post.data.title ?? "Untitled"}
+									title={post.data.title ?? "無題"}
 									excerpt={post.data.excerpt}
 									featuredImage={post.data.featured_image}
 									href={`/posts/${post.id}`}
@@ -187,277 +197,3 @@ function formatDate(date: Date | null | undefined) {
 		)
 	}
 </Base>
-
-<style>
-	.home-content {
-		max-width: var(--wide-width);
-		margin: 0 auto;
-		padding: var(--spacing-16) var(--spacing-6);
-	}
-
-	/* Featured Section - Side by side */
-	.featured-section {
-		margin-bottom: var(--spacing-16);
-	}
-
-	.featured-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--spacing-8);
-		align-items: center;
-	}
-
-	.featured-image-link {
-		grid-column: 1 / 3;
-		display: block;
-		/* Extend to viewport edge, but cap at -6rem minimum extension */
-		margin-left: min(
-			-6rem,
-			calc(-1 * (var(--spacing-6) + (100vw - var(--wide-width)) / 2))
-		);
-	}
-
-	.featured-image {
-		overflow: hidden;
-		border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-		background: var(--color-surface);
-	}
-
-	.featured-image img {
-		width: 100%;
-		height: auto;
-		aspect-ratio: 4 / 3;
-		object-fit: cover;
-		transition: transform 0.4s ease;
-	}
-
-	.featured-image-link:hover .featured-image img,
-	.featured-grid:has(.featured-title-link:hover) .featured-image img {
-		transform: scale(1.02);
-	}
-
-	.featured-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-4);
-	}
-
-	.featured-meta {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		column-gap: var(--spacing-3);
-		row-gap: var(--spacing-1);
-		font-size: var(--font-size-sm);
-		color: var(--color-muted);
-	}
-
-	.meta-dot {
-		width: 3px;
-		height: 3px;
-		border-radius: 50%;
-		background: var(--color-muted);
-	}
-
-	/* Featured bylines */
-	.featured-bylines {
-		display: flex;
-		align-items: center;
-		gap: 2px;
-	}
-
-	.featured-byline {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-2);
-	}
-
-	.featured-byline-avatar {
-		width: var(--avatar-size-md);
-		height: var(--avatar-size-md);
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	.featured-byline-name {
-		font-weight: 500;
-		color: var(--color-text-secondary);
-	}
-
-	.byline-sep {
-		color: var(--color-muted);
-		margin-right: 2px;
-	}
-
-	.byline-more {
-		font-size: var(--font-size-xs);
-		color: var(--color-muted);
-		margin-left: 2px;
-	}
-
-	.featured-title-link {
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.featured-title {
-		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
-		font-weight: var(--font-weight-display);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		transition: color var(--transition-fast);
-	}
-
-	.featured-title-link:hover .featured-title,
-	.featured-grid:has(.featured-image-link:hover) .featured-title {
-		color: var(--color-brand);
-	}
-
-	.featured-excerpt {
-		font-size: var(--font-size-lg);
-		line-height: var(--leading-relaxed);
-		color: var(--color-text-secondary);
-	}
-
-	.featured-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--spacing-2);
-		margin-top: var(--spacing-2);
-	}
-
-	.featured-tag {
-		display: inline-block;
-		padding: var(--tag-padding-y) var(--spacing-2);
-		font-size: var(--font-size-xs);
-		color: var(--color-text-secondary);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		text-decoration: none;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast);
-	}
-
-	.featured-tag:hover {
-		color: var(--color-text);
-		background: var(--color-border);
-	}
-
-	/* Section header */
-	.section-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		margin-bottom: var(--spacing-8);
-		padding-bottom: var(--spacing-4);
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.section-title {
-		font-size: var(--font-size-sm);
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wider);
-		color: var(--color-muted);
-	}
-
-	.section-link {
-		font-size: var(--font-size-sm);
-		color: var(--color-brand);
-		text-decoration: none;
-		transition: color var(--transition-fast);
-	}
-
-	.section-link:hover {
-		color: var(--color-brand-hover);
-	}
-
-	/* Posts Grid */
-	.posts-section {
-	}
-
-	.posts-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--spacing-12) var(--spacing-8);
-	}
-
-	/* Empty State */
-	.empty-state {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--spacing-3);
-		text-align: center;
-		padding: var(--spacing-20) var(--spacing-6);
-		max-width: 400px;
-		margin: 0 auto;
-	}
-
-	.empty-state h2 {
-		font-size: var(--font-size-2xl);
-		font-weight: var(--font-weight-heading);
-	}
-
-	.empty-state p {
-		color: var(--color-muted);
-	}
-
-	.btn {
-		display: inline-block;
-		margin-top: var(--spacing-4);
-		padding: var(--spacing-3) var(--spacing-6);
-		background: var(--color-brand);
-		color: var(--color-on-brand);
-		text-decoration: none;
-		border-radius: var(--radius);
-		font-size: var(--font-size-sm);
-		font-weight: 500;
-		transition: background var(--transition-fast);
-	}
-
-	.btn:hover {
-		background: var(--color-brand-hover);
-	}
-
-	/* Responsive */
-	@media (max-width: 900px) {
-		.home-content {
-			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
-		}
-
-		.featured-image-link {
-			margin-left: 0;
-		}
-
-		.featured-grid {
-			grid-template-columns: 1fr;
-			gap: var(--spacing-6);
-		}
-
-		.featured-image {
-			border-radius: var(--radius-lg);
-		}
-
-		.featured-image img {
-			aspect-ratio: 16 / 9;
-		}
-
-		.posts-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: var(--spacing-8) var(--spacing-6);
-		}
-	}
-
-	@media (max-width: 600px) {
-		.featured-title {
-			font-size: var(--font-size-2xl);
-		}
-
-		.posts-grid {
-			grid-template-columns: 1fr;
-			gap: var(--spacing-8);
-		}
-	}
-</style>
