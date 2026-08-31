@@ -19,6 +19,7 @@ import subprocess
 import sys
 import tempfile
 from typing import Any, BinaryIO, Mapping, Sequence
+from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
@@ -508,6 +509,72 @@ def reconcile_existing_asset(
         destination["poster_r2_object_key"] = poster_key
 
 
+def replace_asset_media(
+    asset: dict[str, Any],
+    source_file: Path,
+    *,
+    temp_root: Path,
+    env: Mapping[str, str],
+    token: str,
+) -> None:
+    """Repair a missing R2 object while preserving the existing content record."""
+    destination = asset.setdefault("destination", {})
+    content_id = destination.get("emdash_content_id")
+    if not isinstance(content_id, str):
+        raise AlbumMigrationError("Cannot repair media without an EmDash content id")
+    alt = str(asset.get("display", {}).get("alt") or "")
+    source_media = upload_media(source_file, alt=alt, env=env, token=token)
+    poster_media: dict[str, Any] | None = None
+    if asset.get("kind") == "video":
+        poster = temp_root / "replacement-poster.jpg"
+        make_video_poster(source_file, poster)
+        poster_media = upload_media(poster, alt=alt, env=env, token=token)
+
+    current = get_content_by_identifier(
+        "photos", content_id, env=env, token=token
+    )
+    if current is None or not isinstance(current.get("_rev"), str):
+        raise AlbumMigrationError("Existing EmDash photo has no revision for repair")
+    update: dict[str, Any] = {
+        "image": {
+            "id": poster_media["id"] if poster_media else source_media["id"],
+            "provider": "local",
+            "alt": alt,
+        }
+    }
+    if poster_media:
+        update["video"] = {
+            "id": source_media["id"],
+            "provider": "local",
+            "alt": alt,
+        }
+    run_emdash(
+        [
+            "content",
+            "update",
+            "photos",
+            content_id,
+            "--rev",
+            str(current["_rev"]),
+            "--data",
+            json.dumps(update, ensure_ascii=False),
+            "--draft",
+        ],
+        env,
+        token=token,
+    )
+    destination.update(
+        {
+            "emdash_media_id": source_media["id"],
+            "r2_object_key": source_media["storageKey"],
+            "media_path": public_media_path(str(source_media["storageKey"])),
+        }
+    )
+    if poster_media:
+        destination["poster_media_id"] = poster_media["id"]
+        destination["poster_r2_object_key"] = poster_media["storageKey"]
+
+
 def ensure_album_cover(
     manifest: dict[str, Any], *, env: Mapping[str, str], token: str
 ) -> bool:
@@ -647,42 +714,31 @@ def migrate_asset(
                 )
                 checkpoint(manifest_path, manifest)
         if not destination.get("emdash_content_id"):
-            uploaded_ids: list[str] = []
-            try:
-                source_media = upload_media(
-                    source_file,
+            source_media = upload_media(
+                source_file,
+                alt=str(asset.get("display", {}).get("alt") or ""),
+                env=env,
+                token=token,
+            )
+            poster_media: dict[str, Any] | None = None
+            if asset.get("kind") == "video":
+                poster = temp_root / "poster.jpg"
+                make_video_poster(source_file, poster)
+                poster_media = upload_media(
+                    poster,
                     alt=str(asset.get("display", {}).get("alt") or ""),
                     env=env,
                     token=token,
                 )
-                uploaded_ids.append(str(source_media["id"]))
-                poster_media: dict[str, Any] | None = None
-                if asset.get("kind") == "video":
-                    poster = temp_root / "poster.jpg"
-                    make_video_poster(source_file, poster)
-                    poster_media = upload_media(
-                        poster,
-                        alt=str(asset.get("display", {}).get("alt") or ""),
-                        env=env,
-                        token=token,
-                    )
-                    uploaded_ids.append(str(poster_media["id"]))
-                data = content_payload(
-                    asset,
-                    album_id=album_id,
-                    source_media_id=str(source_media["id"]),
-                    poster_media_id=str(poster_media["id"]) if poster_media else None,
-                    metadata=metadata,
-                    source_sha256=str(hashes["sha256"]),
-                )
-                content = create_content(asset, data, env=env, token=token)
-            except Exception:
-                for media_id in reversed(uploaded_ids):
-                    try:
-                        run_emdash(["media", "delete", media_id], env, token=token)
-                    except Exception:
-                        pass
-                raise
+            data = content_payload(
+                asset,
+                album_id=album_id,
+                source_media_id=str(source_media["id"]),
+                poster_media_id=str(poster_media["id"]) if poster_media else None,
+                metadata=metadata,
+                source_sha256=str(hashes["sha256"]),
+            )
+            content = create_content(asset, data, env=env, token=token)
             destination["emdash_content_id"] = content["id"]
             destination["emdash_media_id"] = source_media["id"]
             destination["r2_object_key"] = source_media["storageKey"]
@@ -695,7 +751,23 @@ def migrate_asset(
         storage_key = destination.get("r2_object_key")
         if not isinstance(storage_key, str):
             raise AlbumMigrationError("Asset has no destination storage key")
-        public_hash, public_bytes = public_sha256(storage_key)
+        try:
+            public_hash, public_bytes = public_sha256(storage_key)
+        except HTTPError as exc:
+            if exc.code != 404:
+                raise
+            replace_asset_media(
+                asset,
+                source_file,
+                temp_root=temp_root,
+                env=env,
+                token=token,
+            )
+            checkpoint(manifest_path, manifest)
+            storage_key = asset["destination"].get("r2_object_key")
+            if not isinstance(storage_key, str):
+                raise AlbumMigrationError("Repaired asset has no destination storage key")
+            public_hash, public_bytes = public_sha256(storage_key)
         if public_hash != hashes["sha256"] or public_bytes != hashes["bytes"]:
             raise AlbumMigrationError("Worker media readback does not match source bytes")
         verification.update(
