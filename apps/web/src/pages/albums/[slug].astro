@@ -14,7 +14,6 @@ const { entries: photos, cacheHint: photoCache } = await getEmDashCollection("ph
 	status: "published",
 	where: { album: album.data.id },
 	orderBy: { position: "asc" },
-	limit: 100,
 });
 if (Astro.cache?.enabled) Astro.cache.set(photoCache);
 ---

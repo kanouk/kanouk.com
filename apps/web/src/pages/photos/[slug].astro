@@ -21,7 +21,6 @@ const { entries: albumPhotos, cacheHint: albumPhotosCache } = await getEmDashCol
 	status: "published",
 	where: { album: photo.data.album },
 	orderBy: { position: "asc" },
-	limit: 100,
 });
 if (Astro.cache?.enabled) Astro.cache.set(albumPhotosCache);
 const photoIndex = albumPhotos.findIndex((candidate) => candidate.data.id === photo.data.id);
