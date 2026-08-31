@@ -18,6 +18,8 @@ from typing import Any, Mapping, Sequence
 
 
 EXPECTED_EMAIL = "kanouk@gmail.com"
+WEB_ROOT = Path(__file__).resolve().parents[2] / "apps/web"
+WRANGLER_BIN = WEB_ROOT / "node_modules/.bin/wrangler"
 DEFAULT_CREDENTIAL_FILE = Path(
     os.environ.get("KANOUK_PRIVATE_VAULT", "/Users/kanouk/Documents/Private")
 ) / "10_sensitive/api-keys/Cloudflare-kanouk.md"
@@ -98,7 +100,7 @@ def validate_whoami(payload: Mapping[str, Any], credential: Mapping[str, str]) -
 
 def preflight(credential: Mapping[str, str], env: Mapping[str, str]) -> None:
     result = subprocess.run(
-        ["bunx", "wrangler", "whoami", "--json"],
+        [str(WRANGLER_BIN), "whoami", "--json"],
         env=dict(env),
         capture_output=True,
         text=True,
@@ -144,7 +146,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             return 0
         wrangler_args = normalized_wrangler_args(args)
         return subprocess.run(
-            ["bunx", "wrangler", *wrangler_args],
+            [str(WRANGLER_BIN), *wrangler_args],
             env=env,
             check=False,
         ).returncode

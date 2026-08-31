@@ -47,6 +47,7 @@ from run_emdash_kanouk import (  # noqa: E402
 )
 from run_wrangler_kanouk import (  # noqa: E402
     GuardError as CloudflareGuardError,
+    WRANGLER_BIN,
     child_environment as cloudflare_environment,
     load_credential as load_cloudflare_credential,
     validate_whoami,
@@ -486,7 +487,7 @@ def guarded_cloudflare_environment() -> dict[str, str]:
     credential = load_cloudflare_credential()
     env = cloudflare_environment(credential)
     result = subprocess.run(
-        ["bunx", "wrangler", "whoami", "--json"],
+        [str(WRANGLER_BIN), "whoami", "--json"],
         cwd=WEB_ROOT,
         env=env,
         capture_output=True,
