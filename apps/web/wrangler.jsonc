@@ -1,0 +1,30 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "kanouk-emdash-staging",
+	"main": "./src/worker.ts",
+	"compatibility_date": "2026-02-24",
+	"compatibility_flags": ["nodejs_compat"],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "kanouk-content-staging",
+			"database_id": "30d6fc05-588e-4c4c-9e96-2b77fe35dd82",
+		},
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "kanouk-public-media-staging",
+		},
+	],
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "27e8e784a40a4b9085155f7ef257f1df",
+		},
+	],
+	// General maintenance plus the bounded Media Usage lane (see src/worker.ts)
+	"triggers": {
+		"crons": ["* * * * *", "*/2 * * * *"],
+	},
+}

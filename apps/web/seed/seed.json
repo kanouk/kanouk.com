@@ -1,0 +1,245 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "kanouk.com migration staging",
+		"description": "EmDash blog and public photo staging schema",
+		"author": "kanouk"
+	},
+	"settings": {
+		"title": "kanouk.com",
+		"tagline": "過去の記事と、インターネットに公開する写真の置き場"
+	},
+	"collections": [
+		{
+			"slug": "posts",
+			"label": "Posts",
+			"labelSingular": "Post",
+			"supports": ["drafts", "revisions", "search", "seo"],
+			"sortOrder": 10,
+			"fields": [
+				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+				{ "slug": "featured_image", "label": "Featured Image", "type": "image" },
+				{ "slug": "content", "label": "Content", "type": "portableText", "searchable": true },
+				{ "slug": "excerpt", "label": "Excerpt", "type": "text" },
+				{ "slug": "source_url", "label": "Source URL", "type": "string", "indexed": true },
+				{ "slug": "source_id", "label": "Source ID", "type": "string", "indexed": true },
+				{ "slug": "source_metadata", "label": "Source Metadata", "type": "json" }
+			]
+		},
+		{
+			"slug": "pages",
+			"label": "Pages",
+			"labelSingular": "Page",
+			"supports": ["drafts", "revisions", "search", "seo"],
+			"sortOrder": 20,
+			"fields": [
+				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+				{ "slug": "content", "label": "Content", "type": "portableText", "searchable": true }
+			]
+		},
+		{
+			"slug": "albums",
+			"label": "Albums",
+			"labelSingular": "Album",
+			"supports": ["drafts", "revisions", "search", "seo"],
+			"sortOrder": 30,
+			"dateField": "captured_from",
+			"fields": [
+				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+				{ "slug": "description", "label": "Description", "type": "text", "searchable": true },
+				{ "slug": "cover_image", "label": "Cover Image", "type": "image" },
+				{ "slug": "captured_from", "label": "Captured From", "type": "datetime" },
+				{ "slug": "captured_to", "label": "Captured To", "type": "datetime" },
+				{ "slug": "sort_method", "label": "Sort Method", "type": "string", "defaultValue": "position" },
+				{ "slug": "sort_direction", "label": "Sort Direction", "type": "string", "defaultValue": "asc" },
+				{ "slug": "allow_downloads", "label": "Allow Downloads", "type": "boolean", "defaultValue": false },
+				{ "slug": "source_album_key", "label": "Source Album Key", "type": "string", "indexed": true },
+				{ "slug": "source_url", "label": "Source URL", "type": "string" },
+				{ "slug": "source_metadata", "label": "Source Metadata", "type": "json" }
+			]
+		},
+		{
+			"slug": "photos",
+			"label": "Public Photos",
+			"labelSingular": "Public Photo",
+			"supports": ["drafts", "revisions", "search", "seo"],
+			"sortOrder": 40,
+			"dateField": "captured_at",
+			"fields": [
+				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+				{ "slug": "image", "label": "Image", "type": "image", "required": true },
+				{ "slug": "alt", "label": "Alternative Text", "type": "string", "required": true },
+				{ "slug": "caption", "label": "Caption", "type": "text", "searchable": true },
+				{
+					"slug": "album",
+					"label": "Album",
+					"type": "reference",
+					"required": true,
+					"options": { "collection": "albums" },
+					"indexed": true
+				},
+				{ "slug": "position", "label": "Position", "type": "integer", "required": true, "defaultValue": 0, "indexed": true },
+				{ "slug": "captured_at", "label": "Captured At", "type": "datetime" },
+				{ "slug": "source_system", "label": "Source System", "type": "string", "required": true },
+				{ "slug": "source_id", "label": "Source ID", "type": "string", "required": true, "indexed": true },
+				{ "slug": "source_url", "label": "Source URL", "type": "string" },
+				{ "slug": "original_sha256", "label": "Original SHA-256", "type": "string", "indexed": true },
+				{ "slug": "source_metadata", "label": "Source Metadata", "type": "json" }
+			]
+		},
+		{
+			"slug": "url_mappings",
+			"label": "URL Mappings",
+			"labelSingular": "URL Mapping",
+			"routable": false,
+			"supports": ["revisions"],
+			"sortOrder": 50,
+			"titleField": "source_url",
+			"fields": [
+				{ "slug": "source_url", "label": "Source URL", "type": "string", "required": true, "unique": true, "indexed": true },
+				{ "slug": "target_url", "label": "Target URL", "type": "string", "required": true },
+				{ "slug": "target_kind", "label": "Target Kind", "type": "string", "required": true },
+				{ "slug": "source_system", "label": "Source System", "type": "string", "required": true },
+				{ "slug": "source_record_id", "label": "Source Record ID", "type": "string" },
+				{ "slug": "migration_status", "label": "Migration Status", "type": "string", "defaultValue": "pending" },
+				{ "slug": "verified", "label": "Verified", "type": "boolean", "defaultValue": false }
+			]
+		}
+	],
+	"taxonomies": [
+		{
+			"name": "category",
+			"label": "Categories",
+			"labelSingular": "Category",
+			"hierarchical": true,
+			"collections": ["posts"],
+			"terms": [{ "slug": "migration", "label": "Migration" }]
+		},
+		{
+			"name": "tag",
+			"label": "Tags",
+			"labelSingular": "Tag",
+			"hierarchical": false,
+			"collections": ["posts"],
+			"terms": [{ "slug": "staging", "label": "Staging" }]
+		}
+	],
+	"bylines": [
+		{ "id": "byline-kanouk", "slug": "kanouk", "displayName": "カノ" }
+	],
+	"menus": [
+		{
+			"name": "primary",
+			"label": "Primary Navigation",
+			"items": [
+				{ "type": "custom", "label": "Home", "url": "/" },
+				{ "type": "custom", "label": "Posts", "url": "/posts" },
+				{ "type": "custom", "label": "Photos", "url": "/albums" },
+				{ "type": "custom", "label": "About", "url": "/pages/about" }
+			]
+		}
+	],
+	"widgetAreas": [
+		{
+			"name": "sidebar",
+			"label": "Sidebar",
+			"description": "Widget area displayed on single post pages",
+			"widgets": [
+				{ "type": "component", "componentId": "core:search", "title": "Search" },
+				{ "type": "component", "componentId": "core:categories", "title": "Categories" },
+				{ "type": "component", "componentId": "core:tags", "title": "Tags" }
+			]
+		},
+		{ "name": "footer", "label": "Footer", "description": "Widget area displayed in the site footer", "widgets": [] }
+	],
+	"content": {
+		"pages": [
+			{
+				"id": "about",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "About",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [{ "_type": "span", "text": "WordPress と SmugMug からの移行を検証するためのステージングサイトです。" }]
+						}
+					]
+				}
+			}
+		],
+		"posts": [
+			{
+				"id": "staging-foundation",
+				"slug": "staging-foundation",
+				"status": "published",
+				"data": {
+					"title": "Cloudflare 移行ステージング",
+					"excerpt": "ブログと公開写真を同じ基盤で検証するための合成記事です。",
+					"source_id": "synthetic:staging-foundation",
+					"source_metadata": { "synthetic": true, "deleteBeforeProduction": true },
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [{ "_type": "span", "text": "これは本番記事ではありません。WordPress の本文、画像、旧 URL の移行経路を確認したあと削除します。" }]
+						}
+					]
+				},
+				"bylines": [{ "byline": "byline-kanouk" }],
+				"taxonomies": { "category": ["migration"], "tag": ["staging"] }
+			}
+		],
+		"albums": [
+			{
+				"id": "album-staging",
+				"slug": "staging-album",
+				"status": "published",
+				"data": {
+					"title": "Staging Album",
+					"description": "公開写真の表示・並び順・URLを確認するための合成アルバムです。",
+					"cover_image": {
+						"$media": {
+							"url": "https://raw.githubusercontent.com/kanouk/kanouk.com/main/avatar.png",
+							"alt": "kanouk.com の公開プロフィール画像",
+							"filename": "staging-album-cover.png"
+						}
+					},
+					"sort_method": "position",
+					"sort_direction": "asc",
+					"allow_downloads": false,
+					"source_album_key": "synthetic:staging-album",
+					"source_metadata": { "synthetic": true, "deleteBeforeProduction": true }
+				}
+			}
+		],
+		"photos": [
+			{
+				"id": "photo-staging-avatar",
+				"slug": "staging-avatar",
+				"status": "published",
+				"data": {
+					"title": "Staging image",
+					"image": {
+						"$media": {
+							"url": "https://raw.githubusercontent.com/kanouk/kanouk.com/main/avatar.png",
+							"alt": "kanouk.com の公開プロフィール画像",
+							"filename": "staging-avatar.png"
+						}
+					},
+					"alt": "kanouk.com の公開プロフィール画像",
+					"caption": "R2 への格納と写真ページ表示を確認するための、既に公開済みの画像です。",
+					"album": "$ref:album-staging",
+					"position": 1,
+					"source_system": "synthetic",
+					"source_id": "github:kanouk.com/avatar.png",
+					"source_url": "https://raw.githubusercontent.com/kanouk/kanouk.com/main/avatar.png",
+					"source_metadata": { "synthetic": true, "deleteBeforeProduction": true }
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,93 @@
+---
+import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import "../styles/tokens.css";
+import "../styles/theme.css";
+
+interface Props {
+	title: string;
+	description?: string | null;
+	image?: string | null;
+	content?: { collection: string; id: string; slug?: string | null };
+}
+
+const { title, description, image, content } = Astro.props;
+const fullTitle = `${title} — Photos — kanouk.com`;
+const pageCtx = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: content ? "article" : "website",
+	title: fullTitle,
+	pageTitle: title,
+	description,
+	image,
+	content,
+	seo: { ogImage: image },
+	siteName: "Photos — kanouk.com",
+});
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{fullTitle}</title>
+		{description && <meta name="description" content={description} />}
+		<EmDashHead page={pageCtx} />
+	</head>
+	<body>
+		<EmDashBodyStart page={pageCtx} />
+		<header class="photo-header">
+			<a class="photo-brand" href="/albums">Photos — kanouk.com</a>
+			<a class="blog-link" href="https://blog.kanouk.com">Blog</a>
+		</header>
+		<main><slot /></main>
+		<footer class="photo-footer">
+			<p>インターネットに公開する写真のための場所です。</p>
+		</footer>
+		<EmDashBodyEnd page={pageCtx} />
+	</body>
+</html>
+
+<style>
+	:global(body) {
+		margin: 0;
+		background: var(--color-bg);
+		color: var(--color-text);
+		font-family: var(--font-body), sans-serif;
+	}
+
+	.photo-header,
+	.photo-footer {
+		max-width: 80rem;
+		margin: 0 auto;
+		padding: 1.25rem clamp(1rem, 4vw, 3rem);
+	}
+
+	.photo-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.photo-brand {
+		color: inherit;
+		font-size: 1.05rem;
+		font-weight: 650;
+		text-decoration: none;
+	}
+
+	.blog-link {
+		color: var(--color-text-secondary);
+		text-decoration: none;
+	}
+
+	.photo-footer {
+		margin-top: 4rem;
+		border-top: 1px solid var(--color-border);
+		color: var(--color-muted);
+		font-size: 0.85rem;
+	}
+</style>

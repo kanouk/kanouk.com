@@ -1,0 +1,61 @@
+---
+import { getEmDashCollection, getEmDashEntry } from "emdash";
+import { Image } from "emdash/ui";
+import Photos from "../../layouts/Photos.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+const { entry: photo, cacheHint: photoCache } = await getEmDashEntry("photos", slug);
+if (!photo) return Astro.redirect("/404");
+if (Astro.cache?.enabled) Astro.cache.set(photoCache);
+
+const { entries: albums, cacheHint: albumCache } = await getEmDashCollection("albums", {
+	status: "published",
+	limit: 100,
+});
+if (Astro.cache?.enabled) Astro.cache.set(albumCache);
+const album = albums.find((candidate) => candidate.data.id === photo.data.album);
+
+const capturedAt = photo.data.captured_at ? new Date(photo.data.captured_at) : undefined;
+const formattedDate = capturedAt && !Number.isNaN(capturedAt.getTime())
+	? capturedAt.toLocaleDateString("ja-JP", {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		})
+	: undefined;
+---
+
+<Photos
+	title={photo.data.title}
+	description={photo.data.caption}
+	image={photo.data.image?.src}
+	content={{ collection: "photos", id: photo.data.id, slug: photo.id }}
+>
+	<article class="photo-page">
+		<a class="back" href={album ? `/albums/${album.id}` : "/albums"}>
+			← {album?.data.title || "Albums"}
+		</a>
+		<figure>
+			<div {...photo.edit.image}><Image image={photo.data.image} /></div>
+			<figcaption>
+				<h1 {...photo.edit.title}>{photo.data.title}</h1>
+				{photo.data.caption && <p {...photo.edit.caption}>{photo.data.caption}</p>}
+				{formattedDate && <time>{formattedDate}</time>}
+			</figcaption>
+		</figure>
+	</article>
+</Photos>
+
+<style>
+	.photo-page { max-width: 92rem; margin: 0 auto; padding: 3rem clamp(1rem, 4vw, 3rem); }
+	.back { color: var(--color-text-secondary); text-decoration: none; }
+	figure { margin: 3rem 0 0; }
+	figure > div { display: flex; justify-content: center; background: var(--color-bg-subtle); }
+	figure :global(img) { display: block; max-width: 100%; max-height: 82vh; width: auto; height: auto; object-fit: contain; }
+	figcaption { max-width: 48rem; margin: 1.5rem auto 0; }
+	h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.75rem); letter-spacing: -0.035em; }
+	figcaption p { color: var(--color-text-secondary); line-height: 1.75; }
+	time { color: var(--color-muted); font: 500 0.75rem/1 var(--font-mono), monospace; }
+</style>
