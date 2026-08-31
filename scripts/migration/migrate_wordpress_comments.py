@@ -178,7 +178,8 @@ def migrate(client: D1Client, comments: list[dict[str, Any]], apply: bool) -> di
             "author_user_id", "body", "status", "ip_hash", "user_agent", "moderation_metadata",
             "created_at", "updated_at",
         ]
-        for batch in chunks(comments, 20):
+        # Keep each statement below D1/SQLite's bound-variable ceiling.
+        for batch in chunks(comments, 5):
             placeholders = ",".join("(" + ",".join("?" for _ in columns) + ")" for _ in batch)
             params: list[Any] = []
             for comment in batch:
