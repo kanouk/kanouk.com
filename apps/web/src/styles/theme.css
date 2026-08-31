@@ -685,6 +685,7 @@ main:focus { outline: none; }
 }
 
 @media (max-width: 34rem) {
+	.album-map-count-copy { display: none; }
 	.site-brand__section { display: none; }
 	.site-nav a { font-size: 0.74rem; }
 	.site-footer__nav { grid-template-columns: 1fr; }

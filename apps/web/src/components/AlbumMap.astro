@@ -22,7 +22,9 @@ const { markers } = Astro.props;
 			<button type="button" class="album-map-toggle" aria-expanded="false">
 				<MapPinned size={17} strokeWidth={1.75} aria-hidden="true" />
 				<span>地図で見る</span>
-				<small>{markers.length.toLocaleString("ja-JP")}点に撮影場所あり</small>
+				<small>
+					{markers.length.toLocaleString("ja-JP")}点<span class="album-map-count-copy">に撮影場所あり</span>
+				</small>
 			</button>
 			<div class="album-map-panel" hidden>
 				<div class="album-map-canvas" aria-label="アルバム内の撮影場所" />
