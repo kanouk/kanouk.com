@@ -57,6 +57,21 @@ class AlbumMigrationError(RuntimeError):
     pass
 
 
+TRANSIENT_MARKERS = ("HTTP 429", "HTTP 500", "HTTP 502", "HTTP 503", "HTTP 504", "1102")
+
+
+def is_transient_error(exc: BaseException) -> bool:
+    if isinstance(exc, (TimeoutError, URLError, OSError)):
+        return True
+    if isinstance(exc, HTTPError):
+        return exc.code in {429, 500, 502, 503, 504}
+    return any(marker in str(exc) for marker in TRANSIENT_MARKERS)
+
+
+def retry_delay(attempt: int) -> float:
+    return min(2 ** (attempt - 1), 16)
+
+
 def public_media_path(storage_key: str) -> str:
     return f"/_emdash/api/media/file/{quote(storage_key, safe='')}"
 
@@ -103,42 +118,47 @@ def get_content_by_identifier(
     token: str,
 ) -> dict[str, Any] | None:
     """Read content by id or slug, returning None only for a real 404."""
-    result = subprocess.run(
-        [
-            "bunx",
-            "emdash",
-            "content",
-            "get",
-            collection,
-            identifier,
-            "--raw",
-            "--url",
-            EXPECTED_URL,
-            "--json",
-        ],
-        cwd=WEB_ROOT,
-        env=dict(env),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    if result.returncode != 0:
+    for attempt in range(1, 6):
+        result = subprocess.run(
+            [
+                "bunx",
+                "emdash",
+                "content",
+                "get",
+                collection,
+                identifier,
+                "--raw",
+                "--url",
+                EXPECTED_URL,
+                "--json",
+            ],
+            cwd=WEB_ROOT,
+            env=dict(env),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            try:
+                payload = json.loads(result.stdout)
+            except json.JSONDecodeError as exc:
+                raise AlbumMigrationError("EmDash returned invalid content JSON") from exc
+            if not isinstance(payload, dict):
+                raise AlbumMigrationError("EmDash returned an unexpected content response")
+            return payload
         detail = (result.stderr.strip() or result.stdout.strip()).replace(
             token, "[redacted]"
         )
         if "Content item not found:" in detail:
             return None
-        raise AlbumMigrationError(
+        error = AlbumMigrationError(
             f"EmDash content read failed ({result.returncode}): "
             f"{detail[:500] or 'no diagnostic output'}"
         )
-    try:
-        payload = json.loads(result.stdout)
-    except json.JSONDecodeError as exc:
-        raise AlbumMigrationError("EmDash returned invalid content JSON") from exc
-    if not isinstance(payload, dict):
-        raise AlbumMigrationError("EmDash returned an unexpected content response")
-    return payload
+        if attempt == 5 or not is_transient_error(error):
+            raise error
+        time.sleep(retry_delay(attempt))
+    raise AssertionError("unreachable")
 
 
 def find_live_assets(
@@ -170,9 +190,20 @@ def download_source(
         raise AlbumMigrationError("Asset has no public ArchivedUri")
     if not expected_md5 or live_md5 != expected_md5:
         raise AlbumMigrationError("Live ArchivedMD5 does not match the frozen manifest")
-    request = Request(archived_uri, headers={"User-Agent": "kanouk-migration/1.0"})
-    with destination.open("wb") as output, urlopen(request, timeout=300) as response:
-        hashes = copy_and_hash(response, output)
+    hashes: dict[str, Any] | None = None
+    for attempt in range(1, 6):
+        request = Request(archived_uri, headers={"User-Agent": "kanouk-migration/1.0"})
+        try:
+            with destination.open("wb") as output, urlopen(request, timeout=300) as response:
+                hashes = copy_and_hash(response, output)
+            break
+        except (HTTPError, TimeoutError, URLError, OSError) as exc:
+            destination.unlink(missing_ok=True)
+            if attempt == 5 or not is_transient_error(exc):
+                raise AlbumMigrationError(f"SmugMug source download failed: {exc}") from exc
+            time.sleep(retry_delay(attempt))
+    if hashes is None:
+        raise AssertionError("unreachable")
     if hashes["md5"] != expected_md5:
         raise AlbumMigrationError("Downloaded bytes do not match SmugMug ArchivedMD5")
     return hashes
@@ -624,21 +655,53 @@ def create_content(
         json.dump(data, handle, ensure_ascii=False)
         payload_path = Path(handle.name)
     try:
-        result = run_emdash(
-            [
-                "content",
-                "create",
-                "photos",
-                "--file",
-                str(payload_path),
-                "--slug",
-                str(asset["id"]),
-            ],
-            env,
-            token=token,
-        )
+        result: dict[str, Any] | None = None
+        for attempt in range(1, 6):
+            try:
+                result = run_emdash(
+                    [
+                        "content",
+                        "create",
+                        "photos",
+                        "--file",
+                        str(payload_path),
+                        "--slug",
+                        str(asset["id"]),
+                    ],
+                    env,
+                    token=token,
+                )
+                break
+            except AlbumMigrationError as exc:
+                existing = get_content_by_identifier(
+                    "photos", str(asset["id"]), env=env, token=token
+                )
+                if existing is not None:
+                    existing_data = existing.get("data")
+                    if (
+                        not isinstance(existing_data, dict)
+                        or existing_data.get("source_system") != data.get("source_system")
+                        or existing_data.get("source_id") != data.get("source_id")
+                        or existing_data.get("original_sha256")
+                        != data.get("original_sha256")
+                        or existing_data.get("kind") != data.get("kind")
+                        or existing_data.get("album") != data.get("album")
+                        or existing_data.get("source_metadata", {}).get(
+                            "stable_media_id"
+                        )
+                        != data.get("source_metadata", {}).get("stable_media_id")
+                    ):
+                        raise AlbumMigrationError(
+                            "Recovered EmDash photo does not match the attempted create"
+                        ) from exc
+                    return existing
+                if attempt == 5 or not is_transient_error(exc):
+                    raise
+                time.sleep(retry_delay(attempt))
     finally:
         payload_path.unlink(missing_ok=True)
+    if result is None:
+        raise AssertionError("unreachable")
     if not isinstance(result.get("id"), str):
         raise AlbumMigrationError("EmDash content create omitted its id")
     return result
@@ -685,9 +748,11 @@ def ensure_album_content(
     destination = album.setdefault("destination", {})
     content_id = destination.get("emdash_content_id")
     if isinstance(content_id, str):
-        result = run_emdash(
-            ["content", "get", "albums", content_id, "--raw"], env, token=token
+        result = get_content_by_identifier(
+            "albums", content_id, env=env, token=token
         )
+        if result is None:
+            raise AlbumMigrationError("EmDash album readback was not found")
         data = result.get("data")
         if not isinstance(data, dict) or data.get("source_album_key") != album.get(
             "source", {}
@@ -719,21 +784,50 @@ def ensure_album_content(
         json.dump(data, handle, ensure_ascii=False)
         payload_path = Path(handle.name)
     try:
-        result = run_emdash(
-            [
-                "content",
-                "create",
-                "albums",
-                "--file",
-                str(payload_path),
-                "--slug",
-                str(album.get("slug")),
-            ],
-            env,
-            token=token,
-        )
+        result: dict[str, Any] | None = None
+        for attempt in range(1, 6):
+            try:
+                result = run_emdash(
+                    [
+                        "content",
+                        "create",
+                        "albums",
+                        "--file",
+                        str(payload_path),
+                        "--slug",
+                        str(album.get("slug")),
+                    ],
+                    env,
+                    token=token,
+                )
+                break
+            except AlbumMigrationError as exc:
+                existing = get_content_by_identifier(
+                    "albums", slug, env=env, token=token
+                )
+                if existing is not None:
+                    existing_data = existing.get("data")
+                    if (
+                        not isinstance(existing_data, dict)
+                        or existing_data.get("source_album_key")
+                        != data.get("source_album_key")
+                        or existing_data.get("source_metadata", {}).get(
+                            "stable_album_id"
+                        )
+                        != data.get("source_metadata", {}).get("stable_album_id")
+                    ):
+                        raise AlbumMigrationError(
+                            "Recovered EmDash album does not match the attempted create"
+                        ) from exc
+                    result = existing
+                    break
+                if attempt == 5 or not is_transient_error(exc):
+                    raise
+                time.sleep(retry_delay(attempt))
     finally:
         payload_path.unlink(missing_ok=True)
+    if result is None:
+        raise AssertionError("unreachable")
     content_id = result.get("id")
     if not isinstance(content_id, str):
         raise AlbumMigrationError("EmDash album create omitted its id")
@@ -900,9 +994,11 @@ def ensure_album_cover(
     cover_media_id = destination.get("poster_media_id") or destination.get(
         "emdash_media_id"
     )
-    current = run_emdash(
-        ["content", "get", "albums", album_id, "--raw"], env, token=token
+    current = get_content_by_identifier(
+        "albums", album_id, env=env, token=token
     )
+    if current is None:
+        raise AlbumMigrationError("EmDash album cover readback was not found")
     data = current.get("data")
     revision = current.get("_rev")
     if not isinstance(data, dict) or not isinstance(revision, str):
@@ -938,14 +1034,21 @@ def ensure_album_cover(
 
 def public_sha256(storage_key: str) -> tuple[str, int]:
     url = f"{EXPECTED_URL}/_emdash/api/media/file/{quote(storage_key, safe='')}"
-    digest = hashlib.sha256()
-    size = 0
-    request = Request(url, headers={"User-Agent": "kanouk-migration-verifier/1.0"})
-    with urlopen(request, timeout=300) as response:
-        while chunk := response.read(1024 * 1024):
-            digest.update(chunk)
-            size += len(chunk)
-    return digest.hexdigest(), size
+    for attempt in range(1, 6):
+        digest = hashlib.sha256()
+        size = 0
+        request = Request(url, headers={"User-Agent": "kanouk-migration-verifier/1.0"})
+        try:
+            with urlopen(request, timeout=300) as response:
+                while chunk := response.read(1024 * 1024):
+                    digest.update(chunk)
+                    size += len(chunk)
+            return digest.hexdigest(), size
+        except (HTTPError, TimeoutError, URLError, OSError) as exc:
+            if attempt == 5 or not is_transient_error(exc):
+                raise
+            time.sleep(retry_delay(attempt))
+    raise AssertionError("unreachable")
 
 
 def verify_existing_content(
@@ -954,9 +1057,11 @@ def verify_existing_content(
     content_id = asset.get("destination", {}).get("emdash_content_id")
     if not isinstance(content_id, str):
         raise AlbumMigrationError("Asset has no EmDash content id")
-    payload = run_emdash(
-        ["content", "get", "photos", content_id, "--raw"], env, token=token
+    payload = get_content_by_identifier(
+        "photos", content_id, env=env, token=token
     )
+    if payload is None:
+        raise AlbumMigrationError("EmDash content readback was not found")
     data = payload.get("data")
     if not isinstance(data, dict):
         raise AlbumMigrationError("EmDash content readback has no data")

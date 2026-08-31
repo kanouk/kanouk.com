@@ -184,6 +184,52 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertEqual(result["id"], "media-id")
         self.assertEqual(run.call_count, 2)
 
+    def test_content_read_retries_transient_503(self) -> None:
+        with (
+            patch.object(
+                module.subprocess,
+                "run",
+                side_effect=[
+                    subprocess.CompletedProcess(
+                        [], 1, stdout="", stderr="ERROR HTTP 503"
+                    ),
+                    subprocess.CompletedProcess(
+                        [], 0, stdout=json.dumps({"id": "content-id"}), stderr=""
+                    ),
+                ],
+            ) as run,
+            patch.object(module.time, "sleep"),
+        ):
+            result = module.get_content_by_identifier(
+                "photos", "photo-slug", env={}, token="secret-token"
+            )
+        self.assertEqual(result, {"id": "content-id"})
+        self.assertEqual(run.call_count, 2)
+
+    def test_photo_create_recovers_exact_existing_record_after_503(self) -> None:
+        candidate = asset()
+        data = module.content_payload(
+            candidate,
+            album_id="album-id",
+            source_media_id="media-id",
+            poster_media_id=None,
+            metadata={"captured_at": None, "location": {}},
+            source_sha256="sha",
+        )
+        existing = {"id": "content-id", "data": data}
+        with (
+            patch.object(
+                module,
+                "run_emdash",
+                side_effect=module.AlbumMigrationError("ERROR HTTP 503"),
+            ),
+            patch.object(
+                module, "get_content_by_identifier", return_value=existing
+            ),
+        ):
+            result = module.create_content(candidate, data, env={}, token="token")
+        self.assertEqual(result["id"], "content-id")
+
     def test_finalize_pending_media_requires_hash_and_one_d1_change(self) -> None:
         source = b"verified bytes"
         pending = {
