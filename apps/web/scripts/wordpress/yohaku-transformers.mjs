@@ -199,6 +199,27 @@ export function convertPostContent(post, context) {
 	return blocks.flatMap((block) => {
 		if (block._type !== "htmlBlock") return block;
 		const html = String(block.html || "");
+		const quizId = html.match(/\[ays_quiz\s+id=["']?(\d+)["']?\s*\]/i)?.[1];
+		if (quizId) {
+			const quiz = context.quizzes?.get?.(quizId) || context.quizzes?.[quizId];
+			if (!quiz) return block;
+			return {
+				_type: "yohaku.quiz",
+				_key: block._key,
+				title: quiz.title || "クイズ",
+				description: quiz.description || undefined,
+				questions: quiz.questions || [],
+				sourceQuizId: quizId,
+			};
+		}
+		if (/(?:class|id)=["'][^"']*search-container\b/i.test(html)) {
+			return {
+				_type: "yohaku.siteSearch",
+				_key: block._key,
+				label: "ブログ内を検索",
+				placeholder: "検索語を入力",
+			};
+		}
 		const sourceId = String(block.html || "").match(/\[itemlink\s+post_id=["']?(\d+)/i)?.[1];
 		if (sourceId) return productNode(context.products.get(sourceId), sourceId, block._key);
 		if (/<table\b/i.test(html)) return tableNode(html, keyGenerator);

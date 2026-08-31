@@ -13,6 +13,7 @@ const DEFAULT_SOURCES = [
 		id: "kanolog",
 		origin: "https://kanolog.net",
 		file: "/Users/kanouk/Documents/Private_External_Imports/blog/wordpress.2026-07-10.xml",
+		restDeltaFile: "/Users/kanouk/Documents/Private_External_Imports/blog/kanolog-rest-delta.2026-09-01.json",
 		bylineSlug: "kanouk",
 		bylineName: "カノ",
 	},
@@ -36,6 +37,7 @@ const TARGET_ORIGIN = "https://blog.kanouk.com";
 const DEFAULT_LEDGER = path.resolve("../../migration/wordpress/runtime/import-ledger.json");
 const DEFAULT_MEDIA_LEDGER = path.resolve("../../migration/wordpress/runtime/media-ledger.json");
 const DEFAULT_SMUGMUG_MANIFEST_ROOT = path.resolve("../../migration/smugmug");
+const DEFAULT_QUIZ_DATA = path.resolve("../../migration/wordpress/quiz-maker.json");
 const PUBLISHED_STATUS = "publish";
 const CONTENT_TYPES = new Set(["post", "page"]);
 const TRANSIENT_HTTP_STATUSES = new Set([429, 502, 503, 504]);
@@ -346,7 +348,7 @@ function countType(nodes, type) {
 	return total;
 }
 
-function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings) {
+function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, quizzes) {
 	const { post, source, wxr, modified } = record;
 	const reusableBlocks = new Map(
 		wxr.posts.filter((candidate) => candidate.postType === "wp_block").map((candidate) => [String(candidate.id), candidate]),
@@ -355,6 +357,7 @@ function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings) {
 		siteId: source.id,
 		products: buildProductMap(wxr.posts),
 		reusableBlocks,
+		quizzes,
 	});
 	const mediaRewrite = rewriteMediaReferences(convertedContent, mediaMappings);
 	const smugMugRewrite = rewriteSmugMugReferences(mediaRewrite.value, smugMugMappings);
@@ -660,7 +663,58 @@ async function loadSources(sources = DEFAULT_SOURCES) {
 	for (const source of sources) {
 		const xml = await fs.readFile(source.file, "utf8");
 		const wxr = await parseWxrString(xml);
-		loaded.push({ ...source, xml, wxr, modifiedDates: extractModifiedDates(xml), attachmentMap: buildAttachmentMap(wxr) });
+		const modifiedDates = extractModifiedDates(xml);
+		let restDelta;
+		if (source.restDeltaFile) {
+			try {
+				const raw = await fs.readFile(source.restDeltaFile, "utf8");
+				restDelta = { path: source.restDeltaFile, sha256: sha256(raw), value: JSON.parse(raw) };
+				const existingIds = new Set(wxr.posts.map((post) => String(post.id)));
+				const categoryTerms = restDelta.value.terms?.categories || {};
+				const tagTerms = restDelta.value.terms?.tags || {};
+				for (const post of restDelta.value.posts || []) {
+					if (existingIds.has(String(post.id))) throw new Error(`REST delta duplicates WXR post ${post.id}`);
+					wxr.posts.push({
+						categories: (post.categories || []).map((id) => categoryTerms[String(id)]?.slug).filter(Boolean),
+						tags: (post.tags || []).map((id) => tagTerms[String(id)]?.slug).filter(Boolean),
+						customTaxonomies: {},
+						meta: new Map(Object.entries(post.meta || {})),
+						title: post.title || "",
+						link: post.link || `${source.origin}/?p=${post.id}`,
+						pubDate: post.date_gmt ? new Date(`${post.date_gmt}Z`).toUTCString() : "",
+						creator: source.bylineSlug === "kanouk" ? "kano" : source.bylineSlug,
+						guid: `${source.origin}/?p=${post.id}`,
+						description: "",
+						content: post.content || "",
+						excerpt: post.excerpt || "",
+						id: post.id,
+						postDate: String(post.date || "").replace("T", " "),
+						postDateGmt: String(post.date_gmt || "").replace("T", " "),
+						commentStatus: post.comment_status || "open",
+						pingStatus: post.ping_status || "open",
+						postName: post.slug || "",
+						status: post.status || "draft",
+						postParent: 0,
+						menuOrder: 0,
+						postType: "post",
+						postPassword: "",
+						isSticky: false,
+						taxonomyLabels: {},
+					});
+					if (post.featured_media) wxr.posts.at(-1).meta.set("_thumbnail_id", String(post.featured_media));
+					modifiedDates.set(String(post.id), { local: post.modified, gmt: post.modified_gmt });
+				}
+				for (const term of Object.values(categoryTerms)) {
+					if (!wxr.categories.some((item) => item.nicename === term.slug)) wxr.categories.push({ nicename: term.slug, name: term.name, children: [] });
+				}
+				for (const term of Object.values(tagTerms)) {
+					if (!wxr.tags.some((item) => item.slug === term.slug)) wxr.tags.push({ slug: term.slug, name: term.name });
+				}
+			} catch (error) {
+				if (error?.code !== "ENOENT") throw error;
+			}
+		}
+		loaded.push({ ...source, xml, wxr, restDelta, modifiedDates, attachmentMap: buildAttachmentMap(wxr) });
 	}
 	return loaded;
 }
@@ -691,6 +745,11 @@ export async function buildImportPlan(sources = DEFAULT_SOURCES) {
 	return { loadedSources, records: assignDestinationSlugs(records) };
 }
 
+export async function loadQuizMap(file = DEFAULT_QUIZ_DATA) {
+	const payload = JSON.parse(await fs.readFile(file, "utf8"));
+	return new Map(Object.entries(payload.quizzes || {}));
+}
+
 async function main() {
 	const args = parseArgs(process.argv.slice(2));
 	const origin = process.env.EMDASH_URL;
@@ -708,6 +767,7 @@ async function main() {
 	}
 	const mediaMappings = buildMediaMappings(mediaLedger);
 	const smugMugMappings = buildSmugMugMappings(await loadSmugMugManifests());
+	const quizzes = await loadQuizMap();
 	const records = args.limit ? allRecords.slice(0, args.limit) : allRecords;
 	const contentIds = await loadContentIds(readClient, ["posts", "pages", "url_mappings"]);
 	await ensureSchema(client, args.apply);
@@ -718,7 +778,7 @@ async function main() {
 	const ledgerItems = [];
 	await mapLimit(records, args.concurrency, async (record, index) => {
 		try {
-			const desired = migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings);
+			const desired = migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, quizzes);
 			const status = await upsertContent(client, record, desired, bylines.get(record.source.id), args.apply, contentIds);
 			await upsertUrlMapping(client, desired, record, args.apply, contentIds);
 			counts[status] = (counts[status] || 0) + 1;
@@ -744,7 +804,10 @@ async function main() {
 		version: 1,
 		generated_at: new Date().toISOString(),
 		apply: args.apply,
-		source_files: loadedSources.map((source) => ({ id: source.id, path: source.file, sha256: sha256(source.xml) })),
+		source_files: loadedSources.flatMap((source) => [
+			{ id: source.id, kind: "wxr", path: source.file, sha256: sha256(source.xml) },
+			...(source.restDelta ? [{ id: source.id, kind: "rest-delta", path: source.restDelta.path, sha256: source.restDelta.sha256 }] : []),
+		]),
 		counts: {
 			total_available: allRecords.length,
 			selected: records.length,

@@ -8,6 +8,17 @@ const context = {
 	products: new Map([
 		["42", { title: "Sample", primaryUrl: "https://example.test/item" }],
 	]),
+	quizzes: new Map([
+		["3", {
+			title: "美術検定3級 対策問題",
+			questions: [{
+				source_question_id: "5",
+				question: "作品はどれでしょう。",
+				answers: [{ text: "正解", correct: true }, { text: "不正解", correct: false }],
+				explanation: "解説",
+			}],
+		}],
+	]),
 };
 
 test("converts a theme balloon to semantic dialogue deterministically", () => {
@@ -42,4 +53,25 @@ test("resolves product records without retaining plugin block names", () => {
 	assert.equal(blocks[0]._type, "yohaku.productCard");
 	assert.equal(blocks[0].title, "Sample");
 	assert.equal(blocks[0].id, "https://example.test/item");
+});
+
+test("converts Quiz Maker shortcodes to a portable Yohaku quiz", () => {
+	const post = {
+		id: 4,
+		content: "<!-- wp:shortcode -->[ays_quiz id='3']<!-- /wp:shortcode -->",
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0]._type, "yohaku.quiz");
+	assert.equal(blocks[0].sourceQuizId, "3");
+	assert.equal(blocks[0].questions[0].answers[0].correct, true);
+});
+
+test("converts the legacy search form to native site search", () => {
+	const post = {
+		id: 5,
+		content: '<!-- wp:html --><div id="search-container"><form><input type="text"></form></div><!-- /wp:html -->',
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0]._type, "yohaku.siteSearch");
+	assert.equal(blocks[0].placeholder, "検索語を入力");
 });

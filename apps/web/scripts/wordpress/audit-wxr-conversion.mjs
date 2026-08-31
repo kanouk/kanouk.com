@@ -2,35 +2,33 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { parseWxrString } from "emdash";
+import { buildImportPlan, loadQuizMap } from "./import-wxr.mjs";
 import { buildProductMap, convertPostContent } from "./yohaku-transformers.mjs";
 
+const DEFAULT_QUIZ_PATH = path.resolve("../../migration/wordpress/quiz-maker.json");
 const args = process.argv.slice(2);
 const outputIndex = args.indexOf("--output");
 if (outputIndex < 0 || !args[outputIndex + 1]) throw new Error("Specify --output");
-const sources = args.filter((value, index) => index !== outputIndex && index !== outputIndex + 1);
-if (sources.length === 0) throw new Error("Specify at least one site-id=/path/export.xml source");
+const outputPath = path.resolve(args[outputIndex + 1]);
 
+const { loadedSources, records } = await buildImportPlan();
+const quizzes = await loadQuizMap(DEFAULT_QUIZ_PATH);
 const totals = { posts: 0, pages: 0, attachments: 0, convertedBlocks: 0, htmlBlocks: 0 };
 const reports = [];
-for (const source of sources) {
-	const separator = source.indexOf("=");
-	if (separator < 1) throw new Error(`Invalid source: ${source}`);
-	const siteId = source.slice(0, separator);
-	const sourcePath = path.resolve(source.slice(separator + 1));
-	const bytes = await fs.readFile(sourcePath);
-	const wxr = await parseWxrString(bytes.toString("utf8"));
+
+for (const source of loadedSources) {
+	const sourceRecords = records.filter((record) => record.source.id === source.id);
 	const reusableBlocks = new Map(
-		wxr.posts.filter((post) => post.postType === "wp_block").map((post) => [String(post.id), post]),
+		source.wxr.posts.filter((post) => post.postType === "wp_block").map((post) => [String(post.id), post]),
 	);
-	const products = buildProductMap(wxr.posts);
+	const products = buildProductMap(source.wxr.posts);
 	const blockTypes = new Map();
 	const fallbacks = new Map();
 	const statuses = new Map();
-	const publicContent = wxr.posts.filter((post) => ["post", "page"].includes(post.postType || ""));
-	for (const post of publicContent) {
+	for (const record of sourceRecords) {
+		const { post } = record;
 		statuses.set(post.status || "unknown", (statuses.get(post.status || "unknown") || 0) + 1);
-		const converted = convertPostContent(post, { siteId, reusableBlocks, products });
+		const converted = convertPostContent(post, { siteId: source.id, reusableBlocks, products, quizzes });
 		for (const block of converted) {
 			blockTypes.set(block._type, (blockTypes.get(block._type) || 0) + 1);
 			if (block._type === "htmlBlock") {
@@ -40,21 +38,35 @@ for (const source of sources) {
 		}
 		totals.convertedBlocks += converted.length;
 	}
-	const posts = publicContent.filter((post) => post.postType === "post").length;
-	const pages = publicContent.filter((post) => post.postType === "page").length;
+	const posts = sourceRecords.filter((record) => record.post.postType === "post").length;
+	const pages = sourceRecords.filter((record) => record.post.postType === "page").length;
+	const htmlBlocks = [...fallbacks.values()].reduce((sum, count) => sum + count, 0);
 	totals.posts += posts;
 	totals.pages += pages;
-	totals.attachments += wxr.attachments.length;
-	const htmlBlocks = fallbacks.values().reduce((sum, count) => sum + count, 0);
+	totals.attachments += source.wxr.attachments.length;
 	totals.htmlBlocks += htmlBlocks;
 	reports.push({
-		siteId,
-		source: {
-			filename: path.basename(sourcePath),
-			sha256: createHash("sha256").update(bytes).digest("hex"),
-			bytes: bytes.length,
+		siteId: source.id,
+		sources: [
+			{
+				kind: "wxr",
+				filename: path.basename(source.file),
+				sha256: createHash("sha256").update(source.xml).digest("hex"),
+				bytes: Buffer.byteLength(source.xml),
+			},
+			...(source.restDelta ? [{
+				kind: "rest-delta",
+				filename: path.basename(source.restDelta.path),
+				sha256: source.restDelta.sha256,
+			}] : []),
+		],
+		counts: {
+			posts,
+			pages,
+			attachments: source.wxr.attachments.length,
+			reusableBlocks: reusableBlocks.size,
+			products: products.size,
 		},
-		counts: { posts, pages, attachments: wxr.attachments.length, reusableBlocks: reusableBlocks.size, products: products.size },
 		statuses: Object.fromEntries([...statuses].sort()),
 		portableTextTypes: Object.fromEntries([...blockTypes].sort((a, b) => b[1] - a[1])),
 		htmlBlockExceptions: Object.fromEntries([...fallbacks].sort((a, b) => b[1] - a[1])),
@@ -62,13 +74,14 @@ for (const source of sources) {
 }
 
 const result = {
-	reportVersion: 1,
+	reportVersion: 2,
 	generatedAt: new Date().toISOString(),
 	namespace: "yohaku.*",
 	policy: "Known theme/plugin expressions use semantic blocks; remaining htmlBlock values require review.",
+	quizSource: { filename: path.basename(DEFAULT_QUIZ_PATH), quizzes: quizzes.size },
 	totals,
 	sites: reports,
 };
-await fs.mkdir(path.dirname(path.resolve(args[outputIndex + 1])), { recursive: true });
-await fs.writeFile(path.resolve(args[outputIndex + 1]), `${JSON.stringify(result, null, 2)}\n`);
+await fs.mkdir(path.dirname(outputPath), { recursive: true });
+await fs.writeFile(outputPath, `${JSON.stringify(result, null, 2)}\n`);
 console.log(JSON.stringify(totals));

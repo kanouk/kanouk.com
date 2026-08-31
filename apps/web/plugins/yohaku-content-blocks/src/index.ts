@@ -96,6 +96,24 @@ export function createPlugin() {
 						{ type: "text_input", action_id: "label", label: "項目名" },
 					],
 				},
+				{
+					type: "yohaku.quiz",
+					label: "クイズ",
+					description: "問題、選択肢、正解と解説を一体で保持します",
+					fields: [
+						{ type: "text_input", action_id: "title", label: "見出し" },
+						{ type: "text_input", action_id: "description", label: "説明" },
+					],
+				},
+				{
+					type: "yohaku.siteSearch",
+					label: "サイト内検索",
+					description: "ブログの検索ページへつながる検索フォームです",
+					fields: [
+						{ type: "text_input", action_id: "label", label: "ラベル" },
+						{ type: "text_input", action_id: "placeholder", label: "入力例" },
+					],
+				},
 			],
 		},
 	});

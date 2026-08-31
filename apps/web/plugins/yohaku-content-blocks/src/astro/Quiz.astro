@@ -1,0 +1,104 @@
+---
+const { title = "クイズ", description, questions = [], sourceQuizId = "quiz" } = Astro.props.node;
+const safeQuestions = Array.isArray(questions) ? questions : [];
+---
+<section class="yohaku-quiz" data-yohaku-quiz>
+	<header>
+		<p class="kicker">QUIZ</p>
+		<h2>{title}</h2>
+		{description && <p>{description}</p>}
+	</header>
+	<form>
+		{safeQuestions.map((question, questionIndex) => (
+			<fieldset data-question>
+				<legend><span>{String(questionIndex + 1).padStart(2, "0")}</span>{question.question}</legend>
+				<div class="answers">
+					{(Array.isArray(question.answers) ? question.answers : []).map((answer, answerIndex) => {
+						const id = `yohaku-${sourceQuizId}-${questionIndex}-${answerIndex}`;
+						return <label for={id}>
+							<input id={id} type="radio" name={`yohaku-${sourceQuizId}-${questionIndex}`} value={String(answerIndex)} data-correct={answer.correct ? "true" : "false"} />
+							<span>{answer.text}</span>
+						</label>;
+					})}
+				</div>
+				<p class="feedback" data-feedback aria-live="polite" hidden></p>
+				{question.explanation && <p class="explanation" data-explanation hidden>{question.explanation}</p>}
+			</fieldset>
+		))}
+		<div class="actions">
+			<button type="submit">答え合わせ</button>
+			<button type="reset">やり直す</button>
+		</div>
+		<p class="score" data-score aria-live="polite"></p>
+	</form>
+</section>
+
+<script>
+	document.querySelectorAll<HTMLElement>("[data-yohaku-quiz]").forEach((quiz) => {
+		const form = quiz.querySelector<HTMLFormElement>("form");
+		if (!form || form.dataset.ready) return;
+		form.dataset.ready = "true";
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const fields = [...form.querySelectorAll<HTMLElement>("[data-question]")];
+			let correct = 0;
+			let answered = 0;
+			for (const field of fields) {
+				const selected = field.querySelector<HTMLInputElement>('input[type="radio"]:checked');
+				const feedback = field.querySelector<HTMLElement>("[data-feedback]");
+				const explanation = field.querySelector<HTMLElement>("[data-explanation]");
+				if (!feedback) continue;
+				feedback.hidden = false;
+				if (!selected) {
+					feedback.textContent = "回答を選んでください。";
+					feedback.dataset.result = "missing";
+				} else {
+					answered++;
+					const isCorrect = selected.dataset.correct === "true";
+					if (isCorrect) correct++;
+					feedback.textContent = isCorrect ? "正解です。" : "不正解です。";
+					feedback.dataset.result = isCorrect ? "correct" : "incorrect";
+					if (explanation) explanation.hidden = false;
+				}
+			}
+			const score = form.querySelector<HTMLElement>("[data-score]");
+			if (score) score.textContent = answered === fields.length
+				? `${fields.length}問中${correct}問正解です。`
+				: `${fields.length}問中${answered}問に回答しています。`;
+		});
+		form.addEventListener("reset", () => {
+			queueMicrotask(() => {
+				form.querySelectorAll<HTMLElement>("[data-feedback], [data-explanation]").forEach((item) => {
+					item.hidden = true;
+					delete item.dataset.result;
+				});
+				const score = form.querySelector<HTMLElement>("[data-score]");
+				if (score) score.textContent = "";
+			});
+		});
+	});
+</script>
+
+<style>
+	.yohaku-quiz { margin: 3rem 0; padding: clamp(1.25rem, 4vw, 2.25rem); border: 1px solid var(--color-border); }
+	header { margin-bottom: 2rem; }
+	.kicker { margin: 0 0 .5rem; color: var(--color-brand); font: 600 .68rem/1 var(--font-mono), monospace; letter-spacing: .14em; }
+	h2 { margin: 0; font-size: clamp(1.35rem, 4vw, 1.8rem); }
+	header > p:last-child:not(.kicker) { color: var(--color-text-secondary); }
+	fieldset { margin: 0; padding: 1.7rem 0; border: 0; border-top: 1px solid var(--color-border); }
+	legend { width: 100%; padding: 0; font-family: var(--font-heading); font-weight: 600; line-height: 1.75; }
+	legend span { display: block; margin-bottom: .35rem; color: var(--color-muted); font: 500 .68rem/1 var(--font-mono), monospace; }
+	.answers { display: grid; gap: .45rem; margin-top: 1rem; }
+	label { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: .65rem; align-items: start; min-height: 44px; padding: .65rem .75rem; border: 1px solid transparent; cursor: pointer; }
+	label:hover { border-color: var(--color-border); }
+	input { margin-top: .3rem; accent-color: var(--color-brand); }
+	.feedback, .explanation { margin: .75rem 0 0; font-size: .9rem; }
+	.feedback[data-result="correct"] { color: var(--color-brand); }
+	.feedback[data-result="incorrect"] { color: #a15d44; }
+	.explanation { color: var(--color-text-secondary); }
+	.actions { display: flex; flex-wrap: wrap; gap: .75rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+	button { min-height: 44px; padding: .65rem 1rem; border: 1px solid var(--color-text); background: var(--color-text); color: var(--color-background); font: inherit; cursor: pointer; }
+	button[type="reset"] { background: transparent; color: var(--color-text); }
+	.score { min-height: 1.5em; margin-bottom: 0; font-family: var(--font-heading); font-weight: 600; }
+	[hidden] { display: none; }
+</style>

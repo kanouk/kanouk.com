@@ -1,25 +1,37 @@
 {
-  "reportVersion": 1,
-  "generatedAt": "2026-08-31T17:51:11.286Z",
+  "reportVersion": 2,
+  "generatedAt": "2026-08-31T19:45:35.315Z",
   "namespace": "yohaku.*",
   "policy": "Known theme/plugin expressions use semantic blocks; remaining htmlBlock values require review.",
+  "quizSource": {
+    "filename": "quiz-maker.json",
+    "quizzes": 2
+  },
   "totals": {
-    "posts": 1845,
+    "posts": 1847,
     "pages": 7,
     "attachments": 2027,
-    "convertedBlocks": 16923,
-    "htmlBlocks": 3
+    "convertedBlocks": 17050,
+    "htmlBlocks": 0
   },
   "sites": [
     {
       "siteId": "kanolog",
-      "source": {
-        "filename": "wordpress.2026-07-10.xml",
-        "sha256": "3ee526855aca671f2113e8432c858f1b59f60afc9755fb6d6a895fc9724b39fd",
-        "bytes": 12740420
-      },
+      "sources": [
+        {
+          "kind": "wxr",
+          "filename": "wordpress.2026-07-10.xml",
+          "sha256": "3ee526855aca671f2113e8432c858f1b59f60afc9755fb6d6a895fc9724b39fd",
+          "bytes": 12740420
+        },
+        {
+          "kind": "rest-delta",
+          "filename": "kanolog-rest-delta.2026-09-01.json",
+          "sha256": "e021f81620e03e9f4f6641c308f2bfcb8450fe6ab6e3072d815ad5a129278bc4"
+        }
+      ],
       "counts": {
-        "posts": 1369,
+        "posts": 1371,
         "pages": 3,
         "attachments": 1362,
         "reusableBlocks": 3,
@@ -27,37 +39,38 @@
       },
       "statuses": {
         "draft": 1,
-        "publish": 1371
+        "publish": 1373
       },
       "portableTextTypes": {
-        "block": 9042,
-        "image": 653,
+        "block": 9142,
+        "image": 678,
         "yohaku.productCard": 399,
         "yohaku.linkCard": 126,
         "code": 67,
-        "break": 59,
+        "break": 61,
         "embed": 35,
         "yohaku.dialogue": 12,
         "table": 12,
         "yohaku.callout": 9,
         "yohaku.rating": 8,
         "columns": 5,
-        "htmlBlock": 3,
+        "yohaku.quiz": 2,
         "gallery": 2,
+        "yohaku.siteSearch": 1,
         "file": 1
       },
-      "htmlBlockExceptions": {
-        "core/shortcode": 2,
-        "core/html": 1
-      }
+      "htmlBlockExceptions": {}
     },
     {
       "siteId": "nocalog",
-      "source": {
-        "filename": "nocalog-noca.WordPress.2026-07-10.xml",
-        "sha256": "231d19b5882f1e7854ad8c38ee2aa2cf25d377e6eafa93fd1ad4dbc931b51098",
-        "bytes": 1437097
-      },
+      "sources": [
+        {
+          "kind": "wxr",
+          "filename": "nocalog-noca.WordPress.2026-07-10.xml",
+          "sha256": "231d19b5882f1e7854ad8c38ee2aa2cf25d377e6eafa93fd1ad4dbc931b51098",
+          "bytes": 1437097
+        }
+      ],
       "counts": {
         "posts": 184,
         "pages": 2,
@@ -87,11 +100,14 @@
     },
     {
       "siteId": "art-quiz",
-      "source": {
-        "filename": "11.WordPress.2026-07-10.xml",
-        "sha256": "5e4cec7a3f96be91502a3cdef26fe2569dc3a179391dfd39cccbde13ee2f2577",
-        "bytes": 3171816
-      },
+      "sources": [
+        {
+          "kind": "wxr",
+          "filename": "11.WordPress.2026-07-10.xml",
+          "sha256": "5e4cec7a3f96be91502a3cdef26fe2569dc3a179391dfd39cccbde13ee2f2577",
+          "bytes": 3171816
+        }
+      ],
       "counts": {
         "posts": 292,
         "pages": 2,
