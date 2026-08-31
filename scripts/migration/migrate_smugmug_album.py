@@ -87,6 +87,52 @@ def run_emdash(
     return payload
 
 
+def get_content_by_identifier(
+    collection: str,
+    identifier: str,
+    *,
+    env: Mapping[str, str],
+    token: str,
+) -> dict[str, Any] | None:
+    """Read content by id or slug, returning None only for a real 404."""
+    result = subprocess.run(
+        [
+            "bunx",
+            "emdash",
+            "content",
+            "get",
+            collection,
+            identifier,
+            "--raw",
+            "--url",
+            EXPECTED_URL,
+            "--json",
+        ],
+        cwd=WEB_ROOT,
+        env=dict(env),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        detail = (result.stderr.strip() or result.stdout.strip()).replace(
+            token, "[redacted]"
+        )
+        if "Content item not found:" in detail:
+            return None
+        raise AlbumMigrationError(
+            f"EmDash content read failed ({result.returncode}): "
+            f"{detail[:500] or 'no diagnostic output'}"
+        )
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise AlbumMigrationError("EmDash returned invalid content JSON") from exc
+    if not isinstance(payload, dict):
+        raise AlbumMigrationError("EmDash returned an unexpected content response")
+    return payload
+
+
 def find_live_assets(
     client: SmugMugClient, *, user: str, album_key: str
 ) -> dict[str, dict[str, Any]]:
@@ -351,6 +397,24 @@ def ensure_album_content(
         ).get("album_key"):
             raise AlbumMigrationError("EmDash album readback mismatch")
         return content_id
+    slug = str(album.get("slug") or "")
+    existing = get_content_by_identifier("albums", slug, env=env, token=token)
+    if existing is not None:
+        existing_data = existing.get("data")
+        expected_key = album.get("source", {}).get("album_key")
+        if (
+            not isinstance(existing.get("id"), str)
+            or not isinstance(existing_data, dict)
+            or existing_data.get("source_album_key") != expected_key
+            or existing_data.get("source_metadata", {}).get("stable_album_id")
+            != album.get("id")
+        ):
+            raise AlbumMigrationError(
+                f"Existing EmDash album slug does not match frozen source: {slug}"
+            )
+        destination["emdash_content_id"] = existing["id"]
+        checkpoint(manifest_path, manifest)
+        return str(existing["id"])
     data = album_content_payload(album, manifest.get("assets", []))
     with tempfile.NamedTemporaryFile(
         mode="w", encoding="utf-8", suffix=".json", delete=False
@@ -379,6 +443,69 @@ def ensure_album_content(
     destination["emdash_content_id"] = content_id
     checkpoint(manifest_path, manifest)
     return content_id
+
+
+def reconcile_existing_asset(
+    asset: dict[str, Any],
+    existing: Mapping[str, Any],
+    *,
+    album_id: str,
+    source_sha256: str,
+) -> None:
+    data = existing.get("data")
+    source = asset.get("source", {})
+    if (
+        not isinstance(existing.get("id"), str)
+        or not isinstance(data, dict)
+        or data.get("source_system") != "smugmug"
+        or data.get("source_id") != source.get("image_key")
+        or data.get("original_sha256") != source_sha256
+        or data.get("kind") != asset.get("kind")
+        or data.get("album") != album_id
+        or data.get("source_metadata", {}).get("stable_media_id") != asset.get("id")
+    ):
+        raise AlbumMigrationError(
+            f"Existing EmDash photo slug does not match frozen source: {asset.get('id')}"
+        )
+
+    kind = str(asset.get("kind"))
+    source_media = data.get("video") if kind == "video" else data.get("image")
+    poster_media = data.get("image") if kind == "video" else None
+    storage_key = (
+        source_media.get("meta", {}).get("storageKey")
+        if isinstance(source_media, dict)
+        else None
+    )
+    if (
+        not isinstance(source_media, dict)
+        or not isinstance(source_media.get("id"), str)
+        or not isinstance(storage_key, str)
+    ):
+        raise AlbumMigrationError("Existing EmDash photo has no source media reference")
+
+    destination = asset.setdefault("destination", {})
+    destination.update(
+        {
+            "emdash_content_id": existing["id"],
+            "emdash_media_id": source_media["id"],
+            "r2_object_key": storage_key,
+            "media_path": public_media_path(storage_key),
+        }
+    )
+    if kind == "video":
+        poster_key = (
+            poster_media.get("meta", {}).get("storageKey")
+            if isinstance(poster_media, dict)
+            else None
+        )
+        if (
+            not isinstance(poster_media, dict)
+            or not isinstance(poster_media.get("id"), str)
+            or not isinstance(poster_key, str)
+        ):
+            raise AlbumMigrationError("Existing EmDash video has no poster media reference")
+        destination["poster_media_id"] = poster_media["id"]
+        destination["poster_r2_object_key"] = poster_key
 
 
 def ensure_album_cover(
@@ -507,6 +634,18 @@ def migrate_asset(
         verification["sha256"] = hashes["sha256"]
 
         destination = asset.setdefault("destination", {})
+        if not destination.get("emdash_content_id"):
+            existing = get_content_by_identifier(
+                "photos", str(asset.get("id") or ""), env=env, token=token
+            )
+            if existing is not None:
+                reconcile_existing_asset(
+                    asset,
+                    existing,
+                    album_id=album_id,
+                    source_sha256=str(hashes["sha256"]),
+                )
+                checkpoint(manifest_path, manifest)
         if not destination.get("emdash_content_id"):
             uploaded_ids: list[str] = []
             try:

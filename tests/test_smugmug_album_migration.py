@@ -104,6 +104,61 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertEqual(payload["sort_method"], "position")
         self.assertEqual(payload["sort_direction"], "asc")
 
+    def test_reconcile_existing_image_restores_manifest_destination(self) -> None:
+        candidate = asset()
+        candidate["destination"] = {}
+        module.reconcile_existing_asset(
+            candidate,
+            {
+                "id": "content-id",
+                "data": {
+                    "source_system": "smugmug",
+                    "source_id": "source-key",
+                    "original_sha256": "sha",
+                    "kind": "image",
+                    "album": "album-id",
+                    "source_metadata": {"stable_media_id": "kph_test"},
+                    "image": {
+                        "id": "media-id",
+                        "meta": {"storageKey": "object.jpg"},
+                    },
+                },
+            },
+            album_id="album-id",
+            source_sha256="sha",
+        )
+        self.assertEqual(candidate["destination"]["emdash_content_id"], "content-id")
+        self.assertEqual(candidate["destination"]["emdash_media_id"], "media-id")
+        self.assertEqual(candidate["destination"]["r2_object_key"], "object.jpg")
+        self.assertEqual(
+            candidate["destination"]["media_path"],
+            "/_emdash/api/media/file/object.jpg",
+        )
+
+    def test_reconcile_rejects_wrong_source(self) -> None:
+        candidate = asset()
+        with self.assertRaises(module.AlbumMigrationError):
+            module.reconcile_existing_asset(
+                candidate,
+                {
+                    "id": "content-id",
+                    "data": {
+                        "source_system": "smugmug",
+                        "source_id": "different-source",
+                        "original_sha256": "sha",
+                        "kind": "image",
+                        "album": "album-id",
+                        "source_metadata": {"stable_media_id": "kph_test"},
+                        "image": {
+                            "id": "media-id",
+                            "meta": {"storageKey": "object.jpg"},
+                        },
+                    },
+                },
+                album_id="album-id",
+                source_sha256="sha",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
