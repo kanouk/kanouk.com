@@ -1,0 +1,1622 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:28:57+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2025-03-sapporo",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_ymnrrqolf43qkrvwsyduw7tnsu",
+    "slug": "2025-03-sapporo",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "689qj6",
+      "web_uri": "https://kanolog.smugmug.com/20250310sapporo"
+    },
+    "title": "Sapporo, 2025/03",
+    "description": "長男受験同行",
+    "sort_method": "Position",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 33,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_uxcbk2grpao5bfzvv4xjeznycu",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XTncTXN",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-XTncTXN",
+        "filename": "PXL_20250310_042855909.jpg",
+        "format": "JPG",
+        "archived_md5": "45ec42111ab7e149f97be5f3d9cebaca"
+      },
+      "display": {
+        "title": "南国酒家",
+        "caption": "眺めのいいレストランでランチ",
+        "alt": "南国酒家"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2166302,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-10T20:28:55+00:00",
+          "normalized": "2025-03-10T20:28:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:29:58+00:00",
+          "normalized": "2025-03-10T23:29:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_uxcbk2grpao5bfzvv4xjeznycu",
+        "media_path": "/media/kph_uxcbk2grpao5bfzvv4xjeznycu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_66jvupg66qofa425s7f3opp3lm",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZDdJDJV",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-ZDdJDJV",
+        "filename": "PXL_20250310_043322952.jpg",
+        "format": "JPG",
+        "archived_md5": "f172065e1db0ad68f82ae9c9fc1e5f24"
+      },
+      "display": {
+        "title": "南国酒家",
+        "caption": "あんかけ焼きそばが2000円くらいした。空港価格。。",
+        "alt": "南国酒家"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1914581,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-10T20:33:22+00:00",
+          "normalized": "2025-03-10T20:33:22Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:29:59+00:00",
+          "normalized": "2025-03-10T23:29:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_66jvupg66qofa425s7f3opp3lm",
+        "media_path": "/media/kph_66jvupg66qofa425s7f3opp3lm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3qbksmlzy7yle3ukxrvq3byd7y",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dNtjFvg",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-dNtjFvg",
+        "filename": "PXL_20250310_060534850.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "3b7d91b2b008b655a12e6017bbad4e00"
+      },
+      "display": {
+        "title": "機内",
+        "caption": "3年ぶりくらいの飛行機",
+        "alt": "機内"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3849524,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-10T22:05:34+00:00",
+          "normalized": "2025-03-10T22:05:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:10+00:00",
+          "normalized": "2025-03-10T23:30:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3qbksmlzy7yle3ukxrvq3byd7y",
+        "media_path": "/media/kph_3qbksmlzy7yle3ukxrvq3byd7y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_esxpto7indr3grvy2yit35ioca",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4qrdgvP",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-4qrdgvP",
+        "filename": "PXL_20250310_081023436.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "496231195ed8945d15dca2fea99160e9"
+      },
+      "display": {
+        "title": "荷物受け取り",
+        "caption": "なぜか最後のほうになりがち",
+        "alt": "荷物受け取り"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5442103,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T00:10:23+00:00",
+          "normalized": "2025-03-11T00:10:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:23+00:00",
+          "normalized": "2025-03-10T23:30:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_esxpto7indr3grvy2yit35ioca",
+        "media_path": "/media/kph_esxpto7indr3grvy2yit35ioca",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cofbxomhh25xeuduxwggegzowq",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "B5FMGvd",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-B5FMGvd",
+        "filename": "PXL_20250310_091414763.jpg",
+        "format": "JPG",
+        "archived_md5": "2fdcce22b458909ccc1acafbdd69833c"
+      },
+      "display": {
+        "title": "札幌駅",
+        "caption": "着いたらもう暗かった。なんか綺麗。",
+        "alt": "札幌駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3815386,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T01:14:14+00:00",
+          "normalized": "2025-03-11T01:14:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:21+00:00",
+          "normalized": "2025-03-10T23:30:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cofbxomhh25xeuduxwggegzowq",
+        "media_path": "/media/kph_cofbxomhh25xeuduxwggegzowq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sclybw5pkb3a3lb646duzigcva",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zHkVNvz",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-zHkVNvz",
+        "filename": "PXL_20250310_100942320.jpg",
+        "format": "JPG",
+        "archived_md5": "cb430441e02157cd98eeb8fe61148f69"
+      },
+      "display": {
+        "title": "夜の時計台",
+        "caption": "冬に来たのははじめて。雪があると前とはまた違う雰囲気。",
+        "alt": "夜の時計台"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4340319,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T02:09:42+00:00",
+          "normalized": "2025-03-11T02:09:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:30+00:00",
+          "normalized": "2025-03-10T23:30:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sclybw5pkb3a3lb646duzigcva",
+        "media_path": "/media/kph_sclybw5pkb3a3lb646duzigcva",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lxgvcjnillazh6f66urk2avobq",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Xv8zfgj",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-Xv8zfgj",
+        "filename": "PXL_20250310_103700999.jpg",
+        "format": "JPG",
+        "archived_md5": "7a166bbc253f2f776314075edc7fca46"
+      },
+      "display": {
+        "title": "味の時計台",
+        "caption": "ホテルの近くのラーメン屋さんを長男と探し回って結局時計台に。",
+        "alt": "味の時計台"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3799654,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T02:37:00+00:00",
+          "normalized": "2025-03-11T02:37:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:42+00:00",
+          "normalized": "2025-03-10T23:30:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lxgvcjnillazh6f66urk2avobq",
+        "media_path": "/media/kph_lxgvcjnillazh6f66urk2avobq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xrlvskwm64qkrtwgzjoc5fntny",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WpZZnnz",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-WpZZnnz",
+        "filename": "PXL_20250310_102308691.jpg",
+        "format": "JPG",
+        "archived_md5": "b8778d2452bc997c526df1beec7b8d84"
+      },
+      "display": {
+        "title": "味噌バターコーンラーメン",
+        "caption": "札幌では味噌バターコーン一択！\nたまたま10日で時計台の日？かなんかで安くてラッキー。",
+        "alt": "味噌バターコーンラーメン"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2540412,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T02:23:08+00:00",
+          "normalized": "2025-03-11T02:23:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:42+00:00",
+          "normalized": "2025-03-10T23:30:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xrlvskwm64qkrtwgzjoc5fntny",
+        "media_path": "/media/kph_xrlvskwm64qkrtwgzjoc5fntny",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_p6vqjhjor5ju4c4vkca55f6sam",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2JGFH96",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-2JGFH96",
+        "filename": "PXL_20250310_215624410.jpg",
+        "format": "JPG",
+        "archived_md5": "dd1d4a8354c642464f477939399b2d6f"
+      },
+      "display": {
+        "title": "ホテルの朝食",
+        "caption": "朝食会場。\nビジネスホテルらしくこぢんまりしているが意外に充実してた。",
+        "alt": "ホテルの朝食"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2782709,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T13:56:24+00:00",
+          "normalized": "2025-03-11T13:56:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:55+00:00",
+          "normalized": "2025-03-10T23:30:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_p6vqjhjor5ju4c4vkca55f6sam",
+        "media_path": "/media/kph_p6vqjhjor5ju4c4vkca55f6sam",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yklzgbug7xnubyk4yv5zozlkjy",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mkktMRg",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-mkktMRg",
+        "filename": "PXL_20250310_215839367.jpg",
+        "format": "JPG",
+        "archived_md5": "d006dbd72125fef66ba5e55e62b901cb"
+      },
+      "display": {
+        "title": "朝食",
+        "caption": "石狩汁があるのがうれしい。",
+        "alt": "朝食"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2752928,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T13:58:39+00:00",
+          "normalized": "2025-03-11T13:58:39Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:30:56+00:00",
+          "normalized": "2025-03-10T23:30:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yklzgbug7xnubyk4yv5zozlkjy",
+        "media_path": "/media/kph_yklzgbug7xnubyk4yv5zozlkjy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cjnqs2jto3wzfipug4f2snobay",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZTdqNjc",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-ZTdqNjc",
+        "filename": "PXL_20250310_231800569.jpg",
+        "format": "JPG",
+        "archived_md5": "ac052366ec8957cd3d178e0120ce7033"
+      },
+      "display": {
+        "title": "冬の時計台",
+        "caption": "雪がいい風情出してる",
+        "alt": "冬の時計台"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4901810,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T15:18:00+00:00",
+          "normalized": "2025-03-11T15:18:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:31:23+00:00",
+          "normalized": "2025-03-10T23:31:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cjnqs2jto3wzfipug4f2snobay",
+        "media_path": "/media/kph_cjnqs2jto3wzfipug4f2snobay",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_teyz6octuoo7ngwuincgetlv6y",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WbBFHLQ",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-WbBFHLQ",
+        "filename": "PXL_20250310_231846420.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a6bb7dd5aad89fc62c724d2345516d0b"
+      },
+      "display": {
+        "title": "冬の時計台",
+        "caption": "正面から",
+        "alt": "冬の時計台"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 7476217,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T15:18:46+00:00",
+          "normalized": "2025-03-11T15:18:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:31:24+00:00",
+          "normalized": "2025-03-10T23:31:24Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_teyz6octuoo7ngwuincgetlv6y",
+        "media_path": "/media/kph_teyz6octuoo7ngwuincgetlv6y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_p62lgz2haidho5x5kt6feqjfy4",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gg89gm9",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-gg89gm9",
+        "filename": "PXL_20250310_232030442.jpg",
+        "format": "JPG",
+        "archived_md5": "9d730c2e54ad8f16e5137dfd62b73489"
+      },
+      "display": {
+        "title": "ZXY札幌",
+        "caption": "駅徒歩5分くらい",
+        "alt": "ZXY札幌"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3655615,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T15:20:30+00:00",
+          "normalized": "2025-03-11T15:20:30Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:31:39+00:00",
+          "normalized": "2025-03-10T23:31:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_p62lgz2haidho5x5kt6feqjfy4",
+        "media_path": "/media/kph_p62lgz2haidho5x5kt6feqjfy4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_f4d4nn7affvucjeozqhjqh23oi",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gBLkj7S",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-gBLkj7S",
+        "filename": "PXL_20250310_232057687.jpg",
+        "format": "JPG",
+        "archived_md5": "2689275da6209216f80baeb7ae35546c"
+      },
+      "display": {
+        "title": "ZXY札幌",
+        "caption": "入口",
+        "alt": "ZXY札幌"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5193732,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T15:20:57+00:00",
+          "normalized": "2025-03-11T15:20:57Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:31:43+00:00",
+          "normalized": "2025-03-10T23:31:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_f4d4nn7affvucjeozqhjqh23oi",
+        "media_path": "/media/kph_f4d4nn7affvucjeozqhjqh23oi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_j4jnxwl7ibimf74lb7oodxgqhq",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "w7bcrPm",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-w7bcrPm",
+        "filename": "PXL_20250310_232632427.jpg",
+        "format": "JPG",
+        "archived_md5": "8939db490da7eef43195615788c709e2"
+      },
+      "display": {
+        "title": "ZXY札幌",
+        "caption": "中はこんな感じ。入ってすぐリラックススペースがあるタイプ。",
+        "alt": "ZXY札幌"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3246106,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T15:26:32+00:00",
+          "normalized": "2025-03-11T15:26:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-10T23:31:47+00:00",
+          "normalized": "2025-03-10T23:31:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_j4jnxwl7ibimf74lb7oodxgqhq",
+        "media_path": "/media/kph_j4jnxwl7ibimf74lb7oodxgqhq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mlue3von7xxpzx2vf3zwjxbixy",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "w3J9pF4",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-w3J9pF4",
+        "filename": "PXL_20250311_035519360.jpg",
+        "format": "JPG",
+        "archived_md5": "83a64ba2d7f9c9c45eccbc6f6985884f"
+      },
+      "display": {
+        "title": "お出し食堂 はなれ",
+        "caption": "昼食にスープカレーを求め、長男とふらふらしててみつけた店。",
+        "alt": "お出し食堂 はなれ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3228962,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T19:55:19+00:00",
+          "normalized": "2025-03-11T19:55:19Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:45+00:00",
+          "normalized": "2025-03-22T11:58:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mlue3von7xxpzx2vf3zwjxbixy",
+        "media_path": "/media/kph_mlue3von7xxpzx2vf3zwjxbixy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vju66wmfdxdre5m3rtrn25hn44",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nK932b6",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-nK932b6",
+        "filename": "PXL_20250311_033527807.jpg",
+        "format": "JPG",
+        "archived_md5": "598491256709e181eb9aefca5f747fbb"
+      },
+      "display": {
+        "title": "お出し食堂 はなれ",
+        "caption": "外国人向けっぽい内装",
+        "alt": "お出し食堂 はなれ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2270182,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T19:35:27+00:00",
+          "normalized": "2025-03-11T19:35:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:47+00:00",
+          "normalized": "2025-03-22T11:58:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vju66wmfdxdre5m3rtrn25hn44",
+        "media_path": "/media/kph_vju66wmfdxdre5m3rtrn25hn44",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xhj3h7u7yicu3u5gstr3vz55te",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LGXgM6F",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-LGXgM6F",
+        "filename": "PXL_20250311_033841117.jpg",
+        "format": "JPG",
+        "archived_md5": "27ee7e3bb066bd34c1f10338475748ea"
+      },
+      "display": {
+        "title": "お出し食堂 はなれ",
+        "caption": "出汁推しがすごい",
+        "alt": "お出し食堂 はなれ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3443452,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T19:38:41+00:00",
+          "normalized": "2025-03-11T19:38:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:44+00:00",
+          "normalized": "2025-03-22T11:58:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xhj3h7u7yicu3u5gstr3vz55te",
+        "media_path": "/media/kph_xhj3h7u7yicu3u5gstr3vz55te",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5yaz6nv5tscjioaocge2wogbsi",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "bZ4C6GJ",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-bZ4C6GJ",
+        "filename": "PXL_20250311_040254611.jpg",
+        "format": "JPG",
+        "archived_md5": "42af8d00e94ee06ada198fb06400e8dd"
+      },
+      "display": {
+        "title": "テレビ塔",
+        "caption": "一面の雪でちょっと楽しかった",
+        "alt": "テレビ塔"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4527241,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-11T20:02:54+00:00",
+          "normalized": "2025-03-11T20:02:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:47+00:00",
+          "normalized": "2025-03-22T11:58:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5yaz6nv5tscjioaocge2wogbsi",
+        "media_path": "/media/kph_5yaz6nv5tscjioaocge2wogbsi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ks7je2npdj3ywz3fnhsp7e5l2e",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SvBPWdR",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-SvBPWdR",
+        "filename": "PXL_20250311_091237214.jpg",
+        "format": "JPG",
+        "archived_md5": "3e35434d4f21f0a68b556a9ea5fb5116"
+      },
+      "display": {
+        "title": "北海道らーめん奥原流 久楽 本店",
+        "caption": "札幌にいる間はひたすら味噌ラーメンを食べる",
+        "alt": "北海道らーめん奥原流 久楽 本店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3388508,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T01:12:37+00:00",
+          "normalized": "2025-03-12T01:12:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:49+00:00",
+          "normalized": "2025-03-22T11:58:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ks7je2npdj3ywz3fnhsp7e5l2e",
+        "media_path": "/media/kph_ks7je2npdj3ywz3fnhsp7e5l2e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zvshps2xzqms3yarfuvipd6lnm",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "b38MG8F",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-b38MG8F",
+        "filename": "PXL_20250311_085927410.jpg",
+        "format": "JPG",
+        "archived_md5": "fc7cd1eea16e4c6128a8b547f3d12816"
+      },
+      "display": {
+        "title": "北海道らーめん奥原流 久楽 本店",
+        "caption": "味噌バターコーンラーメン。美味しかった。",
+        "alt": "北海道らーめん奥原流 久楽 本店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2903472,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T00:59:27+00:00",
+          "normalized": "2025-03-12T00:59:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:50+00:00",
+          "normalized": "2025-03-22T11:58:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zvshps2xzqms3yarfuvipd6lnm",
+        "media_path": "/media/kph_zvshps2xzqms3yarfuvipd6lnm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bnqubnzd34tq2nntws3qadvtgy",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SmrFpwC",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-SmrFpwC",
+        "filename": "PXL_20250311_123303651.jpg",
+        "format": "JPG",
+        "archived_md5": "e448cc8c326b119f64bedf74af8a53e5"
+      },
+      "display": {
+        "title": "札幌の夜",
+        "caption": "散歩",
+        "alt": "札幌の夜"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2335552,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T04:33:03+00:00",
+          "normalized": "2025-03-12T04:33:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:59+00:00",
+          "normalized": "2025-03-22T11:58:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bnqubnzd34tq2nntws3qadvtgy",
+        "media_path": "/media/kph_bnqubnzd34tq2nntws3qadvtgy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zd4gse2cupylgjkm3gtcwddg6i",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "pr3MfTb",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-pr3MfTb",
+        "filename": "PXL_20250311_145759715.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "f2ae38f240597acce711ce8773142e3c"
+      },
+      "display": {
+        "title": "札幌の夜",
+        "caption": "少し裏道に入ると雪がすごい",
+        "alt": "札幌の夜"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4508247,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T06:57:59+00:00",
+          "normalized": "2025-03-12T06:57:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:58:59+00:00",
+          "normalized": "2025-03-22T11:58:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zd4gse2cupylgjkm3gtcwddg6i",
+        "media_path": "/media/kph_zd4gse2cupylgjkm3gtcwddg6i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7dd4apnhkdf3fcfpnwz6fjse6q",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sjNRtpJ",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-sjNRtpJ",
+        "filename": "PXL_20250312_042114106.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "85c4ef77976c8052bf1b4adcd3376d72"
+      },
+      "display": {
+        "title": "六花亭 本店",
+        "caption": "想像以上に大きかった",
+        "alt": "六花亭 本店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5227434,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T20:21:14+00:00",
+          "normalized": "2025-03-12T20:21:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:01+00:00",
+          "normalized": "2025-03-22T11:59:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7dd4apnhkdf3fcfpnwz6fjse6q",
+        "media_path": "/media/kph_7dd4apnhkdf3fcfpnwz6fjse6q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mmshsrbrjlwlg5xb2nvripugru",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TgLRwZm",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-TgLRwZm",
+        "filename": "PXL_20250312_042402829.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "bac0e2d706f6f025cb582dc47b21f61a"
+      },
+      "display": {
+        "title": "六花亭 本店",
+        "caption": "本店限定のおみやげをいくつか見繕う",
+        "alt": "六花亭 本店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5779556,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T20:24:02+00:00",
+          "normalized": "2025-03-12T20:24:02Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:02+00:00",
+          "normalized": "2025-03-22T11:59:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mmshsrbrjlwlg5xb2nvripugru",
+        "media_path": "/media/kph_mmshsrbrjlwlg5xb2nvripugru",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_meiscyxarbi35pt7lozn4zjpue",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nwVMLMD",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-nwVMLMD",
+        "filename": "PXL_20250312_044740702.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "e519a81d7eb23ac44060d720fba490b3"
+      },
+      "display": {
+        "title": "札幌駅",
+        "caption": "さようなら札幌",
+        "alt": "札幌駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5131352,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T20:47:40+00:00",
+          "normalized": "2025-03-12T20:47:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:04+00:00",
+          "normalized": "2025-03-22T11:59:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_meiscyxarbi35pt7lozn4zjpue",
+        "media_path": "/media/kph_meiscyxarbi35pt7lozn4zjpue",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6wfvlrqu3qkkfzotzdyryanv4e",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7dnxngQ",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-7dnxngQ",
+        "filename": "PXL_20250312_062122307.jpg",
+        "format": "JPG",
+        "archived_md5": "04689b0a8be8abba7882e024c35b36a0"
+      },
+      "display": {
+        "title": "弟子屈ラーメン 札幌ラーメン横丁店",
+        "caption": "新千歳空港内でもラーメン。弟子屈、と読むらしい。",
+        "alt": "弟子屈ラーメン 札幌ラーメン横丁店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3718165,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T22:21:22+00:00",
+          "normalized": "2025-03-12T22:21:22Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:04+00:00",
+          "normalized": "2025-03-22T11:59:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6wfvlrqu3qkkfzotzdyryanv4e",
+        "media_path": "/media/kph_6wfvlrqu3qkkfzotzdyryanv4e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_un4tzp6xndxvg2lii4dsg54r3q",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kGpM5mN",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-kGpM5mN",
+        "filename": "PXL_20250312_060941024.jpg",
+        "format": "JPG",
+        "archived_md5": "4d54fac52875fb82cd1e959498d5b5cf"
+      },
+      "display": {
+        "title": "弟子屈ラーメン 札幌ラーメン横丁店",
+        "caption": "味噌バターコーンラーメン",
+        "alt": "弟子屈ラーメン 札幌ラーメン横丁店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2483649,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T22:09:41+00:00",
+          "normalized": "2025-03-12T22:09:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:15+00:00",
+          "normalized": "2025-03-22T11:59:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_un4tzp6xndxvg2lii4dsg54r3q",
+        "media_path": "/media/kph_un4tzp6xndxvg2lii4dsg54r3q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_46vdlr4itj6vyycdn7idj26im4",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kVPFCQX",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-kVPFCQX",
+        "filename": "PXL_20250312_073153791.jpg",
+        "format": "JPG",
+        "archived_md5": "2e953465433c939702c5f1133e7b15ac"
+      },
+      "display": {
+        "title": "新千歳空港",
+        "caption": "東京へ帰る",
+        "alt": "新千歳空港"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2571614,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T23:31:53+00:00",
+          "normalized": "2025-03-12T23:31:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:15+00:00",
+          "normalized": "2025-03-22T11:59:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_46vdlr4itj6vyycdn7idj26im4",
+        "media_path": "/media/kph_46vdlr4itj6vyycdn7idj26im4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_w5c7lh3linl5zychxiyrtk6fue",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7kD4Fdb",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-7kD4Fdb",
+        "filename": "PXL_20250312_073208267.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "3c580dd020f8c4ff712d5afe17dac588"
+      },
+      "display": {
+        "title": "新千歳空港",
+        "caption": "何歳になっても感じる飛行機に入るこの通路のわくわく感",
+        "alt": "新千歳空港"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5587068,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T23:32:08+00:00",
+          "normalized": "2025-03-12T23:32:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:17+00:00",
+          "normalized": "2025-03-22T11:59:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_w5c7lh3linl5zychxiyrtk6fue",
+        "media_path": "/media/kph_w5c7lh3linl5zychxiyrtk6fue",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_454kkl7w6yeog62lvaxg27ahzi",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tdk6HtS",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-tdk6HtS",
+        "filename": "PXL_20250312_074132717.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "ef0d26a20b5d90eda48b103cf59c2940"
+      },
+      "display": {
+        "title": "飛行機の中",
+        "caption": "行きよりも古い機内",
+        "alt": "飛行機の中"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4267221,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-12T23:41:32+00:00",
+          "normalized": "2025-03-12T23:41:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:18+00:00",
+          "normalized": "2025-03-22T11:59:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_454kkl7w6yeog62lvaxg27ahzi",
+        "media_path": "/media/kph_454kkl7w6yeog62lvaxg27ahzi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fyavqomj2lroaz5ud6cr265wo4",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tZr2FNG",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-tZr2FNG",
+        "filename": "PXL_20250312_093856262.jpg",
+        "format": "JPG",
+        "archived_md5": "c000b38c9f814628c458c8204fee7b67"
+      },
+      "display": {
+        "title": "羽田空港",
+        "caption": "さくっと到着。めっっっっちゃ揺れた。",
+        "alt": "羽田空港"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2958918,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-13T01:38:56+00:00",
+          "normalized": "2025-03-13T01:38:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:20+00:00",
+          "normalized": "2025-03-22T11:59:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fyavqomj2lroaz5ud6cr265wo4",
+        "media_path": "/media/kph_fyavqomj2lroaz5ud6cr265wo4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_f25rcy3lv2wokaispgmlvuzqt4",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qNrx7wH",
+        "web_uri": "https://kanolog.smugmug.com/20250310sapporo/i-qNrx7wH",
+        "filename": "PXL_20250312_094429912.jpg",
+        "format": "JPG",
+        "archived_md5": "7fd06432c579d9f7f8878ddd68ed9a66"
+      },
+      "display": {
+        "title": "荷物受け取り",
+        "caption": "例によって最後のほうだった",
+        "alt": "荷物受け取り"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3629705,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-03-13T01:44:29+00:00",
+          "normalized": "2025-03-13T01:44:29Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-22T11:59:21+00:00",
+          "normalized": "2025-03-22T11:59:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_f25rcy3lv2wokaispgmlvuzqt4",
+        "media_path": "/media/kph_f25rcy3lv2wokaispgmlvuzqt4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

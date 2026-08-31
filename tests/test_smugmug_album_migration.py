@@ -78,6 +78,26 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertEqual(module.source_extension(asset()), ".jpg")
         self.assertEqual(module.source_extension(asset("video")), ".mp4")
 
+    def test_album_payload_uses_manifest_dates_and_source_identity(self) -> None:
+        payload = module.album_content_payload(
+            {
+                "title": "Kyoto",
+                "slug": "kyoto",
+                "sort_method": "Position",
+                "sort_direction": "Ascending",
+                "source": {
+                    "album_key": "album-key",
+                    "web_uri": "https://example.test/kyoto",
+                },
+            },
+            [asset()],
+        )
+        self.assertEqual(payload["source_album_key"], "album-key")
+        self.assertEqual(payload["captured_from"], "2024-06-01T00:00:00Z")
+        self.assertEqual(payload["captured_to"], "2024-06-01T00:00:00Z")
+        self.assertEqual(payload["sort_method"], "position")
+        self.assertEqual(payload["sort_direction"], "asc")
+
 
 if __name__ == "__main__":
     unittest.main()

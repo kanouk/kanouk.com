@@ -1,0 +1,662 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:20+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2005-03-expo",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_jvvmz4inzikezmtonojulflliu",
+    "slug": "2005-03-expo",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "Vhmwwv",
+      "web_uri": "https://kanolog.smugmug.com/20050326expo"
+    },
+    "title": "Expo, 2005/03",
+    "description": "万博好きの同僚Tさんと愛・地球博に行ってきました",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": false,
+    "source_protected_flag": false,
+    "asset_count": 13,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_p37hdszuzstnauzzn5httecv7q",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CSh6NW4",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-CSh6NW4",
+        "filename": "7482526.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "名古屋駅から",
+        "caption": "シャトルなんとかが出てました。",
+        "alt": "名古屋駅から"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 259550,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T18:11:00+00:00",
+          "normalized": "2005-03-26T18:11:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:01:58+00:00",
+          "normalized": "2022-11-06T17:01:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_p37hdszuzstnauzzn5httecv7q",
+        "media_path": "/media/kph_p37hdszuzstnauzzn5httecv7q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_svtzymwkqyrshyuvs6f5pq5kjq",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NmzwmmM",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-NmzwmmM",
+        "filename": "7482536.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "愛地球博",
+        "caption": "何度見ても微妙なネーミング。",
+        "alt": "愛地球博"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 309472,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T19:03:00+00:00",
+          "normalized": "2005-03-26T19:03:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:01:57+00:00",
+          "normalized": "2022-11-06T17:01:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_svtzymwkqyrshyuvs6f5pq5kjq",
+        "media_path": "/media/kph_svtzymwkqyrshyuvs6f5pq5kjq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fsb3klxgj3lcn4vyyqfli5ajf4",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tmjMVqQ",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-tmjMVqQ",
+        "filename": "7482538.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "リニモ乗り場",
+        "caption": "誰だ、一時間待ちとか言ったのは。",
+        "alt": "リニモ乗り場"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 299480,
+        "width": 1024,
+        "height": 768
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T19:04:00+00:00",
+          "normalized": "2005-03-26T19:04:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:01:57+00:00",
+          "normalized": "2022-11-06T17:01:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fsb3klxgj3lcn4vyyqfli5ajf4",
+        "media_path": "/media/kph_fsb3klxgj3lcn4vyyqfli5ajf4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zpwf6g3fgijky2k2mn2xc7zhsi",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2GcBVzX",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-2GcBVzX",
+        "filename": "7482541.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "リニモ乗り場",
+        "caption": "ガラガラ。話が違う。",
+        "alt": "リニモ乗り場"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 367075,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T19:09:00+00:00",
+          "normalized": "2005-03-26T19:09:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:01:56+00:00",
+          "normalized": "2022-11-06T17:01:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zpwf6g3fgijky2k2mn2xc7zhsi",
+        "media_path": "/media/kph_zpwf6g3fgijky2k2mn2xc7zhsi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xesxwszwenrio77g3tofif7yj4",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tWLLbGs",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-tWLLbGs",
+        "filename": "7482544.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "万博会場まで",
+        "caption": "リニアモーターカーでいきます",
+        "alt": "万博会場まで"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 287779,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T19:12:00+00:00",
+          "normalized": "2005-03-26T19:12:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:01:56+00:00",
+          "normalized": "2022-11-06T17:01:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xesxwszwenrio77g3tofif7yj4",
+        "media_path": "/media/kph_xesxwszwenrio77g3tofif7yj4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hi45xjjo245afiulm22xtkzttq",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XpGFzLn",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-XpGFzLn",
+        "filename": "7482548.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "エントランス",
+        "caption": "人がまばらとかいわない",
+        "alt": "エントランス"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 303355,
+        "width": 1024,
+        "height": 768
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T19:22:00+00:00",
+          "normalized": "2005-03-26T19:22:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:01:55+00:00",
+          "normalized": "2022-11-06T17:01:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hi45xjjo245afiulm22xtkzttq",
+        "media_path": "/media/kph_hi45xjjo245afiulm22xtkzttq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hvwm2s4bxsmmembxi7inl72vcy",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Cr6hWwD",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-Cr6hWwD",
+        "filename": "7482451.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "モリゾーとキッコロ",
+        "caption": "お世辞にもカワイイとはいえない",
+        "alt": "モリゾーとキッコロ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 362127,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T19:55:00+00:00",
+          "normalized": "2005-03-26T19:55:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:02:03+00:00",
+          "normalized": "2022-11-06T17:02:03Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hvwm2s4bxsmmembxi7inl72vcy",
+        "media_path": "/media/kph_hvwm2s4bxsmmembxi7inl72vcy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rxis76z253cvw7nlsbdoav5txi",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jj6QH6G",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-jj6QH6G",
+        "filename": "7482473.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "企業パビリオン前",
+        "caption": "トヨタ館と日立館。どちらもスゴイ行列。",
+        "alt": "企業パビリオン前"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 330420,
+        "width": 1024,
+        "height": 768
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T20:21:00+00:00",
+          "normalized": "2005-03-26T20:21:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:02:02+00:00",
+          "normalized": "2022-11-06T17:02:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rxis76z253cvw7nlsbdoav5txi",
+        "media_path": "/media/kph_rxis76z253cvw7nlsbdoav5txi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jlgbf7h6k7mlo5u7jrxwiysxsy",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4mhT9BC",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-4mhT9BC",
+        "filename": "7482477.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ゴンドラより",
+        "caption": "まだ、緑が出てないので微妙に寂しい。",
+        "alt": "ゴンドラより"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 301758,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T20:32:00+00:00",
+          "normalized": "2005-03-26T20:32:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:02:01+00:00",
+          "normalized": "2022-11-06T17:02:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jlgbf7h6k7mlo5u7jrxwiysxsy",
+        "media_path": "/media/kph_jlgbf7h6k7mlo5u7jrxwiysxsy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3z4aytqplotgel7pxttxt5f4fe",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZqmpnHd",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-ZqmpnHd",
+        "filename": "7482494.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "チェコ館",
+        "caption": "入らなかったけど、微妙にインパクトがあったので。",
+        "alt": "チェコ館"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 400295,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T21:12:00+00:00",
+          "normalized": "2005-03-26T21:12:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:02:01+00:00",
+          "normalized": "2022-11-06T17:02:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3z4aytqplotgel7pxttxt5f4fe",
+        "media_path": "/media/kph_3z4aytqplotgel7pxttxt5f4fe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cv533tnpub4lracvbccimis4hy",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Qr6nNhZ",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-Qr6nNhZ",
+        "filename": "7482502.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "行列",
+        "caption": "マンモスを見るための整理券をもらうのに1時間半待ち。みんなイライラ。",
+        "alt": "行列"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 372475,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T22:08:00+00:00",
+          "normalized": "2005-03-26T22:08:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:02:00+00:00",
+          "normalized": "2022-11-06T17:02:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cv533tnpub4lracvbccimis4hy",
+        "media_path": "/media/kph_cv533tnpub4lracvbccimis4hy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_td5c2glfqfq6h4tungsfejzwl4",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QSqshWX",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-QSqshWX",
+        "filename": "7482511.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "企業パビリオン付近",
+        "caption": "なんか万博的な風景。",
+        "alt": "企業パビリオン付近"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 306133,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-26T23:57:20+00:00",
+          "normalized": "2005-03-26T23:57:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:02:00+00:00",
+          "normalized": "2022-11-06T17:02:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_td5c2glfqfq6h4tungsfejzwl4",
+        "media_path": "/media/kph_td5c2glfqfq6h4tungsfejzwl4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_myv5drnukpmmyrokpqxx6vknie",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XGp2h3S",
+        "web_uri": "https://kanolog.smugmug.com/20050326expo/i-XGp2h3S",
+        "filename": "7482518.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "サークルK",
+        "caption": "万博内。サークルKってこんなオシャレだったっけか。",
+        "alt": "サークルK"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 262293,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-03-27T00:00:00+00:00",
+          "normalized": "2005-03-27T00:00:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:01:59+00:00",
+          "normalized": "2022-11-06T17:01:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_myv5drnukpmmyrokpqxx6vknie",
+        "media_path": "/media/kph_myv5drnukpmmyrokpqxx6vknie",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

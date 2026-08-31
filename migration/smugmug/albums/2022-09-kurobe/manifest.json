@@ -1,0 +1,326 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:25+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2022-09-kurobe",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_jd2qwcqyqn54zllpn2zve7tgo4",
+    "slug": "2022-09-kurobe",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "dXNbbB",
+      "web_uri": "https://kanolog.smugmug.com/Nagano-202209"
+    },
+    "title": "Kurobe, 2022/09",
+    "description": "",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 6,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_wa4biyb4pjxbkldzyjvxdg7exm",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PSkkBNQ",
+        "web_uri": "https://kanolog.smugmug.com/Nagano-202209/i-PSkkBNQ",
+        "filename": "PXL_20220922_214625814.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "580eb1d82d66d736803ae123f1dd9d52"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220922_214625814.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6634807,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-09-23T13:46:25+00:00",
+          "normalized": "2022-09-23T13:46:25Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:39:58+00:00",
+          "normalized": "2022-11-06T16:39:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wa4biyb4pjxbkldzyjvxdg7exm",
+        "media_path": "/media/kph_wa4biyb4pjxbkldzyjvxdg7exm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5eirmbd27m6btoehew7xa3kr2e",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hrfM6dP",
+        "web_uri": "https://kanolog.smugmug.com/Nagano-202209/i-hrfM6dP",
+        "filename": "PXL_20220922_221124831.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a15dd9236892186a0ad4b751bf8b37d9"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220922_221124831.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5101027,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-09-23T14:11:24+00:00",
+          "normalized": "2022-09-23T14:11:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:39:41+00:00",
+          "normalized": "2022-11-06T16:39:41Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5eirmbd27m6btoehew7xa3kr2e",
+        "media_path": "/media/kph_5eirmbd27m6btoehew7xa3kr2e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5z5yvj35aidwk5jn6xlouqgxhe",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dDND9Dm",
+        "web_uri": "https://kanolog.smugmug.com/Nagano-202209/i-dDND9Dm",
+        "filename": "PXL_20220922_221655612.jpg",
+        "format": "JPG",
+        "archived_md5": "a16344fba2b92c48b39150a275ebcbb5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220922_221655612.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2564665,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-09-23T14:16:55+00:00",
+          "normalized": "2022-09-23T14:16:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:39:21+00:00",
+          "normalized": "2022-11-06T16:39:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5z5yvj35aidwk5jn6xlouqgxhe",
+        "media_path": "/media/kph_5z5yvj35aidwk5jn6xlouqgxhe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_krmbdqrcemjdxk5xbzvvn2pn4y",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "H5TWGPH",
+        "web_uri": "https://kanolog.smugmug.com/Nagano-202209/i-H5TWGPH",
+        "filename": "PXL_20220922_222546162.jpg",
+        "format": "JPG",
+        "archived_md5": "0b95019b8033157ed4e9091498962e9e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220922_222546162.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3641346,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-09-23T14:25:46+00:00",
+          "normalized": "2022-09-23T14:25:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:39:32+00:00",
+          "normalized": "2022-11-06T16:39:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_krmbdqrcemjdxk5xbzvvn2pn4y",
+        "media_path": "/media/kph_krmbdqrcemjdxk5xbzvvn2pn4y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7di2f2rysniigdhjf6rwha2c6u",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TfddtPM",
+        "web_uri": "https://kanolog.smugmug.com/Nagano-202209/i-TfddtPM",
+        "filename": "PXL_20220923_013244605.jpg",
+        "format": "JPG",
+        "archived_md5": "36b92a10706b9079bee086f36121abe4"
+      },
+      "display": {
+        "title": "プール全体",
+        "caption": "これだけ広いプールが貸切状態という贅沢。プールサイドでお酒を飲む妻。",
+        "alt": "プール全体"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2562160,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-09-23T17:32:44+00:00",
+          "normalized": "2022-09-23T17:32:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:39:21+00:00",
+          "normalized": "2022-11-06T16:39:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7di2f2rysniigdhjf6rwha2c6u",
+        "media_path": "/media/kph_7di2f2rysniigdhjf6rwha2c6u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_z26demeri3ucmw7wlqqmdd66xe",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LprvTD5",
+        "web_uri": "https://kanolog.smugmug.com/Nagano-202209/i-LprvTD5",
+        "filename": "PXL_20220923_015834529.jpg",
+        "format": "JPG",
+        "archived_md5": "0db1fdd096d4ca78a0c163ea42b55c64"
+      },
+      "display": {
+        "title": "長男と次男",
+        "caption": "広いプールが貸切状態で満足",
+        "alt": "長男と次男"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3235894,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-09-23T17:58:34+00:00",
+          "normalized": "2022-09-23T17:58:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:39:11+00:00",
+          "normalized": "2022-11-06T16:39:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_z26demeri3ucmw7wlqqmdd66xe",
+        "media_path": "/media/kph_z26demeri3ucmw7wlqqmdd66xe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

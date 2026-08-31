@@ -1,0 +1,2774 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:29+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2020-11-miyajima-kure",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_tobrxuwkfbepgj56pmgaqytbq4",
+    "slug": "2020-11-miyajima-kure",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "sXX26h",
+      "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima"
+    },
+    "title": "Miyajima/Kure, 2020/11",
+    "description": "",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 57,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_3mpejar7ahnblodl34bsnpzoye",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "n24BdgN",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-n24BdgN",
+        "filename": "IMG_6558.JPG",
+        "format": "JPG",
+        "archived_md5": "83b5a55f22c32afd892a927066033d06"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_6558.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 725223,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:12+00:00",
+          "normalized": "2022-11-13T01:49:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3mpejar7ahnblodl34bsnpzoye",
+        "media_path": "/media/kph_3mpejar7ahnblodl34bsnpzoye",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7nwusclfbnry2j4d52hwuuf54q",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cFMB7gm",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-cFMB7gm",
+        "filename": "PXL_20201127_214751727.jpg",
+        "format": "JPG",
+        "archived_md5": "dbc303188c81a787c1596e91135df35f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201127_214751727.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3791253,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T14:47:51+00:00",
+          "normalized": "2020-11-28T14:47:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:16+00:00",
+          "normalized": "2022-11-13T01:49:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7nwusclfbnry2j4d52hwuuf54q",
+        "media_path": "/media/kph_7nwusclfbnry2j4d52hwuuf54q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_iwvlk4zgeuq2qr6lxakbqr3pji",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dXvVhzC",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-dXvVhzC",
+        "filename": "PXL_20201128_030541851.jpg",
+        "format": "JPG",
+        "archived_md5": "2640c0cb1f38885197e2aec7a3cdcedc"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_030541851.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3521111,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T20:05:42+00:00",
+          "normalized": "2020-11-28T20:05:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:24+00:00",
+          "normalized": "2022-11-13T01:49:24Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_iwvlk4zgeuq2qr6lxakbqr3pji",
+        "media_path": "/media/kph_iwvlk4zgeuq2qr6lxakbqr3pji",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zaglmambp5onlheukrwnn4tbca",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PsNgMqg",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-PsNgMqg",
+        "filename": "PXL_20201128_031635203.jpg",
+        "format": "JPG",
+        "archived_md5": "d73b49266f17e5943b9befe98880dfd7"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_031635203.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3814376,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T20:16:35+00:00",
+          "normalized": "2020-11-28T20:16:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:26+00:00",
+          "normalized": "2022-11-13T01:49:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zaglmambp5onlheukrwnn4tbca",
+        "media_path": "/media/kph_zaglmambp5onlheukrwnn4tbca",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pchthkpeadjhdquwljr6fczowa",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qzNjhnX",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-qzNjhnX",
+        "filename": "PXL_20201128_031645597.jpg",
+        "format": "JPG",
+        "archived_md5": "c2b11ea51b7d48ec9205b56c28e1bcaa"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_031645597.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3594015,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T20:16:45+00:00",
+          "normalized": "2020-11-28T20:16:45Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:34+00:00",
+          "normalized": "2022-11-13T01:49:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pchthkpeadjhdquwljr6fczowa",
+        "media_path": "/media/kph_pchthkpeadjhdquwljr6fczowa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ycsh6l6cryxwkv2fjsqc4jt5bm",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hd6GFPf",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-hd6GFPf",
+        "filename": "PXL_20201128_033418575.jpg",
+        "format": "JPG",
+        "archived_md5": "00c2844c79ecad7c53bbe8a4d956a246"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_033418575.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3278352,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T20:34:18+00:00",
+          "normalized": "2020-11-28T20:34:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:35+00:00",
+          "normalized": "2022-11-13T01:49:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ycsh6l6cryxwkv2fjsqc4jt5bm",
+        "media_path": "/media/kph_ycsh6l6cryxwkv2fjsqc4jt5bm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_n6duzojyy3f7kq5lg6im5dzfey",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5QPpTFx",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-5QPpTFx",
+        "filename": "PXL_20201128_034811101.jpg",
+        "format": "JPG",
+        "archived_md5": "877580bfcaf9792965d57f9fa7bc71a8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_034811101.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4059181,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T20:48:11+00:00",
+          "normalized": "2020-11-28T20:48:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:45+00:00",
+          "normalized": "2022-11-13T01:49:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_n6duzojyy3f7kq5lg6im5dzfey",
+        "media_path": "/media/kph_n6duzojyy3f7kq5lg6im5dzfey",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_763eizghl3sbe7ulir2t3osfka",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fCGCDWR",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-fCGCDWR",
+        "filename": "PXL_20201128_042000053.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "980788d624ce85346990c90beafa4568"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_042000053.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 7086997,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T21:20:00+00:00",
+          "normalized": "2020-11-28T21:20:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:54+00:00",
+          "normalized": "2022-11-13T01:49:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_763eizghl3sbe7ulir2t3osfka",
+        "media_path": "/media/kph_763eizghl3sbe7ulir2t3osfka",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pnozbbw23iregnxq26ocu43mqa",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "t5DhSLx",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-t5DhSLx",
+        "filename": "IMG_6547.JPG",
+        "format": "JPG",
+        "archived_md5": "b0a888e6381959658f2128b05a775db9"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_6547.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1578979,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T22:46:27+00:00",
+          "normalized": "2020-11-28T22:46:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:06+00:00",
+          "normalized": "2022-11-13T01:49:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pnozbbw23iregnxq26ocu43mqa",
+        "media_path": "/media/kph_pnozbbw23iregnxq26ocu43mqa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_drncgloa3qfrvfuo3xw5ksnt4i",
+      "position": 10,
+      "kind": "video",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WDcvXsG",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-WDcvXsG",
+        "filename": "IMG_6547.MP4",
+        "format": "MP4",
+        "archived_md5": "14c65bafcdbeb395ccf17df70a34a5d5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_6547.MP4"
+      },
+      "file": {
+        "mime_type": "video/mp4",
+        "bytes": 185895,
+        "width": 1440,
+        "height": 1080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T22:46:27+00:00",
+          "normalized": "2020-11-28T22:46:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:39+00:00",
+          "normalized": "2022-11-13T01:54:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_drncgloa3qfrvfuo3xw5ksnt4i",
+        "media_path": "/media/kph_drncgloa3qfrvfuo3xw5ksnt4i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zzcr5jegmgddahnvi4k4nwhuia",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gsLxFnp",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-gsLxFnp",
+        "filename": "IMG_6549.JPG",
+        "format": "JPG",
+        "archived_md5": "1d5ba5ebfebec5a923e61e6ade1f37e0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_6549.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 825266,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T22:47:21+00:00",
+          "normalized": "2020-11-28T22:47:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:05+00:00",
+          "normalized": "2022-11-13T01:49:05Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zzcr5jegmgddahnvi4k4nwhuia",
+        "media_path": "/media/kph_zzcr5jegmgddahnvi4k4nwhuia",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zhpyfoc25vcd3clb6whleodjqq",
+      "position": 12,
+      "kind": "video",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qc4GGbf",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-qc4GGbf",
+        "filename": "IMG_6549.MP4",
+        "format": "MP4",
+        "archived_md5": "a628627d2163891893214842ca38d72b"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_6549.MP4"
+      },
+      "file": {
+        "mime_type": "video/mp4",
+        "bytes": 208574,
+        "width": 1440,
+        "height": 1080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T22:47:21+00:00",
+          "normalized": "2020-11-28T22:47:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:40+00:00",
+          "normalized": "2022-11-13T01:54:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zhpyfoc25vcd3clb6whleodjqq",
+        "media_path": "/media/kph_zhpyfoc25vcd3clb6whleodjqq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gfixcqua7j4uwxmuy247b54ik4",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "q7FbGCb",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-q7FbGCb",
+        "filename": "PXL_20201128_063835313.jpg",
+        "format": "JPG",
+        "archived_md5": "403da7595c9ae9d33cc46a9dbc750108"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_063835313.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4529782,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-28T23:38:35+00:00",
+          "normalized": "2020-11-28T23:38:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:49:58+00:00",
+          "normalized": "2022-11-13T01:49:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gfixcqua7j4uwxmuy247b54ik4",
+        "media_path": "/media/kph_gfixcqua7j4uwxmuy247b54ik4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3el73qbhax6pn2c7k2uuc5n7au",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "v6RQQb6",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-v6RQQb6",
+        "filename": "PXL_20201128_070225136.PORTRAIT.jpg",
+        "format": "JPG",
+        "archived_md5": "1f0b74607b873012710a092c65c8426a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_070225136.PORTRAIT.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5033401,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T00:02:25+00:00",
+          "normalized": "2020-11-29T00:02:25Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:06+00:00",
+          "normalized": "2022-11-13T01:50:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3el73qbhax6pn2c7k2uuc5n7au",
+        "media_path": "/media/kph_3el73qbhax6pn2c7k2uuc5n7au",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vcrekaakhhaohzrrz5e7j4kyxe",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JvkJkVv",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JvkJkVv",
+        "filename": "PXL_20201128_073705651.jpg",
+        "format": "JPG",
+        "archived_md5": "97cd6685d4373b5c467882d83fdb4d1a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_073705651.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3367380,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T00:37:05+00:00",
+          "normalized": "2020-11-29T00:37:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:08+00:00",
+          "normalized": "2022-11-13T01:50:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vcrekaakhhaohzrrz5e7j4kyxe",
+        "media_path": "/media/kph_vcrekaakhhaohzrrz5e7j4kyxe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_q2gayd5leihubbqdfxm32rfyda",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JrcK98t",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JrcK98t",
+        "filename": "PXL_20201128_074056373.jpg",
+        "format": "JPG",
+        "archived_md5": "eab90bf5e3137803e8c502b90f3ec7ae"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_074056373.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4095432,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T00:40:56+00:00",
+          "normalized": "2020-11-29T00:40:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:18+00:00",
+          "normalized": "2022-11-13T01:50:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_q2gayd5leihubbqdfxm32rfyda",
+        "media_path": "/media/kph_q2gayd5leihubbqdfxm32rfyda",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hf4h3mzd7aw3sxcpwgc5giyvki",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xkbHNCr",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-xkbHNCr",
+        "filename": "PXL_20201128_074810439.PORTRAIT.jpg",
+        "format": "JPG",
+        "archived_md5": "b0dc8b949247744e6294c3bd62d017fd"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_074810439.PORTRAIT.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2581066,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T00:48:10+00:00",
+          "normalized": "2020-11-29T00:48:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:15+00:00",
+          "normalized": "2022-11-13T01:50:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hf4h3mzd7aw3sxcpwgc5giyvki",
+        "media_path": "/media/kph_hf4h3mzd7aw3sxcpwgc5giyvki",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_uebf66jfxzedlsvogl2kzcuh5e",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4347zrh",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-4347zrh",
+        "filename": "PXL_20201128_074840863.PORTRAIT.jpg",
+        "format": "JPG",
+        "archived_md5": "ed0c81ba7cb27d8010931bdfe573ea7f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_074840863.PORTRAIT.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3067186,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T00:48:40+00:00",
+          "normalized": "2020-11-29T00:48:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:24+00:00",
+          "normalized": "2022-11-13T01:50:24Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_uebf66jfxzedlsvogl2kzcuh5e",
+        "media_path": "/media/kph_uebf66jfxzedlsvogl2kzcuh5e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mee3uhcokfyph2p7rdvoa4or6a",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7mT5rpw",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-7mT5rpw",
+        "filename": "PXL_20201128_080303262.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a378d4f227f27d4e4c340afbeb93a401"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_080303262.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4504035,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T01:03:03+00:00",
+          "normalized": "2020-11-29T01:03:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:30+00:00",
+          "normalized": "2022-11-13T01:50:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mee3uhcokfyph2p7rdvoa4or6a",
+        "media_path": "/media/kph_mee3uhcokfyph2p7rdvoa4or6a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lra6yh4gubpm7bikmyz7agcu5y",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "S7CGvDC",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-S7CGvDC",
+        "filename": "PXL_20201128_080339515.jpg",
+        "format": "JPG",
+        "archived_md5": "71dfefb0cda7d51eff49b6d0099c6437"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_080339515.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3137915,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T01:03:39+00:00",
+          "normalized": "2020-11-29T01:03:39Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:32+00:00",
+          "normalized": "2022-11-13T01:50:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lra6yh4gubpm7bikmyz7agcu5y",
+        "media_path": "/media/kph_lra6yh4gubpm7bikmyz7agcu5y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_q22i5uffxo6cesxqdallttdkkm",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "pNggXTW",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-pNggXTW",
+        "filename": "PXL_20201128_080505020.jpg",
+        "format": "JPG",
+        "archived_md5": "d49b6fae062b71bfd9d05bcff9092892"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_080505020.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2377148,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T01:05:05+00:00",
+          "normalized": "2020-11-29T01:05:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:38+00:00",
+          "normalized": "2022-11-13T01:50:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_q22i5uffxo6cesxqdallttdkkm",
+        "media_path": "/media/kph_q22i5uffxo6cesxqdallttdkkm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_o75eiln425rpknmxydnxkwmsqm",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3ktkbgR",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-3ktkbgR",
+        "filename": "PXL_20201128_080632340.NIGHT.jpg",
+        "format": "JPG",
+        "archived_md5": "9c7a466f3a6e0000741f3087c5c5a470"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_080632340.NIGHT.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2528763,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T01:06:32+00:00",
+          "normalized": "2020-11-29T01:06:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:41+00:00",
+          "normalized": "2022-11-13T01:50:41Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_o75eiln425rpknmxydnxkwmsqm",
+        "media_path": "/media/kph_o75eiln425rpknmxydnxkwmsqm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vdan34il47gbw4t4o2xne5qnnu",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "t6xqm9d",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-t6xqm9d",
+        "filename": "PXL_20201128_102100368.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "9a398db0a3f397dc0dc81c0570610997"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_102100368.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 10397145,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T03:21:00+00:00",
+          "normalized": "2020-11-29T03:21:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:05+00:00",
+          "normalized": "2022-11-13T01:51:05Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vdan34il47gbw4t4o2xne5qnnu",
+        "media_path": "/media/kph_vdan34il47gbw4t4o2xne5qnnu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ydfplj6jvn2qbug5bafphyfdse",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "6xzvZPn",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-6xzvZPn",
+        "filename": "PXL_20201128_103015679.jpg",
+        "format": "JPG",
+        "archived_md5": "3f6b1b70b2eacaaea4c246f2bde86131"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_103015679.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3026027,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T03:30:15+00:00",
+          "normalized": "2020-11-29T03:30:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:50:50+00:00",
+          "normalized": "2022-11-13T01:50:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ydfplj6jvn2qbug5bafphyfdse",
+        "media_path": "/media/kph_ydfplj6jvn2qbug5bafphyfdse",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tl3ojr4zauvzp6qrb32mmc6hvy",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tdQDzxd",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-tdQDzxd",
+        "filename": "PXL_20201128_113751233.NIGHT.jpg",
+        "format": "JPG",
+        "archived_md5": "80386e56c36dcc64c27f71b4c220f93a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201128_113751233.NIGHT.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3970471,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T04:37:51+00:00",
+          "normalized": "2020-11-29T04:37:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:02+00:00",
+          "normalized": "2022-11-13T01:51:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tl3ojr4zauvzp6qrb32mmc6hvy",
+        "media_path": "/media/kph_tl3ojr4zauvzp6qrb32mmc6hvy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5joljf2zqglbowgywxqrd7kiaq",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Gd78H5s",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-Gd78H5s",
+        "filename": "PXL_20201129_003624688.jpg",
+        "format": "JPG",
+        "archived_md5": "758f67015a6f96b757ec8523d168fa3a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_003624688.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3244500,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:36:24+00:00",
+          "normalized": "2020-11-29T17:36:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:12+00:00",
+          "normalized": "2022-11-13T01:51:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5joljf2zqglbowgywxqrd7kiaq",
+        "media_path": "/media/kph_5joljf2zqglbowgywxqrd7kiaq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bhp4fgkvmnye6hz4xrav6fg3ba",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JFXz84w",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JFXz84w",
+        "filename": "PXL_20201129_003634930.jpg",
+        "format": "JPG",
+        "archived_md5": "bdf2386d7df42ed71b65821c4969c5e0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_003634930.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3210413,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:36:34+00:00",
+          "normalized": "2020-11-29T17:36:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:14+00:00",
+          "normalized": "2022-11-13T01:51:14Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bhp4fgkvmnye6hz4xrav6fg3ba",
+        "media_path": "/media/kph_bhp4fgkvmnye6hz4xrav6fg3ba",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tspr45ok3tw7apw3wyov2sevhe",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "wNMhD3r",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-wNMhD3r",
+        "filename": "PXL_20201129_003843432.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "4ef177272729dfd5448fae3ba73baa74"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_003843432.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6646578,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:38:43+00:00",
+          "normalized": "2020-11-29T17:38:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:29+00:00",
+          "normalized": "2022-11-13T01:51:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tspr45ok3tw7apw3wyov2sevhe",
+        "media_path": "/media/kph_tspr45ok3tw7apw3wyov2sevhe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_c7pa4dtv44flod33cgfqn35uqy",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4rsLnZj",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-4rsLnZj",
+        "filename": "PXL_20201129_003852212.jpg",
+        "format": "JPG",
+        "archived_md5": "f74302716c600dd2b53c1ec36a646ad3"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_003852212.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4125481,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:38:52+00:00",
+          "normalized": "2020-11-29T17:38:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:25+00:00",
+          "normalized": "2022-11-13T01:51:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_c7pa4dtv44flod33cgfqn35uqy",
+        "media_path": "/media/kph_c7pa4dtv44flod33cgfqn35uqy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_blikskfh3fiinv5q7hii5mqnu4",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JhNGtjp",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JhNGtjp",
+        "filename": "PXL_20201129_005528100.jpg",
+        "format": "JPG",
+        "archived_md5": "2e7591e1dcef05539673194decbc0b8a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_005528100.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3684080,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:55:28+00:00",
+          "normalized": "2020-11-29T17:55:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:36+00:00",
+          "normalized": "2022-11-13T01:51:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_blikskfh3fiinv5q7hii5mqnu4",
+        "media_path": "/media/kph_blikskfh3fiinv5q7hii5mqnu4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5ohualpa3xzdh3zou7mxtm6gwi",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RrgsnNF",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-RrgsnNF",
+        "filename": "PXL_20201129_005659850.jpg",
+        "format": "JPG",
+        "archived_md5": "f3bcc2c2bd2423cb52f9deb2a4e052ff"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_005659850.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4142526,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:56:59+00:00",
+          "normalized": "2020-11-29T17:56:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:40+00:00",
+          "normalized": "2022-11-13T01:51:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5ohualpa3xzdh3zou7mxtm6gwi",
+        "media_path": "/media/kph_5ohualpa3xzdh3zou7mxtm6gwi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6tg34aymkkqhdtm7tjhtox3igq",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4rC2zSW",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-4rC2zSW",
+        "filename": "PXL_20201129_005853468.jpg",
+        "format": "JPG",
+        "archived_md5": "2135e8c5705f55815288149d9ee868e5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_005853468.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5947926,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:58:53+00:00",
+          "normalized": "2020-11-29T17:58:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:51+00:00",
+          "normalized": "2022-11-13T01:51:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6tg34aymkkqhdtm7tjhtox3igq",
+        "media_path": "/media/kph_6tg34aymkkqhdtm7tjhtox3igq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_u4lfs3izcak2ia44fsecy6hmhq",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "bL79dV8",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-bL79dV8",
+        "filename": "PXL_20201129_005952589.jpg",
+        "format": "JPG",
+        "archived_md5": "faa05f821f4d60e10a2d93c3308b3b0d"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_005952589.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4089623,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T17:59:52+00:00",
+          "normalized": "2020-11-29T17:59:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:51:51+00:00",
+          "normalized": "2022-11-13T01:51:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_u4lfs3izcak2ia44fsecy6hmhq",
+        "media_path": "/media/kph_u4lfs3izcak2ia44fsecy6hmhq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_h7wgdkkw6ykhtqcbjy3wxumika",
+      "position": 34,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TSqcqRr",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-TSqcqRr",
+        "filename": "PXL_20201129_010337033.jpg",
+        "format": "JPG",
+        "archived_md5": "cbc5d3fdc4a8ca59a78edad03f25e8e4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_010337033.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4098463,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:03:37+00:00",
+          "normalized": "2020-11-29T18:03:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:04+00:00",
+          "normalized": "2022-11-13T01:52:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_h7wgdkkw6ykhtqcbjy3wxumika",
+        "media_path": "/media/kph_h7wgdkkw6ykhtqcbjy3wxumika",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bynlqb46n2t3jbcg2mgr5twl6q",
+      "position": 35,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qqrkHSw",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-qqrkHSw",
+        "filename": "PXL_20201129_010631873.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a011782cfe64128b4ecdc7669c9920e7"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_010631873.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6385117,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:06:31+00:00",
+          "normalized": "2020-11-29T18:06:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:09+00:00",
+          "normalized": "2022-11-13T01:52:09Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bynlqb46n2t3jbcg2mgr5twl6q",
+        "media_path": "/media/kph_bynlqb46n2t3jbcg2mgr5twl6q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vca4vihtix3r3f3o6wonrhhwti",
+      "position": 36,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rpJPDLs",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-rpJPDLs",
+        "filename": "PXL_20201129_010917393.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "1690ea10b7f17c9433b1ed8260335d15"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_010917393.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6893504,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:09:17+00:00",
+          "normalized": "2020-11-29T18:09:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:22+00:00",
+          "normalized": "2022-11-13T01:52:22Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vca4vihtix3r3f3o6wonrhhwti",
+        "media_path": "/media/kph_vca4vihtix3r3f3o6wonrhhwti",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pcl7vlsf64xyn7dnvf5bdom5de",
+      "position": 37,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "GSgSC5V",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-GSgSC5V",
+        "filename": "PXL_20201129_010943805.jpg",
+        "format": "JPG",
+        "archived_md5": "c0c440ba664fa20e3730697cbcd4bbae"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_010943805.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4448000,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:09:43+00:00",
+          "normalized": "2020-11-29T18:09:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:21+00:00",
+          "normalized": "2022-11-13T01:52:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pcl7vlsf64xyn7dnvf5bdom5de",
+        "media_path": "/media/kph_pcl7vlsf64xyn7dnvf5bdom5de",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xcueb6on6radkxfkswuwpmuzke",
+      "position": 38,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "V5Z3tjT",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-V5Z3tjT",
+        "filename": "PXL_20201129_011156794.jpg",
+        "format": "JPG",
+        "archived_md5": "30164093c3d659f4d4d229cd288087a7"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_011156794.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3682869,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:11:56+00:00",
+          "normalized": "2020-11-29T18:11:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:32+00:00",
+          "normalized": "2022-11-13T01:52:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xcueb6on6radkxfkswuwpmuzke",
+        "media_path": "/media/kph_xcueb6on6radkxfkswuwpmuzke",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_stn7uc3rthpvkdlenprzceaqre",
+      "position": 39,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jHwKCcZ",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-jHwKCcZ",
+        "filename": "PXL_20201129_012605453.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "f226c8af6aa429b220bf5b307f974a91"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_012605453.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6184053,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:26:05+00:00",
+          "normalized": "2020-11-29T18:26:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:38+00:00",
+          "normalized": "2022-11-13T01:52:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_stn7uc3rthpvkdlenprzceaqre",
+        "media_path": "/media/kph_stn7uc3rthpvkdlenprzceaqre",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3ovhjy4qbkldxmcrdkz7uvhl44",
+      "position": 40,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "X3R48mJ",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-X3R48mJ",
+        "filename": "PXL_20201129_013646539.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "21fb5d0b495b5cb5477d92079a8b1b19"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_013646539.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 7058322,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:36:46+00:00",
+          "normalized": "2020-11-29T18:36:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:53+00:00",
+          "normalized": "2022-11-13T01:52:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3ovhjy4qbkldxmcrdkz7uvhl44",
+        "media_path": "/media/kph_3ovhjy4qbkldxmcrdkz7uvhl44",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_o3pc45f54drwfoobgresg7qisq",
+      "position": 41,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5btJ2Hc",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-5btJ2Hc",
+        "filename": "PXL_20201129_013851942.jpg",
+        "format": "JPG",
+        "archived_md5": "a1090788e7f509a3cd5f5be54c8581af"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_013851942.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3908057,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:38:51+00:00",
+          "normalized": "2020-11-29T18:38:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:52:48+00:00",
+          "normalized": "2022-11-13T01:52:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_o3pc45f54drwfoobgresg7qisq",
+        "media_path": "/media/kph_o3pc45f54drwfoobgresg7qisq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_aqtfm7es5wb2ws4xnwporepxty",
+      "position": 42,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HP8MF7g",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-HP8MF7g",
+        "filename": "PXL_20201129_015318908.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "d0c4e49201fe9d44da14181e5128034f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_015318908.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6463799,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T18:53:18+00:00",
+          "normalized": "2020-11-29T18:53:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:04+00:00",
+          "normalized": "2022-11-13T01:53:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_aqtfm7es5wb2ws4xnwporepxty",
+        "media_path": "/media/kph_aqtfm7es5wb2ws4xnwporepxty",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dg5axsxxg6fgymc666t2hlly4m",
+      "position": 43,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TL79nsq",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-TL79nsq",
+        "filename": "PXL_20201129_021846694.jpg",
+        "format": "JPG",
+        "archived_md5": "4caab59faf6aae1f1f6cbb31d8da0ce0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_021846694.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4398833,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T19:18:46+00:00",
+          "normalized": "2020-11-29T19:18:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:04+00:00",
+          "normalized": "2022-11-13T01:53:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dg5axsxxg6fgymc666t2hlly4m",
+        "media_path": "/media/kph_dg5axsxxg6fgymc666t2hlly4m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zygkn6hcqirjiovqworlqnpvdm",
+      "position": 44,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WxgQBvg",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-WxgQBvg",
+        "filename": "PXL_20201129_022121378.jpg",
+        "format": "JPG",
+        "archived_md5": "beadb01f32dfa97bd803921ba03c1cd8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_022121378.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4660838,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T19:21:21+00:00",
+          "normalized": "2020-11-29T19:21:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:16+00:00",
+          "normalized": "2022-11-13T01:53:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zygkn6hcqirjiovqworlqnpvdm",
+        "media_path": "/media/kph_zygkn6hcqirjiovqworlqnpvdm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_okg3pa2m5tiuh6shlj45qjjnmm",
+      "position": 45,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "m2rBHZK",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-m2rBHZK",
+        "filename": "PXL_20201129_022211036.jpg",
+        "format": "JPG",
+        "archived_md5": "20981bef69d53ddc4816f6a7f2521456"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_022211036.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3813259,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T19:22:11+00:00",
+          "normalized": "2020-11-29T19:22:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:15+00:00",
+          "normalized": "2022-11-13T01:53:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_okg3pa2m5tiuh6shlj45qjjnmm",
+        "media_path": "/media/kph_okg3pa2m5tiuh6shlj45qjjnmm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6rdfviui647zagdlbv7lkv3kxu",
+      "position": 46,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "S5Jf2jW",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-S5Jf2jW",
+        "filename": "PXL_20201129_022504037.jpg",
+        "format": "JPG",
+        "archived_md5": "5a1e9ab8464b5c7a51c289abc8fd69c9"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_022504037.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3085854,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T19:25:04+00:00",
+          "normalized": "2020-11-29T19:25:04Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:23+00:00",
+          "normalized": "2022-11-13T01:53:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6rdfviui647zagdlbv7lkv3kxu",
+        "media_path": "/media/kph_6rdfviui647zagdlbv7lkv3kxu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6y2eod6azu3hwp4lj3qmo4c4pq",
+      "position": 47,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gZQBb4x",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-gZQBb4x",
+        "filename": "PXL_20201129_023543030.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "1d2faedc3f1ef72922a078a61bb25184"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_023543030.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6437551,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T19:35:43+00:00",
+          "normalized": "2020-11-29T19:35:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:35+00:00",
+          "normalized": "2022-11-13T01:53:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6y2eod6azu3hwp4lj3qmo4c4pq",
+        "media_path": "/media/kph_6y2eod6azu3hwp4lj3qmo4c4pq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hnwpnxna7xthadhbqjiywsdf5i",
+      "position": 48,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5QSN5Dq",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-5QSN5Dq",
+        "filename": "PXL_20201129_025110573.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "0b10da8254ef92718d041c13567bf915"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_025110573.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6107939,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T19:51:10+00:00",
+          "normalized": "2020-11-29T19:51:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:43+00:00",
+          "normalized": "2022-11-13T01:53:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hnwpnxna7xthadhbqjiywsdf5i",
+        "media_path": "/media/kph_hnwpnxna7xthadhbqjiywsdf5i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ifqvtwvdx2q6xmx5bltymsst3a",
+      "position": 49,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jjz9Lmj",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-jjz9Lmj",
+        "filename": "PXL_20201129_033102055.jpg",
+        "format": "JPG",
+        "archived_md5": "3964da86bade41db258d7d4a4e1d7fef"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_033102055.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3271577,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T20:31:02+00:00",
+          "normalized": "2020-11-29T20:31:02Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:44+00:00",
+          "normalized": "2022-11-13T01:53:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ifqvtwvdx2q6xmx5bltymsst3a",
+        "media_path": "/media/kph_ifqvtwvdx2q6xmx5bltymsst3a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bfljo6xhl7opplyh7phsscbmim",
+      "position": 50,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "6kNhs3m",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-6kNhs3m",
+        "filename": "PXL_20201129_061742170.jpg",
+        "format": "JPG",
+        "archived_md5": "55c9a01dd3c62a0b985c36cefb9063cc"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_061742170.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3091316,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T23:17:42+00:00",
+          "normalized": "2020-11-29T23:17:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:52+00:00",
+          "normalized": "2022-11-13T01:53:52Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bfljo6xhl7opplyh7phsscbmim",
+        "media_path": "/media/kph_bfljo6xhl7opplyh7phsscbmim",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_iz6q4n2db3m6xfhyftwomeueg4",
+      "position": 51,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sg2pcmZ",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-sg2pcmZ",
+        "filename": "PXL_20201129_061803321.jpg",
+        "format": "JPG",
+        "archived_md5": "623f977d2fde45363003543194a2bb40"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_061803321.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4467978,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T23:18:03+00:00",
+          "normalized": "2020-11-29T23:18:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:53:56+00:00",
+          "normalized": "2022-11-13T01:53:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_iz6q4n2db3m6xfhyftwomeueg4",
+        "media_path": "/media/kph_iz6q4n2db3m6xfhyftwomeueg4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_h2rwgdhw2w2nyseriveiawt3ey",
+      "position": 52,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VQwJKtL",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-VQwJKtL",
+        "filename": "PXL_20201129_064513384.jpg",
+        "format": "JPG",
+        "archived_md5": "4531915b88d2503018875586fd7a7608"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_064513384.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3960650,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T23:45:13+00:00",
+          "normalized": "2020-11-29T23:45:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:02+00:00",
+          "normalized": "2022-11-13T01:54:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_h2rwgdhw2w2nyseriveiawt3ey",
+        "media_path": "/media/kph_h2rwgdhw2w2nyseriveiawt3ey",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_57g5eywcdxtvwuxkg6hg4czwka",
+      "position": 53,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8zPw4Ls",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-8zPw4Ls",
+        "filename": "PXL_20201129_065542163.jpg",
+        "format": "JPG",
+        "archived_md5": "ad57b5c2bc7fa1ed3b69aaef357f8deb"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_065542163.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2862456,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T23:55:42+00:00",
+          "normalized": "2020-11-29T23:55:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:04+00:00",
+          "normalized": "2022-11-13T01:54:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_57g5eywcdxtvwuxkg6hg4czwka",
+        "media_path": "/media/kph_57g5eywcdxtvwuxkg6hg4czwka",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zuyiid2phm63s363btbi6skcci",
+      "position": 54,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hSRzRjD",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-hSRzRjD",
+        "filename": "PXL_20201129_065932632.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "fccc940574e2a9bec2f6907fd04e37ca"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_065932632.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5974076,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-29T23:59:32+00:00",
+          "normalized": "2020-11-29T23:59:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:20+00:00",
+          "normalized": "2022-11-13T01:54:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zuyiid2phm63s363btbi6skcci",
+        "media_path": "/media/kph_zuyiid2phm63s363btbi6skcci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_nb25ut2gowkwwrchlhikgcjy6y",
+      "position": 55,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "KLhshRQ",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-KLhshRQ",
+        "filename": "PXL_20201129_070035868.jpg",
+        "format": "JPG",
+        "archived_md5": "7994ad85f295e3704bf19f1c54061c68"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_070035868.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4647613,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-30T00:00:35+00:00",
+          "normalized": "2020-11-30T00:00:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:18+00:00",
+          "normalized": "2022-11-13T01:54:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nb25ut2gowkwwrchlhikgcjy6y",
+        "media_path": "/media/kph_nb25ut2gowkwwrchlhikgcjy6y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5wvj3rz2qln5mlaoe4pqqmfcsa",
+      "position": 56,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hcHdKcB",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-hcHdKcB",
+        "filename": "PXL_20201129_070200710.jpg",
+        "format": "JPG",
+        "archived_md5": "22d1de5afad49e16138a9fac5f08eaa6"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_070200710.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4495721,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-30T00:02:00+00:00",
+          "normalized": "2020-11-30T00:02:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:31+00:00",
+          "normalized": "2022-11-13T01:54:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5wvj3rz2qln5mlaoe4pqqmfcsa",
+        "media_path": "/media/kph_5wvj3rz2qln5mlaoe4pqqmfcsa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eu26grkcvtjmplah2zqcwl446i",
+      "position": 57,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "6rfTPsC",
+        "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-6rfTPsC",
+        "filename": "PXL_20201129_071354718.jpg",
+        "format": "JPG",
+        "archived_md5": "9e637ed1fe74eeb8097484948cc64fa2"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201129_071354718.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2738104,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-30T00:13:54+00:00",
+          "normalized": "2020-11-30T00:13:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T01:54:29+00:00",
+          "normalized": "2022-11-13T01:54:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eu26grkcvtjmplah2zqcwl446i",
+        "media_path": "/media/kph_eu26grkcvtjmplah2zqcwl446i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

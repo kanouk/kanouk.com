@@ -1,0 +1,374 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:21+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2021-05-chihibu",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_t6p7z5l4572sfyh4qp2xutyq2u",
+    "slug": "2021-05-chihibu",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "X5QJ3X",
+      "web_uri": "https://kanolog.smugmug.com/20210529Chichibu"
+    },
+    "title": "Chihibu, 2021/05",
+    "description": "",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 7,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_p27clj3td6bbvc6qzt2ij4oo3a",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2DWLN6r",
+        "web_uri": "https://kanolog.smugmug.com/20210529Chichibu/i-2DWLN6r",
+        "filename": "PXL_20210529_025200864.jpg",
+        "format": "JPG",
+        "archived_md5": "d393525b79829d5b2427a4ca3584ce1d"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20210529_025200864.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3597725,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2021-05-29T18:52:00+00:00",
+          "normalized": "2021-05-29T18:52:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:19:13+00:00",
+          "normalized": "2022-12-26T22:19:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_p27clj3td6bbvc6qzt2ij4oo3a",
+        "media_path": "/media/kph_p27clj3td6bbvc6qzt2ij4oo3a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qsui6rhycrehw7c5kfhot3rkwi",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3TKBFSz",
+        "web_uri": "https://kanolog.smugmug.com/20210529Chichibu/i-3TKBFSz",
+        "filename": "PXL_20210529_030907179.jpg",
+        "format": "JPG",
+        "archived_md5": "16196e12f19220c1318e90e5a8ee389b"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20210529_030907179.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3864277,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2021-05-29T19:09:07+00:00",
+          "normalized": "2021-05-29T19:09:07Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:19:13+00:00",
+          "normalized": "2022-12-26T22:19:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qsui6rhycrehw7c5kfhot3rkwi",
+        "media_path": "/media/kph_qsui6rhycrehw7c5kfhot3rkwi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qinhrradlo5tfkg764h6glisce",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "br4DBkV",
+        "web_uri": "https://kanolog.smugmug.com/20210529Chichibu/i-br4DBkV",
+        "filename": "PXL_20210529_041218946.jpg",
+        "format": "JPG",
+        "archived_md5": "0b9d04481c8ca7b29f7c2912c79fe8b1"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20210529_041218946.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4769024,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2021-05-29T20:12:18+00:00",
+          "normalized": "2021-05-29T20:12:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:19:15+00:00",
+          "normalized": "2022-12-26T22:19:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qinhrradlo5tfkg764h6glisce",
+        "media_path": "/media/kph_qinhrradlo5tfkg764h6glisce",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sobukropkvovkapdejk34lh4rq",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QT5fFZK",
+        "web_uri": "https://kanolog.smugmug.com/20210529Chichibu/i-QT5fFZK",
+        "filename": "PXL_20210529_041220993.jpg",
+        "format": "JPG",
+        "archived_md5": "52a988155f9bd8b710bd9bc1d7bcdd17"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20210529_041220993.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4000310,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2021-05-29T20:12:20+00:00",
+          "normalized": "2021-05-29T20:12:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:19:25+00:00",
+          "normalized": "2022-12-26T22:19:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sobukropkvovkapdejk34lh4rq",
+        "media_path": "/media/kph_sobukropkvovkapdejk34lh4rq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jm2lynynytavjhbnfncp6ngyva",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "c6JPdgG",
+        "web_uri": "https://kanolog.smugmug.com/20210529Chichibu/i-c6JPdgG",
+        "filename": "PXL_20210529_042857829.jpg",
+        "format": "JPG",
+        "archived_md5": "8be882bc8b7c3bf3875f620f7ccc46aa"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20210529_042857829.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4000099,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2021-05-29T20:28:57+00:00",
+          "normalized": "2021-05-29T20:28:57Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:19:26+00:00",
+          "normalized": "2022-12-26T22:19:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jm2lynynytavjhbnfncp6ngyva",
+        "media_path": "/media/kph_jm2lynynytavjhbnfncp6ngyva",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_amxtucdhgs6alwm2lzmm563gfy",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "n6FBN43",
+        "web_uri": "https://kanolog.smugmug.com/20210529Chichibu/i-n6FBN43",
+        "filename": "PXL_20210529_043108746.jpg",
+        "format": "JPG",
+        "archived_md5": "d0138871fb1524512c6e6278e2a3512a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20210529_043108746.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3746216,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2021-05-29T20:31:08+00:00",
+          "normalized": "2021-05-29T20:31:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:19:27+00:00",
+          "normalized": "2022-12-26T22:19:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_amxtucdhgs6alwm2lzmm563gfy",
+        "media_path": "/media/kph_amxtucdhgs6alwm2lzmm563gfy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4ekpacgg6u5ydnu7cf37yg5thq",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CtLp3rg",
+        "web_uri": "https://kanolog.smugmug.com/20210529Chichibu/i-CtLp3rg",
+        "filename": "PXL_20210529_044241484.jpg",
+        "format": "JPG",
+        "archived_md5": "64607c43e9d87e36df688a7dd4eb6327"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20210529_044241484.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3351353,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2021-05-29T20:42:41+00:00",
+          "normalized": "2021-05-29T20:42:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:19:32+00:00",
+          "normalized": "2022-12-26T22:19:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4ekpacgg6u5ydnu7cf37yg5thq",
+        "media_path": "/media/kph_4ekpacgg6u5ydnu7cf37yg5thq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

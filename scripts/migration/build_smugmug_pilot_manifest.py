@@ -208,15 +208,16 @@ def merge_verified_progress(
         )
         if not same_source:
             continue
-        previous_key = previous.get("destination", {}).get("r2_object_key")
-        if previous_key:
-            asset["destination"]["r2_object_key"] = previous_key
-        previous_media_id = previous.get("destination", {}).get("emdash_media_id")
-        if previous_media_id:
-            asset["destination"]["emdash_media_id"] = previous_media_id
-        previous_content_id = previous.get("destination", {}).get("emdash_content_id")
-        if previous_content_id:
-            asset["destination"]["emdash_content_id"] = previous_content_id
+        for key in (
+            "r2_object_key",
+            "emdash_media_id",
+            "emdash_content_id",
+            "poster_media_id",
+            "poster_r2_object_key",
+        ):
+            previous_value = previous.get("destination", {}).get(key)
+            if previous_value:
+                asset["destination"][key] = previous_value
         if previous.get("verification", {}).get("source_md5_verified"):
             asset["verification"] = previous["verification"]
     return fresh

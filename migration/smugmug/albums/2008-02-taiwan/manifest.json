@@ -1,0 +1,5126 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:14+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2008-02-taiwan",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_zac6q5c7hdwmvqfu3gzzakoj7m",
+    "slug": "2008-02-taiwan",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "N9k82V",
+      "web_uri": "https://kanolog.smugmug.com/20080229taiwan"
+    },
+    "title": "Taiwan, 2008/02",
+    "description": "上司に台湾に連れて行ってもらいました。初海外です。",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 106,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_ycqwkabovu3ej6gcd6wsdw7z2y",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xcqgdJw",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-xcqgdJw",
+        "filename": "2327097828.jpg",
+        "format": "JPG",
+        "archived_md5": "75315dee7470a04a8fb59601b93e7f2e"
+      },
+      "display": {
+        "title": "京成スカイライナー",
+        "caption": "出発前にパシャリ。",
+        "alt": "京成スカイライナー"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 153978,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-02-29T14:10:15+00:00",
+          "normalized": "2008-02-29T14:10:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:49+00:00",
+          "normalized": "2022-11-06T17:27:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ycqwkabovu3ej6gcd6wsdw7z2y",
+        "media_path": "/media/kph_ycqwkabovu3ej6gcd6wsdw7z2y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_y666wtsdodggtoq4wa45iqfv2y",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8TzqC5c",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-8TzqC5c",
+        "filename": "2326283307.jpg",
+        "format": "JPG",
+        "archived_md5": "91b0607e55e91aca2d4ba94b38d0a851"
+      },
+      "display": {
+        "title": "成田空港",
+        "caption": "すでに初国外。",
+        "alt": "成田空港"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 128142,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-02-29T16:02:27+00:00",
+          "normalized": "2008-02-29T16:02:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:48+00:00",
+          "normalized": "2022-11-06T17:27:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_y666wtsdodggtoq4wa45iqfv2y",
+        "media_path": "/media/kph_y666wtsdodggtoq4wa45iqfv2y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_u52zxejhreoabxkdelp7aztnue",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zqGvV6D",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-zqGvV6D",
+        "filename": "52466265454.jpg",
+        "format": "JPG",
+        "archived_md5": "1318a63ad928069f5e9239ad616a67bb"
+      },
+      "display": {
+        "title": "成田空港",
+        "caption": "",
+        "alt": "成田空港"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 101192,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-02-29T16:02:57+00:00",
+          "normalized": "2008-02-29T16:02:57Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:00:07+00:00",
+          "normalized": "2022-11-06T17:00:07Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_u52zxejhreoabxkdelp7aztnue",
+        "media_path": "/media/kph_u52zxejhreoabxkdelp7aztnue",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5ebto5tymmovnb4r2cfeiaoa5m",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BZMHdCM",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-BZMHdCM",
+        "filename": "52466537778.jpg",
+        "format": "JPG",
+        "archived_md5": "588adf8cbc38a5821b7207d3ac6fb50a"
+      },
+      "display": {
+        "title": "待ち合わせ場所の免税店",
+        "caption": "",
+        "alt": "待ち合わせ場所の免税店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 192703,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-02-29T23:55:51+00:00",
+          "normalized": "2008-02-29T23:55:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:59:59+00:00",
+          "normalized": "2022-11-06T16:59:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5ebto5tymmovnb4r2cfeiaoa5m",
+        "media_path": "/media/kph_5ebto5tymmovnb4r2cfeiaoa5m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_uejly2ijhemmcnglyxr7ntmdgi",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "q4F7J5n",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-q4F7J5n",
+        "filename": "2327098740.jpg",
+        "format": "JPG",
+        "archived_md5": "2ee91bb3012fd7a1e9d8995a59020733"
+      },
+      "display": {
+        "title": "少し時間があったので",
+        "caption": "周辺をフラフラ",
+        "alt": "少し時間があったので"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 202242,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-02-29T23:59:56+00:00",
+          "normalized": "2008-02-29T23:59:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:45+00:00",
+          "normalized": "2022-11-06T17:27:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_uejly2ijhemmcnglyxr7ntmdgi",
+        "media_path": "/media/kph_uejly2ijhemmcnglyxr7ntmdgi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_aqvza62xmmxluae73cboy7pwsa",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qkxtjgr",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-qkxtjgr",
+        "filename": "2326284201.jpg",
+        "format": "JPG",
+        "archived_md5": "5b3699875ab59a4b186b7e962d14ad9e"
+      },
+      "display": {
+        "title": "まだ免税店前",
+        "caption": "違う国にいるんだなぁって、まだ実感がない。",
+        "alt": "まだ免税店前"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 181008,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T00:00:54+00:00",
+          "normalized": "2008-03-01T00:00:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:44+00:00",
+          "normalized": "2022-11-06T17:27:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_aqvza62xmmxluae73cboy7pwsa",
+        "media_path": "/media/kph_aqvza62xmmxluae73cboy7pwsa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_naxfl3b6rrwgxjtqsm2hiyzp6m",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HCqQH92",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-HCqQH92",
+        "filename": "2327099298.jpg",
+        "format": "JPG",
+        "archived_md5": "50dae88397008b02d249961c5b845694"
+      },
+      "display": {
+        "title": "キラキラしてる建物が見える",
+        "caption": "よく考えてみるとそれほど珍しくもないか。",
+        "alt": "キラキラしてる建物が見える"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 201122,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T00:01:17+00:00",
+          "normalized": "2008-03-01T00:01:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:44+00:00",
+          "normalized": "2022-11-06T17:27:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_naxfl3b6rrwgxjtqsm2hiyzp6m",
+        "media_path": "/media/kph_naxfl3b6rrwgxjtqsm2hiyzp6m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hj5xzinsrdfdr2ljgjscp6qram",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "9H5HMft",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-9H5HMft",
+        "filename": "52466538568.jpg",
+        "format": "JPG",
+        "archived_md5": "547aa54ba1b4a9a85f8243959982542e"
+      },
+      "display": {
+        "title": "電車発見",
+        "caption": "",
+        "alt": "電車発見"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 262114,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T00:03:14+00:00",
+          "normalized": "2008-03-01T00:03:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:59:58+00:00",
+          "normalized": "2022-11-06T16:59:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hj5xzinsrdfdr2ljgjscp6qram",
+        "media_path": "/media/kph_hj5xzinsrdfdr2ljgjscp6qram",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4ndumpvsx7bedevsjjrcarcxom",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RmTNLhM",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-RmTNLhM",
+        "filename": "2327100030.jpg",
+        "format": "JPG",
+        "archived_md5": "a8a70bb483926c88d76ff1f5d699edf2"
+      },
+      "display": {
+        "title": "裏路地をウロウロ",
+        "caption": "さっそく裏道へ…",
+        "alt": "裏路地をウロウロ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 221459,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T00:05:34+00:00",
+          "normalized": "2008-03-01T00:05:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:42+00:00",
+          "normalized": "2022-11-06T17:27:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4ndumpvsx7bedevsjjrcarcxom",
+        "media_path": "/media/kph_4ndumpvsx7bedevsjjrcarcxom",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3rfhk2cawihexx6zhg3h2bbtwq",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Hh5dTwR",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-Hh5dTwR",
+        "filename": "2326285491.jpg",
+        "format": "JPG",
+        "archived_md5": "94fdde6197c2b22864d97e0ff20eba6f"
+      },
+      "display": {
+        "title": "厠は読めるぞ",
+        "caption": "",
+        "alt": "厠は読めるぞ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 241339,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:12:08+00:00",
+          "normalized": "2008-03-01T02:12:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:40+00:00",
+          "normalized": "2022-11-06T17:27:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3rfhk2cawihexx6zhg3h2bbtwq",
+        "media_path": "/media/kph_3rfhk2cawihexx6zhg3h2bbtwq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_oynvrelm3tz2a6qdfao7nbx3am",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gFpfb4m",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-gFpfb4m",
+        "filename": "2326285715.jpg",
+        "format": "JPG",
+        "archived_md5": "653f28e212341b6bbe879522304f7df1"
+      },
+      "display": {
+        "title": "怪しげな建物へ...",
+        "caption": "",
+        "alt": "怪しげな建物へ..."
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 182339,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:12:31+00:00",
+          "normalized": "2008-03-01T02:12:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:40+00:00",
+          "normalized": "2022-11-06T17:27:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_oynvrelm3tz2a6qdfao7nbx3am",
+        "media_path": "/media/kph_oynvrelm3tz2a6qdfao7nbx3am",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4qbvapkvcadhc5n22mwxozkzzm",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sZzv5Bg",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-sZzv5Bg",
+        "filename": "2326285983.jpg",
+        "format": "JPG",
+        "archived_md5": "9282d58d7aa7973854a5b79fa4ff32b8"
+      },
+      "display": {
+        "title": "TAIPEI 101",
+        "caption": "高い…",
+        "alt": "TAIPEI 101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 185227,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:38:24+00:00",
+          "normalized": "2008-03-01T02:38:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:39+00:00",
+          "normalized": "2022-11-06T17:27:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4qbvapkvcadhc5n22mwxozkzzm",
+        "media_path": "/media/kph_4qbvapkvcadhc5n22mwxozkzzm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3bcjbbfhgoajmtisugabjr4y2y",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "v3DL2Lr",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-v3DL2Lr",
+        "filename": "2327101146.jpg",
+        "format": "JPG",
+        "archived_md5": "ca1f585203d674d69ccac0d8e0c543a1"
+      },
+      "display": {
+        "title": "TAIPEI101の下",
+        "caption": "",
+        "alt": "TAIPEI101の下"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 179054,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:38:41+00:00",
+          "normalized": "2008-03-01T02:38:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:39+00:00",
+          "normalized": "2022-11-06T17:27:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3bcjbbfhgoajmtisugabjr4y2y",
+        "media_path": "/media/kph_3bcjbbfhgoajmtisugabjr4y2y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_egfp2awerzn4hxfkrc62vf2r2m",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cvfvZMb",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-cvfvZMb",
+        "filename": "2327101476.jpg",
+        "format": "JPG",
+        "archived_md5": "997d4a79cb42d986b609f49222d98b82"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 203586,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:40:30+00:00",
+          "normalized": "2008-03-01T02:40:30Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:37+00:00",
+          "normalized": "2022-11-06T17:27:37Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_egfp2awerzn4hxfkrc62vf2r2m",
+        "media_path": "/media/kph_egfp2awerzn4hxfkrc62vf2r2m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3tgxhhvcmm45wpcan7feexdfmq",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "44SQ8TB",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-44SQ8TB",
+        "filename": "2327101930.jpg",
+        "format": "JPG",
+        "archived_md5": "0c21c287f023fb2acd275864893f8101"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "全部は画角に入らなそう",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 160898,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:41:24+00:00",
+          "normalized": "2008-03-01T02:41:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:35+00:00",
+          "normalized": "2022-11-06T17:27:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3tgxhhvcmm45wpcan7feexdfmq",
+        "media_path": "/media/kph_3tgxhhvcmm45wpcan7feexdfmq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_q6sreuemdr74lz2mqeuztczhta",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VWKSP8Z",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-VWKSP8Z",
+        "filename": "2327102074.jpg",
+        "format": "JPG",
+        "archived_md5": "d85b768021a253d3bffd01939fbf84e6"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "めっちゃ低い位置から撮ってみた",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 96783,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:41:40+00:00",
+          "normalized": "2008-03-01T02:41:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:36+00:00",
+          "normalized": "2022-11-06T17:27:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_q6sreuemdr74lz2mqeuztczhta",
+        "media_path": "/media/kph_q6sreuemdr74lz2mqeuztczhta",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_imzztyt3jzvlsxxydzkiih3g7q",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sjLFSDW",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-sjLFSDW",
+        "filename": "2327102448.jpg",
+        "format": "JPG",
+        "archived_md5": "09154ac3fc5e20fa4c0ee8369046e4dc"
+      },
+      "display": {
+        "title": "独特",
+        "caption": "",
+        "alt": "独特"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 154926,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T02:42:07+00:00",
+          "normalized": "2008-03-01T02:42:07Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:34+00:00",
+          "normalized": "2022-11-06T17:27:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_imzztyt3jzvlsxxydzkiih3g7q",
+        "media_path": "/media/kph_imzztyt3jzvlsxxydzkiih3g7q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mq4iwdypmxqtdb3qaqeaetu2vm",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SL64HsS",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-SL64HsS",
+        "filename": "2327102564.jpg",
+        "format": "JPG",
+        "archived_md5": "c04aed807dd0fee1105b3f4361592a55"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "上から見た夜景",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 85058,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:32:21+00:00",
+          "normalized": "2008-03-01T03:32:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:33+00:00",
+          "normalized": "2022-11-06T17:27:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mq4iwdypmxqtdb3qaqeaetu2vm",
+        "media_path": "/media/kph_mq4iwdypmxqtdb3qaqeaetu2vm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_k3l5oy5dbjojmwwzauaa2mie4y",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QvXj9WZ",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-QvXj9WZ",
+        "filename": "2327102682.jpg",
+        "format": "JPG",
+        "archived_md5": "cfffd9091a92119407cc54a6c403670a"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 88428,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:32:32+00:00",
+          "normalized": "2008-03-01T03:32:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:33+00:00",
+          "normalized": "2022-11-06T17:27:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_k3l5oy5dbjojmwwzauaa2mie4y",
+        "media_path": "/media/kph_k3l5oy5dbjojmwwzauaa2mie4y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_nc5wk6rlhyivvx6b6v56lbcerq",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "w92KKCw",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-w92KKCw",
+        "filename": "2327102890.jpg",
+        "format": "JPG",
+        "archived_md5": "bad0e1a7539cabd3884e989cbd701b51"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "しかたないのでパネルを撮った",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 145704,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:35:23+00:00",
+          "normalized": "2008-03-01T03:35:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:31+00:00",
+          "normalized": "2022-11-06T17:27:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nc5wk6rlhyivvx6b6v56lbcerq",
+        "media_path": "/media/kph_nc5wk6rlhyivvx6b6v56lbcerq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jcso7izsvehji2rtocp4ws5tdq",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "GQ4dXDm",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-GQ4dXDm",
+        "filename": "2327103048.jpg",
+        "format": "JPG",
+        "archived_md5": "4651e5f1652f0cc1103c6f7a4644d710"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 115978,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:36:58+00:00",
+          "normalized": "2008-03-01T03:36:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:31+00:00",
+          "normalized": "2022-11-06T17:27:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jcso7izsvehji2rtocp4ws5tdq",
+        "media_path": "/media/kph_jcso7izsvehji2rtocp4ws5tdq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_47dutb5vjiwws5ussi2gbpu5ly",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vmrxVG4",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-vmrxVG4",
+        "filename": "2327103158.jpg",
+        "format": "JPG",
+        "archived_md5": "0102485868b5999487881f760c0dd442"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 91103,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:39:26+00:00",
+          "normalized": "2008-03-01T03:39:26Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:30+00:00",
+          "normalized": "2022-11-06T17:27:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_47dutb5vjiwws5ussi2gbpu5ly",
+        "media_path": "/media/kph_47dutb5vjiwws5ussi2gbpu5ly",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mhbity7wp5txla5xbngqt25xmi",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "b4BTFKd",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-b4BTFKd",
+        "filename": "2327103224.jpg",
+        "format": "JPG",
+        "archived_md5": "13ee6303cc8c9b661122e85241c72805"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 52852,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:39:35+00:00",
+          "normalized": "2008-03-01T03:39:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:29+00:00",
+          "normalized": "2022-11-06T17:27:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mhbity7wp5txla5xbngqt25xmi",
+        "media_path": "/media/kph_mhbity7wp5txla5xbngqt25xmi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vjuzamnidzufgebk67knsgpiei",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QfPBTGj",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-QfPBTGj",
+        "filename": "2327103430.jpg",
+        "format": "JPG",
+        "archived_md5": "0bf6d457b88781f8ff980ea449ed70ee"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 128826,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:39:52+00:00",
+          "normalized": "2008-03-01T03:39:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:28+00:00",
+          "normalized": "2022-11-06T17:27:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vjuzamnidzufgebk67knsgpiei",
+        "media_path": "/media/kph_vjuzamnidzufgebk67knsgpiei",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_frfsnma6y7fqasuswjxygern7e",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gKvdF7M",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-gKvdF7M",
+        "filename": "2326288545.jpg",
+        "format": "JPG",
+        "archived_md5": "e9d4d6c8af00fb52ae1807ef24a41ba1"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "上手く撮れない",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 101293,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:40:04+00:00",
+          "normalized": "2008-03-01T03:40:04Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:28+00:00",
+          "normalized": "2022-11-06T17:27:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_frfsnma6y7fqasuswjxygern7e",
+        "media_path": "/media/kph_frfsnma6y7fqasuswjxygern7e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_b3b3mveb6rg6jokbclbcjtzlby",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cRTnXLn",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-cRTnXLn",
+        "filename": "2327103722.jpg",
+        "format": "JPG",
+        "archived_md5": "8e3892bf416db38e30e92a6e8105954b"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 91151,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:40:40+00:00",
+          "normalized": "2008-03-01T03:40:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:27+00:00",
+          "normalized": "2022-11-06T17:27:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_b3b3mveb6rg6jokbclbcjtzlby",
+        "media_path": "/media/kph_b3b3mveb6rg6jokbclbcjtzlby",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6bin7dp7md5ndmnfuvbvzmev2y",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "wmQZdgw",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-wmQZdgw",
+        "filename": "2327103902.jpg",
+        "format": "JPG",
+        "archived_md5": "e22413aa59136d38566941a619b35a4a"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 176505,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:52:22+00:00",
+          "normalized": "2008-03-01T03:52:22Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:26+00:00",
+          "normalized": "2022-11-06T17:27:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6bin7dp7md5ndmnfuvbvzmev2y",
+        "media_path": "/media/kph_6bin7dp7md5ndmnfuvbvzmev2y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vfehzkocyclp3feliyquhjbqra",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5czjtGh",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-5czjtGh",
+        "filename": "2327104090.jpg",
+        "format": "JPG",
+        "archived_md5": "7b62413ea9ce27c1dfe2cbf5a18f9a74"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 167002,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:52:40+00:00",
+          "normalized": "2008-03-01T03:52:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:25+00:00",
+          "normalized": "2022-11-06T17:27:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vfehzkocyclp3feliyquhjbqra",
+        "media_path": "/media/kph_vfehzkocyclp3feliyquhjbqra",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_o65ho7falwhv4kfwtke5afkle4",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Ptf4Lfb",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-Ptf4Lfb",
+        "filename": "2327104208.jpg",
+        "format": "JPG",
+        "archived_md5": "3c4294a9fcbdf84bbfefd65bdbf54cd3"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 108737,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:53:49+00:00",
+          "normalized": "2008-03-01T03:53:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:25+00:00",
+          "normalized": "2022-11-06T17:27:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_o65ho7falwhv4kfwtke5afkle4",
+        "media_path": "/media/kph_o65ho7falwhv4kfwtke5afkle4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_micnn2esur6maact76riq7tcia",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "H9GMsTb",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-H9GMsTb",
+        "filename": "2326289339.jpg",
+        "format": "JPG",
+        "archived_md5": "a3e9b65406ea264fd5b5d7d7a94013b5"
+      },
+      "display": {
+        "title": "TAIPEI101",
+        "caption": "",
+        "alt": "TAIPEI101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 93191,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T03:54:06+00:00",
+          "normalized": "2008-03-01T03:54:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:23+00:00",
+          "normalized": "2022-11-06T17:27:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_micnn2esur6maact76riq7tcia",
+        "media_path": "/media/kph_micnn2esur6maact76riq7tcia",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2o7c527tw4weiqzzwxgnmf4er4",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sPMrR3R",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-sPMrR3R",
+        "filename": "2326289501.jpg",
+        "format": "JPG",
+        "archived_md5": "81399ff5a43509aca8e94feadb22fbf9"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2326289501.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 149369,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T05:06:36+00:00",
+          "normalized": "2008-03-01T05:06:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:23+00:00",
+          "normalized": "2022-11-06T17:27:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2o7c527tw4weiqzzwxgnmf4er4",
+        "media_path": "/media/kph_2o7c527tw4weiqzzwxgnmf4er4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_i2gezdnrjx7z62nyeufmddaqzm",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "swzQNrj",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-swzQNrj",
+        "filename": "2327104672.jpg",
+        "format": "JPG",
+        "archived_md5": "bf503737f13747515bdc49031e71b5d1"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2327104672.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 148354,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T05:06:44+00:00",
+          "normalized": "2008-03-01T05:06:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:22+00:00",
+          "normalized": "2022-11-06T17:27:22Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_i2gezdnrjx7z62nyeufmddaqzm",
+        "media_path": "/media/kph_i2gezdnrjx7z62nyeufmddaqzm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6eu4qhrx54rd6enmkn3ooijfdq",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Jhwk7nD",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-Jhwk7nD",
+        "filename": "2327104832.jpg",
+        "format": "JPG",
+        "archived_md5": "7d81deb0cb2a8b6e2bdf351fa50fdef3"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2327104832.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 120945,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T05:06:53+00:00",
+          "normalized": "2008-03-01T05:06:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:22+00:00",
+          "normalized": "2022-11-06T17:27:22Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6eu4qhrx54rd6enmkn3ooijfdq",
+        "media_path": "/media/kph_6eu4qhrx54rd6enmkn3ooijfdq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_urxzmjhu3bcsoiwfga6jg6qchq",
+      "position": 34,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "bWmsHWG",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-bWmsHWG",
+        "filename": "2327105044.jpg",
+        "format": "JPG",
+        "archived_md5": "f8f64246244fc7bdbc8759440da95763"
+      },
+      "display": {
+        "title": "お祭りしてる",
+        "caption": "",
+        "alt": "お祭りしてる"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 185530,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T05:08:02+00:00",
+          "normalized": "2008-03-01T05:08:02Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:21+00:00",
+          "normalized": "2022-11-06T17:27:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_urxzmjhu3bcsoiwfga6jg6qchq",
+        "media_path": "/media/kph_urxzmjhu3bcsoiwfga6jg6qchq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7mz75bvgdtvxae56en3stptfai",
+      "position": 35,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xbxB8hT",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-xbxB8hT",
+        "filename": "2326290269.jpg",
+        "format": "JPG",
+        "archived_md5": "b32681153573924ed9234b11d369e9ce"
+      },
+      "display": {
+        "title": "龍山寺(2)",
+        "caption": "お寺とは思えないほどの派手派手しさ。",
+        "alt": "龍山寺(2)"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 150791,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T05:08:35+00:00",
+          "normalized": "2008-03-01T05:08:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:20+00:00",
+          "normalized": "2022-11-06T17:27:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7mz75bvgdtvxae56en3stptfai",
+        "media_path": "/media/kph_7mz75bvgdtvxae56en3stptfai",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_s235ufg2bxdyx2qboapnffr4lm",
+      "position": 36,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "L7RMbgb",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-L7RMbgb",
+        "filename": "2326290461.jpg",
+        "format": "JPG",
+        "archived_md5": "0a95665d371875aa2854b04bd7109b19"
+      },
+      "display": {
+        "title": "龍山寺(1)",
+        "caption": "みんな真剣に拝んでた。感動した。",
+        "alt": "龍山寺(1)"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 158593,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T05:09:00+00:00",
+          "normalized": "2008-03-01T05:09:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:19+00:00",
+          "normalized": "2022-11-06T17:27:19Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_s235ufg2bxdyx2qboapnffr4lm",
+        "media_path": "/media/kph_s235ufg2bxdyx2qboapnffr4lm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4coc52s7ndi7ptztpgmkf6bvxe",
+      "position": 37,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cwjXR9W",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-cwjXR9W",
+        "filename": "2327105598.jpg",
+        "format": "JPG",
+        "archived_md5": "3c507ce534bdc73ef2d73eb93958b804"
+      },
+      "display": {
+        "title": "お茶バーみたいなところ",
+        "caption": "台湾の若者は健全である。",
+        "alt": "お茶バーみたいなところ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 147179,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T08:12:35+00:00",
+          "normalized": "2008-03-01T08:12:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:19+00:00",
+          "normalized": "2022-11-06T17:27:19Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4coc52s7ndi7ptztpgmkf6bvxe",
+        "media_path": "/media/kph_4coc52s7ndi7ptztpgmkf6bvxe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zf3qsjuwwghzlot4icvljyxs2y",
+      "position": 38,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "G97L7HT",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-G97L7HT",
+        "filename": "2326290927.jpg",
+        "format": "JPG",
+        "archived_md5": "d0d0259b9b6e014e64a22ba4c3d81025"
+      },
+      "display": {
+        "title": "台北駅",
+        "caption": "首都の駅はやはり独特な味がある。",
+        "alt": "台北駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 174774,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T16:26:32+00:00",
+          "normalized": "2008-03-01T16:26:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:17+00:00",
+          "normalized": "2022-11-06T17:27:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zf3qsjuwwghzlot4icvljyxs2y",
+        "media_path": "/media/kph_zf3qsjuwwghzlot4icvljyxs2y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_76dt62k7eifs4uclzkeyfxaebm",
+      "position": 39,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vwFXspk",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-vwFXspk",
+        "filename": "2326291139.jpg",
+        "format": "JPG",
+        "archived_md5": "d43ec2ea6d8cfa2432e9306c31c70c94"
+      },
+      "display": {
+        "title": "映画とかで出てきそう",
+        "caption": "華僑のボスみたいな人がお茶を飲んでて面会する的なシーンというイメージ",
+        "alt": "映画とかで出てきそう"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 176889,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T16:36:08+00:00",
+          "normalized": "2008-03-01T16:36:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:17+00:00",
+          "normalized": "2022-11-06T17:27:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_76dt62k7eifs4uclzkeyfxaebm",
+        "media_path": "/media/kph_76dt62k7eifs4uclzkeyfxaebm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wvncahur2mosr44rcqtfee7jkq",
+      "position": 40,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hZFKbbM",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-hZFKbbM",
+        "filename": "2327106342.jpg",
+        "format": "JPG",
+        "archived_md5": "6106205ddf2b0a9ff879c57adad2ff78"
+      },
+      "display": {
+        "title": "こういう場所！",
+        "caption": "",
+        "alt": "こういう場所！"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 261182,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T16:36:37+00:00",
+          "normalized": "2008-03-01T16:36:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:16+00:00",
+          "normalized": "2022-11-06T17:27:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wvncahur2mosr44rcqtfee7jkq",
+        "media_path": "/media/kph_wvncahur2mosr44rcqtfee7jkq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sl62snum2gzn5nqjn4illx7sli",
+      "position": 41,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Qj8V7Pm",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-Qj8V7Pm",
+        "filename": "2326291699.jpg",
+        "format": "JPG",
+        "archived_md5": "7448644a446382250d393bc7bd19dd8e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2326291699.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 201534,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T16:39:06+00:00",
+          "normalized": "2008-03-01T16:39:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:16+00:00",
+          "normalized": "2022-11-06T17:27:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sl62snum2gzn5nqjn4illx7sli",
+        "media_path": "/media/kph_sl62snum2gzn5nqjn4illx7sli",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hylvln4e4cgddldwvzfb7zgfv4",
+      "position": 42,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PhD7K5c",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-PhD7K5c",
+        "filename": "2326291901.jpg",
+        "format": "JPG",
+        "archived_md5": "320581becebaec851ae605466cd2d0b4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2326291901.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 163079,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T16:39:30+00:00",
+          "normalized": "2008-03-01T16:39:30Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:15+00:00",
+          "normalized": "2022-11-06T17:27:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hylvln4e4cgddldwvzfb7zgfv4",
+        "media_path": "/media/kph_hylvln4e4cgddldwvzfb7zgfv4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cthswks4lhpaeg4coyokpha7ve",
+      "position": 43,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "wBX85GK",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-wBX85GK",
+        "filename": "2327106952.jpg",
+        "format": "JPG",
+        "archived_md5": "c26d500d476adb3d3ba33c76ebc1d9e2"
+      },
+      "display": {
+        "title": "看板とかを撮りたくなる",
+        "caption": "",
+        "alt": "看板とかを撮りたくなる"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 177499,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T16:46:56+00:00",
+          "normalized": "2008-03-01T16:46:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:14+00:00",
+          "normalized": "2022-11-06T17:27:14Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cthswks4lhpaeg4coyokpha7ve",
+        "media_path": "/media/kph_cthswks4lhpaeg4coyokpha7ve",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_feizni4ajcocr4byz4ygknqkz4",
+      "position": 44,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4JWK8Z3",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-4JWK8Z3",
+        "filename": "2327107166.jpg",
+        "format": "JPG",
+        "archived_md5": "4a3eaacc9dec7284e342605da26dbc33"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2327107166.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 160935,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T17:12:53+00:00",
+          "normalized": "2008-03-01T17:12:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:13+00:00",
+          "normalized": "2022-11-06T17:27:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_feizni4ajcocr4byz4ygknqkz4",
+        "media_path": "/media/kph_feizni4ajcocr4byz4ygknqkz4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6vcc7qyrowpfi36nmbgzlfiddm",
+      "position": 45,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZPD8SvB",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-ZPD8SvB",
+        "filename": "2326292467.jpg",
+        "format": "JPG",
+        "archived_md5": "16ee51562cc74b61c5189a354b5bae37"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2326292467.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 150974,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T17:14:08+00:00",
+          "normalized": "2008-03-01T17:14:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:13+00:00",
+          "normalized": "2022-11-06T17:27:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6vcc7qyrowpfi36nmbgzlfiddm",
+        "media_path": "/media/kph_6vcc7qyrowpfi36nmbgzlfiddm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qfnryw35kpmcizwx6zhfievu54",
+      "position": 46,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xxStDgk",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-xxStDgk",
+        "filename": "2326292573.jpg",
+        "format": "JPG",
+        "archived_md5": "426d3d710f86b33110728ece1f2cb40f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2326292573.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 97716,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T17:14:27+00:00",
+          "normalized": "2008-03-01T17:14:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:12+00:00",
+          "normalized": "2022-11-06T17:27:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qfnryw35kpmcizwx6zhfievu54",
+        "media_path": "/media/kph_qfnryw35kpmcizwx6zhfievu54",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6fakun3i4igrsqwhf2fmo4zlni",
+      "position": 47,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "p39x2Tg",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-p39x2Tg",
+        "filename": "2327107564.jpg",
+        "format": "JPG",
+        "archived_md5": "85de6938ebabda2595149ac6a02c4366"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2327107564.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 75348,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T17:14:39+00:00",
+          "normalized": "2008-03-01T17:14:39Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:11+00:00",
+          "normalized": "2022-11-06T17:27:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6fakun3i4igrsqwhf2fmo4zlni",
+        "media_path": "/media/kph_6fakun3i4igrsqwhf2fmo4zlni",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_orfkuihy4xjhw6tja7rpldkmi4",
+      "position": 48,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "F9vCJvs",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-F9vCJvs",
+        "filename": "2327107900.jpg",
+        "format": "JPG",
+        "archived_md5": "4984d63e8fe90ebd30a6338a4169f28c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2327107900.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 240361,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T17:15:34+00:00",
+          "normalized": "2008-03-01T17:15:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:10+00:00",
+          "normalized": "2022-11-06T17:27:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_orfkuihy4xjhw6tja7rpldkmi4",
+        "media_path": "/media/kph_orfkuihy4xjhw6tja7rpldkmi4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2ibjmrprilxmgb5nq246nt4vaq",
+      "position": 49,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "szGZTDn",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-szGZTDn",
+        "filename": "2327108244.jpg",
+        "format": "JPG",
+        "archived_md5": "f24a306d7417fbbe906640ebc906dfb5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "2327108244.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 297806,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T17:16:44+00:00",
+          "normalized": "2008-03-01T17:16:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:09+00:00",
+          "normalized": "2022-11-06T17:27:09Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2ibjmrprilxmgb5nq246nt4vaq",
+        "media_path": "/media/kph_2ibjmrprilxmgb5nq246nt4vaq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tye6ra3vvl33oxvou3oi6nrplu",
+      "position": 50,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MVXcgcJ",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-MVXcgcJ",
+        "filename": "2327108480.jpg",
+        "format": "JPG",
+        "archived_md5": "81139917c6089eb5bcbe347ff1555d10"
+      },
+      "display": {
+        "title": "IMG_0083",
+        "caption": "travel taiwan",
+        "alt": "IMG_0083"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 231832,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:27:53+00:00",
+          "normalized": "2008-03-01T18:27:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:09+00:00",
+          "normalized": "2022-11-06T17:27:09Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tye6ra3vvl33oxvou3oi6nrplu",
+        "media_path": "/media/kph_tye6ra3vvl33oxvou3oi6nrplu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qnr3y5ujqjpivxxvsqzzjairs4",
+      "position": 51,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jMMV9G8",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-jMMV9G8",
+        "filename": "2327108726.jpg",
+        "format": "JPG",
+        "archived_md5": "9b1f1e2c40450059ab5c4ee983e3ab88"
+      },
+      "display": {
+        "title": "IMG_0084",
+        "caption": "travel taiwan",
+        "alt": "IMG_0084"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 219553,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:27:59+00:00",
+          "normalized": "2008-03-01T18:27:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:08+00:00",
+          "normalized": "2022-11-06T17:27:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qnr3y5ujqjpivxxvsqzzjairs4",
+        "media_path": "/media/kph_qnr3y5ujqjpivxxvsqzzjairs4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lc2imunpssmgp3q4zqb745vvtq",
+      "position": 52,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "s7Sdx3n",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-s7Sdx3n",
+        "filename": "2327108862.jpg",
+        "format": "JPG",
+        "archived_md5": "0884674241f00f16a431aa54991a7acf"
+      },
+      "display": {
+        "title": "IMG_0085",
+        "caption": "travel taiwan",
+        "alt": "IMG_0085"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 115090,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:28:29+00:00",
+          "normalized": "2008-03-01T18:28:29Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:07+00:00",
+          "normalized": "2022-11-06T17:27:07Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lc2imunpssmgp3q4zqb745vvtq",
+        "media_path": "/media/kph_lc2imunpssmgp3q4zqb745vvtq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jnbp2w4c3jsncelypu7bf3npbe",
+      "position": 53,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cLQjfv6",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-cLQjfv6",
+        "filename": "2327109020.jpg",
+        "format": "JPG",
+        "archived_md5": "c755d12bf97536fbd0f53bb08119d5e6"
+      },
+      "display": {
+        "title": "IMG_0086",
+        "caption": "travel taiwan",
+        "alt": "IMG_0086"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 120202,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:28:52+00:00",
+          "normalized": "2008-03-01T18:28:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:06+00:00",
+          "normalized": "2022-11-06T17:27:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jnbp2w4c3jsncelypu7bf3npbe",
+        "media_path": "/media/kph_jnbp2w4c3jsncelypu7bf3npbe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bm47aasoizihlauylkgvkxmpea",
+      "position": 54,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xTZdT5S",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-xTZdT5S",
+        "filename": "2327109184.jpg",
+        "format": "JPG",
+        "archived_md5": "9c7e620796507a5fd429a64c864027d1"
+      },
+      "display": {
+        "title": "IMG_0087",
+        "caption": "travel taiwan",
+        "alt": "IMG_0087"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 114562,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:33:04+00:00",
+          "normalized": "2008-03-01T18:33:04Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:06+00:00",
+          "normalized": "2022-11-06T17:27:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bm47aasoizihlauylkgvkxmpea",
+        "media_path": "/media/kph_bm47aasoizihlauylkgvkxmpea",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_no7gxncsbknxizx3bdupectoji",
+      "position": 55,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4WrWqch",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-4WrWqch",
+        "filename": "2326294361.jpg",
+        "format": "JPG",
+        "archived_md5": "22141fcf6f2a8067aeabd7388071ba36"
+      },
+      "display": {
+        "title": "IMG_0088",
+        "caption": "travel taiwan",
+        "alt": "IMG_0088"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 174537,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:33:37+00:00",
+          "normalized": "2008-03-01T18:33:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:04+00:00",
+          "normalized": "2022-11-06T17:27:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_no7gxncsbknxizx3bdupectoji",
+        "media_path": "/media/kph_no7gxncsbknxizx3bdupectoji",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yywkluqrxzui6uatfahw4g76qy",
+      "position": 56,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LkzvG8Z",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-LkzvG8Z",
+        "filename": "2326294585.jpg",
+        "format": "JPG",
+        "archived_md5": "6249b799ab3893bf82e8f6c3cea742bc"
+      },
+      "display": {
+        "title": "IMG_0090",
+        "caption": "travel taiwan",
+        "alt": "IMG_0090"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 238860,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:44:54+00:00",
+          "normalized": "2008-03-01T18:44:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:04+00:00",
+          "normalized": "2022-11-06T17:27:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yywkluqrxzui6uatfahw4g76qy",
+        "media_path": "/media/kph_yywkluqrxzui6uatfahw4g76qy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xnh47xoax7qk26bxakaagpjo3i",
+      "position": 57,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "pwvkwz4",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-pwvkwz4",
+        "filename": "2326295019.jpg",
+        "format": "JPG",
+        "archived_md5": "cbb45e39b7770b3b632da1a1d8dbfcf3"
+      },
+      "display": {
+        "title": "IMG_0091",
+        "caption": "travel taiwan",
+        "alt": "IMG_0091"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 331481,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:47:56+00:00",
+          "normalized": "2008-03-01T18:47:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:03+00:00",
+          "normalized": "2022-11-06T17:27:03Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xnh47xoax7qk26bxakaagpjo3i",
+        "media_path": "/media/kph_xnh47xoax7qk26bxakaagpjo3i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_x6rbyqonzdogd2yfzhbmdluoxe",
+      "position": 58,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "h4f9XcW",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-h4f9XcW",
+        "filename": "2327110386.jpg",
+        "format": "JPG",
+        "archived_md5": "695ea107f90f7b2cf606e7e2b3ea0899"
+      },
+      "display": {
+        "title": "IMG_0092",
+        "caption": "travel taiwan",
+        "alt": "IMG_0092"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 344788,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:50:31+00:00",
+          "normalized": "2008-03-01T18:50:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:02+00:00",
+          "normalized": "2022-11-06T17:27:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_x6rbyqonzdogd2yfzhbmdluoxe",
+        "media_path": "/media/kph_x6rbyqonzdogd2yfzhbmdluoxe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sabhwpusa3egrojz5chrjzulrm",
+      "position": 59,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mbVQ8s4",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-mbVQ8s4",
+        "filename": "2327110642.jpg",
+        "format": "JPG",
+        "archived_md5": "9e05efbe500ad542d5bdfc1ebc24d9ea"
+      },
+      "display": {
+        "title": "IMG_0093",
+        "caption": "travel taiwan",
+        "alt": "IMG_0093"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 234536,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:54:06+00:00",
+          "normalized": "2008-03-01T18:54:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:01+00:00",
+          "normalized": "2022-11-06T17:27:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sabhwpusa3egrojz5chrjzulrm",
+        "media_path": "/media/kph_sabhwpusa3egrojz5chrjzulrm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_l3ggnzdipau7hiw3dqp5jxjh4m",
+      "position": 60,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5t85hz5",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-5t85hz5",
+        "filename": "2326296045.jpg",
+        "format": "JPG",
+        "archived_md5": "4651853136816315f08694a960fbb196"
+      },
+      "display": {
+        "title": "IMG_0094",
+        "caption": "travel taiwan",
+        "alt": "IMG_0094"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 279557,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:55:53+00:00",
+          "normalized": "2008-03-01T18:55:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:01+00:00",
+          "normalized": "2022-11-06T17:27:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_l3ggnzdipau7hiw3dqp5jxjh4m",
+        "media_path": "/media/kph_l3ggnzdipau7hiw3dqp5jxjh4m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_h6kzqs252x24kchgzl5voj4ypi",
+      "position": 61,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "npRKmBj",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-npRKmBj",
+        "filename": "2326296295.jpg",
+        "format": "JPG",
+        "archived_md5": "b2cd5743bfe8b185c4bef223290b0711"
+      },
+      "display": {
+        "title": "IMG_0095",
+        "caption": "travel taiwan",
+        "alt": "IMG_0095"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 246918,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:56:15+00:00",
+          "normalized": "2008-03-01T18:56:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:59+00:00",
+          "normalized": "2022-11-06T17:26:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_h6kzqs252x24kchgzl5voj4ypi",
+        "media_path": "/media/kph_h6kzqs252x24kchgzl5voj4ypi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_psxfgzqzru4nq6o2nrue2s7e5m",
+      "position": 62,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4mM8Ltq",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-4mM8Ltq",
+        "filename": "2327111694.jpg",
+        "format": "JPG",
+        "archived_md5": "a5f4f00db169bbff4a6d87bd26d6334d"
+      },
+      "display": {
+        "title": "九フン",
+        "caption": "千と千尋の例のモデルのとこ。",
+        "alt": "九フン"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 210836,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:57:42+00:00",
+          "normalized": "2008-03-01T18:57:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:59+00:00",
+          "normalized": "2022-11-06T17:26:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_psxfgzqzru4nq6o2nrue2s7e5m",
+        "media_path": "/media/kph_psxfgzqzru4nq6o2nrue2s7e5m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5dzcpzxeyfthkdzi6hrymdqwaa",
+      "position": 63,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dnwFqPV",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-dnwFqPV",
+        "filename": "2327111898.jpg",
+        "format": "JPG",
+        "archived_md5": "6dfdb653f9a512530993a8496f6ea995"
+      },
+      "display": {
+        "title": "IMG_0098",
+        "caption": "travel taiwan",
+        "alt": "IMG_0098"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 170423,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T18:58:05+00:00",
+          "normalized": "2008-03-01T18:58:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:58+00:00",
+          "normalized": "2022-11-06T17:26:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5dzcpzxeyfthkdzi6hrymdqwaa",
+        "media_path": "/media/kph_5dzcpzxeyfthkdzi6hrymdqwaa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yc7lkhrll2ebhcx66zaziov2ka",
+      "position": 64,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ctdd4PB",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-ctdd4PB",
+        "filename": "2326296935.jpg",
+        "format": "JPG",
+        "archived_md5": "e0a4c6788b47695911e7503ba7751e5b"
+      },
+      "display": {
+        "title": "IMG_0101",
+        "caption": "travel taiwan",
+        "alt": "IMG_0101"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 150442,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:00:50+00:00",
+          "normalized": "2008-03-01T19:00:50Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:58+00:00",
+          "normalized": "2022-11-06T17:26:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yc7lkhrll2ebhcx66zaziov2ka",
+        "media_path": "/media/kph_yc7lkhrll2ebhcx66zaziov2ka",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qfb5ktrwob7ikcslzmp2p2tfre",
+      "position": 65,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Vtkjth3",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-Vtkjth3",
+        "filename": "2326297259.jpg",
+        "format": "JPG",
+        "archived_md5": "207b38d0ac6d8eec34a604fe77831662"
+      },
+      "display": {
+        "title": "IMG_0103",
+        "caption": "travel taiwan",
+        "alt": "IMG_0103"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 261956,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:02:41+00:00",
+          "normalized": "2008-03-01T19:02:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:57+00:00",
+          "normalized": "2022-11-06T17:26:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qfb5ktrwob7ikcslzmp2p2tfre",
+        "media_path": "/media/kph_qfb5ktrwob7ikcslzmp2p2tfre",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_truqidn7lmfh32g3ojbms7l5ne",
+      "position": 66,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VdZnNVk",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-VdZnNVk",
+        "filename": "2327112688.jpg",
+        "format": "JPG",
+        "archived_md5": "2c35a183af1c7ee67b90e7ecdc714703"
+      },
+      "display": {
+        "title": "IMG_0105",
+        "caption": "travel taiwan",
+        "alt": "IMG_0105"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 221191,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:04:20+00:00",
+          "normalized": "2008-03-01T19:04:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:56+00:00",
+          "normalized": "2022-11-06T17:26:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_truqidn7lmfh32g3ojbms7l5ne",
+        "media_path": "/media/kph_truqidn7lmfh32g3ojbms7l5ne",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3e6r7mdhl6bfsz566jcppe2mha",
+      "position": 67,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VSTRNJQ",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-VSTRNJQ",
+        "filename": "2327112934.jpg",
+        "format": "JPG",
+        "archived_md5": "d7d9556f9ae8469955b43fa92cb3bed2"
+      },
+      "display": {
+        "title": "IMG_0107",
+        "caption": "travel taiwan",
+        "alt": "IMG_0107"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 219197,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:06:01+00:00",
+          "normalized": "2008-03-01T19:06:01Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:55+00:00",
+          "normalized": "2022-11-06T17:26:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3e6r7mdhl6bfsz566jcppe2mha",
+        "media_path": "/media/kph_3e6r7mdhl6bfsz566jcppe2mha",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ecpjudgbimyjdqrxj4gm3nm7d4",
+      "position": 68,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hv83PKf",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-hv83PKf",
+        "filename": "2326298039.jpg",
+        "format": "JPG",
+        "archived_md5": "f7498c63231a2dad638e82f54b309f01"
+      },
+      "display": {
+        "title": "カオナシ?のモデルらしい",
+        "caption": "travel taiwan",
+        "alt": "カオナシ?のモデルらしい"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 142112,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:07:08+00:00",
+          "normalized": "2008-03-01T19:07:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:54+00:00",
+          "normalized": "2022-11-06T17:26:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ecpjudgbimyjdqrxj4gm3nm7d4",
+        "media_path": "/media/kph_ecpjudgbimyjdqrxj4gm3nm7d4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lk7cddbhs7pmkgauyfeoeckhzi",
+      "position": 69,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2MJTRnR",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-2MJTRnR",
+        "filename": "2326298287.jpg",
+        "format": "JPG",
+        "archived_md5": "128ba742f7cbbc8f1656e5e12b70e081"
+      },
+      "display": {
+        "title": "IMG_0109",
+        "caption": "travel taiwan",
+        "alt": "IMG_0109"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 206847,
+        "width": 960,
+        "height": 1280
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:08:31+00:00",
+          "normalized": "2008-03-01T19:08:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:53+00:00",
+          "normalized": "2022-11-06T17:26:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lk7cddbhs7pmkgauyfeoeckhzi",
+        "media_path": "/media/kph_lk7cddbhs7pmkgauyfeoeckhzi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_a5x5j4whbso6bjwhrdp4befs7u",
+      "position": 70,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gRx37Ff",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-gRx37Ff",
+        "filename": "2326298397.jpg",
+        "format": "JPG",
+        "archived_md5": "081301bf3b19cb43d19b574d375790d2"
+      },
+      "display": {
+        "title": "麺線その2",
+        "caption": "九フン版",
+        "alt": "麺線その2"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 106191,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:15:14+00:00",
+          "normalized": "2008-03-01T19:15:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:53+00:00",
+          "normalized": "2022-11-06T17:26:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_a5x5j4whbso6bjwhrdp4befs7u",
+        "media_path": "/media/kph_a5x5j4whbso6bjwhrdp4befs7u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wi2hjuobsl5qw6jmkmgaoc5wzy",
+      "position": 71,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "KMbQXS4",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-KMbQXS4",
+        "filename": "2326298555.jpg",
+        "format": "JPG",
+        "archived_md5": "def13d146ed3efeffb9fdf82705c2377"
+      },
+      "display": {
+        "title": "IMG_0116",
+        "caption": "travel taiwan",
+        "alt": "IMG_0116"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 128213,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:54:57+00:00",
+          "normalized": "2008-03-01T19:54:57Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:51+00:00",
+          "normalized": "2022-11-06T17:26:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wi2hjuobsl5qw6jmkmgaoc5wzy",
+        "media_path": "/media/kph_wi2hjuobsl5qw6jmkmgaoc5wzy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_65kqg74umxv6e5bl55g4iz7n6q",
+      "position": 72,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "GvBXh2p",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-GvBXh2p",
+        "filename": "2327113952.jpg",
+        "format": "JPG",
+        "archived_md5": "2436d2edf6812cdaeb7b5cf02214bd50"
+      },
+      "display": {
+        "title": "IMG_0117",
+        "caption": "travel taiwan",
+        "alt": "IMG_0117"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 229894,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:55:29+00:00",
+          "normalized": "2008-03-01T19:55:29Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:51+00:00",
+          "normalized": "2022-11-06T17:26:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_65kqg74umxv6e5bl55g4iz7n6q",
+        "media_path": "/media/kph_65kqg74umxv6e5bl55g4iz7n6q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_l76jjmu2vdhipbnxefvjypevnq",
+      "position": 73,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4r65SFs",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-4r65SFs",
+        "filename": "2326299047.jpg",
+        "format": "JPG",
+        "archived_md5": "0ae5048f1c742aca2f3dcbe8d3bc0c33"
+      },
+      "display": {
+        "title": "IMG_0118",
+        "caption": "travel taiwan",
+        "alt": "IMG_0118"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 158820,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:55:39+00:00",
+          "normalized": "2008-03-01T19:55:39Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:50+00:00",
+          "normalized": "2022-11-06T17:26:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_l76jjmu2vdhipbnxefvjypevnq",
+        "media_path": "/media/kph_l76jjmu2vdhipbnxefvjypevnq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_brbks2rexgc6r7im2qm5wj6foq",
+      "position": 74,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Sgww2QP",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-Sgww2QP",
+        "filename": "2326299361.jpg",
+        "format": "JPG",
+        "archived_md5": "d93b24342aff1c5efa1ce56a54ee1bc2"
+      },
+      "display": {
+        "title": "IMG_0119",
+        "caption": "travel taiwan",
+        "alt": "IMG_0119"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 232970,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:56:36+00:00",
+          "normalized": "2008-03-01T19:56:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:50+00:00",
+          "normalized": "2022-11-06T17:26:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_brbks2rexgc6r7im2qm5wj6foq",
+        "media_path": "/media/kph_brbks2rexgc6r7im2qm5wj6foq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_x6vvrduribpapleqct3dlb75bq",
+      "position": 75,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2bwdJ9M",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-2bwdJ9M",
+        "filename": "2327114730.jpg",
+        "format": "JPG",
+        "archived_md5": "ca0ef578d99247345f0bd72bdb158a59"
+      },
+      "display": {
+        "title": "IMG_0120",
+        "caption": "travel taiwan",
+        "alt": "IMG_0120"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 243047,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T19:59:57+00:00",
+          "normalized": "2008-03-01T19:59:57Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:48+00:00",
+          "normalized": "2022-11-06T17:26:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_x6vvrduribpapleqct3dlb75bq",
+        "media_path": "/media/kph_x6vvrduribpapleqct3dlb75bq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eptcjjdyku4ani44sqxdx7mnou",
+      "position": 76,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "C5vH54T",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-C5vH54T",
+        "filename": "2327114934.jpg",
+        "format": "JPG",
+        "archived_md5": "d23827785fe073923b6717d15d0642c7"
+      },
+      "display": {
+        "title": "IMG_0121",
+        "caption": "travel taiwan",
+        "alt": "IMG_0121"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 149422,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T21:55:26+00:00",
+          "normalized": "2008-03-01T21:55:26Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:48+00:00",
+          "normalized": "2022-11-06T17:26:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eptcjjdyku4ani44sqxdx7mnou",
+        "media_path": "/media/kph_eptcjjdyku4ani44sqxdx7mnou",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hycdauc63d5gtjgdq6yo75yerq",
+      "position": 77,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8vHNxwv",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-8vHNxwv",
+        "filename": "2326300113.jpg",
+        "format": "JPG",
+        "archived_md5": "e2f5a558349f119f3a596a173cc76b99"
+      },
+      "display": {
+        "title": "IMG_0122",
+        "caption": "travel taiwan",
+        "alt": "IMG_0122"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 178077,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T21:58:15+00:00",
+          "normalized": "2008-03-01T21:58:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:46+00:00",
+          "normalized": "2022-11-06T17:26:46Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hycdauc63d5gtjgdq6yo75yerq",
+        "media_path": "/media/kph_hycdauc63d5gtjgdq6yo75yerq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wjizis26myjwvstyh3vdv5aaqe",
+      "position": 78,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "J3LKDM2",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-J3LKDM2",
+        "filename": "2327115362.jpg",
+        "format": "JPG",
+        "archived_md5": "d8bf213188ba87f839f5c0e8e420af97"
+      },
+      "display": {
+        "title": "IMG_0123",
+        "caption": "travel taiwan",
+        "alt": "IMG_0123"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 175649,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T22:05:27+00:00",
+          "normalized": "2008-03-01T22:05:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:46+00:00",
+          "normalized": "2022-11-06T17:26:46Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wjizis26myjwvstyh3vdv5aaqe",
+        "media_path": "/media/kph_wjizis26myjwvstyh3vdv5aaqe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lpdg6afp2icphnwklmiui2rmyy",
+      "position": 79,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "S6ngQnL",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-S6ngQnL",
+        "filename": "2326300533.jpg",
+        "format": "JPG",
+        "archived_md5": "90de36da19ed9f65d7e926298c56b84b"
+      },
+      "display": {
+        "title": "IMG_0124",
+        "caption": "travel taiwan",
+        "alt": "IMG_0124"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 189219,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T22:21:58+00:00",
+          "normalized": "2008-03-01T22:21:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:45+00:00",
+          "normalized": "2022-11-06T17:26:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lpdg6afp2icphnwklmiui2rmyy",
+        "media_path": "/media/kph_lpdg6afp2icphnwklmiui2rmyy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_btv36mlg3ikqqvgvjhgwp2yzha",
+      "position": 80,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8WhH9Sk",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-8WhH9Sk",
+        "filename": "2327115794.jpg",
+        "format": "JPG",
+        "archived_md5": "de893092280cd1d2c799e0b214c51c79"
+      },
+      "display": {
+        "title": "IMG_0125",
+        "caption": "travel taiwan",
+        "alt": "IMG_0125"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 147641,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-01T22:22:18+00:00",
+          "normalized": "2008-03-01T22:22:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:45+00:00",
+          "normalized": "2022-11-06T17:26:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_btv36mlg3ikqqvgvjhgwp2yzha",
+        "media_path": "/media/kph_btv36mlg3ikqqvgvjhgwp2yzha",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_snbs2lwlvsujzamf6npzcff35y",
+      "position": 81,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WhRvswj",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-WhRvswj",
+        "filename": "2326300937.jpg",
+        "format": "JPG",
+        "archived_md5": "6710cfb0d953518813a87ee1a1b5bfa9"
+      },
+      "display": {
+        "title": "鼎泰豊総本店",
+        "caption": "逆側からパシャリ。",
+        "alt": "鼎泰豊総本店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 170020,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T02:58:14+00:00",
+          "normalized": "2008-03-02T02:58:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:43+00:00",
+          "normalized": "2022-11-06T17:26:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_snbs2lwlvsujzamf6npzcff35y",
+        "media_path": "/media/kph_snbs2lwlvsujzamf6npzcff35y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_g2w3dshi6cbsrk7eityrfohlwm",
+      "position": 82,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cD7xCJN",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-cD7xCJN",
+        "filename": "2326301205.jpg",
+        "format": "JPG",
+        "archived_md5": "8346d70fd59f993af8aabb30ecd6cd9e"
+      },
+      "display": {
+        "title": "鼎泰豊総本店",
+        "caption": "やっぱりすごく並んでた。けど、ツアーだから入れた。",
+        "alt": "鼎泰豊総本店"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 189988,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T03:50:20+00:00",
+          "normalized": "2008-03-02T03:50:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:44+00:00",
+          "normalized": "2022-11-06T17:26:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_g2w3dshi6cbsrk7eityrfohlwm",
+        "media_path": "/media/kph_g2w3dshi6cbsrk7eityrfohlwm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6r4nhsgl3s57ylpouuendn5sti",
+      "position": 83,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RN4wtQ5",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-RN4wtQ5",
+        "filename": "2327116444.jpg",
+        "format": "JPG",
+        "archived_md5": "28c506b7c808435469cd058f818deb73"
+      },
+      "display": {
+        "title": "士林夜市",
+        "caption": "人が半端じゃない。ありえない。",
+        "alt": "士林夜市"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 203380,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T04:24:13+00:00",
+          "normalized": "2008-03-02T04:24:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:42+00:00",
+          "normalized": "2022-11-06T17:26:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6r4nhsgl3s57ylpouuendn5sti",
+        "media_path": "/media/kph_6r4nhsgl3s57ylpouuendn5sti",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_svhgjzck2a4crj5oadj4nn5dgi",
+      "position": 84,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "bWp4Qzh",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-bWp4Qzh",
+        "filename": "2326301707.jpg",
+        "format": "JPG",
+        "archived_md5": "eedfd9976bb7c4484e4e530ea4374f4b"
+      },
+      "display": {
+        "title": "IMG_0133",
+        "caption": "travel taiwan",
+        "alt": "IMG_0133"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 146886,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T07:01:48+00:00",
+          "normalized": "2008-03-02T07:01:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:42+00:00",
+          "normalized": "2022-11-06T17:26:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_svhgjzck2a4crj5oadj4nn5dgi",
+        "media_path": "/media/kph_svhgjzck2a4crj5oadj4nn5dgi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dgx43au5mk3vswjmzmpnyyxfnq",
+      "position": 85,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CwZR8hX",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-CwZR8hX",
+        "filename": "2327116826.jpg",
+        "format": "JPG",
+        "archived_md5": "1478f72bd5ab9ff971f71c8d64b8998b"
+      },
+      "display": {
+        "title": "IMG_0134",
+        "caption": "travel taiwan",
+        "alt": "IMG_0134"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 133500,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T07:02:01+00:00",
+          "normalized": "2008-03-02T07:02:01Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:40+00:00",
+          "normalized": "2022-11-06T17:26:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dgx43au5mk3vswjmzmpnyyxfnq",
+        "media_path": "/media/kph_dgx43au5mk3vswjmzmpnyyxfnq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gv2cq4cypkyiqm2pvh3ltvumz4",
+      "position": 86,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "bWcbcJj",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-bWcbcJj",
+        "filename": "2327117034.jpg",
+        "format": "JPG",
+        "archived_md5": "6bd1d92d24b8a6796657388e1f959265"
+      },
+      "display": {
+        "title": "学習塾っぽい",
+        "caption": "日本より教育熱心だという話も聞くがホントだった。",
+        "alt": "学習塾っぽい"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 159003,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T07:02:44+00:00",
+          "normalized": "2008-03-02T07:02:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:40+00:00",
+          "normalized": "2022-11-06T17:26:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gv2cq4cypkyiqm2pvh3ltvumz4",
+        "media_path": "/media/kph_gv2cq4cypkyiqm2pvh3ltvumz4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_a6guc3n6bwicgudibli7ooepsi",
+      "position": 87,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3SdvH8M",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-3SdvH8M",
+        "filename": "2326302181.jpg",
+        "format": "JPG",
+        "archived_md5": "ba7eef49b3720aa74c4948dd6a4b9497"
+      },
+      "display": {
+        "title": "IMG_0136",
+        "caption": "travel taiwan",
+        "alt": "IMG_0136"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 79845,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T07:05:09+00:00",
+          "normalized": "2008-03-02T07:05:09Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:39+00:00",
+          "normalized": "2022-11-06T17:26:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_a6guc3n6bwicgudibli7ooepsi",
+        "media_path": "/media/kph_a6guc3n6bwicgudibli7ooepsi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fsyz6ly7unegeclstyx6lzpkli",
+      "position": 88,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Th6M9c2",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-Th6M9c2",
+        "filename": "2326302385.jpg",
+        "format": "JPG",
+        "archived_md5": "30caea4e1c2e6381851d6c30d19ac7ad"
+      },
+      "display": {
+        "title": "IMG_0137",
+        "caption": "travel taiwan",
+        "alt": "IMG_0137"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 147751,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T07:38:45+00:00",
+          "normalized": "2008-03-02T07:38:45Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:38+00:00",
+          "normalized": "2022-11-06T17:26:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fsyz6ly7unegeclstyx6lzpkli",
+        "media_path": "/media/kph_fsyz6ly7unegeclstyx6lzpkli",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xdfeyncq2d3hjgdyvcocxmxlr4",
+      "position": 89,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cGqzV8G",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-cGqzV8G",
+        "filename": "2327117458.jpg",
+        "format": "JPG",
+        "archived_md5": "5bc69d83b25a07651666cbc017f90974"
+      },
+      "display": {
+        "title": "IMG_0138",
+        "caption": "travel taiwan",
+        "alt": "IMG_0138"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 94585,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T07:41:36+00:00",
+          "normalized": "2008-03-02T07:41:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:37+00:00",
+          "normalized": "2022-11-06T17:26:37Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xdfeyncq2d3hjgdyvcocxmxlr4",
+        "media_path": "/media/kph_xdfeyncq2d3hjgdyvcocxmxlr4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bpf44vntuimhjc4qkvuarvhrwa",
+      "position": 90,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2HMSjnz",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-2HMSjnz",
+        "filename": "2327117572.jpg",
+        "format": "JPG",
+        "archived_md5": "f8affb188f25e4224704468006104381"
+      },
+      "display": {
+        "title": "IMG_0139",
+        "caption": "travel taiwan",
+        "alt": "IMG_0139"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 95115,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T07:41:50+00:00",
+          "normalized": "2008-03-02T07:41:50Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:37+00:00",
+          "normalized": "2022-11-06T17:26:37Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bpf44vntuimhjc4qkvuarvhrwa",
+        "media_path": "/media/kph_bpf44vntuimhjc4qkvuarvhrwa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hatoscqff5zvcj4qajy43snqye",
+      "position": 91,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TcbvL5z",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-TcbvL5z",
+        "filename": "2326302933.jpg",
+        "format": "JPG",
+        "archived_md5": "ff189c3db8da77ec9b4f89fe3766f900"
+      },
+      "display": {
+        "title": "IMG_0142",
+        "caption": "travel taiwan",
+        "alt": "IMG_0142"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 150428,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T09:43:28+00:00",
+          "normalized": "2008-03-02T09:43:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:36+00:00",
+          "normalized": "2022-11-06T17:26:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hatoscqff5zvcj4qajy43snqye",
+        "media_path": "/media/kph_hatoscqff5zvcj4qajy43snqye",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xfj4xb6tglfcocved4fsdaydye",
+      "position": 92,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kJ55Frp",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-kJ55Frp",
+        "filename": "2326303145.jpg",
+        "format": "JPG",
+        "archived_md5": "d03fb5ab67447d20d8cf25c049511eb9"
+      },
+      "display": {
+        "title": "IMG_0143",
+        "caption": "travel taiwan",
+        "alt": "IMG_0143"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 179887,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T17:52:28+00:00",
+          "normalized": "2008-03-02T17:52:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:35+00:00",
+          "normalized": "2022-11-06T17:26:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xfj4xb6tglfcocved4fsdaydye",
+        "media_path": "/media/kph_xfj4xb6tglfcocved4fsdaydye",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_r7ojed6jdxwnxgokotpvzba2re",
+      "position": 93,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZQp3jkW",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-ZQp3jkW",
+        "filename": "2327118324.jpg",
+        "format": "JPG",
+        "archived_md5": "e69260d30b63b56952fc2c7b18cdeffd"
+      },
+      "display": {
+        "title": "IMG_0144",
+        "caption": "travel taiwan",
+        "alt": "IMG_0144"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 178109,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T17:52:49+00:00",
+          "normalized": "2008-03-02T17:52:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:34+00:00",
+          "normalized": "2022-11-06T17:26:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_r7ojed6jdxwnxgokotpvzba2re",
+        "media_path": "/media/kph_r7ojed6jdxwnxgokotpvzba2re",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_kx2qs4b6ly6amexu4r6h25kbj4",
+      "position": 94,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vB7Zh94",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-vB7Zh94",
+        "filename": "2326303513.jpg",
+        "format": "JPG",
+        "archived_md5": "32f8d711bc761db9779d723b8cfffe03"
+      },
+      "display": {
+        "title": "IMG_0145",
+        "caption": "travel taiwan",
+        "alt": "IMG_0145"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 90842,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T18:30:21+00:00",
+          "normalized": "2008-03-02T18:30:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:34+00:00",
+          "normalized": "2022-11-06T17:26:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_kx2qs4b6ly6amexu4r6h25kbj4",
+        "media_path": "/media/kph_kx2qs4b6ly6amexu4r6h25kbj4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vu5f6nczbytsgbeplnlhtqakne",
+      "position": 95,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tnbZX89",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-tnbZX89",
+        "filename": "2326303747.jpg",
+        "format": "JPG",
+        "archived_md5": "80ca3162cbe7909ae95af4dd9534e1df"
+      },
+      "display": {
+        "title": "IMG_0147",
+        "caption": "travel taiwan",
+        "alt": "IMG_0147"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 179181,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T18:37:34+00:00",
+          "normalized": "2008-03-02T18:37:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:33+00:00",
+          "normalized": "2022-11-06T17:26:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vu5f6nczbytsgbeplnlhtqakne",
+        "media_path": "/media/kph_vu5f6nczbytsgbeplnlhtqakne",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_nwrvxlablrdeprznqwhrks67z4",
+      "position": 96,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rnPfFjV",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-rnPfFjV",
+        "filename": "2327118928.jpg",
+        "format": "JPG",
+        "archived_md5": "d2db419290586cde2be9b0781c055168"
+      },
+      "display": {
+        "title": "IMG_0148",
+        "caption": "travel taiwan",
+        "alt": "IMG_0148"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 201921,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T18:38:31+00:00",
+          "normalized": "2008-03-02T18:38:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:33+00:00",
+          "normalized": "2022-11-06T17:26:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nwrvxlablrdeprznqwhrks67z4",
+        "media_path": "/media/kph_nwrvxlablrdeprznqwhrks67z4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_iprju62b2aqyzjd23rayxdlrru",
+      "position": 97,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5wNdCFB",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-5wNdCFB",
+        "filename": "2326304117.jpg",
+        "format": "JPG",
+        "archived_md5": "1cddc431e13319c9587ec02d37d3cc90"
+      },
+      "display": {
+        "title": "IMG_0149",
+        "caption": "travel taiwan",
+        "alt": "IMG_0149"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 114956,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T18:40:34+00:00",
+          "normalized": "2008-03-02T18:40:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:31+00:00",
+          "normalized": "2022-11-06T17:26:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_iprju62b2aqyzjd23rayxdlrru",
+        "media_path": "/media/kph_iprju62b2aqyzjd23rayxdlrru",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jabmzsumgu3ytn6ym63ts333qy",
+      "position": 98,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mx69VW6",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-mx69VW6",
+        "filename": "2327119292.jpg",
+        "format": "JPG",
+        "archived_md5": "ff580330a46dd33d5ab0ac2da3dde3ac"
+      },
+      "display": {
+        "title": "IMG_0150",
+        "caption": "travel taiwan",
+        "alt": "IMG_0150"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 123284,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T18:52:28+00:00",
+          "normalized": "2008-03-02T18:52:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:31+00:00",
+          "normalized": "2022-11-06T17:26:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jabmzsumgu3ytn6ym63ts333qy",
+        "media_path": "/media/kph_jabmzsumgu3ytn6ym63ts333qy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5tskky4ox2zonbdatmynbca32q",
+      "position": 99,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "K9vvBSs",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-K9vvBSs",
+        "filename": "2327119468.jpg",
+        "format": "JPG",
+        "archived_md5": "a92d32e7aac1c4ddb9596a76993526f9"
+      },
+      "display": {
+        "title": "IMG_0151",
+        "caption": "travel taiwan",
+        "alt": "IMG_0151"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 123164,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T18:54:38+00:00",
+          "normalized": "2008-03-02T18:54:38Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:30+00:00",
+          "normalized": "2022-11-06T17:26:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5tskky4ox2zonbdatmynbca32q",
+        "media_path": "/media/kph_5tskky4ox2zonbdatmynbca32q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_frowrgscbdbep5fy74i6rloli4",
+      "position": 100,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7hWn9Lk",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-7hWn9Lk",
+        "filename": "2326304561.jpg",
+        "format": "JPG",
+        "archived_md5": "923d40556221b6cbad0c3c42aef1df52"
+      },
+      "display": {
+        "title": "IMG_0152",
+        "caption": "travel taiwan",
+        "alt": "IMG_0152"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 110066,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T18:55:16+00:00",
+          "normalized": "2008-03-02T18:55:16Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:29+00:00",
+          "normalized": "2022-11-06T17:26:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_frowrgscbdbep5fy74i6rloli4",
+        "media_path": "/media/kph_frowrgscbdbep5fy74i6rloli4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eqf7vv7bhsvud6dkegnk3kiswe",
+      "position": 101,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QjtDDk3",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-QjtDDk3",
+        "filename": "2326304795.jpg",
+        "format": "JPG",
+        "archived_md5": "5cc3ca2af0a253536f343636a2dd9ea0"
+      },
+      "display": {
+        "title": "IMG_0153",
+        "caption": "travel taiwan",
+        "alt": "IMG_0153"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 179783,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T19:02:45+00:00",
+          "normalized": "2008-03-02T19:02:45Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:28+00:00",
+          "normalized": "2022-11-06T17:26:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eqf7vv7bhsvud6dkegnk3kiswe",
+        "media_path": "/media/kph_eqf7vv7bhsvud6dkegnk3kiswe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_y56fafbuozfsufldna2hm33wmu",
+      "position": 102,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RTR5tGX",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-RTR5tGX",
+        "filename": "2326304977.jpg",
+        "format": "JPG",
+        "archived_md5": "7abb1a6f76ea8020974e67fbdc2746b6"
+      },
+      "display": {
+        "title": "IMG_0154",
+        "caption": "travel taiwan",
+        "alt": "IMG_0154"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 166813,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T19:07:54+00:00",
+          "normalized": "2008-03-02T19:07:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:28+00:00",
+          "normalized": "2022-11-06T17:26:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_y56fafbuozfsufldna2hm33wmu",
+        "media_path": "/media/kph_y56fafbuozfsufldna2hm33wmu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jmwmlgbcq5yedxzru3qfkzi64q",
+      "position": 103,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MhMcHpJ",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-MhMcHpJ",
+        "filename": "2327120400.jpg",
+        "format": "JPG",
+        "archived_md5": "cff647712a909ba465995ae7aadb8475"
+      },
+      "display": {
+        "title": "IMG_0155",
+        "caption": "travel taiwan",
+        "alt": "IMG_0155"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 294087,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T19:10:52+00:00",
+          "normalized": "2008-03-02T19:10:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:27+00:00",
+          "normalized": "2022-11-06T17:26:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jmwmlgbcq5yedxzru3qfkzi64q",
+        "media_path": "/media/kph_jmwmlgbcq5yedxzru3qfkzi64q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_znztrbrepvrhcqvjvvfcghu7r4",
+      "position": 104,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NBChMh5",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-NBChMh5",
+        "filename": "2327120668.jpg",
+        "format": "JPG",
+        "archived_md5": "c6e3ef80a0914babef56f51d6e5f939c"
+      },
+      "display": {
+        "title": "IMG_0156",
+        "caption": "travel taiwan",
+        "alt": "IMG_0156"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 223436,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T19:11:08+00:00",
+          "normalized": "2008-03-02T19:11:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:26+00:00",
+          "normalized": "2022-11-06T17:26:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_znztrbrepvrhcqvjvvfcghu7r4",
+        "media_path": "/media/kph_znztrbrepvrhcqvjvvfcghu7r4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vbtlyqacvehwjprrqvjzkxepvi",
+      "position": 105,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jGx8N2s",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-jGx8N2s",
+        "filename": "2326305855.jpg",
+        "format": "JPG",
+        "archived_md5": "91bf90f2e42fadabeff4613d3f1f74ec"
+      },
+      "display": {
+        "title": "IMG_0157",
+        "caption": "travel taiwan",
+        "alt": "IMG_0157"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 182595,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T19:11:27+00:00",
+          "normalized": "2008-03-02T19:11:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:25+00:00",
+          "normalized": "2022-11-06T17:26:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vbtlyqacvehwjprrqvjzkxepvi",
+        "media_path": "/media/kph_vbtlyqacvehwjprrqvjzkxepvi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ywf5h6hunpdu3n6sl4et325d3y",
+      "position": 106,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sFrNWGv",
+        "web_uri": "https://kanolog.smugmug.com/20080229taiwan/i-sFrNWGv",
+        "filename": "2327121196.jpg",
+        "format": "JPG",
+        "archived_md5": "49d88a6f0492e9d7c7985e5bf75fe822"
+      },
+      "display": {
+        "title": "IMG_0158",
+        "caption": "travel taiwan",
+        "alt": "IMG_0158"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 266266,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-03-02T19:12:42+00:00",
+          "normalized": "2008-03-02T19:12:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:24+00:00",
+          "normalized": "2022-11-06T17:26:24Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ywf5h6hunpdu3n6sl4et325d3y",
+        "media_path": "/media/kph_ywf5h6hunpdu3n6sl4et325d3y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,1910 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:12+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2022-07-sapporo",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_bc7n6p4fkpwi6km2qpkzzly2lu",
+    "slug": "2022-07-sapporo",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "MMRf7D",
+      "web_uri": "https://kanolog.smugmug.com/Sapporo20220703"
+    },
+    "title": "Sapporo, 2022/07",
+    "description": "札幌に出張に行きました。",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 39,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_4s6hsiq5lzzmwxhguyc2wpzzg4",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5RjZWwr",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-5RjZWwr",
+        "filename": "IMG_20220703_145422.jpg",
+        "format": "JPG",
+        "archived_md5": "bc614b756fec9dfd11e4c1b2de2db795"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20220703_145422.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 165106,
+        "width": 1080,
+        "height": 1440
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:56+00:00",
+          "normalized": "2022-11-06T16:29:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4s6hsiq5lzzmwxhguyc2wpzzg4",
+        "media_path": "/media/kph_4s6hsiq5lzzmwxhguyc2wpzzg4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vwqjbiuc2fwqvrfazsbsncwzfi",
+      "position": 2,
+      "kind": "video",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JwwvgpK",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-JwwvgpK",
+        "filename": "PXL_20220703_084133837.MP4",
+        "format": "MP4",
+        "archived_md5": "f804288f7effceb4669ed3d53dd0e089"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_084133837.MP4"
+      },
+      "file": {
+        "mime_type": "video/mp4",
+        "bytes": 222415,
+        "width": 1080,
+        "height": 1920
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-03T15:41:42+00:00",
+          "normalized": "2022-07-03T15:41:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:49+00:00",
+          "normalized": "2022-11-13T10:15:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vwqjbiuc2fwqvrfazsbsncwzfi",
+        "media_path": "/media/kph_vwqjbiuc2fwqvrfazsbsncwzfi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ij6o5r33ogshrc3ysvo4l5fbsa",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XTSjjV8",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-XTSjjV8",
+        "filename": "PXL_20220703_044303829.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "789e6535430b5ceb3616d93766f15a2a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_044303829.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5258711,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-03T20:43:03+00:00",
+          "normalized": "2022-07-03T20:43:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:16:30+00:00",
+          "normalized": "2022-11-13T10:16:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ij6o5r33ogshrc3ysvo4l5fbsa",
+        "media_path": "/media/kph_ij6o5r33ogshrc3ysvo4l5fbsa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ogmiskw7uuvdfxzozkzmeuboem",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xBLC35F",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-xBLC35F",
+        "filename": "PXL_20220703_045900484.jpg",
+        "format": "JPG",
+        "archived_md5": "8929d0426e5051ded43cead0e7f72d1d"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_045900484.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3031630,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-03T20:59:00+00:00",
+          "normalized": "2022-07-03T20:59:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:16:36+00:00",
+          "normalized": "2022-11-13T10:16:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ogmiskw7uuvdfxzozkzmeuboem",
+        "media_path": "/media/kph_ogmiskw7uuvdfxzozkzmeuboem",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_52mtqk3kekrdx3osxlhck5w6ay",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tJHT2jm",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-tJHT2jm",
+        "filename": "PXL_20220703_063546028.jpg",
+        "format": "JPG",
+        "archived_md5": "3b97a1d78b12adbd616605e1f6200d08"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_063546028.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 549941,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-03T22:35:46+00:00",
+          "normalized": "2022-07-03T22:35:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:56+00:00",
+          "normalized": "2022-11-06T16:29:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_52mtqk3kekrdx3osxlhck5w6ay",
+        "media_path": "/media/kph_52mtqk3kekrdx3osxlhck5w6ay",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_kmozwvcnq2d75lqchl65qlkagu",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "9LPpGtv",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-9LPpGtv",
+        "filename": "PXL_20220703_071449328.jpg",
+        "format": "JPG",
+        "archived_md5": "f3f79a989f98e3a9b82c95cca8d39dd9"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_071449328.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1758110,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-03T23:14:49+00:00",
+          "normalized": "2022-07-03T23:14:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:16:06+00:00",
+          "normalized": "2022-11-13T10:16:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_kmozwvcnq2d75lqchl65qlkagu",
+        "media_path": "/media/kph_kmozwvcnq2d75lqchl65qlkagu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vjhlbh45kxok5s2cf6sjnr7g3u",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JndqHjf",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-JndqHjf",
+        "filename": "PXL_20220703_073613922.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "ab4f9695480d6b18b343ed2e9b2a2a9c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_073613922.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4534572,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-03T23:36:13+00:00",
+          "normalized": "2022-07-03T23:36:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:16:27+00:00",
+          "normalized": "2022-11-13T10:16:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vjhlbh45kxok5s2cf6sjnr7g3u",
+        "media_path": "/media/kph_vjhlbh45kxok5s2cf6sjnr7g3u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6gjidyb2g3hqjk4jrzl3k7kupa",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HxsBzG6",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-HxsBzG6",
+        "filename": "PXL_20220703_083650936.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "86a8e15170f46a32f65ef109936995dd"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_083650936.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4898100,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T00:36:50+00:00",
+          "normalized": "2022-07-04T00:36:50Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:16:03+00:00",
+          "normalized": "2022-11-13T10:16:03Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6gjidyb2g3hqjk4jrzl3k7kupa",
+        "media_path": "/media/kph_6gjidyb2g3hqjk4jrzl3k7kupa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eysoykir24jolvkc2dyzrjvlne",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MXn44cF",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-MXn44cF",
+        "filename": "PXL_20220703_083828908.jpg",
+        "format": "JPG",
+        "archived_md5": "261a3f3153136159b0cfdc3dd3d2071f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_083828908.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2862892,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T00:38:28+00:00",
+          "normalized": "2022-07-04T00:38:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:59+00:00",
+          "normalized": "2022-11-13T10:15:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eysoykir24jolvkc2dyzrjvlne",
+        "media_path": "/media/kph_eysoykir24jolvkc2dyzrjvlne",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hrhfyoif37eg6mfh6ppmdggfya",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TxHPQZT",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-TxHPQZT",
+        "filename": "PXL_20220703_083948692.jpg",
+        "format": "JPG",
+        "archived_md5": "5bd4dcacb9e09d187b48deac6f52a024"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_083948692.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3216436,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T00:39:48+00:00",
+          "normalized": "2022-07-04T00:39:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:44+00:00",
+          "normalized": "2022-11-13T10:15:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hrhfyoif37eg6mfh6ppmdggfya",
+        "media_path": "/media/kph_hrhfyoif37eg6mfh6ppmdggfya",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_t5g6q4rkwoxypwab3x7zlpxykq",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JjTwdTQ",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-JjTwdTQ",
+        "filename": "PXL_20220703_084147208.jpg",
+        "format": "JPG",
+        "archived_md5": "47aba240712f0a8c712c18435a100853"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_084147208.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2913796,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T00:41:47+00:00",
+          "normalized": "2022-07-04T00:41:47Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:13+00:00",
+          "normalized": "2022-11-13T10:15:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_t5g6q4rkwoxypwab3x7zlpxykq",
+        "media_path": "/media/kph_t5g6q4rkwoxypwab3x7zlpxykq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sqhsvx2c5jofb6czulrv4i3doa",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vKWhs9G",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-vKWhs9G",
+        "filename": "PXL_20220703_085722814.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "c278d612a305672f6db248954417bb08"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_085722814.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5416630,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T00:57:22+00:00",
+          "normalized": "2022-07-04T00:57:22Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:29+00:00",
+          "normalized": "2022-11-13T10:15:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sqhsvx2c5jofb6czulrv4i3doa",
+        "media_path": "/media/kph_sqhsvx2c5jofb6czulrv4i3doa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qblq3gromsnvs43r4oilro35im",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CKNw5Zm",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-CKNw5Zm",
+        "filename": "PXL_20220703_085739064.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a180dc05d0d776b6497d0485e541dd95"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_085739064.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5057641,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T00:57:39+00:00",
+          "normalized": "2022-07-04T00:57:39Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:29+00:00",
+          "normalized": "2022-11-13T10:15:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qblq3gromsnvs43r4oilro35im",
+        "media_path": "/media/kph_qblq3gromsnvs43r4oilro35im",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_osymmvaaoonaylfxkw727b7hfm",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "KwqgGbM",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-KwqgGbM",
+        "filename": "PXL_20220703_100711603.jpg",
+        "format": "JPG",
+        "archived_md5": "72e24395b247ee97ec6cb726eb299573"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_100711603.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2503748,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T02:07:11+00:00",
+          "normalized": "2022-07-04T02:07:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:45+00:00",
+          "normalized": "2022-11-06T16:29:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_osymmvaaoonaylfxkw727b7hfm",
+        "media_path": "/media/kph_osymmvaaoonaylfxkw727b7hfm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_njnbarh26oihpjbm5njkngq74m",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JRWFD4T",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-JRWFD4T",
+        "filename": "PXL_20220703_102523997.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "e37ee8d430f178c1d299cced2669abde"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_102523997.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5125447,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T02:25:23+00:00",
+          "normalized": "2022-07-04T02:25:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:04+00:00",
+          "normalized": "2022-11-13T10:15:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_njnbarh26oihpjbm5njkngq74m",
+        "media_path": "/media/kph_njnbarh26oihpjbm5njkngq74m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_c2avhsy537g7n5qyhlsogwsi7u",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CDqZ8Pq",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-CDqZ8Pq",
+        "filename": "PXL_20220703_131310416.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "531018c94bfa5a0e5c9dc832f89466c4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220703_131310416.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4139262,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T05:13:10+00:00",
+          "normalized": "2022-07-04T05:13:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:12+00:00",
+          "normalized": "2022-11-13T10:15:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_c2avhsy537g7n5qyhlsogwsi7u",
+        "media_path": "/media/kph_c2avhsy537g7n5qyhlsogwsi7u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2y2lhsyqjvrjdfedhlfp2kxw7u",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vbXzNZp",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-vbXzNZp",
+        "filename": "PXL_20220704_031455851.jpg",
+        "format": "JPG",
+        "archived_md5": "d1226a8504373c5f5a19904bfb57c256"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_031455851.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1689784,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T19:14:55+00:00",
+          "normalized": "2022-07-04T19:14:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:43+00:00",
+          "normalized": "2022-11-06T16:29:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2y2lhsyqjvrjdfedhlfp2kxw7u",
+        "media_path": "/media/kph_2y2lhsyqjvrjdfedhlfp2kxw7u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6jxisr7lqq4v2endv5q65ssb3y",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3K3LbwT",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-3K3LbwT",
+        "filename": "PXL_20220704_031513868.jpg",
+        "format": "JPG",
+        "archived_md5": "c9904cb8727c476445efe3437f9d48ab"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_031513868.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3399919,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T19:15:13+00:00",
+          "normalized": "2022-07-04T19:15:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:42+00:00",
+          "normalized": "2022-11-06T16:29:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6jxisr7lqq4v2endv5q65ssb3y",
+        "media_path": "/media/kph_6jxisr7lqq4v2endv5q65ssb3y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_frmgvwt6k5ogg5kjw5e5zimnom",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SkTj25s",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-SkTj25s",
+        "filename": "PXL_20220704_041328372.jpg",
+        "format": "JPG",
+        "archived_md5": "d9a9567e5d74e328d4ede7e3309f2a85"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_041328372.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3823941,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:13:28+00:00",
+          "normalized": "2022-07-04T20:13:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:15:01+00:00",
+          "normalized": "2022-11-13T10:15:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_frmgvwt6k5ogg5kjw5e5zimnom",
+        "media_path": "/media/kph_frmgvwt6k5ogg5kjw5e5zimnom",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6ycrq27p44fsmgycmbfrv42s6u",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vWKqLDR",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-vWKqLDR",
+        "filename": "PXL_20220704_041336144.jpg",
+        "format": "JPG",
+        "archived_md5": "df7dc12cb1bd47a0c4b8ff9fb9289b87"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_041336144.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2362930,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:13:36+00:00",
+          "normalized": "2022-07-04T20:13:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:40+00:00",
+          "normalized": "2022-11-06T16:29:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6ycrq27p44fsmgycmbfrv42s6u",
+        "media_path": "/media/kph_6ycrq27p44fsmgycmbfrv42s6u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bbhsdkxhgcl4bl34qtvordgilu",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CpsMf6G",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-CpsMf6G",
+        "filename": "PXL_20220704_041410220.jpg",
+        "format": "JPG",
+        "archived_md5": "06dd0a565e6deca0dc56c825d956cc97"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_041410220.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3552800,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:14:10+00:00",
+          "normalized": "2022-07-04T20:14:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:50+00:00",
+          "normalized": "2022-11-13T10:14:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bbhsdkxhgcl4bl34qtvordgilu",
+        "media_path": "/media/kph_bbhsdkxhgcl4bl34qtvordgilu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sm7xuwb3al2uxroolh3x4nbple",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jCN5nnw",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-jCN5nnw",
+        "filename": "PXL_20220704_041748767.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "ab13d5321d8e40feae2f86369e4846cf"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_041748767.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4975686,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:17:48+00:00",
+          "normalized": "2022-07-04T20:17:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:38+00:00",
+          "normalized": "2022-11-06T16:29:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sm7xuwb3al2uxroolh3x4nbple",
+        "media_path": "/media/kph_sm7xuwb3al2uxroolh3x4nbple",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ep5kdk6hnnmusikedm4dg7n6vq",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LnSHxz2",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-LnSHxz2",
+        "filename": "PXL_20220704_041834039.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "5767256d6289771ca3130e64b20f6a46"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_041834039.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6048791,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:18:34+00:00",
+          "normalized": "2022-07-04T20:18:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:48+00:00",
+          "normalized": "2022-11-13T10:14:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ep5kdk6hnnmusikedm4dg7n6vq",
+        "media_path": "/media/kph_ep5kdk6hnnmusikedm4dg7n6vq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hu4fxoblt3cipaprvfs2kdz73m",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5QNGgMm",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-5QNGgMm",
+        "filename": "PXL_20220704_041906291.jpg",
+        "format": "JPG",
+        "archived_md5": "17915fb8b9049d707b8abfd260d02263"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_041906291.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3028532,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:19:06+00:00",
+          "normalized": "2022-07-04T20:19:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:35+00:00",
+          "normalized": "2022-11-06T16:29:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hu4fxoblt3cipaprvfs2kdz73m",
+        "media_path": "/media/kph_hu4fxoblt3cipaprvfs2kdz73m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_62hap7qk572udjubjzu4wcke6q",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "S2zDR5K",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-S2zDR5K",
+        "filename": "PXL_20220704_042723407.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "53216a98fdfa5cb1163584bc99c80e9a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220704_042723407.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4427295,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:27:23+00:00",
+          "normalized": "2022-07-04T20:27:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:33+00:00",
+          "normalized": "2022-11-06T16:29:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_62hap7qk572udjubjzu4wcke6q",
+        "media_path": "/media/kph_62hap7qk572udjubjzu4wcke6q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vfmht44c2key2jzpcnllbwekca",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "j3JTjVk",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-j3JTjVk",
+        "filename": "PXL_20220704_044048235.jpg",
+        "format": "JPG",
+        "archived_md5": "11e477693b16a19897c1ce462a65bf14"
+      },
+      "display": {
+        "title": "通りすがりの寿司ランチ",
+        "caption": "安いのでは？",
+        "alt": "通りすがりの寿司ランチ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3367842,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:40:48+00:00",
+          "normalized": "2022-07-04T20:40:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:37+00:00",
+          "normalized": "2022-11-13T10:14:37Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vfmht44c2key2jzpcnllbwekca",
+        "media_path": "/media/kph_vfmht44c2key2jzpcnllbwekca",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7uur34rzhhprjrngaqcxyxzjhu",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Hsj8tQV",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-Hsj8tQV",
+        "filename": "PXL_20220704_044846914.jpg",
+        "format": "JPG",
+        "archived_md5": "119d949d699d76c52d877e45376f743d"
+      },
+      "display": {
+        "title": "らーめん赤星",
+        "caption": "岩のりが入ってて美味しそうだったが、味は...",
+        "alt": "らーめん赤星"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2704579,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-04T20:48:46+00:00",
+          "normalized": "2022-07-04T20:48:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:27+00:00",
+          "normalized": "2022-11-13T10:14:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7uur34rzhhprjrngaqcxyxzjhu",
+        "media_path": "/media/kph_7uur34rzhhprjrngaqcxyxzjhu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zjkiik4w3pbtpefkastnu3kuhu",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4cGLdF9",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-4cGLdF9",
+        "filename": "PXL_20220704_114106611.NIGHT.jpg",
+        "format": "JPG",
+        "archived_md5": "ddf0a02d16b30a3f02176b4ce8bf933c"
+      },
+      "display": {
+        "title": "遠くにテレビ塔が見える",
+        "caption": "",
+        "alt": "遠くにテレビ塔が見える"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2865880,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T03:41:06+00:00",
+          "normalized": "2022-07-05T03:41:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:33+00:00",
+          "normalized": "2022-11-13T10:14:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zjkiik4w3pbtpefkastnu3kuhu",
+        "media_path": "/media/kph_zjkiik4w3pbtpefkastnu3kuhu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_puf3o24nbdzeosq4r72oh2eply",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "N478NDt",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-N478NDt",
+        "filename": "PXL_20220704_114216473.jpg",
+        "format": "JPG",
+        "archived_md5": "5dee22db0252a60bc1ffe850fae38ade"
+      },
+      "display": {
+        "title": "大通公園とテレビ塔",
+        "caption": "なんかいい感じ。",
+        "alt": "大通公園とテレビ塔"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1885339,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T03:42:16+00:00",
+          "normalized": "2022-07-05T03:42:16Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:30+00:00",
+          "normalized": "2022-11-06T16:29:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_puf3o24nbdzeosq4r72oh2eply",
+        "media_path": "/media/kph_puf3o24nbdzeosq4r72oh2eply",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_73up6mbpfbkabxz3s4is7t75cm",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VkMcB3d",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-VkMcB3d",
+        "filename": "PXL_20220704_140941161.NIGHT.jpg",
+        "format": "JPG",
+        "archived_md5": "dc4923a992a4afb5642ad71d87409cdd"
+      },
+      "display": {
+        "title": "さっぽろテレビ塔",
+        "caption": "",
+        "alt": "さっぽろテレビ塔"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1078342,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T06:09:41+00:00",
+          "normalized": "2022-07-05T06:09:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:28+00:00",
+          "normalized": "2022-11-06T16:29:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_73up6mbpfbkabxz3s4is7t75cm",
+        "media_path": "/media/kph_73up6mbpfbkabxz3s4is7t75cm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_j6higgz4457numxpi3qete25nu",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vgx5g6n",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-vgx5g6n",
+        "filename": "PXL_20220704_145048108.jpg",
+        "format": "JPG",
+        "archived_md5": "5c42149814d32c6187bfc0be3362d33d"
+      },
+      "display": {
+        "title": "ススキノ",
+        "caption": "有名なニッカウヰスキーの看板が見れてうれしい。",
+        "alt": "ススキノ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4576542,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T06:50:48+00:00",
+          "normalized": "2022-07-05T06:50:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:25+00:00",
+          "normalized": "2022-11-13T10:14:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_j6higgz4457numxpi3qete25nu",
+        "media_path": "/media/kph_j6higgz4457numxpi3qete25nu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dvoysmah5t5uesr5m4uqixxnom",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "P72vLSC",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-P72vLSC",
+        "filename": "PXL_20220704_145656143.jpg",
+        "format": "JPG",
+        "archived_md5": "e813a0ca9cc807d42da6843d3c89ee62"
+      },
+      "display": {
+        "title": "味噌ラーメン山岡家",
+        "caption": "こんな時間にやっていてくれてありがたい。",
+        "alt": "味噌ラーメン山岡家"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2654414,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T06:56:56+00:00",
+          "normalized": "2022-07-05T06:56:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:09:31+00:00",
+          "normalized": "2022-11-13T10:09:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dvoysmah5t5uesr5m4uqixxnom",
+        "media_path": "/media/kph_dvoysmah5t5uesr5m4uqixxnom",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_b6x5m37jnxbwwi46pck6wmqtpu",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8Dhtz9v",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-8Dhtz9v",
+        "filename": "PXL_20220704_145804224.jpg",
+        "format": "JPG",
+        "archived_md5": "15732461a7dcd830e88b15993a3452ef"
+      },
+      "display": {
+        "title": "味噌ラーメン山岡家",
+        "caption": "つくばでよくお世話になった山岡家に味噌専門店があるとは。",
+        "alt": "味噌ラーメン山岡家"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2560405,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T06:58:04+00:00",
+          "normalized": "2022-07-05T06:58:04Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:09:30+00:00",
+          "normalized": "2022-11-13T10:09:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_b6x5m37jnxbwwi46pck6wmqtpu",
+        "media_path": "/media/kph_b6x5m37jnxbwwi46pck6wmqtpu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tnmb37fy2mkneffh4y7b43gy2a",
+      "position": 34,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rHMsgmN",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-rHMsgmN",
+        "filename": "PXL_20220705_004116862.jpg",
+        "format": "JPG",
+        "archived_md5": "c6241b467697030cb6a0863ca7c4d12f"
+      },
+      "display": {
+        "title": "二条市場",
+        "caption": "去年と比べると相場はだいぶ高くなってしまったらしい。",
+        "alt": "二条市場"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4300515,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T16:41:16+00:00",
+          "normalized": "2022-07-05T16:41:16Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:20+00:00",
+          "normalized": "2022-11-13T10:14:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tnmb37fy2mkneffh4y7b43gy2a",
+        "media_path": "/media/kph_tnmb37fy2mkneffh4y7b43gy2a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rbybzsghauetieepr3h3r5jole",
+      "position": 35,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gkr97V6",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-gkr97V6",
+        "filename": "PXL_20220705_041154180.jpg",
+        "format": "JPG",
+        "archived_md5": "1bbc4fd6f2cb07c98cbc4517bf30e97a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220705_041154180.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3600847,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T20:11:54+00:00",
+          "normalized": "2022-07-05T20:11:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:11+00:00",
+          "normalized": "2022-11-13T10:14:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rbybzsghauetieepr3h3r5jole",
+        "media_path": "/media/kph_rbybzsghauetieepr3h3r5jole",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ircmy57636dcim3nalch4swcce",
+      "position": 36,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PLPkdwj",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-PLPkdwj",
+        "filename": "PXL_20220705_041220330.jpg",
+        "format": "JPG",
+        "archived_md5": "619bbb7b6df3143e7717661768f8fd0f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220705_041220330.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2823315,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T20:12:20+00:00",
+          "normalized": "2022-07-05T20:12:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:00+00:00",
+          "normalized": "2022-11-13T10:14:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ircmy57636dcim3nalch4swcce",
+        "media_path": "/media/kph_ircmy57636dcim3nalch4swcce",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6u5taka4eqic5wugsd7dsp4cp4",
+      "position": 37,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cWFPPSM",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-cWFPPSM",
+        "filename": "PXL_20220705_042612568.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "5c558963b46a0cc82cb20c42187941ca"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220705_042612568.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5430404,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T20:26:12+00:00",
+          "normalized": "2022-07-05T20:26:12Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T10:14:07+00:00",
+          "normalized": "2022-11-13T10:14:07Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6u5taka4eqic5wugsd7dsp4cp4",
+        "media_path": "/media/kph_6u5taka4eqic5wugsd7dsp4cp4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gjvt5msfmke2h5nzy3vc7l5d5q",
+      "position": 38,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qN7cBpg",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-qN7cBpg",
+        "filename": "PXL_20220705_045556021.jpg",
+        "format": "JPG",
+        "archived_md5": "b1792f55dbaeefdd664b7735089cfce4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220705_045556021.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1411054,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T20:55:56+00:00",
+          "normalized": "2022-07-05T20:55:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:20+00:00",
+          "normalized": "2022-11-06T16:29:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gjvt5msfmke2h5nzy3vc7l5d5q",
+        "media_path": "/media/kph_gjvt5msfmke2h5nzy3vc7l5d5q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pfx4rshbo6hnx7cn7txo5tjzdm",
+      "position": 39,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NJdLbm5",
+        "web_uri": "https://kanolog.smugmug.com/Sapporo20220703/i-NJdLbm5",
+        "filename": "PXL_20220705_051454732.jpg",
+        "format": "JPG",
+        "archived_md5": "a2f7d889672c6b4c92b480c42120f42a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220705_051454732.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2973427,
+        "width": 4032,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-07-05T21:14:54+00:00",
+          "normalized": "2022-07-05T21:14:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:29:20+00:00",
+          "normalized": "2022-11-06T16:29:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pfx4rshbo6hnx7cn7txo5tjzdm",
+        "media_path": "/media/kph_pfx4rshbo6hnx7cn7txo5tjzdm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

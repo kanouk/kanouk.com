@@ -297,6 +297,143 @@ def create_content(
     return result
 
 
+def album_content_payload(album: Mapping[str, Any], assets: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    captured = sorted(
+        value
+        for asset in assets
+        if isinstance(
+            value := asset.get("timestamps", {}).get("captured_at", {}).get("normalized"),
+            str,
+        )
+    )
+    source = album.get("source", {})
+    sort_method = str(album.get("sort_method") or "position").lower()
+    sort_direction = str(album.get("sort_direction") or "ascending").lower()
+    return {
+        "title": str(album.get("title") or album.get("slug") or "Album"),
+        "description": str(album.get("description") or ""),
+        "captured_from": captured[0] if captured else None,
+        "captured_to": captured[-1] if captured else None,
+        "sort_method": "position" if sort_method == "position" else sort_method,
+        "sort_direction": "desc" if sort_direction in {"descending", "desc"} else "asc",
+        "allow_downloads": bool(album.get("allow_downloads")),
+        "source_album_key": str(source.get("album_key") or ""),
+        "source_url": source.get("web_uri"),
+        "source_metadata": {
+            "stable_album_id": album.get("id"),
+            "source_protected_flag": bool(album.get("source_protected_flag")),
+            "migration": "manifest-v1",
+        },
+    }
+
+
+def ensure_album_content(
+    manifest: dict[str, Any],
+    *,
+    manifest_path: Path,
+    env: Mapping[str, str],
+    token: str,
+) -> str:
+    album = manifest.get("album", {})
+    destination = album.setdefault("destination", {})
+    content_id = destination.get("emdash_content_id")
+    if isinstance(content_id, str):
+        result = run_emdash(
+            ["content", "get", "albums", content_id, "--raw"], env, token=token
+        )
+        data = result.get("data")
+        if not isinstance(data, dict) or data.get("source_album_key") != album.get(
+            "source", {}
+        ).get("album_key"):
+            raise AlbumMigrationError("EmDash album readback mismatch")
+        return content_id
+    data = album_content_payload(album, manifest.get("assets", []))
+    with tempfile.NamedTemporaryFile(
+        mode="w", encoding="utf-8", suffix=".json", delete=False
+    ) as handle:
+        json.dump(data, handle, ensure_ascii=False)
+        payload_path = Path(handle.name)
+    try:
+        result = run_emdash(
+            [
+                "content",
+                "create",
+                "albums",
+                "--file",
+                str(payload_path),
+                "--slug",
+                str(album.get("slug")),
+            ],
+            env,
+            token=token,
+        )
+    finally:
+        payload_path.unlink(missing_ok=True)
+    content_id = result.get("id")
+    if not isinstance(content_id, str):
+        raise AlbumMigrationError("EmDash album create omitted its id")
+    destination["emdash_content_id"] = content_id
+    checkpoint(manifest_path, manifest)
+    return content_id
+
+
+def ensure_album_cover(
+    manifest: dict[str, Any], *, env: Mapping[str, str], token: str
+) -> bool:
+    album_id = manifest.get("album", {}).get("destination", {}).get("emdash_content_id")
+    if not isinstance(album_id, str):
+        return False
+    first = next(
+        (
+            asset
+            for asset in manifest.get("assets", [])
+            if asset.get("verification", {}).get("r2_roundtrip_verified")
+            and asset.get("destination", {}).get("emdash_media_id")
+        ),
+        None,
+    )
+    if first is None:
+        return False
+    destination = first.get("destination", {})
+    cover_media_id = destination.get("poster_media_id") or destination.get(
+        "emdash_media_id"
+    )
+    current = run_emdash(
+        ["content", "get", "albums", album_id, "--raw"], env, token=token
+    )
+    data = current.get("data")
+    revision = current.get("_rev")
+    if not isinstance(data, dict) or not isinstance(revision, str):
+        raise AlbumMigrationError("EmDash album cover readback has no revision")
+    existing = data.get("cover_image")
+    if isinstance(existing, dict) and existing.get("id") == cover_media_id:
+        return False
+    run_emdash(
+        [
+            "content",
+            "update",
+            "albums",
+            album_id,
+            "--rev",
+            revision,
+            "--data",
+            json.dumps(
+                {
+                    "cover_image": {
+                        "id": cover_media_id,
+                        "provider": "local",
+                        "alt": str(first.get("display", {}).get("alt") or ""),
+                    }
+                },
+                ensure_ascii=False,
+            ),
+        ],
+        env,
+        token=token,
+    )
+    return True
+
+
 def public_sha256(storage_key: str) -> tuple[str, int]:
     url = f"{EXPECTED_URL}/_emdash/api/media/file/{quote(storage_key, safe='')}"
     digest = hashlib.sha256()
@@ -435,6 +572,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--limit", type=int)
     result.add_argument("--asset-id", action="append", default=[])
     result.add_argument("--apply", action="store_true")
+    result.add_argument("--continue-on-error", action="store_true")
     result.add_argument("--api-key-env", default="SMUGMUG_API_KEY")
     return result
 
@@ -445,9 +583,6 @@ def main() -> None:
     manifest = json.loads(manifest_path.read_text())
     assert_sanitized(manifest)
     album = manifest.get("album", {})
-    album_id = album.get("destination", {}).get("emdash_content_id")
-    if not isinstance(album_id, str):
-        raise SystemExit("Manifest album has no EmDash destination content id")
     api_key = os.environ.get(args.api_key_env)
     if not api_key:
         raise SystemExit(f"Missing API key environment variable: {args.api_key_env}")
@@ -484,6 +619,12 @@ def main() -> None:
     credential = load_credential()
     env = child_environment(credential)
     preflight(env)
+    album_id = ensure_album_content(
+        manifest,
+        manifest_path=manifest_path,
+        env=env,
+        token=credential["token"],
+    )
     live_assets = find_live_assets(
         SmugMugClient(api_key),
         user=str(album.get("source", {}).get("user")),
@@ -492,12 +633,26 @@ def main() -> None:
     if len(live_assets) != int(album.get("asset_count") or 0):
         raise SystemExit("Live SmugMug asset count differs from frozen manifest")
 
-    counts = {"verified": 0, "skipped_verified": 0, "failed": 0}
+    counts = {
+        "verified": 0,
+        "skipped_verified": 0,
+        "pending_owner_auth": 0,
+        "failed": 0,
+    }
     for index, asset in enumerate(assets, 1):
         image_key = str(asset.get("source", {}).get("image_key") or "")
         live = live_assets.get(image_key)
         if live is None:
             raise SystemExit(f"Frozen asset is absent from live album: {image_key}")
+        if not live.get("ArchivedUri") or not live.get("ArchivedMD5"):
+            asset.setdefault("verification", {})["migration_status"] = "pending_owner_auth"
+            counts["pending_owner_auth"] += 1
+            checkpoint(manifest_path, manifest)
+            print(
+                f"[{index}/{len(assets)}] {asset['id']}: pending_owner_auth",
+                flush=True,
+            )
+            continue
         try:
             status = migrate_asset(
                 asset,
@@ -518,8 +673,17 @@ def main() -> None:
                 file=sys.stderr,
                 flush=True,
             )
-            raise SystemExit(1) from exc
-    print(json.dumps({"apply": True, **counts}, ensure_ascii=False))
+            if not args.continue_on_error:
+                raise SystemExit(1) from exc
+    cover_updated = ensure_album_cover(
+        manifest, env=env, token=credential["token"]
+    )
+    print(
+        json.dumps(
+            {"apply": True, "cover_updated": cover_updated, **counts},
+            ensure_ascii=False,
+        )
+    )
 
 
 if __name__ == "__main__":

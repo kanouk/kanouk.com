@@ -1,0 +1,3542 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:19+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2024-07-kyoto",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_xt2fp7w2o6gspvdqyzi7fkq5ia",
+    "slug": "2024-07-kyoto",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "TWMFQN",
+      "web_uri": "https://kanolog.smugmug.com/20240726Kyoto"
+    },
+    "title": "Kyoto, 2024/07",
+    "description": "京都市京セラ美術館、仁和寺",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": true,
+    "asset_count": 73,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_nksv6ltz3ar57dsczzm5zkz2ta",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4VxmRmJ",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-4VxmRmJ",
+        "filename": "PXL_20240725_225306008.jpg",
+        "format": "JPG",
+        "archived_md5": "3d8b0d28fa0641f09f786466c0ec1667"
+      },
+      "display": {
+        "title": "出発",
+        "caption": "今回は2泊3日で短め。",
+        "alt": "出発"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2211088,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T14:53:06+00:00",
+          "normalized": "2024-07-26T14:53:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:59+00:00",
+          "normalized": "2024-07-31T23:30:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nksv6ltz3ar57dsczzm5zkz2ta",
+        "media_path": "/media/kph_nksv6ltz3ar57dsczzm5zkz2ta",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7ux7bhhp23qx4yl7mevorybcgi",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PXXxRmR",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-PXXxRmR",
+        "filename": "PXL_20240725_231241769.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "8495e776eab39f289ec7fc81daeb4efa"
+      },
+      "display": {
+        "title": "朝ごはん",
+        "caption": "いつもの明太子とちょっとお腹が空いてたので鮭も追加。",
+        "alt": "朝ごはん"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4970202,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T15:12:41+00:00",
+          "normalized": "2024-07-26T15:12:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:59+00:00",
+          "normalized": "2024-07-31T23:30:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7ux7bhhp23qx4yl7mevorybcgi",
+        "media_path": "/media/kph_7ux7bhhp23qx4yl7mevorybcgi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_g63w35hel4m77542i4pfmy4ok4",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gxrRMjF",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-gxrRMjF",
+        "filename": "PXL_20240726_013249455.jpg",
+        "format": "JPG",
+        "archived_md5": "a896da91250e15abc5dcca6f12ff9b1f"
+      },
+      "display": {
+        "title": "到着！",
+        "caption": "仕事してたらあっという間についた。",
+        "alt": "到着！"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1744125,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T17:32:49+00:00",
+          "normalized": "2024-07-26T17:32:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:31:00+00:00",
+          "normalized": "2024-07-31T23:31:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_g63w35hel4m77542i4pfmy4ok4",
+        "media_path": "/media/kph_g63w35hel4m77542i4pfmy4ok4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_asvucbf7v4yyg53tn4ep7oxsz4",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "wVH2SgV",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-wVH2SgV",
+        "filename": "PXL_20240726_015214541.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "c145726f69f67958dbeb01161e216bd2"
+      },
+      "display": {
+        "title": "京都タワー",
+        "caption": "なんか雨降りそうな天気",
+        "alt": "京都タワー"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3870232,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T17:52:14+00:00",
+          "normalized": "2024-07-26T17:52:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:57+00:00",
+          "normalized": "2024-07-31T23:30:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_asvucbf7v4yyg53tn4ep7oxsz4",
+        "media_path": "/media/kph_asvucbf7v4yyg53tn4ep7oxsz4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yagzxrbt5h4xpmskzuikxk2rji",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MXpxmHd",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-MXpxmHd",
+        "filename": "PXL_20240726_015244603.jpg",
+        "format": "JPG",
+        "archived_md5": "434da731b25380e025b033838b46afbc"
+      },
+      "display": {
+        "title": "京都タワー",
+        "caption": "なんか雨降りそうな天気。これから仕事〜。",
+        "alt": "京都タワー"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2773873,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T17:52:44+00:00",
+          "normalized": "2024-07-26T17:52:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:57+00:00",
+          "normalized": "2024-07-31T23:30:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yagzxrbt5h4xpmskzuikxk2rji",
+        "media_path": "/media/kph_yagzxrbt5h4xpmskzuikxk2rji",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bk7kx6cfahbktbn5ohjodxuz3m",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gfmLkKg",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-gfmLkKg",
+        "filename": "PXL_20240726_020640706.jpg",
+        "format": "JPG",
+        "archived_md5": "6028675f945e1b16989a4dd3be861859"
+      },
+      "display": {
+        "title": "からあげくん餃子の王将味",
+        "caption": "関西限定？ おやつに買った。",
+        "alt": "からあげくん餃子の王将味"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1000504,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T18:06:40+00:00",
+          "normalized": "2024-07-26T18:06:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:56+00:00",
+          "normalized": "2024-07-31T23:30:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bk7kx6cfahbktbn5ohjodxuz3m",
+        "media_path": "/media/kph_bk7kx6cfahbktbn5ohjodxuz3m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fy7jmf5xqbewcryswlxsklo4ya",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MDHqHkN",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-MDHqHkN",
+        "filename": "PXL_20240726_025744733.jpg",
+        "format": "JPG",
+        "archived_md5": "9696f2d8bd916d3a82b56332c9e6f572"
+      },
+      "display": {
+        "title": "ZXY京都",
+        "caption": "今日はここで仕事",
+        "alt": "ZXY京都"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2065958,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T18:57:44+00:00",
+          "normalized": "2024-07-26T18:57:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:54+00:00",
+          "normalized": "2024-07-31T23:30:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fy7jmf5xqbewcryswlxsklo4ya",
+        "media_path": "/media/kph_fy7jmf5xqbewcryswlxsklo4ya",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lm5tbvbhih7ldvvsrc7qtvea3y",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DwBtQTF",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-DwBtQTF",
+        "filename": "PXL_20240726_071533180.jpg",
+        "format": "JPG",
+        "archived_md5": "78ceebd292aa77e61096662a3274cd20"
+      },
+      "display": {
+        "title": "七条新町",
+        "caption": "打ち合わせ終わったのでホテルに徒歩で移動",
+        "alt": "七条新町"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2732986,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T23:15:33+00:00",
+          "normalized": "2024-07-26T23:15:33Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:53+00:00",
+          "normalized": "2024-07-31T23:30:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lm5tbvbhih7ldvvsrc7qtvea3y",
+        "media_path": "/media/kph_lm5tbvbhih7ldvvsrc7qtvea3y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hhtvyvhj373j5uxumubmalrbty",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5WCZp3c",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-5WCZp3c",
+        "filename": "PXL_20240726_072609408.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a4764a740534aaaf26aa0929a9867407"
+      },
+      "display": {
+        "title": "堀川通",
+        "caption": "西本願寺の横をてくてく北上。暑い。",
+        "alt": "堀川通"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5811180,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T23:26:09+00:00",
+          "normalized": "2024-07-26T23:26:09Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:54+00:00",
+          "normalized": "2024-07-31T23:30:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hhtvyvhj373j5uxumubmalrbty",
+        "media_path": "/media/kph_hhtvyvhj373j5uxumubmalrbty",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6nd2w66ivpeyuh2qaxm4g5f3gu",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3ns8rwr",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-3ns8rwr",
+        "filename": "PXL_20240726_072958365.jpg",
+        "format": "JPG",
+        "archived_md5": "413d42764c1283ff0656f36f94cf25ed"
+      },
+      "display": {
+        "title": "京都東急ホテル",
+        "caption": "今回泊まるホテル。\n昔ながらのホテルって感じ。",
+        "alt": "京都東急ホテル"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2846771,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-26T23:29:58+00:00",
+          "normalized": "2024-07-26T23:29:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:51+00:00",
+          "normalized": "2024-07-31T23:30:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6nd2w66ivpeyuh2qaxm4g5f3gu",
+        "media_path": "/media/kph_6nd2w66ivpeyuh2qaxm4g5f3gu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jnvn65l2tmo45pwgo5bxuyltxu",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WB2cq3D",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-WB2cq3D",
+        "filename": "PXL_20240726_102243270.jpg",
+        "format": "JPG",
+        "archived_md5": "8722be3fafd1ccf65915c27ae681fe0b"
+      },
+      "display": {
+        "title": "ロビー階",
+        "caption": "祇園祭中だからか飾り付けてあった",
+        "alt": "ロビー階"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2014086,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T02:22:43+00:00",
+          "normalized": "2024-07-27T02:22:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:50+00:00",
+          "normalized": "2024-07-31T23:30:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jnvn65l2tmo45pwgo5bxuyltxu",
+        "media_path": "/media/kph_jnvn65l2tmo45pwgo5bxuyltxu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_o2yjkhnsgcs5f3le4kdu5b5ujm",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "wsTQvjh",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-wsTQvjh",
+        "filename": "PXL_20240727_024640626.jpg",
+        "format": "JPG",
+        "archived_md5": "ef01e1bd15c55c1dc67ff5257648e4a7"
+      },
+      "display": {
+        "title": "堀川五条",
+        "caption": "大きい道同士の交差点なので広い",
+        "alt": "堀川五条"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2510049,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T18:46:40+00:00",
+          "normalized": "2024-07-27T18:46:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:50+00:00",
+          "normalized": "2024-07-31T23:30:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_o2yjkhnsgcs5f3le4kdu5b5ujm",
+        "media_path": "/media/kph_o2yjkhnsgcs5f3le4kdu5b5ujm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5l7zb7qzgpb5dtwbkd3sfuxkqm",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TXVhMmt",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-TXVhMmt",
+        "filename": "PXL_20240727_032805655.jpg",
+        "format": "JPG",
+        "archived_md5": "5a98dd22a7da32fcb58f2cf6c32523be"
+      },
+      "display": {
+        "title": "三条神宮道",
+        "caption": "この交差点好き",
+        "alt": "三条神宮道"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1667954,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:28:05+00:00",
+          "normalized": "2024-07-27T19:28:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:48+00:00",
+          "normalized": "2024-07-31T23:30:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5l7zb7qzgpb5dtwbkd3sfuxkqm",
+        "media_path": "/media/kph_5l7zb7qzgpb5dtwbkd3sfuxkqm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_l53dsddguxueryg4txqy7tqipe",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3tKjbZ5",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-3tKjbZ5",
+        "filename": "PXL_20240727_033233465.jpg",
+        "format": "JPG",
+        "archived_md5": "0bd9126737b3e0118a62beb48080d646"
+      },
+      "display": {
+        "title": "平安神宮のデカ鳥居",
+        "caption": "いつみてもデカい",
+        "alt": "平安神宮のデカ鳥居"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2626970,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:32:33+00:00",
+          "normalized": "2024-07-27T19:32:33Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:48+00:00",
+          "normalized": "2024-07-31T23:30:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_l53dsddguxueryg4txqy7tqipe",
+        "media_path": "/media/kph_l53dsddguxueryg4txqy7tqipe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cbac5zgl2z35bdluriysue5ntq",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kSWqCmh",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-kSWqCmh",
+        "filename": "PXL_20240727_033254922.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "c89d112e41bd90e428515373844eaf24"
+      },
+      "display": {
+        "title": "白川から東山のほうを望む",
+        "caption": "この風景めっちゃ好きでいつも撮っちゃう",
+        "alt": "白川から東山のほうを望む"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 8676263,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:32:54+00:00",
+          "normalized": "2024-07-27T19:32:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:47+00:00",
+          "normalized": "2024-07-31T23:30:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cbac5zgl2z35bdluriysue5ntq",
+        "media_path": "/media/kph_cbac5zgl2z35bdluriysue5ntq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lnxex7x5nnu25hmueb3e2qnale",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fqqKXzR",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-fqqKXzR",
+        "filename": "PXL_20240727_033411416.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "0a15d344486103a3b89bcabb4f5a4f3b"
+      },
+      "display": {
+        "title": "京都京セラ美術館",
+        "caption": "村上隆の京都もののけをみにきた",
+        "alt": "京都京セラ美術館"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4277499,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:34:11+00:00",
+          "normalized": "2024-07-27T19:34:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:45+00:00",
+          "normalized": "2024-07-31T23:30:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lnxex7x5nnu25hmueb3e2qnale",
+        "media_path": "/media/kph_lnxex7x5nnu25hmueb3e2qnale",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yzcf6xmagbu6unwgvkm3fjqmvq",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "pTNwmBQ",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-pTNwmBQ",
+        "filename": "PXL_20240727_033514173.jpg",
+        "format": "JPG",
+        "archived_md5": "fc603c522b79090dae52a6491695f5d3"
+      },
+      "display": {
+        "title": "エントランス",
+        "caption": "正確には京都 \"市\" 京セラ美術館だった",
+        "alt": "エントランス"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 594906,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:35:14+00:00",
+          "normalized": "2024-07-27T19:35:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:44+00:00",
+          "normalized": "2024-07-31T23:30:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yzcf6xmagbu6unwgvkm3fjqmvq",
+        "media_path": "/media/kph_yzcf6xmagbu6unwgvkm3fjqmvq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vujqqdoyc5cq6y4cqflkcjm63e",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LxNVhvv",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-LxNVhvv",
+        "filename": "PXL_20240727_034856219.jpg",
+        "format": "JPG",
+        "archived_md5": "7dcde27c4335a364dfbfdc16fbabae83"
+      },
+      "display": {
+        "title": "洛中洛外図屏風？",
+        "caption": "",
+        "alt": "洛中洛外図屏風？"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4064358,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:48:56+00:00",
+          "normalized": "2024-07-27T19:48:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:45+00:00",
+          "normalized": "2024-07-31T23:30:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vujqqdoyc5cq6y4cqflkcjm63e",
+        "media_path": "/media/kph_vujqqdoyc5cq6y4cqflkcjm63e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4qrlneiyoeekspiwutbisftaka",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "GFhR9XD",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-GFhR9XD",
+        "filename": "PXL_20240727_034934450.jpg",
+        "format": "JPG",
+        "archived_md5": "bdad69ee236829a6f7a7939460c65c25"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240727_034934450.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3049092,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:49:34+00:00",
+          "normalized": "2024-07-27T19:49:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:42+00:00",
+          "normalized": "2024-07-31T23:30:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4qrlneiyoeekspiwutbisftaka",
+        "media_path": "/media/kph_4qrlneiyoeekspiwutbisftaka",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_q7s54ytjw3scf4hf72lnbv6n2m",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cZB5NDD",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-cZB5NDD",
+        "filename": "PXL_20240727_035027049.jpg",
+        "format": "JPG",
+        "archived_md5": "9dfac3dfa2d9a1ddd96efe405f73e1d0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240727_035027049.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3095944,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:50:27+00:00",
+          "normalized": "2024-07-27T19:50:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:42+00:00",
+          "normalized": "2024-07-31T23:30:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_q7s54ytjw3scf4hf72lnbv6n2m",
+        "media_path": "/media/kph_q7s54ytjw3scf4hf72lnbv6n2m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5ui2qmrd5nlnvvfx4poxwl33sa",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mcpm7Hf",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-mcpm7Hf",
+        "filename": "PXL_20240727_035038685.jpg",
+        "format": "JPG",
+        "archived_md5": "b1517916bc06ad1424029da7ddadb45d"
+      },
+      "display": {
+        "title": "",
+        "caption": "よく見るとお花が刻印してある",
+        "alt": "よく見るとお花が刻印してある"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1749635,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:50:38+00:00",
+          "normalized": "2024-07-27T19:50:38Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:41+00:00",
+          "normalized": "2024-07-31T23:30:41Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5ui2qmrd5nlnvvfx4poxwl33sa",
+        "media_path": "/media/kph_5ui2qmrd5nlnvvfx4poxwl33sa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zca3pwon4zisndylbck4j7fsyi",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xwrvDHv",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-xwrvDHv",
+        "filename": "PXL_20240727_035306271.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "6811c66ed6b572ef0b3a3306693e91c0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240727_035306271.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3650668,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:53:06+00:00",
+          "normalized": "2024-07-27T19:53:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:39+00:00",
+          "normalized": "2024-07-31T23:30:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zca3pwon4zisndylbck4j7fsyi",
+        "media_path": "/media/kph_zca3pwon4zisndylbck4j7fsyi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ye43ag3pncxgmma7cy6bb2rkf4",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4nxh9sQ",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-4nxh9sQ",
+        "filename": "PXL_20240727_035753544.jpg",
+        "format": "JPG",
+        "archived_md5": "9d708714c8d36e5e4adc0c6dbe8360df"
+      },
+      "display": {
+        "title": "数字がいっぱい",
+        "caption": "これは素数？",
+        "alt": "数字がいっぱい"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3087341,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:57:53+00:00",
+          "normalized": "2024-07-27T19:57:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:39+00:00",
+          "normalized": "2024-07-31T23:30:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ye43ag3pncxgmma7cy6bb2rkf4",
+        "media_path": "/media/kph_ye43ag3pncxgmma7cy6bb2rkf4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zbq4wthud42w6dm6lk6m24dera",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dr23b95",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-dr23b95",
+        "filename": "PXL_20240727_035832920.jpg",
+        "format": "JPG",
+        "archived_md5": "060dd82163ddb8bb7141df12f006acd1"
+      },
+      "display": {
+        "title": "",
+        "caption": "スタートを見たら素数だった",
+        "alt": "スタートを見たら素数だった"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1070194,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:58:32+00:00",
+          "normalized": "2024-07-27T19:58:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:38+00:00",
+          "normalized": "2024-07-31T23:30:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zbq4wthud42w6dm6lk6m24dera",
+        "media_path": "/media/kph_zbq4wthud42w6dm6lk6m24dera",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_taus7dihe3alrpvfmxxysgv6iq",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "r3Q34nM",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-r3Q34nM",
+        "filename": "PXL_20240727_035950671.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "7d671107ddc401ce6e091b70115b3a33"
+      },
+      "display": {
+        "title": "風神雷神図屏風？",
+        "caption": "",
+        "alt": "風神雷神図屏風？"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4821813,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T19:59:50+00:00",
+          "normalized": "2024-07-27T19:59:50Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:36+00:00",
+          "normalized": "2024-07-31T23:30:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_taus7dihe3alrpvfmxxysgv6iq",
+        "media_path": "/media/kph_taus7dihe3alrpvfmxxysgv6iq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_v6tufirlia6yrz6uhkn7gqsaeq",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RzKh29N",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-RzKh29N",
+        "filename": "PXL_20240727_040009221.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "0ff1fceb70148548b1e7e968293fed08"
+      },
+      "display": {
+        "title": "風神雷神図屏風ぽいやつ2",
+        "caption": "かわいい",
+        "alt": "風神雷神図屏風ぽいやつ2"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3694447,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:00:09+00:00",
+          "normalized": "2024-07-27T20:00:09Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:36+00:00",
+          "normalized": "2024-07-31T23:30:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_v6tufirlia6yrz6uhkn7gqsaeq",
+        "media_path": "/media/kph_v6tufirlia6yrz6uhkn7gqsaeq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sycoc7iz3clv2kjhcw7k6aemaa",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7Frj9Fg",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-7Frj9Fg",
+        "filename": "PXL_20240727_040058101.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "5f619aab3b129361284233915e94f714"
+      },
+      "display": {
+        "title": "風神雷神図屏風っぽいやつ3",
+        "caption": "",
+        "alt": "風神雷神図屏風っぽいやつ3"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4016524,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:00:58+00:00",
+          "normalized": "2024-07-27T20:00:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:35+00:00",
+          "normalized": "2024-07-31T23:30:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sycoc7iz3clv2kjhcw7k6aemaa",
+        "media_path": "/media/kph_sycoc7iz3clv2kjhcw7k6aemaa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ec6k3k6nsez4ppsd7smelxyz5q",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XZdPmcL",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-XZdPmcL",
+        "filename": "original_619a10f3-26c4-4767-aadc-8b542b767c1a_PXL_20240727_040128696.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a756f724af8c464216abc2aac5d1a2ca"
+      },
+      "display": {
+        "title": "尾形光琳っぽい何か",
+        "caption": "",
+        "alt": "尾形光琳っぽい何か"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3668027,
+        "width": 2267,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:01:28+00:00",
+          "normalized": "2024-07-27T20:01:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:34+00:00",
+          "normalized": "2024-07-31T23:30:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ec6k3k6nsez4ppsd7smelxyz5q",
+        "media_path": "/media/kph_ec6k3k6nsez4ppsd7smelxyz5q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xgwr276zl7ni3f6qgperakbt4q",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Kss7v35",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-Kss7v35",
+        "filename": "PXL_20240727_040239169.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "2226d399995685c5f327c516544ddf1b"
+      },
+      "display": {
+        "title": "雲龍図っぽい何か",
+        "caption": "",
+        "alt": "雲龍図っぽい何か"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6129643,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:02:39+00:00",
+          "normalized": "2024-07-27T20:02:39Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:34+00:00",
+          "normalized": "2024-07-31T23:30:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xgwr276zl7ni3f6qgperakbt4q",
+        "media_path": "/media/kph_xgwr276zl7ni3f6qgperakbt4q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_alqhg72nthxc2htagm3sffcwny",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TL72MNx",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-TL72MNx",
+        "filename": "PXL_20240727_040505772.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "18520ed5d2a3f860c74d321994bd1952"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240727_040505772.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5370214,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:05:05+00:00",
+          "normalized": "2024-07-27T20:05:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:33+00:00",
+          "normalized": "2024-07-31T23:30:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_alqhg72nthxc2htagm3sffcwny",
+        "media_path": "/media/kph_alqhg72nthxc2htagm3sffcwny",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_k3suumzpne3awqaeppb25ozwfi",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zqjvJt6",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-zqjvJt6",
+        "filename": "PXL_20240727_040551576.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a176f21b1ae0ae08d8cd78162141fc84"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240727_040551576.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4988679,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:05:51+00:00",
+          "normalized": "2024-07-27T20:05:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:31+00:00",
+          "normalized": "2024-07-31T23:30:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_k3suumzpne3awqaeppb25ozwfi",
+        "media_path": "/media/kph_k3suumzpne3awqaeppb25ozwfi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_efrm6ikjn44ks3t4y6pyu34y34",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NN9n3dr",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-NN9n3dr",
+        "filename": "PXL_20240727_040706114.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "cd494ca0dd7c14799b3f28283602b1cf"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240727_040706114.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3810553,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:07:06+00:00",
+          "normalized": "2024-07-27T20:07:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:31+00:00",
+          "normalized": "2024-07-31T23:30:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_efrm6ikjn44ks3t4y6pyu34y34",
+        "media_path": "/media/kph_efrm6ikjn44ks3t4y6pyu34y34",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_si3yqchhlymyuh75mpbvanvnfm",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "T2VDPbm",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-T2VDPbm",
+        "filename": "original_0f29f25d-2f98-4c78-9c26-6642b3ce79a1_PXL_20240727_040752693.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "3175030f285412185a8d50fad6609fe9"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "original_0f29f25d-2f98-4c78-9c26-6642b3ce79a1_PXL_20240727_040752693.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3625431,
+        "width": 2267,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:07:52+00:00",
+          "normalized": "2024-07-27T20:07:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:29+00:00",
+          "normalized": "2024-07-31T23:30:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_si3yqchhlymyuh75mpbvanvnfm",
+        "media_path": "/media/kph_si3yqchhlymyuh75mpbvanvnfm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3hcndue2w5p7gvcmn3fhs5lvxm",
+      "position": 34,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "wqJzk4n",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-wqJzk4n",
+        "filename": "PXL_20240727_040803197.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "bd40e596a34f38b74a82f8ef26719c01"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240727_040803197.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5633682,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:08:03+00:00",
+          "normalized": "2024-07-27T20:08:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:28+00:00",
+          "normalized": "2024-07-31T23:30:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3hcndue2w5p7gvcmn3fhs5lvxm",
+        "media_path": "/media/kph_3hcndue2w5p7gvcmn3fhs5lvxm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6stkszsxiqtdjc2o7sefqck6fi",
+      "position": 35,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZfQT5js",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-ZfQT5js",
+        "filename": "PXL_20240727_041031199.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "c13daa02d14e0e59a25fa06a310fa8be"
+      },
+      "display": {
+        "title": "",
+        "caption": "この竹のやつが一番好きだった",
+        "alt": "この竹のやつが一番好きだった"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3957843,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:10:31+00:00",
+          "normalized": "2024-07-27T20:10:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:28+00:00",
+          "normalized": "2024-07-31T23:30:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6stkszsxiqtdjc2o7sefqck6fi",
+        "media_path": "/media/kph_6stkszsxiqtdjc2o7sefqck6fi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ehk7ubeif5d2gfevhcronwyyxi",
+      "position": 36,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zT8kfwS",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-zT8kfwS",
+        "filename": "PXL_20240727_041137101.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "bda8af7a6a82402d48aff25debb4d9e8"
+      },
+      "display": {
+        "title": "",
+        "caption": "五山かわいい",
+        "alt": "五山かわいい"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4259217,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:11:37+00:00",
+          "normalized": "2024-07-27T20:11:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:26+00:00",
+          "normalized": "2024-07-31T23:30:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ehk7ubeif5d2gfevhcronwyyxi",
+        "media_path": "/media/kph_ehk7ubeif5d2gfevhcronwyyxi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2mduw5elduuo2kipjlyeorowne",
+      "position": 37,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dRsbQQG",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-dRsbQQG",
+        "filename": "PXL_20240727_041726889.jpg",
+        "format": "JPG",
+        "archived_md5": "fea8a149df0146756bb1af58a7525113"
+      },
+      "display": {
+        "title": "",
+        "caption": "外にルイヴィトンのやつがあった",
+        "alt": "外にルイヴィトンのやつがあった"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2295315,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:17:26+00:00",
+          "normalized": "2024-07-27T20:17:26Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:25+00:00",
+          "normalized": "2024-07-31T23:30:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2mduw5elduuo2kipjlyeorowne",
+        "media_path": "/media/kph_2mduw5elduuo2kipjlyeorowne",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wvr3wu55q64jqislak7xtyyyku",
+      "position": 38,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cWSBMqG",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-cWSBMqG",
+        "filename": "PXL_20240727_041941852.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "df3939e677a127c78818d0e237888a84"
+      },
+      "display": {
+        "title": "エントランス",
+        "caption": "阿吽",
+        "alt": "エントランス"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5498586,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T20:19:41+00:00",
+          "normalized": "2024-07-27T20:19:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:25+00:00",
+          "normalized": "2024-07-31T23:30:25Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wvr3wu55q64jqislak7xtyyyku",
+        "media_path": "/media/kph_wvr3wu55q64jqislak7xtyyyku",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jfybhc7j5y5om7xj6x6onfw3t4",
+      "position": 39,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "h2hs43c",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-h2hs43c",
+        "filename": "PXL_20240727_072729258.jpg",
+        "format": "JPG",
+        "archived_md5": "1716080c6b91f5b7ffe2df224ba555ae"
+      },
+      "display": {
+        "title": "鴨川",
+        "caption": "夏の鴨川は何気にはじめて",
+        "alt": "鴨川"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2558269,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T23:27:29+00:00",
+          "normalized": "2024-07-27T23:27:29Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:23+00:00",
+          "normalized": "2024-07-31T23:30:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jfybhc7j5y5om7xj6x6onfw3t4",
+        "media_path": "/media/kph_jfybhc7j5y5om7xj6x6onfw3t4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ldfgv2o2rat3vnhb4mwr42qmcu",
+      "position": 40,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xrRGL9d",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-xrRGL9d",
+        "filename": "PXL_20240727_073308766.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "63f7bd9e2a2de3807b843318e21d272e"
+      },
+      "display": {
+        "title": "鴨川2",
+        "caption": "さすがに暑すぎるからか人が少ない",
+        "alt": "鴨川2"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 7333739,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-27T23:33:08+00:00",
+          "normalized": "2024-07-27T23:33:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:22+00:00",
+          "normalized": "2024-07-31T23:30:22Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ldfgv2o2rat3vnhb4mwr42qmcu",
+        "media_path": "/media/kph_ldfgv2o2rat3vnhb4mwr42qmcu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_spq2aoeffmmhkhq6cn76kav5fi",
+      "position": 41,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NzGQ8xb",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-NzGQ8xb",
+        "filename": "PXL_20240728_010448073.jpg",
+        "format": "JPG",
+        "archived_md5": "b07d37fe153d23107969577c67caf421"
+      },
+      "display": {
+        "title": "お世話になりまくった製氷機",
+        "caption": "",
+        "alt": "お世話になりまくった製氷機"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1088100,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T17:04:48+00:00",
+          "normalized": "2024-07-28T17:04:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:23+00:00",
+          "normalized": "2024-07-31T23:30:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_spq2aoeffmmhkhq6cn76kav5fi",
+        "media_path": "/media/kph_spq2aoeffmmhkhq6cn76kav5fi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wdgeflp3r2juwutqbdgvggpey4",
+      "position": 42,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZvHLCBb",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-ZvHLCBb",
+        "filename": "PXL_20240728_022941259.jpg",
+        "format": "JPG",
+        "archived_md5": "b88d471a0aab814897bb9c0ca369ed15"
+      },
+      "display": {
+        "title": "仁和寺 仁王門前",
+        "caption": "",
+        "alt": "仁和寺 仁王門前"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2383928,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T18:29:41+00:00",
+          "normalized": "2024-07-28T18:29:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:21+00:00",
+          "normalized": "2024-07-31T23:30:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wdgeflp3r2juwutqbdgvggpey4",
+        "media_path": "/media/kph_wdgeflp3r2juwutqbdgvggpey4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6a6ha7dcxcyyjafxwo7xwuv5ta",
+      "position": 43,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3J4m2tx",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-3J4m2tx",
+        "filename": "PXL_20240728_022946913.jpg",
+        "format": "JPG",
+        "archived_md5": "5c1a2190d08095ded6af9c6c4af3246c"
+      },
+      "display": {
+        "title": "御室仁和寺駅",
+        "caption": "御室感アピールしてる",
+        "alt": "御室仁和寺駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2048218,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T18:29:46+00:00",
+          "normalized": "2024-07-28T18:29:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:19+00:00",
+          "normalized": "2024-07-31T23:30:19Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6a6ha7dcxcyyjafxwo7xwuv5ta",
+        "media_path": "/media/kph_6a6ha7dcxcyyjafxwo7xwuv5ta",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tidg7mmm4ojetak7sscxjuucle",
+      "position": 44,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2WZ9sdj",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-2WZ9sdj",
+        "filename": "PXL_20240728_023206156.jpg",
+        "format": "JPG",
+        "archived_md5": "a8fbcd261990a69b9912c90bae82a1df"
+      },
+      "display": {
+        "title": "仁和寺 仁王門",
+        "caption": "かなり立派。さすが京都三大門。",
+        "alt": "仁和寺 仁王門"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3132916,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T18:32:06+00:00",
+          "normalized": "2024-07-28T18:32:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:18+00:00",
+          "normalized": "2024-07-31T23:30:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tidg7mmm4ojetak7sscxjuucle",
+        "media_path": "/media/kph_tidg7mmm4ojetak7sscxjuucle",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_nvaxgcvlamsmw355psz4sd3zhy",
+      "position": 45,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RCcht97",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-RCcht97",
+        "filename": "PXL_20240728_024703016.jpg",
+        "format": "JPG",
+        "archived_md5": "c9e14ba9d5abd0abcea29004b964f5cd"
+      },
+      "display": {
+        "title": "おむろ松風 天ぷら蕎麦",
+        "caption": "仁和寺を見る前に腹ごしらえと思って目の前のおそば屋さんに入ったら、いろいろびっくりした🥲\nぜひ天ぷらアップでみて欲しい笑",
+        "alt": "おむろ松風 天ぷら蕎麦"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2063207,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T18:47:03+00:00",
+          "normalized": "2024-07-28T18:47:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:18+00:00",
+          "normalized": "2024-07-31T23:30:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nvaxgcvlamsmw355psz4sd3zhy",
+        "media_path": "/media/kph_nvaxgcvlamsmw355psz4sd3zhy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dqdleb5skoskcaxouxd75fcygu",
+      "position": 46,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "KLSZDKQ",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-KLSZDKQ",
+        "filename": "PXL_20240728_030955694.jpg",
+        "format": "JPG",
+        "archived_md5": "fd7e8083ccdf03029964de655a3fa9e5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240728_030955694.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2526835,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:09:55+00:00",
+          "normalized": "2024-07-28T19:09:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:17+00:00",
+          "normalized": "2024-07-31T23:30:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dqdleb5skoskcaxouxd75fcygu",
+        "media_path": "/media/kph_dqdleb5skoskcaxouxd75fcygu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ww3s6bks4xpbmmwxvhlq7mkg6q",
+      "position": 47,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ChDq9Fh",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-ChDq9Fh",
+        "filename": "PXL_20240728_031124969.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "2dc3e162b78f482422532a80c616176c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240728_031124969.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4405904,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:11:24+00:00",
+          "normalized": "2024-07-28T19:11:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:14+00:00",
+          "normalized": "2024-07-31T23:30:14Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ww3s6bks4xpbmmwxvhlq7mkg6q",
+        "media_path": "/media/kph_ww3s6bks4xpbmmwxvhlq7mkg6q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_f55tluasryuvtqiue3vjqrnvba",
+      "position": 48,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "474xjJK",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-474xjJK",
+        "filename": "PXL_20240728_031337124.jpg",
+        "format": "JPG",
+        "archived_md5": "8520a175192eaac88267248823fc2112"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240728_031337124.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4433235,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:13:37+00:00",
+          "normalized": "2024-07-28T19:13:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:15+00:00",
+          "normalized": "2024-07-31T23:30:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_f55tluasryuvtqiue3vjqrnvba",
+        "media_path": "/media/kph_f55tluasryuvtqiue3vjqrnvba",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ycpyb7qzdl2dyxyn64yhz64iam",
+      "position": 49,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "99smjn8",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-99smjn8",
+        "filename": "PXL_20240728_031420745.jpg",
+        "format": "JPG",
+        "archived_md5": "5cc83643d26f713ace650c5333af0986"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240728_031420745.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2813810,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:14:20+00:00",
+          "normalized": "2024-07-28T19:14:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:14+00:00",
+          "normalized": "2024-07-31T23:30:14Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ycpyb7qzdl2dyxyn64yhz64iam",
+        "media_path": "/media/kph_ycpyb7qzdl2dyxyn64yhz64iam",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_kfjircrmrtsvcwmx3q2mywyvnm",
+      "position": 50,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2zJ7ckb",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-2zJ7ckb",
+        "filename": "PXL_20240728_031732141.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "419f7bf720542d9ad5acd400e5ab5df8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20240728_031732141.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6898894,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:17:32+00:00",
+          "normalized": "2024-07-28T19:17:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:12+00:00",
+          "normalized": "2024-07-31T23:30:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_kfjircrmrtsvcwmx3q2mywyvnm",
+        "media_path": "/media/kph_kfjircrmrtsvcwmx3q2mywyvnm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tvbueo6jvreak5deub5urpcp24",
+      "position": 51,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fHwQCmc",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-fHwQCmc",
+        "filename": "PXL_20240728_031824194.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "202aeac1e57052208bcd252dcba75818"
+      },
+      "display": {
+        "title": "仁和寺 五重塔 説明",
+        "caption": "",
+        "alt": "仁和寺 五重塔 説明"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6995116,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:18:24+00:00",
+          "normalized": "2024-07-28T19:18:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:11+00:00",
+          "normalized": "2024-07-31T23:30:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tvbueo6jvreak5deub5urpcp24",
+        "media_path": "/media/kph_tvbueo6jvreak5deub5urpcp24",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_se6ab6v6nonieim755dql7tuxa",
+      "position": 52,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "p3GSXWP",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-p3GSXWP",
+        "filename": "PXL_20240728_031955780.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "26f552ab47ae53cba1905686e16ec976"
+      },
+      "display": {
+        "title": "仁和寺 九所明神 本殿・左右殿",
+        "caption": "",
+        "alt": "仁和寺 九所明神 本殿・左右殿"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4689261,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:19:55+00:00",
+          "normalized": "2024-07-28T19:19:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:11+00:00",
+          "normalized": "2024-07-31T23:30:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_se6ab6v6nonieim755dql7tuxa",
+        "media_path": "/media/kph_se6ab6v6nonieim755dql7tuxa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vz33nu5vvlx5y5e3j33j75o7im",
+      "position": 53,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XkFVxK7",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-XkFVxK7",
+        "filename": "PXL_20240728_032046995.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "b94fc336666559772f5b2067dcc88a5b"
+      },
+      "display": {
+        "title": "仁和寺 九所明神 配置",
+        "caption": "",
+        "alt": "仁和寺 九所明神 配置"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4174557,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:20:46+00:00",
+          "normalized": "2024-07-28T19:20:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:09+00:00",
+          "normalized": "2024-07-31T23:30:09Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vz33nu5vvlx5y5e3j33j75o7im",
+        "media_path": "/media/kph_vz33nu5vvlx5y5e3j33j75o7im",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ryq4ozykdmkkikqcag64rdyuva",
+      "position": 54,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rNL4974",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-rNL4974",
+        "filename": "PXL_20240728_032435202.jpg",
+        "format": "JPG",
+        "archived_md5": "d4ad4eb226eec8e88bac23bf7e5c7fec"
+      },
+      "display": {
+        "title": "仁和寺 経蔵 説明",
+        "caption": "",
+        "alt": "仁和寺 経蔵 説明"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2118824,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:24:35+00:00",
+          "normalized": "2024-07-28T19:24:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:08+00:00",
+          "normalized": "2024-07-31T23:30:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ryq4ozykdmkkikqcag64rdyuva",
+        "media_path": "/media/kph_ryq4ozykdmkkikqcag64rdyuva",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_e6u6rutehi2herhdqorhjy2gq4",
+      "position": 55,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "X6hzGqB",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-X6hzGqB",
+        "filename": "PXL_20240728_032443518.jpg",
+        "format": "JPG",
+        "archived_md5": "e22385885bf91562de9f8d3e99ab8ff9"
+      },
+      "display": {
+        "title": "仁和寺 経蔵",
+        "caption": "",
+        "alt": "仁和寺 経蔵"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3504232,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:24:43+00:00",
+          "normalized": "2024-07-28T19:24:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:08+00:00",
+          "normalized": "2024-07-31T23:30:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_e6u6rutehi2herhdqorhjy2gq4",
+        "media_path": "/media/kph_e6u6rutehi2herhdqorhjy2gq4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_c4jy5dogrwndlmhyvbqwxy2x4a",
+      "position": 56,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nGNfL4c",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-nGNfL4c",
+        "filename": "PXL_20240728_032702168.jpg",
+        "format": "JPG",
+        "archived_md5": "0002d52277b44c2319cbcf15317cb3fd"
+      },
+      "display": {
+        "title": "仁和寺 金堂",
+        "caption": "",
+        "alt": "仁和寺 金堂"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1935543,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:27:02+00:00",
+          "normalized": "2024-07-28T19:27:02Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:06+00:00",
+          "normalized": "2024-07-31T23:30:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_c4jy5dogrwndlmhyvbqwxy2x4a",
+        "media_path": "/media/kph_c4jy5dogrwndlmhyvbqwxy2x4a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hrvzvfssbkfov2bjrwwdmp4ka4",
+      "position": 57,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZVHL8x3",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-ZVHL8x3",
+        "filename": "PXL_20240728_032946403.jpg",
+        "format": "JPG",
+        "archived_md5": "aedcafdedbc9487b65fd7ba13c266632"
+      },
+      "display": {
+        "title": "仁和寺 一願不動（水掛不動） 説明",
+        "caption": "",
+        "alt": "仁和寺 一願不動（水掛不動） 説明"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1933166,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:29:46+00:00",
+          "normalized": "2024-07-28T19:29:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:06+00:00",
+          "normalized": "2024-07-31T23:30:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hrvzvfssbkfov2bjrwwdmp4ka4",
+        "media_path": "/media/kph_hrvzvfssbkfov2bjrwwdmp4ka4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wjgvju4r6ubrmjfmwlgbjgsvv4",
+      "position": 58,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4kSvPhv",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-4kSvPhv",
+        "filename": "PXL_20240728_033451220.jpg",
+        "format": "JPG",
+        "archived_md5": "69d1812b899d4c36acf399fae3bc1911"
+      },
+      "display": {
+        "title": "仁和寺 御影堂",
+        "caption": "",
+        "alt": "仁和寺 御影堂"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2480803,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:34:51+00:00",
+          "normalized": "2024-07-28T19:34:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:05+00:00",
+          "normalized": "2024-07-31T23:30:05Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wjgvju4r6ubrmjfmwlgbjgsvv4",
+        "media_path": "/media/kph_wjgvju4r6ubrmjfmwlgbjgsvv4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5iq45ume6ppamvlxdg73bwq3oq",
+      "position": 59,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8DwHQ7w",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-8DwHQ7w",
+        "filename": "PXL_20240728_034111903.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "28e7c7d46440b2df23a135d90b0a439c"
+      },
+      "display": {
+        "title": "NINNAJI JAXURY SPACE",
+        "caption": "仁和寺の中にカフェ的な建物があったので一休み。",
+        "alt": "NINNAJI JAXURY SPACE"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5019454,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:41:11+00:00",
+          "normalized": "2024-07-28T19:41:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:04+00:00",
+          "normalized": "2024-07-31T23:30:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5iq45ume6ppamvlxdg73bwq3oq",
+        "media_path": "/media/kph_5iq45ume6ppamvlxdg73bwq3oq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fcpdzzpnzn77sgtog77564kfo4",
+      "position": 60,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MtKpWNc",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-MtKpWNc",
+        "filename": "PXL_20240728_034334640.jpg",
+        "format": "JPG",
+        "archived_md5": "eb78bace5fdc6ab970752a13dd1b9715"
+      },
+      "display": {
+        "title": "NINNAJI-JAXURY SPACE 2/2",
+        "caption": "抹茶ラテを頼んでゆっくりした。店内はジブリの映像と音楽が控えめに流れていた。",
+        "alt": "NINNAJI-JAXURY SPACE 2/2"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 918618,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:43:34+00:00",
+          "normalized": "2024-07-28T19:43:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:03+00:00",
+          "normalized": "2024-07-31T23:30:03Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fcpdzzpnzn77sgtog77564kfo4",
+        "media_path": "/media/kph_fcpdzzpnzn77sgtog77564kfo4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_nvvdmvktd4vzy2faci4hibb2fq",
+      "position": 61,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "j7nnV2z",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-j7nnV2z",
+        "filename": "PXL_20240728_035543237.jpg",
+        "format": "JPG",
+        "archived_md5": "24af732364c486c1648f466892830bf7"
+      },
+      "display": {
+        "title": "仁和寺 観音堂 説明",
+        "caption": "",
+        "alt": "仁和寺 観音堂 説明"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2302906,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:55:43+00:00",
+          "normalized": "2024-07-28T19:55:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:03+00:00",
+          "normalized": "2024-07-31T23:30:03Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nvvdmvktd4vzy2faci4hibb2fq",
+        "media_path": "/media/kph_nvvdmvktd4vzy2faci4hibb2fq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jqupxtfkq3lxiezj5vsad7mqpe",
+      "position": 62,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3NZfZGt",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-3NZfZGt",
+        "filename": "PXL_20240728_035619753.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "cca9158c2583138dc898aa8e1a5db0dd"
+      },
+      "display": {
+        "title": "仁和寺 観音堂",
+        "caption": "",
+        "alt": "仁和寺 観音堂"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4864598,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T19:56:19+00:00",
+          "normalized": "2024-07-28T19:56:19Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:00+00:00",
+          "normalized": "2024-07-31T23:30:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jqupxtfkq3lxiezj5vsad7mqpe",
+        "media_path": "/media/kph_jqupxtfkq3lxiezj5vsad7mqpe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hmigx7gxzgv444bhjhv3whdo3u",
+      "position": 63,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dSmkqpG",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-dSmkqpG",
+        "filename": "PXL_20240728_041217969.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "111f2c13b7fc066463810b59b7c60195"
+      },
+      "display": {
+        "title": "御所庭園 1/4",
+        "caption": "暑かったからか、人が少なくてほぼ貸切で贅沢な気持ちになった",
+        "alt": "御所庭園 1/4"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5611200,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:12:17+00:00",
+          "normalized": "2024-07-28T20:12:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:00+00:00",
+          "normalized": "2024-07-31T23:30:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hmigx7gxzgv444bhjhv3whdo3u",
+        "media_path": "/media/kph_hmigx7gxzgv444bhjhv3whdo3u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cgwlqadhyvz5caomudlix7s2by",
+      "position": 64,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "39ffJQh",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-39ffJQh",
+        "filename": "PXL_20240728_041231168.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "7108158ed8138cb124a634fff9c93e68"
+      },
+      "display": {
+        "title": "御所庭園 2/4",
+        "caption": "",
+        "alt": "御所庭園 2/4"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5459035,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:12:31+00:00",
+          "normalized": "2024-07-28T20:12:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:30:00+00:00",
+          "normalized": "2024-07-31T23:30:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cgwlqadhyvz5caomudlix7s2by",
+        "media_path": "/media/kph_cgwlqadhyvz5caomudlix7s2by",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hbaniycrs5epw2suy4wj46abxq",
+      "position": 65,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7wLbhX8",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-7wLbhX8",
+        "filename": "PXL_20240728_041829910.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "fc084727a901d8565af1fc0b35561571"
+      },
+      "display": {
+        "title": "御所庭園 3/4",
+        "caption": "",
+        "alt": "御所庭園 3/4"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4742286,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:18:29+00:00",
+          "normalized": "2024-07-28T20:18:29Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:57+00:00",
+          "normalized": "2024-07-31T23:29:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hbaniycrs5epw2suy4wj46abxq",
+        "media_path": "/media/kph_hbaniycrs5epw2suy4wj46abxq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7siysdja44mwucqwvip55lal6e",
+      "position": 66,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "9W8Ndrh",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-9W8Ndrh",
+        "filename": "PXL_20240728_042033095.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "40886260bb001f0ef50c6f649c308d20"
+      },
+      "display": {
+        "title": "御所庭園 4/4",
+        "caption": "",
+        "alt": "御所庭園 4/4"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6234609,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:20:33+00:00",
+          "normalized": "2024-07-28T20:20:33Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:57+00:00",
+          "normalized": "2024-07-31T23:29:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7siysdja44mwucqwvip55lal6e",
+        "media_path": "/media/kph_7siysdja44mwucqwvip55lal6e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_kkwsj3gsyuomm7oawiu7n3rdmm",
+      "position": 67,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZRp5GG8",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-ZRp5GG8",
+        "filename": "PXL_20240728_042641885.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "bdd5fb039b2b32adb80fdc2f468fa807"
+      },
+      "display": {
+        "title": "仁和寺全景図",
+        "caption": "",
+        "alt": "仁和寺全景図"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4580523,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:26:41+00:00",
+          "normalized": "2024-07-28T20:26:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:57+00:00",
+          "normalized": "2024-07-31T23:29:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_kkwsj3gsyuomm7oawiu7n3rdmm",
+        "media_path": "/media/kph_kkwsj3gsyuomm7oawiu7n3rdmm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rafztyod26pvy3lxnaqd66vuiq",
+      "position": 68,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gKZ8Ljb",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-gKZ8Ljb",
+        "filename": "PXL_20240728_044015904.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "4c0eeb5603109b6fc25b28e1f59cef30"
+      },
+      "display": {
+        "title": "仁和寺 仁王門 説明",
+        "caption": "",
+        "alt": "仁和寺 仁王門 説明"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4530600,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:40:15+00:00",
+          "normalized": "2024-07-28T20:40:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:54+00:00",
+          "normalized": "2024-07-31T23:29:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rafztyod26pvy3lxnaqd66vuiq",
+        "media_path": "/media/kph_rafztyod26pvy3lxnaqd66vuiq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_iew6bxiv6umtboupyad2mclp3e",
+      "position": 69,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Pq6NQ74",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-Pq6NQ74",
+        "filename": "PXL_20240728_044054898.jpg",
+        "format": "JPG",
+        "archived_md5": "8c43b29867a2fcaca3d86a9174540afb"
+      },
+      "display": {
+        "title": "仁和寺前の道路",
+        "caption": "",
+        "alt": "仁和寺前の道路"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2934759,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:40:54+00:00",
+          "normalized": "2024-07-28T20:40:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:54+00:00",
+          "normalized": "2024-07-31T23:29:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_iew6bxiv6umtboupyad2mclp3e",
+        "media_path": "/media/kph_iew6bxiv6umtboupyad2mclp3e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_i5sq4fc5jckcr7a4wtffysql7m",
+      "position": 70,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TH96Vrj",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-TH96Vrj",
+        "filename": "PXL_20240728_044100141.jpg",
+        "format": "JPG",
+        "archived_md5": "8db71f9f12d18c96d5d85f9bc5d59640"
+      },
+      "display": {
+        "title": "仁和寺 仁王門前",
+        "caption": "",
+        "alt": "仁和寺 仁王門前"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3228619,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:41:00+00:00",
+          "normalized": "2024-07-28T20:41:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:54+00:00",
+          "normalized": "2024-07-31T23:29:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_i5sq4fc5jckcr7a4wtffysql7m",
+        "media_path": "/media/kph_i5sq4fc5jckcr7a4wtffysql7m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wa6s2nqh4rfabhlovcewjhnbqe",
+      "position": 71,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "C6S6NPG",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-C6S6NPG",
+        "filename": "PXL_20240728_044550344.jpg",
+        "format": "JPG",
+        "archived_md5": "9b344fbf77d2c3662fbfa7a6c5a38ed1"
+      },
+      "display": {
+        "title": "御室仁和寺駅",
+        "caption": "",
+        "alt": "御室仁和寺駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2360109,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T20:45:50+00:00",
+          "normalized": "2024-07-28T20:45:50Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:51+00:00",
+          "normalized": "2024-07-31T23:29:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wa6s2nqh4rfabhlovcewjhnbqe",
+        "media_path": "/media/kph_wa6s2nqh4rfabhlovcewjhnbqe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jtmlpi56bnc2tuicb4nmgtx2lm",
+      "position": 72,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WgwDbwW",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-WgwDbwW",
+        "filename": "PXL_20240728_050224306.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "9a2ef9c81691295bd131a98db8dc0daf"
+      },
+      "display": {
+        "title": "帷子ノ辻駅",
+        "caption": "四条大宮にいくのに乗換",
+        "alt": "帷子ノ辻駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6068659,
+        "width": 2268,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-28T21:02:24+00:00",
+          "normalized": "2024-07-28T21:02:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:51+00:00",
+          "normalized": "2024-07-31T23:29:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jtmlpi56bnc2tuicb4nmgtx2lm",
+        "media_path": "/media/kph_jtmlpi56bnc2tuicb4nmgtx2lm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2u7iiiwgrgztgvvtwllmydjh7u",
+      "position": 73,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "FsM6rcx",
+        "web_uri": "https://kanolog.smugmug.com/20240726Kyoto/i-FsM6rcx",
+        "filename": "PXL_20240728_113805590.jpg",
+        "format": "JPG",
+        "archived_md5": "2870e58d7b9b554105bbd3729baa54ed"
+      },
+      "display": {
+        "title": "東京駅",
+        "caption": "到着！",
+        "alt": "東京駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2015414,
+        "width": 4032,
+        "height": 2268
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2024-07-29T03:38:05+00:00",
+          "normalized": "2024-07-29T03:38:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2024-07-31T23:29:51+00:00",
+          "normalized": "2024-07-31T23:29:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2u7iiiwgrgztgvvtwllmydjh7u",
+        "media_path": "/media/kph_2u7iiiwgrgztgvvtwllmydjh7u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,1142 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:29:05+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2005-05-kumamoto",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_gtrhrpnfhfjnazfzwz6ba2j5ki",
+    "slug": "2005-05-kumamoto",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "Bb7gWn",
+      "web_uri": "https://kanolog.smugmug.com/20050509kumamoto"
+    },
+    "title": "Kumamoto, 2005/05",
+    "description": "仕事で3週間ほど熊本出張に行ってきました。",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": false,
+    "source_protected_flag": false,
+    "asset_count": 23,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_2u2lec2sfuryuy5s2niy6gwylu",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cGPsHrK",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-cGPsHrK",
+        "filename": "205914_809297615_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "天気が良くてツイてる！",
+        "caption": "",
+        "alt": "天気が良くてツイてる！"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 39248,
+        "width": 480,
+        "height": 640
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:20+00:00",
+          "normalized": "2023-02-05T02:15:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2u2lec2sfuryuy5s2niy6gwylu",
+        "media_path": "/media/kph_2u2lec2sfuryuy5s2niy6gwylu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_z4z7tu2drslfjfg6evi5snuwiu",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "N8kRcpf",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-N8kRcpf",
+        "filename": "205914_809297616_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "阿蘇山の草原",
+        "caption": "",
+        "alt": "阿蘇山の草原"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 30208,
+        "width": 640,
+        "height": 480
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:20+00:00",
+          "normalized": "2023-02-05T02:15:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_z4z7tu2drslfjfg6evi5snuwiu",
+        "media_path": "/media/kph_z4z7tu2drslfjfg6evi5snuwiu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yhq3vn6v6vlumbujskfjiqdsce",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mnz5VCT",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-mnz5VCT",
+        "filename": "205914_809297617_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ここで寝転がってました",
+        "caption": "",
+        "alt": "ここで寝転がってました"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 66020,
+        "width": 480,
+        "height": 640
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:22+00:00",
+          "normalized": "2023-02-05T02:15:22Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yhq3vn6v6vlumbujskfjiqdsce",
+        "media_path": "/media/kph_yhq3vn6v6vlumbujskfjiqdsce",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_znnswww7h4k4s5udbqqnfkcrai",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Qx6xGvG",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-Qx6xGvG",
+        "filename": "205914_809297618_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "205914_809297618_1large.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 40242,
+        "width": 640,
+        "height": 475
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:23+00:00",
+          "normalized": "2023-02-05T02:15:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_znnswww7h4k4s5udbqqnfkcrai",
+        "media_path": "/media/kph_znnswww7h4k4s5udbqqnfkcrai",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_y4642xwboze74tjx27biagoix4",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WSSNmPt",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-WSSNmPt",
+        "filename": "205914_809297619_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "カーナビ便利！",
+        "caption": "",
+        "alt": "カーナビ便利！"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 45445,
+        "width": 480,
+        "height": 640
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:22+00:00",
+          "normalized": "2023-02-05T02:15:22Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_y4642xwboze74tjx27biagoix4",
+        "media_path": "/media/kph_y4642xwboze74tjx27biagoix4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fq4znrfo4jevzrz5srvwifhmdi",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fGqf8CP",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-fGqf8CP",
+        "filename": "205914_809297620_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホントに小噴火してる",
+        "caption": "",
+        "alt": "ホントに小噴火してる"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 34748,
+        "width": 480,
+        "height": 640
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:20+00:00",
+          "normalized": "2023-02-05T02:15:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fq4znrfo4jevzrz5srvwifhmdi",
+        "media_path": "/media/kph_fq4znrfo4jevzrz5srvwifhmdi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2m5reeec4k3owv3yoebkqi5lky",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Z74tXPk",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-Z74tXPk",
+        "filename": "205914_809297621_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ピクニックしたりキャッチボールしたり",
+        "caption": "",
+        "alt": "ピクニックしたりキャッチボールしたり"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 34816,
+        "width": 480,
+        "height": 640
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:22+00:00",
+          "normalized": "2023-02-05T02:15:22Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2m5reeec4k3owv3yoebkqi5lky",
+        "media_path": "/media/kph_2m5reeec4k3owv3yoebkqi5lky",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jlpcvp6z7ohuqfzlldtbxvmvty",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BBHxfC6",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-BBHxfC6",
+        "filename": "205914_809297622_1large.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "火山博物館",
+        "caption": "",
+        "alt": "火山博物館"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 39113,
+        "width": 480,
+        "height": 640
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2023-02-05T02:15:23+00:00",
+          "normalized": "2023-02-05T02:15:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jlpcvp6z7ohuqfzlldtbxvmvty",
+        "media_path": "/media/kph_jlpcvp6z7ohuqfzlldtbxvmvty",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dbkmceqb7qoprqyaqulys6bkva",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TTPHxtq",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-TTPHxtq",
+        "filename": "51146745545.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "熊本空港",
+        "caption": "空港に来るといつもどきどきする",
+        "alt": "熊本空港"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 320784,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-09T18:55:00+00:00",
+          "normalized": "2005-05-09T18:55:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:12+00:00",
+          "normalized": "2022-11-06T17:23:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dbkmceqb7qoprqyaqulys6bkva",
+        "media_path": "/media/kph_dbkmceqb7qoprqyaqulys6bkva",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_e3el5rvzqifkct3sst27a5zsvy",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "T4QbcnS",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-T4QbcnS",
+        "filename": "51144957817.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "怪しいネオン街",
+        "caption": "昔ながらのスナックとかが並んでます",
+        "alt": "怪しいネオン街"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 421910,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-10T03:19:00+00:00",
+          "normalized": "2005-05-10T03:19:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:41+00:00",
+          "normalized": "2022-11-06T17:23:41Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_e3el5rvzqifkct3sst27a5zsvy",
+        "media_path": "/media/kph_e3el5rvzqifkct3sst27a5zsvy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jjp2rufpfepkuuh6uunwtg6wqu",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8KVR8cw",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-8KVR8cw",
+        "filename": "51144959847.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "馬刺",
+        "caption": "こがねの馬刺。絶味すぎ",
+        "alt": "馬刺"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 361733,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-10T03:59:00+00:00",
+          "normalized": "2005-05-10T03:59:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:32+00:00",
+          "normalized": "2022-11-06T17:23:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jjp2rufpfepkuuh6uunwtg6wqu",
+        "media_path": "/media/kph_jjp2rufpfepkuuh6uunwtg6wqu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_nnv4r4zxnzcsritqx44gdexezi",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7kRrdhP",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-7kRrdhP",
+        "filename": "51145642436.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "アーケード",
+        "caption": "地方都市はだいたいこんな感じのアーケードがある気がする",
+        "alt": "アーケード"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 354575,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-10T05:58:00+00:00",
+          "normalized": "2005-05-10T05:58:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:04+00:00",
+          "normalized": "2022-11-06T17:23:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nnv4r4zxnzcsritqx44gdexezi",
+        "media_path": "/media/kph_nnv4r4zxnzcsritqx44gdexezi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ug3srjw7dnpql4mcvrpxlxar6e",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "KLSWdfg",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-KLSWdfg",
+        "filename": "51144966792.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "うなずきん",
+        "caption": "ひとりだけ連れてきちゃいました",
+        "alt": "うなずきん"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 240454,
+        "width": 768,
+        "height": 1024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-10T10:58:00+00:00",
+          "normalized": "2005-05-10T10:58:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:02+00:00",
+          "normalized": "2022-11-06T17:23:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ug3srjw7dnpql4mcvrpxlxar6e",
+        "media_path": "/media/kph_ug3srjw7dnpql4mcvrpxlxar6e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3gnhzdfadz7xancd2pyt4qxqsm",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fhVSRFV",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-fhVSRFV",
+        "filename": "52466264494.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "朝の熊本市街 その1",
+        "caption": "路面電車がなかなかの風情を醸し出してます。",
+        "alt": "朝の熊本市街 その1"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 113329,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-10T13:53:00+00:00",
+          "normalized": "2005-05-10T13:53:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:00:10+00:00",
+          "normalized": "2022-11-06T17:00:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3gnhzdfadz7xancd2pyt4qxqsm",
+        "media_path": "/media/kph_3gnhzdfadz7xancd2pyt4qxqsm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3snu5m7v6d6qi6ywsm4n6tuofm",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fKdhg4R",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-fKdhg4R",
+        "filename": "52466534993.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "朝の熊本市街 その2",
+        "caption": "東京より空気がさわやか、っていうのはたぶん気持ちの問題。",
+        "alt": "朝の熊本市街 その2"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 90440,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-10T13:53:00+00:00",
+          "normalized": "2005-05-10T13:53:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:00:08+00:00",
+          "normalized": "2022-11-06T17:00:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3snu5m7v6d6qi6ywsm4n6tuofm",
+        "media_path": "/media/kph_3snu5m7v6d6qi6ywsm4n6tuofm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ywagixuk4gsia3pwfxzatjbvwe",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "c29B8sz",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-c29B8sz",
+        "filename": "51145638751.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "太平燕(タイピーエン)",
+        "caption": "本当に美味しい。\n関東で食べられる中華料理屋はないのかな…。",
+        "alt": "太平燕(タイピーエン)"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 86194,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-12T04:04:00+00:00",
+          "normalized": "2005-05-12T04:04:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:21+00:00",
+          "normalized": "2022-11-06T17:23:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ywagixuk4gsia3pwfxzatjbvwe",
+        "media_path": "/media/kph_ywagixuk4gsia3pwfxzatjbvwe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_m3icybhyn6dvo7rb6inqfksceu",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DwM4Mp3",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-DwM4Mp3",
+        "filename": "51145643406.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "カラシレンコン",
+        "caption": "熊本といえばい草しか知らなかった僕でしたが、こっちに来る前に西瓜とかカラシレンコンもあるよと教えてもらったので食べてみました。\n\n揚げたてが絶味です！",
+        "alt": "カラシレンコン"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 62547,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-13T04:09:00+00:00",
+          "normalized": "2005-05-13T04:09:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:01+00:00",
+          "normalized": "2022-11-06T17:23:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_m3icybhyn6dvo7rb6inqfksceu",
+        "media_path": "/media/kph_m3icybhyn6dvo7rb6inqfksceu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2a3guijzsjmwcbwic7wa6n22du",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jcXd8zh",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-jcXd8zh",
+        "filename": "52466538268.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "地元の大きな本屋さん (1)",
+        "caption": "熊本に来ても結局本屋かよ！みたいな。",
+        "alt": "地元の大きな本屋さん (1)"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 168688,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-14T17:13:00+00:00",
+          "normalized": "2005-05-14T17:13:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T16:59:59+00:00",
+          "normalized": "2022-11-06T16:59:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2a3guijzsjmwcbwic7wa6n22du",
+        "media_path": "/media/kph_2a3guijzsjmwcbwic7wa6n22du",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4hcev3toko75agxqqlpk54asu4",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HZcBWKP",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-HZcBWKP",
+        "filename": "51146745380.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "熊本城の外堀",
+        "caption": "いい感じの散歩コースになっている",
+        "alt": "熊本城の外堀"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 110113,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-14T21:02:00+00:00",
+          "normalized": "2005-05-14T21:02:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:13+00:00",
+          "normalized": "2022-11-06T17:23:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4hcev3toko75agxqqlpk54asu4",
+        "media_path": "/media/kph_4hcev3toko75agxqqlpk54asu4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_74b77y2tlnifs5jx44ew4wm2ji",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8S44RCX",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-8S44RCX",
+        "filename": "51145645091.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ドラえもん展",
+        "caption": "今日まで。ツイてる！",
+        "alt": "ドラえもん展"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 83455,
+        "width": 800,
+        "height": 600
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-14T21:38:00+00:00",
+          "normalized": "2005-05-14T21:38:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:22:54+00:00",
+          "normalized": "2022-11-06T17:22:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_74b77y2tlnifs5jx44ew4wm2ji",
+        "media_path": "/media/kph_74b77y2tlnifs5jx44ew4wm2ji",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4srhx6dgjubjr4idsjzpxgnsb4",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tqr3Rzs",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-tqr3Rzs",
+        "filename": "51145639921.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "熊本城の石垣 その1",
+        "caption": "曲線がきれい",
+        "alt": "熊本城の石垣 その1"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 177451,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-14T21:50:00+00:00",
+          "normalized": "2005-05-14T21:50:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:15+00:00",
+          "normalized": "2022-11-06T17:23:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4srhx6dgjubjr4idsjzpxgnsb4",
+        "media_path": "/media/kph_4srhx6dgjubjr4idsjzpxgnsb4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zytehcniksjcupw5r2egw36634",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rmF7mBK",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-rmF7mBK",
+        "filename": "51145640051.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "熊本城の石垣 その2",
+        "caption": "鉄壁を誇ったらしい",
+        "alt": "熊本城の石垣 その2"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 111237,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-14T21:50:00+00:00",
+          "normalized": "2005-05-14T21:50:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:13+00:00",
+          "normalized": "2022-11-06T17:23:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zytehcniksjcupw5r2egw36634",
+        "media_path": "/media/kph_zytehcniksjcupw5r2egw36634",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yt6mumb74skfpz7avu4dfap4my",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kV3KpbF",
+        "web_uri": "https://kanolog.smugmug.com/20050509kumamoto/i-kV3KpbF",
+        "filename": "51145639796.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "熊本城",
+        "caption": "日本三大名城の一つらしい",
+        "alt": "熊本城"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 110979,
+        "width": 600,
+        "height": 800
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-05-14T21:56:00+00:00",
+          "normalized": "2005-05-14T21:56:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:15+00:00",
+          "normalized": "2022-11-06T17:23:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yt6mumb74skfpz7avu4dfap4my",
+        "media_path": "/media/kph_yt6mumb74skfpz7avu4dfap4my",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

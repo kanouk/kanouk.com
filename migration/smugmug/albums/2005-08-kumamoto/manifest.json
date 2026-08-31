@@ -1,0 +1,326 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:28+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2005-08-kumamoto",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_jdb6kgwhtx3tzznkeigosoelbq",
+    "slug": "2005-08-kumamoto",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "qP9pBZ",
+      "web_uri": "https://kanolog.smugmug.com/20050813kumamoto"
+    },
+    "title": "Kumamoto, 2005/08",
+    "description": "仲の良い後輩と4人で熊本旅行しました。",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 6,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_uekqjackxbi7n2yye6m5uzqesa",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kk8LBdD",
+        "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-kk8LBdD",
+        "filename": "52466259799.jpg",
+        "format": "JPG",
+        "archived_md5": "c15369925b65d0e2fb87b3325b42d98c"
+      },
+      "display": {
+        "title": "阿蘇山中腹",
+        "caption": "馬が気持ちよさそうに寝てた",
+        "alt": "阿蘇山中腹"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 46033,
+        "width": 640,
+        "height": 480
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-08-13T20:11:19+00:00",
+          "normalized": "2005-08-13T20:11:19Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:00:17+00:00",
+          "normalized": "2022-11-06T17:00:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_uekqjackxbi7n2yye6m5uzqesa",
+        "media_path": "/media/kph_uekqjackxbi7n2yye6m5uzqesa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ydk6bj3wcu7y6d3j6lbcoyxlci",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QWrNgTk",
+        "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-QWrNgTk",
+        "filename": "51144959322.jpg",
+        "format": "JPG",
+        "archived_md5": "87114c90aa3eb7c88fbaa4da76d1d73e"
+      },
+      "display": {
+        "title": "久々の阿蘇で",
+        "caption": "はしゃいでるところを撮られた",
+        "alt": "久々の阿蘇で"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 34028,
+        "width": 640,
+        "height": 480
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-08-13T20:39:44+00:00",
+          "normalized": "2005-08-13T20:39:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:34+00:00",
+          "normalized": "2022-11-06T17:23:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ydk6bj3wcu7y6d3j6lbcoyxlci",
+        "media_path": "/media/kph_ydk6bj3wcu7y6d3j6lbcoyxlci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tuxrai5qzr6jtqn6gfdtnpz6by",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "khM4q3B",
+        "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-khM4q3B",
+        "filename": "51145856003.jpg",
+        "format": "JPG",
+        "archived_md5": "90f918431c8721eab4c5d0813bd8db3c"
+      },
+      "display": {
+        "title": "黒亭のラーメン",
+        "caption": "ものすごい絶味です。もう一度食べたい。",
+        "alt": "黒亭のラーメン"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 66041,
+        "width": 640,
+        "height": 480
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-08-14T20:46:00+00:00",
+          "normalized": "2005-08-14T20:46:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:40+00:00",
+          "normalized": "2022-11-06T17:23:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tuxrai5qzr6jtqn6gfdtnpz6by",
+        "media_path": "/media/kph_tuxrai5qzr6jtqn6gfdtnpz6by",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_v7hthq4rzhd2dkgt7svpa7bpai",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Hm79CGv",
+        "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-Hm79CGv",
+        "filename": "51146744440.jpg",
+        "format": "JPG",
+        "archived_md5": "eb416cafd1b754a9b21a2223dacc6e57"
+      },
+      "display": {
+        "title": "夕食の懐石料理",
+        "caption": "素材不明なものが多かったけど、美味しかった。",
+        "alt": "夕食の懐石料理"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 65515,
+        "width": 640,
+        "height": 480
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-08-15T01:05:00+00:00",
+          "normalized": "2005-08-15T01:05:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:18+00:00",
+          "normalized": "2022-11-06T17:23:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_v7hthq4rzhd2dkgt7svpa7bpai",
+        "media_path": "/media/kph_v7hthq4rzhd2dkgt7svpa7bpai",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gn5rr5wmeutdukl4gdg2eureti",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "t3NC6Sf",
+        "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-t3NC6Sf",
+        "filename": "51144964562.jpg",
+        "format": "JPG",
+        "archived_md5": "62cc07e9a0b5618456ddfeab7bc99306"
+      },
+      "display": {
+        "title": "再会",
+        "caption": "思わず涙が出そうになりました",
+        "alt": "再会"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 54461,
+        "width": 640,
+        "height": 480
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-08-15T16:30:00+00:00",
+          "normalized": "2005-08-15T16:30:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:11+00:00",
+          "normalized": "2022-11-06T17:23:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gn5rr5wmeutdukl4gdg2eureti",
+        "media_path": "/media/kph_gn5rr5wmeutdukl4gdg2eureti",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jcjycedtntewshqhbptazafhyu",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BxxHCcN",
+        "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-BxxHCcN",
+        "filename": "51145856158.jpg",
+        "format": "JPG",
+        "archived_md5": "d2279fa1d397f3fdeb84f46f1efbea6b"
+      },
+      "display": {
+        "title": "黒豚のヒレカツ",
+        "caption": "モグモグ食べました",
+        "alt": "黒豚のヒレカツ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 86397,
+        "width": 640,
+        "height": 480
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2005-08-15T21:15:00+00:00",
+          "normalized": "2005-08-15T21:15:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:23:39+00:00",
+          "normalized": "2022-11-06T17:23:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jcjycedtntewshqhbptazafhyu",
+        "media_path": "/media/kph_jcjycedtntewshqhbptazafhyu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

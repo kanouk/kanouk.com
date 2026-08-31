@@ -17,9 +17,11 @@ DEFAULT_CREDENTIAL_FILE = Path(
 SCRIPT_ROOT = Path(__file__).resolve().parent
 ALLOWED_SCRIPTS = {
     "audit_smugmug.py",
+    "build_smugmug_catalog.py",
     "build_smugmug_pilot_manifest.py",
     "download_smugmug_pilot_asset.py",
     "migrate_smugmug_album.py",
+    "migrate_smugmug_catalog.py",
     "select_smugmug_pilot.py",
 }
 

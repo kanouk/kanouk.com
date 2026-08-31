@@ -27,7 +27,21 @@ if (Astro.cache?.enabled) Astro.cache.set(albumPhotosCache);
 const photoIndex = albumPhotos.findIndex((candidate) => candidate.data.id === photo.data.id);
 const previousPhoto = photoIndex > 0 ? albumPhotos[photoIndex - 1] : undefined;
 const nextPhoto = photoIndex >= 0 ? albumPhotos[photoIndex + 1] : undefined;
-const videoSource = photo.data.kind === "video" ? photo.data.video?.src || photo.data.video?.url : undefined;
+const videoStorageKey = photo.data.video?.meta?.storageKey;
+const imageStorageKey = photo.data.image?.meta?.storageKey;
+const posterSource =
+	photo.data.image?.src ||
+	(typeof imageStorageKey === "string"
+		? `/_emdash/api/media/file/${encodeURIComponent(imageStorageKey)}`
+		: undefined);
+const videoSource =
+	photo.data.kind === "video"
+		? photo.data.video?.src ||
+			photo.data.video?.url ||
+			(typeof videoStorageKey === "string"
+				? `/_emdash/api/media/file/${encodeURIComponent(videoStorageKey)}`
+				: undefined)
+		: undefined;
 
 const capturedDate = photo.data.captured_at?.match(/^(\d{4})-(\d{2})-(\d{2})/);
 const formattedDate = capturedDate
@@ -81,7 +95,7 @@ const mapLinkUrl = hasLocation
 			<div class="media" {...photo.edit.image}>
 				{
 					videoSource ? (
-						<video controls playsinline preload="metadata" poster={photo.data.image?.src}>
+						<video controls playsinline preload="metadata" poster={posterSource}>
 							<source src={videoSource} type={photo.data.video?.mimeType || "video/mp4"} />
 							動画を再生できないブラウザです。
 						</video>

@@ -1,0 +1,2726 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:25+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2025-02-kyoto",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_fa32sd6nwsyejuioaoqhfxl4ri",
+    "slug": "2025-02-kyoto",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "f69Tqb",
+      "web_uri": "https://kanolog.smugmug.com/20250214Kyoto"
+    },
+    "title": "Kyoto, 2025/02",
+    "description": "萬福寺、京都文化博物館（カナレット展）",
+    "sort_method": "Position",
+    "sort_direction": "Ascending",
+    "allow_downloads": false,
+    "source_protected_flag": false,
+    "asset_count": 56,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_mhzkp7zdt34vpztjyleydqgi7q",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nPtFpcC",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-nPtFpcC",
+        "filename": "PXL_20250213_213017532.MP.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "出発",
+        "caption": "約半年ぶりなので楽しみ！",
+        "alt": "出発"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5693811,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-14T14:30:17+00:00",
+          "normalized": "2025-02-14T14:30:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:05:59+00:00",
+          "normalized": "2025-02-16T03:05:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mhzkp7zdt34vpztjyleydqgi7q",
+        "media_path": "/media/kph_mhzkp7zdt34vpztjyleydqgi7q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_s5xf4wjtewfehhxrvkfdsb7pfy",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zWmPcDd",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-zWmPcDd",
+        "filename": "PXL_20250213_213424735.MP.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "いつもの朝食",
+        "caption": "",
+        "alt": "いつもの朝食"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4770851,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-14T14:34:24+00:00",
+          "normalized": "2025-02-14T14:34:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:05:59+00:00",
+          "normalized": "2025-02-16T03:05:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_s5xf4wjtewfehhxrvkfdsb7pfy",
+        "media_path": "/media/kph_s5xf4wjtewfehhxrvkfdsb7pfy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_agcv56mghxid6nzlwlkg6ex6oe",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DqrmXzR",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-DqrmXzR",
+        "filename": "PXL_20250213_235313139.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "京都駅",
+        "caption": "9時からの仕事に間に合うように到着",
+        "alt": "京都駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3752166,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-14T16:53:13+00:00",
+          "normalized": "2025-02-14T16:53:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:04+00:00",
+          "normalized": "2025-02-16T03:06:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_agcv56mghxid6nzlwlkg6ex6oe",
+        "media_path": "/media/kph_agcv56mghxid6nzlwlkg6ex6oe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rk4ckql3rcqfo6zdmo7folwake",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QV2hbLn",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-QV2hbLn",
+        "filename": "PXL_20250214_022732255.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "京都タワー",
+        "caption": "京都に来たなって感じてつい撮ってしまう",
+        "alt": "京都タワー"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2805173,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-14T19:27:32+00:00",
+          "normalized": "2025-02-14T19:27:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:12+00:00",
+          "normalized": "2025-02-16T03:06:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rk4ckql3rcqfo6zdmo7folwake",
+        "media_path": "/media/kph_rk4ckql3rcqfo6zdmo7folwake",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rfenmajivtaz2ma2leduo7n3ci",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "57fr4CH",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-57fr4CH",
+        "filename": "PXL_20250214_000852972.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "烏丸通",
+        "caption": "今回のホテルはこのへん",
+        "alt": "烏丸通"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4501448,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-14T17:08:52+00:00",
+          "normalized": "2025-02-14T17:08:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:05+00:00",
+          "normalized": "2025-02-16T03:06:05Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rfenmajivtaz2ma2leduo7n3ci",
+        "media_path": "/media/kph_rfenmajivtaz2ma2leduo7n3ci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5q43uiatjvugfz6d3vjyc535za",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nH8CBD3",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-nH8CBD3",
+        "filename": "PXL_20250214_001140807.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都",
+        "caption": "今回のホテル！",
+        "alt": "ホテル日航プリンス京都"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5792777,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-14T17:11:40+00:00",
+          "normalized": "2025-02-14T17:11:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:14+00:00",
+          "normalized": "2025-02-16T03:06:14Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5q43uiatjvugfz6d3vjyc535za",
+        "media_path": "/media/kph_5q43uiatjvugfz6d3vjyc535za",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_loh4s376o5t7bp5rj6iqzkiuea",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DvcB4rH",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-DvcB4rH",
+        "filename": "PXL_20250216_005753954.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 ロビー",
+        "caption": "",
+        "alt": "ホテル日航プリンス京都 ロビー"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2924907,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T17:57:53+00:00",
+          "normalized": "2025-02-16T17:57:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:43+00:00",
+          "normalized": "2025-02-16T03:07:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_loh4s376o5t7bp5rj6iqzkiuea",
+        "media_path": "/media/kph_loh4s376o5t7bp5rj6iqzkiuea",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sa3xkjxccjzacggbecwgt2y3mm",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "n4dwKKf",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-n4dwKKf",
+        "filename": "PXL_20250214_061737545.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 部屋",
+        "caption": "全体的に古い感じだけど、デスクも広くて、ソファもあって気に入った",
+        "alt": "ホテル日航プリンス京都 部屋"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3034568,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-14T23:17:37+00:00",
+          "normalized": "2025-02-14T23:17:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:15+00:00",
+          "normalized": "2025-02-16T03:06:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sa3xkjxccjzacggbecwgt2y3mm",
+        "media_path": "/media/kph_sa3xkjxccjzacggbecwgt2y3mm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_no5jgf7643z6sxps6mjoc5o2ly",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XSvzWrV",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-XSvzWrV",
+        "filename": "PXL_20250214_092103170.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "麺屋 猪一 離れ",
+        "caption": "いつも行列でいけない猪一の離れがあるので行ってみたらこっちも行列。。あきらめた",
+        "alt": "麺屋 猪一 離れ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3674845,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T02:21:03+00:00",
+          "normalized": "2025-02-15T02:21:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:21+00:00",
+          "normalized": "2025-02-16T03:06:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_no5jgf7643z6sxps6mjoc5o2ly",
+        "media_path": "/media/kph_no5jgf7643z6sxps6mjoc5o2ly",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jiuywyx4s4hvtdxffut7ijhjyq",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MhvMHtT",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-MhvMHtT",
+        "filename": "PXL_20250214_100022377.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "魔法つけ麺 諭吉本舗",
+        "caption": "一度起こったラーメン欲がおさえられず四条通のこちらに。海外の方向けなのか物価高騰を感じる（1700円）",
+        "alt": "魔法つけ麺 諭吉本舗"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3209721,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T03:00:22+00:00",
+          "normalized": "2025-02-15T03:00:22Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:20+00:00",
+          "normalized": "2025-02-16T03:06:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jiuywyx4s4hvtdxffut7ijhjyq",
+        "media_path": "/media/kph_jiuywyx4s4hvtdxffut7ijhjyq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_n2m3zf25ljbab4sqieouxvxibe",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "m9bqWFx",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-m9bqWFx",
+        "filename": "PXL_20250215_001403450.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 朝食（和食）",
+        "caption": "会場はこんな感じ",
+        "alt": "ホテル日航プリンス京都 朝食（和食）"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2820406,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T17:14:03+00:00",
+          "normalized": "2025-02-15T17:14:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:23+00:00",
+          "normalized": "2025-02-17T12:19:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_n2m3zf25ljbab4sqieouxvxibe",
+        "media_path": "/media/kph_n2m3zf25ljbab4sqieouxvxibe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6emilaudintm7c4ddou5fe5kce",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HB8zqnR",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-HB8zqnR",
+        "filename": "PXL_20250215_002311379.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 朝食（和食）",
+        "caption": "朝食はこんな感じ。京風の味付けで美味しかった。",
+        "alt": "ホテル日航プリンス京都 朝食（和食）"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3051269,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T17:23:11+00:00",
+          "normalized": "2025-02-15T17:23:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:23+00:00",
+          "normalized": "2025-02-16T03:06:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6emilaudintm7c4ddou5fe5kce",
+        "media_path": "/media/kph_6emilaudintm7c4ddou5fe5kce",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_a5r6acolocfwdqmnegyxdtvhwy",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tNkRpvZ",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-tNkRpvZ",
+        "filename": "PXL_20250215_024935330.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "黄檗駅",
+        "caption": "工事中で映えない",
+        "alt": "黄檗駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3024687,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T19:49:35+00:00",
+          "normalized": "2025-02-15T19:49:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:20+00:00",
+          "normalized": "2025-02-17T12:19:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_a5r6acolocfwdqmnegyxdtvhwy",
+        "media_path": "/media/kph_a5r6acolocfwdqmnegyxdtvhwy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_kwvrwigde7oog7b7jyw7ugmt64",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2HmKrQp",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-2HmKrQp",
+        "filename": "PXL_20250215_025003439.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "黄檗駅から萬福寺へ",
+        "caption": "メゾン黄檗なんかかっこいい",
+        "alt": "黄檗駅から萬福寺へ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4643863,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T19:50:03+00:00",
+          "normalized": "2025-02-15T19:50:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:21+00:00",
+          "normalized": "2025-02-17T12:19:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_kwvrwigde7oog7b7jyw7ugmt64",
+        "media_path": "/media/kph_kwvrwigde7oog7b7jyw7ugmt64",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fbipswzcbwlno7e7ha6i5hhxby",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xwgBswd",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-xwgBswd",
+        "filename": "PXL_20250215_025208989.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "黄檗駅から萬福寺へ",
+        "caption": "こういう郊外の道歩くの結構好き",
+        "alt": "黄檗駅から萬福寺へ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4318548,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T19:52:08+00:00",
+          "normalized": "2025-02-15T19:52:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:24+00:00",
+          "normalized": "2025-02-16T03:06:24Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fbipswzcbwlno7e7ha6i5hhxby",
+        "media_path": "/media/kph_fbipswzcbwlno7e7ha6i5hhxby",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mzr4vmkggeywhdxbgzzl5qrodi",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CcXsrhp",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-CcXsrhp",
+        "filename": "PXL_20250215_025359102.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "黄檗駅から萬福寺へ",
+        "caption": "住宅地を抜ける\n子供たちが外で遊んでるのを見て癒やされるおじさん（不審者ぽい）",
+        "alt": "黄檗駅から萬福寺へ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3749827,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T19:53:59+00:00",
+          "normalized": "2025-02-15T19:53:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:34+00:00",
+          "normalized": "2025-02-16T03:06:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mzr4vmkggeywhdxbgzzl5qrodi",
+        "media_path": "/media/kph_mzr4vmkggeywhdxbgzzl5qrodi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vidi6rmkcsuzwjab5545pcklxu",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4cd43Qw",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-4cd43Qw",
+        "filename": "PXL_20250215_030521269.MP.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 総門",
+        "caption": "赤い総門が中国建築みを感じる",
+        "alt": "萬福寺 総門"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5997381,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T20:05:21+00:00",
+          "normalized": "2025-02-15T20:05:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:34+00:00",
+          "normalized": "2025-02-16T03:06:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vidi6rmkcsuzwjab5545pcklxu",
+        "media_path": "/media/kph_vidi6rmkcsuzwjab5545pcklxu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_heaiki572d5n4e7sc6slkbk5de",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gCNtkPQ",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-gCNtkPQ",
+        "filename": "PXL_20250215_030606644.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 総門を抜けたところ",
+        "caption": "",
+        "alt": "萬福寺 総門を抜けたところ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6378426,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T20:06:06+00:00",
+          "normalized": "2025-02-15T20:06:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:39+00:00",
+          "normalized": "2025-02-16T03:06:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_heaiki572d5n4e7sc6slkbk5de",
+        "media_path": "/media/kph_heaiki572d5n4e7sc6slkbk5de",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_crubiejncefmb2n5z2svdq3esi",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "KkpgJp2",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-KkpgJp2",
+        "filename": "PXL_20250215_030723747.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 全景",
+        "caption": "",
+        "alt": "萬福寺 全景"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3729326,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T20:07:23+00:00",
+          "normalized": "2025-02-15T20:07:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:39+00:00",
+          "normalized": "2025-02-16T03:06:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_crubiejncefmb2n5z2svdq3esi",
+        "media_path": "/media/kph_crubiejncefmb2n5z2svdq3esi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jker4xdlsefvgp4wb5b32nxaiq",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VBrsd7z",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-VBrsd7z",
+        "filename": "PXL_20250215_030959409.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 山門",
+        "caption": "想像よりも立派だった",
+        "alt": "萬福寺 山門"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5683976,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T20:09:59+00:00",
+          "normalized": "2025-02-15T20:09:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:44+00:00",
+          "normalized": "2025-02-16T03:06:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jker4xdlsefvgp4wb5b32nxaiq",
+        "media_path": "/media/kph_jker4xdlsefvgp4wb5b32nxaiq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3as2kfxxq5i3mjnm2brs4nlq7m",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Rsk3sfL",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-Rsk3sfL",
+        "filename": "PXL_20250215_031114653.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 天王殿へ",
+        "caption": "飛び石がダイヤ型に並んでるのめずらしい気がする",
+        "alt": "萬福寺 天王殿へ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6357446,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T20:11:14+00:00",
+          "normalized": "2025-02-15T20:11:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:43+00:00",
+          "normalized": "2025-02-16T03:06:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3as2kfxxq5i3mjnm2brs4nlq7m",
+        "media_path": "/media/kph_3as2kfxxq5i3mjnm2brs4nlq7m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bhyglhznk52e43xfraderuf3ea",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NqmCpTp",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-NqmCpTp",
+        "filename": "PXL_20250215_031859003.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 大雄寳殿",
+        "caption": "いわゆる仏殿",
+        "alt": "萬福寺 大雄寳殿"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3849021,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T20:18:59+00:00",
+          "normalized": "2025-02-15T20:18:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:48+00:00",
+          "normalized": "2025-02-16T03:06:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bhyglhznk52e43xfraderuf3ea",
+        "media_path": "/media/kph_bhyglhznk52e43xfraderuf3ea",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gfkjrgy7hhfuknnkra43qyfixa",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mCF8C8r",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-mCF8C8r",
+        "filename": "PXL_20250215_034445151.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 カフェにて",
+        "caption": "萬福寺オリジナルコーヒーをいただく。酸味が独特で飲んだことあるような味だけど、どこで飲んだ味なのか思い出せない。",
+        "alt": "萬福寺 カフェにて"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2976079,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T20:44:45+00:00",
+          "normalized": "2025-02-15T20:44:45Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:47+00:00",
+          "normalized": "2025-02-16T03:06:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gfkjrgy7hhfuknnkra43qyfixa",
+        "media_path": "/media/kph_gfkjrgy7hhfuknnkra43qyfixa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4pcldpchbac37ji7shrf5wv2de",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zBpnMgp",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-zBpnMgp",
+        "filename": "PXL_20250215_040746163.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 法堂",
+        "caption": "武！ってかいてあってなんかかっこよかった（けどは入れず）",
+        "alt": "萬福寺 法堂"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4394676,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T21:07:46+00:00",
+          "normalized": "2025-02-15T21:07:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:53+00:00",
+          "normalized": "2025-02-16T03:06:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4pcldpchbac37ji7shrf5wv2de",
+        "media_path": "/media/kph_4pcldpchbac37ji7shrf5wv2de",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6rkxsfxvbyhwvv7as6zrirpdxe",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "9g2WNXg",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-9g2WNXg",
+        "filename": "PXL_20250215_041147496.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "萬福寺 開山堂のほうへ",
+        "caption": "なんか好きな雰囲気",
+        "alt": "萬福寺 開山堂のほうへ"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5666756,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T21:11:47+00:00",
+          "normalized": "2025-02-15T21:11:47Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:55+00:00",
+          "normalized": "2025-02-16T03:06:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6rkxsfxvbyhwvv7as6zrirpdxe",
+        "media_path": "/media/kph_6rkxsfxvbyhwvv7as6zrirpdxe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pu4zanlbyo4kqavzg3s7wr7lgi",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HqLvc57",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-HqLvc57",
+        "filename": "PXL_20250215_045256673.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "宝蔵院",
+        "caption": "普通にお寺に入るのりで入ったら、ラーメン食べに来たんでしょ？って感じで対応されて一瞬戸惑った",
+        "alt": "宝蔵院"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5152948,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T21:52:56+00:00",
+          "normalized": "2025-02-15T21:52:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:16+00:00",
+          "normalized": "2025-02-17T12:19:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pu4zanlbyo4kqavzg3s7wr7lgi",
+        "media_path": "/media/kph_pu4zanlbyo4kqavzg3s7wr7lgi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ir3wg5mvl6v5yn7qjbnoemukqe",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "q9VqGQg",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-q9VqGQg",
+        "filename": "PXL_20250215_043108187.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "宝蔵院",
+        "caption": "お客さんもいなくてなんか落ち着いた",
+        "alt": "宝蔵院"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2763297,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T21:31:08+00:00",
+          "normalized": "2025-02-15T21:31:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:18+00:00",
+          "normalized": "2025-02-17T12:19:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ir3wg5mvl6v5yn7qjbnoemukqe",
+        "media_path": "/media/kph_ir3wg5mvl6v5yn7qjbnoemukqe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ms6ub5p4ouandzmzbucp6byjju",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kQ59wLM",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-kQ59wLM",
+        "filename": "PXL_20250215_045115116.MP.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "宝蔵院 食堂的な部屋",
+        "caption": "おばあちゃんの家みたいな部屋で食べた",
+        "alt": "宝蔵院 食堂的な部屋"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4157888,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T21:51:15+00:00",
+          "normalized": "2025-02-15T21:51:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:58+00:00",
+          "normalized": "2025-02-16T03:06:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ms6ub5p4ouandzmzbucp6byjju",
+        "media_path": "/media/kph_ms6ub5p4ouandzmzbucp6byjju",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rq6dqjl2ci2tw7soxaguefagyq",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2ZDfrHC",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-2ZDfrHC",
+        "filename": "PXL_20250215_043058035.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "宝蔵院 寺そば",
+        "caption": "冬は豆乳味噌味だった。思ったよりも現代的な味でよかった。",
+        "alt": "宝蔵院 寺そば"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2170565,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T21:30:58+00:00",
+          "normalized": "2025-02-15T21:30:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:06:59+00:00",
+          "normalized": "2025-02-16T03:06:59Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rq6dqjl2ci2tw7soxaguefagyq",
+        "media_path": "/media/kph_rq6dqjl2ci2tw7soxaguefagyq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ccii63zopbgvdvg7rjesmmsgnu",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "n8rBzFM",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-n8rBzFM",
+        "filename": "PXL_20250215_043949611.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "宝蔵院",
+        "caption": "寺そば（豆乳味噌味）の説明",
+        "alt": "宝蔵院"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1802613,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T21:39:49+00:00",
+          "normalized": "2025-02-15T21:39:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:19+00:00",
+          "normalized": "2025-02-17T12:19:19Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ccii63zopbgvdvg7rjesmmsgnu",
+        "media_path": "/media/kph_ccii63zopbgvdvg7rjesmmsgnu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eiqjmhjqs7ugooiof7omi6ds3e",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "V5p9CzM",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-V5p9CzM",
+        "filename": "PXL_20250215_055717397.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "サンタ・マリア・ノヴェッラ・ティサネリーア京都",
+        "caption": "歩いてたらサンタ・マリア・ノヴェッラの店舗があって思わず入ってしまった。香水売ってなかった。",
+        "alt": "サンタ・マリア・ノヴェッラ・ティサネリーア京都"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3664403,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T22:57:17+00:00",
+          "normalized": "2025-02-15T22:57:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:16+00:00",
+          "normalized": "2025-02-17T12:19:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eiqjmhjqs7ugooiof7omi6ds3e",
+        "media_path": "/media/kph_eiqjmhjqs7ugooiof7omi6ds3e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_m3oilt4coeuz5m54r73q5qqoha",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZcmvLfq",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-ZcmvLfq",
+        "filename": "PXL_20250215_065622382.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "カナレット展",
+        "caption": "京都文化博物館にて\n\n正式名称は「カナレットとヴェネツィアの輝き」展とのこと。",
+        "alt": "カナレット展"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4512671,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T23:56:22+00:00",
+          "normalized": "2025-02-15T23:56:22Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:14+00:00",
+          "normalized": "2025-02-16T03:07:14Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_m3oilt4coeuz5m54r73q5qqoha",
+        "media_path": "/media/kph_m3oilt4coeuz5m54r73q5qqoha",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4dmsjzbt7jngqak6yb4w5m7jza",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DxcF748",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-DxcF748",
+        "filename": "PXL_20250215_061753626.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "カナレット展 入口",
+        "caption": "ちょうど開催初日だった。ラッキー",
+        "alt": "カナレット展 入口"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2801571,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T23:17:53+00:00",
+          "normalized": "2025-02-15T23:17:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:08+00:00",
+          "normalized": "2025-02-16T03:07:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4dmsjzbt7jngqak6yb4w5m7jza",
+        "media_path": "/media/kph_4dmsjzbt7jngqak6yb4w5m7jza",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fkvdz32pzjb6undcuvwr7brpgy",
+      "position": 34,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "x4Vjr4g",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-x4Vjr4g",
+        "filename": "PXL_20250215_062650702.MP.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "カナレット展",
+        "caption": "カナル・グランデのレガッタ",
+        "alt": "カナレット展"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6438795,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T23:26:50+00:00",
+          "normalized": "2025-02-15T23:26:50Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:09+00:00",
+          "normalized": "2025-02-16T03:07:09Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fkvdz32pzjb6undcuvwr7brpgy",
+        "media_path": "/media/kph_fkvdz32pzjb6undcuvwr7brpgy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2hnlp65agtarc2emjbpr5xxjkq",
+      "position": 35,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "w8fZv5N",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-w8fZv5N",
+        "filename": "PXL_20250215_062718245.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "カナレット展",
+        "caption": "写真撮影可のエリアも結構あった",
+        "alt": "カナレット展"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2079990,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T23:27:18+00:00",
+          "normalized": "2025-02-15T23:27:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:13+00:00",
+          "normalized": "2025-02-16T03:07:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2hnlp65agtarc2emjbpr5xxjkq",
+        "media_path": "/media/kph_2hnlp65agtarc2emjbpr5xxjkq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pjgrmepqf7ijvsqc5j5t66coae",
+      "position": 36,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3P3cLRj",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-3P3cLRj",
+        "filename": "PXL_20250215_062744579.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "カナレット展",
+        "caption": "サンタ・マリア・デッラ・サルーテ教会",
+        "alt": "カナレット展"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3315999,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-15T23:27:44+00:00",
+          "normalized": "2025-02-15T23:27:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:11+00:00",
+          "normalized": "2025-02-16T03:07:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pjgrmepqf7ijvsqc5j5t66coae",
+        "media_path": "/media/kph_pjgrmepqf7ijvsqc5j5t66coae",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_igazv3artyxxjed32bf2hu6r3u",
+      "position": 37,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "KbkmGc2",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-KbkmGc2",
+        "filename": "PXL_20250215_113321510.MP.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "三条大橋",
+        "caption": "今回はこっちのほうに来る機会がなかったが鴨川を見ないで帰るのも寂しくて散歩",
+        "alt": "三条大橋"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4231057,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T04:33:21+00:00",
+          "normalized": "2025-02-16T04:33:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:28+00:00",
+          "normalized": "2025-02-16T03:07:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_igazv3artyxxjed32bf2hu6r3u",
+        "media_path": "/media/kph_igazv3artyxxjed32bf2hu6r3u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eotob2dvsfsrrogcnf55zmb7hy",
+      "position": 38,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xxk9QmX",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-xxk9QmX",
+        "filename": "PXL_20250215_075704459.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "喫茶ホーボー堂",
+        "caption": "東山エリアをぶらぶらしてたらあったので、一休みした",
+        "alt": "喫茶ホーボー堂"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3464503,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T00:57:04+00:00",
+          "normalized": "2025-02-16T00:57:04Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:13+00:00",
+          "normalized": "2025-02-17T12:19:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eotob2dvsfsrrogcnf55zmb7hy",
+        "media_path": "/media/kph_eotob2dvsfsrrogcnf55zmb7hy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hgf2yalxs6ehyrwxkbaocanvei",
+      "position": 39,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BdxBntz",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-BdxBntz",
+        "filename": "PXL_20250215_075109785.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "喫茶ホーボー堂",
+        "caption": "玄米おはぎ（抹茶味）食べた。おいしかった。",
+        "alt": "喫茶ホーボー堂"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3090113,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T00:51:09+00:00",
+          "normalized": "2025-02-16T00:51:09Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:14+00:00",
+          "normalized": "2025-02-17T12:19:14Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hgf2yalxs6ehyrwxkbaocanvei",
+        "media_path": "/media/kph_hgf2yalxs6ehyrwxkbaocanvei",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_paq2xklyvko3zqt6rfscjrlvgu",
+      "position": 40,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vrkF62T",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-vrkF62T",
+        "filename": "PXL_20250215_121903121.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "中華そば らんたん",
+        "caption": "高瀬川沿いの好きな通り沿いにできてた。前来たときもあったかな。",
+        "alt": "中華そば らんたん"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4712396,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T05:19:03+00:00",
+          "normalized": "2025-02-16T05:19:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:16+00:00",
+          "normalized": "2025-02-16T03:07:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_paq2xklyvko3zqt6rfscjrlvgu",
+        "media_path": "/media/kph_paq2xklyvko3zqt6rfscjrlvgu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pgt7acm4vs3w4blsilltsg4zje",
+      "position": 41,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QxrKgFq",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-QxrKgFq",
+        "filename": "PXL_20250215_120527927.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "中華そば らんたん",
+        "caption": "端麗中華そばを頼んだ",
+        "alt": "中華そば らんたん"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2429027,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T05:05:27+00:00",
+          "normalized": "2025-02-16T05:05:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:28+00:00",
+          "normalized": "2025-02-16T03:07:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pgt7acm4vs3w4blsilltsg4zje",
+        "media_path": "/media/kph_pgt7acm4vs3w4blsilltsg4zje",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2qntw462ymvaouf4l2bchaa4xe",
+      "position": 42,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Vswkc8Q",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-Vswkc8Q",
+        "filename": "PXL_20250216_003109024.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 朝食（洋食）",
+        "caption": "会場はこんな感じ",
+        "alt": "ホテル日航プリンス京都 朝食（洋食）"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3438059,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T17:31:09+00:00",
+          "normalized": "2025-02-16T17:31:09Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:35+00:00",
+          "normalized": "2025-02-16T03:07:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2qntw462ymvaouf4l2bchaa4xe",
+        "media_path": "/media/kph_2qntw462ymvaouf4l2bchaa4xe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_evy7gpvtzd3hpmks7i4bagqdtu",
+      "position": 43,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "pQJMtH9",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-pQJMtH9",
+        "filename": "PXL_20250216_002503514.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 朝食（洋食）",
+        "caption": "",
+        "alt": "ホテル日航プリンス京都 朝食（洋食）"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3450869,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T17:25:03+00:00",
+          "normalized": "2025-02-16T17:25:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:30+00:00",
+          "normalized": "2025-02-16T03:07:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_evy7gpvtzd3hpmks7i4bagqdtu",
+        "media_path": "/media/kph_evy7gpvtzd3hpmks7i4bagqdtu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_p5e7exkbvpswmrgirgu4mhzwbq",
+      "position": 44,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sWrQcqD",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-sWrQcqD",
+        "filename": "PXL_20250216_002758740.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 朝食（洋食）",
+        "caption": "",
+        "alt": "ホテル日航プリンス京都 朝食（洋食）"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3370397,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T17:27:58+00:00",
+          "normalized": "2025-02-16T17:27:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:32+00:00",
+          "normalized": "2025-02-16T03:07:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_p5e7exkbvpswmrgirgu4mhzwbq",
+        "media_path": "/media/kph_p5e7exkbvpswmrgirgu4mhzwbq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ioakhf7wbdndkngyruzbxzljjq",
+      "position": 45,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4fx7c63",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-4fx7c63",
+        "filename": "PXL_20250216_003013518.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 朝食（洋食）",
+        "caption": "",
+        "alt": "ホテル日航プリンス京都 朝食（洋食）"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3369459,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T17:30:13+00:00",
+          "normalized": "2025-02-16T17:30:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:33+00:00",
+          "normalized": "2025-02-16T03:07:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ioakhf7wbdndkngyruzbxzljjq",
+        "media_path": "/media/kph_ioakhf7wbdndkngyruzbxzljjq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_i6djzgdcehyfcpopabl2xox2j4",
+      "position": 46,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mRbHCSf",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-mRbHCSf",
+        "filename": "PXL_20250216_004720529.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ホテル日航プリンス京都 朝食（洋食）",
+        "caption": "",
+        "alt": "ホテル日航プリンス京都 朝食（洋食）"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4111279,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T17:47:20+00:00",
+          "normalized": "2025-02-16T17:47:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-16T03:07:44+00:00",
+          "normalized": "2025-02-16T03:07:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_i6djzgdcehyfcpopabl2xox2j4",
+        "media_path": "/media/kph_i6djzgdcehyfcpopabl2xox2j4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hlxucwdfxtnx2rnhf2zm2mhn3y",
+      "position": 47,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "T8CLBxD",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-T8CLBxD",
+        "filename": "PXL_20250216_001454792.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "ぐるぐるランドリー",
+        "caption": "最終日に全部洗濯して帰るスタイル",
+        "alt": "ぐるぐるランドリー"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4498617,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T17:14:54+00:00",
+          "normalized": "2025-02-16T17:14:54Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:12+00:00",
+          "normalized": "2025-02-17T12:19:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hlxucwdfxtnx2rnhf2zm2mhn3y",
+        "media_path": "/media/kph_hlxucwdfxtnx2rnhf2zm2mhn3y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_243ahbnmv3dumvy2dlwurftwke",
+      "position": 48,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dgh3mTP",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-dgh3mTP",
+        "filename": "PXL_20250216_035910998.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "TRUFFLE DONUT",
+        "caption": "有名らしく朝10時に行ったら13時の整理券渡された",
+        "alt": "TRUFFLE DONUT"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3233132,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T20:59:10+00:00",
+          "normalized": "2025-02-16T20:59:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:10+00:00",
+          "normalized": "2025-02-17T12:19:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_243ahbnmv3dumvy2dlwurftwke",
+        "media_path": "/media/kph_243ahbnmv3dumvy2dlwurftwke",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qy7fatzopqxpakkbenttsghlpm",
+      "position": 49,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "c239pK2",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-c239pK2",
+        "filename": "PXL_20250216_055221146.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "大阪梅田",
+        "caption": "大阪来ると100%迷う",
+        "alt": "大阪梅田"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4278812,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T22:52:21+00:00",
+          "normalized": "2025-02-16T22:52:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T09:08:36+00:00",
+          "normalized": "2025-02-17T09:08:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qy7fatzopqxpakkbenttsghlpm",
+        "media_path": "/media/kph_qy7fatzopqxpakkbenttsghlpm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_chaqefoh7bi4w7o72dcz2a2m3u",
+      "position": 50,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sT5bv8k",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-sT5bv8k",
+        "filename": "PXL_20250216_061906572.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "大阪梅田",
+        "caption": "スケートリンクがあった",
+        "alt": "大阪梅田"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3019318,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-16T23:19:06+00:00",
+          "normalized": "2025-02-16T23:19:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T09:08:35+00:00",
+          "normalized": "2025-02-17T09:08:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_chaqefoh7bi4w7o72dcz2a2m3u",
+        "media_path": "/media/kph_chaqefoh7bi4w7o72dcz2a2m3u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jmk3kzxzdv7wh4aunvcg7ngwyi",
+      "position": 51,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ccSjhRP",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-ccSjhRP",
+        "filename": "PXL_20250216_084042520.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "新大阪駅 逢酒場 ちろり",
+        "caption": "新大阪駅で時間があったのでちょっと寄った",
+        "alt": "新大阪駅 逢酒場 ちろり"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2920512,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-17T01:40:42+00:00",
+          "normalized": "2025-02-17T01:40:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T09:08:38+00:00",
+          "normalized": "2025-02-17T09:08:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jmk3kzxzdv7wh4aunvcg7ngwyi",
+        "media_path": "/media/kph_jmk3kzxzdv7wh4aunvcg7ngwyi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_m5juyw7ytevt2g4twkeftig2zq",
+      "position": 52,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8vLdHLV",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-8vLdHLV",
+        "filename": "PXL_20250216_074528972.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "新大阪駅 逢酒場 ちろり",
+        "caption": "焼き厚揚げとハイボール",
+        "alt": "新大阪駅 逢酒場 ちろり"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2160464,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-17T00:45:28+00:00",
+          "normalized": "2025-02-17T00:45:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:07+00:00",
+          "normalized": "2025-02-17T12:19:07Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_m5juyw7ytevt2g4twkeftig2zq",
+        "media_path": "/media/kph_m5juyw7ytevt2g4twkeftig2zq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6w4k33syoxysufuv77ezpguuxi",
+      "position": 53,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "wkv2CJ9",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-wkv2CJ9",
+        "filename": "PXL_20250216_074631544.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "新大阪駅 逢酒場 ちろり",
+        "caption": "串揚げ。天つゆにつけて食べるスタイルらしい。",
+        "alt": "新大阪駅 逢酒場 ちろり"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2339539,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-17T00:46:31+00:00",
+          "normalized": "2025-02-17T00:46:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:08+00:00",
+          "normalized": "2025-02-17T12:19:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6w4k33syoxysufuv77ezpguuxi",
+        "media_path": "/media/kph_6w4k33syoxysufuv77ezpguuxi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vlfulh5zg2a5tsbbgeryoypxb4",
+      "position": 54,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zLJBZrm",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-zLJBZrm",
+        "filename": "PXL_20250216_080446570.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "新大阪駅 逢酒場 ちろり",
+        "caption": "おでん盛り。大人ぶってからしつけたら死ぬほど辛くて後悔した。",
+        "alt": "新大阪駅 逢酒場 ちろり"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2144775,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-17T01:04:46+00:00",
+          "normalized": "2025-02-17T01:04:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T12:19:10+00:00",
+          "normalized": "2025-02-17T12:19:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vlfulh5zg2a5tsbbgeryoypxb4",
+        "media_path": "/media/kph_vlfulh5zg2a5tsbbgeryoypxb4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yaypweov5i22offi7v3zv7r2tq",
+      "position": 55,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hGrvhPF",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-hGrvhPF",
+        "filename": "PXL_20250216_082328451.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "新大阪駅 神座",
+        "caption": "野菜ラーメン",
+        "alt": "新大阪駅 神座"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2233434,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-17T01:23:28+00:00",
+          "normalized": "2025-02-17T01:23:28Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T09:08:38+00:00",
+          "normalized": "2025-02-17T09:08:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yaypweov5i22offi7v3zv7r2tq",
+        "media_path": "/media/kph_yaypweov5i22offi7v3zv7r2tq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2yi4m6teiltfox4g5mtah72apa",
+      "position": 56,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Dkj32Hw",
+        "web_uri": "https://kanolog.smugmug.com/20250214Kyoto/i-Dkj32Hw",
+        "filename": "PXL_20250216_090305740.jpg",
+        "format": "JPG",
+        "archived_md5": null
+      },
+      "display": {
+        "title": "新大阪駅",
+        "caption": "帰ります！",
+        "alt": "新大阪駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4096231,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-02-17T02:03:05+00:00",
+          "normalized": "2025-02-17T02:03:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-02-17T09:08:44+00:00",
+          "normalized": "2025-02-17T09:08:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2yi4m6teiltfox4g5mtah72apa",
+        "media_path": "/media/kph_2yi4m6teiltfox4g5mtah72apa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

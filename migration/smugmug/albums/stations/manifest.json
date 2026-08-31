@@ -1,0 +1,1142 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:28:59+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/stations",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_qmnfcpajuy4rrxnkssmm3tll7e",
+    "slug": "stations",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "8PdRPg",
+      "web_uri": "https://kanolog.smugmug.com/Stations"
+    },
+    "title": "Stations",
+    "description": "",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 23,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_z7u55idpc43resz47snqpaxgoa",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hVGRFSQ",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-hVGRFSQ",
+        "filename": "52466261509.jpg",
+        "format": "JPG",
+        "archived_md5": "ee3c47eda59b60118b785f922370718b"
+      },
+      "display": {
+        "title": "北千住駅前",
+        "caption": "",
+        "alt": "北千住駅前"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 202412,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-02-03T01:33:21+00:00",
+          "normalized": "2008-02-03T01:33:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:00:15+00:00",
+          "normalized": "2022-11-06T17:00:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_z7u55idpc43resz47snqpaxgoa",
+        "media_path": "/media/kph_z7u55idpc43resz47snqpaxgoa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sy47pjbydpkjwyqjo5lpdrxqby",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rhXXHR3",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-rhXXHR3",
+        "filename": "2257271867.jpg",
+        "format": "JPG",
+        "archived_md5": "17346664e6f64bf1fc0d4d389f1b88ad"
+      },
+      "display": {
+        "title": "蕨駅前 その1",
+        "caption": "なぜか蕨に降り立ったのであった…",
+        "alt": "蕨駅前 その1"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 98794,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-02-11T07:39:26+00:00",
+          "normalized": "2008-02-11T07:39:26Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:27:51+00:00",
+          "normalized": "2022-11-06T17:27:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sy47pjbydpkjwyqjo5lpdrxqby",
+        "media_path": "/media/kph_sy47pjbydpkjwyqjo5lpdrxqby",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gwu5osrv4nkh5aw4ogu2knv6h4",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "p3DhrHW",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-p3DhrHW",
+        "filename": "2668019340.jpg",
+        "format": "JPG",
+        "archived_md5": "669936a68237654f20ea5fa87df9d064"
+      },
+      "display": {
+        "title": "鮫洲駅",
+        "caption": "免許更新にテクテク。",
+        "alt": "鮫洲駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 805639,
+        "width": 1600,
+        "height": 1200
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-07-14T22:52:25+00:00",
+          "normalized": "2008-07-14T22:52:25Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:15+00:00",
+          "normalized": "2022-11-06T17:26:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gwu5osrv4nkh5aw4ogu2knv6h4",
+        "media_path": "/media/kph_gwu5osrv4nkh5aw4ogu2knv6h4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mfqmlpipkhtd4t3febf5tmzoru",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ch5TZVX",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-ch5TZVX",
+        "filename": "2831178789.jpg",
+        "format": "JPG",
+        "archived_md5": "3ac06d74d334aadce00a55ed5117a9e9"
+      },
+      "display": {
+        "title": "武蔵中原駅",
+        "caption": "",
+        "alt": "武蔵中原駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 127155,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-07-31T02:06:10+00:00",
+          "normalized": "2008-07-31T02:06:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:11+00:00",
+          "normalized": "2022-11-06T17:26:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mfqmlpipkhtd4t3febf5tmzoru",
+        "media_path": "/media/kph_mfqmlpipkhtd4t3febf5tmzoru",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_66ov52eg2oi5p7md3kwdqfi2aa",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RHvPLCP",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-RHvPLCP",
+        "filename": "2831178683.jpg",
+        "format": "JPG",
+        "archived_md5": "9de72b90b50a1702a0217631ca11e30b"
+      },
+      "display": {
+        "title": "平和台駅",
+        "caption": "",
+        "alt": "平和台駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 84867,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-08-02T19:26:35+00:00",
+          "normalized": "2008-08-02T19:26:35Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:11+00:00",
+          "normalized": "2022-11-06T17:26:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_66ov52eg2oi5p7md3kwdqfi2aa",
+        "media_path": "/media/kph_66ov52eg2oi5p7md3kwdqfi2aa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_f745iiy3uytodvis62vvhnoi5m",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2nmhphf",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-2nmhphf",
+        "filename": "2832012774.jpg",
+        "format": "JPG",
+        "archived_md5": "0f781596489e69a8e56996af076bad4d"
+      },
+      "display": {
+        "title": "上野駅",
+        "caption": "",
+        "alt": "上野駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 109986,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-08-11T20:05:42+00:00",
+          "normalized": "2008-08-11T20:05:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:10+00:00",
+          "normalized": "2022-11-06T17:26:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_f745iiy3uytodvis62vvhnoi5m",
+        "media_path": "/media/kph_f745iiy3uytodvis62vvhnoi5m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dm2k5pji2sz7aztrerxk5gusz4",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nfbTJcb",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-nfbTJcb",
+        "filename": "2832012440.jpg",
+        "format": "JPG",
+        "archived_md5": "402746df0fc53af9c50f83461e8e8d28"
+      },
+      "display": {
+        "title": "西巣鴨駅",
+        "caption": "",
+        "alt": "西巣鴨駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 146551,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-08-11T21:50:12+00:00",
+          "normalized": "2008-08-11T21:50:12Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:26:13+00:00",
+          "normalized": "2022-11-06T17:26:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dm2k5pji2sz7aztrerxk5gusz4",
+        "media_path": "/media/kph_dm2k5pji2sz7aztrerxk5gusz4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5kr3skhnxa46isros45iikkc2u",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "P9Xd9wz",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-P9Xd9wz",
+        "filename": "52466260619.jpg",
+        "format": "JPG",
+        "archived_md5": "8f2fa0b56c3537da56b866e372b876eb"
+      },
+      "display": {
+        "title": "板橋本町駅",
+        "caption": "",
+        "alt": "板橋本町駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 166577,
+        "width": 1280,
+        "height": 960
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2008-08-11T22:31:55+00:00",
+          "normalized": "2008-08-11T22:31:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:00:15+00:00",
+          "normalized": "2022-11-06T17:00:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5kr3skhnxa46isros45iikkc2u",
+        "media_path": "/media/kph_5kr3skhnxa46isros45iikkc2u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6jzffzwdyyrph2jbgbnaneoozq",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DdshWCp",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-DdshWCp",
+        "filename": "PXL_20201110_002545355.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "11f97c1568df476fa923fa84824ef1b5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201110_002545355.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2843280,
+        "width": 1944,
+        "height": 2592
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-10T17:25:45+00:00",
+          "normalized": "2020-11-10T17:25:45Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-18T04:54:01+00:00",
+          "normalized": "2022-12-18T04:54:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6jzffzwdyyrph2jbgbnaneoozq",
+        "media_path": "/media/kph_6jzffzwdyyrph2jbgbnaneoozq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ylnpajihzfo7zm6hyzkzxg33uu",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HCNsTnG",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-HCNsTnG",
+        "filename": "PXL_20201110_014153408.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "b8d12930aaea33b876733ae17d423cf9"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20201110_014153408.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1603708,
+        "width": 1944,
+        "height": 2592
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2020-11-10T18:41:53+00:00",
+          "normalized": "2020-11-10T18:41:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-18T04:53:52+00:00",
+          "normalized": "2022-12-18T04:53:52Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ylnpajihzfo7zm6hyzkzxg33uu",
+        "media_path": "/media/kph_ylnpajihzfo7zm6hyzkzxg33uu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_n5x3jhfqd5od4a4ascsjb6wsqi",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "xkDHSWh",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-xkDHSWh",
+        "filename": "52464032213.jpg",
+        "format": "JPG",
+        "archived_md5": "628d980d518475c9ef5e4e00909a800a"
+      },
+      "display": {
+        "title": "新大久保駅",
+        "caption": "子供の学校に用事",
+        "alt": "新大久保駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1874109,
+        "width": 3024,
+        "height": 3024
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-01-08T21:26:07+00:00",
+          "normalized": "2022-01-08T21:26:07Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-06T17:00:21+00:00",
+          "normalized": "2022-11-06T17:00:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_n5x3jhfqd5od4a4ascsjb6wsqi",
+        "media_path": "/media/kph_n5x3jhfqd5od4a4ascsjb6wsqi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2tylqheig7geuy5ws7ojh7cyw4",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vNhWF3Z",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-vNhWF3Z",
+        "filename": "PXL_20220116_103537070.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "c02c672fb0e90031ce51edaa196e031e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20220116_103537070.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5084352,
+        "width": 3024,
+        "height": 4032
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-01-17T03:35:37+00:00",
+          "normalized": "2022-01-17T03:35:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-24T21:22:40+00:00",
+          "normalized": "2022-12-24T21:22:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2tylqheig7geuy5ws7ojh7cyw4",
+        "media_path": "/media/kph_2tylqheig7geuy5ws7ojh7cyw4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3b2ermd57psojt2k2rwpw6phay",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qL47N8H",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-qL47N8H",
+        "filename": "PXL_20221025_002436495.jpg",
+        "format": "JPG",
+        "archived_md5": "2b7567856d81a27cf61d0a1b703dfe25"
+      },
+      "display": {
+        "title": "大井町駅",
+        "caption": "乗り過ごした😖",
+        "alt": "大井町駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1690878,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-10-25T16:24:36+00:00",
+          "normalized": "2022-10-25T16:24:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-10T01:03:01+00:00",
+          "normalized": "2022-12-10T01:03:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3b2ermd57psojt2k2rwpw6phay",
+        "media_path": "/media/kph_3b2ermd57psojt2k2rwpw6phay",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vp65yaemzlnayrw5fmkyxfiqpy",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JqR6rqG",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-JqR6rqG",
+        "filename": "PXL_20221102_071604852.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "e3bbcaedf65e2f3f7850e1d1eb1f2404"
+      },
+      "display": {
+        "title": "京都駅",
+        "caption": "この構図で写真を撮りがち",
+        "alt": "京都駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6578175,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-11-02T23:16:04+00:00",
+          "normalized": "2022-11-02T23:16:04Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-10T01:03:04+00:00",
+          "normalized": "2022-12-10T01:03:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vp65yaemzlnayrw5fmkyxfiqpy",
+        "media_path": "/media/kph_vp65yaemzlnayrw5fmkyxfiqpy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_55opuptbpx3yddsuplux5qzjbu",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZsmZHBr",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-ZsmZHBr",
+        "filename": "PXL_20221107_103203873.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "8c5cbef91a9fd74a9321f92bd24904d2"
+      },
+      "display": {
+        "title": "恵比寿駅",
+        "caption": "久しぶりの恵比寿駅",
+        "alt": "恵比寿駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6718571,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-11-08T03:32:03+00:00",
+          "normalized": "2022-11-08T03:32:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-07T14:28:55+00:00",
+          "normalized": "2022-11-07T14:28:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_55opuptbpx3yddsuplux5qzjbu",
+        "media_path": "/media/kph_55opuptbpx3yddsuplux5qzjbu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vgpgrjfykjh2gigzsn3wpis62q",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MGTbxdf",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-MGTbxdf",
+        "filename": "PXL_20221108_005108778.jpg",
+        "format": "JPG",
+        "archived_md5": "9468db5eb268c5e10a9c11a84639088d"
+      },
+      "display": {
+        "title": "田町駅",
+        "caption": "",
+        "alt": "田町駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3136256,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-11-08T17:51:08+00:00",
+          "normalized": "2022-11-08T17:51:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-10T01:02:54+00:00",
+          "normalized": "2022-12-10T01:02:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vgpgrjfykjh2gigzsn3wpis62q",
+        "media_path": "/media/kph_vgpgrjfykjh2gigzsn3wpis62q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ryygzbzlkjfvakjfu34t3sb6z4",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kbS9Cxk",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-kbS9Cxk",
+        "filename": "PXL_20221115_004151921.jpg",
+        "format": "JPG",
+        "archived_md5": "4f61e62bcdcc2c3438eac0ec404d1641"
+      },
+      "display": {
+        "title": "下赤塚駅",
+        "caption": "",
+        "alt": "下赤塚駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4494404,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-11-15T17:41:51+00:00",
+          "normalized": "2022-11-15T17:41:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-15T00:52:18+00:00",
+          "normalized": "2022-11-15T00:52:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ryygzbzlkjfvakjfu34t3sb6z4",
+        "media_path": "/media/kph_ryygzbzlkjfvakjfu34t3sb6z4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_g2qzdh5hx6hti4xc7tdncz75ny",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "2JKtmt4",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-2JKtmt4",
+        "filename": "PXL_20221115_032132446.jpg",
+        "format": "JPG",
+        "archived_md5": "9f00160426b5f2e35f7e1dc4f24a2bad"
+      },
+      "display": {
+        "title": "高島平駅",
+        "caption": "",
+        "alt": "高島平駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3706013,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-11-15T20:21:32+00:00",
+          "normalized": "2022-11-15T20:21:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-15T06:42:24+00:00",
+          "normalized": "2022-11-15T06:42:24Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_g2qzdh5hx6hti4xc7tdncz75ny",
+        "media_path": "/media/kph_g2qzdh5hx6hti4xc7tdncz75ny",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2pisrpzkm24jvw6jvuzavjo5a4",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Dbhjr4S",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-Dbhjr4S",
+        "filename": "PXL_20221127_053008216.jpg",
+        "format": "JPG",
+        "archived_md5": "d71a88199e5ff7f86fe96cec7cca99d0"
+      },
+      "display": {
+        "title": "東所沢駅",
+        "caption": "",
+        "alt": "東所沢駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3876183,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-11-27T22:30:08+00:00",
+          "normalized": "2022-11-27T22:30:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-04T07:54:26+00:00",
+          "normalized": "2022-12-04T07:54:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2pisrpzkm24jvw6jvuzavjo5a4",
+        "media_path": "/media/kph_2pisrpzkm24jvw6jvuzavjo5a4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zgqnqn2eollzewh3a3eynr7wqy",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "T5ts4x3",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-T5ts4x3",
+        "filename": "PXL_20221204_052341872.jpg",
+        "format": "JPG",
+        "archived_md5": "2ab468fa989574930101d454a8598560"
+      },
+      "display": {
+        "title": "上野駅",
+        "caption": "",
+        "alt": "上野駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3367531,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-12-04T22:23:41+00:00",
+          "normalized": "2022-12-04T22:23:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-04T07:54:20+00:00",
+          "normalized": "2022-12-04T07:54:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zgqnqn2eollzewh3a3eynr7wqy",
+        "media_path": "/media/kph_zgqnqn2eollzewh3a3eynr7wqy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_br7pxzu63mdfut66wcy42tmtom",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3hpx3SB",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-3hpx3SB",
+        "filename": "PXL_20221204_071121273.jpg",
+        "format": "JPG",
+        "archived_md5": "2b5277a1b6f284ec896850bcc202de6b"
+      },
+      "display": {
+        "title": "上野広小路駅",
+        "caption": "",
+        "alt": "上野広小路駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3270731,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-12-05T00:11:21+00:00",
+          "normalized": "2022-12-05T00:11:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-04T07:54:41+00:00",
+          "normalized": "2022-12-04T07:54:41Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_br7pxzu63mdfut66wcy42tmtom",
+        "media_path": "/media/kph_br7pxzu63mdfut66wcy42tmtom",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lwuhwkg3ajcvuwnvhdf7t52f64",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WHTkF9Q",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-WHTkF9Q",
+        "filename": "PXL_20221210_001726186.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "a71ca3209d8c6164d09e9b3a9fc7a088"
+      },
+      "display": {
+        "title": "光が丘駅",
+        "caption": "",
+        "alt": "光が丘駅"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6259347,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-12-10T17:17:26+00:00",
+          "normalized": "2022-12-10T17:17:26Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-10T00:55:23+00:00",
+          "normalized": "2022-12-10T00:55:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lwuhwkg3ajcvuwnvhdf7t52f64",
+        "media_path": "/media/kph_lwuhwkg3ajcvuwnvhdf7t52f64",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_nfg2rc7eowah6jkuwkc3lvtefa",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "QmR9rWf",
+        "web_uri": "https://kanolog.smugmug.com/Stations/i-QmR9rWf",
+        "filename": "PXL_20221210_072441098.jpg",
+        "format": "JPG",
+        "archived_md5": "dab7d051841db62cf433bd252782d0c5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20221210_072441098.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2233813,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2022-12-11T00:24:41+00:00",
+          "normalized": "2022-12-11T00:24:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-10T23:38:00+00:00",
+          "normalized": "2022-12-10T23:38:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_nfg2rc7eowah6jkuwkc3lvtefa",
+        "media_path": "/media/kph_nfg2rc7eowah6jkuwkc3lvtefa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

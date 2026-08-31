@@ -1,0 +1,3110 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:29:04+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2013-07-hawaii",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_wbh6fn2rpo4ilfez7nycytvyi4",
+    "slug": "2013-07-hawaii",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "BPLvSS",
+      "web_uri": "https://kanolog.smugmug.com/20130719Hawaii"
+    },
+    "title": "Hawaii, 2013/07",
+    "description": "",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 64,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_fg3f6dkhgspijxjgsvkk5ebgf4",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8GRgst6",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-8GRgst6",
+        "filename": "IMG_7089.JPG",
+        "format": "JPG",
+        "archived_md5": "a60cb6a37cb7c567d4f623cc212643b6"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7089.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 78175,
+        "width": 640,
+        "height": 640
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": null,
+          "normalized": null,
+          "timezone_status": "unknown"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:38+00:00",
+          "normalized": "2022-11-13T00:11:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fg3f6dkhgspijxjgsvkk5ebgf4",
+        "media_path": "/media/kph_fg3f6dkhgspijxjgsvkk5ebgf4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_h5nnuwcx7ufs4uoomrytri6e3i",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "3vBMHw9",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-3vBMHw9",
+        "filename": "IMG_7029.JPG",
+        "format": "JPG",
+        "archived_md5": "3e616482ac00185997f518066e476673"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7029.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 633255,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T20:47:23+00:00",
+          "normalized": "2013-07-19T20:47:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:45+00:00",
+          "normalized": "2022-11-13T00:10:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_h5nnuwcx7ufs4uoomrytri6e3i",
+        "media_path": "/media/kph_h5nnuwcx7ufs4uoomrytri6e3i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_k4apk6efa6wg6naop22g2jqs54",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SQGmnwH",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SQGmnwH",
+        "filename": "IMG_7031.JPG",
+        "format": "JPG",
+        "archived_md5": "643d5428bede807e9af013b45f1c5ddd"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7031.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1520486,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T21:46:55+00:00",
+          "normalized": "2013-07-19T21:46:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:49+00:00",
+          "normalized": "2022-11-13T00:10:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_k4apk6efa6wg6naop22g2jqs54",
+        "media_path": "/media/kph_k4apk6efa6wg6naop22g2jqs54",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_t5kia5ldohiobun64wi3wpinqe",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4VscP5d",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-4VscP5d",
+        "filename": "IMG_7035.JPG",
+        "format": "JPG",
+        "archived_md5": "a337a4be4dd273ba50039e795346b982"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7035.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1922083,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T22:25:47+00:00",
+          "normalized": "2013-07-19T22:25:47Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:50+00:00",
+          "normalized": "2022-11-13T00:10:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_t5kia5ldohiobun64wi3wpinqe",
+        "media_path": "/media/kph_t5kia5ldohiobun64wi3wpinqe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_uzlwqtmasam7karvyx7h265ni4",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kWwmQ7M",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-kWwmQ7M",
+        "filename": "IMG_7036.JPG",
+        "format": "JPG",
+        "archived_md5": "f61a50a7fbeadd6ffb9637678798f6f6"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7036.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2108089,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T22:55:21+00:00",
+          "normalized": "2013-07-19T22:55:21Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:52+00:00",
+          "normalized": "2022-11-13T00:10:52Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_uzlwqtmasam7karvyx7h265ni4",
+        "media_path": "/media/kph_uzlwqtmasam7karvyx7h265ni4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_meovcstlvdorzjliph4xtcx6zy",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MBhwdVD",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-MBhwdVD",
+        "filename": "IMG_7037.JPG",
+        "format": "JPG",
+        "archived_md5": "c5d499b300120530494f190a17777747"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7037.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1174291,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T23:10:33+00:00",
+          "normalized": "2013-07-19T23:10:33Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:53+00:00",
+          "normalized": "2022-11-13T00:10:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_meovcstlvdorzjliph4xtcx6zy",
+        "media_path": "/media/kph_meovcstlvdorzjliph4xtcx6zy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eg4rk6xustjrprv243qdrlcdti",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fsTC94H",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-fsTC94H",
+        "filename": "IMG_7038.JPG",
+        "format": "JPG",
+        "archived_md5": "962faf079bc44bcc8d52935dff16e796"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7038.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1760754,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T23:15:19+00:00",
+          "normalized": "2013-07-19T23:15:19Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:57+00:00",
+          "normalized": "2022-11-13T00:10:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eg4rk6xustjrprv243qdrlcdti",
+        "media_path": "/media/kph_eg4rk6xustjrprv243qdrlcdti",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cuchcavizx4kbk2wd6e7wdmqiq",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "98LG73m",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-98LG73m",
+        "filename": "IMG_3080.JPG",
+        "format": "JPG",
+        "archived_md5": "4ce860f5ee731549c2b2f521ee4745b6"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3080.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1341628,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T23:24:52+00:00",
+          "normalized": "2013-07-19T23:24:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:19+00:00",
+          "normalized": "2022-11-13T00:10:19Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cuchcavizx4kbk2wd6e7wdmqiq",
+        "media_path": "/media/kph_cuchcavizx4kbk2wd6e7wdmqiq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ovmuxeslo6hjw4ry4mr42atp2i",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SGRvDxp",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SGRvDxp",
+        "filename": "IMG_7040.JPG",
+        "format": "JPG",
+        "archived_md5": "11f2670181b3f598a4f8ac04f82b32f3"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7040.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1701521,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T23:42:41+00:00",
+          "normalized": "2013-07-19T23:42:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:58+00:00",
+          "normalized": "2022-11-13T00:10:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ovmuxeslo6hjw4ry4mr42atp2i",
+        "media_path": "/media/kph_ovmuxeslo6hjw4ry4mr42atp2i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gpivflnhmyunnbssxnlkttkej4",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5G2fS9G",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-5G2fS9G",
+        "filename": "IMG_7041.JPG",
+        "format": "JPG",
+        "archived_md5": "822e636dc5cb032c8c04a4728ed74cfa"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7041.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1239734,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-19T23:55:59+00:00",
+          "normalized": "2013-07-19T23:55:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:01+00:00",
+          "normalized": "2022-11-13T00:11:01Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gpivflnhmyunnbssxnlkttkej4",
+        "media_path": "/media/kph_gpivflnhmyunnbssxnlkttkej4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_irekv52dnkh7zezu6n7eldumgu",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tPTLdCt",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-tPTLdCt",
+        "filename": "IMG_7042.JPG",
+        "format": "JPG",
+        "archived_md5": "e770bf37ba11404fca1d70981c83d052"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7042.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1554206,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T00:12:41+00:00",
+          "normalized": "2013-07-20T00:12:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:02+00:00",
+          "normalized": "2022-11-13T00:11:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_irekv52dnkh7zezu6n7eldumgu",
+        "media_path": "/media/kph_irekv52dnkh7zezu6n7eldumgu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yjvdhg5uatrzzq4oz5i7pkhlry",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "6szdFqS",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-6szdFqS",
+        "filename": "IMG_7043.JPG",
+        "format": "JPG",
+        "archived_md5": "3849bd8c85e6ff5f2f8799710dde7135"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7043.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1061985,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T01:02:36+00:00",
+          "normalized": "2013-07-20T01:02:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:11+00:00",
+          "normalized": "2022-11-13T00:11:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yjvdhg5uatrzzq4oz5i7pkhlry",
+        "media_path": "/media/kph_yjvdhg5uatrzzq4oz5i7pkhlry",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_uq3khxjo6iobja5m2za33amgde",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PF7PcpS",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PF7PcpS",
+        "filename": "IMG_7046.JPG",
+        "format": "JPG",
+        "archived_md5": "66e36a1a23462ec378e90e78e5d9dcec"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7046.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 909769,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T01:16:19+00:00",
+          "normalized": "2013-07-20T01:16:19Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:06+00:00",
+          "normalized": "2022-11-13T00:11:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_uq3khxjo6iobja5m2za33amgde",
+        "media_path": "/media/kph_uq3khxjo6iobja5m2za33amgde",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zassqyd5ddnprcbofpa5cq56pa",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TJ6mRGG",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-TJ6mRGG",
+        "filename": "IMG_7047.JPG",
+        "format": "JPG",
+        "archived_md5": "1143ab687bf2b9d9a36ca57c0c48e405"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7047.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 835328,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T01:53:26+00:00",
+          "normalized": "2013-07-20T01:53:26Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:10+00:00",
+          "normalized": "2022-11-13T00:11:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zassqyd5ddnprcbofpa5cq56pa",
+        "media_path": "/media/kph_zassqyd5ddnprcbofpa5cq56pa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_an64o7u2tszc7t45g7sktj75lm",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jmfPpvq",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-jmfPpvq",
+        "filename": "IMG_7048.JPG",
+        "format": "JPG",
+        "archived_md5": "12cb78a5ab49a21c51846d1c0930a4d1"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7048.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 759286,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T01:57:43+00:00",
+          "normalized": "2013-07-20T01:57:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:13+00:00",
+          "normalized": "2022-11-13T00:11:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_an64o7u2tszc7t45g7sktj75lm",
+        "media_path": "/media/kph_an64o7u2tszc7t45g7sktj75lm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_flq5ktgfl6a6t63feqchv33q5e",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rG3JDg3",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-rG3JDg3",
+        "filename": "IMG_7049.JPG",
+        "format": "JPG",
+        "archived_md5": "61c6d1ff3ab0e9380bff5e31934599d0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7049.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 950279,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T01:57:51+00:00",
+          "normalized": "2013-07-20T01:57:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:15+00:00",
+          "normalized": "2022-11-13T00:11:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_flq5ktgfl6a6t63feqchv33q5e",
+        "media_path": "/media/kph_flq5ktgfl6a6t63feqchv33q5e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jdjfivnzofat3p2fvm2yms533i",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "6fxDpXv",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-6fxDpXv",
+        "filename": "IMG_7050.JPG",
+        "format": "JPG",
+        "archived_md5": "8cf60189832664bd392d5e041104d79a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7050.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1047577,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T02:15:33+00:00",
+          "normalized": "2013-07-20T02:15:33Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:17+00:00",
+          "normalized": "2022-11-13T00:11:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jdjfivnzofat3p2fvm2yms533i",
+        "media_path": "/media/kph_jdjfivnzofat3p2fvm2yms533i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jtxgwgi3f2vr72y3yd7lqkh2xu",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RKZWbvp",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-RKZWbvp",
+        "filename": "IMG_7051.JPG",
+        "format": "JPG",
+        "archived_md5": "d6ec5233945052d3180841be48ba8207"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7051.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 687019,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T02:20:24+00:00",
+          "normalized": "2013-07-20T02:20:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:17+00:00",
+          "normalized": "2022-11-13T00:11:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jtxgwgi3f2vr72y3yd7lqkh2xu",
+        "media_path": "/media/kph_jtxgwgi3f2vr72y3yd7lqkh2xu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qmj4dqqn5kygrynk4p5t4cjizi",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PbGgdpc",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PbGgdpc",
+        "filename": "IMG_3083.JPG",
+        "format": "JPG",
+        "archived_md5": "ad538ff46c3ad1c6ec75ab615fe866b0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3083.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1475497,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T02:59:50+00:00",
+          "normalized": "2013-07-20T02:59:50Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:18+00:00",
+          "normalized": "2022-11-13T00:10:18Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qmj4dqqn5kygrynk4p5t4cjizi",
+        "media_path": "/media/kph_qmj4dqqn5kygrynk4p5t4cjizi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bqqz3yx6vdwwj2xyq6ym2k2gci",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zR5nsfg",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-zR5nsfg",
+        "filename": "IMG_7019.JPG",
+        "format": "JPG",
+        "archived_md5": "e4d190a0e55f02192fe4177a54488ec5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7019.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 756361,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T04:37:24+00:00",
+          "normalized": "2013-07-20T04:37:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:45+00:00",
+          "normalized": "2022-11-13T00:10:45Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bqqz3yx6vdwwj2xyq6ym2k2gci",
+        "media_path": "/media/kph_bqqz3yx6vdwwj2xyq6ym2k2gci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lpkf5ymz47vty22hr3y6blc4mm",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rvNqgx3",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-rvNqgx3",
+        "filename": "IMG_7053.JPG",
+        "format": "JPG",
+        "archived_md5": "1e8abbf3575df753c4e1e4eb9e77e160"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7053.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1417191,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T16:05:49+00:00",
+          "normalized": "2013-07-20T16:05:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:20+00:00",
+          "normalized": "2022-11-13T00:11:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lpkf5ymz47vty22hr3y6blc4mm",
+        "media_path": "/media/kph_lpkf5ymz47vty22hr3y6blc4mm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hyd5ly6ykxayfvzrlddfpdmeua",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cGMx4wS",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-cGMx4wS",
+        "filename": "IMG_7062.JPG",
+        "format": "JPG",
+        "archived_md5": "30bb77759590b9edf97137d1b6b31bf8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7062.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1094010,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T16:28:09+00:00",
+          "normalized": "2013-07-20T16:28:09Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:20+00:00",
+          "normalized": "2022-11-13T00:11:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hyd5ly6ykxayfvzrlddfpdmeua",
+        "media_path": "/media/kph_hyd5ly6ykxayfvzrlddfpdmeua",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mpu7ma2czvjm2zct3hiyqlbc5i",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XKmXSLX",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XKmXSLX",
+        "filename": "IMG_7064.JPG",
+        "format": "JPG",
+        "archived_md5": "90316075ef54de0002f3f49698bcede4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7064.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1876506,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T16:28:34+00:00",
+          "normalized": "2013-07-20T16:28:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:27+00:00",
+          "normalized": "2022-11-13T00:11:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mpu7ma2czvjm2zct3hiyqlbc5i",
+        "media_path": "/media/kph_mpu7ma2czvjm2zct3hiyqlbc5i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lfic6r6qa7iiaif56elksxps4m",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5zHSmgq",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-5zHSmgq",
+        "filename": "IMG_3090.JPG",
+        "format": "JPG",
+        "archived_md5": "3427143a4781693e5c156f4db009aa33"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3090.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1494805,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T17:21:05+00:00",
+          "normalized": "2013-07-20T17:21:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:27+00:00",
+          "normalized": "2022-11-13T00:10:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lfic6r6qa7iiaif56elksxps4m",
+        "media_path": "/media/kph_lfic6r6qa7iiaif56elksxps4m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7e3n5ki2ofszecpk5q56dablfy",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "L2KG5Lx",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-L2KG5Lx",
+        "filename": "IMG_7067.JPG",
+        "format": "JPG",
+        "archived_md5": "4f90a3c83eca2490859ca709104757ff"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7067.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1158349,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T19:05:48+00:00",
+          "normalized": "2013-07-20T19:05:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:23+00:00",
+          "normalized": "2022-11-13T00:11:23Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7e3n5ki2ofszecpk5q56dablfy",
+        "media_path": "/media/kph_7e3n5ki2ofszecpk5q56dablfy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_barxfkuo63jb5zthrib4qthtdy",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gZWVX2c",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-gZWVX2c",
+        "filename": "IMG_7068.JPG",
+        "format": "JPG",
+        "archived_md5": "633cf39f266cd647b165d6cd825338ae"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7068.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1587752,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T19:11:30+00:00",
+          "normalized": "2013-07-20T19:11:30Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:28+00:00",
+          "normalized": "2022-11-13T00:11:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_barxfkuo63jb5zthrib4qthtdy",
+        "media_path": "/media/kph_barxfkuo63jb5zthrib4qthtdy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_lgg3fa6kgxm4wzwonegf6n74z4",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BFHNMQd",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-BFHNMQd",
+        "filename": "IMG_7069.JPG",
+        "format": "JPG",
+        "archived_md5": "464ebc6078acbaa1168fbc9cd6967d8c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7069.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1465749,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T19:11:57+00:00",
+          "normalized": "2013-07-20T19:11:57Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:32+00:00",
+          "normalized": "2022-11-13T00:11:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_lgg3fa6kgxm4wzwonegf6n74z4",
+        "media_path": "/media/kph_lgg3fa6kgxm4wzwonegf6n74z4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_767zzn4rm6jrv3qcqsbeh3kd6a",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SV3mwnq",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SV3mwnq",
+        "filename": "IMG_7070.JPG",
+        "format": "JPG",
+        "archived_md5": "5c2ea4cc27bbe76e1a0c80933afded71"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7070.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1618913,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T19:12:02+00:00",
+          "normalized": "2013-07-20T19:12:02Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:32+00:00",
+          "normalized": "2022-11-13T00:11:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_767zzn4rm6jrv3qcqsbeh3kd6a",
+        "media_path": "/media/kph_767zzn4rm6jrv3qcqsbeh3kd6a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qs47oow6o5msqs67vhb7nhazye",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XLtCbXk",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XLtCbXk",
+        "filename": "IMG_7071.JPG",
+        "format": "JPG",
+        "archived_md5": "2570a40d99b90827868b2e4afc6ee361"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7071.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2207461,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T19:12:59+00:00",
+          "normalized": "2013-07-20T19:12:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:37+00:00",
+          "normalized": "2022-11-13T00:11:37Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qs47oow6o5msqs67vhb7nhazye",
+        "media_path": "/media/kph_qs47oow6o5msqs67vhb7nhazye",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tdckgywycpt3dgrxjyknhsqbri",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "S7RtGsb",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-S7RtGsb",
+        "filename": "IMG_7074.JPG",
+        "format": "JPG",
+        "archived_md5": "e8b6ab7e92d133d3023de606aa31bb4b"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7074.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1268107,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-20T19:32:27+00:00",
+          "normalized": "2013-07-20T19:32:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:36+00:00",
+          "normalized": "2022-11-13T00:11:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tdckgywycpt3dgrxjyknhsqbri",
+        "media_path": "/media/kph_tdckgywycpt3dgrxjyknhsqbri",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_52ubfi26qyishbpaori6kfiilm",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "szRBpZ3",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-szRBpZ3",
+        "filename": "IMG_7077.JPG",
+        "format": "JPG",
+        "archived_md5": "f7bc3acb3519c1e46b3c183e302792d7"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7077.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1792727,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-21T00:15:44+00:00",
+          "normalized": "2013-07-21T00:15:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:39+00:00",
+          "normalized": "2022-11-13T00:11:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_52ubfi26qyishbpaori6kfiilm",
+        "media_path": "/media/kph_52ubfi26qyishbpaori6kfiilm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wbpd7qmpksqm5hl5cbrdxiixoy",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RtBCRDB",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-RtBCRDB",
+        "filename": "IMG_3134.JPG",
+        "format": "JPG",
+        "archived_md5": "987e9007411d5c01962d10477682a1ea"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3134.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2837307,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-21T20:58:20+00:00",
+          "normalized": "2013-07-21T20:58:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:29+00:00",
+          "normalized": "2022-11-13T00:10:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wbpd7qmpksqm5hl5cbrdxiixoy",
+        "media_path": "/media/kph_wbpd7qmpksqm5hl5cbrdxiixoy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jmg6jsatbg4gh6qy5wp5el2qca",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WXgKmDd",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-WXgKmDd",
+        "filename": "IMG_3141.JPG",
+        "format": "JPG",
+        "archived_md5": "2edf76a180ac471496c6c56c2ac1f976"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3141.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2083006,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-22T15:55:32+00:00",
+          "normalized": "2013-07-22T15:55:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:32+00:00",
+          "normalized": "2022-11-13T00:10:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jmg6jsatbg4gh6qy5wp5el2qca",
+        "media_path": "/media/kph_jmg6jsatbg4gh6qy5wp5el2qca",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6nfpsyeq5wt6crvevma6avx4va",
+      "position": 34,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dnzjFCD",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-dnzjFCD",
+        "filename": "IMG_7111.JPG",
+        "format": "JPG",
+        "archived_md5": "49f5115514d30b0dc1326e9351f66210"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7111.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1257106,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-22T22:01:55+00:00",
+          "normalized": "2013-07-22T22:01:55Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:40+00:00",
+          "normalized": "2022-11-13T00:11:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6nfpsyeq5wt6crvevma6avx4va",
+        "media_path": "/media/kph_6nfpsyeq5wt6crvevma6avx4va",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_n6fwcw4c5a3zizs5znwdfk3aji",
+      "position": 35,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LS4QRgh",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-LS4QRgh",
+        "filename": "IMG_3145.JPG",
+        "format": "JPG",
+        "archived_md5": "1b94462e75475a95366fdc59e5194bd2"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3145.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 978723,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-22T22:03:53+00:00",
+          "normalized": "2013-07-22T22:03:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:33+00:00",
+          "normalized": "2022-11-13T00:10:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_n6fwcw4c5a3zizs5znwdfk3aji",
+        "media_path": "/media/kph_n6fwcw4c5a3zizs5znwdfk3aji",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_2uposn4ljksagunfqcn3tcpjoy",
+      "position": 36,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XmbgSWS",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XmbgSWS",
+        "filename": "IMG_3148.JPG",
+        "format": "JPG",
+        "archived_md5": "fb2d5e6ee9c4a662be94afe147042347"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3148.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 803105,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-22T22:11:37+00:00",
+          "normalized": "2013-07-22T22:11:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:35+00:00",
+          "normalized": "2022-11-13T00:10:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_2uposn4ljksagunfqcn3tcpjoy",
+        "media_path": "/media/kph_2uposn4ljksagunfqcn3tcpjoy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_67x56ejpf2re4mr7dwdow2l4gm",
+      "position": 37,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Kz7d2RK",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-Kz7d2RK",
+        "filename": "IMG_3151.JPG",
+        "format": "JPG",
+        "archived_md5": "adf7db611b7fe9b3b3d974c6252bf78a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3151.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1219697,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-22T23:51:23+00:00",
+          "normalized": "2013-07-22T23:51:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:36+00:00",
+          "normalized": "2022-11-13T00:10:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_67x56ejpf2re4mr7dwdow2l4gm",
+        "media_path": "/media/kph_67x56ejpf2re4mr7dwdow2l4gm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_c724cqhsl2ikpr2ayngkkiwieu",
+      "position": 38,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JGMTSWp",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-JGMTSWp",
+        "filename": "IMG_7118.JPG",
+        "format": "JPG",
+        "archived_md5": "fbbd15375ef1ef83f708685d02ab2b39"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7118.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1517739,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-23T01:56:47+00:00",
+          "normalized": "2013-07-23T01:56:47Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:43+00:00",
+          "normalized": "2022-11-13T00:11:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_c724cqhsl2ikpr2ayngkkiwieu",
+        "media_path": "/media/kph_c724cqhsl2ikpr2ayngkkiwieu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_so3gt6bafpyepykrbg77u3wo5i",
+      "position": 39,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vnJ7XSz",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-vnJ7XSz",
+        "filename": "IMG_3158.JPG",
+        "format": "JPG",
+        "archived_md5": "40bf3a1a6d7ef11ddcd8c0825c43f734"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3158.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2375585,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-23T17:29:34+00:00",
+          "normalized": "2013-07-23T17:29:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:39+00:00",
+          "normalized": "2022-11-13T00:10:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_so3gt6bafpyepykrbg77u3wo5i",
+        "media_path": "/media/kph_so3gt6bafpyepykrbg77u3wo5i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tbugnwirdusukpq6vp6eoo5zxa",
+      "position": 40,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "GXMvpb3",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-GXMvpb3",
+        "filename": "IMG_7127.JPG",
+        "format": "JPG",
+        "archived_md5": "8416ba5c5b0131e115e2bca6f06ca6de"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7127.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 979455,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-23T20:07:36+00:00",
+          "normalized": "2013-07-23T20:07:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:43+00:00",
+          "normalized": "2022-11-13T00:11:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tbugnwirdusukpq6vp6eoo5zxa",
+        "media_path": "/media/kph_tbugnwirdusukpq6vp6eoo5zxa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sy3zqze7766l2nphygzckxyh6m",
+      "position": 41,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PHfQxZX",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PHfQxZX",
+        "filename": "IMG_7133.JPG",
+        "format": "JPG",
+        "archived_md5": "370cf5e4763335379c01a09f5202b760"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7133.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1354310,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-23T20:47:48+00:00",
+          "normalized": "2013-07-23T20:47:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:47+00:00",
+          "normalized": "2022-11-13T00:11:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sy3zqze7766l2nphygzckxyh6m",
+        "media_path": "/media/kph_sy3zqze7766l2nphygzckxyh6m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bxz4ci2ua6ccrvd2ccfnxm343u",
+      "position": 42,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qgcbLcL",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-qgcbLcL",
+        "filename": "IMG_7144.JPG",
+        "format": "JPG",
+        "archived_md5": "429e73d25e069954a68e35cc554a1139"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7144.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1309547,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-23T22:05:18+00:00",
+          "normalized": "2013-07-23T22:05:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:47+00:00",
+          "normalized": "2022-11-13T00:11:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bxz4ci2ua6ccrvd2ccfnxm343u",
+        "media_path": "/media/kph_bxz4ci2ua6ccrvd2ccfnxm343u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_b46urnkoryq24kdcuoq57js2qm",
+      "position": 43,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JJgz3Xj",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-JJgz3Xj",
+        "filename": "IMG_7156.JPG",
+        "format": "JPG",
+        "archived_md5": "7d475e761dc9842d945ba6a0e9ea7d81"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7156.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 615389,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-24T00:20:08+00:00",
+          "normalized": "2013-07-24T00:20:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:50+00:00",
+          "normalized": "2022-11-13T00:11:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_b46urnkoryq24kdcuoq57js2qm",
+        "media_path": "/media/kph_b46urnkoryq24kdcuoq57js2qm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eew6wyjyp3jaqjkfsgqqvtpjry",
+      "position": 44,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "72zw8vm",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-72zw8vm",
+        "filename": "IMG_7157.JPG",
+        "format": "JPG",
+        "archived_md5": "767a752bc8d3c676b52b01e6bcfa8605"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7157.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 823850,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-24T00:23:00+00:00",
+          "normalized": "2013-07-24T00:23:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:50+00:00",
+          "normalized": "2022-11-13T00:11:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eew6wyjyp3jaqjkfsgqqvtpjry",
+        "media_path": "/media/kph_eew6wyjyp3jaqjkfsgqqvtpjry",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vtezlpx2b7siajvpvkdjn3xmim",
+      "position": 45,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BsPkXKZ",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-BsPkXKZ",
+        "filename": "IMG_7158.JPG",
+        "format": "JPG",
+        "archived_md5": "8694716a76877cd2b88b52961ab32cfb"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7158.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 933922,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-24T00:38:39+00:00",
+          "normalized": "2013-07-24T00:38:39Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:53+00:00",
+          "normalized": "2022-11-13T00:11:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vtezlpx2b7siajvpvkdjn3xmim",
+        "media_path": "/media/kph_vtezlpx2b7siajvpvkdjn3xmim",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gro4m2ghr4q6x3clskny5ttqmi",
+      "position": 46,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XCpKVNN",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XCpKVNN",
+        "filename": "IMG_7164.JPG",
+        "format": "JPG",
+        "archived_md5": "f86702380eeb49e06cc750dc1369ff06"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7164.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 797107,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-24T03:51:36+00:00",
+          "normalized": "2013-07-24T03:51:36Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:53+00:00",
+          "normalized": "2022-11-13T00:11:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gro4m2ghr4q6x3clskny5ttqmi",
+        "media_path": "/media/kph_gro4m2ghr4q6x3clskny5ttqmi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7zvhysohh2gdil4lb7vtylbdza",
+      "position": 47,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "hMGh3hL",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-hMGh3hL",
+        "filename": "IMG_7167.JPG",
+        "format": "JPG",
+        "archived_md5": "90ba0428e9953757fa335b735f528da4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7167.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 944692,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-24T17:22:33+00:00",
+          "normalized": "2013-07-24T17:22:33Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:55+00:00",
+          "normalized": "2022-11-13T00:11:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7zvhysohh2gdil4lb7vtylbdza",
+        "media_path": "/media/kph_7zvhysohh2gdil4lb7vtylbdza",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_x2qdke5s2kcc4bx4pv4jowxcge",
+      "position": 48,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CGVk9HL",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-CGVk9HL",
+        "filename": "IMG_3172.JPG",
+        "format": "JPG",
+        "archived_md5": "f30daea58350d7098ec13f508bacbb04"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3172.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1215890,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-24T17:32:17+00:00",
+          "normalized": "2013-07-24T17:32:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:39+00:00",
+          "normalized": "2022-11-13T00:10:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_x2qdke5s2kcc4bx4pv4jowxcge",
+        "media_path": "/media/kph_x2qdke5s2kcc4bx4pv4jowxcge",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pqwcrlpc54vvn6hxxy7jgkts2e",
+      "position": 49,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WmJn9PV",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-WmJn9PV",
+        "filename": "IMG_7168.JPG",
+        "format": "JPG",
+        "archived_md5": "5d35300b40282d80ed80320f7523ca54"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7168.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1062689,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-24T17:32:23+00:00",
+          "normalized": "2013-07-24T17:32:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:57+00:00",
+          "normalized": "2022-11-13T00:11:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pqwcrlpc54vvn6hxxy7jgkts2e",
+        "media_path": "/media/kph_pqwcrlpc54vvn6hxxy7jgkts2e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5vp4kurffj4tux25vmasxtb2fm",
+      "position": 50,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "G23P4DR",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-G23P4DR",
+        "filename": "IMG_7173.JPG",
+        "format": "JPG",
+        "archived_md5": "a1bc5a06017c304e8aa702cc18e7725a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7173.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1038167,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-25T01:50:00+00:00",
+          "normalized": "2013-07-25T01:50:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:11:58+00:00",
+          "normalized": "2022-11-13T00:11:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5vp4kurffj4tux25vmasxtb2fm",
+        "media_path": "/media/kph_5vp4kurffj4tux25vmasxtb2fm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xsqyolco37lavzdw3ks6cfwu4q",
+      "position": 51,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PvF9v8j",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PvF9v8j",
+        "filename": "IMG_7174.JPG",
+        "format": "JPG",
+        "archived_md5": "6fdc60fc3adf8b0dc211fb5b998fc3e3"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7174.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1215743,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-25T02:16:34+00:00",
+          "normalized": "2013-07-25T02:16:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:00+00:00",
+          "normalized": "2022-11-13T00:12:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xsqyolco37lavzdw3ks6cfwu4q",
+        "media_path": "/media/kph_xsqyolco37lavzdw3ks6cfwu4q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ilicd5om2nc6lwmtttvbeqqh4q",
+      "position": 52,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7HK9bJS",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-7HK9bJS",
+        "filename": "IMG_7187.JPG",
+        "format": "JPG",
+        "archived_md5": "9c2051eb38cdd9b8e6a6b198ebc4c087"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7187.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1396596,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-25T16:38:48+00:00",
+          "normalized": "2013-07-25T16:38:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:02+00:00",
+          "normalized": "2022-11-13T00:12:02Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ilicd5om2nc6lwmtttvbeqqh4q",
+        "media_path": "/media/kph_ilicd5om2nc6lwmtttvbeqqh4q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ed2lvzavpoctbpsl6hb3qa35fu",
+      "position": 53,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nn8kHXD",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-nn8kHXD",
+        "filename": "IMG_7191.JPG",
+        "format": "JPG",
+        "archived_md5": "be19b4da6d0bf6ab9c9b71d569549854"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7191.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1733387,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-25T16:46:13+00:00",
+          "normalized": "2013-07-25T16:46:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:04+00:00",
+          "normalized": "2022-11-13T00:12:04Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ed2lvzavpoctbpsl6hb3qa35fu",
+        "media_path": "/media/kph_ed2lvzavpoctbpsl6hb3qa35fu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_avaesbo5e632edza4uwnrjpuna",
+      "position": 54,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "9dhXFNr",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-9dhXFNr",
+        "filename": "IMG_7228.JPG",
+        "format": "JPG",
+        "archived_md5": "fd6ee653f7c0f6b074c08b8171894622"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7228.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1274287,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-25T23:41:59+00:00",
+          "normalized": "2013-07-25T23:41:59Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:06+00:00",
+          "normalized": "2022-11-13T00:12:06Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_avaesbo5e632edza4uwnrjpuna",
+        "media_path": "/media/kph_avaesbo5e632edza4uwnrjpuna",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_qibpdr73dksxam3k26nvyghize",
+      "position": 55,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "snCKgvV",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-snCKgvV",
+        "filename": "IMG_7237.JPG",
+        "format": "JPG",
+        "archived_md5": "2d3d6d0382560c2c8c0fe0ad9a44cf96"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7237.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1805508,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T01:27:41+00:00",
+          "normalized": "2013-07-26T01:27:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:08+00:00",
+          "normalized": "2022-11-13T00:12:08Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_qibpdr73dksxam3k26nvyghize",
+        "media_path": "/media/kph_qibpdr73dksxam3k26nvyghize",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_scxqu4ujoaqlos4gpnwxuzgpvu",
+      "position": 56,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qWrfXT2",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-qWrfXT2",
+        "filename": "IMG_7243.JPG",
+        "format": "JPG",
+        "archived_md5": "20b7b04a9c771bf1eebc87f072e54c6e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7243.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1311523,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T02:21:56+00:00",
+          "normalized": "2013-07-26T02:21:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:10+00:00",
+          "normalized": "2022-11-13T00:12:10Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_scxqu4ujoaqlos4gpnwxuzgpvu",
+        "media_path": "/media/kph_scxqu4ujoaqlos4gpnwxuzgpvu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cwbwia25z5c77pvbczjr6kxaom",
+      "position": 57,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "swbTrtf",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-swbTrtf",
+        "filename": "IMG_7244.JPG",
+        "format": "JPG",
+        "archived_md5": "fdeeef5e9ef901de4e3497e971a75942"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7244.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1025973,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T02:56:06+00:00",
+          "normalized": "2013-07-26T02:56:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:12+00:00",
+          "normalized": "2022-11-13T00:12:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cwbwia25z5c77pvbczjr6kxaom",
+        "media_path": "/media/kph_cwbwia25z5c77pvbczjr6kxaom",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ap4dxtem4awzcl2o2ixpylwpp4",
+      "position": 58,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "SMgdpPh",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SMgdpPh",
+        "filename": "IMG_7246.JPG",
+        "format": "JPG",
+        "archived_md5": "52f2aefc7371c84b9e449a76d93d57e2"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7246.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 681445,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T17:20:15+00:00",
+          "normalized": "2013-07-26T17:20:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:12+00:00",
+          "normalized": "2022-11-13T00:12:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ap4dxtem4awzcl2o2ixpylwpp4",
+        "media_path": "/media/kph_ap4dxtem4awzcl2o2ixpylwpp4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vrl7axxfnyerqq47kkaa4jarom",
+      "position": 59,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JPHWnbQ",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-JPHWnbQ",
+        "filename": "IMG_7265.JPG",
+        "format": "JPG",
+        "archived_md5": "639aa744756594e929630cbdbb49a627"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7265.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1974480,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T20:16:52+00:00",
+          "normalized": "2013-07-26T20:16:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:16+00:00",
+          "normalized": "2022-11-13T00:12:16Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vrl7axxfnyerqq47kkaa4jarom",
+        "media_path": "/media/kph_vrl7axxfnyerqq47kkaa4jarom",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_trsy4fkkpubkld33wtmdbribfy",
+      "position": 60,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HL5V8GJ",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-HL5V8GJ",
+        "filename": "IMG_3232.JPG",
+        "format": "JPG",
+        "archived_md5": "08b5b6c48e59d0cff144821679f281ac"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3232.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1176477,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T20:40:17+00:00",
+          "normalized": "2013-07-26T20:40:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:42+00:00",
+          "normalized": "2022-11-13T00:10:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_trsy4fkkpubkld33wtmdbribfy",
+        "media_path": "/media/kph_trsy4fkkpubkld33wtmdbribfy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6jzlvr3yoi2oaqfzhw2m2bq4ci",
+      "position": 61,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cCL8qfD",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-cCL8qfD",
+        "filename": "IMG_7269.JPG",
+        "format": "JPG",
+        "archived_md5": "fc926e7c3afd7c7d1fed92aff17bb1d8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7269.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1276023,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T21:13:22+00:00",
+          "normalized": "2013-07-26T21:13:22Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:17+00:00",
+          "normalized": "2022-11-13T00:12:17Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6jzlvr3yoi2oaqfzhw2m2bq4ci",
+        "media_path": "/media/kph_6jzlvr3yoi2oaqfzhw2m2bq4ci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_oqtctjrvwwkfshz4ywya434wxi",
+      "position": 62,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5HckkLx",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-5HckkLx",
+        "filename": "IMG_3244.JPG",
+        "format": "JPG",
+        "archived_md5": "748599149581f982294077655a340f36"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3244.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1219317,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-26T22:10:00+00:00",
+          "normalized": "2013-07-26T22:10:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:10:43+00:00",
+          "normalized": "2022-11-13T00:10:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_oqtctjrvwwkfshz4ywya434wxi",
+        "media_path": "/media/kph_oqtctjrvwwkfshz4ywya434wxi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vqlihbalh3vcsnaeauxydluhli",
+      "position": 63,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kH4hkVf",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-kH4hkVf",
+        "filename": "IMG_7276.JPG",
+        "format": "JPG",
+        "archived_md5": "173e3a1f0ba6a03ffa06cc23dacf7551"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7276.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 991216,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-27T01:06:25+00:00",
+          "normalized": "2013-07-27T01:06:25Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:20+00:00",
+          "normalized": "2022-11-13T00:12:20Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vqlihbalh3vcsnaeauxydluhli",
+        "media_path": "/media/kph_vqlihbalh3vcsnaeauxydluhli",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4tssfnxvqdhajtbrinfctydvee",
+      "position": 64,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "V8qjqRw",
+        "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-V8qjqRw",
+        "filename": "IMG_7278.JPG",
+        "format": "JPG",
+        "archived_md5": "09694314bc6ddafb10131f0035dc6154"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_7278.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1175606,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2013-07-27T02:03:46+00:00",
+          "normalized": "2013-07-27T02:03:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-11-13T00:12:21+00:00",
+          "normalized": "2022-11-13T00:12:21Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4tssfnxvqdhajtbrinfctydvee",
+        "media_path": "/media/kph_4tssfnxvqdhajtbrinfctydvee",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

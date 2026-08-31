@@ -1,0 +1,902 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:28+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2015-07-kesen-numa",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_ivetzokpxda2zpafouh46rgjvu",
+    "slug": "2015-07-kesen-numa",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "q9ktp8",
+      "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa"
+    },
+    "title": "Kesen-numa, 2015/07",
+    "description": "",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 18,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_yeesmkaup3x7va34biku6x27ya",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gNTpjDC",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-gNTpjDC",
+        "filename": "IMG_2204.JPG",
+        "format": "JPG",
+        "archived_md5": "1830471c1f4037ca03296a8529e08229"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2204.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1120001,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-18T18:22:42+00:00",
+          "normalized": "2015-07-18T18:22:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:22:51+00:00",
+          "normalized": "2022-12-26T22:22:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yeesmkaup3x7va34biku6x27ya",
+        "media_path": "/media/kph_yeesmkaup3x7va34biku6x27ya",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hhqriaf4f4huaeg7b53uvupixm",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7bNd9PX",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-7bNd9PX",
+        "filename": "IMG_2212.JPG",
+        "format": "JPG",
+        "archived_md5": "14a7c36b00d23e9beb1abab48810e17e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2212.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 926369,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-18T18:31:27+00:00",
+          "normalized": "2015-07-18T18:31:27Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:22:51+00:00",
+          "normalized": "2022-12-26T22:22:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hhqriaf4f4huaeg7b53uvupixm",
+        "media_path": "/media/kph_hhqriaf4f4huaeg7b53uvupixm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_r57gwxf6s7d6mdzwg4veipo3gm",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "q7RPqDK",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-q7RPqDK",
+        "filename": "IMG_2214.JPG",
+        "format": "JPG",
+        "archived_md5": "0cb880301d65b591e28acbab4e95e6e8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2214.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1357074,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-18T18:42:05+00:00",
+          "normalized": "2015-07-18T18:42:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:22:53+00:00",
+          "normalized": "2022-12-26T22:22:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_r57gwxf6s7d6mdzwg4veipo3gm",
+        "media_path": "/media/kph_r57gwxf6s7d6mdzwg4veipo3gm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_uan6d6lzzdk4thetmto2cxt2xq",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Zk9CFfQ",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-Zk9CFfQ",
+        "filename": "IMG_2225.JPG",
+        "format": "JPG",
+        "archived_md5": "d284a1bb6917735e5a6b31fedcf90c90"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2225.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1009620,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-18T20:32:56+00:00",
+          "normalized": "2015-07-18T20:32:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:22:55+00:00",
+          "normalized": "2022-12-26T22:22:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_uan6d6lzzdk4thetmto2cxt2xq",
+        "media_path": "/media/kph_uan6d6lzzdk4thetmto2cxt2xq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_774zmvymm6buml3k6wfio26thq",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VZpx5Lv",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-VZpx5Lv",
+        "filename": "IMG_2229.JPG",
+        "format": "JPG",
+        "archived_md5": "6db81e1ad1e66cd98470351b40da6fff"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2229.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1099749,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-18T23:48:56+00:00",
+          "normalized": "2015-07-18T23:48:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:22:56+00:00",
+          "normalized": "2022-12-26T22:22:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_774zmvymm6buml3k6wfio26thq",
+        "media_path": "/media/kph_774zmvymm6buml3k6wfio26thq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7vufkrfbkhlg4kh4wecpn7dity",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VFf56Dx",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-VFf56Dx",
+        "filename": "IMG_2230.JPG",
+        "format": "JPG",
+        "archived_md5": "c968f3dda58b60fdb8c23d8e6ab27f25"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2230.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 823665,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-19T01:19:08+00:00",
+          "normalized": "2015-07-19T01:19:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:22:57+00:00",
+          "normalized": "2022-12-26T22:22:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7vufkrfbkhlg4kh4wecpn7dity",
+        "media_path": "/media/kph_7vufkrfbkhlg4kh4wecpn7dity",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4q2w5g3w4wulvy35tjn3rggzfu",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Svp3dgN",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-Svp3dgN",
+        "filename": "IMG_2235.JPG",
+        "format": "JPG",
+        "archived_md5": "8412feafeb5f2667ee9546a27f7d80b8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2235.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1010650,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-19T01:40:40+00:00",
+          "normalized": "2015-07-19T01:40:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:22:58+00:00",
+          "normalized": "2022-12-26T22:22:58Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4q2w5g3w4wulvy35tjn3rggzfu",
+        "media_path": "/media/kph_4q2w5g3w4wulvy35tjn3rggzfu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hqg3c7jugi7bunxjibxx5lqcci",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "46ww5Jw",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-46ww5Jw",
+        "filename": "IMG_2287.JPG",
+        "format": "JPG",
+        "archived_md5": "b3d6652021cad23b89c7731e6856aaf0"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2287.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 753432,
+        "width": 2448,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-19T01:50:13+00:00",
+          "normalized": "2015-07-19T01:50:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:15+00:00",
+          "normalized": "2022-12-26T22:23:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hqg3c7jugi7bunxjibxx5lqcci",
+        "media_path": "/media/kph_hqg3c7jugi7bunxjibxx5lqcci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_65lwkp6q5ca7a4wg7cqdof6eqe",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qJJK3Bw",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-qJJK3Bw",
+        "filename": "IMG_2242.JPG",
+        "format": "JPG",
+        "archived_md5": "651fa51083dd291a3560ba6be39fcebb"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2242.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1078190,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-19T14:57:11+00:00",
+          "normalized": "2015-07-19T14:57:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:00+00:00",
+          "normalized": "2022-12-26T22:23:00Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_65lwkp6q5ca7a4wg7cqdof6eqe",
+        "media_path": "/media/kph_65lwkp6q5ca7a4wg7cqdof6eqe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vaigxjjlvlw5deergd7dbqwyyi",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "PghxxFw",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-PghxxFw",
+        "filename": "IMG_2250.JPG",
+        "format": "JPG",
+        "archived_md5": "91f32374376fe3b92d8b853a69f8fbad"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2250.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1486562,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-19T17:56:01+00:00",
+          "normalized": "2015-07-19T17:56:01Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:03+00:00",
+          "normalized": "2022-12-26T22:23:03Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vaigxjjlvlw5deergd7dbqwyyi",
+        "media_path": "/media/kph_vaigxjjlvlw5deergd7dbqwyyi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_h6jud54qxrftv6m6g4x4kzvktm",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MQtFPbz",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-MQtFPbz",
+        "filename": "IMG_2251.JPG",
+        "format": "JPG",
+        "archived_md5": "210e38869a42cd92f26eafe29faa80ed"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2251.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1500073,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-19T17:56:10+00:00",
+          "normalized": "2015-07-19T17:56:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:03+00:00",
+          "normalized": "2022-12-26T22:23:03Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_h6jud54qxrftv6m6g4x4kzvktm",
+        "media_path": "/media/kph_h6jud54qxrftv6m6g4x4kzvktm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7acsnrqpxmyvg25dcuv7ypj6eq",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sh4XjbZ",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-sh4XjbZ",
+        "filename": "IMG_2254.JPG",
+        "format": "JPG",
+        "archived_md5": "5f3539f5cadc1041238779f7c29ebc4f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2254.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1332271,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-19T18:09:42+00:00",
+          "normalized": "2015-07-19T18:09:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:05+00:00",
+          "normalized": "2022-12-26T22:23:05Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7acsnrqpxmyvg25dcuv7ypj6eq",
+        "media_path": "/media/kph_7acsnrqpxmyvg25dcuv7ypj6eq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hetpo7bo7dce3a7bhehdpah4te",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DQdbwsp",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-DQdbwsp",
+        "filename": "IMG_2270.JPG",
+        "format": "JPG",
+        "archived_md5": "3faefe3619a0b063d97dfe2bfaa4f67d"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2270.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 984167,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-20T01:06:56+00:00",
+          "normalized": "2015-07-20T01:06:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:07+00:00",
+          "normalized": "2022-12-26T22:23:07Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hetpo7bo7dce3a7bhehdpah4te",
+        "media_path": "/media/kph_hetpo7bo7dce3a7bhehdpah4te",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cceynhp26hkwb566seozqagyji",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dJwPQPs",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-dJwPQPs",
+        "filename": "IMG_2271.JPG",
+        "format": "JPG",
+        "archived_md5": "6f25cf24acc3cd400896d5bea90588ff"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2271.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1056973,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-20T01:07:08+00:00",
+          "normalized": "2015-07-20T01:07:08Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:09+00:00",
+          "normalized": "2022-12-26T22:23:09Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cceynhp26hkwb566seozqagyji",
+        "media_path": "/media/kph_cceynhp26hkwb566seozqagyji",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_natpbfmgt2pdp4f5pynb2y6ksi",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Ng7DHmG",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-Ng7DHmG",
+        "filename": "IMG_2276.JPG",
+        "format": "JPG",
+        "archived_md5": "59275fb10dc7b7811422408ac9f5eea8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2276.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1200295,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-20T15:42:18+00:00",
+          "normalized": "2015-07-20T15:42:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:11+00:00",
+          "normalized": "2022-12-26T22:23:11Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_natpbfmgt2pdp4f5pynb2y6ksi",
+        "media_path": "/media/kph_natpbfmgt2pdp4f5pynb2y6ksi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eecynz6fxehwezbxyegfc44oyy",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vgLtwDF",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-vgLtwDF",
+        "filename": "IMG_2278.JPG",
+        "format": "JPG",
+        "archived_md5": "860790575320366f2239f100d32d53bb"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2278.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1324044,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-20T15:43:46+00:00",
+          "normalized": "2015-07-20T15:43:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:12+00:00",
+          "normalized": "2022-12-26T22:23:12Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eecynz6fxehwezbxyegfc44oyy",
+        "media_path": "/media/kph_eecynz6fxehwezbxyegfc44oyy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gln5ylomrrc6k355ymvp2uikv4",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TDDw6DL",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-TDDw6DL",
+        "filename": "IMG_2279.JPG",
+        "format": "JPG",
+        "archived_md5": "237909231553f653620e33dd531cf096"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2279.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1194590,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-20T15:44:58+00:00",
+          "normalized": "2015-07-20T15:44:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:13+00:00",
+          "normalized": "2022-12-26T22:23:13Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gln5ylomrrc6k355ymvp2uikv4",
+        "media_path": "/media/kph_gln5ylomrrc6k355ymvp2uikv4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_hjcpu2d3bedzlgbrjabxw2ytci",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "G8Xfjqh",
+        "web_uri": "https://kanolog.smugmug.com/20150718kesen-numa/i-G8Xfjqh",
+        "filename": "IMG_2286.JPG",
+        "format": "JPG",
+        "archived_md5": "c9fb309cf6ea73f4501e8bad0ac20f13"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_2286.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 910900,
+        "width": 2448,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2015-07-20T21:12:34+00:00",
+          "normalized": "2015-07-20T21:12:34Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2022-12-26T22:23:15+00:00",
+          "normalized": "2022-12-26T22:23:15Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_hjcpu2d3bedzlgbrjabxw2ytci",
+        "media_path": "/media/kph_hjcpu2d3bedzlgbrjabxw2ytci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

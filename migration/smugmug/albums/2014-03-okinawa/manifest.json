@@ -1,0 +1,1430 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:27+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2014-03-okinawa",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_bgtut5whe7g2zldftqk7o72pv4",
+    "slug": "2014-03-okinawa",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "m48fV8",
+      "web_uri": "https://kanolog.smugmug.com/20140313Okinawa"
+    },
+    "title": "Okinawa, 2014/03",
+    "description": "",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": true,
+    "asset_count": 29,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_4onrrfkkp4tboqsn5zlmwjrwnq",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "6XggVJB",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-6XggVJB",
+        "filename": "IMG_8117.JPG",
+        "format": "JPG",
+        "archived_md5": "d9727017cc7af0200c5b56f2dd6ed04b"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8117.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 340258,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-13T19:04:31+00:00",
+          "normalized": "2014-03-13T19:04:31Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:46+00:00",
+          "normalized": "2025-03-30T20:15:46Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4onrrfkkp4tboqsn5zlmwjrwnq",
+        "media_path": "/media/kph_4onrrfkkp4tboqsn5zlmwjrwnq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mgwvjnyh3tz5v26zxzeray5w6a",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "DvB46X7",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-DvB46X7",
+        "filename": "IMG_8118.JPG",
+        "format": "JPG",
+        "archived_md5": "df98d39b8e73b92d7910a3252f236a69"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8118.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 432095,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-13T20:45:15+00:00",
+          "normalized": "2014-03-13T20:45:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:46+00:00",
+          "normalized": "2025-03-30T20:15:46Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mgwvjnyh3tz5v26zxzeray5w6a",
+        "media_path": "/media/kph_mgwvjnyh3tz5v26zxzeray5w6a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_liqwg73qqex5ykphgdvpirjfwq",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "q7wKtpg",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-q7wKtpg",
+        "filename": "IMG_8119.JPG",
+        "format": "JPG",
+        "archived_md5": "94676dd2c5a6b5216d1b346848241867"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8119.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 250798,
+        "width": 2048,
+        "height": 1536
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-13T21:05:26+00:00",
+          "normalized": "2014-03-13T21:05:26Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:48+00:00",
+          "normalized": "2025-03-30T20:15:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_liqwg73qqex5ykphgdvpirjfwq",
+        "media_path": "/media/kph_liqwg73qqex5ykphgdvpirjfwq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4yswnupbxkz64ol5l6hmvikovu",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LvQ2Qfz",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-LvQ2Qfz",
+        "filename": "IMG_20140313_154201.jpg",
+        "format": "JPG",
+        "archived_md5": "e3701207b0950d1605ff502f553e9b97"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140313_154201.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 803510,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-13T22:42:02+00:00",
+          "normalized": "2014-03-13T22:42:02Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:53+00:00",
+          "normalized": "2025-03-30T20:15:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4yswnupbxkz64ol5l6hmvikovu",
+        "media_path": "/media/kph_4yswnupbxkz64ol5l6hmvikovu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ggrqbghx6gk2h2dkohnh7fx4bq",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "FcLbrSD",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-FcLbrSD",
+        "filename": "IMG_8123.JPG",
+        "format": "JPG",
+        "archived_md5": "599a608f56a91fa14b8e0cac614621f8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8123.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 507702,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T01:45:49+00:00",
+          "normalized": "2014-03-14T01:45:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:49+00:00",
+          "normalized": "2025-03-30T20:15:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ggrqbghx6gk2h2dkohnh7fx4bq",
+        "media_path": "/media/kph_ggrqbghx6gk2h2dkohnh7fx4bq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_fvnglsiixv6vz4qasgvq7b2z4q",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "mFQzWZq",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-mFQzWZq",
+        "filename": "IMG_8125.JPG",
+        "format": "JPG",
+        "archived_md5": "15cc5597056c86cebe23ad3d3bf2d2f4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8125.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 324905,
+        "width": 2048,
+        "height": 1536
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T01:47:40+00:00",
+          "normalized": "2014-03-14T01:47:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:48+00:00",
+          "normalized": "2025-03-30T20:15:48Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_fvnglsiixv6vz4qasgvq7b2z4q",
+        "media_path": "/media/kph_fvnglsiixv6vz4qasgvq7b2z4q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xdemjohn72tx2k22djrunuc4hu",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "6nsFKK5",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-6nsFKK5",
+        "filename": "IMG_8136.JPG",
+        "format": "JPG",
+        "archived_md5": "f0ea86d682520a42eb99a5598fd0f50a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8136.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 459930,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T04:10:51+00:00",
+          "normalized": "2014-03-14T04:10:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:49+00:00",
+          "normalized": "2025-03-30T20:15:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xdemjohn72tx2k22djrunuc4hu",
+        "media_path": "/media/kph_xdemjohn72tx2k22djrunuc4hu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pre46orcoydnaunf5wrmwb3bqq",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "M2Js7Z8",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-M2Js7Z8",
+        "filename": "IMG_8140.JPG",
+        "format": "JPG",
+        "archived_md5": "f7b773ca8f9c31d501c0ed2acab333fe"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8140.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 376954,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T16:45:42+00:00",
+          "normalized": "2014-03-14T16:45:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:49+00:00",
+          "normalized": "2025-03-30T20:15:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pre46orcoydnaunf5wrmwb3bqq",
+        "media_path": "/media/kph_pre46orcoydnaunf5wrmwb3bqq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5rooejkqiefkhkutb2uyvcjzeu",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NhBPCvV",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-NhBPCvV",
+        "filename": "IMG_20140314_102550.jpg",
+        "format": "JPG",
+        "archived_md5": "b406e0e95420dde793887ce3969441c5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140314_102550.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 924829,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T17:25:51+00:00",
+          "normalized": "2014-03-14T17:25:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:53+00:00",
+          "normalized": "2025-03-30T20:15:53Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5rooejkqiefkhkutb2uyvcjzeu",
+        "media_path": "/media/kph_5rooejkqiefkhkutb2uyvcjzeu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7gj77vfrz62mbknpuwgs2hwzci",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8Z9nQCR",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-8Z9nQCR",
+        "filename": "IMG_8142.JPG",
+        "format": "JPG",
+        "archived_md5": "d759483d075be227eaff3e02b2bb9737"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8142.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 350012,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T17:32:32+00:00",
+          "normalized": "2014-03-14T17:32:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:50+00:00",
+          "normalized": "2025-03-30T20:15:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7gj77vfrz62mbknpuwgs2hwzci",
+        "media_path": "/media/kph_7gj77vfrz62mbknpuwgs2hwzci",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3awlw54eohnm3jhu2zp5jh3m34",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "JFV6Xbv",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-JFV6Xbv",
+        "filename": "IMG_8144.JPG",
+        "format": "JPG",
+        "archived_md5": "b3e5f7f95df14d28db291a5456cd45a5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8144.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 534658,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T17:35:44+00:00",
+          "normalized": "2014-03-14T17:35:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:50+00:00",
+          "normalized": "2025-03-30T20:15:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3awlw54eohnm3jhu2zp5jh3m34",
+        "media_path": "/media/kph_3awlw54eohnm3jhu2zp5jh3m34",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_v76xawdp5cboefbajned4wpoju",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Vdf5zgk",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Vdf5zgk",
+        "filename": "IMG_8146.JPG",
+        "format": "JPG",
+        "archived_md5": "3d28bf59a02dfbe7eba70460ae23498c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8146.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 349098,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T17:52:25+00:00",
+          "normalized": "2014-03-14T17:52:25Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:50+00:00",
+          "normalized": "2025-03-30T20:15:50Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_v76xawdp5cboefbajned4wpoju",
+        "media_path": "/media/kph_v76xawdp5cboefbajned4wpoju",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_y7ixcpmomwcitnmrqwup2g7fwu",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zr9Hkq8",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-zr9Hkq8",
+        "filename": "IMG_8149.JPG",
+        "format": "JPG",
+        "archived_md5": "b8b128154eb0304d7438e801cdb6ae04"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8149.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 372840,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T18:14:20+00:00",
+          "normalized": "2014-03-14T18:14:20Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:51+00:00",
+          "normalized": "2025-03-30T20:15:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_y7ixcpmomwcitnmrqwup2g7fwu",
+        "media_path": "/media/kph_y7ixcpmomwcitnmrqwup2g7fwu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_i3wwlsiwy4pxfini7bgyqg2w5a",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4rZgvHD",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-4rZgvHD",
+        "filename": "IMG_8168.JPG",
+        "format": "JPG",
+        "archived_md5": "f3bd7f37ecb7bc701720d25331ae891f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8168.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 445276,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T21:45:52+00:00",
+          "normalized": "2014-03-14T21:45:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:51+00:00",
+          "normalized": "2025-03-30T20:15:51Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_i3wwlsiwy4pxfini7bgyqg2w5a",
+        "media_path": "/media/kph_i3wwlsiwy4pxfini7bgyqg2w5a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_gajgfuxxkbpq2cbncmoqquy2zu",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Tm4mTT7",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Tm4mTT7",
+        "filename": "IMG_3762.JPG",
+        "format": "JPG",
+        "archived_md5": "c696d04ace0e3fe2e7cdd9f57631b205"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3762.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1397838,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-14T23:17:46+00:00",
+          "normalized": "2014-03-14T23:17:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:47+00:00",
+          "normalized": "2025-03-30T20:15:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_gajgfuxxkbpq2cbncmoqquy2zu",
+        "media_path": "/media/kph_gajgfuxxkbpq2cbncmoqquy2zu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_knlwcelij6d6l2jzuw2au5d4ia",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kRTw5B3",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-kRTw5B3",
+        "filename": "IMG_8169.JPG",
+        "format": "JPG",
+        "archived_md5": "c06af10e6c6876b3b0bebcb1e559d094"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8169.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 470676,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T00:49:53+00:00",
+          "normalized": "2014-03-15T00:49:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:52+00:00",
+          "normalized": "2025-03-30T20:15:52Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_knlwcelij6d6l2jzuw2au5d4ia",
+        "media_path": "/media/kph_knlwcelij6d6l2jzuw2au5d4ia",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_d22als5p5mvhlpy6qkjczqfvty",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "7qttBfx",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-7qttBfx",
+        "filename": "IMG_8173.JPG",
+        "format": "JPG",
+        "archived_md5": "cdb3c62638c6db97678269aa46fd4e23"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8173.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 288485,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T02:15:46+00:00",
+          "normalized": "2014-03-15T02:15:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:52+00:00",
+          "normalized": "2025-03-30T20:15:52Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_d22als5p5mvhlpy6qkjczqfvty",
+        "media_path": "/media/kph_d22als5p5mvhlpy6qkjczqfvty",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_yzhoforxvn6ni6w5zc643hgt6i",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fh2QF77",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-fh2QF77",
+        "filename": "IMG_20140315_094017.jpg",
+        "format": "JPG",
+        "archived_md5": "e1055a7e6bfff9d3f4c3cc2aa5191705"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140315_094017.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1201853,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T16:40:17+00:00",
+          "normalized": "2014-03-15T16:40:17Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:54+00:00",
+          "normalized": "2025-03-30T20:15:54Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_yzhoforxvn6ni6w5zc643hgt6i",
+        "media_path": "/media/kph_yzhoforxvn6ni6w5zc643hgt6i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_x3ukosir5csalf3wqewgsgzi6u",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Xbf6c8C",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Xbf6c8C",
+        "filename": "IMG_3774.JPG",
+        "format": "JPG",
+        "archived_md5": "5cc810660266e3904d0d268f0b58a992"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3774.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1896382,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T16:47:44+00:00",
+          "normalized": "2014-03-15T16:47:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:47+00:00",
+          "normalized": "2025-03-30T20:15:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_x3ukosir5csalf3wqewgsgzi6u",
+        "media_path": "/media/kph_x3ukosir5csalf3wqewgsgzi6u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ccrfsiv5ts2ksrlfhwamrj7fca",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "cjsZHn7",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-cjsZHn7",
+        "filename": "IMG_20140315_094955.jpg",
+        "format": "JPG",
+        "archived_md5": "6c0196046b132dd685717a76c2fc34d7"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140315_094955.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1161996,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T16:49:56+00:00",
+          "normalized": "2014-03-15T16:49:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:55+00:00",
+          "normalized": "2025-03-30T20:15:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ccrfsiv5ts2ksrlfhwamrj7fca",
+        "media_path": "/media/kph_ccrfsiv5ts2ksrlfhwamrj7fca",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_s4hom6npm4ol3gu2bfrx3fcjfy",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "q3xSkTt",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-q3xSkTt",
+        "filename": "IMG_20140315_095016.jpg",
+        "format": "JPG",
+        "archived_md5": "3ef96f386b2b8b41f8d1e5e8b5c78c85"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140315_095016.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1131113,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T16:50:16+00:00",
+          "normalized": "2014-03-15T16:50:16Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:55+00:00",
+          "normalized": "2025-03-30T20:15:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_s4hom6npm4ol3gu2bfrx3fcjfy",
+        "media_path": "/media/kph_s4hom6npm4ol3gu2bfrx3fcjfy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_avc2hcxa4zaplsicy7nf3cpsrq",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "bvNqNZr",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-bvNqNZr",
+        "filename": "IMG_20140315_124848.jpg",
+        "format": "JPG",
+        "archived_md5": "9fb8c744cb57bda4d609d08fff7c0cc6"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140315_124848.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1378092,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T19:48:48+00:00",
+          "normalized": "2014-03-15T19:48:48Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:55+00:00",
+          "normalized": "2025-03-30T20:15:55Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_avc2hcxa4zaplsicy7nf3cpsrq",
+        "media_path": "/media/kph_avc2hcxa4zaplsicy7nf3cpsrq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_47id4x2kpztty5w6m7is6q34ju",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dwK3smj",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-dwK3smj",
+        "filename": "IMG_3783.JPG",
+        "format": "JPG",
+        "archived_md5": "ffd74625bcc1f8a8eca723a2d6aade80"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_3783.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1572575,
+        "width": 2448,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T19:56:43+00:00",
+          "normalized": "2014-03-15T19:56:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:47+00:00",
+          "normalized": "2025-03-30T20:15:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_47id4x2kpztty5w6m7is6q34ju",
+        "media_path": "/media/kph_47id4x2kpztty5w6m7is6q34ju",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_35354zgs7brm6d5b75ybfodluu",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "FsXGVDr",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-FsXGVDr",
+        "filename": "IMG_20140315_125753.jpg",
+        "format": "JPG",
+        "archived_md5": "01de3275a5cf1540a834e67a154a995e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140315_125753.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1155070,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-15T19:57:53+00:00",
+          "normalized": "2014-03-15T19:57:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:56+00:00",
+          "normalized": "2025-03-30T20:15:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_35354zgs7brm6d5b75ybfodluu",
+        "media_path": "/media/kph_35354zgs7brm6d5b75ybfodluu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_wckfl5johd2huxnfjz3ogitn34",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qt926Cz",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-qt926Cz",
+        "filename": "IMG_8181.JPG",
+        "format": "JPG",
+        "archived_md5": "cdb57cf6962ca5a972202fe9973cf9cd"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_8181.JPG"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 479427,
+        "width": 1536,
+        "height": 2048
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-16T00:55:37+00:00",
+          "normalized": "2014-03-16T00:55:37Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:52+00:00",
+          "normalized": "2025-03-30T20:15:52Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_wckfl5johd2huxnfjz3ogitn34",
+        "media_path": "/media/kph_wckfl5johd2huxnfjz3ogitn34",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_d2ktzdvp452v5aq5oorutyawza",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Pf4x5Lg",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Pf4x5Lg",
+        "filename": "IMG_20140316_091842.jpg",
+        "format": "JPG",
+        "archived_md5": "06ec59d05e759e99288860a547a7bfb3"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140316_091842.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 707879,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-16T16:18:43+00:00",
+          "normalized": "2014-03-16T16:18:43Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:56+00:00",
+          "normalized": "2025-03-30T20:15:56Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_d2ktzdvp452v5aq5oorutyawza",
+        "media_path": "/media/kph_d2ktzdvp452v5aq5oorutyawza",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3e2jy5cu2fo67vxqvpfilgos6a",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HX8WL3N",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-HX8WL3N",
+        "filename": "IMG_20140316_092044.jpg",
+        "format": "JPG",
+        "archived_md5": "6f008c8ff049e188161b10e290ae931f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140316_092044.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 615402,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-16T16:20:44+00:00",
+          "normalized": "2014-03-16T16:20:44Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:57+00:00",
+          "normalized": "2025-03-30T20:15:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3e2jy5cu2fo67vxqvpfilgos6a",
+        "media_path": "/media/kph_3e2jy5cu2fo67vxqvpfilgos6a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_iuf54j5hfvtoxiykvtnwgtfvsy",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "LmCrZ2k",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-LmCrZ2k",
+        "filename": "IMG_20140316_093002.jpg",
+        "format": "JPG",
+        "archived_md5": "9642110389da1ac3403a5a5dd4cbdbe5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140316_093002.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 910337,
+        "width": 3264,
+        "height": 2448
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-16T16:30:02+00:00",
+          "normalized": "2014-03-16T16:30:02Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:57+00:00",
+          "normalized": "2025-03-30T20:15:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_iuf54j5hfvtoxiykvtnwgtfvsy",
+        "media_path": "/media/kph_iuf54j5hfvtoxiykvtnwgtfvsy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7d5ztoi262q76ivsfpja57z3va",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8njSpXp",
+        "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-8njSpXp",
+        "filename": "IMG_20140316_095453.jpg",
+        "format": "JPG",
+        "archived_md5": "23aa25d643596963ba4667804ad71fde"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "IMG_20140316_095453.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1288720,
+        "width": 2448,
+        "height": 3264
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2014-03-16T16:54:53+00:00",
+          "normalized": "2014-03-16T16:54:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-03-30T20:15:57+00:00",
+          "normalized": "2025-03-30T20:15:57Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7d5ztoi262q76ivsfpja57z3va",
+        "media_path": "/media/kph_7d5ztoi262q76ivsfpja57z3va",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

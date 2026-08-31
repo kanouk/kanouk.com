@@ -1,0 +1,2678 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-08-31T17:31:31+00:00",
+  "scope": "public SmugMug album migration",
+  "privacy": {
+    "public_assets_only": true,
+    "signed_download_uris_persisted": false,
+    "geolocation_persisted": false,
+    "source_credentials_persisted": false
+  },
+  "url_contract": {
+    "album_path": "/albums/2025-06-osaka-kyoto",
+    "photo_path_template": "/photos/{media_id}",
+    "media_path_template": "/media/{media_id}"
+  },
+  "album": {
+    "id": "kal_gj4grkdewzk6srvaqr5xqrb4wq",
+    "slug": "2025-06-osaka-kyoto",
+    "source": {
+      "service": "smugmug",
+      "user": "kanolog",
+      "album_key": "w9fxWZ",
+      "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto"
+    },
+    "title": "Osaka/Kyoto, 2025/06",
+    "description": "大阪万博、南禅寺",
+    "sort_method": "Date Taken",
+    "sort_direction": "Ascending",
+    "allow_downloads": true,
+    "source_protected_flag": false,
+    "asset_count": 55,
+    "destination": {
+      "emdash_content_id": null
+    }
+  },
+  "assets": [
+    {
+      "id": "kph_iizzkmujpwqj2nvfwxmql57pc4",
+      "position": 1,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rz7sVBJ",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-rz7sVBJ",
+        "filename": "PXL_20250627_113547075.jpg",
+        "format": "JPG",
+        "archived_md5": "d9951313d03932bfdc59b75b64c21651"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_113547075.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1707191,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:35:47+00:00",
+          "normalized": "2025-06-28T03:35:47Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:26+00:00",
+          "normalized": "2025-12-24T12:39:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_iizzkmujpwqj2nvfwxmql57pc4",
+        "media_path": "/media/kph_iizzkmujpwqj2nvfwxmql57pc4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pwiaq5h3uh4afkg4n2vwk3hryi",
+      "position": 2,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rFxbh8s",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-rFxbh8s",
+        "filename": "PXL_20250627_113646109.jpg",
+        "format": "JPG",
+        "archived_md5": "b9b07cedcb26ce9b4d6a9def47210d16"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_113646109.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2583135,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:36:46+00:00",
+          "normalized": "2025-06-28T03:36:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:26+00:00",
+          "normalized": "2025-12-24T12:39:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pwiaq5h3uh4afkg4n2vwk3hryi",
+        "media_path": "/media/kph_pwiaq5h3uh4afkg4n2vwk3hryi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_f7lkatgxjq3lwa76mooqvxyknu",
+      "position": 3,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gHDCBq4",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-gHDCBq4",
+        "filename": "PXL_20250627_113656188.jpg",
+        "format": "JPG",
+        "archived_md5": "b5c8dae04c1f968092c64f49c0768474"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_113656188.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2234932,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:36:56+00:00",
+          "normalized": "2025-06-28T03:36:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:26+00:00",
+          "normalized": "2025-12-24T12:39:26Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_f7lkatgxjq3lwa76mooqvxyknu",
+        "media_path": "/media/kph_f7lkatgxjq3lwa76mooqvxyknu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7b32urlytqrtibekxnoopodhp4",
+      "position": 4,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "M9hXNks",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-M9hXNks",
+        "filename": "PXL_20250627_113803363.jpg",
+        "format": "JPG",
+        "archived_md5": "ad582be778084ae382230136ef8c45b8"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_113803363.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3201995,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:38:03+00:00",
+          "normalized": "2025-06-28T03:38:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:27+00:00",
+          "normalized": "2025-12-24T12:39:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7b32urlytqrtibekxnoopodhp4",
+        "media_path": "/media/kph_7b32urlytqrtibekxnoopodhp4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bnxmbsyagyin57edpugtvfaleq",
+      "position": 5,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "h32kKkp",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-h32kKkp",
+        "filename": "PXL_20250627_114138713.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "9dd24582c12c706e0f7dc09e076a505a"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114138713.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3393773,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:41:38+00:00",
+          "normalized": "2025-06-28T03:41:38Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:27+00:00",
+          "normalized": "2025-12-24T12:39:27Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bnxmbsyagyin57edpugtvfaleq",
+        "media_path": "/media/kph_bnxmbsyagyin57edpugtvfaleq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ctfnhhnt6ylaf56mzl76wkdgfm",
+      "position": 6,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "9Sq8qhw",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-9Sq8qhw",
+        "filename": "PXL_20250627_114552145.jpg",
+        "format": "JPG",
+        "archived_md5": "551601c8cf268158119e5b81f903ab27"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114552145.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3327487,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:45:52+00:00",
+          "normalized": "2025-06-28T03:45:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:28+00:00",
+          "normalized": "2025-12-24T12:39:28Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ctfnhhnt6ylaf56mzl76wkdgfm",
+        "media_path": "/media/kph_ctfnhhnt6ylaf56mzl76wkdgfm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_spt3u2yitbecvf2vjlvqdm5m2i",
+      "position": 7,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "qdqZsMj",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-qdqZsMj",
+        "filename": "PXL_20250627_114605599.jpg",
+        "format": "JPG",
+        "archived_md5": "3868727d48684f5c38f3e3f7ede59fa2"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114605599.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3255383,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:46:05+00:00",
+          "normalized": "2025-06-28T03:46:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:29+00:00",
+          "normalized": "2025-12-24T12:39:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_spt3u2yitbecvf2vjlvqdm5m2i",
+        "media_path": "/media/kph_spt3u2yitbecvf2vjlvqdm5m2i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_jlz4qrqxivam2z6fddzmx5wczi",
+      "position": 8,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "TDMLsCQ",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-TDMLsCQ",
+        "filename": "PXL_20250627_114725481.jpg",
+        "format": "JPG",
+        "archived_md5": "477a70850cf5b501496f49e2ba1ea87e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114725481.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4679950,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:47:25+00:00",
+          "normalized": "2025-06-28T03:47:25Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:29+00:00",
+          "normalized": "2025-12-24T12:39:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_jlz4qrqxivam2z6fddzmx5wczi",
+        "media_path": "/media/kph_jlz4qrqxivam2z6fddzmx5wczi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eomoydlimh32ezilqtylmgtnnq",
+      "position": 9,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "HdD9HsQ",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-HdD9HsQ",
+        "filename": "PXL_20250627_114745428.jpg",
+        "format": "JPG",
+        "archived_md5": "7e546993aa32c22ee78d6906bbe0e8cb"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114745428.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2855494,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:47:45+00:00",
+          "normalized": "2025-06-28T03:47:45Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:29+00:00",
+          "normalized": "2025-12-24T12:39:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eomoydlimh32ezilqtylmgtnnq",
+        "media_path": "/media/kph_eomoydlimh32ezilqtylmgtnnq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vggct36cjaicvmnwo2veif3mki",
+      "position": 10,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZzXn5ZX",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-ZzXn5ZX",
+        "filename": "PXL_20250627_114914873.jpg",
+        "format": "JPG",
+        "archived_md5": "bedb005813b4f061c956ce5a9af8e8a4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114914873.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2683683,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:49:14+00:00",
+          "normalized": "2025-06-28T03:49:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:29+00:00",
+          "normalized": "2025-12-24T12:39:29Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vggct36cjaicvmnwo2veif3mki",
+        "media_path": "/media/kph_vggct36cjaicvmnwo2veif3mki",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rbrnxsu5vb45526attfim2ewda",
+      "position": 11,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "GWQw2xS",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-GWQw2xS",
+        "filename": "PXL_20250627_114932943.jpg",
+        "format": "JPG",
+        "archived_md5": "884dc12b6360ae52a79c4e3b83efab9c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114932943.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1931760,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:49:32+00:00",
+          "normalized": "2025-06-28T03:49:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:31+00:00",
+          "normalized": "2025-12-24T12:39:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rbrnxsu5vb45526attfim2ewda",
+        "media_path": "/media/kph_rbrnxsu5vb45526attfim2ewda",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eitzpkge5zkrtktzwmcwwavgk4",
+      "position": 12,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "G6M7tKD",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-G6M7tKD",
+        "filename": "PXL_20250627_114940428.jpg",
+        "format": "JPG",
+        "archived_md5": "713e326874d2ecc001988010f0780cca"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_114940428.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2261852,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:49:40+00:00",
+          "normalized": "2025-06-28T03:49:40Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:31+00:00",
+          "normalized": "2025-12-24T12:39:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eitzpkge5zkrtktzwmcwwavgk4",
+        "media_path": "/media/kph_eitzpkge5zkrtktzwmcwwavgk4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5j2ciue2q7ndxuaprxudzttcqe",
+      "position": 13,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BdFzm7S",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-BdFzm7S",
+        "filename": "PXL_20250627_115042748.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "ec169706c525e9fd74e6db545839188e"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_115042748.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4330809,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:50:42+00:00",
+          "normalized": "2025-06-28T03:50:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:31+00:00",
+          "normalized": "2025-12-24T12:39:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5j2ciue2q7ndxuaprxudzttcqe",
+        "media_path": "/media/kph_5j2ciue2q7ndxuaprxudzttcqe",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zeai2xochts7etwf2qn7s7hpmu",
+      "position": 14,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8jnLGBc",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-8jnLGBc",
+        "filename": "PXL_20250627_115311658.jpg",
+        "format": "JPG",
+        "archived_md5": "fcaf0ddf4cb304d7a1d54f3d55a2fe22"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_115311658.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2216758,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:53:11+00:00",
+          "normalized": "2025-06-28T03:53:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:30+00:00",
+          "normalized": "2025-12-24T12:39:30Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zeai2xochts7etwf2qn7s7hpmu",
+        "media_path": "/media/kph_zeai2xochts7etwf2qn7s7hpmu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cp3jfctruwj5f77ysgzw72ci6a",
+      "position": 15,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "vpS6Rpz",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-vpS6Rpz",
+        "filename": "PXL_20250627_115600960.jpg",
+        "format": "JPG",
+        "archived_md5": "e4720559714c7c4e0861d041d4d29ec5"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_115600960.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 1878576,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:56:00+00:00",
+          "normalized": "2025-06-28T03:56:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:31+00:00",
+          "normalized": "2025-12-24T12:39:31Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cp3jfctruwj5f77ysgzw72ci6a",
+        "media_path": "/media/kph_cp3jfctruwj5f77ysgzw72ci6a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5bvxbf2c6y7iafyyxrbhey6y6y",
+      "position": 16,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Xhrkf7w",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-Xhrkf7w",
+        "filename": "PXL_20250627_115724171.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "ca7ef95f9d61645aed661b3ee90ebc92"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_115724171.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3259948,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T03:57:24+00:00",
+          "normalized": "2025-06-28T03:57:24Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:32+00:00",
+          "normalized": "2025-12-24T12:39:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5bvxbf2c6y7iafyyxrbhey6y6y",
+        "media_path": "/media/kph_5bvxbf2c6y7iafyyxrbhey6y6y",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_zdgaophg3ao3xi4e5huui6tyma",
+      "position": 17,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "M9crjrJ",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-M9crjrJ",
+        "filename": "PXL_20250627_120000475.jpg",
+        "format": "JPG",
+        "archived_md5": "cbc76969d54467b6306cd25b520d11bf"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_120000475.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4386218,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:00:00+00:00",
+          "normalized": "2025-06-28T04:00:00Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:32+00:00",
+          "normalized": "2025-12-24T12:39:32Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_zdgaophg3ao3xi4e5huui6tyma",
+        "media_path": "/media/kph_zdgaophg3ao3xi4e5huui6tyma",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rsf6jcbgld33rptes4ypsijfgq",
+      "position": 18,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "kZF7DC6",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-kZF7DC6",
+        "filename": "PXL_20250627_120445276.jpg",
+        "format": "JPG",
+        "archived_md5": "453e646d9e4a7d20a8d7bbf53066b2fe"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_120445276.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2984585,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:04:45+00:00",
+          "normalized": "2025-06-28T04:04:45Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:33+00:00",
+          "normalized": "2025-12-24T12:39:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rsf6jcbgld33rptes4ypsijfgq",
+        "media_path": "/media/kph_rsf6jcbgld33rptes4ypsijfgq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ebqncfrxechtgv63poaelt4zc4",
+      "position": 19,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "4CShxBQ",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-4CShxBQ",
+        "filename": "PXL_20250627_120706263.jpg",
+        "format": "JPG",
+        "archived_md5": "45bbf359dac90776f6136cd92481a236"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_120706263.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3294929,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:07:06+00:00",
+          "normalized": "2025-06-28T04:07:06Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:33+00:00",
+          "normalized": "2025-12-24T12:39:33Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ebqncfrxechtgv63poaelt4zc4",
+        "media_path": "/media/kph_ebqncfrxechtgv63poaelt4zc4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dsz2rh2iqqd2ccv4uerahos6ji",
+      "position": 20,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "x5NpQ9X",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-x5NpQ9X",
+        "filename": "PXL_20250627_120741296.jpg",
+        "format": "JPG",
+        "archived_md5": "9bde9523796a94f75b6ca6c9541b2981"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_120741296.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2987480,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:07:41+00:00",
+          "normalized": "2025-06-28T04:07:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:34+00:00",
+          "normalized": "2025-12-24T12:39:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dsz2rh2iqqd2ccv4uerahos6ji",
+        "media_path": "/media/kph_dsz2rh2iqqd2ccv4uerahos6ji",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_rzhey5ciz2vxjqux2umrdho7da",
+      "position": 21,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "NwVPFtq",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-NwVPFtq",
+        "filename": "PXL_20250627_121123009.jpg",
+        "format": "JPG",
+        "archived_md5": "e092428749453b5f990a51fc3b01e6e3"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_121123009.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2607230,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:11:23+00:00",
+          "normalized": "2025-06-28T04:11:23Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:34+00:00",
+          "normalized": "2025-12-24T12:39:34Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_rzhey5ciz2vxjqux2umrdho7da",
+        "media_path": "/media/kph_rzhey5ciz2vxjqux2umrdho7da",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tb5lancimrgcskytmtocdf2xzq",
+      "position": 22,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RDTRtj4",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-RDTRtj4",
+        "filename": "PXL_20250627_121142303.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "e845cf81a98aa3163c330bdbe1b34ce2"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_121142303.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4653211,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:11:42+00:00",
+          "normalized": "2025-06-28T04:11:42Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:35+00:00",
+          "normalized": "2025-12-24T12:39:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tb5lancimrgcskytmtocdf2xzq",
+        "media_path": "/media/kph_tb5lancimrgcskytmtocdf2xzq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dgp5nynycqdhnou5gialrfgc5m",
+      "position": 23,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "dHwPNBX",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-dHwPNBX",
+        "filename": "PXL_20250627_121201127.jpg",
+        "format": "JPG",
+        "archived_md5": "7d3c226c0866d5f305d9d2fdc4ad039c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_121201127.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2614826,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:12:01+00:00",
+          "normalized": "2025-06-28T04:12:01Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:35+00:00",
+          "normalized": "2025-12-24T12:39:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dgp5nynycqdhnou5gialrfgc5m",
+        "media_path": "/media/kph_dgp5nynycqdhnou5gialrfgc5m",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_pz2bic7ozojsygxol55yyf46pu",
+      "position": 24,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jTHtVWK",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-jTHtVWK",
+        "filename": "PXL_20250627_121415280.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "87c9f24d77ab2df906d0485513fddc94"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_121415280.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5837709,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:14:15+00:00",
+          "normalized": "2025-06-28T04:14:15Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:35+00:00",
+          "normalized": "2025-12-24T12:39:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_pz2bic7ozojsygxol55yyf46pu",
+        "media_path": "/media/kph_pz2bic7ozojsygxol55yyf46pu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_5pd6om7dfiysikxfax7nd766fu",
+      "position": 25,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Jg3sjhB",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-Jg3sjhB",
+        "filename": "PXL_20250627_121556145.jpg",
+        "format": "JPG",
+        "archived_md5": "50226b7a2fbd92c52d75d642da90895f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_121556145.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4217292,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:15:56+00:00",
+          "normalized": "2025-06-28T04:15:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:35+00:00",
+          "normalized": "2025-12-24T12:39:35Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_5pd6om7dfiysikxfax7nd766fu",
+        "media_path": "/media/kph_5pd6om7dfiysikxfax7nd766fu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ntrbdlooi7ptidryrw3buvzd2q",
+      "position": 26,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "MFdVwmv",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-MFdVwmv",
+        "filename": "PXL_20250627_121610364.jpg",
+        "format": "JPG",
+        "archived_md5": "bd45dff00eb67084dc2e9d8fbf04da20"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_121610364.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4021223,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:16:10+00:00",
+          "normalized": "2025-06-28T04:16:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:36+00:00",
+          "normalized": "2025-12-24T12:39:36Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ntrbdlooi7ptidryrw3buvzd2q",
+        "media_path": "/media/kph_ntrbdlooi7ptidryrw3buvzd2q",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_l75fh6le36gannefvs6k66yeai",
+      "position": 27,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "gPVnV75",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-gPVnV75",
+        "filename": "PXL_20250627_121711808.jpg",
+        "format": "JPG",
+        "archived_md5": "6a0d535173172e583721c24fa30e7d5d"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_121711808.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3182600,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:17:11+00:00",
+          "normalized": "2025-06-28T04:17:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:37+00:00",
+          "normalized": "2025-12-24T12:39:37Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_l75fh6le36gannefvs6k66yeai",
+        "media_path": "/media/kph_l75fh6le36gannefvs6k66yeai",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cfprp5ejnz6f2bh7qzk36wthjq",
+      "position": 28,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "v8LGs7p",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-v8LGs7p",
+        "filename": "PXL_20250627_122232461.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "343440eeaa6558e3d7dc4c8bbe62dbff"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_122232461.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4321806,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:22:32+00:00",
+          "normalized": "2025-06-28T04:22:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:37+00:00",
+          "normalized": "2025-12-24T12:39:37Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cfprp5ejnz6f2bh7qzk36wthjq",
+        "media_path": "/media/kph_cfprp5ejnz6f2bh7qzk36wthjq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_llwysqfveopl6e3jxf57c5oopa",
+      "position": 29,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "rDPjCQc",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-rDPjCQc",
+        "filename": "PXL_20250627_122233754.jpg",
+        "format": "JPG",
+        "archived_md5": "23fe443cbb98111d3496a98faacc113c"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_122233754.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2212799,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:22:33+00:00",
+          "normalized": "2025-06-28T04:22:33Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:38+00:00",
+          "normalized": "2025-12-24T12:39:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_llwysqfveopl6e3jxf57c5oopa",
+        "media_path": "/media/kph_llwysqfveopl6e3jxf57c5oopa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_o65tvmfmszdebc2mwveyraernq",
+      "position": 30,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WFXRrZD",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-WFXRrZD",
+        "filename": "PXL_20250627_122832092.jpg",
+        "format": "JPG",
+        "archived_md5": "b7eaf112ee5b62f946f6eef0a7ca79e1"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_122832092.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2071489,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:28:32+00:00",
+          "normalized": "2025-06-28T04:28:32Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:38+00:00",
+          "normalized": "2025-12-24T12:39:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_o65tvmfmszdebc2mwveyraernq",
+        "media_path": "/media/kph_o65tvmfmszdebc2mwveyraernq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_bto6yd6wil32ngmc5z6rudk2vy",
+      "position": 31,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "46NKVVZ",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-46NKVVZ",
+        "filename": "PXL_20250627_122907298.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "2a7d7f73a0216f2d8fddf2159e6d330d"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_122907298.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3725275,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:29:07+00:00",
+          "normalized": "2025-06-28T04:29:07Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:38+00:00",
+          "normalized": "2025-12-24T12:39:38Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_bto6yd6wil32ngmc5z6rudk2vy",
+        "media_path": "/media/kph_bto6yd6wil32ngmc5z6rudk2vy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6udpcgagg5sx4zl2bgnr3fm4ye",
+      "position": 32,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "R8ML9Bb",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-R8ML9Bb",
+        "filename": "PXL_20250627_122916160.jpg",
+        "format": "JPG",
+        "archived_md5": "7cd2a73fd2c5792b9dfa14c69f23b6ce"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250627_122916160.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3236886,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T04:29:16+00:00",
+          "normalized": "2025-06-28T04:29:16Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:39+00:00",
+          "normalized": "2025-12-24T12:39:39Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6udpcgagg5sx4zl2bgnr3fm4ye",
+        "media_path": "/media/kph_6udpcgagg5sx4zl2bgnr3fm4ye",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4juce6oqreevd75vhx6z4gq77e",
+      "position": 33,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "jKqjfwr",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-jKqjfwr",
+        "filename": "PXL_20250628_064719163.jpg",
+        "format": "JPG",
+        "archived_md5": "3e7ce47653167709898bf98814e3aaae"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250628_064719163.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4979329,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-28T22:47:19+00:00",
+          "normalized": "2025-06-28T22:47:19Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:40+00:00",
+          "normalized": "2025-12-24T12:39:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4juce6oqreevd75vhx6z4gq77e",
+        "media_path": "/media/kph_4juce6oqreevd75vhx6z4gq77e",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_dhtjvf5o5kjpaylyyzfox34eiu",
+      "position": 34,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "d8gCjG2",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-d8gCjG2",
+        "filename": "PXL_20250628_104029556.jpg",
+        "format": "JPG",
+        "archived_md5": "a54f86ab54bdd70e764af64deaa65078"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250628_104029556.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2883325,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T02:40:29+00:00",
+          "normalized": "2025-06-29T02:40:29Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:40+00:00",
+          "normalized": "2025-12-24T12:39:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_dhtjvf5o5kjpaylyyzfox34eiu",
+        "media_path": "/media/kph_dhtjvf5o5kjpaylyyzfox34eiu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_3jgbjgmas6ttzuwq3reyryyd7i",
+      "position": 35,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "ZxMqjdS",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-ZxMqjdS",
+        "filename": "PXL_20250629_025252127.jpg",
+        "format": "JPG",
+        "archived_md5": "4ea474bff22a020616db43a1c52b6eee"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_025252127.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3374182,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T18:52:52+00:00",
+          "normalized": "2025-06-29T18:52:52Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:40+00:00",
+          "normalized": "2025-12-24T12:39:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_3jgbjgmas6ttzuwq3reyryyd7i",
+        "media_path": "/media/kph_3jgbjgmas6ttzuwq3reyryyd7i",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_xulxacab4qiv3w2kj75opkf44a",
+      "position": 36,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Jg7CGq9",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-Jg7CGq9",
+        "filename": "PXL_20250629_031010514.jpg",
+        "format": "JPG",
+        "archived_md5": "984ec0511339bc273ebbc2c344c67142"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_031010514.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4810173,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T19:10:10+00:00",
+          "normalized": "2025-06-29T19:10:10Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:40+00:00",
+          "normalized": "2025-12-24T12:39:40Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_xulxacab4qiv3w2kj75opkf44a",
+        "media_path": "/media/kph_xulxacab4qiv3w2kj75opkf44a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_4hjpqufrnydx4irwfrofhdpctq",
+      "position": 37,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zNt4jLs",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-zNt4jLs",
+        "filename": "PXL_20250629_031756647.jpg",
+        "format": "JPG",
+        "archived_md5": "f6c09cb514949f5a1db9629b6b69275d"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_031756647.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3545535,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T19:17:56+00:00",
+          "normalized": "2025-06-29T19:17:56Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:41+00:00",
+          "normalized": "2025-12-24T12:39:41Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_4hjpqufrnydx4irwfrofhdpctq",
+        "media_path": "/media/kph_4hjpqufrnydx4irwfrofhdpctq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_mbxg464otv6wt7o7qiuoykgsje",
+      "position": 38,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "RDxn9fN",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-RDxn9fN",
+        "filename": "PXL_20250629_032646349.jpg",
+        "format": "JPG",
+        "archived_md5": "d8c01cfe43bbc9d7819e344fa2f064c4"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_032646349.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3719796,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T19:26:46+00:00",
+          "normalized": "2025-06-29T19:26:46Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:42+00:00",
+          "normalized": "2025-12-24T12:39:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_mbxg464otv6wt7o7qiuoykgsje",
+        "media_path": "/media/kph_mbxg464otv6wt7o7qiuoykgsje",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_eryrngsmpvy4gqsmreyp5uysnm",
+      "position": 39,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8CCNVWq",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-8CCNVWq",
+        "filename": "PXL_20250629_032653680.jpg",
+        "format": "JPG",
+        "archived_md5": "bc1fbf3076f20a26f5f762a654c2972f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_032653680.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3430167,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T19:26:53+00:00",
+          "normalized": "2025-06-29T19:26:53Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:42+00:00",
+          "normalized": "2025-12-24T12:39:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_eryrngsmpvy4gqsmreyp5uysnm",
+        "media_path": "/media/kph_eryrngsmpvy4gqsmreyp5uysnm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_g5idgmh2w35cyc2kmiv6i2k62a",
+      "position": 40,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "N46gcbP",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-N46gcbP",
+        "filename": "PXL_20250629_032711892.jpg",
+        "format": "JPG",
+        "archived_md5": "346abbae26b14d928cf0172d10af9701"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_032711892.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3819176,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T19:27:11+00:00",
+          "normalized": "2025-06-29T19:27:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:42+00:00",
+          "normalized": "2025-12-24T12:39:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_g5idgmh2w35cyc2kmiv6i2k62a",
+        "media_path": "/media/kph_g5idgmh2w35cyc2kmiv6i2k62a",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vk6mqt3texn2exidnxvytegeae",
+      "position": 41,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "8DMTwsn",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-8DMTwsn",
+        "filename": "PXL_20250629_041241933.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "57a0efcba443ae5c97cd933ace965b34"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_041241933.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6825475,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T20:12:41+00:00",
+          "normalized": "2025-06-29T20:12:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:42+00:00",
+          "normalized": "2025-12-24T12:39:42Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vk6mqt3texn2exidnxvytegeae",
+        "media_path": "/media/kph_vk6mqt3texn2exidnxvytegeae",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_snayf3qlsp767lfsip2tf36sqq",
+      "position": 42,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "5DHVTRk",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-5DHVTRk",
+        "filename": "PXL_20250629_041318510.jpg",
+        "format": "JPG",
+        "archived_md5": "0c2629d93cb939b85bbc5271fe67dc38"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_041318510.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4595959,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T20:13:18+00:00",
+          "normalized": "2025-06-29T20:13:18Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:43+00:00",
+          "normalized": "2025-12-24T12:39:43Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_snayf3qlsp767lfsip2tf36sqq",
+        "media_path": "/media/kph_snayf3qlsp767lfsip2tf36sqq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_llzfryxwj273iexpeahbnvknye",
+      "position": 43,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "zKQKW34",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-zKQKW34",
+        "filename": "PXL_20250629_042225831.jpg",
+        "format": "JPG",
+        "archived_md5": "28db83f15a9462e9cf96a4a42023c717"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_042225831.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 2897924,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T20:22:25+00:00",
+          "normalized": "2025-06-29T20:22:25Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:44+00:00",
+          "normalized": "2025-12-24T12:39:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_llzfryxwj273iexpeahbnvknye",
+        "media_path": "/media/kph_llzfryxwj273iexpeahbnvknye",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_7sicyzn4zcbf54vgah3f2xevq4",
+      "position": 44,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "tF2VqtF",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-tF2VqtF",
+        "filename": "PXL_20250629_042958595.jpg",
+        "format": "JPG",
+        "archived_md5": "a76c182ade96fb62dd5a8a9375ca9ead"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_042958595.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6731562,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T20:29:58+00:00",
+          "normalized": "2025-06-29T20:29:58Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:44+00:00",
+          "normalized": "2025-12-24T12:39:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_7sicyzn4zcbf54vgah3f2xevq4",
+        "media_path": "/media/kph_7sicyzn4zcbf54vgah3f2xevq4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_ubuytxxpmegrkrylmdexkp5qce",
+      "position": 45,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "sVVgJFV",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-sVVgJFV",
+        "filename": "PXL_20250629_050414230.jpg",
+        "format": "JPG",
+        "archived_md5": "73c56ee906bb29425a0672472718ad9b"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_050414230.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5897425,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:04:14+00:00",
+          "normalized": "2025-06-29T21:04:14Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:44+00:00",
+          "normalized": "2025-12-24T12:39:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_ubuytxxpmegrkrylmdexkp5qce",
+        "media_path": "/media/kph_ubuytxxpmegrkrylmdexkp5qce",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_6vzezqyky5xvck6xegrdpy6tei",
+      "position": 46,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Z8F2htz",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-Z8F2htz",
+        "filename": "PXL_20250629_050811716.jpg",
+        "format": "JPG",
+        "archived_md5": "96e84bb9d914973dbe0e5be3194d08ed"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_050811716.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6114204,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:08:11+00:00",
+          "normalized": "2025-06-29T21:08:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:44+00:00",
+          "normalized": "2025-12-24T12:39:44Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_6vzezqyky5xvck6xegrdpy6tei",
+        "media_path": "/media/kph_6vzezqyky5xvck6xegrdpy6tei",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_tti4l4nauxhhqllzi2obrwxkxa",
+      "position": 47,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "nKWfx7F",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-nKWfx7F",
+        "filename": "PXL_20250629_051449615.jpg",
+        "format": "JPG",
+        "archived_md5": "2e347ed4fee0081fb839f3f50ed19653"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_051449615.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 6743198,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:14:49+00:00",
+          "normalized": "2025-06-29T21:14:49Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:46+00:00",
+          "normalized": "2025-12-24T12:39:46Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_tti4l4nauxhhqllzi2obrwxkxa",
+        "media_path": "/media/kph_tti4l4nauxhhqllzi2obrwxkxa",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_s3k67bsk5qeu2h4xl5sa3ffvbu",
+      "position": 48,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "BHPKM4d",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-BHPKM4d",
+        "filename": "PXL_20250629_051505727.jpg",
+        "format": "JPG",
+        "archived_md5": "a5996688d5f811de7e4a47e5301ef555"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_051505727.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5607948,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:15:05+00:00",
+          "normalized": "2025-06-29T21:15:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:46+00:00",
+          "normalized": "2025-12-24T12:39:46Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_s3k67bsk5qeu2h4xl5sa3ffvbu",
+        "media_path": "/media/kph_s3k67bsk5qeu2h4xl5sa3ffvbu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_sp2o22wn3cvvxxd2ilxqh7y7jq",
+      "position": 49,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "XccwCMN",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-XccwCMN",
+        "filename": "PXL_20250629_051911898.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "9c28336309ccf7d1b0317f7b250f2d47"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_051911898.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5159683,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:19:11+00:00",
+          "normalized": "2025-06-29T21:19:11Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:46+00:00",
+          "normalized": "2025-12-24T12:39:46Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_sp2o22wn3cvvxxd2ilxqh7y7jq",
+        "media_path": "/media/kph_sp2o22wn3cvvxxd2ilxqh7y7jq",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_kwgbafnjtkrkxwadsm3a3hdsrm",
+      "position": 50,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "WSXVtjk",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-WSXVtjk",
+        "filename": "PXL_20250629_053505271.jpg",
+        "format": "JPG",
+        "archived_md5": "da6098da52a33ef8e9b0e0c8a32add61"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_053505271.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 7128169,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:35:05+00:00",
+          "normalized": "2025-06-29T21:35:05Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:47+00:00",
+          "normalized": "2025-12-24T12:39:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_kwgbafnjtkrkxwadsm3a3hdsrm",
+        "media_path": "/media/kph_kwgbafnjtkrkxwadsm3a3hdsrm",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_vdxh6r6cneil23hewo6mosq67u",
+      "position": 51,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "CZdcm37",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-CZdcm37",
+        "filename": "PXL_20250629_053851264.jpg",
+        "format": "JPG",
+        "archived_md5": "e48156301f2127f5e27d1f3a6687c6ea"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_053851264.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 5057136,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:38:51+00:00",
+          "normalized": "2025-06-29T21:38:51Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:47+00:00",
+          "normalized": "2025-12-24T12:39:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_vdxh6r6cneil23hewo6mosq67u",
+        "media_path": "/media/kph_vdxh6r6cneil23hewo6mosq67u",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_c2h5asnvulp7onex6x76fjfypi",
+      "position": 52,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "Ng8LV52",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-Ng8LV52",
+        "filename": "PXL_20250629_054003058.jpg",
+        "format": "JPG",
+        "archived_md5": "dcbb245005208f157d1c4fdbda4fc9f2"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_054003058.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4014126,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:40:03+00:00",
+          "normalized": "2025-06-29T21:40:03Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:47+00:00",
+          "normalized": "2025-12-24T12:39:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_c2h5asnvulp7onex6x76fjfypi",
+        "media_path": "/media/kph_c2h5asnvulp7onex6x76fjfypi",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_cltfq54u6csxbgiiefho4dsctu",
+      "position": 53,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "VrspBTm",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-VrspBTm",
+        "filename": "PXL_20250629_054613072.jpg",
+        "format": "JPG",
+        "archived_md5": "29504308c710077777698ee45f98af42"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250629_054613072.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 3010312,
+        "width": 3072,
+        "height": 4080
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-29T21:46:13+00:00",
+          "normalized": "2025-06-29T21:46:13Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:47+00:00",
+          "normalized": "2025-12-24T12:39:47Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_cltfq54u6csxbgiiefho4dsctu",
+        "media_path": "/media/kph_cltfq54u6csxbgiiefho4dsctu",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_arojpxtrscervswugxquhddni4",
+      "position": 54,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "fFwJkrf",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-fFwJkrf",
+        "filename": "PXL_20250630_073141435.MP.jpg",
+        "format": "JPG",
+        "archived_md5": "96e051e29ff5bde94493e93aac8b6d5f"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250630_073141435.MP.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4723044,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-06-30T23:31:41+00:00",
+          "normalized": "2025-06-30T23:31:41Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:49+00:00",
+          "normalized": "2025-12-24T12:39:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_arojpxtrscervswugxquhddni4",
+        "media_path": "/media/kph_arojpxtrscervswugxquhddni4",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    },
+    {
+      "id": "kph_oqx6icspb7345hpn7nrdotkygy",
+      "position": 55,
+      "kind": "image",
+      "source": {
+        "service": "smugmug",
+        "image_key": "78r4tqb",
+        "web_uri": "https://kanolog.smugmug.com/250627OsakaKyoto/i-78r4tqb",
+        "filename": "PXL_20250630_094219769.jpg",
+        "format": "JPG",
+        "archived_md5": "6c9e39d4b35dc5a762d35ecf26d728fc"
+      },
+      "display": {
+        "title": "",
+        "caption": "",
+        "alt": "PXL_20250630_094219769.jpg"
+      },
+      "file": {
+        "mime_type": "image/jpeg",
+        "bytes": 4309044,
+        "width": 4080,
+        "height": 3072
+      },
+      "timestamps": {
+        "captured_at": {
+          "source_value": "2025-07-01T01:42:19+00:00",
+          "normalized": "2025-07-01T01:42:19Z",
+          "timezone_status": "smugmug-api"
+        },
+        "uploaded_at": {
+          "source_value": "2025-12-24T12:39:49+00:00",
+          "normalized": "2025-12-24T12:39:49Z",
+          "timezone_status": "smugmug-api"
+        }
+      },
+      "destination": {
+        "photo_path": "/photos/kph_oqx6icspb7345hpn7nrdotkygy",
+        "media_path": "/media/kph_oqx6icspb7345hpn7nrdotkygy",
+        "emdash_content_id": null,
+        "emdash_media_id": null,
+        "r2_object_key": null
+      },
+      "verification": {
+        "source_md5_verified": false,
+        "sha256": null,
+        "r2_roundtrip_verified": false
+      }
+    }
+  ]
+}

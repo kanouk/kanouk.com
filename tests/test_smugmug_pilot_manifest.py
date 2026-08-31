@@ -96,7 +96,11 @@ class SmugMugPilotManifestTests(unittest.TestCase):
                 {
                     "id": "kph_same",
                     "source": {"image_key": "image", "archived_md5": "md5"},
-                    "destination": {"r2_object_key": "object.jpg"},
+                    "destination": {
+                        "r2_object_key": "object.jpg",
+                        "poster_media_id": "poster-id",
+                        "poster_r2_object_key": "poster.jpg",
+                    },
                     "verification": {
                         "source_md5_verified": True,
                         "sha256": "sha",
@@ -107,6 +111,7 @@ class SmugMugPilotManifestTests(unittest.TestCase):
         }
         merged = manifest_module.merge_verified_progress(fresh, existing)
         self.assertEqual(merged["assets"][0]["destination"]["r2_object_key"], "object.jpg")
+        self.assertEqual(merged["assets"][0]["destination"]["poster_media_id"], "poster-id")
         self.assertEqual(merged["assets"][0]["verification"]["sha256"], "sha")
 
 
