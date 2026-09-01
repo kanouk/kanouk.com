@@ -50,11 +50,15 @@ class SmugMugClient:
             "User-Agent": "kanouk-migration-audit/1.0",
         }
 
+    @property
+    def owner_authenticated(self) -> bool:
+        return bool(self.access_token and self.access_token_secret)
+
     def get(self, path: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
         parsed = urlparse(path)
         if parsed.scheme or parsed.netloc:
             raise ValueError("SmugMug API paths must be relative")
-        owner_authenticated = bool(self.access_token and self.access_token_secret)
+        owner_authenticated = self.owner_authenticated
         query = dict(params or {})
         if not owner_authenticated:
             query["APIKey"] = self.api_key

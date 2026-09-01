@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { convertPostContent } from "./yohaku-transformers.mjs";
+import { buildProductMap, convertPostContent } from "./yohaku-transformers.mjs";
 
 const context = {
 	siteId: "test",
@@ -43,6 +43,30 @@ test("keeps a theme post link site-scoped until canonical URL resolution", () =>
 	assert.equal(blocks[0].id, "wordpress://test/post/42");
 });
 
+test("preserves WordPress image size, alignment, caption, and photo-frame meaning", () => {
+	const post = {
+		id: 12,
+		content: `<!-- wp:image {"id":123,"width":"420px","align":"center"} -->
+			<figure class="wp-block-image aligncenter is-resized is-style-photo_frame">
+				<img src="https://example.test/photo.jpg" alt="sample" class="wp-image-123" width="840" height="560" style="width:420px" />
+				<figcaption class="wp-element-caption">旅先の写真</figcaption>
+			</figure><!-- /wp:image -->`,
+	};
+	const blocks = convertPostContent(post, context);
+	assert.deepEqual(blocks[0], {
+		_type: "image",
+		_key: blocks[0]._key,
+		asset: { _type: "reference", _ref: "123", url: "https://example.test/photo.jpg" },
+		alt: "sample",
+		caption: "旅先の写真",
+		width: 840,
+		height: 560,
+		displayWidth: 420,
+		alignment: "center",
+		visualStyle: "photo-frame",
+	});
+});
+
 test("converts classic artwork metadata tables to portable tables", () => {
 	const post = {
 		id: 2,
@@ -63,6 +87,30 @@ test("resolves product records without retaining plugin block names", () => {
 	assert.equal(blocks[0]._type, "yohaku.productCard");
 	assert.equal(blocks[0].title, "Sample");
 	assert.equal(blocks[0].id, "https://example.test/item");
+});
+
+test("recovers Pochipp image, price, and affiliate link from pochipp_data", () => {
+	const products = buildProductMap([
+		{
+			id: 42,
+			postType: "pochipps",
+			title: "Sample product",
+			meta: new Map([
+				["pochipp_data", JSON.stringify({
+					image_url: "https://example.test/product.jpg",
+					amazon_affi_url: "https://example.test/amazon",
+					price: "2420",
+				})],
+			]),
+		},
+	]);
+	assert.deepEqual(products.get("42"), {
+		title: "Sample product",
+		imageUrl: "https://example.test/product.jpg",
+		price: "2420",
+		primaryUrl: "https://example.test/amazon",
+		links: [{ label: "Amazon", url: "https://example.test/amazon" }],
+	});
 });
 
 test("converts inline Pochipp shortcodes without dropping surrounding prose", () => {

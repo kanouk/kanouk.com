@@ -1,0 +1,63 @@
+---
+import { getEmDashCollection } from "emdash";
+import { ArrowLeft, CalendarDays } from "lucide-astro";
+import PostCard from "../../../components/PostCard.astro";
+import Base from "../../../layouts/Base.astro";
+import { getReadingTime } from "../../../utils/reading-time";
+import { getPostArchiveMonths, japanDateParts, japanMonthRange } from "../../../utils/post-archives";
+
+const year = Number(Astro.params.year);
+const month = Number(Astro.params.month);
+if (!Number.isInteger(year) || year < 2000 || year > 2100 || !Number.isInteger(month) || month < 1 || month > 12) {
+	return Astro.redirect("/404");
+}
+const { start, end } = japanMonthRange(year, month);
+const [{ entries: posts, cacheHint }, archives] = await Promise.all([
+	getEmDashCollection("posts", {
+		status: "published",
+		where: { published_at: { gte: start.toISOString(), lt: end.toISOString() } },
+		orderBy: { published_at: "desc" },
+		limit: 100,
+	}),
+	getPostArchiveMonths(240),
+]);
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+if (posts.length === 0) return Astro.redirect("/404");
+const title = `${year}年${month}月の記事`;
+const archiveIndex = archives.findIndex((archive) => archive.year === year && archive.month === month);
+const newer = archiveIndex > 0 ? archives[archiveIndex - 1] : undefined;
+const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
+---
+
+<Base title={title} description={`${title}の一覧`}>
+	<section class="archive-section month-archive">
+		<header class="archive-header">
+			<p class="archive-label"><CalendarDays size={14} strokeWidth={1.7} aria-hidden="true" /> アーカイブ</p>
+			<h1 class="archive-title">{year}年{month}月</h1>
+			<p class="archive-count">{posts.length}件の記事</p>
+		</header>
+		<div class="posts-grid">
+			{posts.map((post) => {
+				const day = post.data.publishedAt instanceof Date ? japanDateParts(post.data.publishedAt).day : undefined;
+				return (
+					<div id={day ? `day-${String(day).padStart(2, "0")}` : undefined}>
+						<PostCard
+							title={post.data.title ?? "無題"}
+							excerpt={post.data.excerpt}
+							featuredImage={post.data.featured_image}
+							href={`/posts/${post.id}`}
+							date={post.data.publishedAt ?? undefined}
+							readingTime={getReadingTime(post.data.content)}
+							tags={(post.data.terms?.tag ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
+							bylines={post.data.bylines ?? []}
+						/>
+					</div>
+				);
+			})}
+		</div>
+		<nav class="month-navigation" aria-label="月別アーカイブ移動">
+			{older ? <a href={older.href}><ArrowLeft size={15} aria-hidden="true" />{older.label}</a> : <span />}
+			{newer ? <a href={newer.href}>{newer.label}<ArrowLeft class="arrow-next" size={15} aria-hidden="true" /></a> : <span />}
+		</nav>
+	</section>
+</Base>

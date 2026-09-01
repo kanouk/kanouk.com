@@ -1,6 +1,7 @@
 ---
 import type { MediaValue, ContentBylineCredit } from "emdash";
 import YohakuImage from "./YohakuImage.astro";
+import YohakuImagePlaceholder from "./YohakuImagePlaceholder.astro";
 
 interface Props {
 	title: string;
@@ -33,14 +34,18 @@ const formattedDate = date
 	: null;
 ---
 
-<article class:list={["post-card", { "post-card--text-only": !featuredImage }]}>
+<article class="post-card">
 	<a href={href} class="card-link">
 		{
 			featuredImage ? (
 				<div class="card-image">
 					<YohakuImage image={featuredImage} crop />
 				</div>
-			) : null
+			) : (
+				<div class="card-image">
+					<YohakuImagePlaceholder />
+				</div>
+			)
 		}
 		<div class="card-body">
 			<div class="card-meta">

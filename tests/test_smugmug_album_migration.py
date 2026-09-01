@@ -38,6 +38,23 @@ def asset(kind: str = "image") -> dict:
     }
 
 
+class OwnerClient:
+    owner_authenticated = True
+
+    def __init__(self, urls: list[str] | None = None) -> None:
+        self.urls = iter(urls or ["https://example.test/original.jpg"])
+
+    def get(self, path: str) -> dict:
+        return {
+            "ImageSizeDetails": {
+                "ImageSizeOriginal": {
+                    "Url": next(self.urls),
+                    "OwnerOnly": True,
+                }
+            }
+        }
+
+
 class SmugMugAlbumMigrationTests(unittest.TestCase):
     def test_image_payload_uses_original_as_image(self) -> None:
         payload = module.content_payload(
@@ -108,6 +125,109 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
                         destination,
                     )
             self.assertFalse(destination.exists())
+
+    def test_owner_download_accepts_missing_frozen_md5_when_live_digest_matches(self) -> None:
+        original = b"owner-only original"
+        live = {
+            "ArchivedMD5": hashlib.md5(original).hexdigest(),
+            "ArchivedSize": len(original),
+            "Uris": {"ImageSizeDetails": {"Uri": "/api/v2/image/test!sizedetails"}},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "source.jpg"
+            with patch.object(module, "urlopen", return_value=io.BytesIO(original)):
+                receipt = module.download_source(
+                    live, "", destination, client=OwnerClient()
+                )
+        self.assertTrue(receipt["reported_md5_match"])
+        self.assertFalse(receipt["repeated_download_match"])
+        self.assertEqual(receipt["download_method"], "owner_image_size_original")
+
+    def test_owner_download_revalidates_stable_raw_bytes_when_reported_md5_differs(self) -> None:
+        reported = b"archived object"
+        downloadable = b"stable raw media"
+        live = {
+            "ArchivedMD5": hashlib.md5(reported).hexdigest(),
+            "ArchivedSize": len(reported),
+            "Uris": {"ImageSizeDetails": {"Uri": "/api/v2/image/test!sizedetails"}},
+        }
+        client = OwnerClient(
+            ["https://example.test/first.jpg", "https://example.test/second.jpg"]
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "source.jpg"
+            with patch.object(
+                module,
+                "urlopen",
+                side_effect=[io.BytesIO(downloadable), io.BytesIO(downloadable)],
+            ):
+                receipt = module.download_source(
+                    live,
+                    hashlib.md5(reported).hexdigest(),
+                    destination,
+                    client=client,
+                )
+        self.assertFalse(receipt["reported_md5_match"])
+        self.assertTrue(receipt["repeated_download_match"])
+
+    def test_owner_download_rejects_unstable_raw_bytes(self) -> None:
+        reported = b"archived object"
+        live = {
+            "ArchivedMD5": hashlib.md5(reported).hexdigest(),
+            "Uris": {"ImageSizeDetails": {"Uri": "/api/v2/image/test!sizedetails"}},
+        }
+        client = OwnerClient(
+            ["https://example.test/first.jpg", "https://example.test/second.jpg"]
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "source.jpg"
+            with patch.object(
+                module,
+                "urlopen",
+                side_effect=[io.BytesIO(b"first"), io.BytesIO(b"second")],
+            ):
+                with self.assertRaisesRegex(
+                    module.AlbumMigrationError, "changed during revalidation"
+                ):
+                    module.download_source(
+                        live,
+                        hashlib.md5(reported).hexdigest(),
+                        destination,
+                        client=client,
+                    )
+            self.assertFalse(destination.exists())
+
+    def test_owner_location_fills_map_fields_when_delivery_exif_has_none(self) -> None:
+        merged = module.merge_owner_location(
+            {"location": {}, "location_source": None, "captured_at": None, "exif": {}},
+            {"Latitude": None, "Longitude": None},
+            {
+                "ImageMetadata": {
+                    "Latitude": 35.0,
+                    "Longitude": 135.0,
+                    "Altitude": 25,
+                }
+            },
+        )
+        self.assertEqual(
+            merged["location"],
+            {"latitude": 35.0, "longitude": 135.0, "altitude": 25.0},
+        )
+        self.assertEqual(merged["location_source"], "smugmug_owner_api")
+
+    def test_owner_location_treats_zero_zero_as_missing(self) -> None:
+        original = {
+            "location": {},
+            "location_source": None,
+            "captured_at": None,
+            "exif": {},
+        }
+        merged = module.merge_owner_location(
+            original,
+            {"Latitude": 0, "Longitude": 0},
+            {"ImageMetadata": {"Latitude": 0, "Longitude": 0}},
+        )
+        self.assertEqual(merged, original)
 
     def test_public_media_path_uses_worker_route_and_escapes_storage_key(self) -> None:
         self.assertEqual(

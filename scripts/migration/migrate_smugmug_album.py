@@ -187,33 +187,109 @@ def find_live_assets(
 
 
 def download_source(
-    live: Mapping[str, Any], expected_md5: str, destination: Path
+    live: Mapping[str, Any],
+    expected_md5: str,
+    destination: Path,
+    *,
+    client: SmugMugClient | None = None,
 ) -> dict[str, Any]:
-    archived_uri = live.get("ArchivedUri")
+    """Download raw media and establish a fail-closed integrity receipt.
+
+    Public migration requires the frozen manifest MD5. Owner migration uses the
+    officially documented ImageSizeOriginal URL. SmugMug occasionally serves
+    stable raw bytes whose digest differs from its ArchivedMD5; that case is
+    accepted only after a second, freshly resolved owner download is identical.
+    """
+    owner_authenticated = bool(client and client.owner_authenticated)
     live_md5 = str(live.get("ArchivedMD5") or "").lower()
-    if not isinstance(archived_uri, str) or not archived_uri:
-        raise AlbumMigrationError("Asset has no public ArchivedUri")
-    if not expected_md5 or live_md5 != expected_md5:
+    if expected_md5 and live_md5 != expected_md5:
         raise AlbumMigrationError("Live ArchivedMD5 does not match the frozen manifest")
-    hashes: dict[str, Any] | None = None
-    for attempt in range(1, 6):
-        request = Request(archived_uri, headers={"User-Agent": "kanouk-migration/1.0"})
-        try:
-            with destination.open("wb") as output, urlopen(request, timeout=300) as response:
-                hashes = copy_and_hash(response, output)
-            break
-        except (HTTPError, TimeoutError, URLError, OSError) as exc:
-            destination.unlink(missing_ok=True)
-            if attempt == 5 or not is_transient_error(exc):
-                raise AlbumMigrationError(f"SmugMug source download failed: {exc}") from exc
-            time.sleep(retry_delay(attempt))
-    if hashes is None:
-        raise AssertionError("unreachable")
-    if hashes["md5"] != expected_md5:
-        destination.unlink(missing_ok=True)
-        raise OwnerAuthenticationRequired(
-            "Public ArchivedUri bytes do not match SmugMug ArchivedMD5"
+    if not expected_md5 and not owner_authenticated:
+        raise OwnerAuthenticationRequired("Public manifest has no ArchivedMD5")
+    if not live_md5:
+        raise AlbumMigrationError("SmugMug owner response has no ArchivedMD5")
+
+    def owner_original() -> tuple[str, bool]:
+        assert client is not None
+        size_uri = ((live.get("Uris") or {}).get("ImageSizeDetails") or {}).get(
+            "Uri"
         )
+        if not size_uri:
+            raise AlbumMigrationError("Owner response has no ImageSizeDetails URI")
+        size_response = client.get(size_uri)
+        original = (size_response.get("ImageSizeDetails") or {}).get(
+            "ImageSizeOriginal"
+        ) or {}
+        uri = original.get("Url") or original.get("URL") or original.get("Uri")
+        if not isinstance(uri, str) or not uri:
+            raise AlbumMigrationError("Owner original media URL is unavailable")
+        return uri, bool(original.get("OwnerOnly"))
+
+    def fetch(uri: str, target: Path) -> dict[str, Any]:
+        hashes: dict[str, Any] | None = None
+        for attempt in range(1, 6):
+            request = Request(uri, headers={"User-Agent": "kanouk-migration/1.0"})
+            try:
+                with target.open("wb") as output, urlopen(
+                    request, timeout=300
+                ) as response:
+                    hashes = copy_and_hash(response, output)
+                break
+            except (HTTPError, TimeoutError, URLError, OSError) as exc:
+                target.unlink(missing_ok=True)
+                if attempt == 5 or not is_transient_error(exc):
+                    raise AlbumMigrationError(
+                        f"SmugMug source download failed: {exc}"
+                    ) from exc
+                time.sleep(retry_delay(attempt))
+        if hashes is None:
+            raise AssertionError("unreachable")
+        return hashes
+
+    if owner_authenticated:
+        download_uri, owner_only = owner_original()
+        download_method = "owner_image_size_original"
+    else:
+        download_uri = live.get("ArchivedUri")
+        owner_only = False
+        download_method = "public_archived_uri"
+        if not isinstance(download_uri, str) or not download_uri:
+            raise OwnerAuthenticationRequired("Asset has no public ArchivedUri")
+
+    hashes = fetch(download_uri, destination)
+    reported_md5_match = hashes["md5"] == live_md5
+    repeated_download_match = False
+    if not reported_md5_match:
+        if not owner_authenticated:
+            destination.unlink(missing_ok=True)
+            raise OwnerAuthenticationRequired(
+                "Public ArchivedUri bytes do not match SmugMug ArchivedMD5"
+            )
+        second_uri, _ = owner_original()
+        repeat_path = destination.with_name(destination.name + ".recheck")
+        try:
+            repeat_hashes = fetch(second_uri, repeat_path)
+            repeated_download_match = (
+                repeat_hashes["sha256"] == hashes["sha256"]
+                and repeat_hashes["bytes"] == hashes["bytes"]
+            )
+        finally:
+            repeat_path.unlink(missing_ok=True)
+        if not repeated_download_match:
+            destination.unlink(missing_ok=True)
+            raise AlbumMigrationError("Owner original bytes changed during revalidation")
+
+    hashes.update(
+        {
+            "download_method": download_method,
+            "owner_only": owner_only,
+            "smugmug_reported_md5": live_md5,
+            "smugmug_reported_bytes": live.get("ArchivedSize")
+            or live.get("OriginalSize"),
+            "reported_md5_match": reported_md5_match,
+            "repeated_download_match": repeated_download_match,
+        }
+    )
     return hashes
 
 
@@ -255,6 +331,7 @@ def extract_metadata(path: Path) -> dict[str, Any]:
         and -90 <= float(latitude) <= 90
         and isinstance(longitude, (int, float))
         and -180 <= float(longitude) <= 180
+        and (float(latitude) != 0 or float(longitude) != 0)
     ):
         location = {"latitude": float(latitude), "longitude": float(longitude)}
         altitude = row.get("GPSAltitude")
@@ -285,7 +362,54 @@ def extract_metadata(path: Path) -> dict[str, Any]:
         )
         if row.get(key) not in (None, "")
     }
-    return {"location": location, "captured_at": captured_at, "exif": exif}
+    return {
+        "location": location,
+        "location_source": "embedded_exif" if location else None,
+        "captured_at": captured_at,
+        "exif": exif,
+    }
+
+
+def numeric_coordinate(value: Any, minimum: float, maximum: float) -> float | None:
+    if isinstance(value, bool):
+        return None
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if minimum <= parsed <= maximum else None
+
+
+def merge_owner_location(
+    extracted: dict[str, Any],
+    live: Mapping[str, Any],
+    metadata_payload: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Preserve SmugMug map coordinates when delivery EXIF omits them."""
+    if extracted.get("location"):
+        return extracted
+    raw_metadata = metadata_payload.get("ImageMetadata")
+    metadata = raw_metadata if isinstance(raw_metadata, Mapping) else {}
+    latitude = numeric_coordinate(live.get("Latitude"), -90, 90)
+    if latitude is None:
+        latitude = numeric_coordinate(metadata.get("Latitude"), -90, 90)
+    longitude = numeric_coordinate(live.get("Longitude"), -180, 180)
+    if longitude is None:
+        longitude = numeric_coordinate(metadata.get("Longitude"), -180, 180)
+    if latitude is None or longitude is None:
+        return extracted
+    if latitude == 0 and longitude == 0:
+        return extracted
+    location: dict[str, float] = {
+        "latitude": latitude,
+        "longitude": longitude,
+    }
+    altitude = numeric_coordinate(live.get("Altitude"), -1500, 100000)
+    if altitude is None:
+        altitude = numeric_coordinate(metadata.get("Altitude"), -1500, 100000)
+    if altitude is not None:
+        location["altitude"] = altitude
+    return {**extracted, "location": location, "location_source": "smugmug_owner_api"}
 
 
 def make_video_poster(source: Path, destination: Path) -> None:
@@ -628,6 +752,7 @@ def content_payload(
     poster_media_id: str | None,
     metadata: Mapping[str, Any],
     source_sha256: str,
+    source_integrity: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     display = asset.get("display", {})
     source = asset.get("source", {})
@@ -656,10 +781,14 @@ def content_payload(
         "source_metadata": {
             "stable_media_id": asset.get("id"),
             "source_archived_md5": source.get("archived_md5"),
-            "gps_exif_preserved": bool(metadata.get("location")),
+            "gps_exif_preserved": bool(metadata.get("location"))
+            and metadata.get("location_source", "embedded_exif") == "embedded_exif",
+            "gps_preserved": bool(metadata.get("location")),
+            "gps_coordinate_source": metadata.get("location_source"),
             "gps_coordinates_stored": "emdash-fields" if metadata.get("location") else None,
             "public_metadata_policy": "Source EXIF retained",
             "exif": metadata.get("exif") or None,
+            "source_integrity": dict(source_integrity or {}) or None,
             "migration": "manifest-v1",
         },
     }
@@ -1128,6 +1257,7 @@ def checkpoint(path: Path, manifest: dict[str, Any]) -> None:
 def migrate_asset(
     asset: dict[str, Any],
     *,
+    client: SmugMugClient,
     live: Mapping[str, Any],
     album_id: str,
     manifest_path: Path,
@@ -1150,11 +1280,30 @@ def migrate_asset(
     with tempfile.TemporaryDirectory(prefix="kanouk-smugmug-") as directory:
         temp_root = Path(directory)
         source_file = temp_root / f"source{source_extension(asset)}"
-        hashes = download_source(live, expected_md5, source_file)
-        metadata = extract_metadata(source_file)
+        hashes = download_source(live, expected_md5, source_file, client=client)
+        metadata_uri = ((live.get("Uris") or {}).get("ImageMetadata") or {}).get(
+            "Uri"
+        )
+        metadata_payload = client.get(metadata_uri) if metadata_uri else {}
+        metadata = merge_owner_location(
+            extract_metadata(source_file), live, metadata_payload
+        )
         verification = asset.setdefault("verification", {})
-        verification["source_md5_verified"] = True
+        verification["source_md5_verified"] = bool(hashes["reported_md5_match"])
+        verification["source_integrity_verified"] = bool(
+            hashes["reported_md5_match"] or hashes["repeated_download_match"]
+        )
         verification["sha256"] = hashes["sha256"]
+        verification["source_integrity"] = {
+            "download_method": hashes["download_method"],
+            "owner_only": hashes["owner_only"],
+            "smugmug_reported_md5": hashes["smugmug_reported_md5"],
+            "smugmug_reported_bytes": hashes["smugmug_reported_bytes"],
+            "downloaded_md5": hashes["md5"],
+            "downloaded_bytes": hashes["bytes"],
+            "reported_md5_match": hashes["reported_md5_match"],
+            "repeated_download_match": hashes["repeated_download_match"],
+        }
 
         destination = asset.setdefault("destination", {})
         if not destination.get("emdash_content_id"):
@@ -1203,6 +1352,7 @@ def migrate_asset(
                 poster_media_id=str(poster_media["id"]) if poster_media else None,
                 metadata=metadata,
                 source_sha256=str(hashes["sha256"]),
+                source_integrity=verification["source_integrity"],
             )
             content = create_content(asset, data, env=env, token=token)
             destination["emdash_content_id"] = content["id"]
@@ -1316,8 +1466,9 @@ def main() -> None:
         env=env,
         token=credential["token"],
     )
+    client = SmugMugClient(api_key)
     live_assets = find_live_assets(
-        SmugMugClient(api_key),
+        client,
         user=str(album.get("source", {}).get("user")),
         album_key=str(album.get("source", {}).get("album_key")),
     )
@@ -1335,7 +1486,9 @@ def main() -> None:
         live = live_assets.get(image_key)
         if live is None:
             raise SystemExit(f"Frozen asset is absent from live album: {image_key}")
-        if not live.get("ArchivedUri") or not live.get("ArchivedMD5"):
+        if not live.get("ArchivedMD5") or (
+            not client.owner_authenticated and not live.get("ArchivedUri")
+        ):
             verification = asset.setdefault("verification", {})
             verification["migration_status"] = "pending_owner_auth"
             verification["owner_auth_reason"] = "public_archive_unavailable"
@@ -1349,6 +1502,7 @@ def main() -> None:
         try:
             status = migrate_asset(
                 asset,
+                client=client,
                 live=live,
                 album_id=album_id,
                 manifest_path=manifest_path,

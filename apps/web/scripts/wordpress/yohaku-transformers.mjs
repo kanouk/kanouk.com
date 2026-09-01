@@ -15,6 +15,65 @@ function matchClassText(html, className) {
 	return match ? safeText(match[1]) : "";
 }
 
+function htmlAttribute(html, name) {
+	const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	return html.match(new RegExp(`\\b${escaped}=["']([^"']*)["']`, "i"))?.[1]
+		?.replaceAll("&amp;", "&")
+		.replaceAll("&quot;", '"')
+		.replaceAll("&#039;", "'");
+}
+
+function numericImageDimension(value) {
+	const match = String(value ?? "").trim().match(/^(\d+(?:\.\d+)?)(?:px)?$/i);
+	return match ? Math.round(Number(match[1])) : undefined;
+}
+
+function imageDisplayWidth(value, intrinsicWidth) {
+	const candidate = String(value ?? "").trim();
+	const absolute = candidate.match(/^(\d+(?:\.\d+)?)(?:px)?$/i);
+	if (absolute) return Math.round(Number(absolute[1]));
+	const percentage = candidate.match(/^(\d+(?:\.\d+)?)%$/);
+	if (percentage && intrinsicWidth) {
+		return Math.round(intrinsicWidth * Number(percentage[1]) / 100);
+	}
+	return undefined;
+}
+
+function imageNode(block, tools) {
+	const html = String(block.innerHTML || "");
+	const imageHtml = html.match(/<img\b[^>]*>/i)?.[0] || "";
+	const figureClass = htmlAttribute(html.match(/<figure\b[^>]*>/i)?.[0] || "", "class") || "";
+	const imageClass = htmlAttribute(imageHtml, "class") || "";
+	const classes = `${figureClass} ${imageClass}`;
+	const sourceUrl = htmlAttribute(imageHtml, "src") || "";
+	const sourceId = block.attrs.id || imageClass.match(/\bwp-image-(\d+)\b/)?.[1] || sourceUrl;
+	const style = htmlAttribute(imageHtml, "style") || "";
+	const styleWidth = style.match(/(?:^|;)\s*width\s*:\s*([^;]+)/i)?.[1];
+	const width = numericImageDimension(htmlAttribute(imageHtml, "width"));
+	const height = numericImageDimension(htmlAttribute(imageHtml, "height"));
+	const alignment = block.attrs.align ||
+		(classes.match(/\balign(left|center|right|wide|full)\b/)?.[1]);
+	const visualStyle = /\bis-style-photo_frame\b/.test(classes)
+		? "photo-frame"
+		: /\bis-style-shadow\b/.test(classes)
+			? "shadow"
+			: /\bis-style-border\b/.test(classes)
+				? "border"
+				: undefined;
+	return {
+		_type: "image",
+		_key: tools.generateKey(),
+		asset: { _type: "reference", _ref: String(sourceId), url: sourceUrl },
+		alt: htmlAttribute(imageHtml, "alt") || "",
+		caption: matchClassText(html, "wp-element-caption") || safeText(html.match(/<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/i)?.[1] || ""),
+		width,
+		height,
+		displayWidth: imageDisplayWidth(block.attrs.width || styleWidth, width),
+		alignment,
+		visualStyle,
+	};
+}
+
 function productNode(product, sourceId, key) {
 	return {
 		_type: "yohaku.productCard",
@@ -24,8 +83,20 @@ function productNode(product, sourceId, key) {
 		id: product?.primaryUrl || undefined,
 		label: "商品を見る",
 		links: product?.links || [],
+		price: product?.price || undefined,
 		sourceProductId: String(sourceId || ""),
 	};
+}
+
+function parsePochippData(value) {
+	if (!value) return {};
+	if (typeof value === "object") return value;
+	try {
+		const parsed = JSON.parse(value);
+		return parsed && typeof parsed === "object" ? parsed : {};
+	} catch {
+		return {};
+	}
 }
 
 function expandPochippShortcodes(blocks, context, keyGenerator) {
@@ -105,20 +176,34 @@ export function buildProductMap(posts) {
 	for (const post of posts) {
 		if (post.postType !== "pochipps") continue;
 		const meta = post.meta;
+		const pochipp = parsePochippData(meta.get("pochipp_data"));
 		const links = [
-			["Amazon", meta.get("yyi_rinker_amazon_title_url") || meta.get("yyi_rinker_amazon_url")],
+			[
+				"Amazon",
+				meta.get("yyi_rinker_amazon_title_url") ||
+					meta.get("yyi_rinker_amazon_url") ||
+					pochipp.amazon_affi_url,
+			],
 			["楽天市場", meta.get("yyi_rinker_rakuten_url")],
-			["Yahoo!ショッピング", meta.get("yyi_rinker_yahoo_url")],
+			[
+				"Yahoo!ショッピング",
+				meta.get("yyi_rinker_yahoo_url") || pochipp.yahoo_detail_url,
+			],
 		]
 			.filter((entry) => entry[1])
-			.map(([label, url]) => ({ label, url }));
+			.map(([label, url]) => ({ label, url }))
+			.filter((entry, index, entries) =>
+				entries.findIndex((candidate) => candidate.url === entry.url) === index,
+			);
 		result.set(String(post.id), {
 			title: post.title || "商品情報",
 			imageUrl:
 				meta.get("yyi_rinker_l_image_url") ||
 				meta.get("yyi_rinker_m_image_url") ||
 				meta.get("yyi_rinker_s_image_url") ||
+				pochipp.image_url ||
 				undefined,
+			price: meta.get("yyi_rinker_price") || pochipp.price || undefined,
 			primaryUrl: links[0]?.url,
 			links,
 		});
@@ -131,6 +216,7 @@ export function convertPostContent(post, context) {
 	let customTransformers;
 	const options = () => ({ customTransformers, keyGenerator, generateKeys: true });
 	customTransformers = {
+		"core/image": (block, _options, tools) => [imageNode(block, tools)],
 		"core/block": (block) => {
 			const reusable = context.reusableBlocks.get(String(block.attrs.ref || ""));
 			return reusable ? gutenbergToPortableText(reusable.content || "", options()) : [];

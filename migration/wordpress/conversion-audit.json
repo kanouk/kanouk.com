@@ -1,6 +1,6 @@
 {
   "reportVersion": 2,
-  "generatedAt": "2026-08-31T19:45:35.315Z",
+  "generatedAt": "2026-09-01T17:04:28.166Z",
   "namespace": "yohaku.*",
   "policy": "Known theme/plugin expressions use semantic blocks; remaining htmlBlock values require review.",
   "quizSource": {
@@ -11,8 +11,16 @@
     "posts": 1847,
     "pages": 7,
     "attachments": 2027,
-    "convertedBlocks": 17050,
-    "htmlBlocks": 0
+    "convertedBlocks": 17055,
+    "htmlBlocks": 0,
+    "imageBlocks": 1018,
+    "imageDisplayWidths": 95,
+    "imageTreatments": {
+      "default": 852,
+      "photo-frame": 162,
+      "border": 3,
+      "shadow": 1
+    }
   },
   "sites": [
     {
@@ -42,9 +50,9 @@
         "publish": 1373
       },
       "portableTextTypes": {
-        "block": 9142,
+        "block": 9138,
         "image": 678,
-        "yohaku.productCard": 399,
+        "yohaku.productCard": 408,
         "yohaku.linkCard": 126,
         "code": 67,
         "break": 61,
@@ -58,6 +66,15 @@
         "gallery": 2,
         "yohaku.siteSearch": 1,
         "file": 1
+      },
+      "imagePresentation": {
+        "blocks": 678,
+        "displayWidths": 53,
+        "treatments": {
+          "default": 519,
+          "photo-frame": 156,
+          "border": 3
+        }
       },
       "htmlBlockExceptions": {}
     },
@@ -96,6 +113,14 @@
         "file": 2,
         "yohaku.accordion": 1
       },
+      "imagePresentation": {
+        "blocks": 49,
+        "displayWidths": 32,
+        "treatments": {
+          "default": 44,
+          "photo-frame": 5
+        }
+      },
       "htmlBlockExceptions": {}
     },
     {
@@ -127,6 +152,15 @@
         "yohaku.productCard": 269,
         "embed": 15,
         "yohaku.linkCard": 5
+      },
+      "imagePresentation": {
+        "blocks": 291,
+        "displayWidths": 10,
+        "treatments": {
+          "default": 289,
+          "shadow": 1,
+          "photo-frame": 1
+        }
       },
       "htmlBlockExceptions": {}
     }

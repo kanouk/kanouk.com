@@ -95,6 +95,7 @@ export function createPlugin() {
 					fields: [
 						{ type: "text_input", action_id: "title", label: "商品名" },
 						{ type: "text_input", action_id: "imageUrl", label: "画像URL" },
+						{ type: "text_input", action_id: "price", label: "取得時価格（円）" },
 						{ type: "text_input", action_id: "id", label: "主なリンク" },
 						{ type: "text_input", action_id: "label", label: "リンク表示名" },
 					],

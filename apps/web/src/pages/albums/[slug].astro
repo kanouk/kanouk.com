@@ -13,12 +13,20 @@ const { entry: album, cacheHint: albumCache } = await getEmDashEntry("albums", s
 if (!album) return Astro.redirect("/404");
 if (Astro.cache?.enabled) Astro.cache.set(albumCache);
 
-const { entries: photos, cacheHint: photoCache } = await getEmDashCollection("photos", {
-	status: "published",
-	where: { album: album.data.id },
-	orderBy: { position: "asc" },
-});
-if (Astro.cache?.enabled) Astro.cache.set(photoCache);
+const photos = [];
+let photoCursor: string | undefined;
+do {
+	const page = await getEmDashCollection("photos", {
+		status: "published",
+		where: { album: album.data.id },
+		orderBy: { position: "asc" },
+		limit: 100,
+		cursor: photoCursor,
+	});
+	if (Astro.cache?.enabled) Astro.cache.set(page.cacheHint);
+	photos.push(...page.entries);
+	photoCursor = page.nextCursor;
+} while (photoCursor);
 
 const locationPhotos = photos.flatMap((photo) => {
 	const latitude = photo.data.latitude;

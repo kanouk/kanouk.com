@@ -1,0 +1,16 @@
+---
+import { Image } from "lucide-astro";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["image-placeholder", className]} aria-hidden="true">
+	<span class="image-placeholder__mark">
+		<Image size={18} strokeWidth={1.35} />
+	</span>
+	<span class="image-placeholder__label">NO IMAGE</span>
+</div>

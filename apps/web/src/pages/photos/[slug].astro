@@ -31,12 +31,20 @@ const { entries: albums, cacheHint: albumCache } = await getEmDashCollection("al
 if (Astro.cache?.enabled) Astro.cache.set(albumCache);
 const album = albums.find((candidate) => candidate.data.id === photo.data.album);
 
-const { entries: albumPhotos, cacheHint: albumPhotosCache } = await getEmDashCollection("photos", {
-	status: "published",
-	where: { album: photo.data.album },
-	orderBy: { position: "asc" },
-});
-if (Astro.cache?.enabled) Astro.cache.set(albumPhotosCache);
+const albumPhotos = [];
+let albumPhotosCursor: string | undefined;
+do {
+	const page = await getEmDashCollection("photos", {
+		status: "published",
+		where: { album: photo.data.album },
+		orderBy: { position: "asc" },
+		limit: 100,
+		cursor: albumPhotosCursor,
+	});
+	if (Astro.cache?.enabled) Astro.cache.set(page.cacheHint);
+	albumPhotos.push(...page.entries);
+	albumPhotosCursor = page.nextCursor;
+} while (albumPhotosCursor);
 const photoIndex = albumPhotos.findIndex((candidate) => candidate.data.id === photo.data.id);
 const previousPhoto = photoIndex > 0 ? albumPhotos[photoIndex - 1] : undefined;
 const nextPhoto = photoIndex >= 0 ? albumPhotos[photoIndex + 1] : undefined;
@@ -162,6 +170,11 @@ const exifDetails = [
 		</a>
 		<figure>
 			<div class="media" {...photo.edit.image}>
+				{previousUrl && (
+					<a class="media-navigation media-navigation--previous" href={previousUrl} aria-label="前の写真">
+						<ArrowLeft size={22} strokeWidth={1.6} aria-hidden="true" />
+					</a>
+				)}
 				{
 					videoSource ? (
 						<video controls playsinline preload="metadata" poster={posterSource}>
@@ -172,11 +185,19 @@ const exifDetails = [
 						<YohakuImage image={photo.data.image} priority />
 					)
 				}
+				{nextUrl && (
+					<a class="media-navigation media-navigation--next" href={nextUrl} aria-label="次の写真">
+						<ArrowRight size={22} strokeWidth={1.6} aria-hidden="true" />
+					</a>
+				)}
 			</div>
 			<figcaption>
 				<h1 {...photo.edit.title}>{photo.data.title}</h1>
 				{photo.data.caption && <p {...photo.edit.caption}>{photo.data.caption}</p>}
-				{formattedDate && <time>{formattedDate}</time>}
+				<div class="photo-context">
+					<span>{photoIndex + 1} / {albumPhotos.length}</span>
+					{formattedDate && <time>{formattedDate}</time>}
+				</div>
 			</figcaption>
 		</figure>
 		<div class="photo-tools" role="group" aria-label="写真の表示と共有">

@@ -1,0 +1,82 @@
+---
+import { getEmDashCollection } from "emdash";
+import { CalendarDays } from "lucide-astro";
+import { getPostArchiveMonths, japanDateParts, japanMonthRange } from "../utils/post-archives";
+
+interface Props {
+	date?: Date | null;
+}
+
+const { date: suppliedDate } = Astro.props;
+const date = suppliedDate ?? new Date();
+const selected = japanDateParts(date);
+const { start, end } = japanMonthRange(selected.year, selected.month);
+const [archives, monthResult] = await Promise.all([
+	getPostArchiveMonths(36),
+	getEmDashCollection("posts", {
+		status: "published",
+		where: {
+			published_at: { gte: start.toISOString(), lt: end.toISOString() },
+		},
+		orderBy: { published_at: "asc" },
+		limit: 100,
+	}),
+]);
+if (Astro.cache?.enabled) Astro.cache.set(monthResult.cacheHint);
+
+const postsByDay = new Map<number, number>();
+for (const post of monthResult.entries) {
+	const publishedAt = post.data.publishedAt;
+	if (!(publishedAt instanceof Date)) continue;
+	const day = japanDateParts(publishedAt).day;
+	postsByDay.set(day, (postsByDay.get(day) ?? 0) + 1);
+}
+const firstWeekday = new Date(Date.UTC(selected.year, selected.month - 1, 1)).getUTCDay();
+const daysInMonth = new Date(Date.UTC(selected.year, selected.month, 0)).getUTCDate();
+const calendarCells = [
+	...Array.from({ length: firstWeekday }, () => null),
+	...Array.from({ length: daysInMonth }, (_, index) => index + 1),
+];
+while (calendarCells.length % 7) calendarCells.push(null);
+const archiveHref = `/archives/${selected.year}/${String(selected.month).padStart(2, "0")}`;
+---
+
+<section class="widget widget-archive">
+	<h3 class="widget__title">
+		<CalendarDays size={14} strokeWidth={1.7} aria-hidden="true" />
+		<span>月別アーカイブ</span>
+	</h3>
+	<div class="widget__content">
+		<label class="archive-select-label">
+			<span class="visually-hidden">表示する月</span>
+			<select class="archive-select" data-archive-select>
+				{archives.map((archive) => (
+					<option value={archive.href} selected={archive.year === selected.year && archive.month === selected.month}>
+						{archive.label}（{archive.count}）
+					</option>
+				))}
+			</select>
+		</label>
+		<table class="post-calendar">
+			<caption><a href={archiveHref}>{selected.year}年{selected.month}月</a></caption>
+			<thead><tr>{["日", "月", "火", "水", "木", "金", "土"].map((day) => <th scope="col">{day}</th>)}</tr></thead>
+			<tbody>
+				{Array.from({ length: calendarCells.length / 7 }, (_, week) => (
+					<tr>
+						{calendarCells.slice(week * 7, week * 7 + 7).map((day) => (
+							<td>{day && (postsByDay.has(day) ? <a href={`${archiveHref}#day-${String(day).padStart(2, "0")}`}>{day}</a> : <span>{day}</span>)}</td>
+						))}
+					</tr>
+				))}
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll<HTMLSelectElement>("[data-archive-select]").forEach((select) => {
+		select.addEventListener("change", () => {
+			if (select.value) window.location.assign(select.value);
+		});
+	});
+</script>

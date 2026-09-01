@@ -53,9 +53,9 @@ Lucide iconは検索、撮影情報、位置、共有、download、全画面、s
 
 ## 原本の扱い
 
-- 公開ArchivedUriから取得したbyteが`ArchivedMD5`と一致したものだけをverifiedにする。
-- ブラウザ表示できるJPEGでもMD5が違えば、SmugMugが生成した派生版の可能性があるため採用しない。
-- 公開archive URIなし165件とMD5不一致資産は`pending_owner_auth`へ置き、Full/Read owner OAuthで再取得する。
+- 公開ArchivedUriを使う場合は、取得byteが`ArchivedMD5`と一致したものだけをverifiedにする。
+- ブラウザ表示できるJPEGでも公開byteのMD5が違えば、SmugMugが生成した派生版の可能性があるため公開経路からは採用しない。
+- 公開archive URIなし、または公開byte不一致の資産はFull/Read owner OAuthで`ImageSizeOriginal`を解決する。owner APIが返すarchived MD5と配信byteが一致しない場合は、署名URLを新しく解決して二度取得し、二回のSHA-256とbyte数が完全一致したときだけ現在のowner原本として採用する。reported値とdownloaded値、再検証方法は台帳へ分けて記録する。
 - R2 upload後に再取得してhashとsizeを再照合し、source hashとCloudflare readback hashを台帳へ残す。
 - GPS EXIFはユーザー方針により保持し、地図機能へ利用する。
 

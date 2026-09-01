@@ -14,6 +14,7 @@ import { Comments, CommentForm } from "emdash/ui/comments";
 import { Search } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
+import PostArchiveNav from "../../components/PostArchiveNav.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
 import { getReadingTime } from "../../utils/reading-time";
@@ -269,6 +270,7 @@ const publishDate =
 						</div>
 					</nav>
 					<div class="sidebar-widgets">
+						<PostArchiveNav date={post.data.publishedAt} />
 						<section class="widget">
 							<h3 class="widget__title">検索</h3>
 							<div class="widget__content">

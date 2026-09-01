@@ -5,6 +5,7 @@ import {
 	getSiteSettings,
 } from "emdash";
 import YohakuImage from "../components/YohakuImage.astro";
+import YohakuImagePlaceholder from "../components/YohakuImagePlaceholder.astro";
 import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
@@ -101,8 +102,8 @@ function formatDate(date: Date | null | undefined) {
 									</div>
 								</a>
 							) : (
-								<div class="featured-image featured-image--empty" aria-hidden="true">
-									<span>Yohaku</span>
+								<div class="featured-image">
+									<YohakuImagePlaceholder />
 								</div>
 							)}
 							<div class="featured-content">

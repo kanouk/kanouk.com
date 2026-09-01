@@ -1,0 +1,29 @@
+---
+import { CalendarDays } from "lucide-astro";
+import Base from "../../layouts/Base.astro";
+import { getPostArchiveMonths } from "../../utils/post-archives";
+
+const archives = await getPostArchiveMonths(240);
+const years = Map.groupBy(archives, (archive) => archive.year);
+---
+
+<Base title="月別アーカイブ" description="カノログの記事を月ごとに探す">
+	<section class="archive-section archive-index">
+		<header class="archive-header">
+			<p class="archive-label"><CalendarDays size={14} strokeWidth={1.7} aria-hidden="true" /> 記事を月から探す</p>
+			<h1 class="archive-title">月別アーカイブ</h1>
+		</header>
+		<div class="archive-years">
+			{[...years].map(([year, months]) => (
+				<section class="archive-year">
+					<h2>{year}</h2>
+					<ul>
+						{months.map((archive) => (
+							<li><a href={archive.href}><span>{archive.month}月</span><small>{archive.count}件</small></a></li>
+						))}
+					</ul>
+				</section>
+			))}
+		</div>
+	</section>
+</Base>

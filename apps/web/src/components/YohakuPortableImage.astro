@@ -8,7 +8,9 @@ interface ImageNode {
 	caption?: string;
 	width?: number;
 	height?: number;
+	displayWidth?: number;
 	alignment?: "left" | "center" | "right" | "wide" | "full";
+	visualStyle?: "photo-frame" | "border" | "shadow";
 }
 
 interface Props {
@@ -28,7 +30,14 @@ const src = bareStorageKey
 
 {
 	src && (
-		<figure class:list={["yohaku-portable-image", node.alignment && `align-${node.alignment}`]}>
+		<figure
+			class:list={[
+				"yohaku-portable-image",
+				node.alignment && `align-${node.alignment}`,
+				node.visualStyle && `style-${node.visualStyle}`,
+			]}
+			style={node.displayWidth ? `--image-display-width:${node.displayWidth}px` : undefined}
+		>
 			<img
 				src={src}
 				alt={node.alt || ""}
