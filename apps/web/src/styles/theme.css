@@ -32,7 +32,7 @@
 	--step-1: clamp(1.17rem, 1.07rem + 0.42vw, 1.4rem);
 	--step-2: clamp(1.42rem, 1.23rem + 0.78vw, 1.9rem);
 	--step-3: clamp(1.65rem, 1.48rem + 0.75vw, 2.15rem);
-	--step-4: clamp(1.95rem, 1.65rem + 1.25vw, 2.8rem);
+	--step-4: clamp(1.9rem, 1.72rem + 0.8vw, 2.5rem);
 	--step-5: clamp(2.3rem, 1.95rem + 1.65vw, 3.25rem);
 
 	--space-1: 0.25rem;
@@ -383,7 +383,7 @@ main:focus { outline: none; }
 .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem; color: var(--ink-muted); font-size: var(--step--1); line-height: 1.5; }
 .meta-dot { width: 0.2rem; height: 0.2rem; border-radius: 50%; background: currentColor; opacity: 0.55; }
 .featured-title-link { color: inherit; text-decoration: none; }
-.featured-title { margin-top: var(--space-4); font-size: var(--step-4); }
+.featured-title { margin-top: var(--space-4); font-size: var(--step-3); }
 .featured-title-link:hover .featured-title { color: var(--accent-strong); }
 .featured-excerpt { display: -webkit-box; margin-top: var(--space-5); overflow: hidden; color: var(--ink-soft); -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
 .featured-tags,
