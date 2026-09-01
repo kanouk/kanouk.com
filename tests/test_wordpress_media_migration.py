@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 from scripts.migration.migrate_wordpress_media import (
+    LEGACY_ORPHANS,
     attachment_aliases,
     network_url,
     parse_wxr_attachments,
@@ -42,6 +43,12 @@ class WordPressMediaMigrationTests(unittest.TestCase):
             network_url("https://example.com/uploads/美術館%20写真.jpg?題=春"),
             "https://example.com/uploads/%E7%BE%8E%E8%A1%93%E9%A4%A8%20%E5%86%99%E7%9C%9F.jpg?%E9%A1%8C=%E6%98%A5",
         )
+
+    def test_legacy_orphan_keeps_original_alias_and_archived_download(self):
+        item = LEGACY_ORPHANS[0]
+        self.assertEqual(item["url"], item["aliases"][0])
+        self.assertIn("web.archive.org/web/", item["download_url"])
+        self.assertEqual(item["mime_type"], "image/jpeg")
 
 
 if __name__ == "__main__":

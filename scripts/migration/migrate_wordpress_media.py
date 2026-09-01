@@ -52,6 +52,31 @@ SOURCES = (
         Path("/Users/kanouk/Documents/Private_External_Imports/blog/11.WordPress.2026-07-10.xml"),
     ),
 )
+LEGACY_ORPHANS = (
+    {
+        "key": "kanolog-legacy:1289",
+        "site": "kanolog",
+        "source_id": "1289",
+        "url": "http://kanologue.com/wp-content/uploads/2018/06/1_vk5am1RJnG88OvMthSK15w-225x300.jpeg",
+        "download_url": "https://web.archive.org/web/20181001032234id_/http://kanologue.com/wp-content/uploads/2018/06/1_vk5am1RJnG88OvMthSK15w-225x300.jpeg",
+        "aliases": [
+            "http://kanologue.com/wp-content/uploads/2018/06/1_vk5am1RJnG88OvMthSK15w-225x300.jpeg",
+        ],
+        "filename": "1_vk5am1RJnG88OvMthSK15w-225x300.jpeg",
+        "mime_type": "image/jpeg",
+        "title": "風邪気味",
+        "alt": "",
+        "caption": "",
+        "description": "",
+        "parent_id": "492",
+        "post_date": "2018-06-08 00:00:00",
+        "post_date_gmt": "2018-06-07 15:00:00",
+        "source_metadata": {
+            "recovery_source": "Internet Archive Wayback Machine",
+            "recovery_timestamp": "20181001032234",
+        },
+    },
+)
 DEFAULT_LEDGER = REPO_ROOT / "migration/wordpress/runtime/media-ledger.json"
 WP = "http://wordpress.org/export/1.2/"
 CONTENT = "http://purl.org/rss/1.0/modules/content/"
@@ -143,6 +168,10 @@ def build_catalog(sources: Iterable[tuple[str, Path]] = SOURCES) -> tuple[list[d
         raw = source.read_bytes()
         source_rows.append({"site": site, "path": str(source), "sha256": hashlib.sha256(raw).hexdigest()})
         assets.extend(parse_wxr_attachments(site, source))
+    # One image referenced by the WXR no longer exists on its original legacy
+    # domain and is not represented as an attachment item.  Preserve the exact
+    # archived bytes as a separately audited migration source.
+    assets.extend(dict(asset) for asset in LEGACY_ORPHANS)
     return assets, source_rows
 
 
@@ -245,7 +274,7 @@ def write_json_atomic(path: Path, value: dict[str, Any]) -> None:
 
 
 def migrate_one(asset: dict[str, Any], token: str) -> dict[str, Any]:
-    source_url = network_url(asset["url"])
+    source_url = network_url(asset.get("download_url", asset["url"]))
     response = request_json(
         "/_emdash/api/import/wordpress/media",
         token,

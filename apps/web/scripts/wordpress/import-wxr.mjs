@@ -200,9 +200,10 @@ function buildAttachmentMap(wxr) {
 function normalizedMediaUrl(url) {
 	try {
 		const parsed = new URL(url);
-		parsed.search = "";
-		parsed.hash = "";
-		return parsed.toString();
+		// WordPress exports commonly mix http and https for the same upload.
+		// Media identity is the host + path; treating the scheme as identity left
+		// otherwise verified local copies pointing back at the old site.
+		return `${parsed.hostname.toLowerCase()}${parsed.pathname}`;
 	} catch {
 		return String(url).split(/[?#]/, 1)[0];
 	}
@@ -212,9 +213,30 @@ function stripWordPressSize(url) {
 	return url.replace(/-\d+x\d+(?=\.[^./?#]+$)/, "");
 }
 
+function stripWordPressDuplicateSuffix(url) {
+	return url.replace(/-\d+(?=\.[^./?#]+$)/, "");
+}
+
+function derivedMediaLookupKeys(url) {
+	const normalized = normalizedMediaUrl(url);
+	const withoutSize = stripWordPressSize(normalized);
+	return new Set([
+		withoutSize,
+		stripWordPressDuplicateSuffix(normalized),
+		stripWordPressDuplicateSuffix(withoutSize),
+	]);
+}
+
+function registerUnambiguous(map, key, mapping) {
+	const existing = map.get(key);
+	if (!existing) map.set(key, mapping);
+	else if (existing.mediaId !== mapping.mediaId) map.set(key, null);
+}
+
 export function buildMediaMappings(ledger = {}) {
 	const exact = new Map();
 	const normalized = new Map();
+	const derived = new Map();
 	for (const item of Object.values(ledger.items || {})) {
 		if (!item || item.status !== "verified" || !item.public_path || !item.media_id) continue;
 		const mapping = {
@@ -225,18 +247,23 @@ export function buildMediaMappings(ledger = {}) {
 		for (const sourceUrl of new Set([item.url, ...(item.aliases || [])])) {
 			if (typeof sourceUrl !== "string" || !sourceUrl) continue;
 			exact.set(sourceUrl, mapping);
-			const base = normalizedMediaUrl(sourceUrl);
-			normalized.set(base, mapping);
-			normalized.set(stripWordPressSize(base), mapping);
+			registerUnambiguous(normalized, normalizedMediaUrl(sourceUrl), mapping);
+			for (const key of derivedMediaLookupKeys(sourceUrl)) registerUnambiguous(derived, key, mapping);
 		}
 	}
-	return { exact, normalized };
+	return { exact, normalized, derived };
 }
 
 function findMediaMapping(url, mappings) {
-	return mappings.exact.get(url)
-		|| mappings.normalized.get(normalizedMediaUrl(url))
-		|| mappings.normalized.get(stripWordPressSize(normalizedMediaUrl(url)));
+	const exact = mappings.exact.get(url);
+	if (exact) return exact;
+	const normalized = mappings.normalized.get(normalizedMediaUrl(url));
+	if (normalized) return normalized;
+	for (const key of derivedMediaLookupKeys(url)) {
+		const mapping = mappings.derived.get(key);
+		if (mapping) return mapping;
+	}
+	return undefined;
 }
 
 export function featuredMediaValue(attachmentUrl, mappings) {

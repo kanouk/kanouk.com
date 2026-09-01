@@ -164,6 +164,51 @@ test("verified WordPress media and derived sizes become local EmDash references"
 	});
 });
 
+test("WordPress media matching tolerates legacy schemes and duplicate suffixes", () => {
+	const mappings = buildMediaMappings({
+		items: {
+			"site:42": {
+				status: "verified",
+				url: "http://example.com/wp-content/uploads/hero.jpg",
+				aliases: [],
+				public_path: "/_emdash/api/media/file/01ABC.jpg",
+				media_id: "01ABC",
+				alt: "Hero",
+			},
+		},
+	});
+	const result = rewriteMediaReferences([
+		{ _type: "image", asset: { url: "https://example.com/wp-content/uploads/hero-1.jpg" } },
+	], mappings);
+	assert.equal(result.value[0].asset._ref, "01ABC");
+	assert.equal(result.value[0].asset.url, "/_emdash/api/media/file/01ABC.jpg");
+	assert.equal(result.rewrites, 1);
+});
+
+test("an actual duplicate-suffixed attachment wins over the legacy filename heuristic", () => {
+	const mappings = buildMediaMappings({
+		items: {
+			"site:base": {
+				status: "verified",
+				url: "http://example.com/wp-content/uploads/hero.jpg",
+				public_path: "/_emdash/api/media/file/BASE.jpg",
+				media_id: "BASE",
+			},
+			"site:duplicate": {
+				status: "verified",
+				url: "http://example.com/wp-content/uploads/hero-1.jpg",
+				public_path: "/_emdash/api/media/file/DUPLICATE.jpg",
+				media_id: "DUPLICATE",
+			},
+		},
+	});
+	assert.deepEqual(featuredMediaValue("https://example.com/wp-content/uploads/hero-1.jpg", mappings), {
+		id: "DUPLICATE",
+		provider: "local",
+		alt: "",
+	});
+});
+
 test("content index follows cursors and keys entries by stored slug", async () => {
 	const calls = [];
 	const client = {
