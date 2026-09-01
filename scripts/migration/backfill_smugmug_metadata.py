@@ -11,7 +11,11 @@ import os
 from pathlib import Path
 import re
 import sys
+import time
 from typing import Any, Mapping
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote
+from urllib.request import Request, urlopen
 
 
 SCRIPT_ROOT = Path(__file__).resolve().parent
@@ -22,11 +26,11 @@ for import_root in (SCRIPT_ROOT, REPO_ROOT / "scripts/cloudflare"):
 
 from audit_smugmug import SmugMugClient, now_iso
 from build_smugmug_pilot_manifest import write_json_atomic
-from migrate_smugmug_album import get_content_by_identifier, run_emdash
-from run_emdash_kanouk import child_environment, load_credential, preflight
+from run_emdash_kanouk import EXPECTED_URL, child_environment, load_credential, preflight
 
 
 NUMBER = re.compile(r"[-+]?\d+(?:\.\d+)?")
+TRANSIENT_HTTP_STATUSES = {429, 502, 503, 504}
 
 
 def text(value: Any) -> str | None:
@@ -77,6 +81,59 @@ def metadata_fields(payload: Mapping[str, Any]) -> tuple[dict[str, Any], list[st
     return {key: value for key, value in exif.items() if value is not None}, keywords
 
 
+def emdash_request(
+    method: str,
+    path: str,
+    token: str,
+    payload: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    body = json.dumps(payload, ensure_ascii=False).encode() if payload is not None else None
+    for attempt in range(1, 6):
+        request = Request(
+            EXPECTED_URL + "/_emdash/api" + path,
+            data=body,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "User-Agent": "kanouk-smugmug-metadata-backfill/2.0",
+            },
+            method=method,
+        )
+        try:
+            with urlopen(request, timeout=45) as response:
+                value = json.load(response)
+            if not isinstance(value, dict):
+                raise RuntimeError("EmDash returned a non-object response")
+            data = value.get("data", value)
+            if not isinstance(data, dict):
+                raise RuntimeError("EmDash returned an invalid response envelope")
+            return data
+        except HTTPError as exc:
+            if attempt < 5 and exc.code in TRANSIENT_HTTP_STATUSES:
+                time.sleep(min(0.5 * 2 ** (attempt - 1), 8))
+                continue
+            detail = exc.read(500).decode(errors="replace")
+            raise RuntimeError(f"EmDash HTTP {exc.code}: {detail}") from exc
+        except (TimeoutError, URLError) as exc:
+            if attempt < 5:
+                time.sleep(min(0.5 * 2 ** (attempt - 1), 8))
+                continue
+            raise RuntimeError(f"EmDash request failed: {exc}") from exc
+    raise RuntimeError("EmDash retry loop exhausted")
+
+
+def get_photo(content_id: str, token: str) -> dict[str, Any]:
+    response = emdash_request("GET", f"/content/photos/{quote(content_id, safe='')}", token)
+    item = response.get("item")
+    if not isinstance(item, dict):
+        raise RuntimeError(f"EmDash photo is missing: {content_id}")
+    revision = response.get("_rev")
+    if isinstance(revision, str):
+        item["_rev"] = revision
+    return item
+
+
 def update_photo(
     asset: dict[str, Any],
     metadata: Mapping[str, Any],
@@ -87,9 +144,7 @@ def update_photo(
     content_id = asset.get("destination", {}).get("emdash_content_id")
     if not isinstance(content_id, str):
         return False
-    current = get_content_by_identifier("photos", content_id, env=env, token=token)
-    if current is None:
-        raise RuntimeError(f"EmDash photo is missing: {asset.get('id')}")
+    current = get_photo(content_id, token)
     data = current.get("data")
     revision = current.get("_rev")
     if not isinstance(data, dict) or not isinstance(revision, str):
@@ -105,22 +160,22 @@ def update_photo(
         return False
     source_metadata["exif"] = exif or None
     source_metadata["keywords"] = keywords or None
-    run_emdash(
-        [
-            "content",
-            "update",
-            "photos",
-            content_id,
-            "--rev",
-            revision,
-            "--data",
-            json.dumps({"source_metadata": source_metadata}, ensure_ascii=False),
-        ],
-        env,
-        token=token,
+    updated = emdash_request(
+        "PUT",
+        f"/content/photos/{quote(content_id, safe='')}",
+        token,
+        {"data": {"source_metadata": source_metadata}, "_rev": revision},
     )
-    readback = get_content_by_identifier("photos", content_id, env=env, token=token)
-    readback_source = (readback or {}).get("data", {}).get("source_metadata")
+    updated_item = updated.get("item")
+    if isinstance(updated_item, dict) and updated_item.get("draftRevisionId"):
+        emdash_request(
+            "POST",
+            f"/content/photos/{quote(content_id, safe='')}/publish",
+            token,
+            {},
+        )
+    readback = get_photo(content_id, token)
+    readback_source = readback.get("data", {}).get("source_metadata")
     if not isinstance(readback_source, dict) or readback_source.get("exif") != (
         exif or None
     ):
