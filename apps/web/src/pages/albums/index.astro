@@ -12,12 +12,10 @@ const { entries: albums, cacheHint } = await getEmDashCollection("albums", {
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 ---
 
-<Photos title="アルバム" description="kanouk.com の公開写真アルバム">
+<Photos title="アルバム" description="kanouk.com の公開アルバム一覧">
 	<section class="albums-page">
 		<header class="page-header">
-			<p class="eyebrow">PUBLIC PHOTO ARCHIVE</p>
 			<h1>アルバム</h1>
-			<p>ブログから参照する写真と、まとまりとして見せる公開アルバム。</p>
 		</header>
 
 		{albums.length === 0 ? (

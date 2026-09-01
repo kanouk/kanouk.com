@@ -13,7 +13,7 @@ export interface BlogSiteIdentitySettings {
 }
 
 const DEFAULT_SITE_TITLE = "カノログ";
-const DEFAULT_SITE_TAGLINE = "過去の記事と、インターネットに公開する写真の置き場";
+const DEFAULT_SITE_TAGLINE = "カノの生活・学習・思索ログ";
 
 export function resolveBlogSiteIdentity(settings?: BlogSiteIdentitySettings) {
 	return {
