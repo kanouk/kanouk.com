@@ -602,6 +602,23 @@ function contentBody(desired, bylineId) {
 async function upsertContent(client, record, desired, bylineId, apply, contentIds) {
 	let current = await getContent(client, desired.collection, desired.slug, contentIds);
 	if (storedMigrationItemIsConverged(current?.item, desired)) return "skipped_verified";
+	if (
+		current?.item?.status === "published"
+		&& desired.status === "published"
+		&& current.item.draftRevisionId
+		&& storedMigrationDataMatches(current.item, desired)
+	) {
+		if (!apply) return "would_publish";
+		await client.post(
+			`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}/publish`,
+			{ publishedAt: desired.publishedAt },
+		);
+		const published = await getContent(client, desired.collection, desired.slug, contentIds);
+		if (published?.item?.status !== "published" || !storedMigrationDataMatches(published.item, desired)) {
+			throw new Error(`Published content readback mismatch for ${record.source.id}:${record.post.id}`);
+		}
+		return "published_verified";
+	}
 	if (!apply) return current ? "would_update" : "would_create";
 	if (!current) {
 		const created = await client.post(`/_emdash/api/content/${desired.collection}`, contentBody(desired, bylineId));
