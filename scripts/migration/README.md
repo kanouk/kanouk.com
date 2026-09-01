@@ -4,6 +4,15 @@ These scripts aggregate source schema and usage signals without persisting post 
 
 ## Yohaku public readback
 
+Before the final production crawl, retire the seed-only public fixtures and
+localize the sidebar/taxonomy labels. The command is dry-run by default and
+soft-deletes content so the verified D1 backup can restore it if necessary:
+
+```sh
+python3 scripts/migration/finalize_staging_content.py
+python3 scripts/migration/finalize_staging_content.py --apply
+```
+
 After a staging deploy, verify the blog archive, photo archive, search, 404,
 sitemap index, response headers, and one real media response:
 

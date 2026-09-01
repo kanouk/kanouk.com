@@ -129,19 +129,19 @@
 	"taxonomies": [
 		{
 			"name": "category",
-			"label": "Categories",
-			"labelSingular": "Category",
+			"label": "カテゴリー",
+			"labelSingular": "カテゴリー",
 			"hierarchical": true,
 			"collections": ["posts"],
-			"terms": [{ "slug": "migration", "label": "Migration" }]
+			"terms": []
 		},
 		{
 			"name": "tag",
-			"label": "Tags",
-			"labelSingular": "Tag",
+			"label": "タグ",
+			"labelSingular": "タグ",
 			"hierarchical": false,
 			"collections": ["posts"],
-			"terms": [{ "slug": "staging", "label": "Staging" }]
+			"terms": []
 		}
 	],
 	"bylines": [
@@ -152,10 +152,9 @@
 			"name": "primary",
 			"label": "Primary Navigation",
 			"items": [
-				{ "type": "custom", "label": "Home", "url": "/" },
-				{ "type": "custom", "label": "Posts", "url": "/posts" },
-				{ "type": "custom", "label": "Photos", "url": "/albums" },
-				{ "type": "custom", "label": "About", "url": "/pages/about" }
+				{ "type": "custom", "label": "ホーム", "url": "/" },
+				{ "type": "custom", "label": "記事", "url": "/posts" },
+				{ "type": "custom", "label": "写真", "url": "/albums" }
 			]
 		}
 	],
@@ -165,101 +164,17 @@
 			"label": "Sidebar",
 			"description": "Widget area displayed on single post pages",
 			"widgets": [
-				{ "type": "component", "componentId": "core:search", "title": "Search" },
-				{ "type": "component", "componentId": "core:categories", "title": "Categories" },
-				{ "type": "component", "componentId": "core:tags", "title": "Tags" }
+				{ "type": "component", "componentId": "core:search", "title": "検索" },
+				{ "type": "component", "componentId": "core:categories", "title": "カテゴリー" },
+				{ "type": "component", "componentId": "core:tags", "title": "タグ" }
 			]
 		},
 		{ "name": "footer", "label": "Footer", "description": "Widget area displayed in the site footer", "widgets": [] }
 	],
 	"content": {
-		"pages": [
-			{
-				"id": "about",
-				"slug": "about",
-				"status": "published",
-				"data": {
-					"title": "About",
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [{ "_type": "span", "text": "WordPress と SmugMug からの移行を検証するためのステージングサイトです。" }]
-						}
-					]
-				}
-			}
-		],
-		"posts": [
-			{
-				"id": "staging-foundation",
-				"slug": "staging-foundation",
-				"status": "published",
-				"data": {
-					"title": "Cloudflare 移行ステージング",
-					"excerpt": "ブログと公開写真を同じ基盤で検証するための合成記事です。",
-					"source_id": "synthetic:staging-foundation",
-					"source_metadata": { "synthetic": true, "deleteBeforeProduction": true },
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [{ "_type": "span", "text": "これは本番記事ではありません。WordPress の本文、画像、旧 URL の移行経路を確認したあと削除します。" }]
-						}
-					]
-				},
-				"bylines": [{ "byline": "byline-kanouk" }],
-				"taxonomies": { "category": ["migration"], "tag": ["staging"] }
-			}
-		],
-		"albums": [
-			{
-				"id": "album-staging",
-				"slug": "staging-album",
-				"status": "published",
-				"data": {
-					"title": "Staging Album",
-					"description": "公開写真の表示・並び順・URLを確認するための合成アルバムです。",
-					"cover_image": {
-						"$media": {
-							"url": "https://raw.githubusercontent.com/kanouk/kanouk.com/main/avatar.png",
-							"alt": "kanouk.com の公開プロフィール画像",
-							"filename": "staging-album-cover.png"
-						}
-					},
-					"sort_method": "position",
-					"sort_direction": "asc",
-					"allow_downloads": false,
-					"source_album_key": "synthetic:staging-album",
-					"source_metadata": { "synthetic": true, "deleteBeforeProduction": true }
-				}
-			}
-		],
-		"photos": [
-			{
-				"id": "photo-staging-avatar",
-				"slug": "staging-avatar",
-				"status": "published",
-				"data": {
-					"title": "Staging image",
-					"kind": "image",
-					"image": {
-						"$media": {
-							"url": "https://raw.githubusercontent.com/kanouk/kanouk.com/main/avatar.png",
-							"alt": "kanouk.com の公開プロフィール画像",
-							"filename": "staging-avatar.png"
-						}
-					},
-					"alt": "kanouk.com の公開プロフィール画像",
-					"caption": "R2 への格納と写真ページ表示を確認するための、既に公開済みの画像です。",
-					"album": "$ref:album-staging",
-					"position": 1,
-					"source_system": "synthetic",
-					"source_id": "github:kanouk.com/avatar.png",
-					"source_url": "https://raw.githubusercontent.com/kanouk/kanouk.com/main/avatar.png",
-					"source_metadata": { "synthetic": true, "deleteBeforeProduction": true }
-				}
-			}
-		]
+		"pages": [],
+		"posts": [],
+		"albums": [],
+		"photos": []
 	}
 }

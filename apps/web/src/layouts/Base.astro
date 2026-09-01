@@ -80,14 +80,13 @@ const pageCtx = createPublicPageContext({
 		<header class="site-header">
 			<div class="site-header__inner">
 				<a href="/" class="site-brand" aria-label={`${siteTitle} ホーム`}>
-					{siteLogo ? (
-						<img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="site-brand__image" />
-					) : (
-						<>
-							<span class="site-brand__name">{siteTitle}</span>
-							<span class="site-brand__section">Blog</span>
-						</>
+					{siteLogo && (
+						<img src={siteLogo.url} alt="" class="site-brand__image" />
 					)}
+					<span class="site-brand__copy">
+						<span class="site-brand__name">{siteTitle}</span>
+						<span class="site-brand__tagline">{siteTagline}</span>
+					</span>
 				</a>
 
 				<nav class="site-nav" aria-label="主要ナビゲーション">

@@ -122,7 +122,42 @@ const publishDate =
 	content={{ collection: "posts", id: post.data.id, slug: post.id }}
 >
 	<article class="article">
-		{/* Hero: Full-width featured image */}
+		<header class="article-lead">
+			<div class="article-meta">
+				{
+					bylines.length > 0 && (
+						<>
+							<span class="article-meta-byline">
+								{bylines.map((credit, i) => (
+									<>
+										{i > 0 && ", "}
+										{credit.byline.displayName}
+									</>
+								))}
+							</span>
+							<span class="meta-dot" />
+						</>
+					)
+				}
+				{
+					publishDate && (
+						<>
+							<time>{publishDate}</time>
+							<span class="meta-dot" />
+						</>
+					)
+				}
+				<span>{readingTime}分</span>
+			</div>
+			<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
+			{
+				post.data.excerpt && (
+					<p class="article-excerpt" {...post.edit.excerpt}>{post.data.excerpt}</p>
+				)
+			}
+		</header>
+
+		{/* The title establishes context before the optional visual. */}
 		{
 			post.data.featured_image && (
 				<div class="article-hero" {...post.edit.featured_image}>
@@ -197,41 +232,6 @@ const publishDate =
 
 			{/* Main content */}
 			<div class="article-main">
-				<header class="article-header">
-					<div class="article-meta">
-						{
-							bylines.length > 0 && (
-								<>
-									<span class="article-meta-byline">
-										{bylines.map((credit, i) => (
-											<>
-												{i > 0 && ", "}
-												{credit.byline.displayName}
-											</>
-										))}
-									</span>
-									<span class="meta-dot" />
-								</>
-							)
-						}
-						{
-							publishDate && (
-								<>
-									<time>{publishDate}</time>
-									<span class="meta-dot" />
-								</>
-							)
-						}
-						<span>{readingTime}分</span>
-					</div>
-					<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
-					{
-						post.data.excerpt && (
-							<p class="article-excerpt" {...post.edit.excerpt}>{post.data.excerpt}</p>
-						)
-					}
-				</header>
-
 				<div class="article-content">
 					<PortableText
 						value={post.data.content}

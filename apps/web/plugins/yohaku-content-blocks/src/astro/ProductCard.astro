@@ -6,20 +6,26 @@ const actions = Array.isArray(links) && links.length > 0
 	: href
 		? [{ label, url: href }]
 		: [];
+const displayTitle = typeof title === "string" && title.trim() && title !== "商品情報"
+	? title.trim()
+	: null;
+const hasContent = Boolean(displayTitle || imageUrl || actions.length > 0);
 ---
-<aside class="yohaku-product-card">
-	{imageUrl && <img src={imageUrl} alt="" loading="lazy" />}
-	<div>
-		<p>{title || "商品情報"}</p>
-		{actions.length > 0 && (
-			<ul aria-label="購入先">
-				{actions.map((action) => (
-					<li><a href={action.url} rel="nofollow sponsored">{action.label || label} ↗</a></li>
-				))}
-			</ul>
-		)}
-	</div>
-</aside>
+{hasContent && (
+	<aside class="yohaku-product-card">
+		{imageUrl && <img src={imageUrl} alt="" loading="lazy" />}
+		<div>
+			<p>{displayTitle || "商品情報"}</p>
+			{actions.length > 0 && (
+				<ul aria-label="購入先">
+					{actions.map((action) => (
+						<li><a href={action.url} rel="nofollow sponsored">{action.label || label} ↗</a></li>
+					))}
+				</ul>
+			)}
+		</div>
+	</aside>
+)}
 <style>
 	.yohaku-product-card { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.25rem; align-items: center; margin: 2.5rem 0; padding: 1.25rem 0; border-block: 1px solid var(--color-border); }
 	img { width: 7rem; height: 7rem; object-fit: contain; background: #fff; }

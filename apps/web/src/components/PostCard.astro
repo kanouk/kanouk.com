@@ -33,16 +33,14 @@ const formattedDate = date
 	: null;
 ---
 
-<article class="post-card">
+<article class:list={["post-card", { "post-card--text-only": !featuredImage }]}>
 	<a href={href} class="card-link">
 		{
 			featuredImage ? (
 				<div class="card-image">
 					<YohakuImage image={featuredImage} crop />
 				</div>
-			) : (
-				<div class="card-placeholder" />
-			)
+			) : null
 		}
 		<div class="card-body">
 			<div class="card-meta">
