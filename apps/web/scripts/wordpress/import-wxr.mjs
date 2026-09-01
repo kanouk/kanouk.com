@@ -93,9 +93,20 @@ function sha256(value) {
 }
 
 function stableJson(value) {
-	if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
+	// Match the JSON representation that is actually sent to EmDash. Object
+	// properties whose value is undefined are omitted by JSON.stringify, while
+	// undefined array entries become null. Without the same normalization here,
+	// a successful API round-trip can look different from the in-memory source
+	// object and hide the real migration result behind a false mismatch.
+	if (Array.isArray(value)) {
+		return `[${value.map((item) => item === undefined ? "null" : stableJson(item)).join(",")}]`;
+	}
 	if (value && typeof value === "object") {
-		return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableJson(value[key])}`).join(",")}}`;
+		return `{${Object.keys(value)
+			.filter((key) => value[key] !== undefined)
+			.sort()
+			.map((key) => `${JSON.stringify(key)}:${stableJson(value[key])}`)
+			.join(",")}}`;
 	}
 	return JSON.stringify(value);
 }

@@ -71,6 +71,29 @@ test("stored migration fingerprints cannot hide sanitized portable text", () => 
 	assert.equal(storedMigrationDataMatches(stored, desired), true);
 });
 
+test("stored migration comparison follows JSON transport semantics", () => {
+	const desired = {
+		fingerprint: "same-fingerprint",
+		data: {
+			title: "Quiz",
+			source_url: "https://example.com/quiz",
+			source_id: "example:1",
+			content: [{ _type: "yohaku.quiz", title: "Quiz", description: undefined }],
+		},
+	};
+	const stored = {
+		data: {
+			title: desired.data.title,
+			source_url: desired.data.source_url,
+			source_id: desired.data.source_id,
+			source_metadata: { migration_fingerprint: desired.fingerprint },
+			content: [{ _type: "yohaku.quiz", title: "Quiz" }],
+		},
+	};
+
+	assert.equal(storedMigrationDataMatches(stored, desired), true);
+});
+
 test("verified WordPress media and derived sizes become local EmDash references", () => {
 	const mappings = buildMediaMappings({
 		items: {
