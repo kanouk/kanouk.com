@@ -239,15 +239,12 @@ export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs) {
 		]) {
 			if (candidate) addLegacyMapping(mappings, candidate, target);
 		}
-		// The old sites were consolidated before this migration. Their historical
-		// category-style permalinks therefore use kanolog.net even when the record
-		// came from the nocalog export.
-		if (record.source.id === "kanolog") {
-			addLegacyMapping(mappings, `https://kanolog.net/stream/${id}`, target);
-			addLegacyMapping(mappings, `https://kanolog.net/kanolog/${id}`, target);
-		}
-		if (record.source.id === "nocalog") {
-			addLegacyMapping(mappings, `https://kanolog.net/productivity/${id}`, target);
+		// The old sites were consolidated before this migration. Historical links
+		// can therefore use kanolog.net with any of these permalink bases even when
+		// the record came from another export. addLegacyMapping deliberately turns
+		// an ID collision into a null mapping instead of guessing.
+		for (const base of ["archives", "stream", "kanolog", "productivity"]) {
+			addLegacyMapping(mappings, `https://kanolog.net/${base}/${id}`, target);
 		}
 		const year = String(record.post.postDate || "").match(/^(\d{4})/)?.[1];
 		if (year) archiveYears.add(year);

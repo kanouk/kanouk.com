@@ -87,9 +87,31 @@ test("historically merged nocalog IDs resolve through kanolog productivity perma
 		post: { id: 3759, postType: "post", postDate: "2010-01-01 00:00:00" },
 	}];
 	const mappings = buildLegacyLinkMappings(records, [source], new Map());
-	const result = rewriteLegacySiteReferences("https://kanolog.net/productivity/3759", mappings);
-	assert.equal(result.value, "https://blog.kanouk.com/posts/focus");
-	assert.equal(result.rewrites, 1);
+	const result = rewriteLegacySiteReferences({
+		productivity: "https://kanolog.net/productivity/3759",
+		stream: "https://kanolog.net/stream/3759",
+		archive: "https://kanolog.net/archives/3759",
+	}, mappings);
+	assert.equal(result.value.productivity, "https://blog.kanouk.com/posts/focus");
+	assert.equal(result.value.stream, "https://blog.kanouk.com/posts/focus");
+	assert.equal(result.value.archive, "https://blog.kanouk.com/posts/focus");
+	assert.equal(result.rewrites, 3);
+});
+
+test("ambiguous historical merged IDs are not guessed", () => {
+	const sources = [
+		{ id: "kanolog", origin: "https://kanolog.net", wxr: { categories: [], tags: [] } },
+		{ id: "nocalog", origin: "https://nocalog.net", wxr: { categories: [], tags: [] } },
+	];
+	const records = sources.map((source, index) => ({
+		source,
+		slug: `collision-${index}`,
+		post: { id: 42, postType: "post", postDate: "2010-01-01 00:00:00" },
+	}));
+	const mappings = buildLegacyLinkMappings(records, sources, new Map());
+	const result = rewriteLegacySiteReferences("https://kanolog.net/stream/42", mappings);
+	assert.equal(result.value, "https://kanolog.net/stream/42");
+	assert.equal(result.rewrites, 0);
 });
 
 test("modified dates are preserved from WXR items", () => {
