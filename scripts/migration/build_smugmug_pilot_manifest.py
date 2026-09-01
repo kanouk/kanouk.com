@@ -84,9 +84,14 @@ def timestamp_source(value: Any) -> dict[str, str | None]:
     }
 
 
-def sanitized_asset(image: dict[str, Any], fallback_position: int) -> dict[str, Any]:
+def sanitized_asset(
+    image: dict[str, Any], fallback_position: int, *, album_key: str | None = None
+) -> dict[str, Any]:
     image_key = str(image["ImageKey"])
-    media_id = stable_id("kph", "smugmug-image", image_key)
+    collected = bool(image.get("CollectedFrom"))
+    stable_source = f"{album_key}:{image_key}" if collected and album_key else image_key
+    stable_kind = "smugmug-collected-image" if collected and album_key else "smugmug-image"
+    media_id = stable_id("kph", stable_kind, stable_source)
     filename = str(image.get("FileName") or f"{image_key}.{str(image.get('Format') or 'jpg').lower()}")
     image_format = str(image.get("Format") or "")
     is_video = bool(image.get("IsVideo"))
@@ -104,6 +109,7 @@ def sanitized_asset(image: dict[str, Any], fallback_position: int) -> dict[str, 
             "filename": filename,
             "format": image_format,
             "archived_md5": image.get("ArchivedMD5"),
+            "collected": collected,
         },
         "display": {
             "title": image.get("Title") or "",
@@ -143,7 +149,10 @@ def manifest(
     slug: str,
 ) -> dict[str, Any]:
     album_key = str(album["AlbumKey"])
-    assets = [sanitized_asset(image, index) for index, image in enumerate(images, 1)]
+    assets = [
+        sanitized_asset(image, index, album_key=album_key)
+        for index, image in enumerate(images, 1)
+    ]
     assets.sort(key=lambda item: (int(item["position"]), item["id"]))
     album_id = stable_id("kal", "smugmug-album", album_key)
     return {
@@ -191,13 +200,25 @@ def merge_verified_progress(
     ).get("source", {}).get("album_key"):
         raise ValueError("Existing manifest belongs to a different SmugMug album")
     existing_assets = {item.get("id"): item for item in existing.get("assets", [])}
+    existing_assets_by_source = {
+        (
+            item.get("source", {}).get("image_key"),
+            item.get("source", {}).get("archived_md5"),
+        ): item
+        for item in existing.get("assets", [])
+    }
     existing_album_content_id = (
         existing.get("album", {}).get("destination", {}).get("emdash_content_id")
     )
     if existing_album_content_id:
         fresh["album"]["destination"]["emdash_content_id"] = existing_album_content_id
     for asset in fresh.get("assets", []):
-        previous = existing_assets.get(asset.get("id"))
+        previous = existing_assets.get(asset.get("id")) or existing_assets_by_source.get(
+            (
+                asset.get("source", {}).get("image_key"),
+                asset.get("source", {}).get("archived_md5"),
+            )
+        )
         if not previous:
             continue
         same_source = (
@@ -208,6 +229,13 @@ def merge_verified_progress(
         )
         if not same_source:
             continue
+        asset["id"] = previous.get("id", asset.get("id"))
+        for path_key in ("photo_path", "media_path"):
+            path_value = previous.get("destination", {}).get(path_key) or asset.get(
+                "destination", {}
+            ).get(path_key)
+            if path_value:
+                asset["destination"][path_key] = path_value
         for key in (
             "r2_object_key",
             "emdash_media_id",

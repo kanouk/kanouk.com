@@ -50,6 +50,14 @@ class SmugMugPilotManifestTests(unittest.TestCase):
         self.assertNotIn("Longitude", serialized)
         self.assertEqual(asset["source"]["archived_md5"], "d41d8cd98f00b204e9800998ecf8427e")
 
+    def test_collected_asset_uses_album_scoped_stable_id(self) -> None:
+        image = self.sample()
+        image["CollectedFrom"] = {"Uri": "/api/v2/image/original"}
+        first = manifest_module.sanitized_asset(image, 1, album_key="album-a")
+        second = manifest_module.sanitized_asset(image, 1, album_key="album-b")
+        self.assertNotEqual(first["id"], second["id"])
+        self.assertTrue(first["source"]["collected"])
+
     def test_manifest_has_fixed_url_contract_and_source_order(self) -> None:
         first = self.sample()
         first["ImageKey"] = "first"
@@ -113,6 +121,43 @@ class SmugMugPilotManifestTests(unittest.TestCase):
         self.assertEqual(merged["assets"][0]["destination"]["r2_object_key"], "object.jpg")
         self.assertEqual(merged["assets"][0]["destination"]["poster_media_id"], "poster-id")
         self.assertEqual(merged["assets"][0]["verification"]["sha256"], "sha")
+
+    def test_regeneration_preserves_existing_id_when_collected_state_changes(self) -> None:
+        album = {"source": {"album_key": "album"}}
+        fresh = {
+            "album": album,
+            "assets": [
+                {
+                    "id": "new-context-id",
+                    "source": {"image_key": "image", "archived_md5": "md5"},
+                    "destination": {
+                        "photo_path": "/photos/new-context-id",
+                        "media_path": "/media/new-context-id",
+                    },
+                    "verification": {"source_md5_verified": False},
+                }
+            ],
+        }
+        existing = {
+            "album": album,
+            "assets": [
+                {
+                    "id": "published-id",
+                    "source": {"image_key": "image", "archived_md5": "md5"},
+                    "destination": {
+                        "photo_path": "/photos/published-id",
+                        "media_path": "/media/published-id",
+                    },
+                    "verification": {"source_md5_verified": False},
+                }
+            ],
+        }
+        merged = manifest_module.merge_verified_progress(fresh, existing)
+        self.assertEqual(merged["assets"][0]["id"], "published-id")
+        self.assertEqual(
+            merged["assets"][0]["destination"]["photo_path"],
+            "/photos/published-id",
+        )
 
 
 if __name__ == "__main__":
