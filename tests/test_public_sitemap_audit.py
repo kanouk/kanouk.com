@@ -45,6 +45,12 @@ class PublicSitemapAuditTests(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertTrue(module.FORBIDDEN[name].search(sample))
 
+    def test_public_crawl_retries_transient_not_found_and_worker_errors(self) -> None:
+        self.assertIn(404, module.RETRY_STATUSES)
+        self.assertIn(500, module.RETRY_STATUSES)
+        self.assertIn(524, module.RETRY_STATUSES)
+        self.assertEqual(module.MAX_FETCH_ATTEMPTS, 5)
+
 
 if __name__ == "__main__":
     unittest.main()

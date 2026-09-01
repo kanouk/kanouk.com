@@ -18,7 +18,8 @@ from xml.etree import ElementTree
 
 
 USER_AGENT = "kanouk-full-public-audit/1.0"
-TRANSIENT_STATUSES = {429, 502, 503, 504}
+RETRY_STATUSES = {404, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524}
+MAX_FETCH_ATTEMPTS = 5
 FORBIDDEN = {
     "wordpress_upload": re.compile(
         rb"(?:kanolog\.net|nocalog\.net|kanologue\.com)/wp-content/uploads",
@@ -70,7 +71,7 @@ class Failure:
 def fetch(
     url: str, *, max_bytes: int = 4 * 1024 * 1024
 ) -> tuple[int, Mapping[str, str], bytes, str]:
-    for attempt in range(1, 4):
+    for attempt in range(1, MAX_FETCH_ATTEMPTS + 1):
         try:
             with urlopen(
                 Request(
@@ -89,14 +90,14 @@ def fetch(
                     response.geturl(),
                 )
         except HTTPError as exc:
-            if attempt < 3 and exc.code in TRANSIENT_STATUSES:
-                time.sleep(0.5 * attempt)
+            if attempt < MAX_FETCH_ATTEMPTS and exc.code in RETRY_STATUSES:
+                time.sleep(min(0.75 * (2 ** (attempt - 1)), 4.0))
                 continue
             return exc.code, dict(exc.headers.items()), exc.read(max_bytes), url
         except (TimeoutError, URLError, OSError):
-            if attempt == 3:
+            if attempt == MAX_FETCH_ATTEMPTS:
                 raise
-            time.sleep(0.5 * attempt)
+            time.sleep(min(0.75 * (2 ** (attempt - 1)), 4.0))
     raise RuntimeError("fetch retry loop exhausted")
 
 
@@ -150,7 +151,7 @@ def main() -> None:
         "--base-url",
         default="https://kanouk-emdash-staging.kanouk.workers.dev",
     )
-    parser.add_argument("--concurrency", type=int, default=12)
+    parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument(
         "--expect-preview-noindex",
         action=argparse.BooleanOptionalAction,
@@ -164,8 +165,8 @@ def main() -> None:
     )
     parser.add_argument("--output")
     args = parser.parse_args()
-    if args.concurrency < 1 or args.concurrency > 16:
-        raise SystemExit("--concurrency must be between 1 and 16")
+    if args.concurrency < 1 or args.concurrency > 8:
+        raise SystemExit("--concurrency must be between 1 and 8")
     base_url = args.base_url.rstrip("/")
     parsed_base = urlparse(base_url)
     if parsed_base.scheme not in {"http", "https"} or not parsed_base.netloc:
