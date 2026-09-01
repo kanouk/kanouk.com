@@ -83,6 +83,8 @@ def main() -> None:
             digest.update(chunk)
     size_uri = ((image.get("Uris") or {}).get("ImageSizeDetails") or {}).get("Uri")
     size_details = client.get(size_uri) if size_uri else {}
+    metadata_uri = ((image.get("Uris") or {}).get("ImageMetadata") or {}).get("Uri")
+    metadata = client.get(metadata_uri) if metadata_uri else {}
     print(
         json.dumps(
             {
@@ -96,6 +98,7 @@ def main() -> None:
                 == str(image.get("ArchivedMD5") or "").lower(),
                 "magic_hex": first_bytes.hex(),
                 "size_details_shape": shape(size_details),
+                "metadata_shape": shape(metadata),
             },
             ensure_ascii=False,
             indent=2,
