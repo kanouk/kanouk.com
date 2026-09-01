@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import math
 import os
@@ -131,9 +132,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog", type=Path, required=True)
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--concurrency", type=int, default=6)
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--continue-on-error", action="store_true")
     args = parser.parse_args()
+    if args.concurrency < 1 or args.concurrency > 12:
+        raise SystemExit("--concurrency must be between 1 and 12")
     catalog = json.loads(args.catalog.read_text())
     manifests = [
         (args.catalog.parent / row["manifest"]).resolve()
@@ -184,31 +188,42 @@ def main() -> None:
             str(image.get("ImageKey")): image
             for image in client.paged(images_uri, "AlbumImage")
         }
-        for asset in selected_assets:
-            try:
-                image_key = str(asset.get("source", {}).get("image_key"))
-                live = live_assets.get(image_key)
-                metadata_uri = ((live or {}).get("Uris") or {}).get(
-                    "ImageMetadata", {}
-                ).get("Uri")
-                if not metadata_uri:
-                    raise RuntimeError(f"SmugMug metadata is unavailable: {asset.get('id')}")
-                changed = update_photo(
-                    asset,
-                    client.get(metadata_uri),
-                    env=env,
-                    token=credential["token"],
-                )
-                verification = asset.setdefault("verification", {})
-                verification["metadata_backfilled_at"] = now_iso()
-                write_json_atomic(manifest_path, manifest)
-                counts["updated" if changed else "unchanged"] += 1
-                print(f"{asset.get('id')}: {'updated' if changed else 'unchanged'}", flush=True)
-            except Exception as exc:
-                counts["failed"] += 1
-                print(f"{asset.get('id')}: failed: {exc}", flush=True)
-                if not args.continue_on_error:
-                    raise
+        def process_asset(asset: dict[str, Any]) -> tuple[dict[str, Any], bool, str]:
+            image_key = str(asset.get("source", {}).get("image_key"))
+            live = live_assets.get(image_key)
+            metadata_uri = ((live or {}).get("Uris") or {}).get(
+                "ImageMetadata", {}
+            ).get("Uri")
+            if not metadata_uri:
+                raise RuntimeError(f"SmugMug metadata is unavailable: {asset.get('id')}")
+            changed = update_photo(
+                asset,
+                client.get(metadata_uri),
+                env=env,
+                token=credential["token"],
+            )
+            return asset, changed, now_iso()
+
+        with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+            futures = {executor.submit(process_asset, asset): asset for asset in selected_assets}
+            for future in as_completed(futures):
+                asset = futures[future]
+                try:
+                    _, changed, backfilled_at = future.result()
+                    verification = asset.setdefault("verification", {})
+                    verification["metadata_backfilled_at"] = backfilled_at
+                    # Checkpoint only from the main thread so concurrent assets
+                    # cannot overwrite each other's manifest progress.
+                    write_json_atomic(manifest_path, manifest)
+                    counts["updated" if changed else "unchanged"] += 1
+                    print(f"{asset.get('id')}: {'updated' if changed else 'unchanged'}", flush=True)
+                except Exception as exc:
+                    counts["failed"] += 1
+                    print(f"{asset.get('id')}: failed: {exc}", flush=True)
+                    if not args.continue_on_error:
+                        for pending_future in futures:
+                            pending_future.cancel()
+                        raise
     print(json.dumps({"apply": True, **counts}, ensure_ascii=False))
 
 
