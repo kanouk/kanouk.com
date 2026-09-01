@@ -33,6 +33,16 @@ test("converts a theme balloon to semantic dialogue deterministically", () => {
 	assert.equal(first[0].body, "Hello");
 });
 
+test("keeps a theme post link site-scoped until canonical URL resolution", () => {
+	const post = {
+		id: 11,
+		content: '<!-- wp:loos/post-link {"postId":"42","postTitle":"関連記事"} /-->',
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0]._type, "yohaku.linkCard");
+	assert.equal(blocks[0].id, "wordpress://test/post/42");
+});
+
 test("converts classic artwork metadata tables to portable tables", () => {
 	const post = {
 		id: 2,

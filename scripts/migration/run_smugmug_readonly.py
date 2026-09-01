@@ -24,6 +24,7 @@ ALLOWED_SCRIPTS = {
     "download_smugmug_pilot_asset.py",
     "migrate_smugmug_album.py",
     "migrate_smugmug_catalog.py",
+    "resume_smugmug_owner_migration.py",
     "select_smugmug_pilot.py",
 }
 

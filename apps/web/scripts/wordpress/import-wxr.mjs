@@ -225,6 +225,13 @@ function addLegacyMapping(mappings, source, target) {
 	else if (existing !== target) mappings.set(key, null);
 }
 
+function addExactLegacyMapping(mappings, source, target) {
+	const key = source.toLowerCase();
+	const existing = mappings.get(key);
+	if (!existing) mappings.set(key, target);
+	else if (existing !== target) mappings.set(key, null);
+}
+
 export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs) {
 	const mappings = new Map();
 	const archiveYears = new Set();
@@ -239,6 +246,14 @@ export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs) {
 		]) {
 			if (candidate) addLegacyMapping(mappings, candidate, target);
 		}
+		addExactLegacyMapping(
+			mappings,
+			`wordpress://${record.source.id}/post/${id}`,
+			target,
+		);
+		// Older migration runs emitted a site-less pseudo URL. Keep it resolvable
+		// only when the numeric WordPress ID is unambiguous across every source.
+		addExactLegacyMapping(mappings, `wordpress://post/${id}`, target);
 		// The old sites were consolidated before this migration. Historical links
 		// can therefore use kanolog.net with any of these permalink bases even when
 		// the record came from another export. addLegacyMapping deliberately turns
@@ -284,7 +299,16 @@ export function rewriteLegacySiteReferences(value, mappings) {
 	let rewrites = 0;
 	const visit = (node) => {
 		if (typeof node === "string") {
-			return node.replace(
+			const pseudoResolved = node.replace(
+				/wordpress:\/\/(?:[a-z0-9_-]+\/)?post\/\d+/gi,
+				(raw) => {
+					const target = mappings.get(raw.toLowerCase());
+					if (!target) return raw;
+					rewrites++;
+					return target;
+				},
+			);
+			return pseudoResolved.replace(
 				/https?:\/\/(?:www\.)?(?:kanolog\.net|nocalog\.net|art-quiz\.com)[^\s"'<>]*/gi,
 				(raw) => {
 					const trailing = raw.match(/[),.;:!?]+$/)?.[0] || "";

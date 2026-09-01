@@ -21,6 +21,7 @@ USER_AGENT = "kanouk-full-public-audit/1.0"
 RETRY_STATUSES = {404, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524}
 MAX_FETCH_ATTEMPTS = 5
 FORBIDDEN = {
+    "wordpress_pseudo_url": re.compile(rb"wordpress://", re.IGNORECASE),
     "wordpress_upload": re.compile(
         rb"(?:kanolog\.net|nocalog\.net|kanologue\.com)/wp-content/uploads",
         re.IGNORECASE,

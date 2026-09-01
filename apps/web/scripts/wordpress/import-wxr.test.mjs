@@ -75,6 +75,26 @@ test("legacy post, archive, category, and tag links resolve to canonical targets
 	assert.equal(result.rewrites, 8);
 });
 
+test("semantic internal link cards resolve site-scoped WordPress IDs", () => {
+	const sources = [
+		{ id: "kanolog", origin: "https://kanolog.net", wxr: { categories: [], tags: [] } },
+		{ id: "nocalog", origin: "https://nocalog.net", wxr: { categories: [], tags: [] } },
+	];
+	const records = sources.map((source, index) => ({
+		source,
+		slug: `${source.id}-post`,
+		post: { id: 42, postType: "post", postDate: "2010-01-01 00:00:00" },
+	}));
+	const mappings = buildLegacyLinkMappings(records, sources, new Map());
+	const result = rewriteLegacySiteReferences({
+		scoped: "wordpress://nocalog/post/42",
+		ambiguousLegacy: "wordpress://post/42",
+	}, mappings);
+	assert.equal(result.value.scoped, "https://blog.kanouk.com/posts/nocalog-post");
+	assert.equal(result.value.ambiguousLegacy, "wordpress://post/42");
+	assert.equal(result.rewrites, 1);
+});
+
 test("historically merged nocalog IDs resolve through kanolog productivity permalinks", () => {
 	const source = {
 		id: "nocalog",

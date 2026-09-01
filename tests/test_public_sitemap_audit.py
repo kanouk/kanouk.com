@@ -35,6 +35,7 @@ class PublicSitemapAuditTests(unittest.TestCase):
 
     def test_forbidden_patterns_cover_migration_residue(self) -> None:
         samples = {
+            "wordpress_pseudo_url": b'href="wordpress://nocalog/post/42"',
             "wordpress_upload": b"https://kanolog.net/wp-content/uploads/a.jpg",
             "smugmug": b"https://kanolog.smugmug.com/gallery",
             "legacy_site_link": b'<a href="https://art-quiz.com/sample">',

@@ -153,7 +153,9 @@ export function convertPostContent(post, context) {
 		"loos/post-link": (block, _options, tools) => [{
 			_type: "yohaku.linkCard",
 			_key: tools.generateKey(),
-			id: block.attrs.postId ? `wordpress://post/${block.attrs.postId}` : undefined,
+			id: block.attrs.postId
+				? `wordpress://${context.siteId}/post/${block.attrs.postId}`
+				: undefined,
 			title: String(block.attrs.postTitle || "関連記事"),
 		}],
 		"jin-gb-block/blog-card": (block, _options, tools) => [{

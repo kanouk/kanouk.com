@@ -42,6 +42,44 @@ python3 scripts/migration/verify_public_site.py \
 
 host分離後は、汎用monitorに加えてblog hostへphoto route、photos hostへblog routeを送ったときの308とLocationも確認します。
 
+## SmugMug owner OAuth後の再開
+
+公開APIだけで原本一致まで確認できなかったassetだけを再開します。認証値はPrivate Vaultの`10_sensitive`からallowlist runnerが子processへ渡し、標準出力やGitへ出しません。
+
+認証前のpreflightは書き込みを行わず、現在は5 album／236 assetを選択します。
+
+```sh
+cd /Users/kanouk/projects/kanouk.com
+python3 scripts/migration/run_smugmug_readonly.py \
+  resume_smugmug_owner_migration.py \
+  --catalog migration/smugmug/catalog.json
+```
+
+ユーザー同席時に一度だけFull / Readを許可し、表示された6桁コードをterminalへ入力します。
+
+```sh
+python3 scripts/migration/authorize_smugmug_owner.py
+```
+
+その後、preflightの`owner_credentials`が`ready`であることを確認してから再開します。コマンドは`pending_owner_auth`を含むalbumだけを選び、既にverifiedのassetは再uploadしません。
+
+```sh
+python3 scripts/migration/run_smugmug_readonly.py \
+  resume_smugmug_owner_migration.py \
+  --catalog migration/smugmug/catalog.json \
+  --apply --concurrency 2
+
+python3 scripts/migration/run_smugmug_readonly.py \
+  backfill_smugmug_metadata.py \
+  --catalog migration/smugmug/catalog.json \
+  --apply --continue-on-error
+
+python3 scripts/migration/report_smugmug_migration.py \
+  --catalog migration/smugmug/catalog.json
+```
+
+reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true`になるまで完了扱いにしません。owner APIで公開catalog外のalbumが見えても自動追加・公開せず、40公開albumとの全件性比較だけを記録します。成功後にWordPress全件再import、全sitemap監査、backup／restore drillをもう一度実行します。
+
 ## 切替後の監視時点
 
 | 時点 | 必須確認 |
