@@ -69,6 +69,11 @@ TAXONOMY_LABELS = {
     "tag": ("タグ", "タグ"),
 }
 
+SYNTHETIC_TERMS = {
+    "migration": ("category", "Migration"),
+    "staging": ("tag", "Staging"),
+}
+
 
 def finalize(client: QueryClient, *, apply: bool, now: str | None = None) -> dict[str, Any]:
     timestamp = now or datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
@@ -84,6 +89,28 @@ def finalize(client: QueryClient, *, apply: bool, now: str | None = None) -> dic
                 f"UPDATE {table} SET status='draft',deleted_at=?,updated_at=? WHERE id=? AND deleted_at IS NULL",
                 [timestamp, timestamp, rows[0]["id"]],
             )
+
+    seed_terms: list[dict[str, Any]] = []
+    for slug, (name, label) in SYNTHETIC_TERMS.items():
+        rows = client.query(
+            "SELECT id,name,slug,label FROM taxonomies WHERE name=? AND slug=? AND label=?",
+            [name, slug, label],
+        )
+        if len(rows) > 1:
+            raise RuntimeError(f"Refusing to remove duplicate synthetic taxonomy term: {name}/{slug}")
+        seed_terms.extend(rows)
+    if seed_terms:
+        post_ids = {row["id"] for row in fixtures["posts"]}
+        for term in seed_terms:
+            assignments = client.query(
+                "SELECT collection,entry_id FROM content_taxonomies WHERE taxonomy_id=?",
+                [term["id"]],
+            )
+            if any(row.get("collection") != "posts" or row.get("entry_id") not in post_ids for row in assignments):
+                raise RuntimeError("Refusing to remove a synthetic term assigned to non-fixture content")
+            if apply:
+                client.query("DELETE FROM content_taxonomies WHERE taxonomy_id=?", [term["id"]])
+                client.query("DELETE FROM taxonomies WHERE id=?", [term["id"]])
 
     widgets = client.query(
         "SELECT w.id,w.component_id,w.title FROM _emdash_widgets w "
@@ -125,6 +152,12 @@ def finalize(client: QueryClient, *, apply: bool, now: str | None = None) -> dic
         )
         if any(row.get("title") != WIDGET_TITLES.get(row.get("component_id")) for row in readback_widgets):
             raise RuntimeError("Localized widget readback failed")
+        for slug, (name, label) in SYNTHETIC_TERMS.items():
+            if client.query(
+                "SELECT id FROM taxonomies WHERE name=? AND slug=? AND label=?",
+                [name, slug, label],
+            ):
+                raise RuntimeError(f"Synthetic taxonomy readback failed: {name}/{slug}")
 
     return {
         "apply": apply,
@@ -142,6 +175,7 @@ def finalize(client: QueryClient, *, apply: bool, now: str | None = None) -> dic
             (row.get("label"), row.get("label_singular")) != TAXONOMY_LABELS[row["name"]]
             for row in taxonomies
         ),
+        "synthetic_terms": len(seed_terms),
     }
 
 

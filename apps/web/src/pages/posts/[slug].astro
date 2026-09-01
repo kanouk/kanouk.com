@@ -3,14 +3,15 @@ import {
 	getEmDashEntry,
 	getEmDashCollection,
 	getTermsForEntries,
+	getTaxonomyTerms,
 	getSeoMeta,
 	getSiteSettings,
 } from "emdash";
 import {
 	PortableText,
-	WidgetArea,
 } from "emdash/ui";
 import { Comments, CommentForm } from "emdash/ui/comments";
+import { Search } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
@@ -80,6 +81,19 @@ const readingTime = getReadingTime(post.data.content);
 // This post's tags are already hydrated onto the entry by getEmDashEntry —
 // no extra query needed.
 const tags = post.data.terms?.tag ?? [];
+
+type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
+function flattenTerms(terms: SidebarTerm[]): SidebarTerm[] {
+	return terms.flatMap((term) => [term, ...flattenTerms(term.children)]);
+}
+const [categoryTerms, tagTerms] = await Promise.all([
+	getTaxonomyTerms("category", { includeCounts: true }),
+	getTaxonomyTerms("tag", { includeCounts: true }),
+]);
+const sidebarCategories = flattenTerms(categoryTerms).filter((term) => (term.count ?? 0) > 0);
+const sidebarTags = flattenTerms(tagTerms)
+	.filter((term) => (term.count ?? 0) > 0)
+	.slice(0, 20);
 
 // Fetch a few extra recent posts in case the current post is among them.
 const { entries: recentPosts } = await getEmDashCollection("posts", {
@@ -245,7 +259,7 @@ const publishDate =
 				</div>
 			</div>
 
-			{/* Right gutter: TOC + Sidebar widgets */}
+			{/* Right gutter: TOC + compact content discovery */}
 			<aside class="article-sidebar">
 				<div class="sidebar-sticky">
 					<nav class="toc" aria-label="目次">
@@ -255,7 +269,52 @@ const publishDate =
 						</div>
 					</nav>
 					<div class="sidebar-widgets">
-						<WidgetArea name="sidebar" />
+						<section class="widget">
+							<h3 class="widget__title">検索</h3>
+							<div class="widget__content">
+								<form method="get" action="/search" class="widget-search">
+									<input
+										type="search"
+										name="q"
+										placeholder="記事を検索"
+										aria-label="記事を検索"
+										class="widget-search__input"
+									/>
+									<button type="submit" class="widget-search__button" aria-label="検索する">
+										<Search size={15} strokeWidth={1.8} aria-hidden="true" />
+									</button>
+								</form>
+							</div>
+						</section>
+						{sidebarCategories.length > 0 && (
+							<section class="widget">
+								<h3 class="widget__title">カテゴリー</h3>
+								<div class="widget__content">
+									<ul class="widget-categories">
+										{sidebarCategories.map((category) => (
+											<li>
+												<a href={`/category/${category.slug}`} class="widget-categories__link">
+													{category.label}
+												</a>
+												<span class="widget-categories__count">{category.count}</span>
+											</li>
+										))}
+									</ul>
+								</div>
+							</section>
+						)}
+						{sidebarTags.length > 0 && (
+							<section class="widget">
+								<h3 class="widget__title">タグ</h3>
+								<div class="widget__content">
+									<ul class="widget-tags__cloud">
+										{sidebarTags.map((tag) => (
+											<li><a href={`/tag/${tag.slug}`} class="widget-tags__link">{tag.label}</a></li>
+										))}
+									</ul>
+								</div>
+							</section>
+						)}
 					</div>
 				</div>
 			</aside>
