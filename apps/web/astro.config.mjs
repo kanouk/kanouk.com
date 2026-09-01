@@ -28,7 +28,9 @@ export default defineConfig({
 			provider: fontProviders.google(),
 			name: "Noto Sans JP",
 			cssVariable: "--font-body",
-			weights: [400, 500, 600, 700],
+			// Two deliberate weights keep the Japanese hierarchy clear without
+			// multiplying every Unicode-subset request on long articles.
+			weights: [400, 600],
 			fallbacks: ["Hiragino Sans", "Yu Gothic", "sans-serif"],
 		},
 		{

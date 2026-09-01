@@ -61,6 +61,24 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn('font-feature-settings: "palt" 0', headings.group(1))
         self.assertIn("letter-spacing: 0.01em", headings.group(1))
 
+    def test_cms_images_publish_a_css_aspect_ratio_before_decode(self) -> None:
+        component = (WEB_ROOT / "src/components/YohakuImage.astro").read_text()
+        css = (WEB_ROOT / "src/styles/theme.css").read_text()
+        self.assertIn("const aspectRatio = width && height ? width / height", component)
+        self.assertIn("--yohaku-image-ratio:${aspectRatio}", component)
+        self.assertIn('class:list={["yohaku-image", className]}', component)
+        self.assertIn("aspect-ratio: var(--yohaku-image-ratio, auto)", css)
+
+    def test_japanese_font_hierarchy_uses_only_two_network_weights(self) -> None:
+        config = (WEB_ROOT / "astro.config.mjs").read_text()
+        noto = re.search(
+            r'name:\s*"Noto Sans JP"(?P<body>.*?)(?:\n\s*\},)',
+            config,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(noto)
+        self.assertIn("weights: [400, 600]", noto.group("body"))
+
 
 if __name__ == "__main__":
     unittest.main()

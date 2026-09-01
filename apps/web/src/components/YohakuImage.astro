@@ -13,6 +13,7 @@ const { image, alt, class: className, priority = false, crop = false } = Astro.p
 const value = typeof image === "string" ? { id: "", src: image } : image;
 const width = value?.width;
 const height = value?.height;
+const aspectRatio = width && height ? width / height : undefined;
 const storageKey = value?.meta?.storageKey;
 const legacyUrl = (value as (MediaValue & { url?: string }) | null | undefined)?.url;
 const src =
@@ -37,9 +38,10 @@ const cropSafely = crop && !lowResolution;
 			loading={priority ? "eager" : "lazy"}
 			fetchpriority={priority ? "high" : undefined}
 			decoding="async"
-			class={className}
+			class:list={["yohaku-image", className]}
 			data-fit={cropSafely ? "crop" : "preserve"}
 			data-low-resolution={lowResolution ? "true" : undefined}
+			style={aspectRatio ? `--yohaku-image-ratio:${aspectRatio}` : undefined}
 		/>
 	)
 }

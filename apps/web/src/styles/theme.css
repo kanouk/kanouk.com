@@ -143,6 +143,7 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote { margin: 0;
 ul, ol { padding: 0; }
 img, svg, video, canvas, iframe { display: block; max-width: 100%; }
 img, video { height: auto; }
+.yohaku-image { aspect-ratio: var(--yohaku-image-ratio, auto); }
 button, input, textarea, select { color: inherit; font: inherit; }
 button { cursor: pointer; }
 
@@ -304,7 +305,7 @@ main:focus { outline: none; }
 .site-footer { border-top: 1px solid var(--rule); }
 .site-footer__inner { width: min(100%, var(--wide)); margin-inline: auto; padding: var(--space-8) var(--gutter) var(--space-6); }
 .site-footer__lead { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(15rem, 2fr); gap: var(--space-6); align-items: baseline; }
-.site-footer__brand { color: var(--ink); font-size: 1rem; font-weight: 700; letter-spacing: -0.025em; text-decoration: none; }
+.site-footer__brand { color: var(--ink); font-size: 1rem; font-weight: 600; letter-spacing: -0.025em; text-decoration: none; }
 .site-footer__lead p { max-width: 42rem; color: var(--ink-soft); font-size: var(--step--1); }
 .site-footer__nav { display: grid; grid-template-columns: repeat(2, minmax(9rem, 1fr)); gap: var(--space-7); width: min(100%, 32rem); margin: var(--space-7) 0 var(--space-8) auto; }
 .site-footer__nav > div { display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; }
@@ -664,7 +665,7 @@ main:focus { outline: none; }
 .photo-brand__mark { display: grid; width: 2rem; height: 2rem; border: 1px solid var(--rule); color: var(--accent-strong); place-items: center; transition: border-color 180ms ease, transform 180ms ease; }
 .photo-brand:hover .photo-brand__mark { border-color: var(--accent); transform: rotate(12deg); }
 .photo-brand__copy { display: inline-flex; align-items: baseline; gap: 0.55rem; }
-.photo-brand__copy > span { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.025em; }
+.photo-brand__copy > span { font-size: 0.98rem; font-weight: 600; letter-spacing: -0.025em; }
 .photo-brand small { color: var(--ink-muted); font-family: var(--font-code); font-size: 0.63rem; letter-spacing: 0.11em; text-transform: uppercase; }
 .site-switcher { display: flex; gap: var(--space-5); }
 .site-switcher a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--ink-soft); font-size: var(--step--1); text-decoration: none; }
