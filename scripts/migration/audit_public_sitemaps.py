@@ -263,6 +263,7 @@ def main() -> None:
     report = {
         "verified": not failures,
         "base_url": base_url,
+        "allowed_smugmug_ids": sorted(set(args.allow_smugmug_id)),
         "child_sitemaps": len(child_sitemaps),
         "public_pages": len(pages),
         "internal_links": len(internal_links),

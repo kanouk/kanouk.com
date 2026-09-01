@@ -139,6 +139,7 @@ SmugMug API / OAuth ──┘                    └ media (R2) ─────�
 ## 未確定部分
 
 - SmugMugの`pending_owner_auth`は、ユーザー同席時のFull/Read OAuth後に原本一致を確定する。
-- WordPress添付2,027件とSmugMugアセット2,168件は全件転送・readback照合の進行中。
-- 全media確定後に1,854コンテンツを再importし、旧WordPress / SmugMug参照を同時に固定URLへ置換する。
+- WordPressはWXR添付2,027件とarchiveから回収した1件、合計2,028件を全件転送・readback照合済み。1,854コンテンツの再importも全件`skipped_verified`、失敗0で冪等性を確認済み。
+- SmugMugは2,168件中1,932件を転送・readback照合済み。残る236件は5アルバムのowner OAuth待ちで、2025-02京都記事のSmugMug 9参照だけが未置換。
+- owner OAuth後に該当5アルバムを再開し、その結果で1,854コンテンツを再importしてSmugMug 9参照を固定URLへ置換する。
 - custom domainのDNS切替は未実施であり、最終監査後もユーザーの明示指示なしには行わない。

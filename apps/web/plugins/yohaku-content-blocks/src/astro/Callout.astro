@@ -9,7 +9,7 @@ const { title, body, content, tone = "note" } = Astro.props.node;
 <style>
 	.yohaku-callout { margin: 2.25rem 0; padding: 1.15rem 1.25rem; border-block: 1px solid var(--color-border); color: var(--color-text-secondary); }
 	.yohaku-callout.is-tip { border-top-color: var(--color-brand); }
-	.yohaku-callout.is-caution { border-top-color: #a15d44; }
+	.yohaku-callout.is-caution { border-top-color: var(--color-danger); }
 	.yohaku-callout-title { margin: 0 0 0.45rem; color: var(--color-text); font-size: 0.78rem; font-weight: 650; letter-spacing: 0.08em; }
 	.yohaku-callout :global(p:first-child) { margin-top: 0; }
 	.yohaku-callout :global(p:last-child) { margin-bottom: 0; }

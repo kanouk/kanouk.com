@@ -31,6 +31,7 @@
 		--color-surface: light-dark(#f7f7f7, #181818);
 		--color-brand: light-dark(#0066cc, #4d9fff);
 		--color-brand-hover: light-dark(#0052a3, #6eb0ff);
+		--color-danger: light-dark(#984f42, #e0a090);
 		--color-on-brand: white;
 		--color-brand-ring: color-mix(in srgb, var(--color-brand) 25%, transparent);
 
@@ -141,6 +142,7 @@
 			--color-surface: #f7f7f7;
 			--color-brand: #0066cc;
 			--color-brand-hover: #0052a3;
+			--color-danger: #984f42;
 		}
 	}
 }

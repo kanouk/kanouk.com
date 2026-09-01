@@ -66,6 +66,7 @@
 	--color-surface: var(--paper-raised);
 	--color-brand: var(--accent);
 	--color-brand-hover: var(--accent-strong);
+	--color-danger: var(--danger);
 	--color-on-brand: var(--paper-raised);
 	--font-heading: var(--font-body);
 	--content-width: var(--measure);
@@ -91,6 +92,7 @@
 		--accent-soft: #1c3441;
 		--focus: #8fc7ff;
 		--photo-stage: #080908;
+		--danger: #e0a090;
 	}
 }
 
@@ -109,6 +111,7 @@
 	--accent-soft: #1c3441;
 	--focus: #8fc7ff;
 	--photo-stage: #080908;
+	--danger: #e0a090;
 }
 
 :root[data-theme="light"] { color-scheme: light; }
