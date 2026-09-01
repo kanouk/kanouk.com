@@ -102,7 +102,7 @@ python3 ../../scripts/cloudflare/run_emdash_migration_kanouk.py \
 - desktop / 390x844 mobileでblog homeとphoto pageを目視確認
 - EmDash adminへ作成済みpasskeyでサインインし、管理者名「カノ」と公開byline「カノ」を確認
 
-本番DNS、custom domain、WordPress、SmugMugには変更を加えていません。
+`kanouk.com`のCloudflare zone作成と`blog.kanouk.com` / `photos.kanouk.com` Custom Domain設定は完了しています。nameserver切替はregistrar認証後に実施します。旧WordPress／SmugMugには変更を加えておらず、停止・解約は対象外です。
 
 ## Rollback and teardown
 

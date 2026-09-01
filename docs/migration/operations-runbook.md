@@ -1,6 +1,6 @@
 # Yohaku運用・監視・バックアップrunbook
 
-対象は `blog.kanouk.com` / `photos.kanouk.com` と、切替前の統合ステージングです。DNS切替、旧WordPress停止、SmugMug解約はこのrunbookを実行するだけでは行いません。
+対象は `blog.kanouk.com` / `photos.kanouk.com` と、統合ステージングです。DNS切替はユーザーから明示承認済みです。旧WordPress停止、SmugMug解約はこのrunbookの対象外です。
 
 ## 毎回のdeploy後
 
@@ -42,11 +42,39 @@ python3 scripts/migration/verify_public_site.py \
 
 host分離後は、汎用monitorに加えてblog hostへphoto route、photos hostへblog routeを送ったときの308とLocationも確認します。
 
-## SmugMug owner OAuth後の再開
+## 2026-09-02 DNS切替
+
+Cloudflare accountは`kanouk@gmail.com`、zoneは`kanouk.com`です。`fragrance.radio@gmail.com`側を使用しません。
+
+切替前の公開DNS:
+
+- nameserver: `dns01.muumuu-domain.com` / `dns02.muumuu-domain.com`
+- apex A: GitHub Pagesの4 address
+- `www`: `kanouk.github.io`
+- MX / TXT / CAA: なし
+- `blog` / `photos`: なし
+
+Cloudflare指定nameserver:
+
+- `desi.ns.cloudflare.com`
+- `harlan.ns.cloudflare.com`
+
+手順:
+
+1. ムームードメイン管理画面でrecord一覧とDNSSEC無効を確認する。
+2. Cloudflare側のapex A 4件と`www` CNAMEが現行値と一致することを確認する。
+3. registrarのnameserverをCloudflare指定2件へ置換する。
+4. `dig NS kanouk.com`とCloudflare dashboardでzone activeを確認する。
+5. `wrangler.jsonc`の2 Custom Domainをguard付きdeployし、CloudflareがDNS recordとTLS certificateを発行したことを確認する。
+6. blog / photosのreadback、host分離308、canonical、robots、sitemapを確認する。
+
+旧nameserver値、最終backup、直前Worker versionをrollback記録として保持します。nameserver切替後も旧WordPress／SmugMugは削除しません。
+
+## SmugMug owner OAuth後の再開（完了済みの復旧手順）
 
 公開APIだけで原本一致まで確認できなかったassetだけを再開します。認証値はPrivate Vaultの`10_sensitive`からallowlist runnerが子processへ渡し、標準出力やGitへ出しません。
 
-認証前のpreflightは書き込みを行わず、現在は5 album／236 assetを選択します。
+認証前のpreflightは書き込みを行わず、2026-09-01の実行では5 album／236 assetだけを選択しました。
 
 ```sh
 cd /Users/kanouk/projects/kanouk.com
@@ -108,7 +136,8 @@ python3 scripts/migration/backup_cloudflare_staging.py --apply --concurrency 4
 
 # 上の出力に表示されたbackup directoryを指定
 python3 scripts/migration/verify_cloudflare_backup.py \
-  /Users/kanouk/Documents/Private_External_Imports/kanouk-cloudflare-backups/<timestamp>
+  /Users/kanouk/Documents/Private_External_Imports/kanouk-cloudflare-backups/<timestamp> \
+  --output /tmp/kanouk-backup-verification.json
 ```
 
 backupは次を満たした場合だけ成功です。

@@ -2,20 +2,20 @@
 
 このディレクトリは [Issue #1](https://github.com/kanouk/kanouk.com/issues/1) の設計・監査・運用記録です。移行先は EmDash 0.35.0 + Astro + Cloudflare Workers / D1 / R2、公開名はブログが「カノログ」、デザインシステム名と独自ブロック名前空間は `Yohaku` です。
 
-## 現在地（2026-09-01）
+## 現在地（2026-09-02）
 
 - Cloudflare Paid の `kanouk@gmail.com` 側に専用ステージングを構築済み。guard が account と resource 名を検査し、`fragrance.radio@gmail.com` 側への誤操作を止める
 - staging Worker / D1 / R2 / KV を作成し、`kanouk-emdash-staging.kanouk.workers.dev` へデプロイ済み
 - WordPress 3サイトのWXR原本、WXR添付2,027件とarchiveから回収した1件、合計2,028 mediaをR2へ移行・readback verified。1,854コンテンツは再importの2回目が全件`skipped_verified`
 - kanolog は管理者RESTでも再監査し、公開1,370投稿、下書き1投稿、固定ページ3件、再利用ブロック3件、Pochipp 590件、コメント65件を確認
 - nocalog / art-quiz は現在の公開REST件数がWXRの公開件数と一致。WXRには下書き・非公開も保持されている
-- SmugMug は40アルバム、2,168アセット（JPEG 2,156、MP4 12）を固定ID付きmanifestへ収録。GPSを削除せず、1,932件をR2 readbackまでverified
-- SmugMugの公開ダウンロードで原本MD5と一致しない236件は、縮小版で代用せず `pending_owner_auth` に分類。所有者OAuthのFull/Read認証器と、該当5アルバムだけを再開するfail-closed入口を用意済み
+- SmugMug は40アルバム、2,168アセット（JPEG 2,156、MP4 12）を固定ID付きmanifestへ収録。所有者OAuthで原本を回収し、GPSを削除せず2,168件すべてをR2 readbackまでverified
 - コメント127件を公開65／保留62の状態を保って移行し、IPアドレスとUser-Agentは保存していない
-- 全4 sitemap・3,820ページ・内部リンク5,843件を巡回し、HTTP/network失敗、`wordpress://`、旧WordPress upload、Gutenberg comment、shortcodeはいずれも0件。残るSmugMug 9参照はowner OAuth待ち236件に属する
-- D1 SQLとR2全3,272 object（6,374,290,611 bytes）のbackup／別SQLite復元／全byte hash照合に成功
+- 全4 sitemap・4,056ページ・内部リンク6,302件を巡回し、HTTP/network失敗、`wordpress://`、旧WordPress upload、SmugMug、旧サイト、Gutenberg comment、shortcodeはいずれも0件
+- D1 SQLとR2全3,507 object（6,933,980,178 bytes）のbackup／別SQLite復元／全byte hash照合に成功。85 table／40,974 row、integrity `ok`、foreign key違反0
 - Yohakuのブログ／写真UI、ダークモード、検索、地図、EXIF、共有、全画面、スライドショー、キーボード／スワイプ移動をステージングへ実装済み
-- DNS切替、WordPress停止、SmugMug解約は未実施。このIssue群ではユーザーの別途明示指示なしに実行しない
+- `kanouk.com`を`kanouk@gmail.com`側Cloudflareへ追加し、Custom Domain設定をコード化済み。DNS切替はユーザー承認済みで、ムームードメイン認証後に実施する
+- WordPress停止、SmugMug解約は未実施し、今回も対象外とする
 
 ## データの流れ
 
@@ -50,11 +50,11 @@ SmugMug代替は既製の別サービスではなく、このリポジトリで�
 
 ## 残っているゲート
 
-1. SmugMug所有者OAuthをユーザー同席時に一度だけ認可し、`pending_owner_auth` 236件を原本一致へ収束させる。
-2. その結果で1,854コンテンツを再importし、残るSmugMug 9参照を同時置換する。
-3. 2,168件のmetadata、12 MP4、40 album cover／順序／件数を最終監査する。
-4. 最終import後にbackup、全URL／SEO／desktop／mobile／dark mode監査を再実行する。
-5. ここまで合格後もDNS切替は行わず、切替候補としてユーザーへ提示する。
+1. ムームードメインの現行DNSレコードを管理画面で最終照合する。
+2. nameserverをCloudflare指定値へ切り替え、zoneがactiveになるまで確認する。
+3. `blog.kanouk.com` / `photos.kanouk.com` Custom Domainをdeployし、DNS／TLS／host分離を読み戻す。
+4. 独自ドメインで全URL／SEO／desktop／mobile／dark mode監査を再実行する。
+5. Search Console／GA4／404／Worker errorを切替直後から監視する。旧WordPress／SmugMugは停止・解約しない。
 
 ## アカウントと秘密情報
 
@@ -68,4 +68,4 @@ SmugMug代替は既製の別サービスではなく、このリポジトリで�
 - Google Photosにある私的写真の代替
 - Gyazo代替の半非公開アップロード基盤（Issue #2）
 - 写真販売・プリント注文
-- DNS切替、旧サービス停止・解約
+- 旧サービス停止・解約

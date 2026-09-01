@@ -1,6 +1,6 @@
 # 移行元とEmDashのデータ構造監査
 
-更新日: 2026-09-01
+更新日: 2026-09-02
 
 この文書は、現在保存されている移行元原本と、ステージングへ実装済みのEmDashスキーマを記録します。件数は移行台帳の値であり、進行中の転送成功件数とは分けて扱います。
 
@@ -33,7 +33,7 @@ WXR本文にはGutenberg標準ブロックのほか、SWELL/LOOS、JIN、Pochipp
 - `yohaku.siteSearch`
 - `yohaku.steps`
 
-1,854コンテンツを17,050ブロックへ変換した監査では、通常のフォールバック `htmlBlock` は0件です。つまり「機械的にHTML化する」のではなく、標準Portable Textと汎用的なYohaku意味ブロックで保持します。
+1,854コンテンツを17,055ブロックへ変換した監査では、通常のフォールバック `htmlBlock` は0件です。つまり「機械的にHTML化する」のではなく、標準Portable Textと汎用的なYohaku意味ブロックで保持します。
 
 ## SmugMug
 
@@ -130,16 +130,15 @@ WordPress WXR / REST ─┐
 SmugMug API / OAuth ──┘                    └ media (R2) ───────── photos UI
 ```
 
-- 公開ブログ名は「カノログ」、予定URLは `blog.kanouk.com`。
-- 公開写真の予定URLは `photos.kanouk.com`。
+- 公開ブログ名は「カノログ」、正式URLは `blog.kanouk.com`。
+- 公開写真の正式URLは `photos.kanouk.com`。
 - R2の管理URLは公開せず、Workerのmedia配信経路を使う。
 - source ID、source URL、raw metadata、source hash、Cloudflare readback hashを残し、転送は中断・再実行可能にする。
 - `fragrance.radio@gmail.com`側のCloudflare資源は使用しない。対象accountは`kanouk@gmail.com`。
 
-## 未確定部分
+## 最終状態と外部ゲート
 
-- SmugMugの`pending_owner_auth`は、ユーザー同席時のFull/Read OAuth後に原本一致を確定する。
 - WordPressはWXR添付2,027件とarchiveから回収した1件、合計2,028件を全件転送・readback照合済み。1,854コンテンツの再importも全件`skipped_verified`、失敗0で冪等性を確認済み。
-- SmugMugは2,168件中1,932件を転送・readback照合済み。残る236件は5アルバムのowner OAuth待ちで、2025-02京都記事のSmugMug 9参照だけが未置換。
-- owner OAuth後に該当5アルバムを再開し、その結果で1,854コンテンツを再importしてSmugMug 9参照を固定URLへ置換する。
-- custom domainのDNS切替は未実施であり、最終監査後もユーザーの明示指示なしには行わない。
+- SmugMugは2,168件すべてを転送・readback照合済み。owner OAuth待ち236件を原本一致へ収束し、2025-02京都記事のSmugMug 9参照も固定URLへ置換済み。
+- 最終crawlは4,056 page／6,302 internal link、旧WordPress／SmugMug／未変換表現0件。
+- custom domainのDNS切替はユーザー承認済み。registrar認証後にnameserverを変更し、公開readbackを行う。

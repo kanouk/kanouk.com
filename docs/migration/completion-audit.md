@@ -1,8 +1,8 @@
 # Issue #1〜#11 完了監査
 
-更新日: 2026-09-01
+更新日: 2026-09-02
 
-この文書は、Issue本文のチェック状態ではなく、manifest、移行台帳、公開readback、backup検証結果を正本として、移行全体の達成・未達を判定します。DNS切替、旧WordPress停止、SmugMug解約、データ削除はユーザーの別途明示指示なしに実行しません。
+この文書は、Issue本文のチェック状態ではなく、manifest、移行台帳、公開readback、backup検証結果を正本として、移行全体の達成・未達を判定します。DNS切替はユーザーから明示承認済みです。旧WordPress停止、SmugMug解約、データ削除は対象外です。
 
 ## 判定の原則
 
@@ -15,17 +15,17 @@
 
 | Issue | 判定 | 現在の直接証拠 | 真正の残作業 |
 |---|---|---|---|
-| #1 統合移行 | 部分達成 | Cloudflare基盤、WordPress全件、写真1,932件、Yohaku、全公開crawl、backup/restoreが成立 | #8の236件、最終再import・再監査、承認後のDNS切替、切替後監視 |
+| #1 統合移行 | 部分達成 | Cloudflare基盤、WordPress全件、写真2,168件、Yohaku、全公開crawl、backup/restoreが成立 | 認証後のDNS切替、custom domain readback、切替後監視 |
 | #2 Gyazo代替 | 対象外 | 公開写真移行とはデータ境界・認証要件が異なる別Issue | 今回は実装しない |
 | #3 データ構造監査 | 達成 | `source-schema.md`、`field-mapping.md`、WXR/SmugMug catalog実測 | なし。最終値だけ台帳から更新する |
-| #4 Cloudflare基盤 | 達成 | `kanouk@gmail.com` account guard、staging Worker/D1/R2/KV、公開readback | production custom domainは#10の承認ゲート |
+| #4 Cloudflare基盤 | 達成 | `kanouk@gmail.com` account guard、Worker/D1/R2/KV、公開readback、`kanouk.com` zone作成 | custom domainの公開切替は#10 |
 | #5 写真パイロット | 達成 | 固定ID、GPS保持、R2 roundtrip、写真・動画・地図・UIの実証 | なし |
-| #6 Yohakuデザイン | 部分達成 | 共通token/component、blog/photos UI、dark mode、320/390px、キーボード、contrast、SEO回帰をstagingで確認 | 最終データ後の代表再確認と、承認されたcustom domainでのPC/mobile readback |
-| #7 意味ブロック | 部分達成 | 1,854件/17,050 block、`htmlBlock` 0、9種類の編集UI/renderer、管理画面で`yohaku.steps`を編集・破棄・再読込、公開crawlのshortcode/Gutenberg comment 0 | owner OAuth後の最終再importと代表記事の最終比較 |
-| #8 SmugMug完全移行 | 未達 | 40 album/2,168 assetをmanifest化、1,932 verified、重複ID/manifest不一致0 | Full/Read owner OAuthで5 album/236 assetを原本取得しverifiedへ収束 |
-| #9 WordPress完全移行 | 部分達成 | 2,028 media verified、1,854 content再実行`skipped_verified`、comments 127、旧WP upload/shortcode/Gutenberg comment 0 | SmugMug 9参照の置換。nocalog/art-quiz非公開の現在差分はWXR以降unknown。ホスト全体backupは管理アクセス範囲外 |
-| #10 URL/SEO/切替 | 部分達成 | 4 sitemap、3,820 page、5,843 internal link、HTTP/network/旧WP参照0。canonical/robots/OGP/JSON-LD/readback合格 | owner OAuth後の最終crawl・backup。DNSは操作内容を提示し、別途明示承認後のみ実施 |
-| #11 監視/backup/実費 | 部分達成 | D1 SQLとR2 3,272 object/6,374,290,611 bytesを保全し、別SQLite復元、36,746 row、integrity/foreign key、全media hashを検証 | 最終import後backup、custom domain切替後監視、Cloudflare請求期間後の実費確定。解約はしない |
+| #6 Yohakuデザイン | 部分達成 | 共通token/component、blog/photos UI、dark mode、320/390/1440px、基準線、画像比率、キーボード、contrast、SEO回帰を最終データで確認 | custom domainでのPC/mobile/dark readback |
+| #7 意味ブロック | 達成 | 1,854件/17,055 block、`htmlBlock` 0、9種類の編集UI/renderer、公開crawlのshortcode/Gutenberg comment 0 | なし |
+| #8 SmugMug完全移行 | 達成 | 40 album/2,168 assetすべてverified、重複ID/manifest不一致/pending 0、GPS/EXIF保持、metadata backfill済み | なし |
+| #9 WordPress完全移行 | 達成 | 2,028 media verified、1,854 content再実行`skipped_verified`、comments 127、旧WP/SmugMug/shortcode/Gutenberg comment 0 | nocalog/art-quizのWXR後非公開差分は管理認証外のためunknownとして記録済み |
+| #10 URL/SEO/切替 | 部分達成 | 4 sitemap、4,056 page、6,302 internal link、HTTP/network/旧参照0。canonical/robots/OGP/JSON-LD/readback合格。DNS承認済み | registrar認証、nameserver切替、Custom Domain deploy、本番readback |
+| #11 監視/backup/実費 | 部分達成 | D1 SQLとR2 3,507 object/6,933,980,178 bytesを保全し、別SQLite復元、40,974 row、integrity/foreign key、全media hashを検証 | custom domain切替後監視、Cloudflare請求期間後の実費確定。解約はしない |
 
 ## 機械監査
 
@@ -35,7 +35,8 @@
 python3 scripts/migration/audit_migration_completion.py \
   --backup-manifest /path/to/backup/manifest.json \
   --backup-verification /path/to/backup-verification.json \
-  --public-audit /path/to/final-public-audit.json
+  --public-audit /path/to/final-public-audit.json \
+  --dns-change-authorized
 ```
 
 切替前ゲートでは`--require-complete`を付けます。1件でも未完了なら終了コード2です。
@@ -48,37 +49,31 @@ backup manifestの存在確認だけでは復元成功を意味しません。�
 
 ```bash
 python3 scripts/migration/verify_cloudflare_backup.py \
-  /path/to/backup | tee /path/to/backup-verification.json
+  /path/to/backup \
+  --output /path/to/backup-verification.json
 ```
 
-2026-09-01の復元結果:
+2026-09-02の最終復元結果:
 
 ```json
 {
   "verified": true,
-  "media_count": 3272,
-  "media_total_bytes": 6374290611,
+  "media_count": 3507,
+  "media_total_bytes": 6933980178,
   "d1_tables_restored": 85,
-  "d1_rows_restored": 36746,
+  "d1_rows_restored": 40974,
   "d1_integrity": "ok",
   "d1_foreign_key_violations": 0
 }
 ```
 
-## 現在の停止条件
+## 現在の外部ゲート
 
-`pending_owner_auth` 236件を公開縮小画像で代用しません。対象は次の5アルバムに限定されています。
-
-| album | source key | pending |
-|---|---|---:|
-| `stream` | `8w6v9r` | 71 |
-| `2005-05-kumamoto` | `Bb7gWn` | 23 |
-| `2023-01-nara-kyoto` | `R8jnsN` | 73 |
-| `2005-03-expo` | `Vhmwwv` | 13 |
-| `2025-02-kyoto` | `f69Tqb` | 56 |
-
-この認証後は、該当5アルバムだけを再開し、metadata backfill、1,854件再import、全公開crawl、最終backupを順番に実行します。同じD1/R2へ並行書込みせず、各readback合格後に次へ進みます。
+- ムームードメイン管理画面の認証
+- Cloudflare指定nameserverへの切替とzone active化
+- custom domainのTLS発行・DNS伝播
+- Search Console／GA4の外部処理と、1週間・1か月・3か月の経時監視
 
 ## 完了を宣言しない理由
 
-現時点のWordPress移行とYohaku実装は成立していますが、写真236件が原本未照合であり、そのうち2025-02京都の9参照が記事内に残ります。したがって「全データ移行完了」「切替可能」「年間削減額確定」はまだ証明されていません。owner OAuth後の最終監査と、別途承認された場合のcustom domain切替・監視までをIssue #1の完了判定に含めます。
+データ移行、ステージング全件監査、最終backup/restoreは完了し、機械ゲートは`cutover_ready: true`です。ただし独自ドメインがまだ公開トラフィックを処理しておらず、切替後監視と実請求期間も未経過です。したがってIssue #1/#6/#10/#11は、本番readbackと経時監視の証拠が揃うまで完了を宣言しません。

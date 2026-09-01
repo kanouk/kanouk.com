@@ -2,6 +2,16 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "kanouk-emdash-staging",
 	"main": "./src/worker.ts",
+	"routes": [
+		{
+			"pattern": "blog.kanouk.com",
+			"custom_domain": true,
+		},
+		{
+			"pattern": "photos.kanouk.com",
+			"custom_domain": true,
+		},
+	],
 	"compatibility_date": "2026-02-24",
 	"compatibility_flags": ["nodejs_compat"],
 	"limits": {

@@ -2,7 +2,7 @@
 
 対象はGoogle Photosの代替ではなく、インターネットへ公開するアルバムとブログ埋め込みです。SmugMug製品全体ではなく、購入以外の閲覧体験を `photos.kanouk.com` へ移します。
 
-## source実測（2026-09-01）
+## source実測（2026-09-02）
 
 | 項目 | 実測 |
 |---|---:|
@@ -21,13 +21,13 @@
 | SmugMug側の機能 | Yohaku / EmDash側 | 状態 |
 |---|---|---|
 | アルバム一覧・詳細 | 安定slug、source順、title、description、件数 | 実装済み |
-| highlight cover | source highlightを優先、未取得時だけfallback | 実装済み・全件照合待ち |
-| 写真・動画詳細 | 固定ID、原寸比を保つ表示、MP4 controls/poster | 実装済み・全動画監査待ち |
+| highlight cover | source highlightを優先、未取得時だけfallback | 実装・全件照合済み |
+| 写真・動画詳細 | 固定ID、原寸比を保つ表示、MP4 controls/poster | 実装・全動画監査済み |
 | Lightbox | Fullscreen APIによる全画面表示 | 実装済み |
 | 前後移動 | link、左右キー、mobile swipe | 実装済み |
 | slideshow | 6秒送り、再生／停止、reduced-motion対応 | 実装済み |
 | title / caption / 撮影日 | 写真詳細へ表示 | 実装済み |
-| EXIF | camera、lens、絞り、シャッター、ISO、焦点距離、露出補正 | 実装済み・全件backfill待ち |
+| EXIF | camera、lens、絞り、シャッター、ISO、焦点距離、露出補正 | 実装・backfill済み |
 | 位置情報 | GPS保持、写真地図、アルバム全体のLeaflet地図 | 実装済み |
 | 共有 | Web Share、clipboard fallback | 実装済み |
 | download | source albumの`allow_downloads`をUIで尊重 | 実装済み |
@@ -36,7 +36,7 @@
 | comment | source全件監査で0件 | 移行対象なし |
 | responsive cover | 一覧は`object-fit: cover`、低解像度だけ拡大しない | 実装済み |
 | 個別写真 | `contain`で全体を表示し、原寸を超えて拡大しない | 実装済み |
-| stable URL | source identityから固定album/photo ID、旧新台帳 | 実装済み・全件出力待ち |
+| stable URL | source identityから固定album/photo ID、旧新台帳 | 実装・全件出力済み |
 | SEO | title、description、OG、canonical、host別sitemap | 実装済み・custom domain監査待ち |
 
 Lucide iconは検索、撮影情報、位置、共有、download、全画面、slideshow、前後移動、動画判別など意味のある操作に限定して使います。写真を主役にしつつ、単調な無機質さを避けます。

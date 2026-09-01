@@ -710,9 +710,10 @@ main:focus { outline: none; }
 .album-card .cover.placeholder svg { position: relative; z-index: 1; padding: 0.35rem; background: var(--paper-muted); box-sizing: content-box; }
 .album-card .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms cubic-bezier(.2,.65,.25,1); }
 .album-card:hover .cover img { transform: scale(1.015); }
-.album-copy { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--rule); }
+.album-copy { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); margin-top: var(--space-4); }
 .album-copy h2 { font-size: var(--step-1); }
 .album-copy p { grid-column: 1 / -1; color: var(--ink-muted); font-size: var(--step--1); }
+.album-card:hover .album-copy h2 { color: var(--accent-strong); }
 
 .album-page { padding-block: clamp(2.5rem, 6vw, 5rem); }
 .album-page > header { max-width: var(--measure); margin-block: clamp(3rem, 7vw, 6rem); }
@@ -734,7 +735,8 @@ main:focus { outline: none; }
 .photo-card { position: relative; display: inline-block; width: 100%; margin-bottom: clamp(1.5rem, 3vw, 2.6rem); break-inside: avoid; color: inherit; text-decoration: none; }
 .photo-card img { width: 100%; height: auto; background: var(--paper-muted); }
 .photo-card img[data-low-resolution="true"] { width: auto; max-width: 100%; margin-inline: auto; }
-.photo-card > span:not(.video-badge) { display: block; margin-top: var(--space-3); padding-top: var(--space-2); border-top: 1px solid var(--rule-soft); color: var(--ink-soft); font-size: 0.72rem; }
+.photo-card > span:not(.video-badge) { display: block; margin-top: var(--space-3); color: var(--ink-soft); font-size: 0.72rem; }
+.photo-card:hover > span:not(.video-badge) { color: var(--accent-strong); }
 .video-badge { position: absolute; top: var(--space-3); right: var(--space-3); display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.55rem; background: rgb(10 12 9 / 82%); color: #fff; font-size: 0.68rem; }
 
 .photo-page { padding-block: clamp(2.5rem, 6vw, 5rem); }

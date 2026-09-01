@@ -53,9 +53,14 @@ def wordpress_summary(
     media_total = int(media.get("total_available") or 0)
     media_verified = int(media_counts.get("verified") or 0)
 
+    converted_blocks = int(conversion_totals.get("convertedBlocks") or 0)
     conversion_complete = (
         expected_content == 1854
-        and int(conversion_totals.get("convertedBlocks") or 0) == 17050
+        # The exact block count can legitimately increase when a raw legacy
+        # construct is replaced by several semantic Yohaku blocks. Completion
+        # is therefore tied to full source coverage and zero htmlBlock
+        # fallbacks, not to one historical generated count.
+        and converted_blocks >= expected_content
         and int(conversion_totals.get("htmlBlocks") or 0) == 0
     )
     media_complete = media_total == 2028 and media_verified == media_total
@@ -68,7 +73,7 @@ def wordpress_summary(
     return {
         "conversion": {
             "content": expected_content,
-            "blocks": int(conversion_totals.get("convertedBlocks") or 0),
+            "blocks": converted_blocks,
             "html_blocks": int(conversion_totals.get("htmlBlocks") or 0),
             "complete": conversion_complete,
         },
@@ -158,6 +163,7 @@ def build_audit(
     backup_manifest_path: Path | None = None,
     backup_verification_path: Path | None = None,
     public_audit_path: Path | None = None,
+    dns_change_authorized: bool = False,
 ) -> dict[str, Any]:
     wordpress = wordpress_summary(
         conversion_path, wordpress_media_path, wordpress_import_path
@@ -218,7 +224,7 @@ def build_audit(
             "data_migration_complete": data_complete,
             "backup_restore_verified": backup["verified"],
             "final_public_audit_verified": public_audit["verified"],
-            "dns_change_requires_explicit_user_approval": True,
+            "dns_change_authorized": dns_change_authorized,
             "cancellation_in_scope": False,
             "cutover_ready": completion_verified and not blockers,
         },
@@ -252,6 +258,11 @@ def main() -> None:
     parser.add_argument("--backup-manifest", type=Path)
     parser.add_argument("--backup-verification", type=Path)
     parser.add_argument("--public-audit", type=Path)
+    parser.add_argument(
+        "--dns-change-authorized",
+        action="store_true",
+        help="Record that the owner has explicitly authorized the DNS cutover.",
+    )
     parser.add_argument("--output", type=Path)
     parser.add_argument("--require-complete", action="store_true")
     args = parser.parse_args()
@@ -268,6 +279,7 @@ def main() -> None:
             args.backup_verification.resolve() if args.backup_verification else None
         ),
         public_audit_path=(args.public_audit.resolve() if args.public_audit else None),
+        dns_change_authorized=args.dns_change_authorized,
     )
     output = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     if args.output:

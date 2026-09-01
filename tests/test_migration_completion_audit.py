@@ -31,7 +31,7 @@ class MigrationCompletionAuditTests(unittest.TestCase):
                     "totals": {
                         "posts": 1847,
                         "pages": 7,
-                        "convertedBlocks": 17050,
+                        "convertedBlocks": 17055,
                         "htmlBlocks": 0,
                     }
                 },
@@ -254,10 +254,12 @@ class MigrationCompletionAuditTests(unittest.TestCase):
                 backup_manifest_path=backup_manifest,
                 backup_verification_path=backup_verification,
                 public_audit_path=public_audit,
+                dns_change_authorized=True,
             )
 
         self.assertTrue(audit["gates"]["backup_restore_verified"])
         self.assertTrue(audit["gates"]["final_public_audit_verified"])
+        self.assertTrue(audit["gates"]["dns_change_authorized"])
         self.assertTrue(audit["gates"]["cutover_ready"])
         self.assertTrue(audit["complete"])
 
