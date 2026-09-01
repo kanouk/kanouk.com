@@ -22,10 +22,10 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 			<p class="empty">公開中のアルバムはまだありません。</p>
 		) : (
 			<div class="album-grid">
-				{albums.map((album) => (
+				{albums.map((album, index) => (
 					<a class="album-card" href={`/albums/${album.id}`}>
 						{album.data.cover_image ? (
-							<div class="cover"><YohakuImage image={album.data.cover_image} crop /></div>
+							<div class="cover"><YohakuImage image={album.data.cover_image} crop priority={index === 0} /></div>
 						) : (
 							<div class="cover placeholder" aria-hidden="true">
 								<Images size={28} strokeWidth={1.25} />

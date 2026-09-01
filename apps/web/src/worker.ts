@@ -3,7 +3,7 @@ import handler, { createScheduledHandler, PluginBridge } from "@emdash-cms/cloud
 export { PluginBridge };
 
 const PREVIEW_PREFIX = "/_yohaku/media/preview/";
-const PREVIEW_WIDTH = 960;
+const PREVIEW_WIDTH = 1200;
 type HandlerFetch = typeof handler.fetch;
 type HandlerRequest = Parameters<HandlerFetch>[0];
 type HandlerEnv = Parameters<HandlerFetch>[1];

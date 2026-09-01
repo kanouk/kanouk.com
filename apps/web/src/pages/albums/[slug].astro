@@ -74,9 +74,9 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 		<AlbumMap markers={locationPhotos} />
 
 		<div class="photo-grid">
-			{photos.map((photo) => (
+			{photos.map((photo, index) => (
 				<a class="photo-card" href={`/photos/${photo.id}`} aria-label={photo.data.alt || photo.data.title}>
-					<YohakuImage image={photo.data.image} />
+					<YohakuImage image={photo.data.image} preview priority={index === 0} />
 					{photo.data.kind === "video" && (
 						<span class="video-badge">
 							<CirclePlay size={14} strokeWidth={1.8} aria-hidden="true" />

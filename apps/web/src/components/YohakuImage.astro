@@ -7,9 +7,17 @@ interface Props {
 	class?: string;
 	priority?: boolean;
 	crop?: boolean;
+	preview?: boolean;
 }
 
-const { image, alt, class: className, priority = false, crop = false } = Astro.props;
+const {
+	image,
+	alt,
+	class: className,
+	priority = false,
+	crop = false,
+	preview = false,
+} = Astro.props;
 const value = typeof image === "string" ? { id: "", src: image } : image;
 const width = value?.width;
 const height = value?.height;
@@ -28,7 +36,7 @@ const lowResolution = Boolean(width && height && (width < 640 || height < 480));
 const cropSafely = crop && !lowResolution;
 const previewKey = typeof storageKey === "string" ? storageKey : value?.id;
 const src =
-	cropSafely && previewKey
+	(preview || cropSafely) && !lowResolution && previewKey
 		? `/_yohaku/media/preview/${encodeURIComponent(previewKey)}`
 		: originalSrc;
 ---

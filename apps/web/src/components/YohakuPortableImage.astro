@@ -1,4 +1,6 @@
 ---
+import YohakuImage from "./YohakuImage.astro";
+
 interface ImageNode {
 	asset?: {
 		_ref?: string;
@@ -26,6 +28,7 @@ const src = bareStorageKey
 		(node?.asset?._ref
 			? `/_emdash/api/media/file/${encodeURIComponent(node.asset._ref)}`
 			: undefined);
+const mediaId = bareStorageKey || node?.asset?._ref || "";
 ---
 
 {
@@ -38,14 +41,15 @@ const src = bareStorageKey
 			]}
 			style={node.displayWidth ? `--image-display-width:${node.displayWidth}px` : undefined}
 		>
-			<img
-				src={src}
-				alt={node.alt || ""}
-				width={node.width}
-				height={node.height}
-				loading="lazy"
-				decoding="async"
-				data-fit="preserve"
+			<YohakuImage
+				image={{
+					id: mediaId,
+					src,
+					alt: node.alt || "",
+					width: node.width,
+					height: node.height,
+				}}
+				preview
 			/>
 			{node.caption && <figcaption>{node.caption}</figcaption>}
 		</figure>

@@ -82,12 +82,20 @@ class YohakuDesignContractTests(unittest.TestCase):
     def test_list_images_use_one_bounded_cloudflare_preview_preset(self) -> None:
         component = (WEB_ROOT / "src/components/YohakuImage.astro").read_text()
         worker = (WEB_ROOT / "src/worker.ts").read_text()
-        self.assertIn("cropSafely && previewKey", component)
+        self.assertIn("(preview || cropSafely) && !lowResolution && previewKey", component)
         self.assertIn("/_yohaku/media/preview/", component)
-        self.assertIn("const PREVIEW_WIDTH = 960", worker)
+        self.assertIn("const PREVIEW_WIDTH = 1200", worker)
         self.assertIn('format: "webp"', worker)
         self.assertIn('fit: "scale-down"', worker)
         self.assertIn('quality: 85', worker)
+
+        portable = (WEB_ROOT / "src/components/YohakuPortableImage.astro").read_text()
+        album_archive = (WEB_ROOT / "src/pages/albums/index.astro").read_text()
+        album_detail = (WEB_ROOT / "src/pages/albums/[slug].astro").read_text()
+        self.assertIn("<YohakuImage", portable)
+        self.assertIn("preview", portable)
+        self.assertIn("priority={index === 0}", album_archive)
+        self.assertIn("preview priority={index === 0}", album_detail)
 
 
 if __name__ == "__main__":
