@@ -1,12 +1,19 @@
 ---
 import { getEmDashCollection, getTermsForEntries } from "emdash";
 import Base from "../../layouts/Base.astro";
+import ArchivePagination from "../../components/ArchivePagination.astro";
 import { getReadingTime } from "../../utils/reading-time";
+
+const PAGE_SIZE = 24;
+const requestedPage = Number.parseInt(Astro.url.searchParams.get("page") ?? "1", 10);
+const page = Number.isSafeInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
 
 // Sort in the database rather than in JS — lets the DB use its index on
 // published_at and avoids a full-table scan on the client.
-const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
+const { entries: posts, hasMore = false, cacheHint } = await getEmDashCollection("posts", {
 	orderBy: { published_at: "desc" },
+	limit: PAGE_SIZE,
+	offset: (page - 1) * PAGE_SIZE,
 });
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
@@ -40,7 +47,7 @@ const formatDate = (date: Date) =>
 			<p class="eyebrow">ARCHIVE</p>
 			<h1 class="page-title">すべての記事</h1>
 			<p class="page-description">
-				{posts.length.toLocaleString("ja-JP")}件
+				{page > 1 ? `${page}ページ目・` : ""}{posts.length.toLocaleString("ja-JP")}件を表示
 			</p>
 		</header>
 
@@ -105,5 +112,6 @@ const formatDate = (date: Date) =>
 				</div>
 			)
 		}
+		<ArchivePagination page={page} hasMore={hasMore} basePath="/posts" />
 	</div>
 </Base>

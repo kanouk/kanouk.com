@@ -1,0 +1,39 @@
+---
+import { ArrowLeft, ArrowRight } from "lucide-astro";
+
+interface Props {
+	page: number;
+	hasMore: boolean;
+	basePath: string;
+}
+
+const { page, hasMore, basePath } = Astro.props;
+const hrefFor = (targetPage: number) =>
+	targetPage <= 1 ? basePath : `${basePath}?page=${targetPage}`;
+---
+
+{
+	(page > 1 || hasMore) && (
+		<nav class="archive-pagination" aria-label="記事一覧のページ送り">
+			{page > 1 ? (
+				<a class="archive-pagination__link" href={hrefFor(page - 1)} rel="prev">
+					<ArrowLeft size={16} strokeWidth={1.7} aria-hidden="true" />
+					<span>前のページ</span>
+				</a>
+			) : (
+				<span />
+			)}
+			<span class="archive-pagination__current" aria-current="page">
+				{page}
+			</span>
+			{hasMore ? (
+				<a class="archive-pagination__link" href={hrefFor(page + 1)} rel="next">
+					<span>次のページ</span>
+					<ArrowRight size={16} strokeWidth={1.7} aria-hidden="true" />
+				</a>
+			) : (
+				<span />
+			)}
+		</nav>
+	)
+}
