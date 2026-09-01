@@ -1,5 +1,6 @@
 ---
 import { getEmDashCollection } from "emdash";
+import { Images } from "lucide-astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 
@@ -28,7 +29,9 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 						{album.data.cover_image ? (
 							<div class="cover"><YohakuImage image={album.data.cover_image} crop /></div>
 						) : (
-							<div class="cover placeholder" aria-hidden="true" />
+							<div class="cover placeholder" aria-hidden="true">
+								<Images size={28} strokeWidth={1.25} />
+							</div>
 						)}
 						<div class="album-copy">
 							<h2>{album.data.title}</h2>
