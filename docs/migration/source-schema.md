@@ -140,5 +140,5 @@ SmugMug API / OAuth ──┘                    └ media (R2) ─────�
 
 - WordPressはWXR添付2,027件とarchiveから回収した1件、合計2,028件を全件転送・readback照合済み。1,854コンテンツの再importも全件`skipped_verified`、失敗0で冪等性を確認済み。
 - SmugMugは2,168件すべてを転送・readback照合済み。owner OAuth待ち236件を原本一致へ収束し、2025-02京都記事のSmugMug 9参照も固定URLへ置換済み。
-- 最終crawlは4,056 page／6,302 internal link、旧WordPress／SmugMug／未変換表現0件。
-- custom domainのDNS切替はユーザー承認済み。registrar認証後にnameserverを変更し、公開readbackを行う。
+- staging最終crawlは4,056 page／6,302 internal link、本番host別crawlは4,056 page／6,490 internal link。旧WordPress／SmugMug／未変換表現0件で、本番の一時timeout 4件は対象再監査12/12で200。
+- custom domainのDNS切替、zone active化、TLS、公開readback、本番全件crawlは2026-09-02に完了した。経時監視と実費確定は別工程で継続する。

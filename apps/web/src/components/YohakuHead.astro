@@ -1,5 +1,10 @@
 ---
 import { Font } from "astro:assets";
+
+const GA4_MEASUREMENT_ID = "G-94EQ0WN7B9";
+const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
+	Astro.url.hostname,
+);
 ---
 
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
@@ -7,6 +12,18 @@ import { Font } from "astro:assets";
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <Font cssVariable="--font-body" />
 <Font cssVariable="--font-mono" />
+{analyticsEnabled && (
+	<>
+		<link rel="preconnect" href="https://www.googletagmanager.com" />
+		<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}></script>
+		<script is:inline define:vars={{ GA4_MEASUREMENT_ID }}>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag("js", new Date());
+			gtag("config", GA4_MEASUREMENT_ID);
+		</script>
+	</>
+)}
 <script is:inline>
 	(function () {
 		var match = document.cookie.match(/(?:^|; )theme=([^;]+)/);

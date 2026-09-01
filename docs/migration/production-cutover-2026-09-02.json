@@ -1,0 +1,115 @@
+{
+  "cutover_observed_at": "2026-09-02T06:53:55+09:00",
+  "account_email": "kanouk@gmail.com",
+  "account_id_suffix": "1b1773",
+  "zone": {
+    "name": "kanouk.com",
+    "id": "929ba1aeb538cc8977baca490e55351a",
+    "status": "active",
+    "name_servers": [
+      "desi.ns.cloudflare.com",
+      "harlan.ns.cloudflare.com"
+    ]
+  },
+  "worker": {
+    "service": "kanouk-emdash-staging",
+    "version": "86d6efcb-7a33-48db-85be-d7f66c29fe7b",
+    "custom_domains": [
+      "blog.kanouk.com",
+      "photos.kanouk.com"
+    ],
+    "workers_dev_preserved": true
+  },
+  "tls": {
+    "issuer": "Google Trust Services WE1",
+    "subject": "CN=kanouk.com",
+    "subject_alt_names": [
+      "kanouk.com",
+      "*.kanouk.com"
+    ]
+  },
+  "representative_readback": {
+    "blog": {
+      "checks": 14,
+      "failed": 0
+    },
+    "photos": {
+      "checks": 12,
+      "failed": 0
+    },
+    "host_split": {
+      "blog_photo_route": 308,
+      "photos_blog_route": 308
+    },
+    "apex_status": 200,
+    "www_status": 301
+  },
+  "full_crawl": {
+    "blog": {
+      "child_sitemaps": 2,
+      "public_pages": 1848,
+      "internal_links": 2278,
+      "forbidden_reference_counts": 0,
+      "initial_network_timeouts": 1,
+      "targeted_recheck_attempts": 3,
+      "targeted_recheck_failures": 0
+    },
+    "photos": {
+      "child_sitemaps": 2,
+      "public_pages": 2208,
+      "internal_links": 4212,
+      "forbidden_reference_counts": 0,
+      "initial_network_timeouts": 3,
+      "targeted_recheck_attempts": 9,
+      "targeted_recheck_failures": 0
+    }
+  },
+  "verification": {
+    "python_tests": 125,
+    "wordpress_conversion_tests": 25,
+    "astro_typecheck_errors": 0,
+    "astro_typecheck_warnings": 0,
+    "build": "passed",
+    "diff_check": "passed"
+  },
+  "analytics": {
+    "ga4_measurement_id": "G-94EQ0WN7B9",
+    "production_hosts_only": true,
+    "blog_tag_readback": "passed",
+    "photos_tag_readback": "passed",
+    "staging_tag_absent": true,
+    "realtime_status": "pending_external_confirmation"
+  },
+  "monitoring_checkpoints": [
+    {
+      "observed_at": "2026-09-02T08:03:48+09:00",
+      "elapsed": "approximately_1_hour",
+      "zone_status": "active",
+      "custom_domains_connected": 2,
+      "representative_readback": {
+        "blog_failed": 0,
+        "photos_failed": 0
+      },
+      "active_deployment_error_rate_percent": 0,
+      "asset_5xx_responses": 0,
+      "analytics_gap_found": true
+    },
+    {
+      "observed_at": "2026-09-02T08:07:12+09:00",
+      "elapsed": "post_analytics_fix",
+      "worker_version": "86d6efcb-7a33-48db-85be-d7f66c29fe7b",
+      "production_tag_readback": "passed",
+      "staging_noindex_and_no_analytics": "passed",
+      "representative_readback": {
+        "blog_checks": 14,
+        "blog_failed": 0,
+        "photos_checks": 12,
+        "photos_failed": 0
+      }
+    }
+  ],
+  "retained_sources": {
+    "wordpress_deleted_or_cancelled": false,
+    "smugmug_deleted_or_cancelled": false
+  }
+}

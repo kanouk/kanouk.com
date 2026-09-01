@@ -1,14 +1,14 @@
 # 未完了事項と移行ゲート
 
-「未確認」と「実装・移行・readback済み」を分けて管理します。2026-09-02現在、Cloudflare基盤、WordPress全件、公開写真2,168件、最終全件crawl、backup／restore drillまで成立しています。残作業は独自ドメイン切替と切替後監視です。
+「未確認」と「実装・移行・readback済み」を分けて管理します。2026-09-02現在、Cloudflare基盤、WordPress全件、公開写真2,168件、最終全件crawl、backup／restore drill、独自ドメイン切替、初回監視まで成立しています。残作業は24時間以降の経時監視と外部サービスの反映確認です。
 
 ## 現在のblocker
 
 | 項目 | 状態 | 次の操作 |
 |---|---|---|
 | nocalog / art-quiz現在の非公開差分 | 公開REST件数はWXRと一致、管理者認証は未所持 | WXRの下書き・非公開を正本として保持し、公開差分がないことを明記 |
-| DNS / 本番URL | `kanouk.com` zone作成・Custom Domain設定・DNS承認済み、未切替 | ムームードメイン認証後に現行recordを照合し、nameserver変更、TLS／本番readback |
-| 検索・分析の外部処理 | Search Console／GA4はcustom domain未公開のため未測定 | 切替直後から確認し、非同期処理はpendingとして監視 |
+| DNS / 本番URL | nameserver変更、zone active、2 Custom Domain、TLS、本番readback、全件crawl済み | なし。経時監視は別行で継続 |
+| 検索・分析の外部処理 | custom domain公開済み。GA4 tagはproductionのみreadback済み。Search Console／GA4 realtimeの反映は非同期 | 24時間・1週間・1か月・3か月の時点で確認し、pendingを事実として記録 |
 
 ## WordPressで確認済み
 
@@ -24,9 +24,9 @@
 - コメント127件はapproved 65／pending 62を保持し、IP／User-Agentを除外して移行済み。
 - 移行済みリンクカード50記事をsite-scopedな正規URLへ更新。全件再実行は`skipped_verified` 1,854、公開crawlの`wordpress://`は0件。
 
-## WordPressで残る外部確認
+## WordPressの公開再確認
 
-- 独自ドメイン上でPochipp、quiz、画像枠、長文／短文記事をdesktop / mobile / darkで読み戻すこと。
+- Pochipp、quiz、画像枠、長文／短文記事はYohaku stagingでdesktop / mobile / darkを確認し、独自ドメインが同じWorker versionを返すことをreadback済み。
 - 旧WordPress uploads、SmugMug、Gutenberg comment、既知shortcodeは最終crawlで0件。
 
 ## SmugMugで確認済み
@@ -77,6 +77,9 @@
 [x] `wordpress://`を再importし公開crawlで0件を確認
 [x] URL / SEO / desktop / mobile / dark mode最終監査
 [x] DNS切替をユーザーが明示承認
-[ ] registrar認証後にnameserver切替
-[ ] custom domainで本番readbackと監視
+[x] registrar認証後にnameserver切替
+[x] custom domainで本番readback
+[x] 切替約1時間後のzone/domain/Worker 5xx/代表readback確認
+[x] GA4をproduction 2ホストだけへ継承しstagingから除外
+[ ] 1週間・1か月・3か月の経時監視と実費確定
 ```

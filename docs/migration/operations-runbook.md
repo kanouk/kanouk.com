@@ -23,7 +23,7 @@ python3 scripts/migration/verify_public_site.py
 3. アルバム一覧が200で読める。
 4. 写真検索が200で結果画面を返す。
 5. 存在しないURLが404を返す。
-6. sitemap indexがblog / photos両方のsitemapを持つ。
+6. sitemap indexが、blogではposts/pages、photosではalbums/photosだけを持つ。
 7. 実在するR2 mediaが画像として読み戻せる。
 8. stagingは`X-Robots-Tag: noindex`を返す。
 9. `nosniff`とReferrer-Policyがある。
@@ -84,6 +84,20 @@ Cloudflare指定nameserver:
 
 旧nameserver値、最終backup、直前Worker versionをrollback記録として保持します。nameserver切替後も旧WordPress／SmugMugは削除しません。
 
+### 切替結果
+
+2026-09-02 06:53:55 JSTにCloudflare zoneの`active`を確認し、2 Custom Domainを適用しました。
+
+- .com親DNSと主要public resolverは`desi.ns.cloudflare.com` / `harlan.ns.cloudflare.com`を返す。
+- `blog.kanouk.com` / `photos.kanouk.com`はWorker `kanouk-emdash-staging`のproduction environmentへ接続済み。
+- `workers_dev` / `preview_urls`は明示的に有効化し、既存staging URLも200を維持する。
+- TLSは`kanouk.com` / `*.kanouk.com`を含み、両Custom Domainで200を返す。
+- blog→photo route、photos→blog routeはqueryを維持して308。
+- apexは200、wwwはapexへの301を維持する。
+- 本番全件crawlは4,056 page / 6,490 internal link、残存参照0。一時timeout 4件は各3回の対象再監査12/12で200。
+
+切替証拠の機械可読要約は`production-cutover-2026-09-02.json`に保存しています。macOSのローカルresolverは旧NSをTTL中保持したため、切替直後の検証は.com親DNS、1.1.1.1、Cloudflare権威DNS、固定SNI/TLS接続を併用しました。ローカルcacheだけを公開障害と判定しません。
+
 ## SmugMug owner OAuth後の再開（完了済みの復旧手順）
 
 公開APIだけで原本一致まで確認できなかったassetだけを再開します。認証値はPrivate Vaultの`10_sensitive`からallowlist runnerが子processへ渡し、標準出力やGitへ出しません。
@@ -134,6 +148,12 @@ reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true
 | 3か月 | 旧URL残存、コスト、運用品質をまとめ、旧サービスを残す／解約候補にする判断材料を提示 |
 
 検索エンジン側の処理待ちは即時合格とせず、pendingとして次の監視時点へ持ち越します。
+
+### 初回監視結果
+
+2026-09-02 08:03 JST（切替約1時間後）に、zone `active`、Custom Domain 2件、blog 14/14・photos 12/12の代表readback、active deployment error rate 0%、asset 5xx 0を確認しました。旧カノログのGA4 measurement IDが初期releaseへ入っていないことを同時に検出したため、production hostだけで有効になるよう修正し、Worker version `86d6efcb-7a33-48db-85be-d7f66c29fe7b`へdeployしました。
+
+修正後は両production hostでGA4 loaderとmeasurement IDを読み戻し、stagingではGA4なし・`X-Robots-Tag: noindex`を維持しています。GA4 realtimeとSearch Consoleは外部反映を未確認のためpendingです。
 
 ## Cloudflare staging backup
 

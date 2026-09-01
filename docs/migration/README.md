@@ -11,10 +11,11 @@
 - nocalog / art-quiz は現在の公開REST件数がWXRの公開件数と一致。WXRには下書き・非公開も保持されている
 - SmugMug は40アルバム、2,168アセット（JPEG 2,156、MP4 12）を固定ID付きmanifestへ収録。所有者OAuthで原本を回収し、GPSを削除せず2,168件すべてをR2 readbackまでverified
 - コメント127件を公開65／保留62の状態を保って移行し、IPアドレスとUser-Agentは保存していない
-- 全4 sitemap・4,056ページ・内部リンク6,302件を巡回し、HTTP/network失敗、`wordpress://`、旧WordPress upload、SmugMug、旧サイト、Gutenberg comment、shortcodeはいずれも0件
+- staging全4 sitemap・4,056ページ・内部リンク6,302件と、切替後のhost別4 sitemap・4,056ページ・内部リンク6,490件を巡回。残存参照はいずれも0件で、本番の一時timeout 4件も対象再監査12/12で200
 - D1 SQLとR2全3,507 object（6,933,980,178 bytes）のbackup／別SQLite復元／全byte hash照合に成功。85 table／40,974 row、integrity `ok`、foreign key違反0
 - Yohakuのブログ／写真UI、ダークモード、検索、地図、EXIF、共有、全画面、スライドショー、キーボード／スワイプ移動をステージングへ実装済み
-- `kanouk.com`を`kanouk@gmail.com`側Cloudflareへ追加し、Custom Domain設定をコード化済み。DNS切替はユーザー承認済みで、ムームードメイン認証後に実施する
+- `kanouk.com`を`kanouk@gmail.com`側Cloudflareへ追加し、2026-09-02にnameserver切替、zone active、2 Custom Domain、TLS、本番readbackまで完了
+- 旧カノログのGA4 `G-94EQ0WN7B9`をproduction 2ホストだけへ継承。stagingはanalyticsなし・`noindex`のまま維持
 - WordPress停止、SmugMug解約は未実施し、今回も対象外とする
 
 ## データの流れ
@@ -50,11 +51,9 @@ SmugMug代替は既製の別サービスではなく、このリポジトリで�
 
 ## 残っているゲート
 
-1. ムームードメインの現行DNSレコードを管理画面で最終照合する。
-2. nameserverをCloudflare指定値へ切り替え、zoneがactiveになるまで確認する。
-3. `blog.kanouk.com` / `photos.kanouk.com` Custom Domainをdeployし、DNS／TLS／host分離を読み戻す。
-4. 独自ドメインで全URL／SEO／desktop／mobile／dark mode監査を再実行する。
-5. Search Console／GA4／404／Worker errorを切替直後から監視する。旧WordPress／SmugMugは停止・解約しない。
+1. 24時間、1週間、1か月、3か月の時点でWorker error、404、Search Console、GA4、Core Web Vitalsを監視する。
+2. Cloudflareの請求期間後にWorkers／R2／D1／Imagesの実費を確定し、年$100削減の成否を判定する。
+3. 旧WordPress／SmugMugは停止・解約せず、監視結果を材料に別途判断する。
 
 ## アカウントと秘密情報
 

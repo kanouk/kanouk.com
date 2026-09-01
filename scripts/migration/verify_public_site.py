@@ -192,15 +192,16 @@ def main() -> None:
     parsed = urlparse(base_url)
     if parsed.scheme not in {"http", "https"} or not parsed.netloc:
         raise SystemExit("--base-url must be an absolute HTTP(S) URL")
+    is_photos_host = parsed.hostname == "photos.kanouk.com"
 
     checks: list[Check] = []
     try:
         home_html = add_page_check(
             checks,
-            name="blog-home",
+            name="photo-home" if is_photos_host else "blog-home",
             url=urljoin(base_url, "/"),
             expected_status=200,
-            marker="カノログ",
+            marker="<h1>アルバム</h1>" if is_photos_host else "カノログ",
             expect_preview_noindex=args.expect_preview_noindex,
         )
         posts_html = add_page_check(
@@ -230,35 +231,40 @@ def main() -> None:
 
         add_seo_check(
             checks,
-            name="blog-home-seo",
+            name="photo-home-seo" if is_photos_host else "blog-home-seo",
             url=urljoin(base_url, "/"),
             html=home_html,
-            expected_canonical="https://blog.kanouk.com/",
+            expected_canonical=(
+                "https://photos.kanouk.com/albums"
+                if is_photos_host
+                else "https://blog.kanouk.com/"
+            ),
             expected_jsonld="WebSite",
         )
 
-        post_match = re.search(r'href="(/posts/[^"?#]+)"', home_html)
-        if not post_match:
-            raise RuntimeError("no published post found for SEO readback")
-        post_path = unescape(post_match.group(1))
-        post_url = urljoin(base_url, post_path)
-        post_html = add_page_check(
-            checks,
-            name="post-detail",
-            url=post_url,
-            expected_status=200,
-            marker='class="article"',
-            expect_preview_noindex=args.expect_preview_noindex,
-        )
-        add_seo_check(
-            checks,
-            name="post-detail-seo",
-            url=post_url,
-            html=post_html,
-            expected_canonical=urljoin("https://blog.kanouk.com", post_path),
-            expected_jsonld="BlogPosting",
-            require_og_image=True,
-        )
+        if not is_photos_host:
+            post_match = re.search(r'href="(/posts/[^"?#]+)"', home_html)
+            if not post_match:
+                raise RuntimeError("no published post found for SEO readback")
+            post_path = unescape(post_match.group(1))
+            post_url = urljoin(base_url, post_path)
+            post_html = add_page_check(
+                checks,
+                name="post-detail",
+                url=post_url,
+                expected_status=200,
+                marker='class="article"',
+                expect_preview_noindex=args.expect_preview_noindex,
+            )
+            add_seo_check(
+                checks,
+                name="post-detail-seo",
+                url=post_url,
+                html=post_html,
+                expected_canonical=urljoin("https://blog.kanouk.com", post_path),
+                expected_jsonld="BlogPosting",
+                require_og_image=True,
+            )
 
         album_match = re.search(r'href="(/albums/[^"?#]+)"', albums_html)
         if not album_match:
@@ -325,7 +331,13 @@ def main() -> None:
             sitemap_failures.append(f"status={status}, expected=200")
         if "application/xml" not in header(headers, "Content-Type"):
             sitemap_failures.append("response is not XML")
-        for expected in ("sitemap-posts.xml", "sitemap-albums.xml"):
+        if parsed.hostname == "blog.kanouk.com":
+            expected_sitemaps = ("sitemap-posts.xml", "sitemap-pages.xml")
+        elif parsed.hostname == "photos.kanouk.com":
+            expected_sitemaps = ("sitemap-albums.xml", "sitemap-photos.xml")
+        else:
+            expected_sitemaps = ("sitemap-posts.xml", "sitemap-albums.xml")
+        for expected in expected_sitemaps:
             if expected not in sitemap_text:
                 sitemap_failures.append(f"missing {expected}")
         if args.expect_preview_noindex and "noindex" not in header(headers, "X-Robots-Tag").lower():

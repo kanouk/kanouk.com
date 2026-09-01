@@ -19,6 +19,8 @@ def load_jsonc(path: Path) -> dict[str, object]:
 class YohakuDesignContractTests(unittest.TestCase):
     def test_blog_and_photos_are_declared_as_worker_custom_domains(self) -> None:
         config = load_jsonc(WEB_ROOT / "wrangler.jsonc")
+        self.assertTrue(config.get("workers_dev"))
+        self.assertTrue(config.get("preview_urls"))
         routes = config.get("routes")
         self.assertIsInstance(routes, list)
         self.assertEqual(
@@ -28,6 +30,13 @@ class YohakuDesignContractTests(unittest.TestCase):
                 {"pattern": "photos.kanouk.com", "custom_domain": True},
             ],
         )
+
+    def test_ga4_continuity_is_limited_to_production_hosts(self) -> None:
+        head = (WEB_ROOT / "src/components/YohakuHead.astro").read_text()
+        self.assertIn('const GA4_MEASUREMENT_ID = "G-94EQ0WN7B9"', head)
+        self.assertIn('["blog.kanouk.com", "photos.kanouk.com"]', head)
+        self.assertIn("Astro.url.hostname", head)
+        self.assertIn("googletagmanager.com/gtag/js", head)
 
     def test_pages_do_not_define_route_specific_style_systems(self) -> None:
         offenders = [
