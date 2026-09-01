@@ -638,14 +638,14 @@ main:focus { outline: none; }
 .albums-page .page-header h1 { font-size: var(--step-4); }
 .album-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(3rem, 7vw, 6rem) clamp(1.25rem, 4vw, 3.5rem); }
 .album-card { display: block; color: inherit; text-decoration: none; }
-.album-card .cover { display: grid; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper-muted); place-items: center; }
+.album-card .cover { position: relative; display: grid; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper-muted); place-items: center; }
 .album-card .cover.placeholder { position: relative; color: var(--accent-strong); }
 .album-card .cover.placeholder::before,
 .album-card .cover.placeholder::after { position: absolute; content: ""; }
 .album-card .cover.placeholder::before { inset: 12%; border: 1px solid var(--rule); }
 .album-card .cover.placeholder::after { width: 1px; height: 22%; background: var(--accent); transform: rotate(35deg); }
 .album-card .cover.placeholder svg { position: relative; z-index: 1; padding: 0.35rem; background: var(--paper-muted); box-sizing: content-box; }
-.album-card .cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms cubic-bezier(.2,.65,.25,1); }
+.album-card .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms cubic-bezier(.2,.65,.25,1); }
 .album-card:hover .cover img { transform: scale(1.015); }
 .album-copy { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--rule); }
 .album-copy h2 { font-size: var(--step-1); }
