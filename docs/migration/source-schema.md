@@ -1,155 +1,144 @@
 # 移行元とEmDashのデータ構造監査
 
-調査日: 2026-08-31
+更新日: 2026-09-01
 
-## 調査範囲
-
-確認できた事実、本人の方針、設計上の提案を混同しないため、以下の記号を使います。
-
-- **確認済み**: API、既存manifest、またはEmDash 0.35.0の配布ソースで確認した内容
-- **本人方針**: 本人が今回の会話で定めた利用範囲
-- **設計案**: 移行先として提案する構造。実装前であり変更可能
+この文書は、現在保存されている移行元原本と、ステージングへ実装済みのEmDashスキーマを記録します。件数は移行台帳の値であり、進行中の転送成功件数とは分けて扱います。
 
 ## WordPress
 
-### 取得範囲
+### 保存済み原本と現在値
 
-| サイト | 2026-08-31 REST監査 | 2026-07-10 WXR manifest | 制約 |
-|---|---:|---:|---|
-| kanolog.net | 認証済み。全readable status | あり | 既存Application Passwordが有効 |
-| nocalog.net | 公開データのみ | あり | kanologの認証情報は401 |
-| art-quiz.com | 公開データのみ | あり | kanologの認証情報は401 |
+- kanolog.net、nocalog.net、art-quiz.comのWXR原本をSHA-256付きで保存済み。
+- WXRから投稿1,847件、固定ページ7件、合計1,854コンテンツを抽出済み。
+- statusはpublish 1,848件、draft 3件、private 3件。非公開状態は移行先でも公開しない。
+- 添付は2,027件。JPEG、PNG、GIF、WebP、SVG、PDF、XLSX、MP3を含む。
+- コメントは127件（approved 65、pending 62）。IPアドレスとUser-Agentは移行しない。
+- kanolog.netは所有者RESTでも監査済み。現在値は公開投稿1,370件、下書き1件、固定ページ3件、添付1,362件、Pochipp 590件、再利用ブロック3件、nav menu item 10件、公開コメント65件。
+- kanolog.netのWXR後の公開投稿差分2件は、保存済みREST deltaと一致する。
+- nocalog.netとart-quiz.comは公開REST件数がWXRの公開件数と一致する。現在の非公開差分は管理者認証がないため未確認だが、WXR内のdraft/privateは保持している。
 
-既存manifestにはWXR原本のSHA-256と件数が残っていますが、参照先XMLは現在存在しません。したがって、本文ブロック、全postmeta、非公開投稿、メニューを確定するには最新WXRの再取得が必要です。
+### 本文構造
 
-### 件数
+WXR本文にはGutenberg標準ブロックのほか、SWELL/LOOS、JIN、Pochipp、Jetpack、WPMF、クイズ、会話、商品カードなどのテーマ／プラグイン依存表現があります。
 
-| サイト | 投稿 | 固定ページ | 添付 | Pochipp | 再利用ブロック | その他 |
-|---|---:|---:|---:|---:|---:|---|
-| kanolog.net REST | 1,371（公開1,370、下書き1） | 3 | 1,362 | 590（公開589、下書き1） | 3 | nav menu item 10 |
-| nocalog.net 公開REST | 183 | 1 | 62 | 1 | API上は2、本文取得不可 | blog_parts 1 |
-| art-quiz.com 公開REST | 291 | 0 | 603 | 13 | 0 | — |
-| 2026-07-10 WXR合計 | 1,845 | 7 | 2,027 | 604 | 5 | blog_parts 1、nav menu item 13 |
+変換器はテーマ固有名を移行先へ持ち込まず、表現の意味に応じて次の `yohaku.*` ブロックへ正規化します。
 
-WXR時点の投稿・固定ページ合計は1,852件です。2026-08-31の公開RESTでは更新後の差分があるため、WXR件数は本移行の確定値としては使いません。
+- `yohaku.accordion`
+- `yohaku.callout`
+- `yohaku.dialogue`
+- `yohaku.linkCard`
+- `yohaku.productCard`
+- `yohaku.rating`
+- `yohaku.quiz`
+- `yohaku.siteSearch`
+- `yohaku.steps`
 
-kanolog.netでは認証RESTからコメント65件を確認しました。nocalog.net / art-quiz.comの公開RESTでは0件ですが、非承認・非公開コメントの不存在までは確認できていません。
-
-添付は画像だけではありません。kanolog.netにはJPEG 815、PNG 481、GIF 54、WebP 6のほか、XLSX 3、PDF 1、MP3 1、SVG 1があります。nocalog.netにもPDFとXLSXがあります。したがってWordPress添付はEmDash media/fileとして扱い、公開写真アルバムへ一律に入れません。GIFアニメーション、SVG、音声、文書はパイロットで個別に表示確認します。
-
-### WordPressの論理構造
-
-1件の投稿系レコードは、最低限次を持ちます。
-
-- `id`, `type`, `status`, `date`, `modified`, `slug`, `link`
-- `title`, `content`, `excerpt`
-- `author`, `parent`, `featured_media`, `template`, `format`
-- taxonomy assignment（category、tag、カスタムtaxonomy）
-- postmeta / RESTで登録された`meta`
-- 添付、コメント、メニュー、再利用ブロックへの参照
-
-kanolog.netの認証RESTで露出したmetaは `swell_btn_cv_data`、`footnotes`、`pochipp_data` でした。RESTは登録済みmetaしか返さないため、これを全postmeta一覧とは扱いません。
-
-### 本文の変換リスク
-
-kanolog.netのraw contentで、次のGutenbergブロックを確認しました。
-
-- 主な標準ブロック: paragraph、image、list/list-item、quote、heading、separator、preformatted、embed、table、columns/column、html、code、audio、file、gallery、group
-- プラグイン・テーマ依存: pochipp 989、loos 140、loos-hcb 23、jin-gb-block 17、jetpack 8、wpmf 1
-
-また、Pochipp、`ays_quiz`、gallery、`itemlink`などのshortcode候補があります。監査の正規表現は文章中の角括弧も候補に含めるため、shortcode件数はWXRで構文確認してから確定します。
-
-kanolog本文には少なくとも `kanolog.smugmug.com` 115参照、`photos.smugmug.com` 98参照がありました。これはURL出現回数で、ユニーク画像数ではありません。
+1,854コンテンツを17,050ブロックへ変換した監査では、通常のフォールバック `htmlBlock` は0件です。つまり「機械的にHTML化する」のではなく、標準Portable Textと汎用的なYohaku意味ブロックで保持します。
 
 ## SmugMug
 
-### 本人方針
+### 公開カタログ実測
 
-- Google Photosにあるプライベート写真の代替はしない。
-- SmugMugは公開サイト用であり、アルバム表示とブログ埋め込みが主用途。
-- Gyazo代替は別Issueで検討し、今回の公開写真基盤へ混在させない。
-
-### 公開API実測
-
-| 項目 | 実測 |
+| 項目 | 件数・値 |
 |---|---:|
-| 公開APIから読めるアルバム | 40 |
-| 資産 | 2,168 |
-| JPG | 2,156 |
-| MP4 | 12 |
-| API上の原本相当サイズ合計 | 6,465,591,357 bytes（約6.47 GB） |
-| `ArchivedUri` + `ArchivedMD5`あり | 2,003 |
-| `ArchivedUri`なし | 165 |
-| ダウンロード許可アルバム | 36 |
-| ダウンロード不許可アルバム | 4 |
-| タイトルあり | 934 |
-| キャプションあり | 687 |
-| 動画 | 12 |
-| 0以外の位置座標あり | 1,114 |
-| hidden | 0 |
+| アルバム | 40 |
+| アセット | 2,168 |
+| JPEG / MP4 | 2,156 / 12 |
+| source相当サイズ | 6,465,591,357 bytes |
+| 公開`ArchivedUri` + `ArchivedMD5`あり | 2,003 |
+| 公開archive URIなし | 165 |
+| GPSあり | 1,114 |
+| title / caption / keyword | 934 / 687 / 2 |
+| download許可 / 不許可アルバム | 36 / 4 |
+| protected album / asset | 7 / 339 |
+| comment | 0 |
 
-全40アルバムの`SecurityType`は公開API上 `None`、並び順は35件が撮影日、5件が手動positionです。39件は昇順、1件は降順です。
+全アセットは公開サイト用途です。Google Photosの私的写真の代替や、Gyazo代替の半非公開領域はこのモデルへ混在させません。
 
-`Protected`はアルバム7件・資産339件でtrueですが、公開APIから読み取れることと、原本ダウンロード可否は別です。165資産は公開APIだけでは確実な原本取得経路が確認できず、所有者認証後の監査対象です。また1,114資産に0以外の位置座標があるため、移行時に値を保全しても新しい公開APIやHTMLへは既定で露出させません。
+### SmugMugで保持する構造
 
-### SmugMugの論理構造
+アルバムではsource identity、名前・説明、highlight、並び順、download可否、公開設定とraw metadataを保持します。写真・動画ではsource identity、ファイル名、形式、原本hash、寸法、撮影日時、title、caption、keyword、EXIF、GPS、album内positionとraw metadataを保持します。
 
-アルバムで確認した主な項目:
+GPSは削除しません。正規化した緯度・経度・高度を写真レコードへ保存し、写真詳細とアルバム地図に使います。公開JPEGが表示できてもsource MD5と一致しない場合は原本とみなさず、`pending_owner_auth`へ分類します。
 
-- 識別: `AlbumKey`, `NodeID`, `Uri`, `WebUri`, `UrlName`, `UrlPath`
-- 表示: `Name`, `Title`, `Description`, `Keywords`, highlight/cover image
-- 並び: `SortMethod`, `SortDirection`, `ImageCount`
-- 公開・機能: `SecurityType`, `Protected`, `AllowDownloads`, `CanShare`, `CanBuy`, `CanFavorite`
-- 関係: folder、parent folders、images、comments、share、download
+## 実装済みEmDashスキーマ
 
-画像・動画で確認した主な項目:
+ブログと写真は同じWorker / D1 / R2基盤を使いますが、collectionと公開画面を分けています。
 
-- 識別: `ImageKey`, `AlbumKey`, `Uri`, `WebUri`, `UploadKey`
-- ファイル: `FileName`, `Format`, `OriginalSize`, `ArchivedSize`, `ArchivedUri`, `ArchivedMD5`
-- 寸法・時刻: `OriginalWidth`, `OriginalHeight`, `DateTimeOriginal`, `DateTimeUploaded`
-- 表示: `Title`, `Caption`, `Keywords`, `ThumbnailUrl`, size variants
-- 状態: `Hidden`, `Protected`, `Watermarked`, `IsVideo`, `Status`
-- 関係: album、comments、share、metadata、size details、video variants
+### `posts`
 
-## EmDash 0.35.0
+- `title:string`（required/searchable）
+- `featured_image:image`
+- `content:portableText`（searchable）
+- `excerpt:text`
+- `source_url:string`（indexed）
+- `source_id:string`（indexed）
+- `source_metadata:json`
 
-配布パッケージの実装で次を確認しました。
+### `pages`
 
-- WordPressの直接REST importは未実装で、REST接続は検出用途。通常はWXR uploadを案内する。
-- WXRは投稿、固定ページ、カスタム投稿タイプ、添付、taxonomy、メニュー、再利用ブロックを解析する。
-- `post` → `posts`、`page` → `pages`、`attachment` → `media`が既定対応。未知のカスタム投稿タイプは同名collectionになる。
-- 基本フィールドは `title:string`、`content:portableText`、`excerpt:text`。
-- `_thumbnail_id`がある型には `featured_image:image`を追加する。
-- `wp_block`はcollectionではなくsectionとして処理する。
-- Gutenberg本文はPortable Textへ変換し、対応できないものは`htmlBlock`として保持できる。
-- WXR statusはpublish/draft/pending/private/futureを認識する。ただしprivateの実際の公開制御はpilotで確認する。
-- 添付URLをダウンロードしてEmDash storageへ取り込み、URLを書き換える経路を持つ。
-- EmDash Exporter plugin経由のimportもあるが、WordPress側へのplugin導入が必要になる。
+- `title:string`（required/searchable）
+- `content:portableText`（searchable）
+- `source_url:string`（indexed）
+- `source_id:string`（indexed）
+- `source_metadata:json`
 
-## 移行先の設計案
+### `albums`
 
-ブログと公開写真は同じR2を共有しても、論理モデルと公開経路を分けます。
+- `title:string`（required/searchable）
+- `description:text`（searchable）
+- `cover_image:image`
+- `captured_from:datetime` / `captured_to:datetime`
+- `sort_method:string` / `sort_direction:string`
+- `allow_downloads:boolean`
+- `source_album_key:string`（indexed）
+- `source_url:string`
+- `source_metadata:json`
+
+### `photos`
+
+- `title:string`（required/searchable）
+- `image:image`（required）
+- `kind:select`（`image` / `video`）
+- `video:file`
+- `alt:string`（required）
+- `caption:text`（searchable）
+- `album:reference(albums)`（required/indexed）
+- `position:integer`（required/indexed）
+- `captured_at:datetime`
+- `latitude:number` / `longitude:number` / `altitude:number`
+- `source_system:string` / `source_id:string`（required、IDはindexed）
+- `source_url:string`
+- `original_sha256:string`（indexed）
+- `source_metadata:json`
+
+### `url_mappings`
+
+- `source_url:string`（required/unique/indexed）
+- `target_url:string`（required）
+- `target_kind:string`（required）
+- `source_system:string`（required）
+- `source_record_id:string`
+- `migration_status:string`
+- `verified:boolean`
+
+## 保存先と公開境界
 
 ```text
-EmDash content (D1) ── media reference ──┐
-                                        ├── media_asset (D1) ── object (R2)
-Public album (D1) ── album_item ────────┘
+WordPress WXR / REST ─┐
+                      ├─ manifest・ledger ─ EmDash content (D1) ─ blog UI
+SmugMug API / OAuth ──┘                    └ media (R2) ───────── photos UI
 ```
 
-- EmDash: posts、pages、必要なcustom collections、taxonomy、comments、redirects
-- 公開写真: albums、album_items、media_assets、media_variants
-- 共通台帳: source identities、source URLs、hash、R2 object key、import/verification status
-- URL: `blog.kanouk.com`と`photos.kanouk.com`で明確に分ける
-- private/Gyazo代替: 別バケット・別認証境界とし、今回の公開モデルには追加しない
+- 公開ブログ名は「カノログ」、予定URLは `blog.kanouk.com`。
+- 公開写真の予定URLは `photos.kanouk.com`。
+- R2の管理URLは公開せず、Workerのmedia配信経路を使う。
+- source ID、source URL、raw metadata、source hash、Cloudflare readback hashを残し、転送は中断・再実行可能にする。
+- `fragrance.radio@gmail.com`側のCloudflare資源は使用しない。対象accountは`kanouk@gmail.com`。
 
-## パイロット選定条件
+## 未確定部分
 
-最初の移行単位は次をすべて含む小さな集合にします。
-
-- 1つのSmugMugアルバム（JPG、動画、タイトル/キャプション、撮影日順を含む）
-- 5〜10本のブログ記事（WordPress添付、SmugMug直リンク、Gutenberg標準ブロックを含む）
-- Pochippまたはテーマ依存ブロックを少なくとも1本含む
-- 旧URLから新URLまでの対応を人手で全件照合できる規模
-- 非公開写真やGyazo画像を含まない
-
-パイロット合格条件は、件数一致、原本hash一致、本文中の画像参照ゼロ残存、PC/モバイル表示、旧URLの301、rollback手順の確認です。
+- SmugMugの`pending_owner_auth`は、ユーザー同席時のFull/Read OAuth後に原本一致を確定する。
+- WordPress添付2,027件とSmugMugアセット2,168件は全件転送・readback照合の進行中。
+- 全media確定後に1,854コンテンツを再importし、旧WordPress / SmugMug参照を同時に固定URLへ置換する。
+- custom domainのDNS切替は未実施であり、最終監査後もユーザーの明示指示なしには行わない。
