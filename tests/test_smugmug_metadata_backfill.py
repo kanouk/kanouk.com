@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 
 MODULE_PATH = Path(__file__).parents[1] / "scripts/migration/backfill_smugmug_metadata.py"
@@ -42,6 +43,47 @@ class SmugMugMetadataBackfillTests(unittest.TestCase):
         )
         self.assertEqual(exif, {})
         self.assertEqual(keywords, [])
+
+    def test_retries_version_conflict_with_fresh_revision(self) -> None:
+        reads = iter(
+            [
+                {"_rev": "rev-1", "data": {"source_metadata": {}}},
+                {"_rev": "rev-2", "data": {"source_metadata": {}}},
+                {
+                    "_rev": "rev-3",
+                    "data": {
+                        "source_metadata": {
+                            "exif": {"Make": "Apple"},
+                            "keywords": None,
+                        }
+                    },
+                },
+            ]
+        )
+        put_revisions: list[str] = []
+
+        def fake_request(method, path, token, payload=None):
+            if method == "PUT":
+                put_revisions.append(payload["_rev"])
+                if len(put_revisions) == 1:
+                    raise RuntimeError("EmDash HTTP 409: version conflict")
+                return {"item": {"draftRevisionId": None}}
+            raise AssertionError(f"unexpected request: {method} {path}")
+
+        with (
+            patch.object(module, "get_photo", side_effect=lambda *_: next(reads)),
+            patch.object(module, "emdash_request", side_effect=fake_request),
+            patch.object(module.time, "sleep"),
+        ):
+            changed = module.update_photo(
+                {"id": "photo-1", "destination": {"emdash_content_id": "photo-1"}},
+                {"ImageMetadata": {"Make": "Apple"}},
+                env={},
+                token="token",
+            )
+
+        self.assertTrue(changed)
+        self.assertEqual(put_revisions, ["rev-1", "rev-2"])
 
 
 if __name__ == "__main__":

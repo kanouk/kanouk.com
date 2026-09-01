@@ -144,28 +144,40 @@ def update_photo(
     content_id = asset.get("destination", {}).get("emdash_content_id")
     if not isinstance(content_id, str):
         return False
-    current = get_photo(content_id, token)
-    data = current.get("data")
-    revision = current.get("_rev")
-    if not isinstance(data, dict) or not isinstance(revision, str):
-        raise RuntimeError(f"EmDash photo has invalid readback: {asset.get('id')}")
-    existing = data.get("source_metadata")
-    source_metadata = dict(existing) if isinstance(existing, dict) else {}
     mapped_exif, keywords = metadata_fields(metadata)
-    existing_exif = source_metadata.get("exif")
-    exif = existing_exif if isinstance(existing_exif, dict) and existing_exif else mapped_exif
-    if source_metadata.get("exif") == (exif or None) and source_metadata.get(
-        "keywords"
-    ) == (keywords or None):
-        return False
-    source_metadata["exif"] = exif or None
-    source_metadata["keywords"] = keywords or None
-    updated = emdash_request(
-        "PUT",
-        f"/content/photos/{quote(content_id, safe='')}",
-        token,
-        {"data": {"source_metadata": source_metadata}, "_rev": revision},
-    )
+    for conflict_attempt in range(1, 4):
+        current = get_photo(content_id, token)
+        data = current.get("data")
+        revision = current.get("_rev")
+        if not isinstance(data, dict) or not isinstance(revision, str):
+            raise RuntimeError(f"EmDash photo has invalid readback: {asset.get('id')}")
+        existing = data.get("source_metadata")
+        source_metadata = dict(existing) if isinstance(existing, dict) else {}
+        existing_exif = source_metadata.get("exif")
+        exif = (
+            existing_exif
+            if isinstance(existing_exif, dict) and existing_exif
+            else mapped_exif
+        )
+        if source_metadata.get("exif") == (exif or None) and source_metadata.get(
+            "keywords"
+        ) == (keywords or None):
+            return False
+        source_metadata["exif"] = exif or None
+        source_metadata["keywords"] = keywords or None
+        try:
+            updated = emdash_request(
+                "PUT",
+                f"/content/photos/{quote(content_id, safe='')}",
+                token,
+                {"data": {"source_metadata": source_metadata}, "_rev": revision},
+            )
+            break
+        except RuntimeError as exc:
+            if conflict_attempt < 3 and str(exc).startswith("EmDash HTTP 409:"):
+                time.sleep(0.2 * conflict_attempt)
+                continue
+            raise
     updated_item = updated.get("item")
     if isinstance(updated_item, dict) and updated_item.get("draftRevisionId"):
         emdash_request(
