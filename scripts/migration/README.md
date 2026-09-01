@@ -2,6 +2,19 @@
 
 These scripts aggregate source schema and usage signals without persisting post bodies, titles, slugs, user names, media files, or credentials.
 
+## Yohaku public readback
+
+After a staging deploy, verify the blog archive, photo archive, search, 404,
+sitemap index, response headers, and one real media response:
+
+```sh
+python3 scripts/migration/verify_public_site.py
+```
+
+The staging default requires `X-Robots-Tag: noindex`. After custom domains are
+connected, pass the appropriate host with `--no-expect-preview-noindex` and run
+the blog and photo host checks separately.
+
 ## WordPress REST
 
 Public-only:
