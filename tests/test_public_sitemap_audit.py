@@ -37,6 +37,7 @@ class PublicSitemapAuditTests(unittest.TestCase):
         samples = {
             "wordpress_upload": b"https://kanolog.net/wp-content/uploads/a.jpg",
             "smugmug": b"https://kanolog.smugmug.com/gallery",
+            "legacy_site_link": b'<a href="https://art-quiz.com/sample">',
             "gutenberg_comment": b"<!-- wp:paragraph -->",
             "legacy_shortcode": b"[pochipp id=12]",
         }

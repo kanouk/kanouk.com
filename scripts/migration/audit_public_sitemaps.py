@@ -25,6 +25,10 @@ FORBIDDEN = {
         re.IGNORECASE,
     ),
     "smugmug": re.compile(rb"(?:smugmug\.com|smugmugcdn\.com)", re.IGNORECASE),
+    "legacy_site_link": re.compile(
+        rb"https?://(?:www\.)?(?:kanolog\.net|nocalog\.net|art-quiz\.com)(?:[/\"'?#]|$)",
+        re.IGNORECASE,
+    ),
     "gutenberg_comment": re.compile(rb"<!--\s*/?wp:", re.IGNORECASE),
     "legacy_shortcode": re.compile(
         rb"\[(?:quiz|pochipp|swell|jin|speech_balloon|blogcard)(?:\s|\])",

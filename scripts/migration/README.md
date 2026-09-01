@@ -16,8 +16,8 @@ connected, pass the appropriate host with `--no-expect-preview-noindex` and run
 the blog and photo host checks separately.
 
 For the pre-cutover full audit, crawl every URL in all four public sitemaps,
-check internal links, and reject legacy WordPress uploads, SmugMug references,
-Gutenberg comments, and known legacy shortcodes:
+check internal links, and reject legacy site links, WordPress uploads, SmugMug
+references, Gutenberg comments, and known legacy shortcodes:
 
 ```sh
 python3 scripts/migration/audit_public_sitemaps.py \
