@@ -136,7 +136,7 @@ def main() -> None:
             name="album-archive",
             url=urljoin(base_url, "/albums"),
             expected_status=200,
-            marker="PUBLIC PHOTO ARCHIVE",
+            marker="<h1>アルバム</h1>",
             expect_preview_noindex=args.expect_preview_noindex,
         )
         add_page_check(
