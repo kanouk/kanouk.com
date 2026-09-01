@@ -28,6 +28,20 @@ python3 scripts/migration/verify_public_site.py
 8. stagingは`X-Robots-Tag: noindex`を返す。
 9. `nosniff`とReferrer-Policyがある。
 
+### 公開画像previewの固定契約
+
+一覧、アルバム詳細、記事内画像は、低解像度原本を除き
+`/_yohaku/media/preview-v1/<storage-key>`を通します。`preview-v1`の契約は
+`幅1200px / WebP / quality 85 / scale-down`の1種類だけです。`scale-down`なので
+原本より大きく引き伸ばしません。変形に失敗した場合は原本へ安全にfallbackします。
+
+URLのversionと変形条件は、見た目だけでなくCloudflare Imagesのunique
+transformation数とブラウザのimmutable cacheを管理する契約です。幅違いの`srcset`や
+別formatを安易に増やさず、変更時は新version、対象media数、当月usage、旧cacheの影響を
+先に監査します。現行R2 mediaは3,507件なので、各原本をこの1条件で一度ずつ変形する
+前提ではImages Freeの月5,000 unique transformations内ですが、実usageとerror 9422を
+Cloudflare dashboardで監視し、無料枠内と推測だけで確定しません。
+
 custom domain接続後はhostごとに実行します。
 
 ```sh
@@ -167,13 +181,14 @@ WXR、SmugMug manifest、WordPress media ledger、旧新URL ledgerはR2 backup�
 - Workers Paid: account最低月額とrequest / CPUの実使用
 - R2: GB-month、Class A、Class B。public egressは無料
 - D1: rows read / rows written / storage
-- Imagesを使っていなければ0として分離し、R2をImages料金へ二重計上しない
+- Images: `preview-v1`のunique transformations。R2保存量をImages料金へ二重計上しない
 
 公式価格:
 
 - https://developers.cloudflare.com/workers/platform/pricing/
 - https://developers.cloudflare.com/r2/pricing/
 - https://developers.cloudflare.com/d1/platform/pricing/
+- https://developers.cloudflare.com/images/pricing/
 
 2026-09-01時点の概算では、Workers Paidの最低額が月$5なら年$60です。SmugMug年$100だけとの単純比較は年約$40削減ですが、最終R2総量、request実績、WordPress hosting費を含めた実測後に確定します。無料枠に収まるという仮定で完了扱いにはしません。
 

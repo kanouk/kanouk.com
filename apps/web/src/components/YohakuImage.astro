@@ -37,7 +37,7 @@ const cropSafely = crop && !lowResolution;
 const previewKey = typeof storageKey === "string" ? storageKey : value?.id;
 const src =
 	(preview || cropSafely) && !lowResolution && previewKey
-		? `/_yohaku/media/preview/${encodeURIComponent(previewKey)}`
+		? `/_yohaku/media/preview-v1/${encodeURIComponent(previewKey)}`
 		: originalSrc;
 ---
 
