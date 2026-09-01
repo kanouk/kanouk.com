@@ -100,6 +100,16 @@ function stableJson(value) {
 	return JSON.stringify(value);
 }
 
+export function storedMigrationDataMatches(item, desired) {
+	const data = item?.data;
+	if (!data) return false;
+	return data.source_metadata?.migration_fingerprint === desired.fingerprint
+		&& data.title === desired.data.title
+		&& data.source_url === desired.data.source_url
+		&& data.source_id === desired.data.source_id
+		&& stableJson(data.content ?? []) === stableJson(desired.data.content ?? []);
+}
+
 function decodeXmlValue(value = "") {
 	const cdata = value.match(/^<!\[CDATA\[([\s\S]*)\]\]>$/)?.[1];
 	return (cdata ?? value)
@@ -572,11 +582,13 @@ function contentBody(desired, bylineId) {
 
 async function upsertContent(client, record, desired, bylineId, apply, contentIds) {
 	let current = await getContent(client, desired.collection, desired.slug, contentIds);
-	let currentFingerprint = current?.item?.data?.source_metadata?.migration_fingerprint;
-	if (currentFingerprint === desired.fingerprint && current.item.status === desired.status) return "skipped_verified";
+	if (storedMigrationDataMatches(current?.item, desired) && current.item.status === desired.status) return "skipped_verified";
 	if (!apply) return current ? "would_update" : "would_create";
 	if (!current) {
 		const created = await client.post(`/_emdash/api/content/${desired.collection}`, contentBody(desired, bylineId));
+		if (!storedMigrationDataMatches(created.data?.item, desired)) {
+			throw new Error(`Created content readback mismatch for ${record.source.id}:${record.post.id}`);
+		}
 		contentIds.set(`${desired.collection}:${desired.slug}`, created.data.item.id);
 		if (desired.status === "published") {
 			await client.post(
@@ -588,7 +600,7 @@ async function upsertContent(client, record, desired, bylineId, apply, contentId
 	}
 	for (let attempt = 1; attempt <= 4; attempt++) {
 		try {
-			await client.put(`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}`, {
+			const updated = await client.put(`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}`, {
 				data: desired.data,
 				slug: desired.slug,
 				...(desired.status === "draft" ? { status: "draft" } : {}),
@@ -598,14 +610,19 @@ async function upsertContent(client, record, desired, bylineId, apply, contentId
 				publishedAt: desired.publishedAt,
 				_rev: current._rev,
 			});
+			const readback = updated.data?.item
+				? updated.data.item
+				: (await getContent(client, desired.collection, desired.slug, contentIds))?.item;
+			if (!storedMigrationDataMatches(readback, desired)) {
+				throw new Error(`Updated content readback mismatch for ${record.source.id}:${record.post.id}`);
+			}
 			break;
 		} catch (error) {
 			if (attempt === 4 || !String(error).includes("CONFLICT")) throw error;
 			await sleep(100 * attempt);
 			current = await getContent(client, desired.collection, desired.slug, contentIds);
 			if (!current) throw error;
-			currentFingerprint = current.item?.data?.source_metadata?.migration_fingerprint;
-			if (currentFingerprint === desired.fingerprint && current.item.status === desired.status) {
+			if (storedMigrationDataMatches(current.item, desired) && current.item.status === desired.status) {
 				return "skipped_verified";
 			}
 		}

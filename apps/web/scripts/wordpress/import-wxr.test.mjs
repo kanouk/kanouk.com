@@ -11,6 +11,7 @@ import {
 	rewriteMediaReferences,
 	rewriteSmugMugReferences,
 	shouldRetryRequest,
+	storedMigrationDataMatches,
 } from "./import-wxr.mjs";
 
 test("destination slugs preserve unique slugs and namespace collisions", () => {
@@ -46,6 +47,28 @@ test("only transient HTTP responses and safe network failures are retried", () =
 	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "GET" }), true);
 	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "PUT" }), true);
 	assert.equal(shouldRetryRequest({ error: new TypeError("fetch failed"), method: "POST" }), false);
+});
+
+test("stored migration fingerprints cannot hide sanitized portable text", () => {
+	const desired = {
+		fingerprint: "same-fingerprint",
+		data: {
+			title: "Quiz",
+			source_url: "https://example.com/quiz",
+			source_id: "site:1",
+			content: [{ _type: "yohaku.quiz", questions: [{ question: "Q" }] }],
+		},
+	};
+	const stored = {
+		data: {
+			...desired.data,
+			source_metadata: { migration_fingerprint: desired.fingerprint },
+			content: [{ _type: "htmlBlock", html: "[ays_quiz id='1']" }],
+		},
+	};
+	assert.equal(storedMigrationDataMatches(stored, desired), false);
+	stored.data.content = desired.data.content;
+	assert.equal(storedMigrationDataMatches(stored, desired), true);
 });
 
 test("verified WordPress media and derived sizes become local EmDash references", () => {
