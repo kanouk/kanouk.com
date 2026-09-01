@@ -1,0 +1,76 @@
+---
+export const prerender = false;
+
+import { search } from "emdash";
+import { Image as ImageIcon, Images, Search } from "lucide-astro";
+import Photos from "../layouts/Photos.astro";
+
+const query = Astro.url.searchParams.get("q")?.trim() || "";
+const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
+const searchUrl = isPreviewHost ? "/photo-search" : "/search";
+const { items: results } = query
+	? await search(query, { collections: ["albums", "photos"], limit: 40 })
+	: { items: [] };
+
+const resultUrl = (collection: string, slug: string | null, id: string) =>
+	collection === "albums"
+		? `/albums/${slug ?? id}`
+		: `/photos/${slug ?? id}`;
+---
+
+<Photos
+	title={query ? `「${query}」の検索結果` : "写真を検索"}
+	description="公開アルバムと写真を検索"
+>
+	<section class="photo-search-page">
+		<header class="page-header">
+			<p class="eyebrow">SEARCH THE ARCHIVE</p>
+			<h1>写真を検索</h1>
+			<p>アルバム名、説明、写真のタイトルやキャプションから探せます。</p>
+		</header>
+
+		<form method="get" action={searchUrl} class="photo-search-form">
+			<label class="sr-only" for="photo-search-query">検索語</label>
+			<Search size={18} strokeWidth={1.75} aria-hidden="true" />
+			<input
+				id="photo-search-query"
+				type="search"
+				name="q"
+				value={query}
+				placeholder="場所、年月、写真の名前など"
+				autocomplete="off"
+				autofocus
+			/>
+			<button type="submit">検索</button>
+		</form>
+
+		{query && (
+			<p class="photo-search-summary" aria-live="polite">
+				{results.length === 0
+					? `「${query}」に一致する公開写真はありませんでした。`
+					: `${results.length.toLocaleString("ja-JP")}件見つかりました`}
+			</p>
+		)}
+
+		{results.length > 0 && (
+			<ol class="photo-search-results">
+				{results.map((result) => (
+					<li>
+						<a href={resultUrl(result.collection, result.slug, result.id)}>
+							{result.collection === "albums" ? (
+								<Images size={17} strokeWidth={1.6} aria-hidden="true" />
+							) : (
+								<ImageIcon size={17} strokeWidth={1.6} aria-hidden="true" />
+							)}
+							<span class="photo-search-result-copy">
+								<small>{result.collection === "albums" ? "アルバム" : "写真"}</small>
+								<strong>{result.title || "無題"}</strong>
+								{result.snippet && <span set:html={result.snippet} />}
+							</span>
+						</a>
+					</li>
+				))}
+			</ol>
+		)}
+	</section>
+</Photos>

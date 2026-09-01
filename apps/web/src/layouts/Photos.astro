@@ -1,6 +1,7 @@
 ---
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
+import { Search } from "lucide-astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import "../styles/tokens.css";
@@ -17,6 +18,7 @@ const { title, description, image, content } = Astro.props;
 const fullTitle = `${title} — Photos — kanouk.com`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
 const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
+const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 const pageCtx = createPublicPageContext({
 	Astro,
 	kind: content ? "content" : "custom",
@@ -48,6 +50,10 @@ const pageCtx = createPublicPageContext({
 			<a class="photo-brand" href="/albums"><span>kanouk.com</span><small>Photos</small></a>
 			<nav class="site-switcher" aria-label="サイト切り替え">
 				<a aria-current="page" href="/albums">写真</a>
+				<a class="photo-search-link" href={searchUrl} aria-label="写真を検索">
+					<Search size={16} strokeWidth={1.75} aria-hidden="true" />
+					<span>検索</span>
+				</a>
 				<a href={blogUrl}>ブログ</a>
 			</nav>
 		</header>
