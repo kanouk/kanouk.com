@@ -181,70 +181,8 @@ const publishDate =
 			)
 		}
 
-		{/* Three-column layout */}
+		{/* Reading column plus a separate discovery rail. */}
 		<div class="article-grid">
-			{/* Left gutter: Meta information */}
-			<aside class="article-meta-col">
-				<div class="meta-sticky">
-					{
-						bylines.length > 0 && (
-							<div class="meta-block byline-block">
-								<span class="meta-label">
-									著者
-								</span>
-								<div class="bylines">
-									{bylines.map((credit) => (
-										<div class="byline">
-											{credit.byline.avatarMediaId && (
-												<img
-													src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
-													alt={credit.byline.displayName}
-													class="byline-avatar"
-												/>
-											)}
-											<div class="byline-info">
-												<span class="byline-name">
-													{credit.byline.displayName}
-												</span>
-												{credit.roleLabel && (
-													<span class="byline-role">{credit.roleLabel}</span>
-												)}
-											</div>
-										</div>
-									))}
-								</div>
-							</div>
-						)
-					}
-					{
-						publishDate && (
-							<div class="meta-block">
-								<span class="meta-label">公開日</span>
-								<time class="meta-value">{publishDate}</time>
-							</div>
-						)
-					}
-					<div class="meta-block">
-						<span class="meta-label">読了目安</span>
-						<span class="meta-value">{readingTime}分</span>
-					</div>
-					{
-						tags.length > 0 && (
-							<div class="meta-block">
-								<span class="meta-label">タグ</span>
-								<div class="meta-tags">
-									{tags.map((t) => (
-										<a href={`/tag/${t.slug}`} class="meta-tag">
-											{t.label}
-										</a>
-									))}
-								</div>
-							</div>
-						)
-					}
-				</div>
-			</aside>
-
 			{/* Main content */}
 			<div class="article-main">
 				<div class="article-content">
@@ -253,6 +191,16 @@ const publishDate =
 						components={{ type: { image: YohakuPortableImage } }}
 					/>
 				</div>
+
+				{
+					tags.length > 0 && (
+						<nav class="article-tags" aria-label="記事のタグ">
+							{tags.map((tag) => (
+								<a href={`/tag/${tag.slug}`}>{tag.label}</a>
+							))}
+						</nav>
+					)
+				}
 
 				<div class="article-comments">
 					<Comments collection="posts" contentId={post.data.id} threaded />

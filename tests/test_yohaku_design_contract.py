@@ -40,7 +40,7 @@ class YohakuDesignContractTests(unittest.TestCase):
     def test_article_lead_hero_and_body_share_one_reading_axis(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
         for selector in (".article-lead", ".article-hero", ".article-main"):
-            self.assertRegex(css, rf"{re.escape(selector)}\s*\{{[^}}]*grid-column:\s*2;")
+            self.assertRegex(css, rf"{re.escape(selector)}\s*\{{[^}}]*grid-column:\s*1;")
 
     def test_image_lists_do_not_add_mechanical_rules_below_every_image(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
@@ -96,6 +96,15 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn("preview", portable)
         self.assertIn("priority={index === 0}", album_archive)
         self.assertIn("preview priority={index === 0}", album_detail)
+
+    def test_article_uses_one_reading_axis_without_duplicate_left_metadata(self) -> None:
+        article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
+        theme = (WEB_ROOT / "src/styles/theme.css").read_text()
+        self.assertNotIn('class="article-meta-col"', article)
+        self.assertIn('class="article-tags"', article)
+        self.assertIn(".article-lead { grid-column: 1;", theme)
+        self.assertIn(".article-hero { grid-column: 1;", theme)
+        self.assertIn(".article-main { grid-column: 1;", theme)
 
 
 if __name__ == "__main__":
