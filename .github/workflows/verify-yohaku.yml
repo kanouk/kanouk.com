@@ -34,6 +34,11 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Install EXIF inspection dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes libimage-exiftool-perl
+
       - name: Test migration safety code
         run: python -m unittest discover -s tests -p 'test_*.py'
 
