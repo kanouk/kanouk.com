@@ -51,6 +51,27 @@ class PublicSitemapAuditTests(unittest.TestCase):
         self.assertIn(524, module.RETRY_STATUSES)
         self.assertEqual(module.MAX_FETCH_ATTEMPTS, 5)
 
+    def test_smugmug_allowlist_only_suppresses_the_matching_reference(self) -> None:
+        body = (
+            b'<img src="https://photos.smugmug.com/a/i-allowed/image.jpg">'
+            b'<img src="https://photos.smugmug.com/a/i-unresolved/image.jpg">'
+        )
+        self.assertEqual(
+            module.count_forbidden(
+                "smugmug", body, allowed_smugmug_ids=["allowed"]
+            ),
+            1,
+        )
+
+    def test_smugmug_allowlist_can_suppress_one_known_reference(self) -> None:
+        body = b'<img src="https://photos.smugmug.com/a/i-allowed/image.jpg">'
+        self.assertEqual(
+            module.count_forbidden(
+                "smugmug", body, allowed_smugmug_ids=["allowed"]
+            ),
+            0,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

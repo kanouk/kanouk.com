@@ -36,6 +36,10 @@ FORBIDDEN = {
         re.IGNORECASE,
     ),
 }
+SMUGMUG_REFERENCE = re.compile(
+    rb"(?:https?:)?//[^\s\"'<>]*(?:smugmug\.com|smugmugcdn\.com)[^\s\"'<>]*",
+    re.IGNORECASE,
+)
 
 
 class PageParser(HTMLParser):
@@ -119,6 +123,22 @@ def normalize_link(value: str, page_url: str) -> str | None:
     return absolute or None
 
 
+def count_forbidden(
+    name: str, body: bytes, *, allowed_smugmug_ids: list[str]
+) -> int:
+    """Count residue without letting one allowed image hide its whole page."""
+    pattern = FORBIDDEN[name]
+    if name != "smugmug" or not allowed_smugmug_ids:
+        return len(pattern.findall(body))
+
+    allowed = [image_id.encode() for image_id in allowed_smugmug_ids]
+    scrubbed = body
+    for reference in SMUGMUG_REFERENCE.findall(body):
+        if any(image_id in reference for image_id in allowed):
+            scrubbed = scrubbed.replace(reference, b"")
+    return len(pattern.findall(scrubbed))
+
+
 def sitemap_urls(base_url: str) -> tuple[list[str], list[str]]:
     index_url = urljoin(base_url.rstrip("/") + "/", "sitemap.xml")
     status, _, body, _ = fetch(index_url)
@@ -194,15 +214,13 @@ def main() -> None:
             headers, "X-Robots-Tag"
         ).lower():
             local_failures.append(Failure(url, "robots", "preview noindex header missing"))
-        for name, pattern in FORBIDDEN.items():
-            matches = pattern.findall(body)
-            if name == "smugmug" and matches and any(
-                allowed.encode() in body for allowed in args.allow_smugmug_id
-            ):
-                matches = []
-            local_counts[name] = len(matches)
-            if matches:
-                local_failures.append(Failure(url, name, f"{len(matches)} match(es)"))
+        for name in FORBIDDEN:
+            count = count_forbidden(
+                name, body, allowed_smugmug_ids=args.allow_smugmug_id
+            )
+            local_counts[name] = count
+            if count:
+                local_failures.append(Failure(url, name, f"{count} match(es)"))
         parser = PageParser()
         parser.feed(body.decode("utf-8", errors="replace"))
         if not parser.has_title:
