@@ -44,6 +44,7 @@ def main() -> None:
         connection = sqlite3.connect(database)
         connection.executescript(d1_path.read_text())
         integrity = connection.execute("PRAGMA integrity_check").fetchone()[0]
+        foreign_key_violations = connection.execute("PRAGMA foreign_key_check").fetchall()
         table_count = connection.execute(
             "SELECT COUNT(*) FROM sqlite_master WHERE type='table'"
         ).fetchone()[0]
@@ -56,6 +57,10 @@ def main() -> None:
         connection.close()
     if integrity != "ok":
         raise SystemExit(f"Local D1 restore integrity failed: {integrity}")
+    if foreign_key_violations:
+        raise SystemExit(
+            f"Local D1 restore has {len(foreign_key_violations)} foreign-key violation(s)"
+        )
     if restored_counts != manifest["d1"].get("row_counts", {}):
         raise SystemExit("Local D1 restore row counts differ from the backup manifest")
     print(
@@ -67,6 +72,7 @@ def main() -> None:
                 "d1_tables_restored": table_count,
                 "d1_rows_restored": sum(restored_counts.values()),
                 "d1_integrity": integrity,
+                "d1_foreign_key_violations": len(foreign_key_violations),
             }
         )
     )

@@ -47,6 +47,18 @@ class CloudflareBackupTests(unittest.TestCase):
         self.assertIn('SELECT rowid FROM "ec_posts" WHERE "id" = \'post-1\'', statement)
         self.assertIn('INSERT INTO "_emdash_fts_posts" ("rowid", "id", "title")', statement)
 
+    def test_file_hash_returns_sha1_sha256_and_size(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "sample.bin"
+            path.write_bytes(b"kanouk")
+            sha1, sha256, size = module.hash_file(path)
+            self.assertEqual(sha1, "5ac6c380000fc0f0f4f85d8c3043ca229ffa1a49")
+            self.assertEqual(
+                sha256,
+                "995ce18769a9ff6098a39942169e3af9daf55af50aed827f66415bb0e2acc594",
+            )
+            self.assertEqual(size, 6)
+
 
 if __name__ == "__main__":
     unittest.main()

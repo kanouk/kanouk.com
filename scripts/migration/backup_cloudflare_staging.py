@@ -93,48 +93,160 @@ def list_media(token: str) -> list[dict[str, Any]]:
             return items
 
 
+def hash_file(path: Path) -> tuple[str, str, int]:
+    sha1 = hashlib.sha1()
+    sha256 = hashlib.sha256()
+    size = 0
+    with path.open("rb") as source:
+        while chunk := source.read(1024 * 1024):
+            sha1.update(chunk)
+            sha256.update(chunk)
+            size += len(chunk)
+    return sha1.hexdigest(), sha256.hexdigest(), size
+
+
+def download_once(url: str, destination_parent: Path, token: str) -> tuple[Path, str, str, int]:
+    sha1 = hashlib.sha1()
+    sha256 = hashlib.sha256()
+    size = 0
+    request = Request(
+        url,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "User-Agent": "kanouk-backup/1.0",
+        },
+    )
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            "wb", dir=destination_parent, delete=False
+        ) as output:
+            temporary = Path(output.name)
+            with urlopen(request, timeout=300) as response:
+                while chunk := response.read(1024 * 1024):
+                    output.write(chunk)
+                    sha1.update(chunk)
+                    sha256.update(chunk)
+                    size += len(chunk)
+        return temporary, sha1.hexdigest(), sha256.hexdigest(), size
+    except Exception:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+        raise
+
+
+def media_entry(
+    item: dict[str, Any],
+    destination: Path,
+    output_root: Path,
+    sha1: str,
+    sha256: str,
+    size: int,
+    verification: str,
+) -> dict[str, Any]:
+    return {
+        "id": item.get("id"),
+        "filename": item.get("filename"),
+        "mime_type": item.get("mimeType"),
+        "storage_key": item.get("storageKey"),
+        "relative_path": str(destination.relative_to(output_root)),
+        "bytes": size,
+        "sha1": sha1,
+        "sha256": sha256,
+        "verification": verification,
+        "status": item.get("status"),
+    }
+
+
 def download_media(item: dict[str, Any], output_root: Path, token: str) -> dict[str, Any]:
     storage_key = item.get("storageKey")
     if not isinstance(storage_key, str) or not STORAGE_KEY.fullmatch(storage_key):
         raise RuntimeError("Media item has an unsafe storage key")
     destination = output_root / "objects" / storage_key
     destination.parent.mkdir(parents=True, exist_ok=True)
-    sha1 = hashlib.sha1()
-    sha256 = hashlib.sha256()
-    size = 0
-    request = Request(
-        f"{EXPECTED_URL}/_emdash/api/media/file/{quote(storage_key, safe='')}",
-        headers={
-            "Authorization": f"Bearer {token}",
-            "User-Agent": "kanouk-backup/1.0",
-        },
-    )
-    with tempfile.NamedTemporaryFile("wb", dir=destination.parent, delete=False) as output:
-        temporary = Path(output.name)
-        with urlopen(request, timeout=300) as response:
-            while chunk := response.read(1024 * 1024):
-                output.write(chunk)
-                sha1.update(chunk)
-                sha256.update(chunk)
-                size += len(chunk)
     expected_size = item.get("size")
+    if not isinstance(expected_size, int) or expected_size < 0:
+        raise RuntimeError("Media item has an invalid size")
     expected_hash = str(item.get("contentHash") or "")
-    if size != expected_size or expected_hash != f"sha1:{sha1.hexdigest()}":
-        temporary.unlink(missing_ok=True)
-        raise RuntimeError(f"Media backup verification failed: {item.get('id')}")
-    temporary.chmod(0o600)
-    temporary.replace(destination)
-    return {
-        "id": item.get("id"),
-        "filename": item.get("filename"),
-        "mime_type": item.get("mimeType"),
-        "storage_key": storage_key,
-        "relative_path": str(destination.relative_to(output_root)),
-        "bytes": size,
-        "sha1": sha1.hexdigest(),
-        "sha256": sha256.hexdigest(),
-        "status": item.get("status"),
-    }
+    url = f"{EXPECTED_URL}/_emdash/api/media/file/{quote(storage_key, safe='')}"
+    existing: tuple[str, str, int] | None = None
+    if destination.is_file():
+        existing = hash_file(destination)
+        existing_sha1, existing_sha256, existing_size = existing
+        if existing_size == expected_size and expected_hash == f"sha1:{existing_sha1}":
+            return media_entry(
+                item,
+                destination,
+                output_root,
+                existing_sha1,
+                existing_sha256,
+                existing_size,
+                "emdash_sha1",
+            )
+    last_detail = "verification did not match"
+    for attempt in range(1, 6):
+        first: Path | None = None
+        second: Path | None = None
+        try:
+            first, sha1, sha256, size = download_once(url, destination.parent, token)
+            if size != expected_size:
+                last_detail = f"size mismatch on attempt {attempt}"
+                continue
+            if expected_hash:
+                if expected_hash != f"sha1:{sha1}":
+                    last_detail = f"SHA-1 mismatch on attempt {attempt}"
+                    continue
+                first.chmod(0o600)
+                first.replace(destination)
+                first = None
+                return media_entry(
+                    item,
+                    destination,
+                    output_root,
+                    sha1,
+                    sha256,
+                    size,
+                    "emdash_sha1",
+                )
+            if existing is not None and existing[2] == expected_size:
+                if existing[1] == sha256:
+                    return media_entry(
+                        item,
+                        destination,
+                        output_root,
+                        existing[0],
+                        existing[1],
+                        existing[2],
+                        "double_download_sha256",
+                    )
+                existing = None
+            second, second_sha1, second_sha256, second_size = download_once(
+                url, destination.parent, token
+            )
+            if second_size != size or second_sha256 != sha256:
+                last_detail = f"independent SHA-256 mismatch on attempt {attempt}"
+                continue
+            first.chmod(0o600)
+            first.replace(destination)
+            first = None
+            return media_entry(
+                item,
+                destination,
+                output_root,
+                second_sha1,
+                second_sha256,
+                second_size,
+                "double_download_sha256",
+            )
+        except (HTTPError, URLError, TimeoutError, OSError) as exc:
+            last_detail = f"{type(exc).__name__} on attempt {attempt}"
+        finally:
+            if first is not None:
+                first.unlink(missing_ok=True)
+            if second is not None:
+                second.unlink(missing_ok=True)
+        time.sleep(min(0.75 * 2 ** (attempt - 1), 8))
+    raise RuntimeError(f"Media backup verification failed: {item.get('id')} ({last_detail})")
 
 
 class D1Client:
@@ -358,6 +470,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", type=Path, default=DEFAULT_BACKUP_ROOT)
     parser.add_argument("--concurrency", type=int, default=4)
+    parser.add_argument("--resume", type=Path)
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
     if args.concurrency < 1 or args.concurrency > 8:
@@ -378,9 +491,16 @@ def main() -> None:
         )
         return
 
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    output_root = args.output_root / timestamp
-    output_root.mkdir(parents=True, exist_ok=False)
+    if args.resume:
+        output_root = args.resume.resolve()
+        if output_root.parent != args.output_root.resolve():
+            raise SystemExit("--resume must be an existing child of --output-root")
+        if not output_root.is_dir() or (output_root / "manifest.json").exists():
+            raise SystemExit("--resume must identify an incomplete backup directory")
+    else:
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        output_root = args.output_root / timestamp
+        output_root.mkdir(parents=True, exist_ok=False)
     output_root.chmod(0o700)
     d1_path = output_root / "d1.sql"
     d1_export = export_d1(d1_path)
@@ -411,6 +531,12 @@ def main() -> None:
         },
         "media_count": len(entries),
         "media_total_bytes": sum(int(item["bytes"]) for item in entries),
+        "media_verification_counts": {
+            verification: sum(
+                item["verification"] == verification for item in entries
+            )
+            for verification in sorted({str(item["verification"]) for item in entries})
+        },
         "media": entries,
     }
     write_json_atomic(output_root / "manifest.json", manifest)
