@@ -11,6 +11,7 @@ SHA-256 hashes.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -293,6 +294,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER)
     parser.add_argument("--continue-on-error", action="store_true")
     parser.add_argument("--reverify", action="store_true")
+    parser.add_argument("--concurrency", type=int, default=1)
     args = parser.parse_args(argv)
     assets, source_rows = build_catalog()
     total_available = len(assets)
@@ -315,32 +317,50 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps({"apply": args.apply, "selected": len(assets), "ledger": str(args.ledger)}))
     if not args.apply:
         return 0
+    if args.concurrency < 1 or args.concurrency > 8:
+        raise SystemExit("--concurrency must be between 1 and 8")
     token, _env = load_admin_credential()
     failures = 0
+    queued: list[tuple[int, dict[str, Any]]] = []
     for index, asset in enumerate(assets, start=1):
         previous = items.get(asset["key"], {})
         if previous.get("status") == "verified" and not args.reverify:
             print(f"[{index}/{len(assets)}] {asset['key']} skipped_verified")
             continue
-        try:
-            migrated = migrate_one(asset, token)
-            items[asset["key"]] = {**asset, **migrated}
-            print(f"[{index}/{len(assets)}] {asset['key']} verified")
-        except Exception as exc:  # checkpoint the source identity and diagnostic
-            failures += 1
-            items[asset["key"]] = {
-                **asset,
-                "status": "failed",
-                "failed_at": now_iso(),
-                "error": str(exc)[:500],
-            }
-            print(f"[{index}/{len(assets)}] {asset['key']} failed: {exc}", file=sys.stderr)
-            if not args.continue_on_error:
-                ledger["generated_at"] = now_iso()
-                write_json_atomic(args.ledger, ledger)
-                return 1
-        ledger["generated_at"] = now_iso()
-        write_json_atomic(args.ledger, ledger)
+        queued.append((index, asset))
+
+    with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+        futures: dict[Future[dict[str, Any]], tuple[int, dict[str, Any]]] = {
+            executor.submit(migrate_one, asset, token): (index, asset)
+            for index, asset in queued
+        }
+        for future in as_completed(futures):
+            index, asset = futures[future]
+            try:
+                migrated = future.result()
+                items[asset["key"]] = {**asset, **migrated}
+                print(f"[{index}/{len(assets)}] {asset['key']} verified", flush=True)
+            except Exception as exc:  # checkpoint source identity and diagnostic
+                failures += 1
+                items[asset["key"]] = {
+                    **asset,
+                    "status": "failed",
+                    "failed_at": now_iso(),
+                    "error": str(exc)[:500],
+                }
+                print(
+                    f"[{index}/{len(assets)}] {asset['key']} failed: {exc}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                if not args.continue_on_error:
+                    for pending in futures:
+                        pending.cancel()
+                    ledger["generated_at"] = now_iso()
+                    write_json_atomic(args.ledger, ledger)
+                    return 1
+            ledger["generated_at"] = now_iso()
+            write_json_atomic(args.ledger, ledger)
     statuses: dict[str, int] = {}
     for value in items.values():
         status = str(value.get("status", "unknown"))
