@@ -31,6 +31,7 @@ SmugMug API / owner OAuth ────┘                                ├─ 
 - [field-mapping.md](field-mapping.md): WordPress / SmugMugから移行先への対応
 - [smugmug-feature-parity.md](smugmug-feature-parity.md): SmugMug閲覧機能の採否と実装状況
 - [unmapped-fields.md](unmapped-fields.md): 未完了事項と最終ゲート
+- [operations-runbook.md](operations-runbook.md): deploy後監視、backup、復元、rollback、コスト測定
 
 ## 残っているゲート
 
