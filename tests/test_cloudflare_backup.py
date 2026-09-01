@@ -21,6 +21,32 @@ class CloudflareBackupTests(unittest.TestCase):
             self.assertEqual(path.read_text(), '{\n  "ok": true\n}\n')
             self.assertEqual(path.stat().st_mode & 0o777, 0o600)
 
+    def test_sql_literal_preserves_text_null_numbers_and_blobs(self) -> None:
+        self.assertEqual(module.sql_literal(None), "NULL")
+        self.assertEqual(module.sql_literal(42), "42")
+        self.assertEqual(module.sql_literal("Kano's log"), "'Kano''s log'")
+        self.assertEqual(module.sql_literal([0, 127, 255]), "X'007fff'")
+        self.assertEqual(
+            module.sql_literal({"type": "Buffer", "data": [1, 2, 3]}),
+            "X'010203'",
+        )
+
+    def test_fts_shadow_tables_are_excluded_from_logical_dump(self) -> None:
+        self.assertTrue(module.FTS_VIRTUAL_TABLE.fullmatch("_emdash_fts_posts"))
+        self.assertTrue(module.FTS_SHADOW_TABLE.fullmatch("_emdash_fts_posts_data"))
+        self.assertFalse(module.FTS_SHADOW_TABLE.fullmatch("ec_posts"))
+        self.assertIn("_cf_KV", module.PROTECTED_D1_TABLES)
+
+    def test_fts_restore_looks_up_the_source_rowid_by_content_id(self) -> None:
+        statement = module.insert_fts_statements(
+            "_emdash_fts_posts",
+            "ec_posts",
+            ["id", "title"],
+            [{"id": "post-1", "title": "Hello"}],
+        )[0]
+        self.assertIn('SELECT rowid FROM "ec_posts" WHERE "id" = \'post-1\'', statement)
+        self.assertIn('INSERT INTO "_emdash_fts_posts" ("rowid", "id", "title")', statement)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -47,9 +47,17 @@ def main() -> None:
         table_count = connection.execute(
             "SELECT COUNT(*) FROM sqlite_master WHERE type='table'"
         ).fetchone()[0]
+        restored_counts = {
+            table: connection.execute(
+                f'SELECT COUNT(*) FROM "{table.replace(chr(34), chr(34) * 2)}"'
+            ).fetchone()[0]
+            for table in manifest["d1"].get("row_counts", {})
+        }
         connection.close()
     if integrity != "ok":
         raise SystemExit(f"Local D1 restore integrity failed: {integrity}")
+    if restored_counts != manifest["d1"].get("row_counts", {}):
+        raise SystemExit("Local D1 restore row counts differ from the backup manifest")
     print(
         json.dumps(
             {
@@ -57,6 +65,7 @@ def main() -> None:
                 "media_count": len(manifest["media"]),
                 "media_total_bytes": verified_bytes,
                 "d1_tables_restored": table_count,
+                "d1_rows_restored": sum(restored_counts.values()),
                 "d1_integrity": integrity,
             }
         )

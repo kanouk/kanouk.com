@@ -10,10 +10,11 @@ import hashlib
 import json
 from pathlib import Path
 import re
-import subprocess
 import sys
 import tempfile
+import time
 from typing import Any
+from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
@@ -30,8 +31,6 @@ from run_emdash_kanouk import (  # noqa: E402
     preflight as emdash_preflight,
 )
 from run_wrangler_kanouk import (  # noqa: E402
-    WEB_ROOT,
-    WRANGLER_BIN,
     child_environment as cloudflare_environment,
     load_credential as load_cloudflare_credential,
     preflight as cloudflare_preflight,
@@ -42,7 +41,14 @@ DEFAULT_BACKUP_ROOT = Path(
     "/Users/kanouk/Documents/Private_External_Imports/kanouk-cloudflare-backups"
 )
 DATABASE_NAME = "kanouk-content-staging"
+DATABASE_ID = "30d6fc05-588e-4c4c-9e96-2b77fe35dd82"
 STORAGE_KEY = re.compile(r"^[A-Za-z0-9._-]+$")
+FTS_VIRTUAL_TABLE = re.compile(r"^_emdash_fts_[A-Za-z0-9_]+$")
+FTS_SHADOW_TABLE = re.compile(
+    r"^_emdash_fts_[A-Za-z0-9_]+_(?:config|content|data|docsize|idx)$"
+)
+D1_PAGE_SIZE = 50
+PROTECTED_D1_TABLES = {"_cf_KV"}
 
 
 def now_iso() -> str:
@@ -131,32 +137,221 @@ def download_media(item: dict[str, Any], output_root: Path, token: str) -> dict[
     }
 
 
-def export_d1(destination: Path) -> None:
+class D1Client:
+    def __init__(self, account_id: str, token: str) -> None:
+        self.url = (
+            f"https://api.cloudflare.com/client/v4/accounts/{account_id}"
+            f"/d1/database/{DATABASE_ID}/query"
+        )
+        self.token = token
+
+    def query(self, sql: str, params: list[Any] | None = None) -> list[dict[str, Any]]:
+        payload = json.dumps({"sql": sql, "params": params or []}).encode()
+        for attempt in range(1, 6):
+            request = Request(
+                self.url,
+                data=payload,
+                headers={
+                    "Authorization": f"Bearer {self.token}",
+                    "Content-Type": "application/json",
+                    "User-Agent": "kanouk-backup/1.0",
+                },
+                method="POST",
+            )
+            try:
+                with urlopen(request, timeout=120) as response:
+                    value = json.load(response)
+                if not value.get("success"):
+                    raise RuntimeError("Cloudflare D1 query did not succeed")
+                result = value.get("result", [])
+                if not result or not result[0].get("success", True):
+                    raise RuntimeError("Cloudflare D1 result did not succeed")
+                rows = result[0].get("results", [])
+                if not isinstance(rows, list):
+                    raise RuntimeError("Cloudflare D1 returned invalid rows")
+                return [row for row in rows if isinstance(row, dict)]
+            except HTTPError as exc:
+                detail = exc.read(2000).decode("utf-8", errors="replace")
+                retryable_query_error = exc.code == 400 and (
+                    "no such column: rowid" in detail or "SQLITE_BUSY" in detail
+                )
+                if attempt < 5 and (
+                    exc.code in {429, 500, 502, 503, 504} or retryable_query_error
+                ):
+                    time.sleep(min(0.75 * 2 ** (attempt - 1), 8))
+                    continue
+                raise RuntimeError(
+                    f"Cloudflare D1 HTTP {exc.code}: {detail[-1200:]}"
+                ) from exc
+            except (TimeoutError, URLError, OSError) as exc:
+                if attempt < 5:
+                    time.sleep(min(0.75 * 2 ** (attempt - 1), 8))
+                    continue
+                raise RuntimeError("Cloudflare D1 request failed") from exc
+        raise RuntimeError("Cloudflare D1 retry loop exhausted")
+
+
+def quote_identifier(value: str) -> str:
+    return '"' + value.replace('"', '""') + '"'
+
+
+def sql_literal(value: Any) -> str:
+    if value is None:
+        return "NULL"
+    if isinstance(value, bool):
+        return "1" if value else "0"
+    if isinstance(value, (int, float)):
+        return repr(value)
+    if isinstance(value, (bytes, bytearray)):
+        return f"X'{bytes(value).hex()}'"
+    if isinstance(value, list) and all(
+        isinstance(item, int) and 0 <= item <= 255 for item in value
+    ):
+        return f"X'{bytes(value).hex()}'"
+    if isinstance(value, dict) and value.get("type") == "Buffer" and isinstance(
+        value.get("data"), list
+    ):
+        return sql_literal(value["data"])
+    if isinstance(value, (list, dict)):
+        value = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+    text = str(value)
+    if "\x00" in text:
+        return f"CAST(X'{text.encode().hex()}' AS TEXT)"
+    return "'" + text.replace("'", "''") + "'"
+
+
+def table_rows(
+    client: D1Client, table: str, *, include_rowid: bool = False
+) -> tuple[list[str], list[dict[str, Any]]]:
+    selected = "rowid AS __backup_rowid, *" if include_rowid else "*"
+    rows: list[dict[str, Any]] = []
+    offset = 0
+    while True:
+        page = client.query(
+            f"SELECT {selected} FROM {quote_identifier(table)} "
+            "LIMIT ? OFFSET ?",
+            [D1_PAGE_SIZE, offset],
+        )
+        rows.extend(page)
+        if len(page) < D1_PAGE_SIZE:
+            columns = [
+                column
+                for column in (rows[0].keys() if rows else [])
+                if column != "__backup_rowid"
+            ]
+            return columns, rows
+        offset += len(page)
+
+
+def insert_statements(
+    table: str,
+    columns: list[str],
+    rows: list[dict[str, Any]],
+    *, include_rowid: bool = False,
+) -> list[str]:
+    target_columns = (["rowid"] if include_rowid else []) + columns
+    quoted_columns = ", ".join(quote_identifier(column) for column in target_columns)
+    statements: list[str] = []
+    for row in rows:
+        values = ([row.get("__backup_rowid")] if include_rowid else []) + [
+            row.get(column) for column in columns
+        ]
+        statements.append(
+            f"INSERT INTO {quote_identifier(table)} ({quoted_columns}) VALUES "
+            f"({', '.join(sql_literal(value) for value in values)});"
+        )
+    return statements
+
+
+def insert_fts_statements(
+    table: str, source_table: str, columns: list[str], rows: list[dict[str, Any]]
+) -> list[str]:
+    if "id" not in columns:
+        raise RuntimeError(f"Logical FTS table {table} has no id column")
+    target_columns = ["rowid", *columns]
+    quoted_columns = ", ".join(quote_identifier(column) for column in target_columns)
+    statements: list[str] = []
+    for row in rows:
+        source_rowid = (
+            f"(SELECT rowid FROM {quote_identifier(source_table)} WHERE "
+            f"{quote_identifier('id')} = {sql_literal(row.get('id'))})"
+        )
+        values = [source_rowid, *(sql_literal(row.get(column)) for column in columns)]
+        statements.append(
+            f"INSERT INTO {quote_identifier(table)} ({quoted_columns}) VALUES "
+            f"({', '.join(values)});"
+        )
+    return statements
+
+
+def export_d1(destination: Path) -> dict[str, Any]:
     credential = load_cloudflare_credential()
     env = cloudflare_environment(credential)
     cloudflare_preflight(credential, env)
-    result = subprocess.run(
-        [
-            str(WRANGLER_BIN),
-            "d1",
-            "export",
-            DATABASE_NAME,
-            "--remote",
-            "--skip-confirmation",
-            "--output",
-            str(destination),
-            "--config",
-            str(WEB_ROOT / "wrangler.jsonc"),
-        ],
-        cwd=WEB_ROOT,
-        env=env,
-        capture_output=True,
-        text=True,
-        check=False,
+    client = D1Client(credential["account_id"], credential["api_token"])
+    schema = client.query(
+        "SELECT type,name,tbl_name,sql FROM sqlite_master "
+        "WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name"
     )
-    if result.returncode != 0 or not destination.is_file():
-        detail = (result.stderr or result.stdout or "no command output").strip()
-        raise RuntimeError(f"Cloudflare D1 export failed: {detail[-2000:]}")
+    tables = [
+        row
+        for row in schema
+        if row.get("type") == "table" and isinstance(row.get("sql"), str)
+    ]
+    ordinary_tables = [
+        row
+        for row in tables
+        if str(row["name"]) not in PROTECTED_D1_TABLES
+        and not FTS_VIRTUAL_TABLE.fullmatch(str(row["name"]))
+        and not FTS_SHADOW_TABLE.fullmatch(str(row["name"]))
+    ]
+    virtual_tables = [
+        row
+        for row in tables
+        if FTS_VIRTUAL_TABLE.fullmatch(str(row["name"]))
+        and not FTS_SHADOW_TABLE.fullmatch(str(row["name"]))
+        and str(row["sql"]).lstrip().upper().startswith("CREATE VIRTUAL TABLE")
+    ]
+    trailing_schema = [
+        row
+        for row in schema
+        if row.get("type") in {"index", "trigger", "view"}
+        and isinstance(row.get("sql"), str)
+    ]
+    lines = [
+        "PRAGMA foreign_keys=OFF;",
+        "BEGIN TRANSACTION;",
+    ]
+    table_counts: dict[str, int] = {}
+    for row in ordinary_tables:
+        table = str(row["name"])
+        lines.append(str(row["sql"]).rstrip(";") + ";")
+        columns, rows = table_rows(client, table)
+        lines.extend(insert_statements(table, columns, rows))
+        table_counts[table] = len(rows)
+        print(f"D1 table {table}: {len(rows)} row(s)", flush=True)
+    for row in virtual_tables:
+        table = str(row["name"])
+        lines.append(str(row["sql"]).rstrip(";") + ";")
+        columns, rows = table_rows(client, table)
+        source_table = "ec_" + table.removeprefix("_emdash_fts_")
+        lines.extend(insert_fts_statements(table, source_table, columns, rows))
+        table_counts[table] = len(rows)
+        print(f"D1 logical FTS table {table}: {len(rows)} row(s)", flush=True)
+    lines.extend(str(row["sql"]).rstrip(";") + ";" for row in trailing_schema)
+    lines.extend(["COMMIT;", "PRAGMA foreign_keys=ON;"])
+    with tempfile.NamedTemporaryFile(
+        "w", dir=destination.parent, delete=False, encoding="utf-8"
+    ) as output:
+        temporary = Path(output.name)
+        output.write("\n".join(lines) + "\n")
+    temporary.chmod(0o600)
+    temporary.replace(destination)
+    return {
+        "ordinary_tables": len(ordinary_tables),
+        "logical_fts_tables": len(virtual_tables),
+        "row_counts": table_counts,
+    }
 
 
 def main() -> None:
@@ -186,8 +381,9 @@ def main() -> None:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output_root = args.output_root / timestamp
     output_root.mkdir(parents=True, exist_ok=False)
+    output_root.chmod(0o700)
     d1_path = output_root / "d1.sql"
-    export_d1(d1_path)
+    d1_export = export_d1(d1_path)
     entries: list[dict[str, Any]] = []
     with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
         futures: dict[Future[dict[str, Any]], str] = {
@@ -211,6 +407,7 @@ def main() -> None:
             "relative_path": "d1.sql",
             "bytes": len(d1_bytes),
             "sha256": hashlib.sha256(d1_bytes).hexdigest(),
+            **d1_export,
         },
         "media_count": len(entries),
         "media_total_bytes": sum(int(item["bytes"]) for item in entries),
