@@ -1,64 +1,71 @@
-# SmugMug機能の精査
+# SmugMug閲覧機能の精査
 
-SmugMug全機能を再実装するのではなく、現在の使い方に必要な公開アルバム・ブログ埋め込みを移します。
+対象はGoogle Photosの代替ではなく、インターネットへ公開するアルバムとブログ埋め込みです。SmugMug製品全体ではなく、購入以外の閲覧体験を `photos.kanouk.com` へ移します。
 
-## 必須（初回リリース）
+## source実測（2026-09-01）
 
-| 機能 | 根拠 | 移行先 |
+| 項目 | 実測 |
+|---|---:|
+| アルバム | 40 |
+| アセット | 2,168 |
+| JPEG / MP4 | 2,156 / 12 |
+| title / caption | 934 / 687 |
+| GPS | 1,114 |
+| keyword | 2 |
+| comment | 0 |
+| download許可 / 不許可アルバム | 36 / 4 |
+| protected album / asset | 7 / 339 |
+
+## 閲覧機能の対応
+
+| SmugMug側の機能 | Yohaku / EmDash側 | 状態 |
 |---|---|---|
-| アルバム一覧・詳細 | 公開サイトとして使用 | photos frontend + D1 |
-| カバー画像 | SmugMugにhighlight/cover関係あり | `album.cover_media_id` |
-| 撮影日順・手動順・昇降順 | 35/5、39/1で実利用 | `sort_method`, `position`, `sort_direction` |
-| 写真/動画表示 | JPG 2,156、MP4 12 | R2 + responsive frontend |
-| タイトル・キャプション | 934 / 687資産で使用 | media/album item fields |
-| 前後移動・lightbox | アルバム閲覧の基本 | photos frontend |
-| ブログ埋め込み | 本文にSmugMug host参照あり | EmDash media nodeへ変換 |
-| レスポンシブ画像 | 表示速度・mobile UX | R2 variants + `srcset` |
-| ダウンロード可否 | 36許可、4不許可 | album policyとして保持 |
-| 安定URL | 旧リンク置換と再監査に必要 | source identity + URL ledger |
-| 動画poster/再生 | 12 MP4 | variant + HTML video |
-| SEO metadata | 公開サイト | title、description、OG、canonical、sitemap |
+| アルバム一覧・詳細 | 安定slug、source順、title、description、件数 | 実装済み |
+| highlight cover | source highlightを優先、未取得時だけfallback | 実装済み・全件照合待ち |
+| 写真・動画詳細 | 固定ID、原寸比を保つ表示、MP4 controls/poster | 実装済み・全動画監査待ち |
+| Lightbox | Fullscreen APIによる全画面表示 | 実装済み |
+| 前後移動 | link、左右キー、mobile swipe | 実装済み |
+| slideshow | 6秒送り、再生／停止、reduced-motion対応 | 実装済み |
+| title / caption / 撮影日 | 写真詳細へ表示 | 実装済み |
+| EXIF | camera、lens、絞り、シャッター、ISO、焦点距離、露出補正 | 実装済み・全件backfill待ち |
+| 位置情報 | GPS保持、写真地図、アルバム全体のLeaflet地図 | 実装済み |
+| 共有 | Web Share、clipboard fallback | 実装済み |
+| download | source albumの`allow_downloads`をUIで尊重 | 実装済み |
+| 検索 | album / photo / videoのtitle、caption、keywordをFTS検索 | 実装済み |
+| keyword | 写真詳細のchipと検索 | 実装済み。source利用が2件のため専用一覧は作らない |
+| comment | source全件監査で0件 | 移行対象なし |
+| responsive cover | 一覧は`object-fit: cover`、低解像度だけ拡大しない | 実装済み |
+| 個別写真 | `contain`で全体を表示し、原寸を超えて拡大しない | 実装済み |
+| stable URL | source identityから固定album/photo ID、旧新台帳 | 実装済み・全件出力待ち |
+| SEO | title、description、OG、canonical、host別sitemap | 実装済み・custom domain監査待ち |
 
-## 置き換える機能
+Lucide iconは検索、撮影情報、位置、共有、download、全画面、slideshow、前後移動、動画判別など意味のある操作に限定して使います。写真を主役にしつつ、単調な無機質さを避けます。
 
-| SmugMug | 置き換え |
-|---|---|
-| SmugMug image size URLs | R2派生画像 |
-| SmugMug share URL | photos.kanouk.comのcanonical URL |
-| SmugMug album download | 許可アルバムのみWorker経由、または初回は個別原本download |
-| SmugMug navigation/site skin | kanouk.com共通の軽量navigation |
-| API上のMD5 | 取得確認に使い、R2台帳はSHA-256も保持 |
+## 対象外
 
-## 初回リリースでは作らない
-
-- 写真プリント・販売・price list・package
-- favorite
+- 写真プリント・販売・price list・package・cart
+- favorite（sourceの2,168件すべて`CanFavorite=false`）
 - Lightroom等との同期
-- watermark編集
-- 顧客納品gallery
-- SmugMug同等のサイトビルダー
-- private/unlisted album
-- Gyazo型のupload shortcut、guess-resistant URL、password/API allowlist
+- watermark編集（source watermark利用0件）
+- 顧客納品galleryとSmugMug同等のsite builder
+- private/unlisted写真を公開すること
+- Gyazo型upload shortcut、推測困難URL、password、API allowlist（Issue #2）
 
-最後の2項目はセキュリティ境界が異なるためIssue #2で扱います。
+## 原本の扱い
 
-## 確認が必要
+- 公開ArchivedUriから取得したbyteが`ArchivedMD5`と一致したものだけをverifiedにする。
+- ブラウザ表示できるJPEGでもMD5が違えば、SmugMugが生成した派生版の可能性があるため採用しない。
+- 公開archive URIなし165件とMD5不一致資産は`pending_owner_auth`へ置き、Full/Read owner OAuthで再取得する。
+- R2 upload後に再取得してhashとsizeを再照合し、source hashとCloudflare readback hashを台帳へ残す。
+- GPS EXIFはユーザー方針により保持し、地図機能へ利用する。
 
-- 7 protected album / 339 protected assetの実際の意味と所有者画面上の設定
-- ダウンロード不許可4アルバムを新サイトでも不許可にするか
-- 位置情報・EXIFを公開表示するか（既定は非公開）
-- コメント、共有、購入機能に残すべき実データがあるか
-- folder階層をUIへ残すか、album一覧へ平坦化するか
-- 165資産の所有者認証による原本取得方法
+## 受け入れ条件
 
-## 受け入れ確認
-
-パイロットでは、同じアルバムをSmugMugと新サイトで横に並べて次を確認します。
-
-1. 件数、並び順、カバーが一致する。
-2. JPGとMP4が表示・再生できる。
-3. タイトル、キャプション、縦横比が保たれる。
-4. mobileでlightboxと前後移動が使える。
-5. ダウンロード不許可をUIが破らない。
-6. ブログ埋め込みからSmugMug host参照が消える。
-7. 原本hashまたはsource MD5が一致する。
+1. 40/40アルバム、2,168/2,168アセットにverified / pending / excludedの説明可能な最終状態がある。
+2. 件数、position、highlight cover、title、caption、撮影日時がsourceと一致する。
+3. JPEGとMP4がdesktop / 390px mobileで表示・再生できる。
+4. 全画面、左右キー、swipe、slideshow、共有、download policy、検索、地図、EXIFが使える。
+5. 一覧coverはデザイン優先でcropし、個別写真は全体を表示する。低解像度画像を無理に拡大しない。
+6. ブログ埋め込みから旧SmugMug host参照が消え、固定URLへ一意に解決できる。
+7. 原本とCloudflareから再取得したbyteのhashが一致する。
+8. 本番切替後もSmugMugを解約せず、ユーザーの別途判断まで併存する。

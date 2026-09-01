@@ -1,62 +1,77 @@
-# 未確定事項と移行ゲート
+# 未完了事項と移行ゲート
+
+「未確認」と「実装済みだが全件実行待ち」を分けて管理します。2026-09-01現在、Cloudflare基盤とデータモデルは成立しており、主な残作業は全件転送・所有者認証・最終監査です。
 
 ## 現在のblocker
 
 | 項目 | 状態 | 次の操作 |
 |---|---|---|
-| Cloudflare account | Wrangler既定は `fragrance.radio@gmail.com` | `kanouk@gmail.com` の専用profileを作り、`whoami`で確認する。既定profileを誤用しない |
-| 最新WXR | 2026-07-10 manifestはあるがXML原本なし | 3サイトから最新exportを取得し、SHA-256と件数を記録 |
-| nocalog認証 | kanolog credentialでは401 | 専用Application PasswordまたはWXRを用意 |
-| art-quiz認証 | kanolog credentialでは401 | 専用Application PasswordまたはWXRを用意 |
-| SmugMug完全原本 | 2,003/2,168だけ公開APIにarchive URIあり | OAuth所有者認証で残り165を監査 |
+| SmugMug完全原本 | 公開取得したJPEGの一部が`ArchivedMD5`と不一致、公開archive URIなしも165件 | ユーザー同席時にFull/Read OAuthを認可し、`pending_owner_auth`だけ再取得 |
+| WordPress添付 | 2,027件の再開可能転送を実行中 | 完走後に失敗だけ再実行し、全件のsource/readback SHA-256を確定 |
+| 本文media参照 | 1,854コンテンツは先行import済みだが、media台帳完成前 | media完了後に全件再importし、2回目が`skipped_verified`になることを確認 |
+| nocalog / art-quiz現在の非公開差分 | 公開REST件数はWXRと一致、管理者認証は未所持 | WXRの下書き・非公開を正本として保持し、公開差分がないことを明記 |
+| DNS / 本番URL | `blog.kanouk.com` / `photos.kanouk.com` は設計済み、未切替 | 全監査合格後に切替候補を提示。別途明示指示なしに変更しない |
 
-## WordPressで未確定
+## WordPressで確認済み
 
-- 全postmeta keyと値型。RESTで見える3 keyだけでは不足。
-- Pochipp 604レコードのうち、記事から参照されるものと管理用データの境界。
-- SWELL/JIN/Jetpack/WPMF/quiz blockの正確なrendering。
-- `blog_parts` 1件をsectionへするかcollectionへするか。
-- nav menu、widget、theme option、custom CSSのうち移行すべきもの。
-- 下書き、非公開、予約投稿の総数（nocalog / art-quiz）。
-- コメント本文と個人情報の公開方針。
-- 2026-07-10以降の新規・更新・削除差分。
-- 添付2,027件の原本存在、派生画像、`srcset`、hash、総容量。
+- WXR 3件から投稿1,847、固定ページ7、合計1,854コンテンツを抽出。
+- 状態はpublish 1,848、draft 3、private 3。privateは公開せず元状態をmetadataへ保持する。
+- 添付は2,027件。JPEG / PNG / GIF / WebP / SVG / PDF / XLSX / MP3を含む。
+- コメントは127件（approved 65、pending 62）。IPとUser-Agentは移行しない。
+- 17,050ブロックへ変換し、通常の`htmlBlock`は0件。テーマ／プラグイン名ではなく`yohaku.*`の意味ブロックへ正規化する。
+- kanolog管理者RESTでPochipp 590件、再利用ブロック3件、menu item 10件、featured media付き投稿93件を確認した。
+- kanologの現在公開投稿は1,370件。WXR公開1,368件との差は保存済みREST deltaの2件と一致する。
+- nocalogは公開183投稿・1ページ・62添付、art-quizは公開291投稿・603添付で、現在RESTとWXR公開件数が一致する。
 
-## SmugMugで未確定
+## WordPressで残る監査
 
-- `Protected`と公開範囲、download権限の組み合わせ。
-- 原本URIなし165資産の取得可否。
-- folder/parent folder階層を新UIに反映する必要性。
-- 位置情報文字列が実座標か未設定sentinelか。公開には使用しない。
-- EXIF、keywords、comments、share、purchase dataをどこまで保全するか。
-- 12動画のcodec、poster、ブラウザ互換性。
-- album highlightとnode coverが異なる場合の優先順位。
+- 2,027添付の最終成功／失敗／重複件数と総byte数。
+- verified mediaだけで本文、featured image、`srcset`、画像リンクが新URLへ置換されたこと。
+- Pochipp、quiz、SWELL/JIN/Jetpack/WPMF表現の代表記事をdesktop / mobileで比較すること。
+- コメント公開65件とpending 62件が公開範囲を違えず移行されたこと。
+- 公開HTMLから旧WordPress uploads URL、SmugMug URL、未変換shortcodeが消えたこと。
 
-## EmDashでpilot確認が必要
+## SmugMugで確認済み
 
-- Pochipp、SWELL/JIN、quiz shortcodeがPortable Textまたは`htmlBlock`で表示可能か。
-- `private` statusが公開route、preview、sitemapから確実に除外されるか。
-- WXR media importerが3サイトの全attachment URLを取得できるか。
-- 外部SmugMug直リンクをmedia importerへ渡すcustom transformの差し込み点。
-- menu、comments、section、taxonomy階層の実データでの再現性。
-- D1のwide collection制限と、不要なpostmetaを除外するallowlist。
+- 40アルバム、2,168アセット（JPEG 2,156、MP4 12）。
+- source相当6.465GB、公開archive相当5.931GB。2,003件に公開ArchivedUri/MD5があり、165件にはない。
+- GPSを持つ資産は1,114件。GPS EXIFは削除せず、写真詳細とアルバム地図へ利用する。
+- 36アルバムがdownload許可、4アルバムが不許可。新UIもこの設定を尊重する。
+- protected設定は7アルバム／339資産。公開API上の対象2,168件はすべて`CanShare=true`。
+- title 934件、caption 687件、keyword利用2件。コメントは全アルバム合計0件。
+- source highlight imageをカバー選択へ保持し、未取得時だけ決定的fallbackを使う。
+- 公開JPEGが有効でもsource MD5と一致しない場合は縮小版を採用しない。
 
-## 判断済み
+## SmugMugで残る監査
 
-- プライベート写真の正本はGoogle Photosのまま。置き換えない。
-- 今回の写真サービスは公開写真とブログ埋め込み専用。
-- blogは `blog.kanouk.com`、photosは `photos.kanouk.com`。
-- Gyazo代替は別Issue。公開R2 bucketや認証なしmedia URLへ混在させない。
-- デザインの本格的なbrush-upはデータモデルとpilot成立後。最初は移行完全性とmobile基本UXを優先する。
+- owner OAuthで非公開APIを含む全件性を再確認する。
+- `pending_owner_auth`を原本一致へ収束させる。
+- 12 MP4の全件再生、poster、Range、mobileを最終確認する。
+- metadata backfillを全件実行し、EXIFとkeywordを再監査する。
+- source highlight、件数、position、title、caption、日時を40アルバムすべて照合する。
 
-## Phase 2開始時のチェック
+## EmDash / Yohakuで確認済み
+
+- 公開／非公開status、Portable Text、media、taxonomy、commentのモデルと冪等import経路。
+- 写真一覧・詳細、カバーcrop、原寸比を保つ個別表示、低解像度の非拡大。
+- 全画面、前後移動、キーボード、swipe、スライドショー、共有、download policy。
+- GPS地図、EXIF、keyword表示、写真・動画・アルバム検索。
+- Noto Sans JP、白／near-black、青の限定accent、moderate見出し、dark mode、Lucide icon。
+- production host別のblog / photoルーティングとsitemap分離。workers.devはnoindexのQA面として維持。
+
+## 最終チェック
 
 ```text
-[ ] Cloudflare email = kanouk@gmail.com
-[ ] account name / account idを作業ログに記録（secretとして公開Issueへ貼らない）
-[ ] fragrance.radio@gmail.comではないことを二重確認
-[ ] 最新WXR 3件のhashと件数を固定
-[ ] SmugMug owner authのread-only疎通
-[ ] pilot album / pilot postsを確定
-[ ] D1/R2/Worker命名とrollback方針をレビュー
+[x] Cloudflare email = kanouk@gmail.com
+[x] guardでfragrance.radio@gmail.com側への誤操作を拒否
+[x] staging D1 / R2 / Worker / KV作成
+[x] WXR 3件のhashと件数を固定
+[x] SmugMug owner OAuth実行器を用意
+[ ] SmugMug owner OAuthをユーザー同席で認可
+[ ] SmugMug 2,168件を最終状態へ収束
+[ ] WordPress media 2,027件を最終状態へ収束
+[ ] content / comments再importと公開readback
+[ ] D1 / R2 backupとrestore drill
+[ ] URL / SEO / desktop / mobile / dark mode全監査
+[ ] DNS切替は別途ユーザー判断
 ```
