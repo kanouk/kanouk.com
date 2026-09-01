@@ -155,7 +155,8 @@ def export_d1(destination: Path) -> None:
         check=False,
     )
     if result.returncode != 0 or not destination.is_file():
-        raise RuntimeError("Cloudflare D1 export failed")
+        detail = (result.stderr or result.stdout or "no command output").strip()
+        raise RuntimeError(f"Cloudflare D1 export failed: {detail[-2000:]}")
 
 
 def main() -> None:
