@@ -15,6 +15,19 @@ The staging default requires `X-Robots-Tag: noindex`. After custom domains are
 connected, pass the appropriate host with `--no-expect-preview-noindex` and run
 the blog and photo host checks separately.
 
+For the pre-cutover full audit, crawl every URL in all four public sitemaps,
+check internal links, and reject legacy WordPress uploads, SmugMug references,
+Gutenberg comments, and known legacy shortcodes:
+
+```sh
+python3 scripts/migration/audit_public_sitemaps.py \
+  --output /tmp/kanouk-public-sitemap-audit.json
+```
+
+Known SmugMug references may be temporarily allowlisted by image key only when
+the corresponding original is explicitly blocked on owner OAuth. Remove that
+allowlist and require a clean run after owner authorization.
+
 ## WordPress REST
 
 Public-only:
@@ -92,3 +105,14 @@ After an account-guarded R2 upload and re-download, use `record_smugmug_r2_round
 Public SmugMug photos keep their source GPS EXIF so the replacement can preserve SmugMug's map feature. Exact coordinates are stored in EmDash number fields and are never written to the Git manifest, command output, or receipts. `record_smugmug_public_derivative.py` compares the source and public file internally, refuses removed or changed GPS, and records only the preservation result, EmDash IDs, storage key, hashes, byte count, and color profile.
 
 `apply_smugmug_pilot_gps.py` is fail-closed and dry-run by default. It checks the frozen source SHA-256 and GPS EXIF without printing coordinates. With `--apply`, it uses the account-guarded EmDash credential to upload the source bytes and update the existing photo's `latitude`, `longitude`, `altitude`, media reference, and non-coordinate source metadata. The `photos` schema must already contain those three number fields.
+
+After byte migration, `backfill_smugmug_metadata.py` copies public EXIF and
+keywords into the photo entries without replacing the separately stored GPS
+fields. It checkpoints each manifest atomically, retries transient API errors
+and version conflicts, and is safe to rerun until the dry-run count reaches
+zero:
+
+```sh
+python3 scripts/migration/run_smugmug_readonly.py backfill_smugmug_metadata.py \
+  --catalog migration/smugmug/catalog.json --apply --continue-on-error
+```
