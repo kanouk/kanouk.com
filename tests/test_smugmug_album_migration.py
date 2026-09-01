@@ -135,6 +135,24 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertEqual(payload["sort_method"], "position")
         self.assertEqual(payload["sort_direction"], "asc")
 
+    def test_prefers_smugmug_highlight_for_album_cover(self) -> None:
+        first = asset()
+        first["source"]["image_key"] = "first"
+        first["destination"] = {"emdash_media_id": "first-media"}
+        first["verification"] = {"r2_roundtrip_verified": True}
+        highlighted = asset()
+        highlighted["id"] = "kph_highlighted"
+        highlighted["source"]["image_key"] = "highlight"
+        highlighted["destination"] = {"emdash_media_id": "highlight-media"}
+        highlighted["verification"] = {"r2_roundtrip_verified": True}
+        manifest = {
+            "album": {"source": {"highlight_image_key": "highlight"}},
+            "assets": [first, highlighted],
+        }
+        self.assertEqual(
+            module.preferred_cover_asset(manifest)["id"], "kph_highlighted"
+        )
+
     def test_reconcile_existing_image_restores_manifest_destination(self) -> None:
         candidate = asset()
         candidate["destination"] = {}

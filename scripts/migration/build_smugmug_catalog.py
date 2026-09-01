@@ -20,6 +20,7 @@ if str(SCRIPT_ROOT) not in sys.path:
 
 from audit_smugmug import SmugMugClient, now_iso  # noqa: E402
 from build_smugmug_pilot_manifest import (  # noqa: E402
+    album_highlight_image_key,
     assert_sanitized,
     manifest as album_manifest,
     merge_verified_progress,
@@ -85,7 +86,13 @@ def build(
         slug = unique_slug(album_slug(album), album_key, used)
         images_uri = ((album.get("Uris") or {}).get("AlbumImages") or {}).get("Uri")
         images = list(client.paged(images_uri, "AlbumImage")) if images_uri else []
-        payload = album_manifest(album, images, user=user, slug=slug)
+        payload = album_manifest(
+            album,
+            images,
+            user=user,
+            slug=slug,
+            highlight_image_key=album_highlight_image_key(client, album),
+        )
         payload["scope"] = "public SmugMug album migration"
         path = output_dir / slug / "manifest.json"
         if path.exists():

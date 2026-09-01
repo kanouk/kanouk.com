@@ -1004,24 +1004,40 @@ def replace_asset_media(
         destination["poster_r2_object_key"] = poster_media["storageKey"]
 
 
+def preferred_cover_asset(manifest: Mapping[str, Any]) -> Mapping[str, Any] | None:
+    assets = [
+        asset
+        for asset in manifest.get("assets", [])
+        if asset.get("verification", {}).get("r2_roundtrip_verified")
+        and asset.get("destination", {}).get("emdash_media_id")
+    ]
+    highlight_key = (
+        manifest.get("album", {}).get("source", {}).get("highlight_image_key")
+    )
+    if highlight_key:
+        highlighted = next(
+            (
+                asset
+                for asset in assets
+                if asset.get("source", {}).get("image_key") == highlight_key
+            ),
+            None,
+        )
+        if highlighted is not None:
+            return highlighted
+    return assets[0] if assets else None
+
+
 def ensure_album_cover(
     manifest: dict[str, Any], *, env: Mapping[str, str], token: str
 ) -> bool:
     album_id = manifest.get("album", {}).get("destination", {}).get("emdash_content_id")
     if not isinstance(album_id, str):
         return False
-    first = next(
-        (
-            asset
-            for asset in manifest.get("assets", [])
-            if asset.get("verification", {}).get("r2_roundtrip_verified")
-            and asset.get("destination", {}).get("emdash_media_id")
-        ),
-        None,
-    )
-    if first is None:
+    cover_asset = preferred_cover_asset(manifest)
+    if cover_asset is None:
         return False
-    destination = first.get("destination", {})
+    destination = cover_asset.get("destination", {})
     cover_media_id = destination.get("poster_media_id") or destination.get(
         "emdash_media_id"
     )
@@ -1051,7 +1067,7 @@ def ensure_album_cover(
                     "cover_image": {
                         "id": cover_media_id,
                         "provider": "local",
-                        "alt": str(first.get("display", {}).get("alt") or ""),
+                        "alt": str(cover_asset.get("display", {}).get("alt") or ""),
                     }
                 },
                 ensure_ascii=False,

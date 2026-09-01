@@ -147,6 +147,7 @@ def manifest(
     *,
     user: str,
     slug: str,
+    highlight_image_key: str | None = None,
 ) -> dict[str, Any]:
     album_key = str(album["AlbumKey"])
     assets = [
@@ -178,6 +179,7 @@ def manifest(
                 "user": user,
                 "album_key": album_key,
                 "web_uri": album.get("WebUri"),
+                "highlight_image_key": highlight_image_key,
             },
             "title": album.get("Title") or album.get("Name") or slug,
             "description": album.get("Description") or "",
@@ -246,8 +248,12 @@ def merge_verified_progress(
             previous_value = previous.get("destination", {}).get(key)
             if previous_value:
                 asset["destination"][key] = previous_value
-        if previous.get("verification", {}).get("source_md5_verified"):
-            asset["verification"] = previous["verification"]
+        previous_verification = previous.get("verification")
+        if isinstance(previous_verification, dict):
+            asset["verification"] = {
+                **asset.get("verification", {}),
+                **previous_verification,
+            }
     return fresh
 
 
@@ -256,6 +262,20 @@ def find_album(client: SmugMugClient, user: str, album_key: str) -> dict[str, An
         if str(album.get("AlbumKey")) == album_key:
             return album
     raise SystemExit(f"Public album not found: {album_key}")
+
+
+def album_highlight_image_key(client: SmugMugClient, album: dict[str, Any]) -> str | None:
+    highlight_uri = ((album.get("Uris") or {}).get("HighlightImage") or {}).get(
+        "Uri"
+    )
+    if not highlight_uri:
+        return None
+    response = client.get(highlight_uri)
+    for key in ("Image", "AlbumImage", "HighlightImage"):
+        candidate = response.get(key)
+        if isinstance(candidate, dict) and candidate.get("ImageKey"):
+            return str(candidate["ImageKey"])
+    return None
 
 
 def write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
@@ -309,6 +329,7 @@ def main() -> None:
         client.paged(images_uri, "AlbumImage"),
         user=args.user,
         slug=args.slug,
+        highlight_image_key=album_highlight_image_key(client, album),
     )
     output = Path(args.output)
     if output.exists():

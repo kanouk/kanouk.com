@@ -71,11 +71,18 @@ class SmugMugPilotManifestTests(unittest.TestCase):
             "WebUri": "https://example.smugmug.com/kyoto",
         }
         payload = manifest_module.manifest(
-            album, [first, second], user="kanolog", slug="2024-06-kyoto"
+            album,
+            [first, second],
+            user="kanolog",
+            slug="2024-06-kyoto",
+            highlight_image_key="second",
         )
         self.assertEqual(payload["url_contract"]["album_path"], "/albums/2024-06-kyoto")
         self.assertEqual(payload["assets"][0]["source"]["image_key"], "second")
         self.assertEqual(payload["album"]["asset_count"], 2)
+        self.assertEqual(
+            payload["album"]["source"]["highlight_image_key"], "second"
+        )
         self.assertEqual(
             payload["assets"][0]["timestamps"]["captured_at"]["timezone_status"],
             "unknown",
@@ -157,6 +164,40 @@ class SmugMugPilotManifestTests(unittest.TestCase):
         self.assertEqual(
             merged["assets"][0]["destination"]["photo_path"],
             "/photos/published-id",
+        )
+
+    def test_regeneration_preserves_owner_auth_pending_reason(self) -> None:
+        album = {"source": {"album_key": "album"}}
+        fresh = {
+            "album": album,
+            "assets": [
+                {
+                    "id": "asset",
+                    "source": {"image_key": "image", "archived_md5": "md5"},
+                    "destination": {},
+                    "verification": {"source_md5_verified": False},
+                }
+            ],
+        }
+        existing = {
+            "album": album,
+            "assets": [
+                {
+                    "id": "asset",
+                    "source": {"image_key": "image", "archived_md5": "md5"},
+                    "destination": {},
+                    "verification": {
+                        "source_md5_verified": False,
+                        "migration_status": "pending_owner_auth",
+                        "owner_auth_reason": "public_archive_unavailable",
+                    },
+                }
+            ],
+        }
+        merged = manifest_module.merge_verified_progress(fresh, existing)
+        self.assertEqual(
+            merged["assets"][0]["verification"]["migration_status"],
+            "pending_owner_auth",
         )
 
 
