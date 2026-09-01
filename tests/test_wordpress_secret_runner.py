@@ -45,6 +45,8 @@ class WordPressSecretRunnerTests(unittest.TestCase):
             ["audit_wordpress.py", "rest"], credential
         )
         self.assertEqual(command[-2:], ["--site", "https://kanolog.net"])
+        self.assertIn("--username-env", command)
+        self.assertIn("WP_AUDIT_PASSWORD", command)
         with self.assertRaisesRegex(runner.WordPressCredentialError, "override"):
             runner.normalized_command(
                 ["audit_wordpress.py", "rest", "--site", "https://example.test"],

@@ -78,6 +78,17 @@ def normalized_command(args: Sequence[str], credential: Mapping[str, str]) -> li
         values.insert(0, required_subcommand)
     if "--site" in values:
         raise WordPressCredentialError("Source site override is blocked")
+    if script_name == "audit_wordpress.py":
+        if "--username-env" in values or "--password-env" in values:
+            raise WordPressCredentialError("Credential environment override is blocked")
+        values.extend(
+            [
+                "--username-env",
+                "WP_AUDIT_USER",
+                "--password-env",
+                "WP_AUDIT_PASSWORD",
+            ]
+        )
     script = (SCRIPT_ROOT / script_name).resolve()
     if script.parent != SCRIPT_ROOT or not script.is_file():
         raise WordPressCredentialError("WordPress script path is invalid")
