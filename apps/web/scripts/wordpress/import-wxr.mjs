@@ -227,6 +227,7 @@ function addLegacyMapping(mappings, source, target) {
 
 export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs) {
 	const mappings = new Map();
+	const archiveYears = new Set();
 	for (const record of records) {
 		const target = TARGET_ORIGIN + targetPath(record);
 		const id = String(record.post.id);
@@ -238,14 +239,35 @@ export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs) {
 		]) {
 			if (candidate) addLegacyMapping(mappings, candidate, target);
 		}
+		// The old sites were consolidated before this migration. Their historical
+		// category-style permalinks therefore use kanolog.net even when the record
+		// came from the nocalog export.
+		if (record.source.id === "kanolog") {
+			addLegacyMapping(mappings, `https://kanolog.net/stream/${id}`, target);
+			addLegacyMapping(mappings, `https://kanolog.net/kanolog/${id}`, target);
+		}
+		if (record.source.id === "nocalog") {
+			addLegacyMapping(mappings, `https://kanolog.net/productivity/${id}`, target);
+		}
+		const year = String(record.post.postDate || "").match(/^(\d{4})/)?.[1];
+		if (year) archiveYears.add(year);
 	}
 	for (const source of loadedSources) {
 		addLegacyMapping(mappings, source.origin, TARGET_ORIGIN);
+		addLegacyMapping(mappings, `${source.origin}/wp-admin`, TARGET_ORIGIN);
+		for (const year of archiveYears) {
+			addLegacyMapping(mappings, `${source.origin}/date/${year}`, `${TARGET_ORIGIN}/posts`);
+		}
 		for (const term of source.wxr.categories || []) {
 			const slug = taxonomySlugs.get(`category:${term.nicename}`) || term.nicename;
 			addLegacyMapping(
 				mappings,
 				`${source.origin}/category/${term.nicename}`,
+				`${TARGET_ORIGIN}/category/${slug}`,
+			);
+			addLegacyMapping(
+				mappings,
+				`${source.origin}/${term.nicename}`,
 				`${TARGET_ORIGIN}/category/${slug}`,
 			);
 		}

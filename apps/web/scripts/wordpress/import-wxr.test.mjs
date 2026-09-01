@@ -47,6 +47,7 @@ test("legacy post, archive, category, and tag links resolve to canonical targets
 		post: {
 			id: 42,
 			postType: "post",
+			postDate: "2000-01-02 03:04:05",
 			link: "https://kanolog.net/productivity/42",
 			guid: "https://kanolog.net/?p=42",
 		},
@@ -57,13 +58,38 @@ test("legacy post, archive, category, and tag links resolve to canonical targets
 		id: "http://kanolog.net/archives/42",
 		title: "https://kanolog.net/productivity/42",
 		category: "https://kanolog.net/category/productivity/",
+		categoryWithoutBase: "https://kanolog.net/productivity/",
 		tag: "https://kanolog.net/tag/books",
+		stream: "https://kanolog.net/stream/42",
+		year: "https://kanolog.net/date/2000",
+		admin: "https://kanolog.net/wp-admin/",
 	}, mappings);
 	assert.equal(result.value.id, "https://blog.kanouk.com/posts/new-post");
 	assert.equal(result.value.title, "https://blog.kanouk.com/posts/new-post");
 	assert.equal(result.value.category, "https://blog.kanouk.com/category/productivity");
+	assert.equal(result.value.categoryWithoutBase, "https://blog.kanouk.com/category/productivity");
 	assert.equal(result.value.tag, "https://blog.kanouk.com/tag/books");
-	assert.equal(result.rewrites, 4);
+	assert.equal(result.value.stream, "https://blog.kanouk.com/posts/new-post");
+	assert.equal(result.value.year, "https://blog.kanouk.com/posts");
+	assert.equal(result.value.admin, "https://blog.kanouk.com");
+	assert.equal(result.rewrites, 8);
+});
+
+test("historically merged nocalog IDs resolve through kanolog productivity permalinks", () => {
+	const source = {
+		id: "nocalog",
+		origin: "https://nocalog.net",
+		wxr: { categories: [], tags: [] },
+	};
+	const records = [{
+		source,
+		slug: "focus",
+		post: { id: 3759, postType: "post", postDate: "2010-01-01 00:00:00" },
+	}];
+	const mappings = buildLegacyLinkMappings(records, [source], new Map());
+	const result = rewriteLegacySiteReferences("https://kanolog.net/productivity/3759", mappings);
+	assert.equal(result.value, "https://blog.kanouk.com/posts/focus");
+	assert.equal(result.rewrites, 1);
 });
 
 test("modified dates are preserved from WXR items", () => {
