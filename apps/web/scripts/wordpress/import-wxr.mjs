@@ -121,6 +121,14 @@ export function storedMigrationDataMatches(item, desired) {
 		&& stableJson(data.content ?? []) === stableJson(desired.data.content ?? []);
 }
 
+export function storedMigrationItemIsConverged(item, desired) {
+	if (!storedMigrationDataMatches(item, desired) || item?.status !== desired.status) return false;
+	// EmDash returns the draft data for a published item when a pending draft
+	// revision exists. The payload can therefore match while the live revision
+	// (and public HTML) is still stale.
+	return desired.status !== "published" || !item.draftRevisionId;
+}
+
 function decodeXmlValue(value = "") {
 	const cdata = value.match(/^<!\[CDATA\[([\s\S]*)\]\]>$/)?.[1];
 	return (cdata ?? value)
@@ -593,7 +601,7 @@ function contentBody(desired, bylineId) {
 
 async function upsertContent(client, record, desired, bylineId, apply, contentIds) {
 	let current = await getContent(client, desired.collection, desired.slug, contentIds);
-	if (storedMigrationDataMatches(current?.item, desired) && current.item.status === desired.status) return "skipped_verified";
+	if (storedMigrationItemIsConverged(current?.item, desired)) return "skipped_verified";
 	if (!apply) return current ? "would_update" : "would_create";
 	if (!current) {
 		const created = await client.post(`/_emdash/api/content/${desired.collection}`, contentBody(desired, bylineId));
@@ -606,6 +614,10 @@ async function upsertContent(client, record, desired, bylineId, apply, contentId
 				`/_emdash/api/content/${desired.collection}/${encodeURIComponent(created.data.item.id)}/publish`,
 				{ publishedAt: desired.publishedAt },
 			);
+			const published = await getContent(client, desired.collection, desired.slug, contentIds);
+			if (published?.item?.status !== "published" || !storedMigrationDataMatches(published.item, desired)) {
+				throw new Error(`Published content readback mismatch for ${record.source.id}:${record.post.id}`);
+			}
 		}
 		return "created";
 	}
@@ -633,13 +645,20 @@ async function upsertContent(client, record, desired, bylineId, apply, contentId
 			await sleep(100 * attempt);
 			current = await getContent(client, desired.collection, desired.slug, contentIds);
 			if (!current) throw error;
-			if (storedMigrationDataMatches(current.item, desired) && current.item.status === desired.status) {
+			if (storedMigrationItemIsConverged(current.item, desired)) {
 				return "skipped_verified";
 			}
 		}
 	}
-	if (desired.status === "published" && current.item.status !== "published") {
+	// Updating an already-published EmDash item creates/updates its draft
+	// revision; it does not replace the live revision. Always publish after a
+	// successful write so a verified draft cannot leave stale public HTML.
+	if (desired.status === "published") {
 		await client.post(`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}/publish`, { publishedAt: desired.publishedAt });
+		const published = await getContent(client, desired.collection, desired.slug, contentIds);
+		if (published?.item?.status !== "published" || !storedMigrationDataMatches(published.item, desired)) {
+			throw new Error(`Published content readback mismatch for ${record.source.id}:${record.post.id}`);
+		}
 	} else if (desired.status === "draft" && current.item.status === "published") {
 		await client.post(`/_emdash/api/content/${desired.collection}/${encodeURIComponent(current.item.id)}/unpublish`, {});
 	}

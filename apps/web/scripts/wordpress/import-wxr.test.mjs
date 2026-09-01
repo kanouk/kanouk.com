@@ -12,6 +12,7 @@ import {
 	rewriteSmugMugReferences,
 	shouldRetryRequest,
 	storedMigrationDataMatches,
+	storedMigrationItemIsConverged,
 } from "./import-wxr.mjs";
 
 test("destination slugs preserve unique slugs and namespace collisions", () => {
@@ -92,6 +93,35 @@ test("stored migration comparison follows JSON transport semantics", () => {
 	};
 
 	assert.equal(storedMigrationDataMatches(stored, desired), true);
+});
+
+test("a matching published draft is not treated as live convergence", () => {
+	const desired = {
+		fingerprint: "same-fingerprint",
+		status: "published",
+		data: {
+			title: "Published title",
+			source_url: "https://example.com/post",
+			source_id: "example:2",
+			content: [{ _type: "block", children: [] }],
+		},
+	};
+	const item = {
+		status: "published",
+		draftRevisionId: "draft-revision",
+		data: {
+			title: desired.data.title,
+			source_url: desired.data.source_url,
+			source_id: desired.data.source_id,
+			source_metadata: { migration_fingerprint: desired.fingerprint },
+			content: desired.data.content,
+		},
+	};
+
+	assert.equal(storedMigrationDataMatches(item, desired), true);
+	assert.equal(storedMigrationItemIsConverged(item, desired), false);
+	item.draftRevisionId = null;
+	assert.equal(storedMigrationItemIsConverged(item, desired), true);
 });
 
 test("verified WordPress media and derived sizes become local EmDash references", () => {
