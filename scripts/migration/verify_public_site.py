@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 from dataclasses import asdict, dataclass
 from html import unescape
+from html.parser import HTMLParser
 import json
 import re
 import time
@@ -27,6 +28,85 @@ class Check:
     status: int | None
     elapsed_ms: int
     detail: str
+
+
+class SeoParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.canonicals: list[str] = []
+        self.meta: dict[str, list[str]] = {}
+        self.jsonld_types: list[str] = []
+        self._jsonld_parts: list[str] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {key.lower(): value or "" for key, value in attrs}
+        if tag.lower() == "link" and values.get("rel", "").lower() == "canonical":
+            self.canonicals.append(values.get("href", ""))
+        if tag.lower() == "meta":
+            key = values.get("property") or values.get("name")
+            if key:
+                self.meta.setdefault(key.lower(), []).append(values.get("content", ""))
+        if tag.lower() == "script" and values.get("type", "").lower() == "application/ld+json":
+            self._jsonld_parts = []
+
+    def handle_data(self, data: str) -> None:
+        if self._jsonld_parts is not None:
+            self._jsonld_parts.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() != "script" or self._jsonld_parts is None:
+            return
+        raw = "".join(self._jsonld_parts).strip()
+        self._jsonld_parts = None
+        try:
+            payload = json.loads(raw)
+        except json.JSONDecodeError:
+            self.jsonld_types.append("INVALID")
+            return
+        if isinstance(payload, dict):
+            value = payload.get("@type")
+            if isinstance(value, str):
+                self.jsonld_types.append(value)
+
+
+def add_seo_check(
+    checks: list[Check],
+    *,
+    name: str,
+    url: str,
+    html: str,
+    expected_canonical: str | None,
+    expected_jsonld: str,
+    require_og_image: bool = False,
+) -> None:
+    parser = SeoParser()
+    parser.feed(html)
+    failures: list[str] = []
+    expected_canonicals = [] if expected_canonical is None else [expected_canonical]
+    if parser.canonicals != expected_canonicals:
+        failures.append(
+            f"canonical={parser.canonicals!r}, expected={expected_canonicals!r}"
+        )
+    if parser.jsonld_types != [expected_jsonld]:
+        failures.append(
+            f"jsonld={parser.jsonld_types!r}, expected={[expected_jsonld]!r}"
+        )
+    if len(parser.meta.get("og:title", [])) != 1:
+        failures.append("expected exactly one og:title")
+    if require_og_image:
+        images = parser.meta.get("og:image", [])
+        if len(images) != 1 or not images[0].startswith("https://"):
+            failures.append("expected exactly one absolute og:image")
+    checks.append(
+        Check(
+            name=name,
+            url=url,
+            ok=not failures,
+            status=200,
+            elapsed_ms=0,
+            detail="ok" if not failures else "; ".join(failures),
+        )
+    )
 
 
 def fetch(
@@ -115,7 +195,7 @@ def main() -> None:
 
     checks: list[Check] = []
     try:
-        add_page_check(
+        home_html = add_page_check(
             checks,
             name="blog-home",
             url=urljoin(base_url, "/"),
@@ -123,7 +203,7 @@ def main() -> None:
             marker="カノログ",
             expect_preview_noindex=args.expect_preview_noindex,
         )
-        add_page_check(
+        posts_html = add_page_check(
             checks,
             name="post-archive",
             url=urljoin(base_url, "/posts"),
@@ -146,6 +226,87 @@ def main() -> None:
             expected_status=200,
             marker="写真を検索",
             expect_preview_noindex=args.expect_preview_noindex,
+        )
+
+        add_seo_check(
+            checks,
+            name="blog-home-seo",
+            url=urljoin(base_url, "/"),
+            html=home_html,
+            expected_canonical="https://blog.kanouk.com/",
+            expected_jsonld="WebSite",
+        )
+
+        post_match = re.search(r'href="(/posts/[^"?#]+)"', home_html)
+        if not post_match:
+            raise RuntimeError("no published post found for SEO readback")
+        post_path = unescape(post_match.group(1))
+        post_url = urljoin(base_url, post_path)
+        post_html = add_page_check(
+            checks,
+            name="post-detail",
+            url=post_url,
+            expected_status=200,
+            marker='class="article"',
+            expect_preview_noindex=args.expect_preview_noindex,
+        )
+        add_seo_check(
+            checks,
+            name="post-detail-seo",
+            url=post_url,
+            html=post_html,
+            expected_canonical=urljoin("https://blog.kanouk.com", post_path),
+            expected_jsonld="BlogPosting",
+            require_og_image=True,
+        )
+
+        album_match = re.search(r'href="(/albums/[^"?#]+)"', albums_html)
+        if not album_match:
+            raise RuntimeError("no published album found for SEO readback")
+        album_path = unescape(album_match.group(1))
+        album_url = urljoin(base_url, album_path)
+        album_html = add_page_check(
+            checks,
+            name="album-detail",
+            url=album_url,
+            expected_status=200,
+            marker='class="album-page"',
+            expect_preview_noindex=args.expect_preview_noindex,
+        )
+        add_seo_check(
+            checks,
+            name="album-detail-seo",
+            url=album_url,
+            html=album_html,
+            expected_canonical=urljoin("https://photos.kanouk.com", album_path),
+            expected_jsonld="CollectionPage",
+            require_og_image=True,
+        )
+
+        photo_match = re.search(r'href="(/photos/[^"?#]+)"', album_html)
+        if not photo_match:
+            raise RuntimeError("no published photo found for SEO readback")
+        photo_path = unescape(photo_match.group(1))
+        photo_url = urljoin(base_url, photo_path)
+        photo_html = add_page_check(
+            checks,
+            name="photo-detail",
+            url=photo_url,
+            expected_status=200,
+            marker='class="photo-page"',
+            expect_preview_noindex=args.expect_preview_noindex,
+        )
+        photo_seo = SeoParser()
+        photo_seo.feed(photo_html)
+        photo_jsonld = photo_seo.jsonld_types[0] if len(photo_seo.jsonld_types) == 1 else ""
+        add_seo_check(
+            checks,
+            name="photo-detail-seo",
+            url=photo_url,
+            html=photo_html,
+            expected_canonical=urljoin("https://photos.kanouk.com", photo_path),
+            expected_jsonld=photo_jsonld if photo_jsonld in {"ImageObject", "VideoObject"} else "ImageObject",
+            require_og_image=True,
         )
         add_page_check(
             checks,

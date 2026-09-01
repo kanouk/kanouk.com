@@ -14,7 +14,7 @@ interface Props {
 	pageTitle?: string | null;
 	description?: string | null;
 	image?: string | null;
-	canonical?: string | null;
+	canonical?: string | null | false;
 	robots?: string | null;
 	type?: "website" | "article";
 	publishedTime?: string | null;
@@ -28,7 +28,7 @@ const {
 	pageTitle,
 	description,
 	image,
-	canonical,
+	canonical: canonicalProp,
 	robots,
 	type = "website",
 	publishedTime,
@@ -36,6 +36,10 @@ const {
 	author,
 	content,
 } = Astro.props;
+
+const canonical = canonicalProp === false
+	? null
+	: canonicalProp ?? new URL(Astro.url.pathname, "https://blog.kanouk.com").toString();
 
 const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(await getSiteSettings());
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;

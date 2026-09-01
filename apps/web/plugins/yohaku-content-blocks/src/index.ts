@@ -15,6 +15,37 @@ export function createPlugin() {
 	return definePlugin({
 		id: "yohaku-content-blocks",
 		version: "0.1.0",
+		hooks: {
+			"page:metadata": ({ page }) => {
+				if (!page.canonical) return null;
+				const schemaType = page.pageType === "collection"
+					? "CollectionPage"
+					: page.pageType === "image"
+						? "ImageObject"
+						: page.pageType === "video"
+							? "VideoObject"
+							: null;
+				if (!schemaType) return null;
+				const graph: Record<string, unknown> = {
+					"@context": "https://schema.org",
+					"@type": schemaType,
+					name: page.pageTitle ?? page.title ?? undefined,
+					url: page.canonical,
+					description: page.description ?? undefined,
+					isPartOf: {
+						"@type": "WebSite",
+						name: "Photos — kanouk.com",
+						url: "https://photos.kanouk.com/albums",
+					},
+				};
+				if (page.image) {
+					if (schemaType === "ImageObject") graph.contentUrl = page.image;
+					else if (schemaType === "VideoObject") graph.thumbnailUrl = page.image;
+					else graph.image = page.image;
+				}
+				return { kind: "jsonld", id: "primary", graph };
+			},
+		},
 		admin: {
 			portableTextBlocks: [
 				{

@@ -11,24 +11,29 @@ interface Props {
 	title: string;
 	description?: string | null;
 	image?: string | null;
+	pageType?: "website" | "collection" | "image" | "video";
 	content?: { collection: string; id: string; slug?: string | null };
 }
 
-const { title, description, image, content } = Astro.props;
+const { title, description, image, pageType = "website", content } = Astro.props;
 const fullTitle = `${title} — Photos — kanouk.com`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
 const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
+const canonicalPath = Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname;
+const canonical = new URL(canonicalPath, "https://photos.kanouk.com").toString();
+const absoluteImage = image ? new URL(image, "https://photos.kanouk.com").toString() : null;
 const pageCtx = createPublicPageContext({
 	Astro,
 	kind: content ? "content" : "custom",
-	pageType: content ? "article" : "website",
+	pageType,
 	title: fullTitle,
 	pageTitle: title,
 	description,
-	image,
+	canonical,
+	image: absoluteImage,
 	content,
-	seo: { ogImage: image },
+	seo: { ogImage: absoluteImage },
 	siteName: "Photos — kanouk.com",
 });
 ---
@@ -40,7 +45,6 @@ const pageCtx = createPublicPageContext({
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<YohakuHead />
 		<title>{fullTitle}</title>
-		{description && <meta name="description" content={description} />}
 		<EmDashHead page={pageCtx} />
 	</head>
 	<body class="site site--photos">

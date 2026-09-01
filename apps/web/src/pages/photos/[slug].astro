@@ -15,6 +15,7 @@ import {
 } from "lucide-astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
+import { resolvePublicMediaUrl } from "../../utils/media-url";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
@@ -45,12 +46,7 @@ const nextUrl = nextPhoto ? `/photos/${nextPhoto.id}` : undefined;
 const slideshowNextUrl = nextUrl || (firstPhoto && firstPhoto.id !== photo.data.id ? `/photos/${firstPhoto.id}` : undefined);
 const downloadUrl = album?.data.allow_downloads ? `/media/${photo.id}` : undefined;
 const videoStorageKey = photo.data.video?.meta?.storageKey;
-const imageStorageKey = photo.data.image?.meta?.storageKey;
-const posterSource =
-	photo.data.image?.src ||
-	(typeof imageStorageKey === "string"
-		? `/_emdash/api/media/file/${encodeURIComponent(imageStorageKey)}`
-		: undefined);
+const posterSource = resolvePublicMediaUrl(photo.data.image);
 const videoSource =
 	photo.data.kind === "video"
 		? photo.data.video?.src ||
@@ -150,7 +146,8 @@ const exifDetails = [
 <Photos
 	title={photo.data.title}
 	description={photo.data.caption}
-	image={photo.data.image?.src}
+	image={posterSource}
+	pageType={photo.data.kind === "video" ? "video" : "image"}
 	content={{ collection: "photos", id: photo.data.id, slug: photo.id }}
 >
 	<article
@@ -348,11 +345,14 @@ const exifDetails = [
 	});
 
 	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && slideshowTimer) {
+			stopSlideshow();
+			return;
+		}
 		const target = event.target as HTMLElement | null;
 		if (target?.matches("input, textarea, select, button, a, [contenteditable=true]")) return;
 		if (event.key === "ArrowLeft" && previousUrl) navigate(previousUrl);
 		if (event.key === "ArrowRight" && nextUrl) navigate(nextUrl);
-		if (event.key === "Escape" && slideshowTimer) stopSlideshow();
 	});
 
 	let touchStartX: number | undefined;
