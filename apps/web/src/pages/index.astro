@@ -10,9 +10,10 @@ import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
-// Limit to what we render (1 featured + 6 grid). The DB does the slicing
+// Limit to what we render (1 featured + 3 grid). The archive remains the
+// complete browsing surface; the home page stays focused and lightweight.
 // instead of fetching every post and discarding the tail in JS.
-const POSTS_PER_PAGE = 7;
+const POSTS_PER_PAGE = 4;
 
 const [{ entries: posts, cacheHint }, settings] = await Promise.all([
 	getEmDashCollection("posts", {
@@ -33,8 +34,8 @@ const hasMorePosts = posts.length > POSTS_PER_PAGE;
 const featuredPost = visiblePosts.find((p) => p.data.featured_image) ?? visiblePosts[0];
 const featuredIndex = featuredPost ? visiblePosts.indexOf(featuredPost) : -1;
 
-// Get remaining posts (exclude featured if found, limit to 6 for grid)
-const gridPosts = visiblePosts.filter((_, i) => i !== featuredIndex).slice(0, 6);
+// Get remaining posts (exclude featured if found, limit to 3 for grid)
+const gridPosts = visiblePosts.filter((_, i) => i !== featuredIndex).slice(0, 3);
 
 // Single batched query for tags across the featured post + grid posts.
 // Avoids the N+1 pattern of calling getEntryTerms() per entry.
