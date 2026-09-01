@@ -19,6 +19,7 @@ ALLOWED_SCRIPTS = {
     "audit_smugmug.py",
     "build_smugmug_catalog.py",
     "build_smugmug_pilot_manifest.py",
+    "diagnose_smugmug_asset.py",
     "download_smugmug_pilot_asset.py",
     "migrate_smugmug_album.py",
     "migrate_smugmug_catalog.py",

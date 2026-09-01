@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import hashlib
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -87,6 +88,26 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
     def test_source_extension_is_stable(self) -> None:
         self.assertEqual(module.source_extension(asset()), ".jpg")
         self.assertEqual(module.source_extension(asset("video")), ".mp4")
+
+    def test_download_source_requires_owner_auth_when_public_bytes_are_not_original(self) -> None:
+        expected = b"original image bytes"
+        public_derivative = b"public derivative bytes"
+        live = {
+            "ArchivedUri": "https://example.test/archive.jpg",
+            "ArchivedMD5": hashlib.md5(expected).hexdigest(),
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "source.jpg"
+            with patch.object(
+                module, "urlopen", return_value=io.BytesIO(public_derivative)
+            ):
+                with self.assertRaises(module.OwnerAuthenticationRequired):
+                    module.download_source(
+                        live,
+                        hashlib.md5(expected).hexdigest(),
+                        destination,
+                    )
+            self.assertFalse(destination.exists())
 
     def test_public_media_path_uses_worker_route_and_escapes_storage_key(self) -> None:
         self.assertEqual(

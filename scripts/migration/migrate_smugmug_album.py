@@ -58,6 +58,10 @@ class AlbumMigrationError(RuntimeError):
     pass
 
 
+class OwnerAuthenticationRequired(AlbumMigrationError):
+    """The public SmugMug response cannot provide the byte-exact original."""
+
+
 TRANSIENT_MARKERS = ("HTTP 429", "HTTP 500", "HTTP 502", "HTTP 503", "HTTP 504", "1102")
 
 
@@ -206,7 +210,10 @@ def download_source(
     if hashes is None:
         raise AssertionError("unreachable")
     if hashes["md5"] != expected_md5:
-        raise AlbumMigrationError("Downloaded bytes do not match SmugMug ArchivedMD5")
+        destination.unlink(missing_ok=True)
+        raise OwnerAuthenticationRequired(
+            "Public ArchivedUri bytes do not match SmugMug ArchivedMD5"
+        )
     return hashes
 
 
@@ -1213,6 +1220,8 @@ def migrate_asset(
             public_hash, public_bytes = public_sha256(storage_key)
         if public_hash != hashes["sha256"] or public_bytes != hashes["bytes"]:
             raise AlbumMigrationError("Worker media readback does not match source bytes")
+        verification.pop("migration_status", None)
+        verification.pop("owner_auth_reason", None)
         verification.update(
             {
                 "r2_roundtrip_verified": True,
@@ -1311,7 +1320,9 @@ def main() -> None:
         if live is None:
             raise SystemExit(f"Frozen asset is absent from live album: {image_key}")
         if not live.get("ArchivedUri") or not live.get("ArchivedMD5"):
-            asset.setdefault("verification", {})["migration_status"] = "pending_owner_auth"
+            verification = asset.setdefault("verification", {})
+            verification["migration_status"] = "pending_owner_auth"
+            verification["owner_auth_reason"] = "public_archive_unavailable"
             counts["pending_owner_auth"] += 1
             checkpoint(manifest_path, manifest)
             print(
@@ -1331,6 +1342,17 @@ def main() -> None:
             )
             counts[status] += 1
             print(f"[{index}/{len(assets)}] {asset['id']}: {status}", flush=True)
+        except OwnerAuthenticationRequired as exc:
+            verification = asset.setdefault("verification", {})
+            verification["migration_status"] = "pending_owner_auth"
+            verification["owner_auth_reason"] = "public_archive_hash_mismatch"
+            counts["pending_owner_auth"] += 1
+            checkpoint(manifest_path, manifest)
+            print(
+                f"[{index}/{len(assets)}] {asset.get('id')}: "
+                f"pending_owner_auth: {exc}",
+                flush=True,
+            )
         except Exception as exc:
             counts["failed"] += 1
             checkpoint(manifest_path, manifest)
