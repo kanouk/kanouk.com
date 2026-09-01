@@ -11,6 +11,7 @@ import {
 	Pause,
 	Play,
 	Share2,
+	Tags,
 } from "lucide-astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
@@ -101,6 +102,15 @@ const exif = sourceMetadata && typeof sourceMetadata === "object"
 	? (sourceMetadata as Record<string, unknown>).exif
 	: undefined;
 const exifData = exif && typeof exif === "object" ? exif as Record<string, unknown> : {};
+const sourceKeywords = sourceMetadata && typeof sourceMetadata === "object"
+	? (sourceMetadata as Record<string, unknown>).keywords
+	: undefined;
+const keywords = Array.isArray(sourceKeywords)
+	? sourceKeywords.filter(
+		(keyword): keyword is string =>
+			typeof keyword === "string" && Boolean(keyword.trim()),
+	)
+	: [];
 const textValue = (value: unknown) =>
 	typeof value === "string" && value.trim() ? value.trim() : undefined;
 const numberValue = (value: unknown) =>
@@ -229,6 +239,19 @@ const exifDetails = [
 							</div>
 						))}
 					</dl>
+				</section>
+			)
+		}
+		{
+			keywords.length > 0 && (
+				<section class="photo-keywords" aria-labelledby="keyword-title">
+					<h2 id="keyword-title">
+						<Tags size={17} strokeWidth={1.65} aria-hidden="true" />
+						<span>キーワード</span>
+					</h2>
+					<ul>
+						{keywords.map((keyword) => <li>{keyword}</li>)}
+					</ul>
 				</section>
 			)
 		}

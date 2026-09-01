@@ -665,6 +665,11 @@ main:focus { outline: none; }
 .exif dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-4) var(--space-6); margin-top: var(--space-5); }
 .exif dt { color: var(--ink-muted); font-size: 0.68rem; }
 .exif dd { margin-top: 0.2rem; color: var(--ink-soft); font-size: var(--step--1); }
+.photo-keywords { margin-top: var(--space-7); }
+.photo-keywords h2 { display: inline-flex; align-items: center; gap: 0.45rem; font-size: var(--step-1); }
+.photo-keywords h2 svg { color: var(--accent-strong); }
+.photo-keywords ul { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); list-style: none; }
+.photo-keywords li { padding: 0.35rem 0.65rem; border: 1px solid var(--rule); color: var(--ink-soft); font-size: 0.7rem; }
 .location { margin-top: var(--space-8); }
 .location-heading { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); }
 .location-heading h2 { font-size: var(--step-1); }
