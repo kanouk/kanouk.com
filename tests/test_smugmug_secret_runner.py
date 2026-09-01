@@ -37,6 +37,36 @@ class SmugMugCredentialTests(unittest.TestCase):
         )
         self.assertEqual(env["SMUGMUG_API_KEY"], "expected")
 
+    def test_api_secret_alone_keeps_public_mode(self) -> None:
+        env = runner.child_environment(
+            {"API Key": "key", "API Secret": "secret"},
+            {"SMUGMUG_API_SECRET": "stale", "SMUGMUG_ACCESS_TOKEN": "stale"},
+        )
+        self.assertNotIn("SMUGMUG_API_SECRET", env)
+        self.assertNotIn("SMUGMUG_ACCESS_TOKEN", env)
+
+    def test_loads_complete_owner_credentials_without_printing_them(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "SmugMug.md"
+            path.write_text(
+                "API Key: `key`\nAPI Secret: `secret`\n"
+                "Access Token: `token`\nAccess Token Secret: `token-secret`\n"
+            )
+            credentials = runner.load_credentials(path)
+            env = runner.child_environment(credentials, {"PATH": "/bin"})
+        self.assertEqual(env["SMUGMUG_API_SECRET"], "secret")
+        self.assertEqual(env["SMUGMUG_ACCESS_TOKEN"], "token")
+        self.assertEqual(env["SMUGMUG_ACCESS_TOKEN_SECRET"], "token-secret")
+
+    def test_rejects_partial_owner_credentials(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "SmugMug.md"
+            path.write_text("API Key: `key`\nAccess Token: `token`\n")
+            with self.assertRaisesRegex(
+                runner.SmugMugCredentialError, "incomplete owner credentials"
+            ):
+                runner.load_credentials(path)
+
     def test_only_allows_read_only_scripts(self) -> None:
         command = runner.normalized_command(["audit_smugmug.py", "--help"])
         self.assertEqual(Path(command[1]).name, "audit_smugmug.py")

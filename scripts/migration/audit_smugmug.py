@@ -15,6 +15,8 @@ from typing import Any, Iterable
 from urllib.parse import urlencode, urlparse
 from urllib.request import Request, urlopen
 
+from smugmug_oauth import authorization_header
+
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -32,6 +34,16 @@ def increment(counter: Counter[str], value: Any) -> None:
 class SmugMugClient:
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
+        self.api_secret = os.environ.get("SMUGMUG_API_SECRET")
+        self.access_token = os.environ.get("SMUGMUG_ACCESS_TOKEN")
+        self.access_token_secret = os.environ.get("SMUGMUG_ACCESS_TOKEN_SECRET")
+        owner_values = (
+            self.api_secret,
+            self.access_token,
+            self.access_token_secret,
+        )
+        if any(owner_values[1:]) and not all(owner_values):
+            raise ValueError("SmugMug owner credentials are incomplete")
         self.origin = "https://api.smugmug.com"
         self.headers = {
             "Accept": "application/json",
@@ -42,11 +54,27 @@ class SmugMugClient:
         parsed = urlparse(path)
         if parsed.scheme or parsed.netloc:
             raise ValueError("SmugMug API paths must be relative")
-        query = {"APIKey": self.api_key, **(params or {})}
+        owner_authenticated = bool(self.access_token and self.access_token_secret)
+        query = dict(params or {})
+        if not owner_authenticated:
+            query["APIKey"] = self.api_key
         separator = "&" if "?" in path else "?"
+        url = f"{self.origin}{path}"
+        if query:
+            url = f"{url}{separator}{urlencode(query)}"
+        headers = dict(self.headers)
+        if owner_authenticated:
+            headers["Authorization"] = authorization_header(
+                "GET",
+                url,
+                consumer_key=self.api_key,
+                consumer_secret=str(self.api_secret),
+                token=str(self.access_token),
+                token_secret=str(self.access_token_secret),
+            )
         request = Request(
-            f"{self.origin}{path}{separator}{urlencode(query)}",
-            headers=self.headers,
+            url,
+            headers=headers,
         )
         last_error: Exception | None = None
         for attempt in range(3):
