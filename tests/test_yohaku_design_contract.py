@@ -79,6 +79,16 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIsNotNone(noto)
         self.assertIn("weights: [400, 600]", noto.group("body"))
 
+    def test_list_images_use_one_bounded_cloudflare_preview_preset(self) -> None:
+        component = (WEB_ROOT / "src/components/YohakuImage.astro").read_text()
+        worker = (WEB_ROOT / "src/worker.ts").read_text()
+        self.assertIn("cropSafely && previewKey", component)
+        self.assertIn("/_yohaku/media/preview/", component)
+        self.assertIn("const PREVIEW_WIDTH = 960", worker)
+        self.assertIn('format: "webp"', worker)
+        self.assertIn('fit: "scale-down"', worker)
+        self.assertIn('quality: 85', worker)
+
 
 if __name__ == "__main__":
     unittest.main()

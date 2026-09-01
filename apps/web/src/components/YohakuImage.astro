@@ -16,7 +16,7 @@ const height = value?.height;
 const aspectRatio = width && height ? width / height : undefined;
 const storageKey = value?.meta?.storageKey;
 const legacyUrl = (value as (MediaValue & { url?: string }) | null | undefined)?.url;
-const src =
+const originalSrc =
 	value?.src ||
 	legacyUrl ||
 	(typeof storageKey === "string"
@@ -26,6 +26,11 @@ const src =
 			: undefined);
 const lowResolution = Boolean(width && height && (width < 640 || height < 480));
 const cropSafely = crop && !lowResolution;
+const previewKey = typeof storageKey === "string" ? storageKey : value?.id;
+const src =
+	cropSafely && previewKey
+		? `/_yohaku/media/preview/${encodeURIComponent(previewKey)}`
+		: originalSrc;
 ---
 
 {
