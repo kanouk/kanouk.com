@@ -28,6 +28,50 @@ function productNode(product, sourceId, key) {
 	};
 }
 
+function expandPochippShortcodes(blocks, context, keyGenerator) {
+	return blocks.flatMap((block) => {
+		if (block?._type !== "block" || !Array.isArray(block.children)) return block;
+		if (!block.children.some((child) =>
+			child?._type === "span"
+			&& typeof child.text === "string"
+			&& /\[pochipp\s+id=["']?\d+["']?\s*\]/i.test(child.text),
+		)) return block;
+		const expanded = [];
+		let pending = { ...block, children: [] };
+		const flush = () => {
+			const meaningful = pending.children.some((child) =>
+				child?._type !== "span" || String(child.text || "").trim(),
+			);
+			if (meaningful) expanded.push(pending);
+			pending = { ...block, _key: keyGenerator(), children: [] };
+		};
+		for (const child of block.children) {
+			if (child?._type !== "span" || typeof child.text !== "string") {
+				pending.children.push(child);
+				continue;
+			}
+			const matches = [...child.text.matchAll(/\[pochipp\s+id=["']?(\d+)["']?\s*\]/gi)];
+			if (!matches.length) {
+				pending.children.push(child);
+				continue;
+			}
+			let cursor = 0;
+			for (const match of matches) {
+				const before = child.text.slice(cursor, match.index);
+				if (before) pending.children.push({ ...child, _key: keyGenerator(), text: before });
+				flush();
+				const sourceId = match[1];
+				expanded.push(productNode(context.products.get(sourceId), sourceId, keyGenerator()));
+				cursor = match.index + match[0].length;
+			}
+			const after = child.text.slice(cursor);
+			if (after) pending.children.push({ ...child, _key: keyGenerator(), text: after });
+		}
+		flush();
+		return expanded.length ? expanded : block;
+	});
+}
+
 function tableNode(html, keyGenerator) {
 	const rows = [...html.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map((row) => ({
 		_type: "tableRow",
@@ -196,7 +240,7 @@ export function convertPostContent(post, context) {
 	};
 
 	const blocks = gutenbergToPortableText(post.content || "", options());
-	return blocks.flatMap((block) => {
+	const normalized = blocks.flatMap((block) => {
 		if (block._type !== "htmlBlock") return block;
 		const html = String(block.html || "");
 		const quizId = html.match(/\[ays_quiz\s+id=["']?(\d+)["']?\s*\]/i)?.[1];
@@ -241,4 +285,5 @@ export function convertPostContent(post, context) {
 		}
 		return block;
 	});
+	return expandPochippShortcodes(normalized, context, keyGenerator);
 }

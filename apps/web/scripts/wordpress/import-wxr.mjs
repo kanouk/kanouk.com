@@ -193,6 +193,97 @@ function targetPath(record) {
 	return `/${record.post.postType === "page" ? "pages" : "posts"}/${record.slug}`;
 }
 
+function comparableLegacyUrl(value) {
+	try {
+		const parsed = new URL(value);
+		const hostname = parsed.hostname.toLowerCase().replace(/^www\./, "");
+		let pathname = parsed.pathname;
+		for (let attempt = 0; attempt < 2; attempt++) {
+			try {
+				const decoded = decodeURIComponent(pathname);
+				if (decoded === pathname) break;
+				pathname = decoded;
+			} catch {
+				break;
+			}
+		}
+		pathname = pathname.replace(/\/+$/, "") || "/";
+		const postId = parsed.searchParams.get("p");
+		return postId
+			? `${hostname}/?p=${postId}`
+			: `${hostname}${pathname.toLowerCase()}`;
+	} catch {
+		return "";
+	}
+}
+
+function addLegacyMapping(mappings, source, target) {
+	const key = comparableLegacyUrl(source);
+	if (!key) return;
+	const existing = mappings.get(key);
+	if (!existing) mappings.set(key, target);
+	else if (existing !== target) mappings.set(key, null);
+}
+
+export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs) {
+	const mappings = new Map();
+	for (const record of records) {
+		const target = TARGET_ORIGIN + targetPath(record);
+		const id = String(record.post.id);
+		for (const candidate of [
+			sourceUrl(record),
+			record.post.guid,
+			`${record.source.origin}/?p=${id}`,
+			`${record.source.origin}/archives/${id}`,
+		]) {
+			if (candidate) addLegacyMapping(mappings, candidate, target);
+		}
+	}
+	for (const source of loadedSources) {
+		addLegacyMapping(mappings, source.origin, TARGET_ORIGIN);
+		for (const term of source.wxr.categories || []) {
+			const slug = taxonomySlugs.get(`category:${term.nicename}`) || term.nicename;
+			addLegacyMapping(
+				mappings,
+				`${source.origin}/category/${term.nicename}`,
+				`${TARGET_ORIGIN}/category/${slug}`,
+			);
+		}
+		for (const term of source.wxr.tags || []) {
+			const slug = taxonomySlugs.get(`tag:${term.slug}`) || term.slug;
+			addLegacyMapping(
+				mappings,
+				`${source.origin}/tag/${term.slug}`,
+				`${TARGET_ORIGIN}/tag/${slug}`,
+			);
+		}
+	}
+	return mappings;
+}
+
+export function rewriteLegacySiteReferences(value, mappings) {
+	let rewrites = 0;
+	const visit = (node) => {
+		if (typeof node === "string") {
+			return node.replace(
+				/https?:\/\/(?:www\.)?(?:kanolog\.net|nocalog\.net|art-quiz\.com)[^\s"'<>]*/gi,
+				(raw) => {
+					const trailing = raw.match(/[),.;:!?]+$/)?.[0] || "";
+					const candidate = trailing ? raw.slice(0, -trailing.length) : raw;
+					const target = mappings.get(comparableLegacyUrl(candidate));
+					if (!target) return raw;
+					rewrites++;
+					return target + trailing;
+				},
+			);
+		}
+		if (Array.isArray(node)) return node.map(visit);
+		if (!node || typeof node !== "object") return node;
+		return Object.fromEntries(Object.entries(node).map(([key, child]) => [key, visit(child)]));
+	};
+	return { value: visit(value), rewrites };
+}
+
 function buildAttachmentMap(wxr) {
 	return new Map(wxr.attachments.filter((item) => item.id && item.url).map((item) => [String(item.id), item.url]));
 }
@@ -413,7 +504,7 @@ function countType(nodes, type) {
 	return total;
 }
 
-function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, quizzes) {
+function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes) {
 	const { post, source, wxr, modified } = record;
 	const reusableBlocks = new Map(
 		wxr.posts.filter((candidate) => candidate.postType === "wp_block").map((candidate) => [String(candidate.id), candidate]),
@@ -426,7 +517,8 @@ function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, qu
 	});
 	const mediaRewrite = rewriteMediaReferences(convertedContent, mediaMappings);
 	const smugMugRewrite = rewriteSmugMugReferences(mediaRewrite.value, smugMugMappings);
-	const content = smugMugRewrite.value;
+	const legacyLinkRewrite = rewriteLegacySiteReferences(smugMugRewrite.value, legacyLinkMappings);
+	const content = legacyLinkRewrite.value;
 	const collection = post.postType === "page" ? "pages" : "posts";
 	const oldUrl = sourceUrl(record);
 	const targetUrl = TARGET_ORIGIN + targetPath(record);
@@ -449,6 +541,7 @@ function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, qu
 	};
 	if (mediaRewrite.rewrites > 0) baseMetadata.media_rewrite_count = mediaRewrite.rewrites;
 	if (smugMugRewrite.rewrites > 0) baseMetadata.smugmug_rewrite_count = smugMugRewrite.rewrites;
+	if (legacyLinkRewrite.rewrites > 0) baseMetadata.legacy_link_rewrite_count = legacyLinkRewrite.rewrites;
 	const data = {
 		title: post.title || "無題",
 		content,
@@ -874,12 +967,13 @@ async function main() {
 	await ensureSchema(client, args.apply);
 	const bylines = await ensureBylines(client, DEFAULT_SOURCES, args.apply);
 	const taxonomySlugs = await ensureTaxonomies(client, loadedSources, args.apply);
+	const legacyLinkMappings = buildLegacyLinkMappings(allRecords, loadedSources, taxonomySlugs);
 	const counts = {};
 	const failures = [];
 	const ledgerItems = [];
 	await mapLimit(records, args.concurrency, async (record, index) => {
 		try {
-			const desired = migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, quizzes);
+			const desired = migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes);
 			const status = await upsertContent(client, record, desired, bylines.get(record.source.id), args.apply, contentIds);
 			await upsertUrlMapping(client, desired, record, args.apply, contentIds);
 			counts[status] = (counts[status] || 0) + 1;

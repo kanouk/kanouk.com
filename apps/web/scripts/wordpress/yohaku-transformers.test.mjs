@@ -55,6 +55,22 @@ test("resolves product records without retaining plugin block names", () => {
 	assert.equal(blocks[0].id, "https://example.test/item");
 });
 
+test("converts inline Pochipp shortcodes without dropping surrounding prose", () => {
+	const post = {
+		id: 31,
+		content: '<!-- wp:paragraph --><p>前の文章<br>[pochipp id="42"]後の文章</p><!-- /wp:paragraph -->',
+	};
+	const blocks = convertPostContent(post, context);
+	assert.deepEqual(blocks.map((block) => block._type), [
+		"block",
+		"yohaku.productCard",
+		"block",
+	]);
+	assert.match(blocks[0].children.map((child) => child.text).join(""), /前の文章/);
+	assert.equal(blocks[1].title, "Sample");
+	assert.match(blocks[2].children.map((child) => child.text).join(""), /後の文章/);
+});
+
 test("converts Quiz Maker shortcodes to a portable Yohaku quiz", () => {
 	const post = {
 		id: 4,

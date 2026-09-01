@@ -3,12 +3,14 @@ import test from "node:test";
 
 import {
 	assignDestinationSlugs,
+	buildLegacyLinkMappings,
 	buildMediaMappings,
 	buildSmugMugMappings,
 	extractModifiedDates,
 	featuredMediaValue,
 	loadContentIds,
 	rewriteMediaReferences,
+	rewriteLegacySiteReferences,
 	rewriteSmugMugReferences,
 	shouldRetryRequest,
 	storedMigrationDataMatches,
@@ -28,6 +30,40 @@ test("destination slugs preserve unique slugs and namespace collisions", () => {
 		"about-b",
 		"wp-b-4",
 	]);
+});
+
+test("legacy post, archive, category, and tag links resolve to canonical targets", () => {
+	const source = {
+		id: "kanolog",
+		origin: "https://kanolog.net",
+		wxr: {
+			categories: [{ nicename: "productivity" }],
+			tags: [{ slug: "books" }],
+		},
+	};
+	const records = [{
+		source,
+		slug: "new-post",
+		post: {
+			id: 42,
+			postType: "post",
+			link: "https://kanolog.net/productivity/42",
+			guid: "https://kanolog.net/?p=42",
+		},
+	}];
+	const mappings = buildLegacyLinkMappings(records, [source], new Map());
+	const result = rewriteLegacySiteReferences({
+		_type: "yohaku.linkCard",
+		id: "http://kanolog.net/archives/42",
+		title: "https://kanolog.net/productivity/42",
+		category: "https://kanolog.net/category/productivity/",
+		tag: "https://kanolog.net/tag/books",
+	}, mappings);
+	assert.equal(result.value.id, "https://blog.kanouk.com/posts/new-post");
+	assert.equal(result.value.title, "https://blog.kanouk.com/posts/new-post");
+	assert.equal(result.value.category, "https://blog.kanouk.com/category/productivity");
+	assert.equal(result.value.tag, "https://blog.kanouk.com/tag/books");
+	assert.equal(result.rewrites, 4);
 });
 
 test("modified dates are preserved from WXR items", () => {
