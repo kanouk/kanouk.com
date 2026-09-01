@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-08-31T17:31:33+00:00",
+  "generated_at": "2026-09-01T04:43:15+00:00",
   "scope": "public SmugMug album migration",
   "privacy": {
     "public_assets_only": true,
@@ -20,7 +20,8 @@
       "service": "smugmug",
       "user": "kanolog",
       "album_key": "wnVtgh",
-      "web_uri": "https://kanolog.smugmug.com/20230127kyoto"
+      "web_uri": "https://kanolog.smugmug.com/20230127kyoto",
+      "highlight_image_key": "RvPNWVm"
     },
     "title": "Kyoto, 2023/01",
     "description": "高台寺、相国寺、京セラ美術館",
@@ -30,7 +31,7 @@
     "source_protected_flag": false,
     "asset_count": 60,
     "destination": {
-      "emdash_content_id": null
+      "emdash_content_id": "01M1DHHN5Z38Q94Z89M1BZQRW5"
     }
   },
   "assets": [
@@ -44,7 +45,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-mBCGJ9b",
         "filename": "IMG_20230130_132347.jpg",
         "format": "JPG",
-        "archived_md5": "3aa4ed450b72c45e25b8cf25f129684f"
+        "archived_md5": "3aa4ed450b72c45e25b8cf25f129684f",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -71,15 +73,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_y4adkb6cg5g7hqo6iy7tui37em",
-        "media_path": "/media/kph_y4adkb6cg5g7hqo6iy7tui37em",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHHY5K8SZPN8BMR45G47ET.01M1DHHYNTNH4FBR5GATVM8WEA.jpg",
+        "emdash_content_id": "01M1DHJ37QGMPACA51KPMD3AYQ",
+        "emdash_media_id": "01M1DHHY5KF7N9FV0H5BQ69BHK",
+        "r2_object_key": "01M1DHHY5K8SZPN8BMR45G47ET.01M1DHHYNTNH4FBR5GATVM8WEA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "65327f6092caa847dbbaa69c452af1f4b2b4d5986b9f37a04beb2c9c4114f13f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:52:48+00:00",
+        "public_asset": {
+          "sha256": "65327f6092caa847dbbaa69c452af1f4b2b4d5986b9f37a04beb2c9c4114f13f",
+          "bytes": 285344,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:52:48+00:00"
+        }
       }
     },
     {
@@ -92,7 +103,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-QvNZvkh",
         "filename": "PXL_20230127_021741963.jpg",
         "format": "JPG",
-        "archived_md5": "ec9ee4f261522197a773ff64bb8bd56e"
+        "archived_md5": "ec9ee4f261522197a773ff64bb8bd56e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -119,15 +131,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_26dp35sxd5s6tz7azqtz364x2a",
-        "media_path": "/media/kph_26dp35sxd5s6tz7azqtz364x2a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHJBM6EQSD42VGW1BFMCXV.01M1DHJC6MQ4H8T57461V2A1R7.jpg",
+        "emdash_content_id": "01M1DHJGF7BF03YSENWBC9KKQS",
+        "emdash_media_id": "01M1DHJBM66E59498EJ3J3DSRB",
+        "r2_object_key": "01M1DHJBM6EQSD42VGW1BFMCXV.01M1DHJC6MQ4H8T57461V2A1R7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3384e6d9573d657f4b8b0ae53c6e6dc01e3f6c4f9c4d42c4f42b747884af4bd9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:53:01+00:00",
+        "public_asset": {
+          "sha256": "3384e6d9573d657f4b8b0ae53c6e6dc01e3f6c4f9c4d42c4f42b747884af4bd9",
+          "bytes": 1731569,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:53:01+00:00"
+        }
       }
     },
     {
@@ -140,7 +161,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-Tj5vw74",
         "filename": "PXL_20230127_021901271.jpg",
         "format": "JPG",
-        "archived_md5": "bba8232c54e12fa1ed00a0b9dab4ff1d"
+        "archived_md5": "bba8232c54e12fa1ed00a0b9dab4ff1d",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -167,15 +189,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_yedurtsl2xuaujofd5ac2shr5i",
-        "media_path": "/media/kph_yedurtsl2xuaujofd5ac2shr5i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHMH3VGAS29MR1RVQR30F9.01M1DHMHRS1MG7RBAQWZY75Y32.jpg",
+        "emdash_content_id": "01M1DHMNXVWAEMJEF8B3FRBSQ3",
+        "emdash_media_id": "01M1DHMH3VN6S1NDXCQR6T1WGX",
+        "r2_object_key": "01M1DHMH3VGAS29MR1RVQR30F9.01M1DHMHRS1MG7RBAQWZY75Y32.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d522351132617da2e574fc516ab2304b4c27107e00cd742036276a68355796ba",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:54:13+00:00",
+        "public_asset": {
+          "sha256": "d522351132617da2e574fc516ab2304b4c27107e00cd742036276a68355796ba",
+          "bytes": 3222585,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:54:13+00:00"
+        }
       }
     },
     {
@@ -188,7 +219,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-6NbLJs6",
         "filename": "PXL_20230127_113908453.jpg",
         "format": "JPG",
-        "archived_md5": "a2f77ce55e1be1b9fa7c8e354a8fc29b"
+        "archived_md5": "a2f77ce55e1be1b9fa7c8e354a8fc29b",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -215,15 +247,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_udqoamhodceul5ckaxsf727buq",
-        "media_path": "/media/kph_udqoamhodceul5ckaxsf727buq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHPVB56QY5960ZX8FHXRS0.01M1DHPVWH2ZNGDC4DRNJPPE8T.jpg",
+        "emdash_content_id": "01M1DHQ0ZNB7ZYP57CGTSCM3VB",
+        "emdash_media_id": "01M1DHPVB5MV50W99TDN25JJ91",
+        "r2_object_key": "01M1DHPVB56QY5960ZX8FHXRS0.01M1DHPVWH2ZNGDC4DRNJPPE8T.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "6624158fbd289516de7c34d372c839c6a9fa6bffca92b77aa07f70a38ded2c6f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:55:29+00:00",
+        "public_asset": {
+          "sha256": "6624158fbd289516de7c34d372c839c6a9fa6bffca92b77aa07f70a38ded2c6f",
+          "bytes": 2261351,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:55:29+00:00"
+        }
       }
     },
     {
@@ -236,7 +277,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-gDdmQgn",
         "filename": "PXL_20230128_024145299.jpg",
         "format": "JPG",
-        "archived_md5": "6eb4e3258f156ce1d4d1b9e24e2e36f4"
+        "archived_md5": "6eb4e3258f156ce1d4d1b9e24e2e36f4",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -263,15 +305,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bzy2gqlfh23smfrcaalzsdcbfu",
-        "media_path": "/media/kph_bzy2gqlfh23smfrcaalzsdcbfu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHS2HSPYY8CJ2NQYJPXZ1X.01M1DHS35H6P566C4QD6B80167.jpg",
+        "emdash_content_id": "01M1DHS7PA45V4WK6B27CHRNMC",
+        "emdash_media_id": "01M1DHS2HS8F28NKVW78DEY21S",
+        "r2_object_key": "01M1DHS2HSPYY8CJ2NQYJPXZ1X.01M1DHS35H6P566C4QD6B80167.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f30c68c69cbf855a0a7f9068a7e7373518cdf126b8d05dbf5e1b12574123a71a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:56:42+00:00",
+        "public_asset": {
+          "sha256": "f30c68c69cbf855a0a7f9068a7e7373518cdf126b8d05dbf5e1b12574123a71a",
+          "bytes": 4210244,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:56:42+00:00"
+        }
       }
     },
     {
@@ -284,7 +335,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-zH3sZzJ",
         "filename": "PXL_20230128_024308744.jpg",
         "format": "JPG",
-        "archived_md5": "cb2d231c388b0952b0a72e4fc6a4cf4f"
+        "archived_md5": "cb2d231c388b0952b0a72e4fc6a4cf4f",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -311,15 +363,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ybvjy4fhdpo6c3hi2txj5blvqm",
-        "media_path": "/media/kph_ybvjy4fhdpo6c3hi2txj5blvqm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHV8RQ7SNN5TQQRT7M478P.01M1DHV9CW0YKPZS50NWAMVF4X.jpg",
+        "emdash_content_id": "01M1DHVDZF1GW1BTF4EFERB10D",
+        "emdash_media_id": "01M1DHV8RQD6Z8BMHDH1S9G4EH",
+        "r2_object_key": "01M1DHV8RQ7SNN5TQQRT7M478P.01M1DHV9CW0YKPZS50NWAMVF4X.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e725870072c0ef5d7522a29d60e498bb15f0eeae5b3d3ec3968b38d90f701ffb",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:57:54+00:00",
+        "public_asset": {
+          "sha256": "e725870072c0ef5d7522a29d60e498bb15f0eeae5b3d3ec3968b38d90f701ffb",
+          "bytes": 3480140,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:57:54+00:00"
+        }
       }
     },
     {
@@ -332,7 +393,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-rwgLgW3",
         "filename": "PXL_20230128_030525863.MP.jpg",
         "format": "JPG",
-        "archived_md5": "08681dd6fb7a926c1b7be43cb0f25648"
+        "archived_md5": "08681dd6fb7a926c1b7be43cb0f25648",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -359,15 +421,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_rnog4n73mkz4jf65e4fq2lxixi",
-        "media_path": "/media/kph_rnog4n73mkz4jf65e4fq2lxixi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHVPGR2T612B9K0KB8S55J.01M1DHVQ66JBMASPJJF6MHE87W.jpg",
+        "emdash_content_id": "01M1DHVV9TD6WDHGX804Z7SAAF",
+        "emdash_media_id": "01M1DHVPGR8DPZYZBNBE8AHA37",
+        "r2_object_key": "01M1DHVPGR2T612B9K0KB8S55J.01M1DHVQ66JBMASPJJF6MHE87W.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c34c42c040c26b6d253e645207f3441901103137d662c3e221314a74920bdb39",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:58:07+00:00",
+        "public_asset": {
+          "sha256": "c34c42c040c26b6d253e645207f3441901103137d662c3e221314a74920bdb39",
+          "bytes": 6503291,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:58:07+00:00"
+        }
       }
     },
     {
@@ -380,7 +451,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-hdXH4MQ",
         "filename": "PXL_20230128_030554037.jpg",
         "format": "JPG",
-        "archived_md5": "3753e3a4f7d7844cd859f84fb2ed4ffa"
+        "archived_md5": "3753e3a4f7d7844cd859f84fb2ed4ffa",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -407,15 +479,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ls56dccssfbo4w3vk7xrotryee",
-        "media_path": "/media/kph_ls56dccssfbo4w3vk7xrotryee",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHXVRW6Y5JBSMNNY7GJSWC.01M1DHXWB6S83Z7DMPNHJPXNDP.jpg",
+        "emdash_content_id": "01M1DHY0P5580QMH8B3584528Y",
+        "emdash_media_id": "01M1DHXVRWC2CJSD5SPHBX9D0R",
+        "r2_object_key": "01M1DHXVRW6Y5JBSMNNY7GJSWC.01M1DHXWB6S83Z7DMPNHJPXNDP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a79c81f7d589b9e2d1f24e0554308bcf4f4f5749a16d6bd4eb54f96ae4e65e58",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:59:18+00:00",
+        "public_asset": {
+          "sha256": "a79c81f7d589b9e2d1f24e0554308bcf4f4f5749a16d6bd4eb54f96ae4e65e58",
+          "bytes": 2799747,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:59:18+00:00"
+        }
       }
     },
     {
@@ -428,7 +509,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-cBRSB3X",
         "filename": "PXL_20230128_030943731.jpg",
         "format": "JPG",
-        "archived_md5": "959110e121f9cc6202511f1b3382c285"
+        "archived_md5": "959110e121f9cc6202511f1b3382c285",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -455,15 +537,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_kgzqal6gf3nuytm35fda5mkzy4",
-        "media_path": "/media/kph_kgzqal6gf3nuytm35fda5mkzy4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHY8DXZ1MVE56SPE38HS15.01M1DHY906SRGBZ1DX92NXX55T.jpg",
+        "emdash_content_id": "01M1DHYDT89Q7WDHVNM3492159",
+        "emdash_media_id": "01M1DHY8DXEYE7KJS960GK58PK",
+        "r2_object_key": "01M1DHY8DXZ1MVE56SPE38HS15.01M1DHY906SRGBZ1DX92NXX55T.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2e67f909896b2ebf2e97c30d00dcca72b77041a01dd39fc0217ad37aa868a13d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:59:32+00:00",
+        "public_asset": {
+          "sha256": "2e67f909896b2ebf2e97c30d00dcca72b77041a01dd39fc0217ad37aa868a13d",
+          "bytes": 3072443,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:59:32+00:00"
+        }
       }
     },
     {
@@ -476,7 +567,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-nr8QxgV",
         "filename": "PXL_20230128_031011554.jpg",
         "format": "JPG",
-        "archived_md5": "ad2870e31a6147aa85e5be1e17ea80c8"
+        "archived_md5": "ad2870e31a6147aa85e5be1e17ea80c8",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -503,15 +595,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_4y6iwdcyjlk2xqenxwifin7osq",
-        "media_path": "/media/kph_4y6iwdcyjlk2xqenxwifin7osq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHYNMEYX0SCR7VMJQB9BTV.01M1DHYP9V8D26ASYK6XF8YNZ2.jpg",
+        "emdash_content_id": "01M1DHYTJACX11R5MBQEXN99WH",
+        "emdash_media_id": "01M1DHYNMEF4HVT6RF5HMGBTZE",
+        "r2_object_key": "01M1DHYNMEYX0SCR7VMJQB9BTV.01M1DHYP9V8D26ASYK6XF8YNZ2.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "faf92811915ce1417a99cda4044012242b10fee4904497def7f81cfb27013d98",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:59:45+00:00",
+        "public_asset": {
+          "sha256": "faf92811915ce1417a99cda4044012242b10fee4904497def7f81cfb27013d98",
+          "bytes": 3550352,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:59:45+00:00"
+        }
       }
     },
     {
@@ -524,7 +625,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-zFm2RgQ",
         "filename": "PXL_20230128_031119308.jpg",
         "format": "JPG",
-        "archived_md5": "d5b033e9109534c081f6181cee5e77aa"
+        "archived_md5": "d5b033e9109534c081f6181cee5e77aa",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -551,15 +653,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_jaxpzczm4v5yqnnqzdooyda3eq",
-        "media_path": "/media/kph_jaxpzczm4v5yqnnqzdooyda3eq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHZ2FFBT9K8Z7NZ1411DAS.01M1DHZ33TMP92EY5055C76KXJ.jpg",
+        "emdash_content_id": "01M1DHZ7AS7K7RY46F5NWCXV44",
+        "emdash_media_id": "01M1DHZ2FFYDQ7Z6ZQAQVV1EVN",
+        "r2_object_key": "01M1DHZ2FFBT9K8Z7NZ1411DAS.01M1DHZ33TMP92EY5055C76KXJ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "fc6f1e81400f1d0f99dd1f4674c8e2345ae43f9eb8e761f80a97b9d36583c283",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:59:58+00:00",
+        "public_asset": {
+          "sha256": "fc6f1e81400f1d0f99dd1f4674c8e2345ae43f9eb8e761f80a97b9d36583c283",
+          "bytes": 2550654,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:59:58+00:00"
+        }
       }
     },
     {
@@ -572,7 +683,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-NFTvqRC",
         "filename": "PXL_20230128_031219280.jpg",
         "format": "JPG",
-        "archived_md5": "6e1783e38d06da193cf34421aa0240a5"
+        "archived_md5": "6e1783e38d06da193cf34421aa0240a5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -599,15 +711,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_2nylngrwy56sobubsfvf2erjki",
-        "media_path": "/media/kph_2nylngrwy56sobubsfvf2erjki",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJ1AJ4A00ZQW456F2X6X9S.01M1DJ1BRBDQGSP6TYATTXW216.jpg",
+        "emdash_content_id": "01M1DJ1GTE76YBJW9XRSW00GBQ",
+        "emdash_media_id": "01M1DJ1AJ4XDHM2G5KETQK7FY8",
+        "r2_object_key": "01M1DJ1AJ4A00ZQW456F2X6X9S.01M1DJ1BRBDQGSP6TYATTXW216.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "89d287ddaf70d2ba811981e4dbd6c977a9fd4e48cce17fddde333533bd69410d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:01:13+00:00",
+        "public_asset": {
+          "sha256": "89d287ddaf70d2ba811981e4dbd6c977a9fd4e48cce17fddde333533bd69410d",
+          "bytes": 3559707,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:01:13+00:00"
+        }
       }
     },
     {
@@ -620,7 +741,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-jKhPQfr",
         "filename": "PXL_20230128_031250922.jpg",
         "format": "JPG",
-        "archived_md5": "569a3daff6b66c2fbd126e7275bbfb28"
+        "archived_md5": "569a3daff6b66c2fbd126e7275bbfb28",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -647,15 +769,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_k25igxfl447g635fv4boqpse3m",
-        "media_path": "/media/kph_k25igxfl447g635fv4boqpse3m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJ1TQDK7G2QXD96KHC27CP.01M1DJ1VC9KX6KT37PZ7XBT52B.jpg",
+        "emdash_content_id": "01M1DJ1ZQC0GJ2TVX5YARWGADV",
+        "emdash_media_id": "01M1DJ1TQDXSADTD7QD51T9P3G",
+        "r2_object_key": "01M1DJ1TQDK7G2QXD96KHC27CP.01M1DJ1VC9KX6KT37PZ7XBT52B.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "78eb1059ccf22808a19b4fb7eb084d51dc2e7a5366c05bfddb89c8cdb6291b15",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:01:29+00:00",
+        "public_asset": {
+          "sha256": "78eb1059ccf22808a19b4fb7eb084d51dc2e7a5366c05bfddb89c8cdb6291b15",
+          "bytes": 2793326,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:01:29+00:00"
+        }
       }
     },
     {
@@ -668,7 +799,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-HTkdkXn",
         "filename": "PXL_20230128_031612131.jpg",
         "format": "JPG",
-        "archived_md5": "504257b7af4c837159175e7a7d976648"
+        "archived_md5": "504257b7af4c837159175e7a7d976648",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -695,15 +827,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_fydmkptp55sl4tx3bh2pubu3ru",
-        "media_path": "/media/kph_fydmkptp55sl4tx3bh2pubu3ru",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJ41E3ABFAWMA79YG5B1NE.01M1DJ425FK4GG952XFRR1HMMP.jpg",
+        "emdash_content_id": "01M1DJ46STSTQNFHGMZXXP3KYH",
+        "emdash_media_id": "01M1DJ41E33FXRJPZ4J1BN1Q6Q",
+        "r2_object_key": "01M1DJ41E3ABFAWMA79YG5B1NE.01M1DJ425FK4GG952XFRR1HMMP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "02ce7ae1143970a1e395d5effe7398d98546bcab26446e7d76906152501c9577",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:02:41+00:00",
+        "public_asset": {
+          "sha256": "02ce7ae1143970a1e395d5effe7398d98546bcab26446e7d76906152501c9577",
+          "bytes": 3040134,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:02:41+00:00"
+        }
       }
     },
     {
@@ -716,7 +857,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-ms9S4ZV",
         "filename": "PXL_20230128_031702907.jpg",
         "format": "JPG",
-        "archived_md5": "0d6664cd161570299fcb5b7a2e8e719a"
+        "archived_md5": "0d6664cd161570299fcb5b7a2e8e719a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -743,15 +885,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hlpuoxm4uwyb63jbvuj42cowha",
-        "media_path": "/media/kph_hlpuoxm4uwyb63jbvuj42cowha",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJ69F57VKH86SYD5DK384D.01M1DJ6A33P6WSQW5ECJERHQAS.jpg",
+        "emdash_content_id": "01M1DJ6F38P3TAV15SBP8SKQDR",
+        "emdash_media_id": "01M1DJ69F5B84H0JXD480E465T",
+        "r2_object_key": "01M1DJ69F57VKH86SYD5DK384D.01M1DJ6A33P6WSQW5ECJERHQAS.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "bba1ff6c290003fe2048c81c77311f96394af9bec4f767fd347155b4ea90b5ea",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:03:56+00:00",
+        "public_asset": {
+          "sha256": "bba1ff6c290003fe2048c81c77311f96394af9bec4f767fd347155b4ea90b5ea",
+          "bytes": 4498794,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:03:56+00:00"
+        }
       }
     },
     {
@@ -764,7 +915,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-ds44wj2",
         "filename": "PXL_20230128_032207324.jpg",
         "format": "JPG",
-        "archived_md5": "064af7468f89925effe75dc2ce760790"
+        "archived_md5": "064af7468f89925effe75dc2ce760790",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -791,15 +943,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_rsxoxwvuf3zuq5m3k73am75gce",
-        "media_path": "/media/kph_rsxoxwvuf3zuq5m3k73am75gce",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJ8GP6ACZFS12XFV1THDPJ.01M1DJ8HEZYRQ7915GX7Q49K0Z.jpg",
+        "emdash_content_id": "01M1DJ8QAWY4DVJ0KWD0EFRD0E",
+        "emdash_media_id": "01M1DJ8GP68TQBD2TR0ZG2YBGR",
+        "r2_object_key": "01M1DJ8GP6ACZFS12XFV1THDPJ.01M1DJ8HEZYRQ7915GX7Q49K0Z.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "37aba6f73dd51deb69e082209ef77c4961ac4283831055b246802057ddb870c3",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:05:11+00:00",
+        "public_asset": {
+          "sha256": "37aba6f73dd51deb69e082209ef77c4961ac4283831055b246802057ddb870c3",
+          "bytes": 3921155,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:05:11+00:00"
+        }
       }
     },
     {
@@ -812,7 +973,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-CcLWFGw",
         "filename": "PXL_20230128_032342066.jpg",
         "format": "JPG",
-        "archived_md5": "6b01931a60058593982dc1dfc2e6e401"
+        "archived_md5": "6b01931a60058593982dc1dfc2e6e401",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -839,15 +1001,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_x3qe75jlwjmlda7m5s4ke447wu",
-        "media_path": "/media/kph_x3qe75jlwjmlda7m5s4ke447wu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJ9369752QXCWKCT2F1EKM.01M1DJ93SXHKS9KKR2C8B055A1.jpg",
+        "emdash_content_id": "01M1DJ99HS4G3ST5344QWGSN9Z",
+        "emdash_media_id": "01M1DJ9369EF41YK0M35JWHA20",
+        "r2_object_key": "01M1DJ9369752QXCWKCT2F1EKM.01M1DJ93SXHKS9KKR2C8B055A1.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5935a4636625dcf6f55a84507c16a86e3da1ff0f6e24754bb9d1e5e537ba508c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:05:30+00:00",
+        "public_asset": {
+          "sha256": "5935a4636625dcf6f55a84507c16a86e3da1ff0f6e24754bb9d1e5e537ba508c",
+          "bytes": 6058850,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:05:30+00:00"
+        }
       }
     },
     {
@@ -860,7 +1031,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-vNnTc4b",
         "filename": "PXL_20230128_032349512.jpg",
         "format": "JPG",
-        "archived_md5": "ce303830092a40afcc5e7e4c45e4b6d7"
+        "archived_md5": "ce303830092a40afcc5e7e4c45e4b6d7",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -887,15 +1059,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_yz2odjnw2coomzfxhu627ydz34",
-        "media_path": "/media/kph_yz2odjnw2coomzfxhu627ydz34",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJ9MB9SZJ74TKH0PBQRJ16.01M1DJ9N3MDW3P960FB015PTJG.jpg",
+        "emdash_content_id": "01M1DJ9V0SAHH22R2AH1JBQWMF",
+        "emdash_media_id": "01M1DJ9MB9QDPBDMEX0B39E4HM",
+        "r2_object_key": "01M1DJ9MB9SZJ74TKH0PBQRJ16.01M1DJ9N3MDW3P960FB015PTJG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "778637d7e2b7cda3cb955cfdc86eec13eff40473d70c15b47b4ec2f76a85fb2f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:05:48+00:00",
+        "public_asset": {
+          "sha256": "778637d7e2b7cda3cb955cfdc86eec13eff40473d70c15b47b4ec2f76a85fb2f",
+          "bytes": 6070910,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:05:48+00:00"
+        }
       }
     },
     {
@@ -908,7 +1089,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-w9xvJr8",
         "filename": "PXL_20230128_032907510.jpg",
         "format": "JPG",
-        "archived_md5": "ce7e1f1f681bcc5fb77b11f0f6475667"
+        "archived_md5": "ce7e1f1f681bcc5fb77b11f0f6475667",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -935,15 +1117,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tylnusrbhzez4eqeadrigj7zuy",
-        "media_path": "/media/kph_tylnusrbhzez4eqeadrigj7zuy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJBX9DDZHG835Y044J241T.01M1DJBXZCY318RHS3VZJ0G8TP.jpg",
+        "emdash_content_id": "01M1DJC45F08QKVJCG22KV436M",
+        "emdash_media_id": "01M1DJBX9DGZVTG1KBPPKN5SEF",
+        "r2_object_key": "01M1DJBX9DDZHG835Y044J241T.01M1DJBXZCY318RHS3VZJ0G8TP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9368bb4445769a785c8c856782a0ffaf740c46289365b2dcad4555f0db80414f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:07:02+00:00",
+        "public_asset": {
+          "sha256": "9368bb4445769a785c8c856782a0ffaf740c46289365b2dcad4555f0db80414f",
+          "bytes": 3351099,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:07:02+00:00"
+        }
       }
     },
     {
@@ -956,7 +1147,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-RvPNWVm",
         "filename": "PXL_20230128_033000825.jpg",
         "format": "JPG",
-        "archived_md5": "1d520bf2b6fa4d5e5cf2549e20682bde"
+        "archived_md5": "1d520bf2b6fa4d5e5cf2549e20682bde",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -983,15 +1175,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6xb22kzo27o6afvqvwzqpbn6pe",
-        "media_path": "/media/kph_6xb22kzo27o6afvqvwzqpbn6pe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJCF1T4STDPDK9PB8ZH6BX.01M1DJCFNV3X43GJR91X6HZH1R.jpg",
+        "emdash_content_id": "01M1DJCMR2DJXT9HGD5AYSBJR4",
+        "emdash_media_id": "01M1DJCF1T41ZR3Z6WJN1PQR44",
+        "r2_object_key": "01M1DJCF1T4STDPDK9PB8ZH6BX.01M1DJCFNV3X43GJR91X6HZH1R.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "067ec4978e15f95e5d9cf30a54da7fbd06549dbbdf6fbaf63c269566e626e0f8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:07:19+00:00",
+        "public_asset": {
+          "sha256": "067ec4978e15f95e5d9cf30a54da7fbd06549dbbdf6fbaf63c269566e626e0f8",
+          "bytes": 2437507,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:07:19+00:00"
+        }
       }
     },
     {
@@ -1004,7 +1205,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-jHzdcxh",
         "filename": "PXL_20230128_033246173.jpg",
         "format": "JPG",
-        "archived_md5": "b84e7a756b48d99f8cff7d4f4f8f2fdf"
+        "archived_md5": "b84e7a756b48d99f8cff7d4f4f8f2fdf",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1031,15 +1233,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_jobglwutx7rbpnmzwaonkhzf6u",
-        "media_path": "/media/kph_jobglwutx7rbpnmzwaonkhzf6u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJCYPSH7MWVF07S30ZB7AC.01M1DJCZE1DJN8J3KQX22F73AM.jpg",
+        "emdash_content_id": "01M1DJD4J09W4MSQYSFWWYR2WJ",
+        "emdash_media_id": "01M1DJCYPSW1JDTZF88HREQMEN",
+        "r2_object_key": "01M1DJCYPSH7MWVF07S30ZB7AC.01M1DJCZE1DJN8J3KQX22F73AM.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "41d95a786ce30ffa4cc454fc0204725ff0a9c731ac7085dbe67181ebb60eee66",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:07:35+00:00",
+        "public_asset": {
+          "sha256": "41d95a786ce30ffa4cc454fc0204725ff0a9c731ac7085dbe67181ebb60eee66",
+          "bytes": 2992153,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:07:35+00:00"
+        }
       }
     },
     {
@@ -1052,7 +1263,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-CnkF3tX",
         "filename": "PXL_20230128_033637288.jpg",
         "format": "JPG",
-        "archived_md5": "557f72351d952771980f08ba3c17433e"
+        "archived_md5": "557f72351d952771980f08ba3c17433e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1079,15 +1291,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_wzsqahopmcwryrl4uek6qglovm",
-        "media_path": "/media/kph_wzsqahopmcwryrl4uek6qglovm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJDFP4Z75YYA0SXHQENZ5Z.01M1DJDGGM70MS3NAFBGSKDZ44.jpg",
+        "emdash_content_id": "01M1DJDPE7DA24KW3KR74RXVWQ",
+        "emdash_media_id": "01M1DJDFP4TZ8WMPM82EDZGST1",
+        "r2_object_key": "01M1DJDFP4Z75YYA0SXHQENZ5Z.01M1DJDGGM70MS3NAFBGSKDZ44.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5eab9cdf1100063ce4706bb5b5147826f3f98be27ddcc810b04c8b19cef33a8a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:07:53+00:00",
+        "public_asset": {
+          "sha256": "5eab9cdf1100063ce4706bb5b5147826f3f98be27ddcc810b04c8b19cef33a8a",
+          "bytes": 3417893,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:07:53+00:00"
+        }
       }
     },
     {
@@ -1100,7 +1321,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-24cvdJP",
         "filename": "PXL_20230128_033828324.jpg",
         "format": "JPG",
-        "archived_md5": "fae9df33fa98e90402d24c2a4ea749e6"
+        "archived_md5": "fae9df33fa98e90402d24c2a4ea749e6",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1127,15 +1349,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pgb3gjfldumuaibhpjc7t2ltve",
-        "media_path": "/media/kph_pgb3gjfldumuaibhpjc7t2ltve",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJE0YKVV6C19VZAJKJ9H1M.01M1DJE1NM9CMXMKBG6APZRRGR.jpg",
+        "emdash_content_id": "01M1DJE7MQHJ38TVM31N17DRGE",
+        "emdash_media_id": "01M1DJE0YK9AK1W7WPD0ZA1CZP",
+        "r2_object_key": "01M1DJE0YKVV6C19VZAJKJ9H1M.01M1DJE1NM9CMXMKBG6APZRRGR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "dd44b442059b4a619704e4c46e97371fc9f8570095b17b094bce38ae892d1cb4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:08:11+00:00",
+        "public_asset": {
+          "sha256": "dd44b442059b4a619704e4c46e97371fc9f8570095b17b094bce38ae892d1cb4",
+          "bytes": 2922226,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:08:11+00:00"
+        }
       }
     },
     {
@@ -1148,7 +1379,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-5Bmcsgq",
         "filename": "PXL_20230128_033840658.jpg",
         "format": "JPG",
-        "archived_md5": "3510dee7ac24d6b590fa6123d142a74e"
+        "archived_md5": "3510dee7ac24d6b590fa6123d142a74e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1175,15 +1407,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_yph6tnclbrskk6bznhh7so2xlu",
-        "media_path": "/media/kph_yph6tnclbrskk6bznhh7so2xlu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJEJS2BGQ51ZF4C62HAZZF.01M1DJEKEZ7NYW94QHK5YQ0C8N.jpg",
+        "emdash_content_id": "01M1DJERDY6HXQ17FZ8F61WDPT",
+        "emdash_media_id": "01M1DJEJS2E976MP6Z3RXHG0DZ",
+        "r2_object_key": "01M1DJEJS2BGQ51ZF4C62HAZZF.01M1DJEKEZ7NYW94QHK5YQ0C8N.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "29e33c6dd5084411cf4b8626827f0e364b8b517fb5fcc587dfb08f0bcc4a2996",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:08:28+00:00",
+        "public_asset": {
+          "sha256": "29e33c6dd5084411cf4b8626827f0e364b8b517fb5fcc587dfb08f0bcc4a2996",
+          "bytes": 3124957,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:08:28+00:00"
+        }
       }
     },
     {
@@ -1196,7 +1437,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-q2GNFQN",
         "filename": "PXL_20230128_034008303.jpg",
         "format": "JPG",
-        "archived_md5": "9467eafd7ffe15f21be2caa3738d9465"
+        "archived_md5": "9467eafd7ffe15f21be2caa3738d9465",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1223,15 +1465,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vnmsyechjegyb4ta5jixflewxy",
-        "media_path": "/media/kph_vnmsyechjegyb4ta5jixflewxy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJF39F74KJP8YKWNN8MHMS.01M1DJF41GDDGZ27JWCQQQ9MD2.jpg",
+        "emdash_content_id": "01M1DJFABXVWQMQTAVBVPWHC5D",
+        "emdash_media_id": "01M1DJF39FXF8WRHJ7WQJV9176",
+        "r2_object_key": "01M1DJF39F74KJP8YKWNN8MHMS.01M1DJF41GDDGZ27JWCQQQ9MD2.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2abc3563a50f7acf9c0ffb94be7643d596a867a94aea2e79b8b793473e903802",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:08:48+00:00",
+        "public_asset": {
+          "sha256": "2abc3563a50f7acf9c0ffb94be7643d596a867a94aea2e79b8b793473e903802",
+          "bytes": 3679325,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:08:48+00:00"
+        }
       }
     },
     {
@@ -1244,7 +1495,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-6qFH9qf",
         "filename": "PXL_20230128_034029268.jpg",
         "format": "JPG",
-        "archived_md5": "9302e383de23760c70f9d96fdca8bbf0"
+        "archived_md5": "9302e383de23760c70f9d96fdca8bbf0",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1271,15 +1523,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_56fxjr5dfr2zuqcwnc2vonpdfa",
-        "media_path": "/media/kph_56fxjr5dfr2zuqcwnc2vonpdfa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJFN4HZRT2NJQ78M2X97C0.01M1DJFNPGZ54M1FES1QGHK1NG.jpg",
+        "emdash_content_id": "01M1DJFTS2GGWF3K0A9ZZ2GSFS",
+        "emdash_media_id": "01M1DJFN4H6NMSFMB34JQ7M1MC",
+        "r2_object_key": "01M1DJFN4HZRT2NJQ78M2X97C0.01M1DJFNPGZ54M1FES1QGHK1NG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "70b1813cc4c9ddf94122aaef512bd506896087750d272d51be5bb04aa32c6e3a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:09:03+00:00",
+        "public_asset": {
+          "sha256": "70b1813cc4c9ddf94122aaef512bd506896087750d272d51be5bb04aa32c6e3a",
+          "bytes": 4796618,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:09:03+00:00"
+        }
       }
     },
     {
@@ -1292,7 +1553,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-KHGgzKW",
         "filename": "PXL_20230128_034303941.MP.jpg",
         "format": "JPG",
-        "archived_md5": "30be46336cb7f86ea281f9a270f285a3"
+        "archived_md5": "30be46336cb7f86ea281f9a270f285a3",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1319,15 +1581,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uuoy336nztc2t4gf73vcbidije",
-        "media_path": "/media/kph_uuoy336nztc2t4gf73vcbidije",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJHX83ZKRAWMPM2RNXZC3V.01M1DJHY10A7PVGH772CV8QCDK.jpg",
+        "emdash_content_id": "01M1DJJ513XRY0JVB19M8PHAJ6",
+        "emdash_media_id": "01M1DJHX83AWXNFH4CZQ2ZWE72",
+        "r2_object_key": "01M1DJHX83ZKRAWMPM2RNXZC3V.01M1DJHY10A7PVGH772CV8QCDK.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d4ee59bffe869773d3d6fbb4340f5421b98f1859d7d5eba42d3125977d32f602",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:10:20+00:00",
+        "public_asset": {
+          "sha256": "d4ee59bffe869773d3d6fbb4340f5421b98f1859d7d5eba42d3125977d32f602",
+          "bytes": 8002501,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:10:20+00:00"
+        }
       }
     },
     {
@@ -1340,7 +1611,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-WPH6nKX",
         "filename": "PXL_20230128_034526256.jpg",
         "format": "JPG",
-        "archived_md5": "545383797614b77c78e5d54886c092f2"
+        "archived_md5": "545383797614b77c78e5d54886c092f2",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1367,15 +1639,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ypkeeo2fl5nbuwx2rqixryhou4",
-        "media_path": "/media/kph_ypkeeo2fl5nbuwx2rqixryhou4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJJGKMNHZ774A4DBRYJM6R.01M1DJJH8WW0FX5J2C9Q7KPYKT.jpg",
+        "emdash_content_id": "01M1DJJQ04E47233TBJZBVY2ZA",
+        "emdash_media_id": "01M1DJJGKMNNNHVHQAK8KFKBE2",
+        "r2_object_key": "01M1DJJGKMNHZ774A4DBRYJM6R.01M1DJJH8WW0FX5J2C9Q7KPYKT.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ad7690672c84b8236f7fd62e98ecd9f212d1871592cfa79d5232686a6dfd86f7",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:10:38+00:00",
+        "public_asset": {
+          "sha256": "ad7690672c84b8236f7fd62e98ecd9f212d1871592cfa79d5232686a6dfd86f7",
+          "bytes": 4175397,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:10:38+00:00"
+        }
       }
     },
     {
@@ -1388,7 +1669,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-mN6sFNq",
         "filename": "PXL_20230128_034800532.jpg",
         "format": "JPG",
-        "archived_md5": "1d1e36b244304bf1dff57a532b74e991"
+        "archived_md5": "1d1e36b244304bf1dff57a532b74e991",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1415,15 +1697,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bfyauzatyb2ai7r6ae54ux3jk4",
-        "media_path": "/media/kph_bfyauzatyb2ai7r6ae54ux3jk4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJK10NJ53A4PZJ5CA1EVK0.01M1DJK1PGJ1E0NSM6GEE686DM.jpg",
+        "emdash_content_id": "01M1DJK6YYETJ5VZ29FK4RFTTM",
+        "emdash_media_id": "01M1DJK10N7T0NYX88HD9S64KC",
+        "r2_object_key": "01M1DJK10NJ53A4PZJ5CA1EVK0.01M1DJK1PGJ1E0NSM6GEE686DM.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "56dc77264e55f7498ed485398153c79655d3053e5fc00c469c10c7d0f3d3a971",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:10:54+00:00",
+        "public_asset": {
+          "sha256": "56dc77264e55f7498ed485398153c79655d3053e5fc00c469c10c7d0f3d3a971",
+          "bytes": 2886964,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:10:54+00:00"
+        }
       }
     },
     {
@@ -1436,7 +1727,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-D8Q75FZ",
         "filename": "PXL_20230128_034835091.jpg",
         "format": "JPG",
-        "archived_md5": "7aea4c196a921df0f59278cde0e60f8d"
+        "archived_md5": "7aea4c196a921df0f59278cde0e60f8d",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1463,15 +1755,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_dukjqnkref5f6uukgdoggm7wpm",
-        "media_path": "/media/kph_dukjqnkref5f6uukgdoggm7wpm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJKG3AV93BHVG86NB6XPYB.01M1DJKGYPEHR35WD98Q9BWMMV.jpg",
+        "emdash_content_id": "01M1DJKP5YHKRBENCT44VYNQ46",
+        "emdash_media_id": "01M1DJKG3AV1EHEMVZ9RNSW6PH",
+        "r2_object_key": "01M1DJKG3AV93BHVG86NB6XPYB.01M1DJKGYPEHR35WD98Q9BWMMV.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b934a3b70db9448a178daed3fac3233e7d838e632eaca9e8140021714411eff9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:11:10+00:00",
+        "public_asset": {
+          "sha256": "b934a3b70db9448a178daed3fac3233e7d838e632eaca9e8140021714411eff9",
+          "bytes": 3628222,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:11:10+00:00"
+        }
       }
     },
     {
@@ -1484,7 +1785,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-hhW4xqr",
         "filename": "PXL_20230128_035058078.jpg",
         "format": "JPG",
-        "archived_md5": "c2d046dcdfb4a77682bb85637bc00822"
+        "archived_md5": "c2d046dcdfb4a77682bb85637bc00822",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1511,15 +1813,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zc2tdzolfaxdehlcwr4e2yhxe4",
-        "media_path": "/media/kph_zc2tdzolfaxdehlcwr4e2yhxe4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJM0DGMZC7KTVX8M6162CA.01M1DJM175H5PK0MGVNVY8SY67.jpg",
+        "emdash_content_id": "01M1DJM78XM0K1S4JRHTWXT9KM",
+        "emdash_media_id": "01M1DJM0DGPCEDWKTVK7AB4X46",
+        "r2_object_key": "01M1DJM0DGMZC7KTVX8M6162CA.01M1DJM175H5PK0MGVNVY8SY67.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "93ffc0038bb51300bc5d1c12a9afac344246008408e1bc2e45389d152b2ae2ff",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:11:28+00:00",
+        "public_asset": {
+          "sha256": "93ffc0038bb51300bc5d1c12a9afac344246008408e1bc2e45389d152b2ae2ff",
+          "bytes": 5591735,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:11:28+00:00"
+        }
       }
     },
     {
@@ -1532,7 +1843,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-BwzkmGV",
         "filename": "PXL_20230128_042411301.jpg",
         "format": "JPG",
-        "archived_md5": "0d28a06093e6040d4a448f16316468e4"
+        "archived_md5": "0d28a06093e6040d4a448f16316468e4",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1559,15 +1871,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_4din34rikpe6e7wamlhsxthu4e",
-        "media_path": "/media/kph_4din34rikpe6e7wamlhsxthu4e",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJMH9NVGNHJKGCY4X858VV.01M1DJMHZCNW2XDJRY3PPNZ2KA.jpg",
+        "emdash_content_id": "01M1DJMQ8G1J0XT09QWSB6FFX3",
+        "emdash_media_id": "01M1DJMH9NAAYAKK7DSSJX7RMK",
+        "r2_object_key": "01M1DJMH9NVGNHJKGCY4X858VV.01M1DJMHZCNW2XDJRY3PPNZ2KA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ad2ae6ba82d1f9b509a7ad98fdf9325736de598b6e178c9e56849ff1fdbb2bf8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:11:45+00:00",
+        "public_asset": {
+          "sha256": "ad2ae6ba82d1f9b509a7ad98fdf9325736de598b6e178c9e56849ff1fdbb2bf8",
+          "bytes": 3130867,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:11:45+00:00"
+        }
       }
     },
     {
@@ -1580,7 +1901,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-FKnkrCG",
         "filename": "PXL_20230128_043828187.jpg",
         "format": "JPG",
-        "archived_md5": "acb55b229e6a39b3fc2ac38c94a33451"
+        "archived_md5": "acb55b229e6a39b3fc2ac38c94a33451",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1607,15 +1929,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_j6y4gllzoszpzuu3gx6c7tkvta",
-        "media_path": "/media/kph_j6y4gllzoszpzuu3gx6c7tkvta",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJN1C50AGB9YPNX6HB2WJ0.01M1DJN279CWSR6MQ6V3QHN7WA.jpg",
+        "emdash_content_id": "01M1DJN7XRDTYSSWQYTDN6SPFW",
+        "emdash_media_id": "01M1DJN1C534F4Y95WG9D80SVV",
+        "r2_object_key": "01M1DJN1C50AGB9YPNX6HB2WJ0.01M1DJN279CWSR6MQ6V3QHN7WA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b0e35c074c210abed89268b95ea47cde698c72645bc4008b0ddef7d54c4e8dcf",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:12:00+00:00",
+        "public_asset": {
+          "sha256": "b0e35c074c210abed89268b95ea47cde698c72645bc4008b0ddef7d54c4e8dcf",
+          "bytes": 5089510,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:12:00+00:00"
+        }
       }
     },
     {
@@ -1628,7 +1959,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-rxmmcGf",
         "filename": "PXL_20230128_044109570.jpg",
         "format": "JPG",
-        "archived_md5": "a71014dd6eb57ba11645d2f506474000"
+        "archived_md5": "a71014dd6eb57ba11645d2f506474000",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1655,15 +1987,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uquw7kuzqmws724v4p5xtvdpnm",
-        "media_path": "/media/kph_uquw7kuzqmws724v4p5xtvdpnm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJQA8N78P6J1WJZWQDA43E.01M1DJQB0EQXKZZWXM42NM93M8.jpg",
+        "emdash_content_id": "01M1DJQG3QVDHTX1FFEDS7S12B",
+        "emdash_media_id": "01M1DJQA8NK6AEX603APR7DADT",
+        "r2_object_key": "01M1DJQA8N78P6J1WJZWQDA43E.01M1DJQB0EQXKZZWXM42NM93M8.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8fbbbc6ce238785053ef116fa5ac94d098cf3cd15e80d9c216843b4738449321",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:13:15+00:00",
+        "public_asset": {
+          "sha256": "8fbbbc6ce238785053ef116fa5ac94d098cf3cd15e80d9c216843b4738449321",
+          "bytes": 3848936,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:13:15+00:00"
+        }
       }
     },
     {
@@ -1676,7 +2017,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-SZ4sMWR",
         "filename": "PXL_20230128_044914231.jpg",
         "format": "JPG",
-        "archived_md5": "7dd762b9d28d75541a06c7e494139479"
+        "archived_md5": "7dd762b9d28d75541a06c7e494139479",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1703,15 +2045,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gjjxp4g3dl67kbxc4pf2t346nq",
-        "media_path": "/media/kph_gjjxp4g3dl67kbxc4pf2t346nq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJQTYF0A98Q7SKWDG0MDRH.01M1DJQVMJXK8W1VVY08AA96XN.jpg",
+        "emdash_content_id": "01M1DJR0Q1WW24BKTNDJP4QRNP",
+        "emdash_media_id": "01M1DJQTYF7Q91ZDJ9ES6EKKP9",
+        "r2_object_key": "01M1DJQTYF0A98Q7SKWDG0MDRH.01M1DJQVMJXK8W1VVY08AA96XN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b2df0f346871857675b3d06ad902f731b30d39a2ed0b79e17c3369bae7fd217f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:13:32+00:00",
+        "public_asset": {
+          "sha256": "b2df0f346871857675b3d06ad902f731b30d39a2ed0b79e17c3369bae7fd217f",
+          "bytes": 4696944,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:13:32+00:00"
+        }
       }
     },
     {
@@ -1724,7 +2075,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-s68Gmn6",
         "filename": "IMG_0135.JPG",
         "format": "JPG",
-        "archived_md5": "576c1a5f4b77f7fbd4f9fbfb065f1957"
+        "archived_md5": "576c1a5f4b77f7fbd4f9fbfb065f1957",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1751,15 +2103,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ukbnmac7p3dwlgaumas74rlkdm",
-        "media_path": "/media/kph_ukbnmac7p3dwlgaumas74rlkdm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJRA3RCPA75BM8W0MH74JM.01M1DJRAW923XK70YPB6SGBVG2.jpg",
+        "emdash_content_id": "01M1DJRGJ5D7BXH4GAC30JSN63",
+        "emdash_media_id": "01M1DJRA3RBBCWSN4QM6Y1099K",
+        "r2_object_key": "01M1DJRA3RCPA75BM8W0MH74JM.01M1DJRAW923XK70YPB6SGBVG2.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "71fec821d0ede139f05a3a092b62e19a7fd06adc366c00c2693631697560f924",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:13:49+00:00",
+        "public_asset": {
+          "sha256": "71fec821d0ede139f05a3a092b62e19a7fd06adc366c00c2693631697560f924",
+          "bytes": 1790970,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:13:49+00:00"
+        }
       }
     },
     {
@@ -1772,7 +2133,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-kXWnXRV",
         "filename": "IMG_0137.JPG",
         "format": "JPG",
-        "archived_md5": "867fd59076176bb5042d8a53f69bca4e"
+        "archived_md5": "867fd59076176bb5042d8a53f69bca4e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1799,15 +2161,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_i6ddmp5zm5ei63xcgqtjvh22gm",
-        "media_path": "/media/kph_i6ddmp5zm5ei63xcgqtjvh22gm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJRTXZVZC493911DH492WY.01M1DJRVJ3GH37671WTHDQGT2D.jpg",
+        "emdash_content_id": "01M1DJS0RARD5C159GZ7NN5H0R",
+        "emdash_media_id": "01M1DJRTXZZDJ4VBGHPQRKYEQW",
+        "r2_object_key": "01M1DJRTXZVZC493911DH492WY.01M1DJRVJ3GH37671WTHDQGT2D.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cfd029ec4d2c70f91938b25f2a499ef6aff18253ef08a8877eac3d38b2b0febb",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:14:05+00:00",
+        "public_asset": {
+          "sha256": "cfd029ec4d2c70f91938b25f2a499ef6aff18253ef08a8877eac3d38b2b0febb",
+          "bytes": 2319204,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:14:05+00:00"
+        }
       }
     },
     {
@@ -1820,7 +2191,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-MDvrwG4",
         "filename": "IMG_0138.JPG",
         "format": "JPG",
-        "archived_md5": "7e329fa7b407f013d443e631c5e06c47"
+        "archived_md5": "7e329fa7b407f013d443e631c5e06c47",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1847,15 +2219,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_qcm5vkqmfiv3fbx6vpmd5c4jci",
-        "media_path": "/media/kph_qcm5vkqmfiv3fbx6vpmd5c4jci",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJSB9YBFKJ886EKFCAK4WE.01M1DJSBY7ESXWR0X9HF5ZN30R.jpg",
+        "emdash_content_id": "01M1DJSGZYNNB2HKJ1DQMAFWF2",
+        "emdash_media_id": "01M1DJSB9YYGTPB02GQ8Q5TFDZ",
+        "r2_object_key": "01M1DJSB9YBFKJ886EKFCAK4WE.01M1DJSBY7ESXWR0X9HF5ZN30R.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f18259189be88ab5cf0756b3e36125b5498ec338386e9d0c47982832b93a5e3a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:14:21+00:00",
+        "public_asset": {
+          "sha256": "f18259189be88ab5cf0756b3e36125b5498ec338386e9d0c47982832b93a5e3a",
+          "bytes": 1851513,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:14:21+00:00"
+        }
       }
     },
     {
@@ -1868,7 +2249,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-j2H8zQh",
         "filename": "IMG_0139.JPG",
         "format": "JPG",
-        "archived_md5": "5ee1dd378dec4d67cb4e040d1def9a96"
+        "archived_md5": "5ee1dd378dec4d67cb4e040d1def9a96",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1895,15 +2277,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_b5jveoilhxjyxuuieq4ybfntb4",
-        "media_path": "/media/kph_b5jveoilhxjyxuuieq4ybfntb4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJVH9AGK2ST5QRY2C1G2PN.01M1DJVJ04AG7JM0CT54E9F86Q.jpg",
+        "emdash_content_id": "01M1DJVRGTZ10CZCQX5HBDQPQ1",
+        "emdash_media_id": "01M1DJVH9AVGNF91YQ9VWE477V",
+        "r2_object_key": "01M1DJVH9AGK2ST5QRY2C1G2PN.01M1DJVJ04AG7JM0CT54E9F86Q.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f46bbfb52bc0878a2e04d697d8191da107284d67ca529755239a5ffa0c8f36f9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:15:34+00:00",
+        "public_asset": {
+          "sha256": "f46bbfb52bc0878a2e04d697d8191da107284d67ca529755239a5ffa0c8f36f9",
+          "bytes": 2620780,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:15:34+00:00"
+        }
       }
     },
     {
@@ -1916,7 +2307,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-DvJSVxf",
         "filename": "IMG_0140.JPG",
         "format": "JPG",
-        "archived_md5": "ba88bc5037262d9f32685e8d54eb5b99"
+        "archived_md5": "ba88bc5037262d9f32685e8d54eb5b99",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1943,15 +2335,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_qhydx4wy3txge7ccuu5hqzotim",
-        "media_path": "/media/kph_qhydx4wy3txge7ccuu5hqzotim",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJW36G9X9YCBN97C2Y949Q.01M1DJW3XV47ABXKAQVXWY3TCD.jpg",
+        "emdash_content_id": "01M1DJW91Q1JZBZ9S6BCQCZA9N",
+        "emdash_media_id": "01M1DJW36GSHYG88KT74885EVJ",
+        "r2_object_key": "01M1DJW36G9X9YCBN97C2Y949Q.01M1DJW3XV47ABXKAQVXWY3TCD.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "17c2b719f57fcf52a1ec410977819a9b10b95c6a8d825be59ff816c8fee6e7b8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:15:51+00:00",
+        "public_asset": {
+          "sha256": "17c2b719f57fcf52a1ec410977819a9b10b95c6a8d825be59ff816c8fee6e7b8",
+          "bytes": 1642313,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:15:51+00:00"
+        }
       }
     },
     {
@@ -1964,7 +2365,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-2hhnfZv",
         "filename": "IMG_0141.JPG",
         "format": "JPG",
-        "archived_md5": "da06f0bcc6b5b272f6782eccfdb2b3f7"
+        "archived_md5": "da06f0bcc6b5b272f6782eccfdb2b3f7",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1991,15 +2393,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hjabzhunlorar2yc2wi3vrccbq",
-        "media_path": "/media/kph_hjabzhunlorar2yc2wi3vrccbq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJYBABEY4DW079KHG7BW8Y.01M1DJYC5M1C05JQ2R5AWPECZQ.jpg",
+        "emdash_content_id": "01M1DJYHPN963H5G73XT2SFAT4",
+        "emdash_media_id": "01M1DJYBABSMJV53GREFHJPHA2",
+        "r2_object_key": "01M1DJYBABEY4DW079KHG7BW8Y.01M1DJYC5M1C05JQ2R5AWPECZQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c2d4865a488c4a289f8811ea854ffbe54d22f4a306dfe5cee409fab96682300d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:17:06+00:00",
+        "public_asset": {
+          "sha256": "c2d4865a488c4a289f8811ea854ffbe54d22f4a306dfe5cee409fab96682300d",
+          "bytes": 3309742,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:17:06+00:00"
+        }
       }
     },
     {
@@ -2012,7 +2423,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-4tgR53F",
         "filename": "IMG_0142.JPG",
         "format": "JPG",
-        "archived_md5": "748997d6598544548012148c0d72056a"
+        "archived_md5": "748997d6598544548012148c0d72056a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2039,15 +2451,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_76xb5wjwxinbrpujp4rirmi66e",
-        "media_path": "/media/kph_76xb5wjwxinbrpujp4rirmi66e",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJYWJPZFAMPX9XR50REBEE.01M1DJYXFF7514YWY75A322TCP.jpg",
+        "emdash_content_id": "01M1DJZ2ZKBC0QMNCDR6CCCE5C",
+        "emdash_media_id": "01M1DJYWJPTHWJ2922KM0QC5ZW",
+        "r2_object_key": "01M1DJYWJPZFAMPX9XR50REBEE.01M1DJYXFF7514YWY75A322TCP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1eb7cd74d3db427e56155d4e9a648b1ee9a20991221a6c47a846fb79bf969ac0",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:17:23+00:00",
+        "public_asset": {
+          "sha256": "1eb7cd74d3db427e56155d4e9a648b1ee9a20991221a6c47a846fb79bf969ac0",
+          "bytes": 2574692,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:17:23+00:00"
+        }
       }
     },
     {
@@ -2060,7 +2481,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-Zx8Dbzz",
         "filename": "IMG_0143.JPG",
         "format": "JPG",
-        "archived_md5": "17748b534539d7761946c397a60e1aac"
+        "archived_md5": "17748b534539d7761946c397a60e1aac",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2087,15 +2509,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_akbngjrrlgvfl7kxlelldypjbu",
-        "media_path": "/media/kph_akbngjrrlgvfl7kxlelldypjbu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJZDKME6458F2KCX5MJT9Y.01M1DJZEC4ZXQ4VJ39ZYMXZ431.jpg",
+        "emdash_content_id": "01M1DJZK8A15XBYWPQJ8TA8XF2",
+        "emdash_media_id": "01M1DJZDKM4N7E3XMJ08QVZMHQ",
+        "r2_object_key": "01M1DJZDKME6458F2KCX5MJT9Y.01M1DJZEC4ZXQ4VJ39ZYMXZ431.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "91c51b620f04e0fe3e499a55531c65ef2ab43f8c469a2420c82d083401be5fd4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:17:40+00:00",
+        "public_asset": {
+          "sha256": "91c51b620f04e0fe3e499a55531c65ef2ab43f8c469a2420c82d083401be5fd4",
+          "bytes": 2835251,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:17:40+00:00"
+        }
       }
     },
     {
@@ -2108,7 +2539,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-74T5CqQ",
         "filename": "IMG_0145.JPG",
         "format": "JPG",
-        "archived_md5": "b0808afb874396c5191c8faf75a58c7a"
+        "archived_md5": "b0808afb874396c5191c8faf75a58c7a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2135,15 +2567,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7hpn4hhniy2iathoccjghliqwu",
-        "media_path": "/media/kph_7hpn4hhniy2iathoccjghliqwu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DJZWQEFQK4TM11YRPGQ92E.01M1DJZXBX88SX9X6V6WN1XXH1.jpg",
+        "emdash_content_id": "01M1DK02ERYE5CYBQYVZ3PR161",
+        "emdash_media_id": "01M1DJZWQE05ZKHZG4R734DN91",
+        "r2_object_key": "01M1DJZWQEFQK4TM11YRPGQ92E.01M1DJZXBX88SX9X6V6WN1XXH1.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d232a2d69f51fdf62e0cddfb00709c2611615b4ceffbd9fbd4f21984d513a58a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:17:55+00:00",
+        "public_asset": {
+          "sha256": "d232a2d69f51fdf62e0cddfb00709c2611615b4ceffbd9fbd4f21984d513a58a",
+          "bytes": 2150406,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:17:55+00:00"
+        }
       }
     },
     {
@@ -2156,7 +2597,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-27LS97h",
         "filename": "PXL_20230128_072731823.jpg",
         "format": "JPG",
-        "archived_md5": "0115962bad09bd23714b1eaa9e6ed656"
+        "archived_md5": "0115962bad09bd23714b1eaa9e6ed656",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2183,15 +2625,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vfokz7maefpiocf75cvqi6axb4",
-        "media_path": "/media/kph_vfokz7maefpiocf75cvqi6axb4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK0DVYYPVGKWGAPF1JDG56.01M1DK0EMB317BE8B4M1F62XZ7.jpg",
+        "emdash_content_id": "01M1DK0M4B1KYF9VMF6FCKZ28J",
+        "emdash_media_id": "01M1DK0DVYA9PPY5GYVSS1J9TK",
+        "r2_object_key": "01M1DK0DVYYPVGKWGAPF1JDG56.01M1DK0EMB317BE8B4M1F62XZ7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5b582050d2616ef5ea2d572b997cb7508b39962fbd299a81ece1863fc232607c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:18:14+00:00",
+        "public_asset": {
+          "sha256": "5b582050d2616ef5ea2d572b997cb7508b39962fbd299a81ece1863fc232607c",
+          "bytes": 3141820,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:18:14+00:00"
+        }
       }
     },
     {
@@ -2204,7 +2655,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-txC8qtL",
         "filename": "PXL_20230129_040409555.MP.jpg",
         "format": "JPG",
-        "archived_md5": "34d7de3e9c00d395a171542cdd8c7f4e"
+        "archived_md5": "34d7de3e9c00d395a171542cdd8c7f4e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2231,15 +2683,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_igtvrkye7nxjnwyd7njsp66byu",
-        "media_path": "/media/kph_igtvrkye7nxjnwyd7njsp66byu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK0ZJP0WN56BE52Z3WRBG0.01M1DK10B5FRNV7YZ6MAWDCGSA.jpg",
+        "emdash_content_id": "01M1DK16KG9ZKHEJJR43XZ194S",
+        "emdash_media_id": "01M1DK0ZJP3PFMF92KCK764W4A",
+        "r2_object_key": "01M1DK0ZJP0WN56BE52Z3WRBG0.01M1DK10B5FRNV7YZ6MAWDCGSA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "62da5df5688080e04b00326d7a9aa8321945cc497b0f3f154db0c6a83151b3a4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:18:34+00:00",
+        "public_asset": {
+          "sha256": "62da5df5688080e04b00326d7a9aa8321945cc497b0f3f154db0c6a83151b3a4",
+          "bytes": 6395441,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:18:34+00:00"
+        }
       }
     },
     {
@@ -2252,7 +2713,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-qvVFSbD",
         "filename": "PXL_20230129_040521040.jpg",
         "format": "JPG",
-        "archived_md5": "bd7998fba847b4e5f79271f1c349ad13"
+        "archived_md5": "bd7998fba847b4e5f79271f1c349ad13",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2279,15 +2741,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hkdbaqnonfwzucjvjipdhzfeqy",
-        "media_path": "/media/kph_hkdbaqnonfwzucjvjipdhzfeqy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK1HMFYE0QKH9GC4ENQ0ZY.01M1DK1JBS72C88Q6QEGCRKA5K.jpg",
+        "emdash_content_id": "01M1DK1R1P4YSP71JKTTNRQ9XT",
+        "emdash_media_id": "01M1DK1HMFHKF9SBSM24JBCDGT",
+        "r2_object_key": "01M1DK1HMFYE0QKH9GC4ENQ0ZY.01M1DK1JBS72C88Q6QEGCRKA5K.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7b6557fa336740fec93f5a75cba8f520651662e3f34d82b7565f14542dfdb732",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:18:51+00:00",
+        "public_asset": {
+          "sha256": "7b6557fa336740fec93f5a75cba8f520651662e3f34d82b7565f14542dfdb732",
+          "bytes": 3489383,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:18:51+00:00"
+        }
       }
     },
     {
@@ -2300,7 +2771,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-zHRhq6M",
         "filename": "PXL_20230130_031637459_Original.jpg",
         "format": "JPG",
-        "archived_md5": "4d21e03ef1e855cfebb63e2d2896da17"
+        "archived_md5": "4d21e03ef1e855cfebb63e2d2896da17",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2327,15 +2799,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7sm6mlrs6wmagw2nxdy22fe2ii",
-        "media_path": "/media/kph_7sm6mlrs6wmagw2nxdy22fe2ii",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK2231DAQ20PS5B9YGH8D4.01M1DK22TMDPDCBNSNAWBM3Y9G.jpg",
+        "emdash_content_id": "01M1DK27XBYKEJXXN7T1FDYYGW",
+        "emdash_media_id": "01M1DK2231SNK8NWE97T9WNEC4",
+        "r2_object_key": "01M1DK2231DAQ20PS5B9YGH8D4.01M1DK22TMDPDCBNSNAWBM3Y9G.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e9128e6043d184d99663417ff6c7b81898b3f650d6cc53c356f5bdde4077fb6b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:19:08+00:00",
+        "public_asset": {
+          "sha256": "e9128e6043d184d99663417ff6c7b81898b3f650d6cc53c356f5bdde4077fb6b",
+          "bytes": 5173462,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:19:08+00:00"
+        }
       }
     },
     {
@@ -2348,7 +2829,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-5W2KntK",
         "filename": "PXL_20230130_031805407.jpg",
         "format": "JPG",
-        "archived_md5": "af898761b89ae27624c52d8c24e35f30"
+        "archived_md5": "af898761b89ae27624c52d8c24e35f30",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2375,15 +2857,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_mvainnpkahryaaxps7zmibbn54",
-        "media_path": "/media/kph_mvainnpkahryaaxps7zmibbn54",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK2JSMYYXK94Z50FS9T2XN.01M1DK2KB8DR544M66VWAKPCW2.jpg",
+        "emdash_content_id": "01M1DK2RM6RH6PRQJ3N94TJGTG",
+        "emdash_media_id": "01M1DK2JSMVMMBHDEYVS5F9Z3T",
+        "r2_object_key": "01M1DK2JSMYYXK94Z50FS9T2XN.01M1DK2KB8DR544M66VWAKPCW2.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "34a39d989a9a8fea28fa1ade603aee9a2dc549d1aeaf9f8429d9be97a3fbe6eb",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:19:24+00:00",
+        "public_asset": {
+          "sha256": "34a39d989a9a8fea28fa1ade603aee9a2dc549d1aeaf9f8429d9be97a3fbe6eb",
+          "bytes": 2446434,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:19:24+00:00"
+        }
       }
     },
     {
@@ -2396,7 +2887,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-KZgh8VQ",
         "filename": "PXL_20230130_031805407_Original.jpg",
         "format": "JPG",
-        "archived_md5": "fc72f8da404dc9a3880d27756ba2cef8"
+        "archived_md5": "fc72f8da404dc9a3880d27756ba2cef8",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2423,15 +2915,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uohed6br5wv3k6j5s4sdxs35nq",
-        "media_path": "/media/kph_uohed6br5wv3k6j5s4sdxs35nq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK332WZQRRTQ7RCBX1FPBT.01M1DK33MW2PZQE0WE5Y0W6KR1.jpg",
+        "emdash_content_id": "01M1DK392WNAYQ1PCXTG6A5MWF",
+        "emdash_media_id": "01M1DK332W2FFXEZQVDCJDTJ24",
+        "r2_object_key": "01M1DK332WZQRRTQ7RCBX1FPBT.01M1DK33MW2PZQE0WE5Y0W6KR1.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "83e5b7c16dbf12be8717311599aad742763871ce664c7519c4cda4b00864a4ef",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:19:41+00:00",
+        "public_asset": {
+          "sha256": "83e5b7c16dbf12be8717311599aad742763871ce664c7519c4cda4b00864a4ef",
+          "bytes": 3088360,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:19:41+00:00"
+        }
       }
     },
     {
@@ -2444,7 +2945,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-jkPcr9N",
         "filename": "PXL_20230130_032023868.jpg",
         "format": "JPG",
-        "archived_md5": "04a6b63039ff270ff000c0d387815acc"
+        "archived_md5": "04a6b63039ff270ff000c0d387815acc",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2471,15 +2973,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_jguhwlu4hb5mztx4j4dv7ic6yy",
-        "media_path": "/media/kph_jguhwlu4hb5mztx4j4dv7ic6yy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK3K1PVKET9MVJYK87DKXG.01M1DK3KR0BMA4CAK6270EWZFH.jpg",
+        "emdash_content_id": "01M1DK3S16PF8KN3308EVE4K8E",
+        "emdash_media_id": "01M1DK3K1P8HP3QR6NQ4HK92RY",
+        "r2_object_key": "01M1DK3K1PVKET9MVJYK87DKXG.01M1DK3KR0BMA4CAK6270EWZFH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ed54676c1a8d1cb4296129bc1efdcba8efbed6a5f5039a7f215c32f2566fc86a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:19:58+00:00",
+        "public_asset": {
+          "sha256": "ed54676c1a8d1cb4296129bc1efdcba8efbed6a5f5039a7f215c32f2566fc86a",
+          "bytes": 4182714,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:19:58+00:00"
+        }
       }
     },
     {
@@ -2492,7 +3003,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-vqTDRvP",
         "filename": "PXL_20230130_032047593.jpg",
         "format": "JPG",
-        "archived_md5": "f503eae45783f517eb7d73bedfc531b2"
+        "archived_md5": "f503eae45783f517eb7d73bedfc531b2",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2519,15 +3031,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bmj5ikaevllniolz2khlqoqbw4",
-        "media_path": "/media/kph_bmj5ikaevllniolz2khlqoqbw4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK449173JHYJ6JEME67084.01M1DK44WRD2XCRP7QN0WJT69T.jpg",
+        "emdash_content_id": "01M1DK4AFD7B2W06EFBC93JTGJ",
+        "emdash_media_id": "01M1DK4491JQB489V827AA7KXW",
+        "r2_object_key": "01M1DK449173JHYJ6JEME67084.01M1DK44WRD2XCRP7QN0WJT69T.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "6b75d1355d1162d89cc692389e1609ad01ad4b769c04ade288dc931c7c855024",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:20:15+00:00",
+        "public_asset": {
+          "sha256": "6b75d1355d1162d89cc692389e1609ad01ad4b769c04ade288dc931c7c855024",
+          "bytes": 2604256,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:20:15+00:00"
+        }
       }
     },
     {
@@ -2540,7 +3061,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-Sb9gdhd",
         "filename": "PXL_20230130_032146140.jpg",
         "format": "JPG",
-        "archived_md5": "21d2a5d874b6e8fe1fddfa873e4db194"
+        "archived_md5": "21d2a5d874b6e8fe1fddfa873e4db194",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2567,15 +3089,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3yxahjsm6slc3kclgqy3c4mwmi",
-        "media_path": "/media/kph_3yxahjsm6slc3kclgqy3c4mwmi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK4M55HA1ZCN8HVDYREAZK.01M1DK4MW003NC1QDHH2RANCMD.jpg",
+        "emdash_content_id": "01M1DK4V70YXTX3GNEPNDGCYKP",
+        "emdash_media_id": "01M1DK4M55QZBH7ZV1FQA2ZWBT",
+        "r2_object_key": "01M1DK4M55HA1ZCN8HVDYREAZK.01M1DK4MW003NC1QDHH2RANCMD.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9cce0b5ab646f97f4f0e758365b48e848292ca20b72b30b0c9c84025930e042f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:20:33+00:00",
+        "public_asset": {
+          "sha256": "9cce0b5ab646f97f4f0e758365b48e848292ca20b72b30b0c9c84025930e042f",
+          "bytes": 4199774,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:20:33+00:00"
+        }
       }
     },
     {
@@ -2588,7 +3119,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-Rjs9tVP",
         "filename": "PXL_20230130_032417841.jpg",
         "format": "JPG",
-        "archived_md5": "c555521a666198444670c1513dff310e"
+        "archived_md5": "c555521a666198444670c1513dff310e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2615,15 +3147,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tzimtflqod4krat4bekg26g3va",
-        "media_path": "/media/kph_tzimtflqod4krat4bekg26g3va",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK55XQW1EGE0583KJZQSQJ.01M1DK56Q3W1TCYNVKJAEH3F6S.jpg",
+        "emdash_content_id": "01M1DK5C011Y7ZHHBHX4MKVY4M",
+        "emdash_media_id": "01M1DK55XQ7EZM6BMH5GFMZ3GK",
+        "r2_object_key": "01M1DK55XQW1EGE0583KJZQSQJ.01M1DK56Q3W1TCYNVKJAEH3F6S.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0cf37516d3244b7badb49e82d64f2ecfdc73f2b1e4100792456fcc5ecf8bce84",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:20:49+00:00",
+        "public_asset": {
+          "sha256": "0cf37516d3244b7badb49e82d64f2ecfdc73f2b1e4100792456fcc5ecf8bce84",
+          "bytes": 3110591,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:20:49+00:00"
+        }
       }
     },
     {
@@ -2636,7 +3177,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-Gm5Ng34",
         "filename": "PXL_20230130_033054392.jpg",
         "format": "JPG",
-        "archived_md5": "dd0edc93dea5d23730b33a310dfb3125"
+        "archived_md5": "dd0edc93dea5d23730b33a310dfb3125",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2663,15 +3205,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hfrweoiiuhxbrwrjj4jjl5kwmy",
-        "media_path": "/media/kph_hfrweoiiuhxbrwrjj4jjl5kwmy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK5NJGEEVW3P5CFNYTN9XC.01M1DK5PC111G3GAWYE3Z5ZCKA.jpg",
+        "emdash_content_id": "01M1DK5WK6G74S9WVB6N6TC47M",
+        "emdash_media_id": "01M1DK5NJGG4MHX730Z5NKVTAR",
+        "r2_object_key": "01M1DK5NJGEEVW3P5CFNYTN9XC.01M1DK5PC111G3GAWYE3Z5ZCKA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9b2c3a305916a83d66d5be5f999ad249b41c0b545355e4f242ebf1b6bd987791",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:21:06+00:00",
+        "public_asset": {
+          "sha256": "9b2c3a305916a83d66d5be5f999ad249b41c0b545355e4f242ebf1b6bd987791",
+          "bytes": 4763847,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:21:06+00:00"
+        }
       }
     },
     {
@@ -2684,7 +3235,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-9zJsSs3",
         "filename": "PXL_20230130_033206772.jpg",
         "format": "JPG",
-        "archived_md5": "15de9a30f6ea630cb880ff52d07bfc9a"
+        "archived_md5": "15de9a30f6ea630cb880ff52d07bfc9a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2711,15 +3263,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3pn76cqhlybxhrgo555ukodslu",
-        "media_path": "/media/kph_3pn76cqhlybxhrgo555ukodslu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK672MAN6YRQWN0YWQM490.01M1DK67PWDK1MBW409M7SRH5B.jpg",
+        "emdash_content_id": "01M1DK6CMKJ2JSJVQS42QXHH2G",
+        "emdash_media_id": "01M1DK672MY2BHVWH8F8F2A9TW",
+        "r2_object_key": "01M1DK672MAN6YRQWN0YWQM490.01M1DK67PWDK1MBW409M7SRH5B.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "45a9308ae1b970ee6931b93a023d7e2bb58fb0dcbb3edda35a6b311c60092669",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:21:22+00:00",
+        "public_asset": {
+          "sha256": "45a9308ae1b970ee6931b93a023d7e2bb58fb0dcbb3edda35a6b311c60092669",
+          "bytes": 4174190,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:21:22+00:00"
+        }
       }
     },
     {
@@ -2732,7 +3293,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-tmGdh4W",
         "filename": "PXL_20230130_033619138.jpg",
         "format": "JPG",
-        "archived_md5": "121542981874c842caa518b9abc44ad1"
+        "archived_md5": "121542981874c842caa518b9abc44ad1",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2759,15 +3321,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_2kwvaqfgi74elp25w7wirdtlmm",
-        "media_path": "/media/kph_2kwvaqfgi74elp25w7wirdtlmm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK8C50Z0EHK899ZHVV03Z8.01M1DK8CTSX6PPS2SZ7DYZPBQN.jpg",
+        "emdash_content_id": "01M1DK8J3WTS4QY6GZSEXGJHNG",
+        "emdash_media_id": "01M1DK8C50WFAXMXY7GQ0B6XMG",
+        "r2_object_key": "01M1DK8C50Z0EHK899ZHVV03Z8.01M1DK8CTSX6PPS2SZ7DYZPBQN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e9a04671fa979b0c7da500276db0fe591ef174003dbbcd27aee1c5c685658571",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:22:34+00:00",
+        "public_asset": {
+          "sha256": "e9a04671fa979b0c7da500276db0fe591ef174003dbbcd27aee1c5c685658571",
+          "bytes": 4155807,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:22:34+00:00"
+        }
       }
     },
     {
@@ -2780,7 +3351,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-5B2FrTP",
         "filename": "PXL_20230130_034448754.jpg",
         "format": "JPG",
-        "archived_md5": "35ec08788d00864b69ace29d72a8eca6"
+        "archived_md5": "35ec08788d00864b69ace29d72a8eca6",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2807,15 +3379,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_qndurokq7vctwnun2qfdpvzs5m",
-        "media_path": "/media/kph_qndurokq7vctwnun2qfdpvzs5m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK8W275K74EAPCB6SVGDQV.01M1DK8WWAEK97VZ0TMF3TYE9C.jpg",
+        "emdash_content_id": "01M1DK9260GWZTSVX7CP3JQPHC",
+        "emdash_media_id": "01M1DK8W27CAY5PWRWH1VDHA88",
+        "r2_object_key": "01M1DK8W275K74EAPCB6SVGDQV.01M1DK8WWAEK97VZ0TMF3TYE9C.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f827bdb75cd12b041f0f9eedace9fa36cacf998a0b07988a5d42358617acb068",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:22:51+00:00",
+        "public_asset": {
+          "sha256": "f827bdb75cd12b041f0f9eedace9fa36cacf998a0b07988a5d42358617acb068",
+          "bytes": 5105053,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:22:51+00:00"
+        }
       }
     },
     {
@@ -2828,7 +3409,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-VmhJT57",
         "filename": "PXL_20230130_044323174.jpg",
         "format": "JPG",
-        "archived_md5": "609fdc4e88c5dc6efdcb9932fd713593"
+        "archived_md5": "609fdc4e88c5dc6efdcb9932fd713593",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2855,15 +3437,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_32mfvxwrrr7kxdovmrq6rnu5my",
-        "media_path": "/media/kph_32mfvxwrrr7kxdovmrq6rnu5my",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK9CGC1RFW9XGD30AG825T.01M1DK9D9T2R5TW0DPDEFJR0SH.jpg",
+        "emdash_content_id": "01M1DK9JMB3S0Z1D4SPRCVHT5C",
+        "emdash_media_id": "01M1DK9CGCFH2BFDD8NG6QKP19",
+        "r2_object_key": "01M1DK9CGC1RFW9XGD30AG825T.01M1DK9D9T2R5TW0DPDEFJR0SH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2dd8c38c0b44ae43fe23524348f59140fea2ebe581365cb66123262b0953141e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:23:08+00:00",
+        "public_asset": {
+          "sha256": "2dd8c38c0b44ae43fe23524348f59140fea2ebe581365cb66123262b0953141e",
+          "bytes": 3748811,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:23:08+00:00"
+        }
       }
     },
     {
@@ -2876,7 +3467,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230127kyoto/i-QJjgWkS",
         "filename": "PXL_20230130_062605758.MP.jpg",
         "format": "JPG",
-        "archived_md5": "a71a6117e82973f4782b3ee3f9e7bf17"
+        "archived_md5": "a71a6117e82973f4782b3ee3f9e7bf17",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2903,15 +3495,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zic6eflgu56te6pgotgyrg5lem",
-        "media_path": "/media/kph_zic6eflgu56te6pgotgyrg5lem",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DK9XWGJ56E2WR4VT5Z1F0M.01M1DK9YP2PTYCYG7MV7B7N3EA.jpg",
+        "emdash_content_id": "01M1DKA47S4MXV8HTT247RB1MD",
+        "emdash_media_id": "01M1DK9XWGAW6JB11YP462G05K",
+        "r2_object_key": "01M1DK9XWGJ56E2WR4VT5Z1F0M.01M1DK9YP2PTYCYG7MV7B7N3EA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "de2ae1ebdc3dcf6073f0006a5d8734e0d38c159344466efcebc0b86afc2a8b6d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T04:23:25+00:00",
+        "public_asset": {
+          "sha256": "de2ae1ebdc3dcf6073f0006a5d8734e0d38c159344466efcebc0b86afc2a8b6d",
+          "bytes": 5434851,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T04:23:25+00:00"
+        }
       }
     }
   ]

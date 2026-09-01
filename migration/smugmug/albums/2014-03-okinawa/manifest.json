@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-08-31T17:31:27+00:00",
+  "generated_at": "2026-09-01T04:43:07+00:00",
   "scope": "public SmugMug album migration",
   "privacy": {
     "public_assets_only": true,
@@ -20,7 +20,8 @@
       "service": "smugmug",
       "user": "kanolog",
       "album_key": "m48fV8",
-      "web_uri": "https://kanolog.smugmug.com/20140313Okinawa"
+      "web_uri": "https://kanolog.smugmug.com/20140313Okinawa",
+      "highlight_image_key": "bvNqNZr"
     },
     "title": "Okinawa, 2014/03",
     "description": "",
@@ -30,7 +31,7 @@
     "source_protected_flag": true,
     "asset_count": 29,
     "destination": {
-      "emdash_content_id": null
+      "emdash_content_id": "01M1DE6RYTXY10M4EJH3VRR4QQ"
     }
   },
   "assets": [
@@ -44,7 +45,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-6XggVJB",
         "filename": "IMG_8117.JPG",
         "format": "JPG",
-        "archived_md5": "d9727017cc7af0200c5b56f2dd6ed04b"
+        "archived_md5": "d9727017cc7af0200c5b56f2dd6ed04b",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -71,15 +73,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_4onrrfkkp4tboqsn5zlmwjrwnq",
-        "media_path": "/media/kph_4onrrfkkp4tboqsn5zlmwjrwnq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DE70YZRRKK0Y54V6NB99V4.01M1DE71J5FVDFVQQFD8NPWSXH.jpg",
+        "emdash_content_id": "01M1DE75YXHGJKRG68E3HGSVGA",
+        "emdash_media_id": "01M1DE70YZ7CJPERVXYBG1MEAZ",
+        "r2_object_key": "01M1DE70YZRRKK0Y54V6NB99V4.01M1DE71J5FVDFVQQFD8NPWSXH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f3374e975f2359548c407deaa6da0ae25c0f86e8397ec48e11fee3762b7a785a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:54:24+00:00",
+        "public_asset": {
+          "sha256": "f3374e975f2359548c407deaa6da0ae25c0f86e8397ec48e11fee3762b7a785a",
+          "bytes": 340258,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:54:24+00:00"
+        }
       }
     },
     {
@@ -92,7 +103,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-DvB46X7",
         "filename": "IMG_8118.JPG",
         "format": "JPG",
-        "archived_md5": "df98d39b8e73b92d7910a3252f236a69"
+        "archived_md5": "df98d39b8e73b92d7910a3252f236a69",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -119,15 +131,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_mgwvjnyh3tz5v26zxzeray5w6a",
-        "media_path": "/media/kph_mgwvjnyh3tz5v26zxzeray5w6a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DEGMJS5DTBH72GH1CTXTVP.01M1DEGN5YDDDQJYQC0K3JEQ3F.jpg",
+        "emdash_content_id": "01M1DEGS72KXJKGDYPDE5TF8SF",
+        "emdash_media_id": "01M1DEGMJSC6GRJC8TS1H944YZ",
+        "r2_object_key": "01M1DEGMJS5DTBH72GH1CTXTVP.01M1DEGN5YDDDQJYQC0K3JEQ3F.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "49a63049fb81f7c7369453c1051bbb5b3143aafb2c40197cb8b460837bf5ee1c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:59:39+00:00",
+        "public_asset": {
+          "sha256": "49a63049fb81f7c7369453c1051bbb5b3143aafb2c40197cb8b460837bf5ee1c",
+          "bytes": 432095,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:59:39+00:00"
+        }
       }
     },
     {
@@ -140,7 +161,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-q7wKtpg",
         "filename": "IMG_8119.JPG",
         "format": "JPG",
-        "archived_md5": "94676dd2c5a6b5216d1b346848241867"
+        "archived_md5": "94676dd2c5a6b5216d1b346848241867",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -167,15 +189,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_liqwg73qqex5ykphgdvpirjfwq",
-        "media_path": "/media/kph_liqwg73qqex5ykphgdvpirjfwq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DEH0HYGGSQCZ0KXGW0CPBH.01M1DEH123SMRK5FGCANK9TR81.jpg",
+        "emdash_content_id": "01M1DEH5D0SJH1JHDHF98KVC0Y",
+        "emdash_media_id": "01M1DEH0HYYH55J01X9FE8P6GP",
+        "r2_object_key": "01M1DEH0HYGGSQCZ0KXGW0CPBH.01M1DEH123SMRK5FGCANK9TR81.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "44f329395a4856e61775a429c7d925d5d6368a2278f33d0da4b094a34a69e60c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:59:52+00:00",
+        "public_asset": {
+          "sha256": "44f329395a4856e61775a429c7d925d5d6368a2278f33d0da4b094a34a69e60c",
+          "bytes": 250798,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:59:52+00:00"
+        }
       }
     },
     {
@@ -188,7 +219,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-LvQ2Qfz",
         "filename": "IMG_20140313_154201.jpg",
         "format": "JPG",
-        "archived_md5": "e3701207b0950d1605ff502f553e9b97"
+        "archived_md5": "e3701207b0950d1605ff502f553e9b97",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -215,15 +247,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_4yswnupbxkz64ol5l6hmvikovu",
-        "media_path": "/media/kph_4yswnupbxkz64ol5l6hmvikovu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DEHEAP8T913MAJD0S9FVQD.01M1DEHEXG0C3X3Y9368XN6F7G.jpg",
+        "emdash_content_id": "01M1DEHKR9MQPHMYYARR48KWTN",
+        "emdash_media_id": "01M1DEHEAPAJYASZ65FEY6KZ69",
+        "r2_object_key": "01M1DEHEAP8T913MAJD0S9FVQD.01M1DEHEXG0C3X3Y9368XN6F7G.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "06a84374301a704abf062fd8b7aed987f0ae7fefc640134b621c84e0246bcfbc",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:00:06+00:00",
+        "public_asset": {
+          "sha256": "06a84374301a704abf062fd8b7aed987f0ae7fefc640134b621c84e0246bcfbc",
+          "bytes": 803510,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:00:06+00:00"
+        }
       }
     },
     {
@@ -236,7 +277,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-FcLbrSD",
         "filename": "IMG_8123.JPG",
         "format": "JPG",
-        "archived_md5": "599a608f56a91fa14b8e0cac614621f8"
+        "archived_md5": "599a608f56a91fa14b8e0cac614621f8",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -263,15 +305,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ggrqbghx6gk2h2dkohnh7fx4bq",
-        "media_path": "/media/kph_ggrqbghx6gk2h2dkohnh7fx4bq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DEV385H1CZD53JA1TRVH60.01M1DEV3R82365DNVFSDASY7DD.jpg",
+        "emdash_content_id": "01M1DEV88WA98W8B0Y9FTKK157",
+        "emdash_media_id": "01M1DEV385CEKMRYS0ZBFRAY0T",
+        "r2_object_key": "01M1DEV385H1CZD53JA1TRVH60.01M1DEV3R82365DNVFSDASY7DD.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b48980e6952b307ffcbdf56c2e3d586c1522ce6d5c20a4ede5a9c1e2774fc01d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:05:22+00:00",
+        "public_asset": {
+          "sha256": "b48980e6952b307ffcbdf56c2e3d586c1522ce6d5c20a4ede5a9c1e2774fc01d",
+          "bytes": 507702,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:05:22+00:00"
+        }
       }
     },
     {
@@ -284,7 +335,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-mFQzWZq",
         "filename": "IMG_8125.JPG",
         "format": "JPG",
-        "archived_md5": "15cc5597056c86cebe23ad3d3bf2d2f4"
+        "archived_md5": "15cc5597056c86cebe23ad3d3bf2d2f4",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -311,15 +363,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_fvnglsiixv6vz4qasgvq7b2z4q",
-        "media_path": "/media/kph_fvnglsiixv6vz4qasgvq7b2z4q",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DEVFYSMF52PTS5ZS1RFYQ4.01M1DEVGKS9WTHFYCZ6763X6M4.jpg",
+        "emdash_content_id": "01M1DEVMYVXG29J73C9200JGNK",
+        "emdash_media_id": "01M1DEVFYSGZ19KXDVYT24DB3F",
+        "r2_object_key": "01M1DEVFYSMF52PTS5ZS1RFYQ4.01M1DEVGKS9WTHFYCZ6763X6M4.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b1d6ca651762dab20ab4ab3a19b184d2cc787eaf54a32a1fa1fb1167b162219f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:05:35+00:00",
+        "public_asset": {
+          "sha256": "b1d6ca651762dab20ab4ab3a19b184d2cc787eaf54a32a1fa1fb1167b162219f",
+          "bytes": 324905,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:05:35+00:00"
+        }
       }
     },
     {
@@ -332,7 +393,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-6nsFKK5",
         "filename": "IMG_8136.JPG",
         "format": "JPG",
-        "archived_md5": "f0ea86d682520a42eb99a5598fd0f50a"
+        "archived_md5": "f0ea86d682520a42eb99a5598fd0f50a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -359,15 +421,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_xdemjohn72tx2k22djrunuc4hu",
-        "media_path": "/media/kph_xdemjohn72tx2k22djrunuc4hu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DF53SG8KHZ8Q1NAK8X3NXJ.01M1DF54DK2JBN9RWC40TSSYZ7.jpg",
+        "emdash_content_id": "01M1DF58MKH0BB3DRXR6ANE7EH",
+        "emdash_media_id": "01M1DF53SGPT26D18A7QYQABNW",
+        "r2_object_key": "01M1DF53SG8KHZ8Q1NAK8X3NXJ.01M1DF54DK2JBN9RWC40TSSYZ7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "bd269a19b2d99a69485f599937c3e390decce1b78b4141fc871df2d221bd2a95",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:10:50+00:00",
+        "public_asset": {
+          "sha256": "bd269a19b2d99a69485f599937c3e390decce1b78b4141fc871df2d221bd2a95",
+          "bytes": 459930,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:10:50+00:00"
+        }
       }
     },
     {
@@ -380,7 +451,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-M2Js7Z8",
         "filename": "IMG_8140.JPG",
         "format": "JPG",
-        "archived_md5": "f7b773ca8f9c31d501c0ed2acab333fe"
+        "archived_md5": "f7b773ca8f9c31d501c0ed2acab333fe",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -407,15 +479,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pre46orcoydnaunf5wrmwb3bqq",
-        "media_path": "/media/kph_pre46orcoydnaunf5wrmwb3bqq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DF5GMR0E1PV5EBMH3R1JMF.01M1DF5H4KGPDHSGQ4EVBHW19Z.jpg",
+        "emdash_content_id": "01M1DF5NPX04CDAFSD8PQ0TA02",
+        "emdash_media_id": "01M1DF5GMR1BX70FQFQDYPW3Q3",
+        "r2_object_key": "01M1DF5GMR0E1PV5EBMH3R1JMF.01M1DF5H4KGPDHSGQ4EVBHW19Z.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "47e40abdcc25a48bdfa3adbff9abda12ff72dcfc0e9e29cf026fc1a8ce704e28",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:11:03+00:00",
+        "public_asset": {
+          "sha256": "47e40abdcc25a48bdfa3adbff9abda12ff72dcfc0e9e29cf026fc1a8ce704e28",
+          "bytes": 376954,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:11:03+00:00"
+        }
       }
     },
     {
@@ -428,7 +509,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-NhBPCvV",
         "filename": "IMG_20140314_102550.jpg",
         "format": "JPG",
-        "archived_md5": "b406e0e95420dde793887ce3969441c5"
+        "archived_md5": "b406e0e95420dde793887ce3969441c5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -455,15 +537,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5rooejkqiefkhkutb2uyvcjzeu",
-        "media_path": "/media/kph_5rooejkqiefkhkutb2uyvcjzeu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFF4SFJXE2CBKFES5ZJW7S.01M1DFF5BTPA20GZ9V52Y6DYQW.jpg",
+        "emdash_content_id": "01M1DFFAABM11T66KGPMC7PXCD",
+        "emdash_media_id": "01M1DFF4SFTMP9Z29ATEQPSH8J",
+        "r2_object_key": "01M1DFF4SFJXE2CBKFES5ZJW7S.01M1DFF5BTPA20GZ9V52Y6DYQW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b0461303eef3179e81ee6c6de6f9781d5b16b34648a502df8d7b1d76e3b65f5e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:16:20+00:00",
+        "public_asset": {
+          "sha256": "b0461303eef3179e81ee6c6de6f9781d5b16b34648a502df8d7b1d76e3b65f5e",
+          "bytes": 924829,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:16:20+00:00"
+        }
       }
     },
     {
@@ -476,7 +567,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-8Z9nQCR",
         "filename": "IMG_8142.JPG",
         "format": "JPG",
-        "archived_md5": "d759483d075be227eaff3e02b2bb9737"
+        "archived_md5": "d759483d075be227eaff3e02b2bb9737",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -503,15 +595,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7gj77vfrz62mbknpuwgs2hwzci",
-        "media_path": "/media/kph_7gj77vfrz62mbknpuwgs2hwzci",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFRSPTMX2MDYBSMJHDWJ3A.01M1DFRTRCJ69J2TC7D7QNEQCF.jpg",
+        "emdash_content_id": "01M1DFRZS5842B88HPVYMR5SFZ",
+        "emdash_media_id": "01M1DFRSPTHE5N0VVP247PYE5K",
+        "r2_object_key": "01M1DFRSPTMX2MDYBSMJHDWJ3A.01M1DFRTRCJ69J2TC7D7QNEQCF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e5cca9d2d3b2651d87dd8832b4dc5fcc450fd4cad78b58d9c4fccf43792d15e8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:21:36+00:00",
+        "public_asset": {
+          "sha256": "e5cca9d2d3b2651d87dd8832b4dc5fcc450fd4cad78b58d9c4fccf43792d15e8",
+          "bytes": 350012,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:21:36+00:00"
+        }
       }
     },
     {
@@ -524,7 +625,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-JFV6Xbv",
         "filename": "IMG_8144.JPG",
         "format": "JPG",
-        "archived_md5": "b3e5f7f95df14d28db291a5456cd45a5"
+        "archived_md5": "b3e5f7f95df14d28db291a5456cd45a5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -551,15 +653,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3awlw54eohnm3jhu2zp5jh3m34",
-        "media_path": "/media/kph_3awlw54eohnm3jhu2zp5jh3m34",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFS82B78EYXHBY1RJSEGD0.01M1DFS8PZJ1TWZ8DH3VCFKSNW.jpg",
+        "emdash_content_id": "01M1DFSEMGR9ZSGQGT8XNYR14T",
+        "emdash_media_id": "01M1DFS82B6ZTBGXE8NXC8MQRE",
+        "r2_object_key": "01M1DFS82B78EYXHBY1RJSEGD0.01M1DFS8PZJ1TWZ8DH3VCFKSNW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "55cd19ce50add52e615e2caad81078443f1c0ad15ba6ce15d61be242f3fec1de",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:21:52+00:00",
+        "public_asset": {
+          "sha256": "55cd19ce50add52e615e2caad81078443f1c0ad15ba6ce15d61be242f3fec1de",
+          "bytes": 534658,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:21:52+00:00"
+        }
       }
     },
     {
@@ -572,7 +683,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Vdf5zgk",
         "filename": "IMG_8146.JPG",
         "format": "JPG",
-        "archived_md5": "3d28bf59a02dfbe7eba70460ae23498c"
+        "archived_md5": "3d28bf59a02dfbe7eba70460ae23498c",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -599,15 +711,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_v76xawdp5cboefbajned4wpoju",
-        "media_path": "/media/kph_v76xawdp5cboefbajned4wpoju",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFSQ4DT8YYXSEBHGQ8MR5F.01M1DFSQZG3P6DJ0RVKHFTGMW7.jpg",
+        "emdash_content_id": "01M1DFSW3GFFYV443R8Y8A0M17",
+        "emdash_media_id": "01M1DFSQ4DJ72P4KEB8KM7RH6J",
+        "r2_object_key": "01M1DFSQ4DT8YYXSEBHGQ8MR5F.01M1DFSQZG3P6DJ0RVKHFTGMW7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "894f4241c310615a99e027ea7c25d74a5c3bfcf9646d7ba2c5237e1c1da15517",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:22:06+00:00",
+        "public_asset": {
+          "sha256": "894f4241c310615a99e027ea7c25d74a5c3bfcf9646d7ba2c5237e1c1da15517",
+          "bytes": 349098,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:22:06+00:00"
+        }
       }
     },
     {
@@ -620,7 +741,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-zr9Hkq8",
         "filename": "IMG_8149.JPG",
         "format": "JPG",
-        "archived_md5": "b8b128154eb0304d7438e801cdb6ae04"
+        "archived_md5": "b8b128154eb0304d7438e801cdb6ae04",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -647,15 +769,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_y7ixcpmomwcitnmrqwup2g7fwu",
-        "media_path": "/media/kph_y7ixcpmomwcitnmrqwup2g7fwu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG3AWENSH9V49N2687GK0E.01M1DG3BHWQBQPB7PPD2NZVBCZ.jpg",
+        "emdash_content_id": "01M1DG3FXHT5FDDF7NEZFPXR92",
+        "emdash_media_id": "01M1DG3AWEVAYF3SNY2AQ8YBMY",
+        "r2_object_key": "01M1DG3AWENSH9V49N2687GK0E.01M1DG3BHWQBQPB7PPD2NZVBCZ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3c8ce23cf484a9a22b49b437faf88eda4a2a3e548710c1e86741da599aac9cc8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:27:21+00:00",
+        "public_asset": {
+          "sha256": "3c8ce23cf484a9a22b49b437faf88eda4a2a3e548710c1e86741da599aac9cc8",
+          "bytes": 372840,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:27:21+00:00"
+        }
       }
     },
     {
@@ -668,7 +799,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-4rZgvHD",
         "filename": "IMG_8168.JPG",
         "format": "JPG",
-        "archived_md5": "f3bd7f37ecb7bc701720d25331ae891f"
+        "archived_md5": "f3bd7f37ecb7bc701720d25331ae891f",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -695,15 +827,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_i3wwlsiwy4pxfini7bgyqg2w5a",
-        "media_path": "/media/kph_i3wwlsiwy4pxfini7bgyqg2w5a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG3R24F4T12A6KT0NWAFQ6.01M1DG3RN795EAPNG18J29JP3H.jpg",
+        "emdash_content_id": "01M1DG3X6DRNTF46K3N887MAYK",
+        "emdash_media_id": "01M1DG3R24M31TWVDZM35QW79M",
+        "r2_object_key": "01M1DG3R24F4T12A6KT0NWAFQ6.01M1DG3RN795EAPNG18J29JP3H.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8fd2b6ce545bd9b6cc67d94676bd4f30f94b08f0a934f0e2f51c62eaca9facc4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:27:35+00:00",
+        "public_asset": {
+          "sha256": "8fd2b6ce545bd9b6cc67d94676bd4f30f94b08f0a934f0e2f51c62eaca9facc4",
+          "bytes": 445276,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:27:35+00:00"
+        }
       }
     },
     {
@@ -716,7 +857,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Tm4mTT7",
         "filename": "IMG_3762.JPG",
         "format": "JPG",
-        "archived_md5": "c696d04ace0e3fe2e7cdd9f57631b205"
+        "archived_md5": "c696d04ace0e3fe2e7cdd9f57631b205",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -743,15 +885,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gajgfuxxkbpq2cbncmoqquy2zu",
-        "media_path": "/media/kph_gajgfuxxkbpq2cbncmoqquy2zu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG549R9XST41W2FATK76N1.01M1DG54VX81W0HHEYJNKVPY6K.jpg",
+        "emdash_content_id": "01M1DG59HD74R8R5DJ975EK36M",
+        "emdash_media_id": "01M1DG549RF2XEVDCC3HWSGKW4",
+        "r2_object_key": "01M1DG549R9XST41W2FATK76N1.01M1DG54VX81W0HHEYJNKVPY6K.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ea387cfba7a6fe3920b1eff1073417f6d6aaac22ea6eef1aec77e8696be5ced4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:28:19+00:00",
+        "public_asset": {
+          "sha256": "ea387cfba7a6fe3920b1eff1073417f6d6aaac22ea6eef1aec77e8696be5ced4",
+          "bytes": 1397838,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:28:19+00:00"
+        }
       }
     },
     {
@@ -764,7 +915,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-kRTw5B3",
         "filename": "IMG_8169.JPG",
         "format": "JPG",
-        "archived_md5": "c06af10e6c6876b3b0bebcb1e559d094"
+        "archived_md5": "c06af10e6c6876b3b0bebcb1e559d094",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -791,15 +943,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_knlwcelij6d6l2jzuw2au5d4ia",
-        "media_path": "/media/kph_knlwcelij6d6l2jzuw2au5d4ia",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGET9KXNWZ5DW4NZ75G90T.01M1DGEVMNFH0BZC84C4RDAVEN.jpg",
+        "emdash_content_id": "01M1DGF0KDEQQG59PVGQQXWYXJ",
+        "emdash_media_id": "01M1DGET9KQB9F4YJBYH12S64T",
+        "r2_object_key": "01M1DGET9KXNWZ5DW4NZ75G90T.01M1DGEVMNFH0BZC84C4RDAVEN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a112860db27076e4d1fb16ac5eb25c3a06abdb2e2623adcf921db9e5d2022f0d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:33:39+00:00",
+        "public_asset": {
+          "sha256": "a112860db27076e4d1fb16ac5eb25c3a06abdb2e2623adcf921db9e5d2022f0d",
+          "bytes": 470676,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:33:39+00:00"
+        }
       }
     },
     {
@@ -812,7 +973,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-7qttBfx",
         "filename": "IMG_8173.JPG",
         "format": "JPG",
-        "archived_md5": "cdb3c62638c6db97678269aa46fd4e23"
+        "archived_md5": "cdb3c62638c6db97678269aa46fd4e23",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -839,15 +1001,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_d22als5p5mvhlpy6qkjczqfvty",
-        "media_path": "/media/kph_d22als5p5mvhlpy6qkjczqfvty",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGF8SDY4SQD2VRDN8F6SDG.01M1DGF9EK7WHFT2HSY452PS50.jpg",
+        "emdash_content_id": "01M1DGFDSRJQJHJTJCY2YXVHF8",
+        "emdash_media_id": "01M1DGF8SDNGWKSWFSMKP0Z2HT",
+        "r2_object_key": "01M1DGF8SDY4SQD2VRDN8F6SDG.01M1DGF9EK7WHFT2HSY452PS50.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "222a67ab63c4914d1789b3b84b65f9e5dfed4976876ebc1024b1e47edbfbf9f5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:33:52+00:00",
+        "public_asset": {
+          "sha256": "222a67ab63c4914d1789b3b84b65f9e5dfed4976876ebc1024b1e47edbfbf9f5",
+          "bytes": 288485,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:33:52+00:00"
+        }
       }
     },
     {
@@ -860,7 +1031,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-fh2QF77",
         "filename": "IMG_20140315_094017.jpg",
         "format": "JPG",
-        "archived_md5": "e1055a7e6bfff9d3f4c3cc2aa5191705"
+        "archived_md5": "e1055a7e6bfff9d3f4c3cc2aa5191705",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -887,15 +1059,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_yzhoforxvn6ni6w5zc643hgt6i",
-        "media_path": "/media/kph_yzhoforxvn6ni6w5zc643hgt6i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGHFZE37026PQFR97QJERZ.01M1DGHGGW3ZX5GXC60AE96Z32.jpg",
+        "emdash_content_id": "01M1DGHPKHMNZ3603K58Q1F42P",
+        "emdash_media_id": "01M1DGHFZEX6A4M3RABW2B6ZDX",
+        "r2_object_key": "01M1DGHFZE37026PQFR97QJERZ.01M1DGHGGW3ZX5GXC60AE96Z32.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2ec821c8b55d4dff29821ef22ae02474c0f1203b1c23a4339be65a8d47885e25",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:35:06+00:00",
+        "public_asset": {
+          "sha256": "2ec821c8b55d4dff29821ef22ae02474c0f1203b1c23a4339be65a8d47885e25",
+          "bytes": 1201853,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:35:06+00:00"
+        }
       }
     },
     {
@@ -908,7 +1089,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Xbf6c8C",
         "filename": "IMG_3774.JPG",
         "format": "JPG",
-        "archived_md5": "5cc810660266e3904d0d268f0b58a992"
+        "archived_md5": "5cc810660266e3904d0d268f0b58a992",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -935,15 +1117,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_x3ukosir5csalf3wqewgsgzi6u",
-        "media_path": "/media/kph_x3ukosir5csalf3wqewgsgzi6u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGKQEE4CKW282TMT68P4S7.01M1DGKR0E6H2R7P3D4V3Z8AW6.jpg",
+        "emdash_content_id": "01M1DGKX0SRAX0GVWFXTAGBDXT",
+        "emdash_media_id": "01M1DGKQEE1C7W768TRRE0SRSS",
+        "r2_object_key": "01M1DGKQEE4CKW282TMT68P4S7.01M1DGKR0E6H2R7P3D4V3Z8AW6.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d93179cf61034c6dd3dfccf1f0902ceb3fa824f6ba7a087f6f99526f37cc1557",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:36:19+00:00",
+        "public_asset": {
+          "sha256": "d93179cf61034c6dd3dfccf1f0902ceb3fa824f6ba7a087f6f99526f37cc1557",
+          "bytes": 1896382,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:36:19+00:00"
+        }
       }
     },
     {
@@ -956,7 +1147,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-cjsZHn7",
         "filename": "IMG_20140315_094955.jpg",
         "format": "JPG",
-        "archived_md5": "6c0196046b132dd685717a76c2fc34d7"
+        "archived_md5": "6c0196046b132dd685717a76c2fc34d7",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -983,15 +1175,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ccrfsiv5ts2ksrlfhwamrj7fca",
-        "media_path": "/media/kph_ccrfsiv5ts2ksrlfhwamrj7fca",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGM619RFQ2MJN7QY8C6B34.01M1DGM6NXZMG0K69QPCXTR9HN.jpg",
+        "emdash_content_id": "01M1DGMBF81V0YG5FX5J714JZ4",
+        "emdash_media_id": "01M1DGM6194BBGKC32TEN10Y7M",
+        "r2_object_key": "01M1DGM619RFQ2MJN7QY8C6B34.01M1DGM6NXZMG0K69QPCXTR9HN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "91e6312251b23a5f79a03dd43866753098b60de05d6ac8dd4a1099c6d5a83654",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:36:33+00:00",
+        "public_asset": {
+          "sha256": "91e6312251b23a5f79a03dd43866753098b60de05d6ac8dd4a1099c6d5a83654",
+          "bytes": 1161996,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:36:33+00:00"
+        }
       }
     },
     {
@@ -1004,7 +1205,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-q3xSkTt",
         "filename": "IMG_20140315_095016.jpg",
         "format": "JPG",
-        "archived_md5": "3ef96f386b2b8b41f8d1e5e8b5c78c85"
+        "archived_md5": "3ef96f386b2b8b41f8d1e5e8b5c78c85",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1031,15 +1233,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_s4hom6npm4ol3gu2bfrx3fcjfy",
-        "media_path": "/media/kph_s4hom6npm4ol3gu2bfrx3fcjfy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGMKRC33V5SGQ4P00DGKBJ.01M1DGMM9X8P383EQZHE1TFM66.jpg",
+        "emdash_content_id": "01M1DGMSTF2V4JGMT92137F22H",
+        "emdash_media_id": "01M1DGMKRCYNV37MHC17W0SZTM",
+        "r2_object_key": "01M1DGMKRC33V5SGQ4P00DGKBJ.01M1DGMM9X8P383EQZHE1TFM66.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "4d7190e26fdda4f6e63ed13a19c5beb44338810647185a724b2800c158af0ebf",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:36:48+00:00",
+        "public_asset": {
+          "sha256": "4d7190e26fdda4f6e63ed13a19c5beb44338810647185a724b2800c158af0ebf",
+          "bytes": 1131113,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:36:48+00:00"
+        }
       }
     },
     {
@@ -1052,7 +1263,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-bvNqNZr",
         "filename": "IMG_20140315_124848.jpg",
         "format": "JPG",
-        "archived_md5": "9fb8c744cb57bda4d609d08fff7c0cc6"
+        "archived_md5": "9fb8c744cb57bda4d609d08fff7c0cc6",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1079,15 +1291,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_avc2hcxa4zaplsicy7nf3cpsrq",
-        "media_path": "/media/kph_avc2hcxa4zaplsicy7nf3cpsrq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGPQNTG7WWTKY9YKTRHYQM.01M1DGPR9Z3XY6BFYV39RJ7NYJ.jpg",
+        "emdash_content_id": "01M1DGPXDRY249GQ9ZF3Y849TM",
+        "emdash_media_id": "01M1DGPQNTKBSX63N347V3E9VB",
+        "r2_object_key": "01M1DGPQNTG7WWTKY9YKTRHYQM.01M1DGPR9Z3XY6BFYV39RJ7NYJ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3c68fdc853af611845fd2e8fa56c02ba26a06640ed5549c86ea2808db9e2eecc",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:37:57+00:00",
+        "public_asset": {
+          "sha256": "3c68fdc853af611845fd2e8fa56c02ba26a06640ed5549c86ea2808db9e2eecc",
+          "bytes": 1378092,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:37:57+00:00"
+        }
       }
     },
     {
@@ -1100,7 +1321,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-dwK3smj",
         "filename": "IMG_3783.JPG",
         "format": "JPG",
-        "archived_md5": "ffd74625bcc1f8a8eca723a2d6aade80"
+        "archived_md5": "ffd74625bcc1f8a8eca723a2d6aade80",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1127,15 +1349,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_47id4x2kpztty5w6m7is6q34ju",
-        "media_path": "/media/kph_47id4x2kpztty5w6m7is6q34ju",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGRYF3N0AC423T4K7BBQ3H.01M1DGRZ05HKEC3M1T6MFCMZEP.jpg",
+        "emdash_content_id": "01M1DGS4BGWZ1V7XH3VPQNVJ68",
+        "emdash_media_id": "01M1DGRYF3QDR7Z1SZN5HFZJP3",
+        "r2_object_key": "01M1DGRYF3N0AC423T4K7BBQ3H.01M1DGRZ05HKEC3M1T6MFCMZEP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1403e7778e223f2f6baffad2638048a861df7ec575b3ab72fcdd61002176b26d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:39:10+00:00",
+        "public_asset": {
+          "sha256": "1403e7778e223f2f6baffad2638048a861df7ec575b3ab72fcdd61002176b26d",
+          "bytes": 1572575,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:39:10+00:00"
+        }
       }
     },
     {
@@ -1148,7 +1379,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-FsXGVDr",
         "filename": "IMG_20140315_125753.jpg",
         "format": "JPG",
-        "archived_md5": "01de3275a5cf1540a834e67a154a995e"
+        "archived_md5": "01de3275a5cf1540a834e67a154a995e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1175,15 +1407,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_35354zgs7brm6d5b75ybfodluu",
-        "media_path": "/media/kph_35354zgs7brm6d5b75ybfodluu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGTDGHRBAJFT4985KNMG44.01M1DGTE0TH6YM4CXGMZ0MQSWV.jpg",
+        "emdash_content_id": "01M1DGTJYQRC697D103ND4J4F1",
+        "emdash_media_id": "01M1DGTDGHFDRPK3YA46BNAD0C",
+        "r2_object_key": "01M1DGTDGHRBAJFT4985KNMG44.01M1DGTE0TH6YM4CXGMZ0MQSWV.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a488090d9b77d29896038d8742d45b6c52eff1a35e5d8797d26c06ef4a0a95e5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:39:57+00:00",
+        "public_asset": {
+          "sha256": "a488090d9b77d29896038d8742d45b6c52eff1a35e5d8797d26c06ef4a0a95e5",
+          "bytes": 1155070,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:39:57+00:00"
+        }
       }
     },
     {
@@ -1196,7 +1437,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-qt926Cz",
         "filename": "IMG_8181.JPG",
         "format": "JPG",
-        "archived_md5": "cdb57cf6962ca5a972202fe9973cf9cd"
+        "archived_md5": "cdb57cf6962ca5a972202fe9973cf9cd",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1223,15 +1465,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_wckfl5johd2huxnfjz3ogitn34",
-        "media_path": "/media/kph_wckfl5johd2huxnfjz3ogitn34",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGTTF7H7G0PJPR29PP8027.01M1DGTV2K79TJ1GAFFQ64MH2P.jpg",
+        "emdash_content_id": "01M1DGTZF1VZTSZ94HMFS8ZX59",
+        "emdash_media_id": "01M1DGTTF71HBYB52JYBVWHR41",
+        "r2_object_key": "01M1DGTTF7H7G0PJPR29PP8027.01M1DGTV2K79TJ1GAFFQ64MH2P.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c806080aa0dbac203ece48f438dc5cbf7fbe66023a380f7484bd78de5e4189b7",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:40:10+00:00",
+        "public_asset": {
+          "sha256": "c806080aa0dbac203ece48f438dc5cbf7fbe66023a380f7484bd78de5e4189b7",
+          "bytes": 479427,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:40:10+00:00"
+        }
       }
     },
     {
@@ -1244,7 +1495,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-Pf4x5Lg",
         "filename": "IMG_20140316_091842.jpg",
         "format": "JPG",
-        "archived_md5": "06ec59d05e759e99288860a547a7bfb3"
+        "archived_md5": "06ec59d05e759e99288860a547a7bfb3",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1271,15 +1523,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_d2ktzdvp452v5aq5oorutyawza",
-        "media_path": "/media/kph_d2ktzdvp452v5aq5oorutyawza",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH4HHNGYSFF07NBFCEVNYY.01M1DH4K0BVJDCS5EGS0B6G94Y.jpg",
+        "emdash_content_id": "01M1DH4R2DYB6KBPXA5QNYJ5Q5",
+        "emdash_media_id": "01M1DH4HHNRC03F0D41K32N372",
+        "r2_object_key": "01M1DH4HHNGYSFF07NBFCEVNYY.01M1DH4K0BVJDCS5EGS0B6G94Y.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3ef532a62e99e6394bb5e6bd21be3379a213a3f8d1a5479ffcd4a1998b249c5f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:45:31+00:00",
+        "public_asset": {
+          "sha256": "3ef532a62e99e6394bb5e6bd21be3379a213a3f8d1a5479ffcd4a1998b249c5f",
+          "bytes": 707879,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:45:31+00:00"
+        }
       }
     },
     {
@@ -1292,7 +1553,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-HX8WL3N",
         "filename": "IMG_20140316_092044.jpg",
         "format": "JPG",
-        "archived_md5": "6f008c8ff049e188161b10e290ae931f"
+        "archived_md5": "6f008c8ff049e188161b10e290ae931f",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1319,15 +1581,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3e2jy5cu2fo67vxqvpfilgos6a",
-        "media_path": "/media/kph_3e2jy5cu2fo67vxqvpfilgos6a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHE8AH35PY6JVVM2752KS0.01M1DHE8Z5KBGPHHKPESNPD5JM.jpg",
+        "emdash_content_id": "01M1DHEEAQ91P0PKCZV7QPW0VN",
+        "emdash_media_id": "01M1DHE8AH22D7CW93F9PWYYAF",
+        "r2_object_key": "01M1DHE8AH35PY6JVVM2752KS0.01M1DHE8Z5KBGPHHKPESNPD5JM.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b40a8a807cd6a19ee39916caf13e132185acea45637f69e236c6fdc5b5e18d72",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:50:48+00:00",
+        "public_asset": {
+          "sha256": "b40a8a807cd6a19ee39916caf13e132185acea45637f69e236c6fdc5b5e18d72",
+          "bytes": 615402,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:50:48+00:00"
+        }
       }
     },
     {
@@ -1340,7 +1611,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-LmCrZ2k",
         "filename": "IMG_20140316_093002.jpg",
         "format": "JPG",
-        "archived_md5": "9642110389da1ac3403a5a5dd4cbdbe5"
+        "archived_md5": "9642110389da1ac3403a5a5dd4cbdbe5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1367,15 +1639,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_iuf54j5hfvtoxiykvtnwgtfvsy",
-        "media_path": "/media/kph_iuf54j5hfvtoxiykvtnwgtfvsy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHENNZ2T62VXG8A37GEP69.01M1DHEPB48GC4HPP3JGK4484K.jpg",
+        "emdash_content_id": "01M1DHEVECEPBAYAVFD610FHN2",
+        "emdash_media_id": "01M1DHENNZ7J1FKKY555B4ABNP",
+        "r2_object_key": "01M1DHENNZ2T62VXG8A37GEP69.01M1DHEPB48GC4HPP3JGK4484K.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ea40162822b776bd19ca70321e29ab14e644b673f2fac9d9bf93bd6f718f5eeb",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:51:01+00:00",
+        "public_asset": {
+          "sha256": "ea40162822b776bd19ca70321e29ab14e644b673f2fac9d9bf93bd6f718f5eeb",
+          "bytes": 910337,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:51:01+00:00"
+        }
       }
     },
     {
@@ -1388,7 +1669,8 @@
         "web_uri": "https://kanolog.smugmug.com/20140313Okinawa/i-8njSpXp",
         "filename": "IMG_20140316_095453.jpg",
         "format": "JPG",
-        "archived_md5": "23aa25d643596963ba4667804ad71fde"
+        "archived_md5": "23aa25d643596963ba4667804ad71fde",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1415,15 +1697,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7d5ztoi262q76ivsfpja57z3va",
-        "media_path": "/media/kph_7d5ztoi262q76ivsfpja57z3va",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHGWCRE3SNTNB9SEE96W9Y.01M1DHGWX5RCNBEMQ8MXE6RMSV.jpg",
+        "emdash_content_id": "01M1DHH2D70GMTMYC74TA5D6EX",
+        "emdash_media_id": "01M1DHGWCRMEBCWE0MB5VH5TT9",
+        "r2_object_key": "01M1DHGWCRE3SNTNB9SEE96W9Y.01M1DHGWX5RCNBEMQ8MXE6RMSV.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "fb57f5b1bcc7709ac1356969c5cf39861b1ce76c752fca5c315b78ad539ee132",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:52:14+00:00",
+        "public_asset": {
+          "sha256": "fb57f5b1bcc7709ac1356969c5cf39861b1ce76c752fca5c315b78ad539ee132",
+          "bytes": 1288720,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:52:14+00:00"
+        }
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-08-31T17:29:04+00:00",
+  "generated_at": "2026-09-01T04:40:38+00:00",
   "scope": "public SmugMug album migration",
   "privacy": {
     "public_assets_only": true,
@@ -20,7 +20,8 @@
       "service": "smugmug",
       "user": "kanolog",
       "album_key": "BPLvSS",
-      "web_uri": "https://kanolog.smugmug.com/20130719Hawaii"
+      "web_uri": "https://kanolog.smugmug.com/20130719Hawaii",
+      "highlight_image_key": "PHfQxZX"
     },
     "title": "Hawaii, 2013/07",
     "description": "",
@@ -30,7 +31,7 @@
     "source_protected_flag": false,
     "asset_count": 64,
     "destination": {
-      "emdash_content_id": null
+      "emdash_content_id": "01M1CJF19B7A3GZVKQBPVD0VBX"
     }
   },
   "assets": [
@@ -44,7 +45,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-8GRgst6",
         "filename": "IMG_7089.JPG",
         "format": "JPG",
-        "archived_md5": "a60cb6a37cb7c567d4f623cc212643b6"
+        "archived_md5": "a60cb6a37cb7c567d4f623cc212643b6",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -71,15 +73,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_fg3f6dkhgspijxjgsvkk5ebgf4",
-        "media_path": "/media/kph_fg3f6dkhgspijxjgsvkk5ebgf4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CX9X8DF8S30J04J7BZE61H.jpg",
+        "emdash_content_id": "01M1CX9ZGD5Y6WN0GPW93GFTG6",
+        "emdash_media_id": "01M1CX9XGQC9AZ6F5XFGJDRWJ8",
+        "r2_object_key": "01M1CX9X8DF8S30J04J7BZE61H.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2c2515ff1f45c8ca46f61e28455c7631d698e9b8bdf5eeda9761a6c69adede17",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:58:51+00:00",
+        "public_asset": {
+          "sha256": "2c2515ff1f45c8ca46f61e28455c7631d698e9b8bdf5eeda9761a6c69adede17",
+          "bytes": 78175,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:58:51+00:00"
+        }
       }
     },
     {
@@ -92,7 +103,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-3vBMHw9",
         "filename": "IMG_7029.JPG",
         "format": "JPG",
-        "archived_md5": "3e616482ac00185997f518066e476673"
+        "archived_md5": "3e616482ac00185997f518066e476673",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -119,15 +131,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_h5nnuwcx7ufs4uoomrytri6e3i",
-        "media_path": "/media/kph_h5nnuwcx7ufs4uoomrytri6e3i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CYYFEQVMT9PJETNQYA539X.01M1CYYFYREEEMEG2THG9HF6ZT.jpg",
+        "emdash_content_id": "01M1CYYPYR3GCJQ51WHJ0Q503P",
+        "emdash_media_id": "01M1CYYFEQA968WN23SFABR4E9",
+        "r2_object_key": "01M1CYYFEQVMT9PJETNQYA539X.01M1CYYFYREEEMEG2THG9HF6ZT.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "27d39a45616b679ca64f122fdceffb5e669643fa18fbf3a61cd529794884ea58",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:33:42+00:00",
+        "public_asset": {
+          "sha256": "27d39a45616b679ca64f122fdceffb5e669643fa18fbf3a61cd529794884ea58",
+          "bytes": 633255,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:33:42+00:00"
+        }
       }
     },
     {
@@ -140,7 +161,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SQGmnwH",
         "filename": "IMG_7031.JPG",
         "format": "JPG",
-        "archived_md5": "643d5428bede807e9af013b45f1c5ddd"
+        "archived_md5": "643d5428bede807e9af013b45f1c5ddd",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -167,15 +189,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_k4apk6efa6wg6naop22g2jqs54",
-        "media_path": "/media/kph_k4apk6efa6wg6naop22g2jqs54",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CXFSPWCVWG52MD7Y158JSW.jpg",
+        "emdash_content_id": "01M1CXFXPA2YMPS2DQSQT4YF9B",
+        "emdash_media_id": "01M1CXFTJ3NHM1XQTWYBN7GZ59",
+        "r2_object_key": "01M1CXFSPWCVWG52MD7Y158JSW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "64822c4d21dd346a35ba6940fca871cf47d517b8412e578d687d438c1353a7f1",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:02:06+00:00",
+        "public_asset": {
+          "sha256": "64822c4d21dd346a35ba6940fca871cf47d517b8412e578d687d438c1353a7f1",
+          "bytes": 1520486,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:02:06+00:00"
+        }
       }
     },
     {
@@ -188,7 +219,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-4VscP5d",
         "filename": "IMG_7035.JPG",
         "format": "JPG",
-        "archived_md5": "a337a4be4dd273ba50039e795346b982"
+        "archived_md5": "a337a4be4dd273ba50039e795346b982",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -215,15 +247,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_t5kia5ldohiobun64wi3wpinqe",
-        "media_path": "/media/kph_t5kia5ldohiobun64wi3wpinqe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CXHZJZBHTAW6WN7VZFSJ26.jpg",
+        "emdash_content_id": "01M1CXJ2JYRKVQ0S6CZ8KAVSHV",
+        "emdash_media_id": "01M1CXHZXV05T6TNZ7ZYDN0KQA",
+        "r2_object_key": "01M1CXHZJZBHTAW6WN7VZFSJ26.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "582f6c042f8db6036b031f3cb4e88bd3f72ff2fbb7108747ccd0b1efc6be7f08",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:03:17+00:00",
+        "public_asset": {
+          "sha256": "582f6c042f8db6036b031f3cb4e88bd3f72ff2fbb7108747ccd0b1efc6be7f08",
+          "bytes": 1922083,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:03:17+00:00"
+        }
       }
     },
     {
@@ -236,7 +277,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-kWwmQ7M",
         "filename": "IMG_7036.JPG",
         "format": "JPG",
-        "archived_md5": "f61a50a7fbeadd6ffb9637678798f6f6"
+        "archived_md5": "f61a50a7fbeadd6ffb9637678798f6f6",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -263,15 +305,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uzlwqtmasam7karvyx7h265ni4",
-        "media_path": "/media/kph_uzlwqtmasam7karvyx7h265ni4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CXM4WQ5A2DCNXDD1NCSG6S.jpg",
+        "emdash_content_id": "01M1CXM7XP90GDYBHXMD847N3M",
+        "emdash_media_id": "01M1CXM59BRAMKZEN1J1A7X2EY",
+        "r2_object_key": "01M1CXM4WQ5A2DCNXDD1NCSG6S.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8b898ffd2846fa5637def4fe443b47c9b9e77c4a03013b70041d822de95377f6",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:04:27+00:00",
+        "public_asset": {
+          "sha256": "8b898ffd2846fa5637def4fe443b47c9b9e77c4a03013b70041d822de95377f6",
+          "bytes": 2108089,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:04:27+00:00"
+        }
       }
     },
     {
@@ -284,7 +335,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-MBhwdVD",
         "filename": "IMG_7037.JPG",
         "format": "JPG",
-        "archived_md5": "c5d499b300120530494f190a17777747"
+        "archived_md5": "c5d499b300120530494f190a17777747",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -311,15 +363,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_meovcstlvdorzjliph4xtcx6zy",
-        "media_path": "/media/kph_meovcstlvdorzjliph4xtcx6zy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CY6118B0WH5YS92N6Z0SPK.jpg",
+        "emdash_content_id": "01M1CY6472TSP28RBFCG6PSHN9",
+        "emdash_media_id": "01M1CY61CY4TZECME8XYTSGMQT",
+        "r2_object_key": "01M1CY6118B0WH5YS92N6Z0SPK.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cbe678095e1243423b1405f132ae8efd463ca75b7cf9093758ffd69604a5ef3c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:47:44+00:00",
+        "public_asset": {
+          "sha256": "cbe678095e1243423b1405f132ae8efd463ca75b7cf9093758ffd69604a5ef3c",
+          "bytes": 1174291,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:47:44+00:00"
+        }
       }
     },
     {
@@ -332,7 +393,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-fsTC94H",
         "filename": "IMG_7038.JPG",
         "format": "JPG",
-        "archived_md5": "962faf079bc44bcc8d52935dff16e796"
+        "archived_md5": "962faf079bc44bcc8d52935dff16e796",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -359,15 +421,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_eg4rk6xustjrprv243qdrlcdti",
-        "media_path": "/media/kph_eg4rk6xustjrprv243qdrlcdti",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CY6E8MXG1JHRKW9GS1FYET.jpg",
+        "emdash_content_id": "01M1CY6H94T09GB5M8MH4GPB4M",
+        "emdash_media_id": "01M1CY6EM5KC6V0FN07APGWNJQ",
+        "r2_object_key": "01M1CY6E8MXG1JHRKW9GS1FYET.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0074a1733d3cbdcb86867b1fe30fe47c82c6e320b0052710333b6b145ca5378a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:47:47+00:00",
+        "public_asset": {
+          "sha256": "0074a1733d3cbdcb86867b1fe30fe47c82c6e320b0052710333b6b145ca5378a",
+          "bytes": 1760754,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:47:47+00:00"
+        }
       }
     },
     {
@@ -380,7 +451,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-98LG73m",
         "filename": "IMG_3080.JPG",
         "format": "JPG",
-        "archived_md5": "4ce860f5ee731549c2b2f521ee4745b6"
+        "archived_md5": "4ce860f5ee731549c2b2f521ee4745b6",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -407,15 +479,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_cuchcavizx4kbk2wd6e7wdmqiq",
-        "media_path": "/media/kph_cuchcavizx4kbk2wd6e7wdmqiq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CY6TW0661QV6SZHK4K1256.jpg",
+        "emdash_content_id": "01M1CY72E9CTZQ7816XDB8703B",
+        "emdash_media_id": "01M1CY6V7HDKDJ11KNXTZDC2WB",
+        "r2_object_key": "01M1CY6TW0661QV6SZHK4K1256.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9fd974ed9b361367bf008aee6b603e6d5b39ff22e73af7af03ca33160ab0116d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:48:50+00:00",
+        "public_asset": {
+          "sha256": "9fd974ed9b361367bf008aee6b603e6d5b39ff22e73af7af03ca33160ab0116d",
+          "bytes": 1341628,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:48:50+00:00"
+        }
       }
     },
     {
@@ -428,7 +509,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SGRvDxp",
         "filename": "IMG_7040.JPG",
         "format": "JPG",
-        "archived_md5": "11f2670181b3f598a4f8ac04f82b32f3"
+        "archived_md5": "11f2670181b3f598a4f8ac04f82b32f3",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -455,15 +537,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ovmuxeslo6hjw4ry4mr42atp2i",
-        "media_path": "/media/kph_ovmuxeslo6hjw4ry4mr42atp2i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CY7AAHGXZY9XS0R2J07VBF.jpg",
+        "emdash_content_id": "01M1CY7DGY9EDGZKVNDQHS38N1",
+        "emdash_media_id": "01M1CY7ASEBB2AFZRN2C64BA4E",
+        "r2_object_key": "01M1CY7AAHGXZY9XS0R2J07VBF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "87f2d6ea607feefa49813ec002da1bc9d262372b90d6af17324455f4f261a9fb",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:48:55+00:00",
+        "public_asset": {
+          "sha256": "87f2d6ea607feefa49813ec002da1bc9d262372b90d6af17324455f4f261a9fb",
+          "bytes": 1701521,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:48:55+00:00"
+        }
       }
     },
     {
@@ -476,7 +567,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-5G2fS9G",
         "filename": "IMG_7041.JPG",
         "format": "JPG",
-        "archived_md5": "822e636dc5cb032c8c04a4728ed74cfa"
+        "archived_md5": "822e636dc5cb032c8c04a4728ed74cfa",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -503,15 +595,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gpivflnhmyunnbssxnlkttkej4",
-        "media_path": "/media/kph_gpivflnhmyunnbssxnlkttkej4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D05XTPJ1XKZ2ZB78Y38Z96.01M1D05YB9SXJ3TBMRDKYCKEFA.jpg",
+        "emdash_content_id": "01M1D063CYXSDAHPZW3MXW6SS8",
+        "emdash_media_id": "01M1D05XTP2HQQDNRT7PG3QJ0N",
+        "r2_object_key": "01M1D05XTPJ1XKZ2ZB78Y38Z96.01M1D05YB9SXJ3TBMRDKYCKEFA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "77ce478312d9f7316e91bcfd3232144817a502f8b7579fdef875f3a68f73e4ca",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:49:09+00:00",
+        "public_asset": {
+          "sha256": "77ce478312d9f7316e91bcfd3232144817a502f8b7579fdef875f3a68f73e4ca",
+          "bytes": 1239734,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:49:09+00:00"
+        }
       }
     },
     {
@@ -524,7 +625,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-tPTLdCt",
         "filename": "IMG_7042.JPG",
         "format": "JPG",
-        "archived_md5": "e770bf37ba11404fca1d70981c83d052"
+        "archived_md5": "e770bf37ba11404fca1d70981c83d052",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -551,15 +653,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_irekv52dnkh7zezu6n7eldumgu",
-        "media_path": "/media/kph_irekv52dnkh7zezu6n7eldumgu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D06CDRC9ASX4W9R4GC5QGT.01M1D06CY7K0HPN1PSDAMCPT4D.jpg",
+        "emdash_content_id": "01M1D06J8VB2RZB12K4TR2AF29",
+        "emdash_media_id": "01M1D06CDRA96KGQB187JFS0TG",
+        "r2_object_key": "01M1D06CDRC9ASX4W9R4GC5QGT.01M1D06CY7K0HPN1PSDAMCPT4D.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0d99a01716874c833fcae592791c3e028aff38da98baf57625d031319750524c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:49:24+00:00",
+        "public_asset": {
+          "sha256": "0d99a01716874c833fcae592791c3e028aff38da98baf57625d031319750524c",
+          "bytes": 1554206,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:49:24+00:00"
+        }
       }
     },
     {
@@ -572,7 +683,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-6szdFqS",
         "filename": "IMG_7043.JPG",
         "format": "JPG",
-        "archived_md5": "3849bd8c85e6ff5f2f8799710dde7135"
+        "archived_md5": "3849bd8c85e6ff5f2f8799710dde7135",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -599,15 +711,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_yjvdhg5uatrzzq4oz5i7pkhlry",
-        "media_path": "/media/kph_yjvdhg5uatrzzq4oz5i7pkhlry",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D0AWJM861EBCVW79J2P84X.01M1D0AX2QW7R1GDJQSZX4DBKH.jpg",
+        "emdash_content_id": "01M1D0B2QZ6D9ZDB1ATTT27F68",
+        "emdash_media_id": "01M1D0AWJMFQ3KHFXVDZM1VPQ4",
+        "r2_object_key": "01M1D0AWJM861EBCVW79J2P84X.01M1D0AX2QW7R1GDJQSZX4DBKH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e690b87dbf3da3ff724dbf68ed36286154760b970c99d28c8f295fffdf9cfc96",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:51:53+00:00",
+        "public_asset": {
+          "sha256": "e690b87dbf3da3ff724dbf68ed36286154760b970c99d28c8f295fffdf9cfc96",
+          "bytes": 1061985,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:51:53+00:00"
+        }
       }
     },
     {
@@ -620,7 +741,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PF7PcpS",
         "filename": "IMG_7046.JPG",
         "format": "JPG",
-        "archived_md5": "66e36a1a23462ec378e90e78e5d9dcec"
+        "archived_md5": "66e36a1a23462ec378e90e78e5d9dcec",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -647,15 +769,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uq3khxjo6iobja5m2za33amgde",
-        "media_path": "/media/kph_uq3khxjo6iobja5m2za33amgde",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D0BBFAMZGAC6ST1AXXCJWX.01M1D0BC2MCF5X2BEBW7R3PDYN.jpg",
+        "emdash_content_id": "01M1D0BH7B8Q00HAXVT7B672N1",
+        "emdash_media_id": "01M1D0BBFAM1FZFETXHN969R8V",
+        "r2_object_key": "01M1D0BBFAMZGAC6ST1AXXCJWX.01M1D0BC2MCF5X2BEBW7R3PDYN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "57507c97b4cbefc41885590d71998337cc9099e2687d855523fae8e435c26807",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:52:07+00:00",
+        "public_asset": {
+          "sha256": "57507c97b4cbefc41885590d71998337cc9099e2687d855523fae8e435c26807",
+          "bytes": 909769,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:52:07+00:00"
+        }
       }
     },
     {
@@ -668,7 +799,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-TJ6mRGG",
         "filename": "IMG_7047.JPG",
         "format": "JPG",
-        "archived_md5": "1143ab687bf2b9d9a36ca57c0c48e405"
+        "archived_md5": "1143ab687bf2b9d9a36ca57c0c48e405",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -695,15 +827,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zassqyd5ddnprcbofpa5cq56pa",
-        "media_path": "/media/kph_zassqyd5ddnprcbofpa5cq56pa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D0N0CN8X9HNCEVX3M3S7G4.01M1D0N0XSEJJB0M6W4396PBTH.jpg",
+        "emdash_content_id": "01M1D0N5T1XCQZ5DZA3DCN2CH4",
+        "emdash_media_id": "01M1D0N0CNBWNVKFZTQS1BA08H",
+        "r2_object_key": "01M1D0N0CN8X9HNCEVX3M3S7G4.01M1D0N0XSEJJB0M6W4396PBTH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cf4615d618c8b7a23fb04de5347502bf99479f46f33c3bc9d46a1f170c09a6fd",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T22:57:23+00:00",
+        "public_asset": {
+          "sha256": "cf4615d618c8b7a23fb04de5347502bf99479f46f33c3bc9d46a1f170c09a6fd",
+          "bytes": 835328,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T22:57:23+00:00"
+        }
       }
     },
     {
@@ -716,7 +857,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-jmfPpvq",
         "filename": "IMG_7048.JPG",
         "format": "JPG",
-        "archived_md5": "12cb78a5ab49a21c51846d1c0930a4d1"
+        "archived_md5": "12cb78a5ab49a21c51846d1c0930a4d1",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -743,15 +885,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_an64o7u2tszc7t45g7sktj75lm",
-        "media_path": "/media/kph_an64o7u2tszc7t45g7sktj75lm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D0YMXTKABD5TE38FDA1NJ8.01M1D0YNE0CC3C6WC155XQ05G1.jpg",
+        "emdash_content_id": "01M1D0YSWFAZV88HQ64CK2QT45",
+        "emdash_media_id": "01M1D0YMXT0JZHY92NS1G2N1Q1",
+        "r2_object_key": "01M1D0YMXTKABD5TE38FDA1NJ8.01M1D0YNE0CC3C6WC155XQ05G1.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f90c2e426de6601303732715db05109efca3a63ae6add8f5ed95731fdc863112",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:02:38+00:00",
+        "public_asset": {
+          "sha256": "f90c2e426de6601303732715db05109efca3a63ae6add8f5ed95731fdc863112",
+          "bytes": 759286,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:02:38+00:00"
+        }
       }
     },
     {
@@ -764,7 +915,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-rG3JDg3",
         "filename": "IMG_7049.JPG",
         "format": "JPG",
-        "archived_md5": "61c6d1ff3ab0e9380bff5e31934599d0"
+        "archived_md5": "61c6d1ff3ab0e9380bff5e31934599d0",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -791,15 +943,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_flq5ktgfl6a6t63feqchv33q5e",
-        "media_path": "/media/kph_flq5ktgfl6a6t63feqchv33q5e",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D0Z1PHC75GACQCMFB5HQ19.01M1D0Z27QPZ5BV0K5XQSCJBJF.jpg",
+        "emdash_content_id": "01M1D0Z729W5S5183WMDPESVCQ",
+        "emdash_media_id": "01M1D0Z1PHXZPZWCAPM37KD63C",
+        "r2_object_key": "01M1D0Z1PHC75GACQCMFB5HQ19.01M1D0Z27QPZ5BV0K5XQSCJBJF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "667da52c08ca36ff52e7cd13c9fbf3cc12a41a8992b73e963bbe13328da906c8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:02:52+00:00",
+        "public_asset": {
+          "sha256": "667da52c08ca36ff52e7cd13c9fbf3cc12a41a8992b73e963bbe13328da906c8",
+          "bytes": 950279,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:02:52+00:00"
+        }
       }
     },
     {
@@ -812,7 +973,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-6fxDpXv",
         "filename": "IMG_7050.JPG",
         "format": "JPG",
-        "archived_md5": "8cf60189832664bd392d5e041104d79a"
+        "archived_md5": "8cf60189832664bd392d5e041104d79a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -839,15 +1001,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_jdjfivnzofat3p2fvm2yms533i",
-        "media_path": "/media/kph_jdjfivnzofat3p2fvm2yms533i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D18PN50735MY3F52Z99JFF.01M1D18Q9WE5N0N476RPBR3JJQ.jpg",
+        "emdash_content_id": "01M1D18WD2N8V4K5D1ZS7005CA",
+        "emdash_media_id": "01M1D18PN5FS86N2NVZQKVV28C",
+        "r2_object_key": "01M1D18PN50735MY3F52Z99JFF.01M1D18Q9WE5N0N476RPBR3JJQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "85b8fb51655949c60450afaa3c565504ec9a8fbd3203bfcaf8d8322dd0df461f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:08:09+00:00",
+        "public_asset": {
+          "sha256": "85b8fb51655949c60450afaa3c565504ec9a8fbd3203bfcaf8d8322dd0df461f",
+          "bytes": 1047577,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:08:09+00:00"
+        }
       }
     },
     {
@@ -860,7 +1031,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-RKZWbvp",
         "filename": "IMG_7051.JPG",
         "format": "JPG",
-        "archived_md5": "d6ec5233945052d3180841be48ba8207"
+        "archived_md5": "d6ec5233945052d3180841be48ba8207",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -887,15 +1059,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_jtxgwgi3f2vr72y3yd7lqkh2xu",
-        "media_path": "/media/kph_jtxgwgi3f2vr72y3yd7lqkh2xu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D194NYNWV0EWMYQHHFNC8W.01M1D195BFGHQD6J809WPAD8V9.jpg",
+        "emdash_content_id": "01M1D19A03ANFSJ4K5NPF0EGV7",
+        "emdash_media_id": "01M1D194NYWVKZW0FT3Q5MY1AJ",
+        "r2_object_key": "01M1D194NYNWV0EWMYQHHFNC8W.01M1D195BFGHQD6J809WPAD8V9.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7f03c3e5296623682ee42c96401db1466108b055fde720137761d555bb56123a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:08:22+00:00",
+        "public_asset": {
+          "sha256": "7f03c3e5296623682ee42c96401db1466108b055fde720137761d555bb56123a",
+          "bytes": 687019,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:08:22+00:00"
+        }
       }
     },
     {
@@ -908,7 +1089,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PbGgdpc",
         "filename": "IMG_3083.JPG",
         "format": "JPG",
-        "archived_md5": "ad538ff46c3ad1c6ec75ab615fe866b0"
+        "archived_md5": "ad538ff46c3ad1c6ec75ab615fe866b0",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -935,15 +1117,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_qmj4dqqn5kygrynk4p5t4cjizi",
-        "media_path": "/media/kph_qmj4dqqn5kygrynk4p5t4cjizi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1BC14D6ED1Q9G4KD707RC.01M1D1BCK0X1PDB1V3S6BA520J.jpg",
+        "emdash_content_id": "01M1D1BHV818ZZD942X14K0PNV",
+        "emdash_media_id": "01M1D1BC148R21NC4JDP5RKNGR",
+        "r2_object_key": "01M1D1BC14D6ED1Q9G4KD707RC.01M1D1BCK0X1PDB1V3S6BA520J.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f741c16935c1ecfd0011b469cd030f78eba0e779338b0e5be06ba18dc53a8300",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:09:36+00:00",
+        "public_asset": {
+          "sha256": "f741c16935c1ecfd0011b469cd030f78eba0e779338b0e5be06ba18dc53a8300",
+          "bytes": 1475497,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:09:36+00:00"
+        }
       }
     },
     {
@@ -956,7 +1147,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-zR5nsfg",
         "filename": "IMG_7019.JPG",
         "format": "JPG",
-        "archived_md5": "e4d190a0e55f02192fe4177a54488ec5"
+        "archived_md5": "e4d190a0e55f02192fe4177a54488ec5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -983,15 +1175,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bqqz3yx6vdwwj2xyq6ym2k2gci",
-        "media_path": "/media/kph_bqqz3yx6vdwwj2xyq6ym2k2gci",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1BT0W2XSMDTMJCA69GS77.01M1D1BTN86W4PKA2ME5RP8477.jpg",
+        "emdash_content_id": "01M1D1BZQXC09ZMVZBY2P9J4E3",
+        "emdash_media_id": "01M1D1BT0WQSKY0J28WXQW1KJ7",
+        "r2_object_key": "01M1D1BT0W2XSMDTMJCA69GS77.01M1D1BTN86W4PKA2ME5RP8477.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d83dbf70385a1388cd091c439a0db96e965997077a991856d497c0cb1244d25f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:09:50+00:00",
+        "public_asset": {
+          "sha256": "d83dbf70385a1388cd091c439a0db96e965997077a991856d497c0cb1244d25f",
+          "bytes": 756361,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:09:50+00:00"
+        }
       }
     },
     {
@@ -1004,7 +1205,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-rvNqgx3",
         "filename": "IMG_7053.JPG",
         "format": "JPG",
-        "archived_md5": "1e8abbf3575df753c4e1e4eb9e77e160"
+        "archived_md5": "1e8abbf3575df753c4e1e4eb9e77e160",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1031,15 +1233,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lpkf5ymz47vty22hr3y6blc4mm",
-        "media_path": "/media/kph_lpkf5ymz47vty22hr3y6blc4mm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1C7N1PHJ17BERFM5YKTW2.01M1D1C85PSE50J2DGVXY0D8SQ.jpg",
+        "emdash_content_id": "01M1D1CD78ZZM9E1FP0XSPXMYW",
+        "emdash_media_id": "01M1D1C7N1ENPQTHY0X2AWRCPQ",
+        "r2_object_key": "01M1D1C7N1PHJ17BERFM5YKTW2.01M1D1C85PSE50J2DGVXY0D8SQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "33924978f675e7a63b218c57f08cc60688a2d0761ad4e5b430a6a52a9429f516",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:10:04+00:00",
+        "public_asset": {
+          "sha256": "33924978f675e7a63b218c57f08cc60688a2d0761ad4e5b430a6a52a9429f516",
+          "bytes": 1417191,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:10:04+00:00"
+        }
       }
     },
     {
@@ -1052,7 +1263,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-cGMx4wS",
         "filename": "IMG_7062.JPG",
         "format": "JPG",
-        "archived_md5": "30bb77759590b9edf97137d1b6b31bf8"
+        "archived_md5": "30bb77759590b9edf97137d1b6b31bf8",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1079,15 +1291,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hyd5ly6ykxayfvzrlddfpdmeua",
-        "media_path": "/media/kph_hyd5ly6ykxayfvzrlddfpdmeua",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1CNDN8H42FKN12FMDK1CK.01M1D1CNY08VTA46YSTH4PHZZ7.jpg",
+        "emdash_content_id": "01M1D1CTAXZ8VAW6BFMFHJ7AE6",
+        "emdash_media_id": "01M1D1CNDN0EF37Y15JWMEV733",
+        "r2_object_key": "01M1D1CNDN8H42FKN12FMDK1CK.01M1D1CNY08VTA46YSTH4PHZZ7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "79919bbe7cc930be66eb46e75fb7cc32a5496f78127c8486e96abb07bc94db6e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:10:17+00:00",
+        "public_asset": {
+          "sha256": "79919bbe7cc930be66eb46e75fb7cc32a5496f78127c8486e96abb07bc94db6e",
+          "bytes": 1094010,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:10:17+00:00"
+        }
       }
     },
     {
@@ -1100,7 +1321,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XKmXSLX",
         "filename": "IMG_7064.JPG",
         "format": "JPG",
-        "archived_md5": "90316075ef54de0002f3f49698bcede4"
+        "archived_md5": "90316075ef54de0002f3f49698bcede4",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1127,15 +1349,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_mpu7ma2czvjm2zct3hiyqlbc5i",
-        "media_path": "/media/kph_mpu7ma2czvjm2zct3hiyqlbc5i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1D2P469WM67S8M0WVGFWK.01M1D1D387QTWXJT7P0FAD0F4F.jpg",
+        "emdash_content_id": "01M1D1D7SQGZP0AZ8PRY4MZ50B",
+        "emdash_media_id": "01M1D1D2P4TD6EQFHSGA8NMWTJ",
+        "r2_object_key": "01M1D1D2P469WM67S8M0WVGFWK.01M1D1D387QTWXJT7P0FAD0F4F.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8bb4fa516d7125f5616fb8ecc964ee7c59654919e7cabf3052da8199ed01bab6",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:10:31+00:00",
+        "public_asset": {
+          "sha256": "8bb4fa516d7125f5616fb8ecc964ee7c59654919e7cabf3052da8199ed01bab6",
+          "bytes": 1876506,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:10:31+00:00"
+        }
       }
     },
     {
@@ -1148,7 +1379,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-5zHSmgq",
         "filename": "IMG_3090.JPG",
         "format": "JPG",
-        "archived_md5": "3427143a4781693e5c156f4db009aa33"
+        "archived_md5": "3427143a4781693e5c156f4db009aa33",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1175,15 +1407,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lfic6r6qa7iiaif56elksxps4m",
-        "media_path": "/media/kph_lfic6r6qa7iiaif56elksxps4m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1DGEAZJH5YEW3KF0NTN20.01M1D1DH1CZK0DKJ1A42ZSPGHM.jpg",
+        "emdash_content_id": "01M1D1DNTKNEYHJH9PY2M2H8EY",
+        "emdash_media_id": "01M1D1DGEA8NJ68AH74KE6AY8D",
+        "r2_object_key": "01M1D1DGEAZJH5YEW3KF0NTN20.01M1D1DH1CZK0DKJ1A42ZSPGHM.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ca350f21c95924818696d04564170207db666d362a60e1bd5f1bacfb7003418c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:10:46+00:00",
+        "public_asset": {
+          "sha256": "ca350f21c95924818696d04564170207db666d362a60e1bd5f1bacfb7003418c",
+          "bytes": 1494805,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:10:46+00:00"
+        }
       }
     },
     {
@@ -1196,7 +1437,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-L2KG5Lx",
         "filename": "IMG_7067.JPG",
         "format": "JPG",
-        "archived_md5": "4f90a3c83eca2490859ca709104757ff"
+        "archived_md5": "4f90a3c83eca2490859ca709104757ff",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1223,15 +1465,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7e3n5ki2ofszecpk5q56dablfy",
-        "media_path": "/media/kph_7e3n5ki2ofszecpk5q56dablfy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1FR3MBHN5K4EFTMX3TFK3.01M1D1FRSCQ2B303ZZ8ZHX6C6S.jpg",
+        "emdash_content_id": "01M1D1FYJC03NKXYKM5M0621YG",
+        "emdash_media_id": "01M1D1FR3MFS99NVKR124Y6C4D",
+        "r2_object_key": "01M1D1FR3MBHN5K4EFTMX3TFK3.01M1D1FRSCQ2B303ZZ8ZHX6C6S.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a4fd767e9fc340e40ee2b5cfad9f27a807c23255f76dbab8d7366fb8018a638d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:12:00+00:00",
+        "public_asset": {
+          "sha256": "a4fd767e9fc340e40ee2b5cfad9f27a807c23255f76dbab8d7366fb8018a638d",
+          "bytes": 1158349,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:12:00+00:00"
+        }
       }
     },
     {
@@ -1244,7 +1495,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-gZWVX2c",
         "filename": "IMG_7068.JPG",
         "format": "JPG",
-        "archived_md5": "633cf39f266cd647b165d6cd825338ae"
+        "archived_md5": "633cf39f266cd647b165d6cd825338ae",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1271,15 +1523,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_barxfkuo63jb5zthrib4qthtdy",
-        "media_path": "/media/kph_barxfkuo63jb5zthrib4qthtdy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1G70PN8K4ZGD8VDHNCR5A.01M1D1G7KRG9T01XF2YXQPMMK3.jpg",
+        "emdash_content_id": "01M1D1GCNAH2ZM6VN113EJQKQ5",
+        "emdash_media_id": "01M1D1G70PCTKTF4FAS99Z60J7",
+        "r2_object_key": "01M1D1G70PN8K4ZGD8VDHNCR5A.01M1D1G7KRG9T01XF2YXQPMMK3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "42eca29b50e9c51adb3e480723ed2ffaa4b3cad81f799dd92fe0e1a156d641b6",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:12:15+00:00",
+        "public_asset": {
+          "sha256": "42eca29b50e9c51adb3e480723ed2ffaa4b3cad81f799dd92fe0e1a156d641b6",
+          "bytes": 1587752,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:12:15+00:00"
+        }
       }
     },
     {
@@ -1292,7 +1553,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-BFHNMQd",
         "filename": "IMG_7069.JPG",
         "format": "JPG",
-        "archived_md5": "464ebc6078acbaa1168fbc9cd6967d8c"
+        "archived_md5": "464ebc6078acbaa1168fbc9cd6967d8c",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1319,15 +1581,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lgg3fa6kgxm4wzwonegf6n74z4",
-        "media_path": "/media/kph_lgg3fa6kgxm4wzwonegf6n74z4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1GMX5S1RCN61N0NYFFA0V.01M1D1GNEF5VZ88SC4DG4169FW.jpg",
+        "emdash_content_id": "01M1D1GVR0A6SR5QBDZZETDM9X",
+        "emdash_media_id": "01M1D1GMX5Y0NFBEQ4E7W4KRVC",
+        "r2_object_key": "01M1D1GMX5S1RCN61N0NYFFA0V.01M1D1GNEF5VZ88SC4DG4169FW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "91b6037ca6bf78f4560a0f0ff54248ad2e5b070f3d5e33c95f2d38aef0c6f5dc",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:12:30+00:00",
+        "public_asset": {
+          "sha256": "91b6037ca6bf78f4560a0f0ff54248ad2e5b070f3d5e33c95f2d38aef0c6f5dc",
+          "bytes": 1465749,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:12:30+00:00"
+        }
       }
     },
     {
@@ -1340,7 +1611,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SV3mwnq",
         "filename": "IMG_7070.JPG",
         "format": "JPG",
-        "archived_md5": "5c2ea4cc27bbe76e1a0c80933afded71"
+        "archived_md5": "5c2ea4cc27bbe76e1a0c80933afded71",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1367,15 +1639,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_767zzn4rm6jrv3qcqsbeh3kd6a",
-        "media_path": "/media/kph_767zzn4rm6jrv3qcqsbeh3kd6a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1JWQV4BZ31ZXREVD93Z7G.01M1D1JX7WQTMJBKFJMP3699ZZ.jpg",
+        "emdash_content_id": "01M1D1K1XEFF1EVQYW60AKRD3C",
+        "emdash_media_id": "01M1D1JWQVAKTWHVTDNZRG5CMA",
+        "r2_object_key": "01M1D1JWQV4BZ31ZXREVD93Z7G.01M1D1JX7WQTMJBKFJMP3699ZZ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "4630c8932ae1984a263cf8e736976400fcf7f34eff76565e06f127615c6d09ee",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:13:43+00:00",
+        "public_asset": {
+          "sha256": "4630c8932ae1984a263cf8e736976400fcf7f34eff76565e06f127615c6d09ee",
+          "bytes": 1618913,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:13:43+00:00"
+        }
       }
     },
     {
@@ -1388,7 +1669,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XLtCbXk",
         "filename": "IMG_7071.JPG",
         "format": "JPG",
-        "archived_md5": "2570a40d99b90827868b2e4afc6ee361"
+        "archived_md5": "2570a40d99b90827868b2e4afc6ee361",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1415,15 +1697,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_qs47oow6o5msqs67vhb7nhazye",
-        "media_path": "/media/kph_qs47oow6o5msqs67vhb7nhazye",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1M9N90A930YS4Y2K8CYYP.01M1D1MAAD2BZ33XXBWEEAT8VG.jpg",
+        "emdash_content_id": "01M1D1MFV7KNB2RAACAV360W2T",
+        "emdash_media_id": "01M1D1M9N9TBN0HJFGSD67WMJZ",
+        "r2_object_key": "01M1D1M9N90A930YS4Y2K8CYYP.01M1D1MAAD2BZ33XXBWEEAT8VG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "23df37876ae48db962939c82129abf49cdc3ace47f8af84e7a7f3532c41a333a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:14:29+00:00",
+        "public_asset": {
+          "sha256": "23df37876ae48db962939c82129abf49cdc3ace47f8af84e7a7f3532c41a333a",
+          "bytes": 2207461,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:14:29+00:00"
+        }
       }
     },
     {
@@ -1436,7 +1727,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-S7RtGsb",
         "filename": "IMG_7074.JPG",
         "format": "JPG",
-        "archived_md5": "e8b6ab7e92d133d3023de606aa31bb4b"
+        "archived_md5": "e8b6ab7e92d133d3023de606aa31bb4b",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1463,15 +1755,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tdckgywycpt3dgrxjyknhsqbri",
-        "media_path": "/media/kph_tdckgywycpt3dgrxjyknhsqbri",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1MRCYAR3XQBVPY27SG4FJ.01M1D1MS17JMT7XEY2BHFNPPH6.jpg",
+        "emdash_content_id": "01M1D1MYJEFNEXG3SXS3H83SSB",
+        "emdash_media_id": "01M1D1MRCYSZ15K3B29SG180NS",
+        "r2_object_key": "01M1D1MRCYAR3XQBVPY27SG4FJ.01M1D1MS17JMT7XEY2BHFNPPH6.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5870f3b9efd950ce7c670eebfbaf8ca61ec4211c121b432309b5538c5156b4da",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:14:44+00:00",
+        "public_asset": {
+          "sha256": "5870f3b9efd950ce7c670eebfbaf8ca61ec4211c121b432309b5538c5156b4da",
+          "bytes": 1268107,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:14:44+00:00"
+        }
       }
     },
     {
@@ -1484,7 +1785,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-szRBpZ3",
         "filename": "IMG_7077.JPG",
         "format": "JPG",
-        "archived_md5": "f7bc3acb3519c1e46b3c183e302792d7"
+        "archived_md5": "f7bc3acb3519c1e46b3c183e302792d7",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1511,15 +1813,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_52ubfi26qyishbpaori6kfiilm",
-        "media_path": "/media/kph_52ubfi26qyishbpaori6kfiilm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1N6E0RQC3VZ6SJBWB40PK.01M1D1N70TYVZNNSTHB7YJ1MA0.jpg",
+        "emdash_content_id": "01M1D1NBW8S9GSCJ3RW5MXP8P1",
+        "emdash_media_id": "01M1D1N6E0WTBGB5ZATMZ4S5JJ",
+        "r2_object_key": "01M1D1N6E0RQC3VZ6SJBWB40PK.01M1D1N70TYVZNNSTHB7YJ1MA0.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "15a8d6a46b62c64f462cc1376eb142c55134572426be9e4c0746fa464c1ecf5d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:14:58+00:00",
+        "public_asset": {
+          "sha256": "15a8d6a46b62c64f462cc1376eb142c55134572426be9e4c0746fa464c1ecf5d",
+          "bytes": 1792727,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:14:58+00:00"
+        }
       }
     },
     {
@@ -1532,7 +1843,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-RtBCRDB",
         "filename": "IMG_3134.JPG",
         "format": "JPG",
-        "archived_md5": "987e9007411d5c01962d10477682a1ea"
+        "archived_md5": "987e9007411d5c01962d10477682a1ea",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1559,15 +1871,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_wbpd7qmpksqm5hl5cbrdxiixoy",
-        "media_path": "/media/kph_wbpd7qmpksqm5hl5cbrdxiixoy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1NMCNZ8HAWCVQ6WD8S19J.01M1D1NMZ87ND5FDSER3MW5CY4.jpg",
+        "emdash_content_id": "01M1D1NTCRFVJTS3Y688MNYCNT",
+        "emdash_media_id": "01M1D1NMCNVTXS66YHDWF4JVFS",
+        "r2_object_key": "01M1D1NMCNZ8HAWCVQ6WD8S19J.01M1D1NMZ87ND5FDSER3MW5CY4.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9812c73fbdee5724c093476df6b30e6b90e7c0f1026f31d9ab6258968d8fc552",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:15:13+00:00",
+        "public_asset": {
+          "sha256": "9812c73fbdee5724c093476df6b30e6b90e7c0f1026f31d9ab6258968d8fc552",
+          "bytes": 2837307,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:15:13+00:00"
+        }
       }
     },
     {
@@ -1580,7 +1901,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-WXgKmDd",
         "filename": "IMG_3141.JPG",
         "format": "JPG",
-        "archived_md5": "2edf76a180ac471496c6c56c2ac1f976"
+        "archived_md5": "2edf76a180ac471496c6c56c2ac1f976",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1607,15 +1929,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_jmg6jsatbg4gh6qy5wp5el2qca",
-        "media_path": "/media/kph_jmg6jsatbg4gh6qy5wp5el2qca",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1P3Y3YHM5ZY8PBNBG97BM.01M1D1P4HB6DHHWPB36KP64R86.jpg",
+        "emdash_content_id": "01M1D1PA2GF96AWX0P2JEG43TX",
+        "emdash_media_id": "01M1D1P3Y3JGE8JSMRA22M97AF",
+        "r2_object_key": "01M1D1P3Y3YHM5ZY8PBNBG97BM.01M1D1P4HB6DHHWPB36KP64R86.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5636100ca8e8c948994eb20dc15972e204ec72faa161256448425d615c7d28ce",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:15:29+00:00",
+        "public_asset": {
+          "sha256": "5636100ca8e8c948994eb20dc15972e204ec72faa161256448425d615c7d28ce",
+          "bytes": 2083006,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:15:29+00:00"
+        }
       }
     },
     {
@@ -1628,7 +1959,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-dnzjFCD",
         "filename": "IMG_7111.JPG",
         "format": "JPG",
-        "archived_md5": "49f5115514d30b0dc1326e9351f66210"
+        "archived_md5": "49f5115514d30b0dc1326e9351f66210",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1655,15 +1987,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6nfpsyeq5wt6crvevma6avx4va",
-        "media_path": "/media/kph_6nfpsyeq5wt6crvevma6avx4va",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1RCR25M7F76W22E971EZC.01M1D1RD9HD95ATNV4EQTY92WN.jpg",
+        "emdash_content_id": "01M1D1RJAM59HZEW2G0YWZYK1K",
+        "emdash_media_id": "01M1D1RCR295JB1A70TKCSQ3PX",
+        "r2_object_key": "01M1D1RCR25M7F76W22E971EZC.01M1D1RD9HD95ATNV4EQTY92WN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "4bc6dac66b26e7c3a8933bd1bd27585d03cfaf1a8d5dddff0846a75fde1bd93f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:16:43+00:00",
+        "public_asset": {
+          "sha256": "4bc6dac66b26e7c3a8933bd1bd27585d03cfaf1a8d5dddff0846a75fde1bd93f",
+          "bytes": 1257106,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:16:43+00:00"
+        }
       }
     },
     {
@@ -1676,7 +2017,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-LS4QRgh",
         "filename": "IMG_3145.JPG",
         "format": "JPG",
-        "archived_md5": "1b94462e75475a95366fdc59e5194bd2"
+        "archived_md5": "1b94462e75475a95366fdc59e5194bd2",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1703,15 +2045,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_n6fwcw4c5a3zizs5znwdfk3aji",
-        "media_path": "/media/kph_n6fwcw4c5a3zizs5znwdfk3aji",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1RT6HJBW33B8ZJSR853XW.01M1D1RTR8A9QAXYT3NF85HCR1.jpg",
+        "emdash_content_id": "01M1D1RZSRGKYCB7TRZGTA8E3V",
+        "emdash_media_id": "01M1D1RT6H2HC69ZR3E9204QEV",
+        "r2_object_key": "01M1D1RT6HJBW33B8ZJSR853XW.01M1D1RTR8A9QAXYT3NF85HCR1.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d33bfe90f140de7da24a2c9c1953bbd0eb39712aab7df61e777faaf2d53cc227",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:16:57+00:00",
+        "public_asset": {
+          "sha256": "d33bfe90f140de7da24a2c9c1953bbd0eb39712aab7df61e777faaf2d53cc227",
+          "bytes": 978723,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:16:57+00:00"
+        }
       }
     },
     {
@@ -1724,7 +2075,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XmbgSWS",
         "filename": "IMG_3148.JPG",
         "format": "JPG",
-        "archived_md5": "fb2d5e6ee9c4a662be94afe147042347"
+        "archived_md5": "fb2d5e6ee9c4a662be94afe147042347",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1751,15 +2103,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_2uposn4ljksagunfqcn3tcpjoy",
-        "media_path": "/media/kph_2uposn4ljksagunfqcn3tcpjoy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1S918PW8P415QSFGMX181.01M1D1S9JKGE3FBRGJ02K28RDZ.jpg",
+        "emdash_content_id": "01M1D1SEQJM0STH4502YQTRY0Q",
+        "emdash_media_id": "01M1D1S918B4SWC8W8XWKZBFRT",
+        "r2_object_key": "01M1D1S918PW8P415QSFGMX181.01M1D1S9JKGE3FBRGJ02K28RDZ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8ac0586672ef6ea5f436ead018eb323e6050e05d2a65176467df77278c45793b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:17:12+00:00",
+        "public_asset": {
+          "sha256": "8ac0586672ef6ea5f436ead018eb323e6050e05d2a65176467df77278c45793b",
+          "bytes": 803105,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:17:12+00:00"
+        }
       }
     },
     {
@@ -1772,7 +2133,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-Kz7d2RK",
         "filename": "IMG_3151.JPG",
         "format": "JPG",
-        "archived_md5": "adf7db611b7fe9b3b3d974c6252bf78a"
+        "archived_md5": "adf7db611b7fe9b3b3d974c6252bf78a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1799,15 +2161,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_67x56ejpf2re4mr7dwdow2l4gm",
-        "media_path": "/media/kph_67x56ejpf2re4mr7dwdow2l4gm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1VG7KQZZ81XDKF0Y4JG5W.01M1D1VGR4FYGZEJ7HX8H0Q4MR.jpg",
+        "emdash_content_id": "01M1D1VPTCDAHPYB8ANK2MJMEG",
+        "emdash_media_id": "01M1D1VG7K4PE8WHHW81G7BNVQ",
+        "r2_object_key": "01M1D1VG7KQZZ81XDKF0Y4JG5W.01M1D1VGR4FYGZEJ7HX8H0Q4MR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "394d9680b75f104ea57da64b3b77abeba06293a41583577c26416b175cc9c6eb",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:18:26+00:00",
+        "public_asset": {
+          "sha256": "394d9680b75f104ea57da64b3b77abeba06293a41583577c26416b175cc9c6eb",
+          "bytes": 1219697,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:18:26+00:00"
+        }
       }
     },
     {
@@ -1820,7 +2191,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-JGMTSWp",
         "filename": "IMG_7118.JPG",
         "format": "JPG",
-        "archived_md5": "fbbd15375ef1ef83f708685d02ab2b39"
+        "archived_md5": "fbbd15375ef1ef83f708685d02ab2b39",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1847,15 +2219,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_c724cqhsl2ikpr2ayngkkiwieu",
-        "media_path": "/media/kph_c724cqhsl2ikpr2ayngkkiwieu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1XS99CK4X3EVZ0VZTC9K2.01M1D1XT7MMKN7NQWMVVRBK55Q.jpg",
+        "emdash_content_id": "01M1D1XYX1TER7NZ1Z5287A536",
+        "emdash_media_id": "01M1D1XS995RQJ8BM3QFRXFF5F",
+        "r2_object_key": "01M1D1XS99CK4X3EVZ0VZTC9K2.01M1D1XT7MMKN7NQWMVVRBK55Q.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "94094e8e38c412358e3b9aa8f344321b307b9d46d6a99186d18c94e77734b190",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:19:39+00:00",
+        "public_asset": {
+          "sha256": "94094e8e38c412358e3b9aa8f344321b307b9d46d6a99186d18c94e77734b190",
+          "bytes": 1517739,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:19:39+00:00"
+        }
       }
     },
     {
@@ -1868,7 +2249,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-vnJ7XSz",
         "filename": "IMG_3158.JPG",
         "format": "JPG",
-        "archived_md5": "40bf3a1a6d7ef11ddcd8c0825c43f734"
+        "archived_md5": "40bf3a1a6d7ef11ddcd8c0825c43f734",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1895,15 +2277,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_so3gt6bafpyepykrbg77u3wo5i",
-        "media_path": "/media/kph_so3gt6bafpyepykrbg77u3wo5i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D1ZZY3HM0FSY9DE35DDY2V.01M1D200HNS97ZDX3JQ0HQ0SSZ.jpg",
+        "emdash_content_id": "01M1D205KQ96WF6HZWEMW28CY2",
+        "emdash_media_id": "01M1D1ZZY3R7B101XFKHC45W9P",
+        "r2_object_key": "01M1D1ZZY3HM0FSY9DE35DDY2V.01M1D200HNS97ZDX3JQ0HQ0SSZ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "74f049318f72ed4cd12b435aa94565134755855c164d34434d9389689533bf59",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:20:52+00:00",
+        "public_asset": {
+          "sha256": "74f049318f72ed4cd12b435aa94565134755855c164d34434d9389689533bf59",
+          "bytes": 2375585,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:20:52+00:00"
+        }
       }
     },
     {
@@ -1916,7 +2307,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-GXMvpb3",
         "filename": "IMG_7127.JPG",
         "format": "JPG",
-        "archived_md5": "8416ba5c5b0131e115e2bca6f06ca6de"
+        "archived_md5": "8416ba5c5b0131e115e2bca6f06ca6de",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1943,15 +2335,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tbugnwirdusukpq6vp6eoo5zxa",
-        "media_path": "/media/kph_tbugnwirdusukpq6vp6eoo5zxa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D23Y3BH88QDZXH7W5ZW17P.01M1D23YN0KW28FH0CC3JZRAYC.jpg",
+        "emdash_content_id": "01M1D243G6K3W46AG3BAXTA7RB",
+        "emdash_media_id": "01M1D23Y3BHP7EAJNCGFR0GC30",
+        "r2_object_key": "01M1D23Y3BH88QDZXH7W5ZW17P.01M1D23YN0KW28FH0CC3JZRAYC.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f41749c01f9fe2cc68a0ddd688d2a2e9386756588d6ab0cd5cc1e4dd90dce9e8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:23:01+00:00",
+        "public_asset": {
+          "sha256": "f41749c01f9fe2cc68a0ddd688d2a2e9386756588d6ab0cd5cc1e4dd90dce9e8",
+          "bytes": 979455,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:23:01+00:00"
+        }
       }
     },
     {
@@ -1964,7 +2365,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PHfQxZX",
         "filename": "IMG_7133.JPG",
         "format": "JPG",
-        "archived_md5": "370cf5e4763335379c01a09f5202b760"
+        "archived_md5": "370cf5e4763335379c01a09f5202b760",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1991,15 +2393,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_sy3zqze7766l2nphygzckxyh6m",
-        "media_path": "/media/kph_sy3zqze7766l2nphygzckxyh6m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D24CAJ32N0T5EB7Q00CJWB.01M1D24CV64K2591J4SSA9PC37.jpg",
+        "emdash_content_id": "01M1D24H84D07APWVCBGF1A965",
+        "emdash_media_id": "01M1D24CAJEK4N16KPQGC5QX54",
+        "r2_object_key": "01M1D24CAJ32N0T5EB7Q00CJWB.01M1D24CV64K2591J4SSA9PC37.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7be999f2e1a7981953ca39be11f5b3980e72a0f129aa03c4fda88b784162dfaa",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:23:15+00:00",
+        "public_asset": {
+          "sha256": "7be999f2e1a7981953ca39be11f5b3980e72a0f129aa03c4fda88b784162dfaa",
+          "bytes": 1354310,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:23:15+00:00"
+        }
       }
     },
     {
@@ -2012,7 +2423,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-qgcbLcL",
         "filename": "IMG_7144.JPG",
         "format": "JPG",
-        "archived_md5": "429e73d25e069954a68e35cc554a1139"
+        "archived_md5": "429e73d25e069954a68e35cc554a1139",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2039,15 +2451,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bxz4ci2ua6ccrvd2ccfnxm343u",
-        "media_path": "/media/kph_bxz4ci2ua6ccrvd2ccfnxm343u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D26HVBWKRBR35ZCSNQPN4F.01M1D26JBY4T127AMFD00ZRQFN.jpg",
+        "emdash_content_id": "01M1D26Q09RE5NVQKG0Y0AG2CZ",
+        "emdash_media_id": "01M1D26HVBQC9566BF9G5BBKMZ",
+        "r2_object_key": "01M1D26HVBWKRBR35ZCSNQPN4F.01M1D26JBY4T127AMFD00ZRQFN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c11802eb2cd33ac17ea6b44d2c8c9ddf546af95f1e04e6fdfaf63fb2906f3e47",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:24:26+00:00",
+        "public_asset": {
+          "sha256": "c11802eb2cd33ac17ea6b44d2c8c9ddf546af95f1e04e6fdfaf63fb2906f3e47",
+          "bytes": 1309547,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:24:26+00:00"
+        }
       }
     },
     {
@@ -2060,7 +2481,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-JJgz3Xj",
         "filename": "IMG_7156.JPG",
         "format": "JPG",
-        "archived_md5": "7d475e761dc9842d945ba6a0e9ea7d81"
+        "archived_md5": "7d475e761dc9842d945ba6a0e9ea7d81",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2087,15 +2509,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_b46urnkoryq24kdcuoq57js2qm",
-        "media_path": "/media/kph_b46urnkoryq24kdcuoq57js2qm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2G6V06EXNWSQ1Z50B48YH.01M1D2G7D38KAB70VJEZYVMZTP.jpg",
+        "emdash_content_id": "01M1D2GCKSGANYFY7XMXQHQ4PK",
+        "emdash_media_id": "01M1D2G6V0D0SP1CKTBABYB93D",
+        "r2_object_key": "01M1D2G6V06EXNWSQ1Z50B48YH.01M1D2G7D38KAB70VJEZYVMZTP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "29bdc802b2e80082a2af4c8c3d76dd00d6a18add93625a50dae797bcd83773f6",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:29:43+00:00",
+        "public_asset": {
+          "sha256": "29bdc802b2e80082a2af4c8c3d76dd00d6a18add93625a50dae797bcd83773f6",
+          "bytes": 615389,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:29:43+00:00"
+        }
       }
     },
     {
@@ -2108,7 +2539,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-72zw8vm",
         "filename": "IMG_7157.JPG",
         "format": "JPG",
-        "archived_md5": "767a752bc8d3c676b52b01e6bcfa8605"
+        "archived_md5": "767a752bc8d3c676b52b01e6bcfa8605",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2135,15 +2567,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_eew6wyjyp3jaqjkfsgqqvtpjry",
-        "media_path": "/media/kph_eew6wyjyp3jaqjkfsgqqvtpjry",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2GMEYM39F6QT577BXY5MZ.01M1D2GN29FPJT23GBKY4MH40N.jpg",
+        "emdash_content_id": "01M1D2GTKKEM83D1MBCQNA6FVB",
+        "emdash_media_id": "01M1D2GMEYZBVZC2XBTDSQGESZ",
+        "r2_object_key": "01M1D2GMEYM39F6QT577BXY5MZ.01M1D2GN29FPJT23GBKY4MH40N.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8a464f6f0c5c9ec763048c397f35cd6bc84e4b42597ff51c9a4504abc0055c3a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:29:57+00:00",
+        "public_asset": {
+          "sha256": "8a464f6f0c5c9ec763048c397f35cd6bc84e4b42597ff51c9a4504abc0055c3a",
+          "bytes": 823850,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:29:57+00:00"
+        }
       }
     },
     {
@@ -2156,7 +2597,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-BsPkXKZ",
         "filename": "IMG_7158.JPG",
         "format": "JPG",
-        "archived_md5": "8694716a76877cd2b88b52961ab32cfb"
+        "archived_md5": "8694716a76877cd2b88b52961ab32cfb",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2183,15 +2625,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vtezlpx2b7siajvpvkdjn3xmim",
-        "media_path": "/media/kph_vtezlpx2b7siajvpvkdjn3xmim",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2H25V1ZMK64NBHNG557SC.01M1D2H2VFQJR6S90D7XBT7CTC.jpg",
+        "emdash_content_id": "01M1D2H7PJR4WQ7VJ2MPBXAR9T",
+        "emdash_media_id": "01M1D2H25V7PB9GTCARSWWPCQB",
+        "r2_object_key": "01M1D2H25V1ZMK64NBHNG557SC.01M1D2H2VFQJR6S90D7XBT7CTC.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3c654ed0630f91b71172e33a925c8fb33fab962be127b44628316e9f051bc653",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:30:11+00:00",
+        "public_asset": {
+          "sha256": "3c654ed0630f91b71172e33a925c8fb33fab962be127b44628316e9f051bc653",
+          "bytes": 933922,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:30:11+00:00"
+        }
       }
     },
     {
@@ -2204,7 +2655,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-XCpKVNN",
         "filename": "IMG_7164.JPG",
         "format": "JPG",
-        "archived_md5": "f86702380eeb49e06cc750dc1369ff06"
+        "archived_md5": "f86702380eeb49e06cc750dc1369ff06",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2231,15 +2683,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gro4m2ghr4q6x3clskny5ttqmi",
-        "media_path": "/media/kph_gro4m2ghr4q6x3clskny5ttqmi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2HFA7DAX1HG1FNYJ3D8A3.01M1D2HFTCTSXE42MGBSDV6GPY.jpg",
+        "emdash_content_id": "01M1D2HMMW7VHBE9PW8XWK9CAD",
+        "emdash_media_id": "01M1D2HFA7E24DRZAK1NXXK85Q",
+        "r2_object_key": "01M1D2HFA7DAX1HG1FNYJ3D8A3.01M1D2HFTCTSXE42MGBSDV6GPY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f724028d98d32396bb1b471c60ad5a7611088233b9d57c3be97f5ebfa6477435",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:30:24+00:00",
+        "public_asset": {
+          "sha256": "f724028d98d32396bb1b471c60ad5a7611088233b9d57c3be97f5ebfa6477435",
+          "bytes": 797107,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:30:24+00:00"
+        }
       }
     },
     {
@@ -2252,7 +2713,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-hMGh3hL",
         "filename": "IMG_7167.JPG",
         "format": "JPG",
-        "archived_md5": "90ba0428e9953757fa335b735f528da4"
+        "archived_md5": "90ba0428e9953757fa335b735f528da4",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2279,15 +2741,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7zvhysohh2gdil4lb7vtylbdza",
-        "media_path": "/media/kph_7zvhysohh2gdil4lb7vtylbdza",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2HWWHMQVFP9J882QEJK3A.01M1D2HXD4607AXATKTEFBR5N4.jpg",
+        "emdash_content_id": "01M1D2J26BEQZXRE6G8XQ20PQX",
+        "emdash_media_id": "01M1D2HWWHXV4VQ4CQ7DERK4ZJ",
+        "r2_object_key": "01M1D2HWWHMQVFP9J882QEJK3A.01M1D2HXD4607AXATKTEFBR5N4.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "59d538a96aac7b71cede8b21f5986cfbcce2b4c9c6241e9d9b148c06b49f15b7",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:30:38+00:00",
+        "public_asset": {
+          "sha256": "59d538a96aac7b71cede8b21f5986cfbcce2b4c9c6241e9d9b148c06b49f15b7",
+          "bytes": 944692,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:30:38+00:00"
+        }
       }
     },
     {
@@ -2300,7 +2771,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-CGVk9HL",
         "filename": "IMG_3172.JPG",
         "format": "JPG",
-        "archived_md5": "f30daea58350d7098ec13f508bacbb04"
+        "archived_md5": "f30daea58350d7098ec13f508bacbb04",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2327,15 +2799,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_x2qdke5s2kcc4bx4pv4jowxcge",
-        "media_path": "/media/kph_x2qdke5s2kcc4bx4pv4jowxcge",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2J9TCW53N2QKS35DMF5H0.01M1D2JAWWBE1AYH4XDQAGSK9V.jpg",
+        "emdash_content_id": "01M1D2JG5X1PTH6Q0C8JF7DBEK",
+        "emdash_media_id": "01M1D2J9TCQ0NNSP7EA0PRVP3K",
+        "r2_object_key": "01M1D2J9TCW53N2QKS35DMF5H0.01M1D2JAWWBE1AYH4XDQAGSK9V.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "44d51039c4439588b3eb49bfd790a1901fac4151670614a8de58e663b1ffa106",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:30:53+00:00",
+        "public_asset": {
+          "sha256": "44d51039c4439588b3eb49bfd790a1901fac4151670614a8de58e663b1ffa106",
+          "bytes": 1215890,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:30:53+00:00"
+        }
       }
     },
     {
@@ -2348,7 +2829,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-WmJn9PV",
         "filename": "IMG_7168.JPG",
         "format": "JPG",
-        "archived_md5": "5d35300b40282d80ed80320f7523ca54"
+        "archived_md5": "5d35300b40282d80ed80320f7523ca54",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2375,15 +2857,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pqwcrlpc54vvn6hxxy7jgkts2e",
-        "media_path": "/media/kph_pqwcrlpc54vvn6hxxy7jgkts2e",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2JRAHZ67QFQRCPD0BK9AV.01M1D2JRYHMZWB8MNK08A7314C.jpg",
+        "emdash_content_id": "01M1D2JYJCBP40F8FKSNWS0T99",
+        "emdash_media_id": "01M1D2JRAHS777YRBHKP27JTA1",
+        "r2_object_key": "01M1D2JRAHZ67QFQRCPD0BK9AV.01M1D2JRYHMZWB8MNK08A7314C.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "428fa651f3548a418858ce97d8915538cdb0bd246a0eb4eb4b6c70437c199931",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:31:07+00:00",
+        "public_asset": {
+          "sha256": "428fa651f3548a418858ce97d8915538cdb0bd246a0eb4eb4b6c70437c199931",
+          "bytes": 1062689,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:31:07+00:00"
+        }
       }
     },
     {
@@ -2396,7 +2887,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-G23P4DR",
         "filename": "IMG_7173.JPG",
         "format": "JPG",
-        "archived_md5": "a1bc5a06017c304e8aa702cc18e7725a"
+        "archived_md5": "a1bc5a06017c304e8aa702cc18e7725a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2423,15 +2915,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5vp4kurffj4tux25vmasxtb2fm",
-        "media_path": "/media/kph_5vp4kurffj4tux25vmasxtb2fm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2WD60Z8NN956M0RQEQB5X.01M1D2WDSNNSH9Q30XNFBVJAYF.jpg",
+        "emdash_content_id": "01M1D2WJ7H608TAWQ7K1JP1NM9",
+        "emdash_media_id": "01M1D2WD60X8CQ0HRRY1ACXQXF",
+        "r2_object_key": "01M1D2WD60Z8NN956M0RQEQB5X.01M1D2WDSNNSH9Q30XNFBVJAYF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "badb3f5e710fff0104334147de9526c626e6764a7a49e81077ec973e3662505e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:36:22+00:00",
+        "public_asset": {
+          "sha256": "badb3f5e710fff0104334147de9526c626e6764a7a49e81077ec973e3662505e",
+          "bytes": 1038167,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:36:22+00:00"
+        }
       }
     },
     {
@@ -2444,7 +2945,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-PvF9v8j",
         "filename": "IMG_7174.JPG",
         "format": "JPG",
-        "archived_md5": "6fdc60fc3adf8b0dc211fb5b998fc3e3"
+        "archived_md5": "6fdc60fc3adf8b0dc211fb5b998fc3e3",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2471,15 +2973,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_xsqyolco37lavzdw3ks6cfwu4q",
-        "media_path": "/media/kph_xsqyolco37lavzdw3ks6cfwu4q",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2WV2CVWQV457PKQJK80C4.01M1D2WVJWQ9HRSDEW31FGJ0QQ.jpg",
+        "emdash_content_id": "01M1D2X00TK8CXFTZCSHBKD2VH",
+        "emdash_media_id": "01M1D2WV2C8XZ414X8E3D30H90",
+        "r2_object_key": "01M1D2WV2CVWQV457PKQJK80C4.01M1D2WVJWQ9HRSDEW31FGJ0QQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b3d02566161f953ceaa1b65ecbaf7503b5109f9ac020587dc5277fd73f4267d0",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:36:37+00:00",
+        "public_asset": {
+          "sha256": "b3d02566161f953ceaa1b65ecbaf7503b5109f9ac020587dc5277fd73f4267d0",
+          "bytes": 1215743,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:36:37+00:00"
+        }
       }
     },
     {
@@ -2492,7 +3003,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-7HK9bJS",
         "filename": "IMG_7187.JPG",
         "format": "JPG",
-        "archived_md5": "9c2051eb38cdd9b8e6a6b198ebc4c087"
+        "archived_md5": "9c2051eb38cdd9b8e6a6b198ebc4c087",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2519,15 +3031,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ilicd5om2nc6lwmtttvbeqqh4q",
-        "media_path": "/media/kph_ilicd5om2nc6lwmtttvbeqqh4q",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2X8XKKD2TZ06A4WF1YR47.01M1D2X9GFYT6DFSMP22QM245G.jpg",
+        "emdash_content_id": "01M1D2XEKAX7N7QGECRSP3N2XG",
+        "emdash_media_id": "01M1D2X8XKAA8WWJ28GPY8D5MB",
+        "r2_object_key": "01M1D2X8XKKD2TZ06A4WF1YR47.01M1D2X9GFYT6DFSMP22QM245G.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "15f31c93765f7a22b5a661498645885a2524f905e51b97e7e537c271030f10f5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:36:51+00:00",
+        "public_asset": {
+          "sha256": "15f31c93765f7a22b5a661498645885a2524f905e51b97e7e537c271030f10f5",
+          "bytes": 1396596,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:36:51+00:00"
+        }
       }
     },
     {
@@ -2540,7 +3061,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-nn8kHXD",
         "filename": "IMG_7191.JPG",
         "format": "JPG",
-        "archived_md5": "be19b4da6d0bf6ab9c9b71d569549854"
+        "archived_md5": "be19b4da6d0bf6ab9c9b71d569549854",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2567,15 +3089,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ed2lvzavpoctbpsl6hb3qa35fu",
-        "media_path": "/media/kph_ed2lvzavpoctbpsl6hb3qa35fu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2XQ89WDQJE1AT8ZN2DJ57.01M1D2XQSVK70EWH5B3TQFJDQD.jpg",
+        "emdash_content_id": "01M1D2XWTM1DDFDCJSP356SSK7",
+        "emdash_media_id": "01M1D2XQ89D49FHKF14NZH5P92",
+        "r2_object_key": "01M1D2XQ89WDQJE1AT8ZN2DJ57.01M1D2XQSVK70EWH5B3TQFJDQD.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "45c0d0f71ba97135539ea06d5bc4072f0877ef3b46415dd9ca43fd65791ab6a5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:37:06+00:00",
+        "public_asset": {
+          "sha256": "45c0d0f71ba97135539ea06d5bc4072f0877ef3b46415dd9ca43fd65791ab6a5",
+          "bytes": 1733387,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:37:06+00:00"
+        }
       }
     },
     {
@@ -2588,7 +3119,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-9dhXFNr",
         "filename": "IMG_7228.JPG",
         "format": "JPG",
-        "archived_md5": "fd6ee653f7c0f6b074c08b8171894622"
+        "archived_md5": "fd6ee653f7c0f6b074c08b8171894622",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2615,15 +3147,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_avaesbo5e632edza4uwnrjpuna",
-        "media_path": "/media/kph_avaesbo5e632edza4uwnrjpuna",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D2Z3WQVVAFJTKXX04B0Z8R.01M1D2Z4D9VH1Q2GR240K0Q51G.jpg",
+        "emdash_content_id": "01M1D2Z8XC9PP91QNM6FEJY6RF",
+        "emdash_media_id": "01M1D2Z3WQV174K5CND1RWCK99",
+        "r2_object_key": "01M1D2Z3WQVVAFJTKXX04B0Z8R.01M1D2Z4D9VH1Q2GR240K0Q51G.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cc7b52d716eb7febec3815895ff94a5a00953f8cc60469f313c25aca8cde90ac",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:37:51+00:00",
+        "public_asset": {
+          "sha256": "cc7b52d716eb7febec3815895ff94a5a00953f8cc60469f313c25aca8cde90ac",
+          "bytes": 1274287,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:37:51+00:00"
+        }
       }
     },
     {
@@ -2636,7 +3177,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-snCKgvV",
         "filename": "IMG_7237.JPG",
         "format": "JPG",
-        "archived_md5": "2d3d6d0382560c2c8c0fe0ad9a44cf96"
+        "archived_md5": "2d3d6d0382560c2c8c0fe0ad9a44cf96",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2663,15 +3205,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_qibpdr73dksxam3k26nvyghize",
-        "media_path": "/media/kph_qibpdr73dksxam3k26nvyghize",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D319D6EZ2QM0RV89WB293P.01M1D319Z0SK17J92AYNZ2MD3J.jpg",
+        "emdash_content_id": "01M1D31EW28J1XQWYCEG1KFHJA",
+        "emdash_media_id": "01M1D319D6N7Q32QJQ5Q8Q83J8",
+        "r2_object_key": "01M1D319D6EZ2QM0RV89WB293P.01M1D319Z0SK17J92AYNZ2MD3J.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d65c85f4499f4264929c2d7878218f47d5479996b15379feb7583ea9539f698f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:39:02+00:00",
+        "public_asset": {
+          "sha256": "d65c85f4499f4264929c2d7878218f47d5479996b15379feb7583ea9539f698f",
+          "bytes": 1805508,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:39:02+00:00"
+        }
       }
     },
     {
@@ -2684,7 +3235,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-qWrfXT2",
         "filename": "IMG_7243.JPG",
         "format": "JPG",
-        "archived_md5": "20b7b04a9c771bf1eebc87f072e54c6e"
+        "archived_md5": "20b7b04a9c771bf1eebc87f072e54c6e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2711,15 +3263,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_scxqu4ujoaqlos4gpnwxuzgpvu",
-        "media_path": "/media/kph_scxqu4ujoaqlos4gpnwxuzgpvu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D31PXY228ACWS15F61XDBQ.01M1D31QESF6RB1TTKXY8KNHZN.jpg",
+        "emdash_content_id": "01M1D31WA120HV6R0M6Y3XEZ37",
+        "emdash_media_id": "01M1D31PXY7E9KXFNDND43CJS0",
+        "r2_object_key": "01M1D31PXY228ACWS15F61XDBQ.01M1D31QESF6RB1TTKXY8KNHZN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1aff6eeb933862cec7e1234ae621ef2b6ecbc889482208c56e7a90da3ab7fcd8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:39:16+00:00",
+        "public_asset": {
+          "sha256": "1aff6eeb933862cec7e1234ae621ef2b6ecbc889482208c56e7a90da3ab7fcd8",
+          "bytes": 1311523,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:39:16+00:00"
+        }
       }
     },
     {
@@ -2732,7 +3293,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-swbTrtf",
         "filename": "IMG_7244.JPG",
         "format": "JPG",
-        "archived_md5": "fdeeef5e9ef901de4e3497e971a75942"
+        "archived_md5": "fdeeef5e9ef901de4e3497e971a75942",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2759,15 +3321,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_cwbwia25z5c77pvbczjr6kxaom",
-        "media_path": "/media/kph_cwbwia25z5c77pvbczjr6kxaom",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3BCE7FPZTJEBSQMPCQ4F5.01M1D3BD0XYYYF39ZZ13MPTWDE.jpg",
+        "emdash_content_id": "01M1D3BHX9WZQXREJ1HSCB344K",
+        "emdash_media_id": "01M1D3BCE7EAJRYZYN2KJT0EMG",
+        "r2_object_key": "01M1D3BCE7FPZTJEBSQMPCQ4F5.01M1D3BD0XYYYF39ZZ13MPTWDE.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a67ce373692f4898015f76389ae96f3043c7945368160c0cc4dfc425da33c356",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:44:34+00:00",
+        "public_asset": {
+          "sha256": "a67ce373692f4898015f76389ae96f3043c7945368160c0cc4dfc425da33c356",
+          "bytes": 1025973,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:44:34+00:00"
+        }
       }
     },
     {
@@ -2780,7 +3351,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-SMgdpPh",
         "filename": "IMG_7246.JPG",
         "format": "JPG",
-        "archived_md5": "52f2aefc7371c84b9e449a76d93d57e2"
+        "archived_md5": "52f2aefc7371c84b9e449a76d93d57e2",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2807,15 +3379,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ap4dxtem4awzcl2o2ixpylwpp4",
-        "media_path": "/media/kph_ap4dxtem4awzcl2o2ixpylwpp4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3BSNJPKNVKGK85TKSCR7F.01M1D3BT833GZND55PCKPJRNSE.jpg",
+        "emdash_content_id": "01M1D3BZM5VH4YTN124QB7GEFA",
+        "emdash_media_id": "01M1D3BSNJ00HA4MF8QD5T00ZQ",
+        "r2_object_key": "01M1D3BSNJPKNVKGK85TKSCR7F.01M1D3BT833GZND55PCKPJRNSE.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d63a94c57743701720f162a2566caeec65ba3fd2f032950a84f7bd72a39e658c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:44:47+00:00",
+        "public_asset": {
+          "sha256": "d63a94c57743701720f162a2566caeec65ba3fd2f032950a84f7bd72a39e658c",
+          "bytes": 681445,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:44:47+00:00"
+        }
       }
     },
     {
@@ -2828,7 +3409,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-JPHWnbQ",
         "filename": "IMG_7265.JPG",
         "format": "JPG",
-        "archived_md5": "639aa744756594e929630cbdbb49a627"
+        "archived_md5": "639aa744756594e929630cbdbb49a627",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2855,15 +3437,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vrl7axxfnyerqq47kkaa4jarom",
-        "media_path": "/media/kph_vrl7axxfnyerqq47kkaa4jarom",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3C7P5PEPEK580T0DR7DBQ.01M1D3C89GPH5RMER48T3B15NX.jpg",
+        "emdash_content_id": "01M1D3CD47A1KYAYRE272G915Q",
+        "emdash_media_id": "01M1D3C7P5FP6KSDSP3EK3S99Y",
+        "r2_object_key": "01M1D3C7P5PEPEK580T0DR7DBQ.01M1D3C89GPH5RMER48T3B15NX.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5954e1a829e58e5dbb44d27dc9e88c63ea6af73a0e3168bf57ae04448876b6dd",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:45:02+00:00",
+        "public_asset": {
+          "sha256": "5954e1a829e58e5dbb44d27dc9e88c63ea6af73a0e3168bf57ae04448876b6dd",
+          "bytes": 1974480,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:45:02+00:00"
+        }
       }
     },
     {
@@ -2876,7 +3467,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-HL5V8GJ",
         "filename": "IMG_3232.JPG",
         "format": "JPG",
-        "archived_md5": "08b5b6c48e59d0cff144821679f281ac"
+        "archived_md5": "08b5b6c48e59d0cff144821679f281ac",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2903,15 +3495,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_trsy4fkkpubkld33wtmdbribfy",
-        "media_path": "/media/kph_trsy4fkkpubkld33wtmdbribfy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3EDWCAZ76HDJ63GDSAVR2.01M1D3EED4SZ2CFC47T1P6XENR.jpg",
+        "emdash_content_id": "01M1D3EKWKQM5DW0Z68AQXB6DB",
+        "emdash_media_id": "01M1D3EDWCC9PR2J3PY9EZ4EHK",
+        "r2_object_key": "01M1D3EDWCAZ76HDJ63GDSAVR2.01M1D3EED4SZ2CFC47T1P6XENR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "84dd9df4d97ce17020ec91092f025f1f163baf35a5ce8c538a7760cbe79dbf0d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:46:13+00:00",
+        "public_asset": {
+          "sha256": "84dd9df4d97ce17020ec91092f025f1f163baf35a5ce8c538a7760cbe79dbf0d",
+          "bytes": 1176477,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:46:13+00:00"
+        }
       }
     },
     {
@@ -2924,7 +3525,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-cCL8qfD",
         "filename": "IMG_7269.JPG",
         "format": "JPG",
-        "archived_md5": "fc926e7c3afd7c7d1fed92aff17bb1d8"
+        "archived_md5": "fc926e7c3afd7c7d1fed92aff17bb1d8",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2951,15 +3553,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6jzlvr3yoi2oaqfzhw2m2bq4ci",
-        "media_path": "/media/kph_6jzlvr3yoi2oaqfzhw2m2bq4ci",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3GNGGDNRXF4RRVG2H7NYA.01M1D3GP0T5HNKWRTS6TB0NERB.jpg",
+        "emdash_content_id": "01M1D3GTSE2H9Z433T0C8MTJJS",
+        "emdash_media_id": "01M1D3GNGGFM05T93Y53018BF4",
+        "r2_object_key": "01M1D3GNGGDNRXF4RRVG2H7NYA.01M1D3GP0T5HNKWRTS6TB0NERB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0940cced5744bc8a4201ec659eceb408a540c3424da9c22cdeb0e6a438ffd6e4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:47:27+00:00",
+        "public_asset": {
+          "sha256": "0940cced5744bc8a4201ec659eceb408a540c3424da9c22cdeb0e6a438ffd6e4",
+          "bytes": 1276023,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:47:27+00:00"
+        }
       }
     },
     {
@@ -2972,7 +3583,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-5HckkLx",
         "filename": "IMG_3244.JPG",
         "format": "JPG",
-        "archived_md5": "748599149581f982294077655a340f36"
+        "archived_md5": "748599149581f982294077655a340f36",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2999,15 +3611,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_oqtctjrvwwkfshz4ywya434wxi",
-        "media_path": "/media/kph_oqtctjrvwwkfshz4ywya434wxi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3H2H4EJDVZWBVX4M91AQ6.01M1D3H33CDMGBA6BM8FX7QDTW.jpg",
+        "emdash_content_id": "01M1D3H7VC3CGTPHDK7W7G06ZK",
+        "emdash_media_id": "01M1D3H2H4CZG8HSDCTHQKDN7R",
+        "r2_object_key": "01M1D3H2H4EJDVZWBVX4M91AQ6.01M1D3H33CDMGBA6BM8FX7QDTW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cffb0b705fcd4ec8a52508d8b8e3ba35bba045dc240f28f9fbf27b23ae870de5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:47:39+00:00",
+        "public_asset": {
+          "sha256": "cffb0b705fcd4ec8a52508d8b8e3ba35bba045dc240f28f9fbf27b23ae870de5",
+          "bytes": 1219317,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:47:39+00:00"
+        }
       }
     },
     {
@@ -3020,7 +3641,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-kH4hkVf",
         "filename": "IMG_7276.JPG",
         "format": "JPG",
-        "archived_md5": "173e3a1f0ba6a03ffa06cc23dacf7551"
+        "archived_md5": "173e3a1f0ba6a03ffa06cc23dacf7551",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -3047,15 +3669,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vqlihbalh3vcsnaeauxydluhli",
-        "media_path": "/media/kph_vqlihbalh3vcsnaeauxydluhli",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3HH520MVM0K666AA94ND4.01M1D3HHPGKJX1796T0R235X4V.jpg",
+        "emdash_content_id": "01M1D3HPP1N29BSY7CPCW07WKJ",
+        "emdash_media_id": "01M1D3HH521FFYG7Z2JCYHAVR5",
+        "r2_object_key": "01M1D3HH520MVM0K666AA94ND4.01M1D3HHPGKJX1796T0R235X4V.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d49748a9db88c0b5ca138e6a398ddce6d2a123116e97efdd2eeb1dbf10d8c595",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:47:55+00:00",
+        "public_asset": {
+          "sha256": "d49748a9db88c0b5ca138e6a398ddce6d2a123116e97efdd2eeb1dbf10d8c595",
+          "bytes": 991216,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:47:55+00:00"
+        }
       }
     },
     {
@@ -3068,7 +3699,8 @@
         "web_uri": "https://kanolog.smugmug.com/20130719Hawaii/i-V8qjqRw",
         "filename": "IMG_7278.JPG",
         "format": "JPG",
-        "archived_md5": "09694314bc6ddafb10131f0035dc6154"
+        "archived_md5": "09694314bc6ddafb10131f0035dc6154",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -3095,15 +3727,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_4tssfnxvqdhajtbrinfctydvee",
-        "media_path": "/media/kph_4tssfnxvqdhajtbrinfctydvee",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D3HXXS4QE3Y4PN1MS0G22M.01M1D3HYE29QQY93NYJ151ZQ7J.jpg",
+        "emdash_content_id": "01M1D3J30GC97TKRTQJEC5FF8T",
+        "emdash_media_id": "01M1D3HXXS0Y28TQ127YAHDZ2C",
+        "r2_object_key": "01M1D3HXXS4QE3Y4PN1MS0G22M.01M1D3HYE29QQY93NYJ151ZQ7J.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5a3992c9fb8d713eb602944c444add5da2d4ee174261cdfd7ea3443c28ebbfea",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T23:48:07+00:00",
+        "public_asset": {
+          "sha256": "5a3992c9fb8d713eb602944c444add5da2d4ee174261cdfd7ea3443c28ebbfea",
+          "bytes": 1175606,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T23:48:07+00:00"
+        }
       }
     }
   ]

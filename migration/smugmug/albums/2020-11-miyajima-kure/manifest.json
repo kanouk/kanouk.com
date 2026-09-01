@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-08-31T17:31:29+00:00",
+  "generated_at": "2026-09-01T04:43:11+00:00",
   "scope": "public SmugMug album migration",
   "privacy": {
     "public_assets_only": true,
@@ -20,7 +20,8 @@
       "service": "smugmug",
       "user": "kanolog",
       "album_key": "sXX26h",
-      "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima"
+      "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima",
+      "highlight_image_key": "X3R48mJ"
     },
     "title": "Miyajima/Kure, 2020/11",
     "description": "",
@@ -30,7 +31,7 @@
     "source_protected_flag": false,
     "asset_count": 57,
     "destination": {
-      "emdash_content_id": null
+      "emdash_content_id": "01M1DFSMV2TJG9G94VRT2V0D98"
     }
   },
   "assets": [
@@ -44,7 +45,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-n24BdgN",
         "filename": "IMG_6558.JPG",
         "format": "JPG",
-        "archived_md5": "83b5a55f22c32afd892a927066033d06"
+        "archived_md5": "83b5a55f22c32afd892a927066033d06",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -71,15 +73,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3mpejar7ahnblodl34bsnpzoye",
-        "media_path": "/media/kph_3mpejar7ahnblodl34bsnpzoye",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFSYC9VQWPB6FZGYZKSHAD.01M1DFSYZ313T1MTBDRA6JSJNH.jpg",
+        "emdash_content_id": "01M1DFT39CE3JHY66H5J27XFCV",
+        "emdash_media_id": "01M1DFSYC9CNHKGC4ZDEDK6NE9",
+        "r2_object_key": "01M1DFSYC9VQWPB6FZGYZKSHAD.01M1DFSYZ313T1MTBDRA6JSJNH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2e8105dd75c9de540bfe1c96fefedcbaf8e87a2bec58fc9bc2632fac998faebf",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:22:13+00:00",
+        "public_asset": {
+          "sha256": "2e8105dd75c9de540bfe1c96fefedcbaf8e87a2bec58fc9bc2632fac998faebf",
+          "bytes": 725223,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:22:13+00:00"
+        }
       }
     },
     {
@@ -92,7 +103,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-cFMB7gm",
         "filename": "PXL_20201127_214751727.jpg",
         "format": "JPG",
-        "archived_md5": "dbc303188c81a787c1596e91135df35f"
+        "archived_md5": "dbc303188c81a787c1596e91135df35f",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -119,15 +131,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7nwusclfbnry2j4d52hwuuf54q",
-        "media_path": "/media/kph_7nwusclfbnry2j4d52hwuuf54q",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFTBSPMKYAQHRXXEAQP3B7.01M1DFTCGJYVY6EZ9JN81FTNC5.jpg",
+        "emdash_content_id": "01M1DFTHKJQ24BP8C04W8WF4XJ",
+        "emdash_media_id": "01M1DFTBSP83R9TXQMP6GB3FYD",
+        "r2_object_key": "01M1DFTBSPMKYAQHRXXEAQP3B7.01M1DFTCGJYVY6EZ9JN81FTNC5.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "23699c2242667b67bca60521a0fa0c9b6a6f1ce894e44491ce8e0df671f1afc9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:22:28+00:00",
+        "public_asset": {
+          "sha256": "23699c2242667b67bca60521a0fa0c9b6a6f1ce894e44491ce8e0df671f1afc9",
+          "bytes": 3791253,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:22:28+00:00"
+        }
       }
     },
     {
@@ -140,7 +161,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-dXvVhzC",
         "filename": "PXL_20201128_030541851.jpg",
         "format": "JPG",
-        "archived_md5": "2640c0cb1f38885197e2aec7a3cdcedc"
+        "archived_md5": "2640c0cb1f38885197e2aec7a3cdcedc",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -167,15 +189,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_iwvlk4zgeuq2qr6lxakbqr3pji",
-        "media_path": "/media/kph_iwvlk4zgeuq2qr6lxakbqr3pji",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFTVC2QNDF723QC6T1448J.01M1DFTVY5BBXK8QDFDZEGZTD5.jpg",
+        "emdash_content_id": "01M1DFV02ZAJKDKTMPK841TYJY",
+        "emdash_media_id": "01M1DFTVC2M3PY5BGNR83JRWVW",
+        "r2_object_key": "01M1DFTVC2QNDF723QC6T1448J.01M1DFTVY5BBXK8QDFDZEGZTD5.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "6f6648d804b6141ccd417374e63129a5607d7b604556e90dbde905eee8df905a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:22:45+00:00",
+        "public_asset": {
+          "sha256": "6f6648d804b6141ccd417374e63129a5607d7b604556e90dbde905eee8df905a",
+          "bytes": 3521111,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:22:45+00:00"
+        }
       }
     },
     {
@@ -188,7 +219,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-PsNgMqg",
         "filename": "PXL_20201128_031635203.jpg",
         "format": "JPG",
-        "archived_md5": "d73b49266f17e5943b9befe98880dfd7"
+        "archived_md5": "d73b49266f17e5943b9befe98880dfd7",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -215,15 +247,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zaglmambp5onlheukrwnn4tbca",
-        "media_path": "/media/kph_zaglmambp5onlheukrwnn4tbca",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFVB78W6QWWFNX26HSVKQF.01M1DFVBSQ18R0QJ2EZSX9WKB9.jpg",
+        "emdash_content_id": "01M1DFVG59MXDMVB2YQ1Z25K7T",
+        "emdash_media_id": "01M1DFVB788KERNNDDM42PG4FJ",
+        "r2_object_key": "01M1DFVB78W6QWWFNX26HSVKQF.01M1DFVBSQ18R0QJ2EZSX9WKB9.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a56c88ed154a86314599f085c0bffaebe23473289b26dbd0dfcbeff82fa2e575",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:22:59+00:00",
+        "public_asset": {
+          "sha256": "a56c88ed154a86314599f085c0bffaebe23473289b26dbd0dfcbeff82fa2e575",
+          "bytes": 3814376,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:22:59+00:00"
+        }
       }
     },
     {
@@ -236,7 +277,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-qzNjhnX",
         "filename": "PXL_20201128_031645597.jpg",
         "format": "JPG",
-        "archived_md5": "c2b11ea51b7d48ec9205b56c28e1bcaa"
+        "archived_md5": "c2b11ea51b7d48ec9205b56c28e1bcaa",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -263,15 +305,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pchthkpeadjhdquwljr6fczowa",
-        "media_path": "/media/kph_pchthkpeadjhdquwljr6fczowa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFXFP5CA0GNGF3HN4RR0T7.01M1DFXGE82VECREEETA0C2WYR.jpg",
+        "emdash_content_id": "01M1DFXN2KMF6YAZ1J8YFZGVEJ",
+        "emdash_media_id": "01M1DFXFP5B5KE3TPK2RGDYMVM",
+        "r2_object_key": "01M1DFXFP5CA0GNGF3HN4RR0T7.01M1DFXGE82VECREEETA0C2WYR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "362754f56a0eea63d43eacf5b31d1cda695cc378a0b9c15483f284b45fd78c4d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:24:10+00:00",
+        "public_asset": {
+          "sha256": "362754f56a0eea63d43eacf5b31d1cda695cc378a0b9c15483f284b45fd78c4d",
+          "bytes": 3594015,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:24:10+00:00"
+        }
       }
     },
     {
@@ -284,7 +335,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-hd6GFPf",
         "filename": "PXL_20201128_033418575.jpg",
         "format": "JPG",
-        "archived_md5": "00c2844c79ecad7c53bbe8a4d956a246"
+        "archived_md5": "00c2844c79ecad7c53bbe8a4d956a246",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -311,15 +363,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ycsh6l6cryxwkv2fjsqc4jt5bm",
-        "media_path": "/media/kph_ycsh6l6cryxwkv2fjsqc4jt5bm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFXYNRTK7VV8H598T6RXYP.01M1DFXZ935X8G1PH9SEHZPADX.jpg",
+        "emdash_content_id": "01M1DFY3VMNMZ0BQCP1HEF7RSC",
+        "emdash_media_id": "01M1DFXYNRVMGKY5NA0YPHYP1Y",
+        "r2_object_key": "01M1DFXYNRTK7VV8H598T6RXYP.01M1DFXZ935X8G1PH9SEHZPADX.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c673fc5b2fd97012e5fadd58862129f8ceb4a40bac507013478eea1c3d18ad6a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:24:25+00:00",
+        "public_asset": {
+          "sha256": "c673fc5b2fd97012e5fadd58862129f8ceb4a40bac507013478eea1c3d18ad6a",
+          "bytes": 3278352,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:24:25+00:00"
+        }
       }
     },
     {
@@ -332,7 +393,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-5QPpTFx",
         "filename": "PXL_20201128_034811101.jpg",
         "format": "JPG",
-        "archived_md5": "877580bfcaf9792965d57f9fa7bc71a8"
+        "archived_md5": "877580bfcaf9792965d57f9fa7bc71a8",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -359,15 +421,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_n6duzojyy3f7kq5lg6im5dzfey",
-        "media_path": "/media/kph_n6duzojyy3f7kq5lg6im5dzfey",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFYCRBF4JCEH0BMDZ2CNT1.01M1DFYD9YQXB3BCND4XMSTXBN.jpg",
+        "emdash_content_id": "01M1DFYHFEMBJH0NH65AH8K8ZP",
+        "emdash_media_id": "01M1DFYCRB7KPTN2DV2C50BH7P",
+        "r2_object_key": "01M1DFYCRBF4JCEH0BMDZ2CNT1.01M1DFYD9YQXB3BCND4XMSTXBN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2839df71b6c563b17c45ddf50f7adb397cc86c2e73e881bba90cea5a4deb6952",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:24:39+00:00",
+        "public_asset": {
+          "sha256": "2839df71b6c563b17c45ddf50f7adb397cc86c2e73e881bba90cea5a4deb6952",
+          "bytes": 4059181,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:24:39+00:00"
+        }
       }
     },
     {
@@ -380,7 +451,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-fCGCDWR",
         "filename": "PXL_20201128_042000053.MP.jpg",
         "format": "JPG",
-        "archived_md5": "980788d624ce85346990c90beafa4568"
+        "archived_md5": "980788d624ce85346990c90beafa4568",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -407,15 +479,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_763eizghl3sbe7ulir2t3osfka",
-        "media_path": "/media/kph_763eizghl3sbe7ulir2t3osfka",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG0JN1NKTKXD3C01P8RXG1.01M1DG0KFM78S9NVMZ849X2BZ3.jpg",
+        "emdash_content_id": "01M1DG0QXFXVSBRBK6KRXSQJ2E",
+        "emdash_media_id": "01M1DG0JN18X0C6CC4V5V37PDT",
+        "r2_object_key": "01M1DG0JN1NKTKXD3C01P8RXG1.01M1DG0KFM78S9NVMZ849X2BZ3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "da4361b1fb7368fedda1bbb28ca2fc782baa5515e4214fec689abbb2daa97dec",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:25:51+00:00",
+        "public_asset": {
+          "sha256": "da4361b1fb7368fedda1bbb28ca2fc782baa5515e4214fec689abbb2daa97dec",
+          "bytes": 7086997,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:25:51+00:00"
+        }
       }
     },
     {
@@ -428,7 +509,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-t5DhSLx",
         "filename": "IMG_6547.JPG",
         "format": "JPG",
-        "archived_md5": "b0a888e6381959658f2128b05a775db9"
+        "archived_md5": "b0a888e6381959658f2128b05a775db9",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -455,15 +537,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pnozbbw23iregnxq26ocu43mqa",
-        "media_path": "/media/kph_pnozbbw23iregnxq26ocu43mqa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG2RWG34DZ2D3C1A7ZE9A5.01M1DG2SEKMEHNSK3SXJSQNHQQ.jpg",
+        "emdash_content_id": "01M1DG2XCBAVKTDNQPV4ZCQNPF",
+        "emdash_media_id": "01M1DG2RWG2H28X92JN6R49168",
+        "r2_object_key": "01M1DG2RWG34DZ2D3C1A7ZE9A5.01M1DG2SEKMEHNSK3SXJSQNHQQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "da7e23af734f3e387c74f4e5ef47708f394a3762bc38e2e72ba4c77d1c899023",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:27:02+00:00",
+        "public_asset": {
+          "sha256": "da7e23af734f3e387c74f4e5ef47708f394a3762bc38e2e72ba4c77d1c899023",
+          "bytes": 1578979,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:27:02+00:00"
+        }
       }
     },
     {
@@ -476,7 +567,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-WDcvXsG",
         "filename": "IMG_6547.MP4",
         "format": "MP4",
-        "archived_md5": "14c65bafcdbeb395ccf17df70a34a5d5"
+        "archived_md5": "14c65bafcdbeb395ccf17df70a34a5d5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -503,15 +595,26 @@
       },
       "destination": {
         "photo_path": "/photos/kph_drncgloa3qfrvfuo3xw5ksnt4i",
-        "media_path": "/media/kph_drncgloa3qfrvfuo3xw5ksnt4i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG3571PNQJCWNY6Z7TE1DR.01M1DG35P9RYF4E16YJ9GXEQ11.mp4",
+        "emdash_content_id": "01M1DG3E95KC7K2ZBK44FNNS3E",
+        "emdash_media_id": "01M1DG35719EQ1G9479Z08EZ3P",
+        "r2_object_key": "01M1DG3571PNQJCWNY6Z7TE1DR.01M1DG35P9RYF4E16YJ9GXEQ11.mp4",
+        "poster_media_id": "01M1DG39409K71JTA8NXNRVR5N",
+        "poster_r2_object_key": "01M1DG3940NADYHXGK2ZTAW9QM.01M1DG39NW0BWV04N5J118VK27.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "513ace70e91ffb1d0b525c63f7ad4ae72a20bf488bee857c3b239f167f447dc4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:27:19+00:00",
+        "public_asset": {
+          "sha256": "513ace70e91ffb1d0b525c63f7ad4ae72a20bf488bee857c3b239f167f447dc4",
+          "bytes": 185895,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:27:19+00:00"
+        }
       }
     },
     {
@@ -524,7 +627,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-gsLxFnp",
         "filename": "IMG_6549.JPG",
         "format": "JPG",
-        "archived_md5": "1d5ba5ebfebec5a923e61e6ade1f37e0"
+        "archived_md5": "1d5ba5ebfebec5a923e61e6ade1f37e0",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -551,15 +655,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zzcr5jegmgddahnvi4k4nwhuia",
-        "media_path": "/media/kph_zzcr5jegmgddahnvi4k4nwhuia",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG3PGHDD46F6W9AYNM7C9G.01M1DG3Q35ZATNBAQ3GZFPE413.jpg",
+        "emdash_content_id": "01M1DG3V5P07V0NDJC1EWFCC48",
+        "emdash_media_id": "01M1DG3PGHA816Q7XBDS8JCWXT",
+        "r2_object_key": "01M1DG3PGHDD46F6W9AYNM7C9G.01M1DG3Q35ZATNBAQ3GZFPE413.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2ee42429283d3646f3dbf19e45abe35da493f0d155b6b203c72cf8ebca38e138",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:27:32+00:00",
+        "public_asset": {
+          "sha256": "2ee42429283d3646f3dbf19e45abe35da493f0d155b6b203c72cf8ebca38e138",
+          "bytes": 825266,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:27:32+00:00"
+        }
       }
     },
     {
@@ -572,7 +685,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-qc4GGbf",
         "filename": "IMG_6549.MP4",
         "format": "MP4",
-        "archived_md5": "a628627d2163891893214842ca38d72b"
+        "archived_md5": "a628627d2163891893214842ca38d72b",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -599,15 +713,26 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zhpyfoc25vcd3clb6whleodjqq",
-        "media_path": "/media/kph_zhpyfoc25vcd3clb6whleodjqq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG430WKYZ0C4FZ8TKR8DA1.01M1DG43K8WPX9KNPXM46VY0RE.mp4",
+        "emdash_content_id": "01M1DG4B76R7KNN9P2NG1ZZX8V",
+        "emdash_media_id": "01M1DG430WW5QC56CFT4ZJHCRX",
+        "r2_object_key": "01M1DG430WKYZ0C4FZ8TKR8DA1.01M1DG43K8WPX9KNPXM46VY0RE.mp4",
+        "poster_media_id": "01M1DG46B9P0FCJ7Y2WG305JDD",
+        "poster_r2_object_key": "01M1DG46B99FWTX7CRN0DMRW1X.01M1DG46THS1EV7G0F08K8TZBR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "925fb556bbe9e9d65b7235dadd278387dc6d859ec32ccc2c2088a8171f31eefd",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:27:49+00:00",
+        "public_asset": {
+          "sha256": "925fb556bbe9e9d65b7235dadd278387dc6d859ec32ccc2c2088a8171f31eefd",
+          "bytes": 208574,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:27:49+00:00"
+        }
       }
     },
     {
@@ -620,7 +745,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-q7FbGCb",
         "filename": "PXL_20201128_063835313.jpg",
         "format": "JPG",
-        "archived_md5": "403da7595c9ae9d33cc46a9dbc750108"
+        "archived_md5": "403da7595c9ae9d33cc46a9dbc750108",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -647,15 +773,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gfixcqua7j4uwxmuy247b54ik4",
-        "media_path": "/media/kph_gfixcqua7j4uwxmuy247b54ik4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG4M9PJGSEW3ZAV4Y44ZQV.01M1DG4MX9DT2RT7Q4WEKG1CAC.jpg",
+        "emdash_content_id": "01M1DG4SQW2H13SS1RHDQ3J63T",
+        "emdash_media_id": "01M1DG4M9P2KH013ZQ1CG0WXJ3",
+        "r2_object_key": "01M1DG4M9PJGSEW3ZAV4Y44ZQV.01M1DG4MX9DT2RT7Q4WEKG1CAC.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "4a2475134dd0e0572587e4f8d4355ff6bec092a6369d64d3ee1682c33f8307a6",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:28:04+00:00",
+        "public_asset": {
+          "sha256": "4a2475134dd0e0572587e4f8d4355ff6bec092a6369d64d3ee1682c33f8307a6",
+          "bytes": 4529782,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:28:04+00:00"
+        }
       }
     },
     {
@@ -668,7 +803,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-v6RQQb6",
         "filename": "PXL_20201128_070225136.PORTRAIT.jpg",
         "format": "JPG",
-        "archived_md5": "1f0b74607b873012710a092c65c8426a"
+        "archived_md5": "1f0b74607b873012710a092c65c8426a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -695,15 +831,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3el73qbhax6pn2c7k2uuc5n7au",
-        "media_path": "/media/kph_3el73qbhax6pn2c7k2uuc5n7au",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG6Y0JJA7W2KPWW4VCBDAA.01M1DG6YNM7MFP7MGSHN6D5C8G.jpg",
+        "emdash_content_id": "01M1DG73EWEB9YQXM6ASFVKTV0",
+        "emdash_media_id": "01M1DG6Y0JEWBVN2NQZY8N11CD",
+        "r2_object_key": "01M1DG6Y0JJA7W2KPWW4VCBDAA.01M1DG6YNM7MFP7MGSHN6D5C8G.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ba1cd5dd5c03864d9d8a10117277ebda0f5ae575d27345de079474243d9c0a67",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:29:19+00:00",
+        "public_asset": {
+          "sha256": "ba1cd5dd5c03864d9d8a10117277ebda0f5ae575d27345de079474243d9c0a67",
+          "bytes": 5033401,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:29:19+00:00"
+        }
       }
     },
     {
@@ -716,7 +861,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JvkJkVv",
         "filename": "PXL_20201128_073705651.jpg",
         "format": "JPG",
-        "archived_md5": "97cd6685d4373b5c467882d83fdb4d1a"
+        "archived_md5": "97cd6685d4373b5c467882d83fdb4d1a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -743,15 +889,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vcrekaakhhaohzrrz5e7j4kyxe",
-        "media_path": "/media/kph_vcrekaakhhaohzrrz5e7j4kyxe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DG8AE0JHVCX1NYHNZQ95EP.01M1DG8B05EV0MXF5D67PN4NWC.jpg",
+        "emdash_content_id": "01M1DG8F42F074P0TPBDMM8V6W",
+        "emdash_media_id": "01M1DG8AE04HX7XASFB09284M0",
+        "r2_object_key": "01M1DG8AE0JHVCX1NYHNZQ95EP.01M1DG8B05EV0MXF5D67PN4NWC.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e688c1a0030387ea23d81c24c2cea3b956a3e6df9e86cdd0700099ed4ece81a3",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:30:05+00:00",
+        "public_asset": {
+          "sha256": "e688c1a0030387ea23d81c24c2cea3b956a3e6df9e86cdd0700099ed4ece81a3",
+          "bytes": 3367380,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:30:05+00:00"
+        }
       }
     },
     {
@@ -764,7 +919,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JrcK98t",
         "filename": "PXL_20201128_074056373.jpg",
         "format": "JPG",
-        "archived_md5": "eab90bf5e3137803e8c502b90f3ec7ae"
+        "archived_md5": "eab90bf5e3137803e8c502b90f3ec7ae",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -791,15 +947,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_q2gayd5leihubbqdfxm32rfyda",
-        "media_path": "/media/kph_q2gayd5leihubbqdfxm32rfyda",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGAHVGKGXXMWEZTS2RQ18V.01M1DGAJEF5HTW1FVX8HQF9WB8.jpg",
+        "emdash_content_id": "01M1DGAPRR88SVXHENP1HEX2NP",
+        "emdash_media_id": "01M1DGAHVGCASZ85HCZ61YR8T4",
+        "r2_object_key": "01M1DGAHVGKGXXMWEZTS2RQ18V.01M1DGAJEF5HTW1FVX8HQF9WB8.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8f6d0b020d534b27672f5e6297f8d75312fb30da3a58c45aade6c3bb51bbcac4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:31:17+00:00",
+        "public_asset": {
+          "sha256": "8f6d0b020d534b27672f5e6297f8d75312fb30da3a58c45aade6c3bb51bbcac4",
+          "bytes": 4095432,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:31:17+00:00"
+        }
       }
     },
     {
@@ -812,7 +977,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-xkbHNCr",
         "filename": "PXL_20201128_074810439.PORTRAIT.jpg",
         "format": "JPG",
-        "archived_md5": "b0dc8b949247744e6294c3bd62d017fd"
+        "archived_md5": "b0dc8b949247744e6294c3bd62d017fd",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -839,15 +1005,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hf4h3mzd7aw3sxcpwgc5giyvki",
-        "media_path": "/media/kph_hf4h3mzd7aw3sxcpwgc5giyvki",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGBZJQDQ2ZNCJ7MEFSTVYR.01M1DGC08DQ9NXW229TS0S756P.jpg",
+        "emdash_content_id": "01M1DGC44TBN52DZ7M9BTXAQH2",
+        "emdash_media_id": "01M1DGBZJQ9PKG9VW79BHQ5R67",
+        "r2_object_key": "01M1DGBZJQDQ2ZNCJ7MEFSTVYR.01M1DGC08DQ9NXW229TS0S756P.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5089182e439c50db0b7a0178b114dcb81441451ceaa3d0a01ffb6e880ab7cb1a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:32:04+00:00",
+        "public_asset": {
+          "sha256": "5089182e439c50db0b7a0178b114dcb81441451ceaa3d0a01ffb6e880ab7cb1a",
+          "bytes": 2581066,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:32:04+00:00"
+        }
       }
     },
     {
@@ -860,7 +1035,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-4347zrh",
         "filename": "PXL_20201128_074840863.PORTRAIT.jpg",
         "format": "JPG",
-        "archived_md5": "ed0c81ba7cb27d8010931bdfe573ea7f"
+        "archived_md5": "ed0c81ba7cb27d8010931bdfe573ea7f",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -887,15 +1063,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uebf66jfxzedlsvogl2kzcuh5e",
-        "media_path": "/media/kph_uebf66jfxzedlsvogl2kzcuh5e",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGCC3N9V6HAZWZK9MK60X2.01M1DGCCPCKZSAZ3D7W7A5B7EP.jpg",
+        "emdash_content_id": "01M1DGCH2VP0X3TQDMZBQ5YNNK",
+        "emdash_media_id": "01M1DGCC3N8TSQGY386GBCNK1Q",
+        "r2_object_key": "01M1DGCC3N9V6HAZWZK9MK60X2.01M1DGCCPCKZSAZ3D7W7A5B7EP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7ed6f7474863b83da149583f95c6a835e8c0ad77a7122ff4f2d847a90ca3a42b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:32:17+00:00",
+        "public_asset": {
+          "sha256": "7ed6f7474863b83da149583f95c6a835e8c0ad77a7122ff4f2d847a90ca3a42b",
+          "bytes": 3067186,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:32:17+00:00"
+        }
       }
     },
     {
@@ -908,7 +1093,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-7mT5rpw",
         "filename": "PXL_20201128_080303262.MP.jpg",
         "format": "JPG",
-        "archived_md5": "a378d4f227f27d4e4c340afbeb93a401"
+        "archived_md5": "a378d4f227f27d4e4c340afbeb93a401",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -935,15 +1121,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_mee3uhcokfyph2p7rdvoa4or6a",
-        "media_path": "/media/kph_mee3uhcokfyph2p7rdvoa4or6a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGCSCPG6CFG2SS40YD8VWE.01M1DGCT7E18MTW6ZXTGKXKK7J.jpg",
+        "emdash_content_id": "01M1DGCYMX2P21RFHBCTSMN7VV",
+        "emdash_media_id": "01M1DGCSCPQDC5W5CTH5AKRW8K",
+        "r2_object_key": "01M1DGCSCPG6CFG2SS40YD8VWE.01M1DGCT7E18MTW6ZXTGKXKK7J.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f3588d5b932579870f931ae6aa6b90e6808a2b6c35af191fc5b311d755bde1b1",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:32:31+00:00",
+        "public_asset": {
+          "sha256": "f3588d5b932579870f931ae6aa6b90e6808a2b6c35af191fc5b311d755bde1b1",
+          "bytes": 4504035,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:32:31+00:00"
+        }
       }
     },
     {
@@ -956,7 +1151,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-S7CGvDC",
         "filename": "PXL_20201128_080339515.jpg",
         "format": "JPG",
-        "archived_md5": "71dfefb0cda7d51eff49b6d0099c6437"
+        "archived_md5": "71dfefb0cda7d51eff49b6d0099c6437",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -983,15 +1179,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lra6yh4gubpm7bikmyz7agcu5y",
-        "media_path": "/media/kph_lra6yh4gubpm7bikmyz7agcu5y",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGD76T1AWNG5HTSVA91CT6.01M1DGD7R0RZ04S2JG4BD9JMMH.jpg",
+        "emdash_content_id": "01M1DGDC2N94F168XDK475E6P3",
+        "emdash_media_id": "01M1DGD76TAYFQMCSCQSR66086",
+        "r2_object_key": "01M1DGD76T1AWNG5HTSVA91CT6.01M1DGD7R0RZ04S2JG4BD9JMMH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f41d7643e336a5a5fbd44446fdca73a494a80ce46929ca8bc65901282c695891",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:32:44+00:00",
+        "public_asset": {
+          "sha256": "f41d7643e336a5a5fbd44446fdca73a494a80ce46929ca8bc65901282c695891",
+          "bytes": 3137915,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:32:44+00:00"
+        }
       }
     },
     {
@@ -1004,7 +1209,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-pNggXTW",
         "filename": "PXL_20201128_080505020.jpg",
         "format": "JPG",
-        "archived_md5": "d49b6fae062b71bfd9d05bcff9092892"
+        "archived_md5": "d49b6fae062b71bfd9d05bcff9092892",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1031,15 +1237,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_q22i5uffxo6cesxqdallttdkkm",
-        "media_path": "/media/kph_q22i5uffxo6cesxqdallttdkkm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGDM1W5HE08BJPVFGFBR5S.01M1DGDMJRWTX5TX461R5DZ5WT.jpg",
+        "emdash_content_id": "01M1DGDS1JHWT2K0WC5NP1JHBW",
+        "emdash_media_id": "01M1DGDM1W11Z2W71TW6YGN8F8",
+        "r2_object_key": "01M1DGDM1W5HE08BJPVFGFBR5S.01M1DGDMJRWTX5TX461R5DZ5WT.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "37bd9cb59b4f7de23fdecf22400f4821ba5239304ff3a4154145795b8dacbb81",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:32:58+00:00",
+        "public_asset": {
+          "sha256": "37bd9cb59b4f7de23fdecf22400f4821ba5239304ff3a4154145795b8dacbb81",
+          "bytes": 2377148,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:32:58+00:00"
+        }
       }
     },
     {
@@ -1052,7 +1267,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-3ktkbgR",
         "filename": "PXL_20201128_080632340.NIGHT.jpg",
         "format": "JPG",
-        "archived_md5": "9c7a466f3a6e0000741f3087c5c5a470"
+        "archived_md5": "9c7a466f3a6e0000741f3087c5c5a470",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1079,15 +1295,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_o75eiln425rpknmxydnxkwmsqm",
-        "media_path": "/media/kph_o75eiln425rpknmxydnxkwmsqm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGE1D1871XGVREM5HDGZYN.01M1DGE1YA86B4ERMY3JVCAN7J.jpg",
+        "emdash_content_id": "01M1DGE6F8VTZDC8JT0EAV4FVP",
+        "emdash_media_id": "01M1DGE1D1Q3CG4DVD0B0DNCVN",
+        "r2_object_key": "01M1DGE1D1871XGVREM5HDGZYN.01M1DGE1YA86B4ERMY3JVCAN7J.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "08b1ba13b233ac2605b1e98d674407c82d3abe4453ac5032f49f8d84d5a402e2",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:33:11+00:00",
+        "public_asset": {
+          "sha256": "08b1ba13b233ac2605b1e98d674407c82d3abe4453ac5032f49f8d84d5a402e2",
+          "bytes": 2528763,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:33:11+00:00"
+        }
       }
     },
     {
@@ -1100,7 +1325,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-t6xqm9d",
         "filename": "PXL_20201128_102100368.MP.jpg",
         "format": "JPG",
-        "archived_md5": "9a398db0a3f397dc0dc81c0570610997"
+        "archived_md5": "9a398db0a3f397dc0dc81c0570610997",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1127,15 +1353,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vdan34il47gbw4t4o2xne5qnnu",
-        "media_path": "/media/kph_vdan34il47gbw4t4o2xne5qnnu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGEEHH8NFNRRA9Z365V2KK.01M1DGEF8QX2KSRK1194F8Q2PG.jpg",
+        "emdash_content_id": "01M1DGEM8HE55DVWXA95ZVZ6Z9",
+        "emdash_media_id": "01M1DGEEHHRZWDG6H1KN4BAJDG",
+        "r2_object_key": "01M1DGEEHH8NFNRRA9Z365V2KK.01M1DGEF8QX2KSRK1194F8Q2PG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c4a806554fc7d133e21c40644467315e81737bed912d81c13288330058114e25",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:33:28+00:00",
+        "public_asset": {
+          "sha256": "c4a806554fc7d133e21c40644467315e81737bed912d81c13288330058114e25",
+          "bytes": 10397145,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:33:28+00:00"
+        }
       }
     },
     {
@@ -1148,7 +1383,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-6xzvZPn",
         "filename": "PXL_20201128_103015679.jpg",
         "format": "JPG",
-        "archived_md5": "3f6b1b70b2eacaaea4c246f2bde86131"
+        "archived_md5": "3f6b1b70b2eacaaea4c246f2bde86131",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1175,15 +1411,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ydfplj6jvn2qbug5bafphyfdse",
-        "media_path": "/media/kph_ydfplj6jvn2qbug5bafphyfdse",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGEZHMDYQ9HM9YSJBBTWWM.01M1DGF049TKMNT113KCZ4B6CT.jpg",
+        "emdash_content_id": "01M1DGF4WX2YHR704B6C38KXJE",
+        "emdash_media_id": "01M1DGEZHMFY4151XTSTMZZQV2",
+        "r2_object_key": "01M1DGEZHMDYQ9HM9YSJBBTWWM.01M1DGF049TKMNT113KCZ4B6CT.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9da204e2dffe5037d127d58a9e48804aa5c920fea657a6d4f8f5114fb1a19949",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:33:43+00:00",
+        "public_asset": {
+          "sha256": "9da204e2dffe5037d127d58a9e48804aa5c920fea657a6d4f8f5114fb1a19949",
+          "bytes": 3026027,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:33:43+00:00"
+        }
       }
     },
     {
@@ -1196,7 +1441,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-tdQDzxd",
         "filename": "PXL_20201128_113751233.NIGHT.jpg",
         "format": "JPG",
-        "archived_md5": "80386e56c36dcc64c27f71b4c220f93a"
+        "archived_md5": "80386e56c36dcc64c27f71b4c220f93a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1223,15 +1469,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tl3ojr4zauvzp6qrb32mmc6hvy",
-        "media_path": "/media/kph_tl3ojr4zauvzp6qrb32mmc6hvy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGFEZ8PT8BMJE9GB34YEJD.01M1DGFFHYMB2SASZ7SXV1WSGA.jpg",
+        "emdash_content_id": "01M1DGFKWCNJ8F622MTXX4AFJG",
+        "emdash_media_id": "01M1DGFEZ83NMWNA2788D74ER4",
+        "r2_object_key": "01M1DGFEZ8PT8BMJE9GB34YEJD.01M1DGFFHYMB2SASZ7SXV1WSGA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a7eed0731f89eacb7a01404d6a21dbc4337fb5c17e9bf42eaa958474dad2444e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:33:58+00:00",
+        "public_asset": {
+          "sha256": "a7eed0731f89eacb7a01404d6a21dbc4337fb5c17e9bf42eaa958474dad2444e",
+          "bytes": 3970471,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:33:58+00:00"
+        }
       }
     },
     {
@@ -1244,7 +1499,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-Gd78H5s",
         "filename": "PXL_20201129_003624688.jpg",
         "format": "JPG",
-        "archived_md5": "758f67015a6f96b757ec8523d168fa3a"
+        "archived_md5": "758f67015a6f96b757ec8523d168fa3a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1271,15 +1527,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5joljf2zqglbowgywxqrd7kiaq",
-        "media_path": "/media/kph_5joljf2zqglbowgywxqrd7kiaq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGFY8C2690TEKSPXJBBM68.01M1DGFYXFR01WW4GN1RBGGS9B.jpg",
+        "emdash_content_id": "01M1DGG3D05NB7KNBCZBTHDHJ7",
+        "emdash_media_id": "01M1DGFY8CYA4H8BCH1NX73FZ8",
+        "r2_object_key": "01M1DGFY8C2690TEKSPXJBBM68.01M1DGFYXFR01WW4GN1RBGGS9B.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "af380dd503bbc6ce8be73461e080de1866c186236b4a97e75b001bf38aa78ba3",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:34:14+00:00",
+        "public_asset": {
+          "sha256": "af380dd503bbc6ce8be73461e080de1866c186236b4a97e75b001bf38aa78ba3",
+          "bytes": 3244500,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:34:14+00:00"
+        }
       }
     },
     {
@@ -1292,7 +1557,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JFXz84w",
         "filename": "PXL_20201129_003634930.jpg",
         "format": "JPG",
-        "archived_md5": "bdf2386d7df42ed71b65821c4969c5e0"
+        "archived_md5": "bdf2386d7df42ed71b65821c4969c5e0",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1319,15 +1585,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bhp4fgkvmnye6hz4xrav6fg3ba",
-        "media_path": "/media/kph_bhp4fgkvmnye6hz4xrav6fg3ba",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGGC0BRNT4XN00V4S8RZDJ.01M1DGGCHS99SXGP3TXYQBBAJ1.jpg",
+        "emdash_content_id": "01M1DGGHKP9N67XCQBP6DTTWMA",
+        "emdash_media_id": "01M1DGGC0BX4V61A52XG101YBY",
+        "r2_object_key": "01M1DGGC0BRNT4XN00V4S8RZDJ.01M1DGGCHS99SXGP3TXYQBBAJ1.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7ec2523bdb49afc19cac79d8f01a748e6e97018566e01e5e7e24705f3403ec94",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:34:29+00:00",
+        "public_asset": {
+          "sha256": "7ec2523bdb49afc19cac79d8f01a748e6e97018566e01e5e7e24705f3403ec94",
+          "bytes": 3210413,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:34:29+00:00"
+        }
       }
     },
     {
@@ -1340,7 +1615,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-wNMhD3r",
         "filename": "PXL_20201129_003843432.MP.jpg",
         "format": "JPG",
-        "archived_md5": "4ef177272729dfd5448fae3ba73baa74"
+        "archived_md5": "4ef177272729dfd5448fae3ba73baa74",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1367,15 +1643,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tspr45ok3tw7apw3wyov2sevhe",
-        "media_path": "/media/kph_tspr45ok3tw7apw3wyov2sevhe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGGV1CZ54VT8EZF6PCF6T3.01M1DGGW5SP3GKTTV2CBBT9R6T.jpg",
+        "emdash_content_id": "01M1DGH144JQ5WFAT1CJ69PTNJ",
+        "emdash_media_id": "01M1DGGV1C28GPH0P4XK407B29",
+        "r2_object_key": "01M1DGGV1CZ54VT8EZF6PCF6T3.01M1DGGW5SP3GKTTV2CBBT9R6T.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ed151d8ec5639094d8f42851a36575356c718a16be523047dadccb80efc7ab5e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:34:45+00:00",
+        "public_asset": {
+          "sha256": "ed151d8ec5639094d8f42851a36575356c718a16be523047dadccb80efc7ab5e",
+          "bytes": 6646578,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:34:45+00:00"
+        }
       }
     },
     {
@@ -1388,7 +1673,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-4rsLnZj",
         "filename": "PXL_20201129_003852212.jpg",
         "format": "JPG",
-        "archived_md5": "f74302716c600dd2b53c1ec36a646ad3"
+        "archived_md5": "f74302716c600dd2b53c1ec36a646ad3",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1415,15 +1701,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_c7pa4dtv44flod33cgfqn35uqy",
-        "media_path": "/media/kph_c7pa4dtv44flod33cgfqn35uqy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGHA3SKJAPXCCHJGJSAW9W.01M1DGHARAJB9PP5QHKHG1ZN0R.jpg",
+        "emdash_content_id": "01M1DGHG22G9F8BTD7138M7S6T",
+        "emdash_media_id": "01M1DGHA3S9Q7K3NWS3YGGENKD",
+        "r2_object_key": "01M1DGHA3SKJAPXCCHJGJSAW9W.01M1DGHARAJB9PP5QHKHG1ZN0R.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1b68f68ac8a40be0be28e645628e536c60d28f56147c2573eb9febee4df83c3a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:35:01+00:00",
+        "public_asset": {
+          "sha256": "1b68f68ac8a40be0be28e645628e536c60d28f56147c2573eb9febee4df83c3a",
+          "bytes": 4125481,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:35:01+00:00"
+        }
       }
     },
     {
@@ -1436,7 +1731,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-JhNGtjp",
         "filename": "PXL_20201129_005528100.jpg",
         "format": "JPG",
-        "archived_md5": "2e7591e1dcef05539673194decbc0b8a"
+        "archived_md5": "2e7591e1dcef05539673194decbc0b8a",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1463,15 +1759,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_blikskfh3fiinv5q7hii5mqnu4",
-        "media_path": "/media/kph_blikskfh3fiinv5q7hii5mqnu4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGHSHQQC02E0KVDPFRNMGT.01M1DGHTAD7H64QZV3Q2Q638K0.jpg",
+        "emdash_content_id": "01M1DGHZ4HZ6NJ4PDQRGF026MQ",
+        "emdash_media_id": "01M1DGHSHQ5CRTA627MGM33A35",
+        "r2_object_key": "01M1DGHSHQQC02E0KVDPFRNMGT.01M1DGHTAD7H64QZV3Q2Q638K0.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "be7e43616e30580365e551b3ddb6c0be54cd70f3fa8a2a4e3502203722595505",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:35:15+00:00",
+        "public_asset": {
+          "sha256": "be7e43616e30580365e551b3ddb6c0be54cd70f3fa8a2a4e3502203722595505",
+          "bytes": 3684080,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:35:15+00:00"
+        }
       }
     },
     {
@@ -1484,7 +1789,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-RrgsnNF",
         "filename": "PXL_20201129_005659850.jpg",
         "format": "JPG",
-        "archived_md5": "f3bcc2c2bd2423cb52f9deb2a4e052ff"
+        "archived_md5": "f3bcc2c2bd2423cb52f9deb2a4e052ff",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1511,15 +1817,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5ohualpa3xzdh3zou7mxtm6gwi",
-        "media_path": "/media/kph_5ohualpa3xzdh3zou7mxtm6gwi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGJ7JVHBRY9G1KQE1XYAYB.01M1DGJ89V6WSH2ARX7NM5NWZC.jpg",
+        "emdash_content_id": "01M1DGJCDZ05S4538GA1M31GXC",
+        "emdash_media_id": "01M1DGJ7JV1C0T8MPFZFRVH4PR",
+        "r2_object_key": "01M1DGJ7JVHBRY9G1KQE1XYAYB.01M1DGJ89V6WSH2ARX7NM5NWZC.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c297fc18f5e21dc0e4adf8b43cd4e8e537b4d360335ae127dc09bc4569fbbea8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:35:29+00:00",
+        "public_asset": {
+          "sha256": "c297fc18f5e21dc0e4adf8b43cd4e8e537b4d360335ae127dc09bc4569fbbea8",
+          "bytes": 4142526,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:35:29+00:00"
+        }
       }
     },
     {
@@ -1532,7 +1847,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-4rC2zSW",
         "filename": "PXL_20201129_005853468.jpg",
         "format": "JPG",
-        "archived_md5": "2135e8c5705f55815288149d9ee868e5"
+        "archived_md5": "2135e8c5705f55815288149d9ee868e5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1559,15 +1875,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6tg34aymkkqhdtm7tjhtox3igq",
-        "media_path": "/media/kph_6tg34aymkkqhdtm7tjhtox3igq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGJMS53WPV86791PXY19FP.01M1DGJNCHJ62AXPFTK7Y2NEVD.jpg",
+        "emdash_content_id": "01M1DGJSYHY2G0EQN45WVZGC2V",
+        "emdash_media_id": "01M1DGJMS5GNV300WWRTPKEE1G",
+        "r2_object_key": "01M1DGJMS53WPV86791PXY19FP.01M1DGJNCHJ62AXPFTK7Y2NEVD.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "37e1c6530c1c810eec1729b0834d62788b5324504125309e8f5d657b7de169c4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:35:43+00:00",
+        "public_asset": {
+          "sha256": "37e1c6530c1c810eec1729b0834d62788b5324504125309e8f5d657b7de169c4",
+          "bytes": 5947926,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:35:43+00:00"
+        }
       }
     },
     {
@@ -1580,7 +1905,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-bL79dV8",
         "filename": "PXL_20201129_005952589.jpg",
         "format": "JPG",
-        "archived_md5": "faa05f821f4d60e10a2d93c3308b3b0d"
+        "archived_md5": "faa05f821f4d60e10a2d93c3308b3b0d",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1607,15 +1933,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_u4lfs3izcak2ia44fsecy6hmhq",
-        "media_path": "/media/kph_u4lfs3izcak2ia44fsecy6hmhq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGK2C2MJ776GNWARVNN0W1.01M1DGK33YB1H3Q81EZ37MF835.jpg",
+        "emdash_content_id": "01M1DGK7PR61FPKVM6M0QYQ0HF",
+        "emdash_media_id": "01M1DGK2C2AZBN069G3FZQ0B6N",
+        "r2_object_key": "01M1DGK2C2MJ776GNWARVNN0W1.01M1DGK33YB1H3Q81EZ37MF835.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cc380b0cb67bb110423ba192ce5bb0a394a7e52401f46cef217abd4f0a2aa2bc",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:35:57+00:00",
+        "public_asset": {
+          "sha256": "cc380b0cb67bb110423ba192ce5bb0a394a7e52401f46cef217abd4f0a2aa2bc",
+          "bytes": 4089623,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:35:57+00:00"
+        }
       }
     },
     {
@@ -1628,7 +1963,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-TSqcqRr",
         "filename": "PXL_20201129_010337033.jpg",
         "format": "JPG",
-        "archived_md5": "cbc5d3fdc4a8ca59a78edad03f25e8e4"
+        "archived_md5": "cbc5d3fdc4a8ca59a78edad03f25e8e4",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1655,15 +1991,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_h7wgdkkw6ykhtqcbjy3wxumika",
-        "media_path": "/media/kph_h7wgdkkw6ykhtqcbjy3wxumika",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGN935T9K0EWDTDP5ZJ4F0.01M1DGN9SR2A4BMAB4K4EHWHZA.jpg",
+        "emdash_content_id": "01M1DGNE8421HCTDMBPDSA8MS9",
+        "emdash_media_id": "01M1DGN9355DZ73H3VMSRF6FEC",
+        "r2_object_key": "01M1DGN935T9K0EWDTDP5ZJ4F0.01M1DGN9SR2A4BMAB4K4EHWHZA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ff84d48e39e50ecc0eb0bc08b5b6e5842ef34e445d2326d14c855c2589065f58",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:37:11+00:00",
+        "public_asset": {
+          "sha256": "ff84d48e39e50ecc0eb0bc08b5b6e5842ef34e445d2326d14c855c2589065f58",
+          "bytes": 4098463,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:37:11+00:00"
+        }
       }
     },
     {
@@ -1676,7 +2021,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-qqrkHSw",
         "filename": "PXL_20201129_010631873.MP.jpg",
         "format": "JPG",
-        "archived_md5": "a011782cfe64128b4ecdc7669c9920e7"
+        "archived_md5": "a011782cfe64128b4ecdc7669c9920e7",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1703,15 +2049,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bynlqb46n2t3jbcg2mgr5twl6q",
-        "media_path": "/media/kph_bynlqb46n2t3jbcg2mgr5twl6q",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGNS96Q611B902PCT0NEW2.01M1DGNT1Y23YBARAS9QXZZMYN.jpg",
+        "emdash_content_id": "01M1DGNZGHD3J8DH09A4316M05",
+        "emdash_media_id": "01M1DGNS96Q2PCZB9E84HS6400",
+        "r2_object_key": "01M1DGNS96Q611B902PCT0NEW2.01M1DGNT1Y23YBARAS9QXZZMYN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7d60c2dd8e8006baec62231389e13077de24ab4d887eb1f517376d3416c9d742",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:37:27+00:00",
+        "public_asset": {
+          "sha256": "7d60c2dd8e8006baec62231389e13077de24ab4d887eb1f517376d3416c9d742",
+          "bytes": 6385117,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:37:27+00:00"
+        }
       }
     },
     {
@@ -1724,7 +2079,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-rpJPDLs",
         "filename": "PXL_20201129_010917393.MP.jpg",
         "format": "JPG",
-        "archived_md5": "1690ea10b7f17c9433b1ed8260335d15"
+        "archived_md5": "1690ea10b7f17c9433b1ed8260335d15",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1751,15 +2107,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vca4vihtix3r3f3o6wonrhhwti",
-        "media_path": "/media/kph_vca4vihtix3r3f3o6wonrhhwti",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGR0TT9Z7DXXD4T645NKY1.01M1DGR1G7V1H6B9F637X2DYYM.jpg",
+        "emdash_content_id": "01M1DGR6FKQH25RB31R3DP23F6",
+        "emdash_media_id": "01M1DGR0TT97KBMF1F2MGHQ108",
+        "r2_object_key": "01M1DGR0TT9Z7DXXD4T645NKY1.01M1DGR1G7V1H6B9F637X2DYYM.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a4e1c0d19f218f9dcc3d65d94354914fb7593baf79d3c4e2c00a6f4102dcc358",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:38:40+00:00",
+        "public_asset": {
+          "sha256": "a4e1c0d19f218f9dcc3d65d94354914fb7593baf79d3c4e2c00a6f4102dcc358",
+          "bytes": 6893504,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:38:40+00:00"
+        }
       }
     },
     {
@@ -1772,7 +2137,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-GSgSC5V",
         "filename": "PXL_20201129_010943805.jpg",
         "format": "JPG",
-        "archived_md5": "c0c440ba664fa20e3730697cbcd4bbae"
+        "archived_md5": "c0c440ba664fa20e3730697cbcd4bbae",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1799,15 +2165,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pcl7vlsf64xyn7dnvf5bdom5de",
-        "media_path": "/media/kph_pcl7vlsf64xyn7dnvf5bdom5de",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGRG075APVSTEQY745X88K.01M1DGRGN51PVWF0QW9J2XXJ2P.jpg",
+        "emdash_content_id": "01M1DGRMNQ3A1G6B2Q3M4X6T5P",
+        "emdash_media_id": "01M1DGRG07GWXHH9QPETTWXMQS",
+        "r2_object_key": "01M1DGRG075APVSTEQY745X88K.01M1DGRGN51PVWF0QW9J2XXJ2P.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a1b2db012c1828ba72f109e6e5db0867b0cbc645d9a42facfa949d42adbb888b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:38:54+00:00",
+        "public_asset": {
+          "sha256": "a1b2db012c1828ba72f109e6e5db0867b0cbc645d9a42facfa949d42adbb888b",
+          "bytes": 4448000,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:38:54+00:00"
+        }
       }
     },
     {
@@ -1820,7 +2195,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-V5Z3tjT",
         "filename": "PXL_20201129_011156794.jpg",
         "format": "JPG",
-        "archived_md5": "30164093c3d659f4d4d229cd288087a7"
+        "archived_md5": "30164093c3d659f4d4d229cd288087a7",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1847,15 +2223,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_xcueb6on6radkxfkswuwpmuzke",
-        "media_path": "/media/kph_xcueb6on6radkxfkswuwpmuzke",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGRWJF39NZ1VK2NX87VGA8.01M1DGRX3YSMHM29GSJYM6THPX.jpg",
+        "emdash_content_id": "01M1DGS2KTGW0JND3D63XR65J9",
+        "emdash_media_id": "01M1DGRWJFKWQYTH9A19WR9T6Q",
+        "r2_object_key": "01M1DGRWJF39NZ1VK2NX87VGA8.01M1DGRX3YSMHM29GSJYM6THPX.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d25a98e31869e34e9dd9b02cf8ae77f3f30d5f83a3d5ad43fea6f65a0c6c5f78",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:39:09+00:00",
+        "public_asset": {
+          "sha256": "d25a98e31869e34e9dd9b02cf8ae77f3f30d5f83a3d5ad43fea6f65a0c6c5f78",
+          "bytes": 3682869,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:39:09+00:00"
+        }
       }
     },
     {
@@ -1868,7 +2253,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-jHwKCcZ",
         "filename": "PXL_20201129_012605453.MP.jpg",
         "format": "JPG",
-        "archived_md5": "f226c8af6aa429b220bf5b307f974a91"
+        "archived_md5": "f226c8af6aa429b220bf5b307f974a91",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1895,15 +2281,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_stn7uc3rthpvkdlenprzceaqre",
-        "media_path": "/media/kph_stn7uc3rthpvkdlenprzceaqre",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGV4KEQJXBKNGSBEVA50ZC.01M1DGV5CJHX83AMDGYCNHXKPY.jpg",
+        "emdash_content_id": "01M1DGVA3NSRWGCVTTWDV7YWHG",
+        "emdash_media_id": "01M1DGV4KERVA44H1XJKGSWA3X",
+        "r2_object_key": "01M1DGV4KEQJXBKNGSBEVA50ZC.01M1DGV5CJHX83AMDGYCNHXKPY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "6e45f7c56f8e5fe94d827bbdf54d12f1072cdad8b67dadc6810a600ac38ceced",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:40:21+00:00",
+        "public_asset": {
+          "sha256": "6e45f7c56f8e5fe94d827bbdf54d12f1072cdad8b67dadc6810a600ac38ceced",
+          "bytes": 6184053,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:40:21+00:00"
+        }
       }
     },
     {
@@ -1916,7 +2311,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-X3R48mJ",
         "filename": "PXL_20201129_013646539.MP.jpg",
         "format": "JPG",
-        "archived_md5": "21fb5d0b495b5cb5477d92079a8b1b19"
+        "archived_md5": "21fb5d0b495b5cb5477d92079a8b1b19",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1943,15 +2339,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3ovhjy4qbkldxmcrdkz7uvhl44",
-        "media_path": "/media/kph_3ovhjy4qbkldxmcrdkz7uvhl44",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGXBNYZ07KABNMYGC1NK0B.01M1DGXCB20CSRD3NW2REMY2R7.jpg",
+        "emdash_content_id": "01M1DGXJGS4KV6HVFSCT2BPV9H",
+        "emdash_media_id": "01M1DGXBNY6JJPD5D62MQM5024",
+        "r2_object_key": "01M1DGXBNYZ07KABNMYGC1NK0B.01M1DGXCB20CSRD3NW2REMY2R7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7fa9b5f28c0a20735683300c862ccc22f659e7624a83eb865b6e66531993960f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:41:35+00:00",
+        "public_asset": {
+          "sha256": "7fa9b5f28c0a20735683300c862ccc22f659e7624a83eb865b6e66531993960f",
+          "bytes": 7058322,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:41:35+00:00"
+        }
       }
     },
     {
@@ -1964,7 +2369,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-5btJ2Hc",
         "filename": "PXL_20201129_013851942.jpg",
         "format": "JPG",
-        "archived_md5": "a1090788e7f509a3cd5f5be54c8581af"
+        "archived_md5": "a1090788e7f509a3cd5f5be54c8581af",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1991,15 +2397,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_o3pc45f54drwfoobgresg7qisq",
-        "media_path": "/media/kph_o3pc45f54drwfoobgresg7qisq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DGZMNHEHXQR34T8E6XSH71.01M1DGZN6Z56J7WG6QMR6XJM0D.jpg",
+        "emdash_content_id": "01M1DGZSWGP7H3RK30H7W2D6W5",
+        "emdash_media_id": "01M1DGZMNHK6DRBDB12EV16GKM",
+        "r2_object_key": "01M1DGZMNHEHXQR34T8E6XSH71.01M1DGZN6Z56J7WG6QMR6XJM0D.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "376ff3aabb90c31f18341a96f9c2c71a24e6251d00a543cd4e114dc590a88114",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:42:49+00:00",
+        "public_asset": {
+          "sha256": "376ff3aabb90c31f18341a96f9c2c71a24e6251d00a543cd4e114dc590a88114",
+          "bytes": 3908057,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:42:49+00:00"
+        }
       }
     },
     {
@@ -2012,7 +2427,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-HP8MF7g",
         "filename": "PXL_20201129_015318908.MP.jpg",
         "format": "JPG",
-        "archived_md5": "d0c4e49201fe9d44da14181e5128034f"
+        "archived_md5": "d0c4e49201fe9d44da14181e5128034f",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2039,15 +2455,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_aqtfm7es5wb2ws4xnwporepxty",
-        "media_path": "/media/kph_aqtfm7es5wb2ws4xnwporepxty",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH03DVRZP942C9G5CYT3P5.01M1DH04259GNF33JAHSK1SRXW.jpg",
+        "emdash_content_id": "01M1DH097GTZ85T6WMX3PTPP60",
+        "emdash_media_id": "01M1DH03DVYTV24NJJDVNZ0CMC",
+        "r2_object_key": "01M1DH03DVRZP942C9G5CYT3P5.01M1DH04259GNF33JAHSK1SRXW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e1036ce1050736b7cfc269f0b7b243c2031f405429c694a588aa3f7803f67b2c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:43:05+00:00",
+        "public_asset": {
+          "sha256": "e1036ce1050736b7cfc269f0b7b243c2031f405429c694a588aa3f7803f67b2c",
+          "bytes": 6463799,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:43:05+00:00"
+        }
       }
     },
     {
@@ -2060,7 +2485,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-TL79nsq",
         "filename": "PXL_20201129_021846694.jpg",
         "format": "JPG",
-        "archived_md5": "4caab59faf6aae1f1f6cbb31d8da0ce0"
+        "archived_md5": "4caab59faf6aae1f1f6cbb31d8da0ce0",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2087,15 +2513,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_dg5axsxxg6fgymc666t2hlly4m",
-        "media_path": "/media/kph_dg5axsxxg6fgymc666t2hlly4m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH2B6WBK5KKW402E88YAAK.01M1DH2BSBKETWVGGV5CAPXYWR.jpg",
+        "emdash_content_id": "01M1DH2H0A24KWXCAVBEB9XDEP",
+        "emdash_media_id": "01M1DH2B6W8MT2FCG4X4NK67WX",
+        "r2_object_key": "01M1DH2B6WBK5KKW402E88YAAK.01M1DH2BSBKETWVGGV5CAPXYWR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c14fa9aa2aeb02d80b291325288187266a000a3ad290c6751271c8765c2fe47b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:44:18+00:00",
+        "public_asset": {
+          "sha256": "c14fa9aa2aeb02d80b291325288187266a000a3ad290c6751271c8765c2fe47b",
+          "bytes": 4398833,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:44:18+00:00"
+        }
       }
     },
     {
@@ -2108,7 +2543,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-WxgQBvg",
         "filename": "PXL_20201129_022121378.jpg",
         "format": "JPG",
-        "archived_md5": "beadb01f32dfa97bd803921ba03c1cd8"
+        "archived_md5": "beadb01f32dfa97bd803921ba03c1cd8",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2135,15 +2571,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zygkn6hcqirjiovqworlqnpvdm",
-        "media_path": "/media/kph_zygkn6hcqirjiovqworlqnpvdm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH4M7177B3C4NSQH98JC98.01M1DH4N9GTGNQA49V62RF9NT9.jpg",
+        "emdash_content_id": "01M1DH4T1TG4PAKTJYGE3H144T",
+        "emdash_media_id": "01M1DH4M71VZGVT16KA382Y397",
+        "r2_object_key": "01M1DH4M7177B3C4NSQH98JC98.01M1DH4N9GTGNQA49V62RF9NT9.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7a77789b2504cb47f2c20864eb9aea0334b896b5c553dc5ed88a0500dd45da4e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:45:33+00:00",
+        "public_asset": {
+          "sha256": "7a77789b2504cb47f2c20864eb9aea0334b896b5c553dc5ed88a0500dd45da4e",
+          "bytes": 4660838,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:45:33+00:00"
+        }
       }
     },
     {
@@ -2156,7 +2601,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-m2rBHZK",
         "filename": "PXL_20201129_022211036.jpg",
         "format": "JPG",
-        "archived_md5": "20981bef69d53ddc4816f6a7f2521456"
+        "archived_md5": "20981bef69d53ddc4816f6a7f2521456",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2183,15 +2629,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_okg3pa2m5tiuh6shlj45qjjnmm",
-        "media_path": "/media/kph_okg3pa2m5tiuh6shlj45qjjnmm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH53A1W65A7TAYPJC79S4X.01M1DH54739ACY8C86Y9MCV6WN.jpg",
+        "emdash_content_id": "01M1DH58GYDSHB4ZQHXVAA10XR",
+        "emdash_media_id": "01M1DH53A1NXKSZ5SRYJ0CCGR2",
+        "r2_object_key": "01M1DH53A1W65A7TAYPJC79S4X.01M1DH54739ACY8C86Y9MCV6WN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0366903c03094ec2c2fe9e2ea88f3506c0a442cd026379aae1452b25a1c46762",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:45:48+00:00",
+        "public_asset": {
+          "sha256": "0366903c03094ec2c2fe9e2ea88f3506c0a442cd026379aae1452b25a1c46762",
+          "bytes": 3813259,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:45:48+00:00"
+        }
       }
     },
     {
@@ -2204,7 +2659,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-S5Jf2jW",
         "filename": "PXL_20201129_022504037.jpg",
         "format": "JPG",
-        "archived_md5": "5a1e9ab8464b5c7a51c289abc8fd69c9"
+        "archived_md5": "5a1e9ab8464b5c7a51c289abc8fd69c9",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2231,15 +2687,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6rdfviui647zagdlbv7lkv3kxu",
-        "media_path": "/media/kph_6rdfviui647zagdlbv7lkv3kxu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH79S65H0X3TEVCRT9APD3.01M1DH7ABT89S0547Z2QQDFDCB.jpg",
+        "emdash_content_id": "01M1DH7EQH99KX795FDF725PVD",
+        "emdash_media_id": "01M1DH79S6DV6BX948X2638BE6",
+        "r2_object_key": "01M1DH79S65H0X3TEVCRT9APD3.01M1DH7ABT89S0547Z2QQDFDCB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b41c7f9cc087b127c1af925986d70667b27f8845c9a1fcfde01c0f31487282f2",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:46:59+00:00",
+        "public_asset": {
+          "sha256": "b41c7f9cc087b127c1af925986d70667b27f8845c9a1fcfde01c0f31487282f2",
+          "bytes": 3085854,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:46:59+00:00"
+        }
       }
     },
     {
@@ -2252,7 +2717,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-gZQBb4x",
         "filename": "PXL_20201129_023543030.MP.jpg",
         "format": "JPG",
-        "archived_md5": "1d2faedc3f1ef72922a078a61bb25184"
+        "archived_md5": "1d2faedc3f1ef72922a078a61bb25184",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2279,15 +2745,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6y2eod6azu3hwp4lj3qmo4c4pq",
-        "media_path": "/media/kph_6y2eod6azu3hwp4lj3qmo4c4pq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH7QGQPG903JW2V9J0AXFD.01M1DH7R415F5CKGYY89161Q9M.jpg",
+        "emdash_content_id": "01M1DH7WJX5RND82BX21P4S8EF",
+        "emdash_media_id": "01M1DH7QGQG7NK44KPZ99ZETBT",
+        "r2_object_key": "01M1DH7QGQPG903JW2V9J0AXFD.01M1DH7R415F5CKGYY89161Q9M.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e460d50e4c8c955cc3cfb375e53debbba05c2c79d895ee8c3a150c1de433c3b1",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:47:14+00:00",
+        "public_asset": {
+          "sha256": "e460d50e4c8c955cc3cfb375e53debbba05c2c79d895ee8c3a150c1de433c3b1",
+          "bytes": 6437551,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:47:14+00:00"
+        }
       }
     },
     {
@@ -2300,7 +2775,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-5QSN5Dq",
         "filename": "PXL_20201129_025110573.MP.jpg",
         "format": "JPG",
-        "archived_md5": "0b10da8254ef92718d041c13567bf915"
+        "archived_md5": "0b10da8254ef92718d041c13567bf915",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2327,15 +2803,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hnwpnxna7xthadhbqjiywsdf5i",
-        "media_path": "/media/kph_hnwpnxna7xthadhbqjiywsdf5i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DH94M69Q71DQS9NQKBS4QE.01M1DH956Z7TSB37PT9MT40AB9.jpg",
+        "emdash_content_id": "01M1DH9AME0JD5SYT5SPVZM399",
+        "emdash_media_id": "01M1DH94M6H8T8VXGHZBRYBW6A",
+        "r2_object_key": "01M1DH94M69Q71DQS9NQKBS4QE.01M1DH956Z7TSB37PT9MT40AB9.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d0db3495319468a81933a1d10a4c45c45340649513bb7d7361a96b9f21ad44cf",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:48:01+00:00",
+        "public_asset": {
+          "sha256": "d0db3495319468a81933a1d10a4c45c45340649513bb7d7361a96b9f21ad44cf",
+          "bytes": 6107939,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:48:01+00:00"
+        }
       }
     },
     {
@@ -2348,7 +2833,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-jjz9Lmj",
         "filename": "PXL_20201129_033102055.jpg",
         "format": "JPG",
-        "archived_md5": "3964da86bade41db258d7d4a4e1d7fef"
+        "archived_md5": "3964da86bade41db258d7d4a4e1d7fef",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2375,15 +2861,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ifqvtwvdx2q6xmx5bltymsst3a",
-        "media_path": "/media/kph_ifqvtwvdx2q6xmx5bltymsst3a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHBA47XB9AVZJCYP995A1E.01M1DHBATDRKDFHFSTNNME30X8.jpg",
+        "emdash_content_id": "01M1DHBFJ3KZE7966XSSQE2VTD",
+        "emdash_media_id": "01M1DHBA47VC4CF3QYC81VD7AD",
+        "r2_object_key": "01M1DHBA47XB9AVZJCYP995A1E.01M1DHBATDRKDFHFSTNNME30X8.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2a80cf33877b0141de1fb8b578c2176665f7e9b0d674bccdabd01544ceb5f549",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:49:11+00:00",
+        "public_asset": {
+          "sha256": "2a80cf33877b0141de1fb8b578c2176665f7e9b0d674bccdabd01544ceb5f549",
+          "bytes": 3271577,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:49:11+00:00"
+        }
       }
     },
     {
@@ -2396,7 +2891,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-6kNhs3m",
         "filename": "PXL_20201129_061742170.jpg",
         "format": "JPG",
-        "archived_md5": "55c9a01dd3c62a0b985c36cefb9063cc"
+        "archived_md5": "55c9a01dd3c62a0b985c36cefb9063cc",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2423,15 +2919,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bfljo6xhl7opplyh7phsscbmim",
-        "media_path": "/media/kph_bfljo6xhl7opplyh7phsscbmim",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHDGJ6A2ND2PQ34CP2ZN06.01M1DHDH6JRMANRCAPCS1KTZ91.jpg",
+        "emdash_content_id": "01M1DHDNDW1W3K2ESX8AB05Y6N",
+        "emdash_media_id": "01M1DHDGJ67P2FTVRRHR9Z9FW5",
+        "r2_object_key": "01M1DHDGJ6A2ND2PQ34CP2ZN06.01M1DHDH6JRMANRCAPCS1KTZ91.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "35b176b7e1d8d25295bdca93e82f032fac0a7f16a5bc941dd62e2e36ce0a1905",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:50:23+00:00",
+        "public_asset": {
+          "sha256": "35b176b7e1d8d25295bdca93e82f032fac0a7f16a5bc941dd62e2e36ce0a1905",
+          "bytes": 3091316,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:50:23+00:00"
+        }
       }
     },
     {
@@ -2444,7 +2949,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-sg2pcmZ",
         "filename": "PXL_20201129_061803321.jpg",
         "format": "JPG",
-        "archived_md5": "623f977d2fde45363003543194a2bb40"
+        "archived_md5": "623f977d2fde45363003543194a2bb40",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2471,15 +2977,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_iz6q4n2db3m6xfhyftwomeueg4",
-        "media_path": "/media/kph_iz6q4n2db3m6xfhyftwomeueg4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHFNMMF5N4Q7J38QARZ918.01M1DHFP8H50H78VKZXH7X528G.jpg",
+        "emdash_content_id": "01M1DHFTJJVK1QND74BZ0FNK9S",
+        "emdash_media_id": "01M1DHFNMMENYKM1DRXF84XZMH",
+        "r2_object_key": "01M1DHFNMMF5N4Q7J38QARZ918.01M1DHFP8H50H78VKZXH7X528G.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "fee822e521122c89ce77ea0a2d2732c55f2237f9e7395def6ebc132395595a59",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:51:34+00:00",
+        "public_asset": {
+          "sha256": "fee822e521122c89ce77ea0a2d2732c55f2237f9e7395def6ebc132395595a59",
+          "bytes": 4467978,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:51:34+00:00"
+        }
       }
     },
     {
@@ -2492,7 +3007,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-VQwJKtL",
         "filename": "PXL_20201129_064513384.jpg",
         "format": "JPG",
-        "archived_md5": "4531915b88d2503018875586fd7a7608"
+        "archived_md5": "4531915b88d2503018875586fd7a7608",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2519,15 +3035,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_h2rwgdhw2w2nyseriveiawt3ey",
-        "media_path": "/media/kph_h2rwgdhw2w2nyseriveiawt3ey",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHG39GM71EBBT2YSGK1QW2.01M1DHG3Y9M47A84DT518G012H.jpg",
+        "emdash_content_id": "01M1DHGA34RX75HEQDN3SYRZ6Q",
+        "emdash_media_id": "01M1DHG39G4H6NN7BY64AV31X7",
+        "r2_object_key": "01M1DHG39GM71EBBT2YSGK1QW2.01M1DHG3Y9M47A84DT518G012H.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "410b1b5353cca44f22bf188f781718e666a2dd91838bc078379aa42c0fbf4cc8",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:51:50+00:00",
+        "public_asset": {
+          "sha256": "410b1b5353cca44f22bf188f781718e666a2dd91838bc078379aa42c0fbf4cc8",
+          "bytes": 3960650,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:51:50+00:00"
+        }
       }
     },
     {
@@ -2540,7 +3065,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-8zPw4Ls",
         "filename": "PXL_20201129_065542163.jpg",
         "format": "JPG",
-        "archived_md5": "ad57b5c2bc7fa1ed3b69aaef357f8deb"
+        "archived_md5": "ad57b5c2bc7fa1ed3b69aaef357f8deb",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2567,15 +3093,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_57g5eywcdxtvwuxkg6hg4czwka",
-        "media_path": "/media/kph_57g5eywcdxtvwuxkg6hg4czwka",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHJC4MKXTC08KJ2H4RT86P.01M1DHJD5VADZC2RSXFJX8D4CH.jpg",
+        "emdash_content_id": "01M1DHJHRY45QVHJ3ZP6AQDKDG",
+        "emdash_media_id": "01M1DHJC4MYZHWMK5BN3FV7V33",
+        "r2_object_key": "01M1DHJC4MKXTC08KJ2H4RT86P.01M1DHJD5VADZC2RSXFJX8D4CH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e5eceaff9d766fd4f5edf77cff28a5446102c7d7604a77251c69d5b5dbe51196",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:53:03+00:00",
+        "public_asset": {
+          "sha256": "e5eceaff9d766fd4f5edf77cff28a5446102c7d7604a77251c69d5b5dbe51196",
+          "bytes": 2862456,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:53:03+00:00"
+        }
       }
     },
     {
@@ -2588,7 +3123,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-hSRzRjD",
         "filename": "PXL_20201129_065932632.MP.jpg",
         "format": "JPG",
-        "archived_md5": "fccc940574e2a9bec2f6907fd04e37ca"
+        "archived_md5": "fccc940574e2a9bec2f6907fd04e37ca",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2615,15 +3151,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zuyiid2phm63s363btbi6skcci",
-        "media_path": "/media/kph_zuyiid2phm63s363btbi6skcci",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHJTX9K9M248NBRPE8FEWJ.01M1DHJW00M1T07NN1Y13P9XNW.jpg",
+        "emdash_content_id": "01M1DHK0QMWSYJZFZW40CA4AAC",
+        "emdash_media_id": "01M1DHJTX9MYSB3PNDJA8A5KC4",
+        "r2_object_key": "01M1DHJTX9K9M248NBRPE8FEWJ.01M1DHJW00M1T07NN1Y13P9XNW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "74f6ee36d967f80a57170aca4dad2db6b2d9cbca76f224ef1550489688acc910",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:53:18+00:00",
+        "public_asset": {
+          "sha256": "74f6ee36d967f80a57170aca4dad2db6b2d9cbca76f224ef1550489688acc910",
+          "bytes": 5974076,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:53:18+00:00"
+        }
       }
     },
     {
@@ -2636,7 +3181,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-KLhshRQ",
         "filename": "PXL_20201129_070035868.jpg",
         "format": "JPG",
-        "archived_md5": "7994ad85f295e3704bf19f1c54061c68"
+        "archived_md5": "7994ad85f295e3704bf19f1c54061c68",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2663,15 +3209,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_nb25ut2gowkwwrchlhikgcjy6y",
-        "media_path": "/media/kph_nb25ut2gowkwwrchlhikgcjy6y",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHMZHQQAF7A8PPW6Z0XEKX.01M1DHN05XMW9BAYVVMY0AB0YB.jpg",
+        "emdash_content_id": "01M1DHN522T7RRXGEAMJW3SNCG",
+        "emdash_media_id": "01M1DHMZHQ85WZ10ZXCW61NGC5",
+        "r2_object_key": "01M1DHMZHQQAF7A8PPW6Z0XEKX.01M1DHN05XMW9BAYVVMY0AB0YB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "756ded96bedfa38a35430df3da6f4bfc873c67d0931f58f81d3f8d8d3f749ab0",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:54:28+00:00",
+        "public_asset": {
+          "sha256": "756ded96bedfa38a35430df3da6f4bfc873c67d0931f58f81d3f8d8d3f749ab0",
+          "bytes": 4647613,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:54:28+00:00"
+        }
       }
     },
     {
@@ -2684,7 +3239,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-hcHdKcB",
         "filename": "PXL_20201129_070200710.jpg",
         "format": "JPG",
-        "archived_md5": "22d1de5afad49e16138a9fac5f08eaa6"
+        "archived_md5": "22d1de5afad49e16138a9fac5f08eaa6",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2711,15 +3267,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5wvj3rz2qln5mlaoe4pqqmfcsa",
-        "media_path": "/media/kph_5wvj3rz2qln5mlaoe4pqqmfcsa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHQ664YKJZEAYRWE45DK9X.01M1DHQ6RQ6KVZP9M40GDF89RB.jpg",
+        "emdash_content_id": "01M1DHQB4AZ9EWK6W1PCWJJXYT",
+        "emdash_media_id": "01M1DHQ664TBNEVV9F2CNQK55H",
+        "r2_object_key": "01M1DHQ664YKJZEAYRWE45DK9X.01M1DHQ6RQ6KVZP9M40GDF89RB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "bf4021646b1a1460156b821c3823e839f1bd88240317f428149535dc748d73cc",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:55:40+00:00",
+        "public_asset": {
+          "sha256": "bf4021646b1a1460156b821c3823e839f1bd88240317f428149535dc748d73cc",
+          "bytes": 4495721,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:55:40+00:00"
+        }
       }
     },
     {
@@ -2732,7 +3297,8 @@
         "web_uri": "https://kanolog.smugmug.com/20201128Hiroshima/i-6rfTPsC",
         "filename": "PXL_20201129_071354718.jpg",
         "format": "JPG",
-        "archived_md5": "9e637ed1fe74eeb8097484948cc64fa2"
+        "archived_md5": "9e637ed1fe74eeb8097484948cc64fa2",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -2759,15 +3325,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_eu26grkcvtjmplah2zqcwl446i",
-        "media_path": "/media/kph_eu26grkcvtjmplah2zqcwl446i",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DHSCW8AMMTW64RYR02P5VV.01M1DHSDDGDZ6B29MMGVH3X1PR.jpg",
+        "emdash_content_id": "01M1DHSHRZB8G8FFNBG3P2KZ4T",
+        "emdash_media_id": "01M1DHSCW8T98RN7EVGVQN5DY3",
+        "r2_object_key": "01M1DHSCW8AMMTW64RYR02P5VV.01M1DHSDDGDZ6B29MMGVH3X1PR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b36742a10bb878ae510a752c8f94af0887e72575b37a2b5dcb127bd1175d5e4b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:56:52+00:00",
+        "public_asset": {
+          "sha256": "b36742a10bb878ae510a752c8f94af0887e72575b37a2b5dcb127bd1175d5e4b",
+          "bytes": 2738104,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:56:52+00:00"
+        }
       }
     }
   ]

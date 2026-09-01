@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-08-31T17:31:18+00:00",
+  "generated_at": "2026-09-01T04:40:53+00:00",
   "scope": "public SmugMug album migration",
   "privacy": {
     "public_assets_only": true,
@@ -20,7 +20,8 @@
       "service": "smugmug",
       "user": "kanolog",
       "album_key": "TMSv9w",
-      "web_uri": "https://kanolog.smugmug.com/20230222Kyoto"
+      "web_uri": "https://kanolog.smugmug.com/20230222Kyoto",
+      "highlight_image_key": "XfJFwjf"
     },
     "title": "Kyoto, 2023/02",
     "description": "銀閣寺、広隆寺、永観堂",
@@ -30,7 +31,7 @@
     "source_protected_flag": false,
     "asset_count": 94,
     "destination": {
-      "emdash_content_id": null
+      "emdash_content_id": "01M1D8GYQTYJSQJ982BJZPJC3N"
     }
   },
   "assets": [
@@ -44,7 +45,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-DBScD9B",
         "filename": "PXL_20230221_231600744.jpg",
         "format": "JPG",
-        "archived_md5": "70d8d96e6c6229aa104aadd9a13a330e"
+        "archived_md5": "70d8d96e6c6229aa104aadd9a13a330e",
+        "collected": false
       },
       "display": {
         "title": "出発！",
@@ -71,15 +73,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_47qxwjzwp7gpn3zodhtlofgxvi",
-        "media_path": "/media/kph_47qxwjzwp7gpn3zodhtlofgxvi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8H83N5VQWH85BHJ2JS1N5.01M1D8H8PMHQGZY9M2CWVY7RDX.jpg",
+        "emdash_content_id": "01M1D8HD55968YNDDAYHZBK613",
+        "emdash_media_id": "01M1D8H83NBDKDRDZA2TWSBV39",
+        "r2_object_key": "01M1D8H83N5VQWH85BHJ2JS1N5.01M1D8H8PMHQGZY9M2CWVY7RDX.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "82539b527e626d47dc3060450db45aa718c3d2b62ca6cae1654ad8e422955b2d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:15:09+00:00",
+        "public_asset": {
+          "sha256": "82539b527e626d47dc3060450db45aa718c3d2b62ca6cae1654ad8e422955b2d",
+          "bytes": 2974880,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:15:09+00:00"
+        }
       }
     },
     {
@@ -92,7 +103,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-2GM9ZcS",
         "filename": "PXL_20230221_234728996.jpg",
         "format": "JPG",
-        "archived_md5": "4b549e4695fcd255f3cfad1be26cfcc2"
+        "archived_md5": "4b549e4695fcd255f3cfad1be26cfcc2",
+        "collected": false
       },
       "display": {
         "title": "富士山",
@@ -119,15 +131,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_34w33sss6q2l23rmgld7rta4va",
-        "media_path": "/media/kph_34w33sss6q2l23rmgld7rta4va",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8JNQCXHXGW73VN5ZA02NN.01M1D8JP8NKHYT70A4ZP1SVQB3.jpg",
+        "emdash_content_id": "01M1D8JTSTWN31KM98DJABXZJ1",
+        "emdash_media_id": "01M1D8JNQCKKR9XN4ZYDCVVQ9R",
+        "r2_object_key": "01M1D8JNQCXHXGW73VN5ZA02NN.01M1D8JP8NKHYT70A4ZP1SVQB3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "11071ec669d9f6c25c5b43aea8406e5d4a44c89aa21116706d53f6f874e2dd6c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:15:55+00:00",
+        "public_asset": {
+          "sha256": "11071ec669d9f6c25c5b43aea8406e5d4a44c89aa21116706d53f6f874e2dd6c",
+          "bytes": 2361023,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:15:55+00:00"
+        }
       }
     },
     {
@@ -140,7 +161,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-SQDFVtj",
         "filename": "PXL_20230222_000437500.jpg",
         "format": "JPG",
-        "archived_md5": "2ae7195b615ee99856c7e7c46c79edf7"
+        "archived_md5": "2ae7195b615ee99856c7e7c46c79edf7",
+        "collected": false
       },
       "display": {
         "title": "富士山",
@@ -167,15 +189,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_4obbdlw5sulawubb2knjhoxcau",
-        "media_path": "/media/kph_4obbdlw5sulawubb2knjhoxcau",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8K2FXDH3EYHRPTRA64AD6.01M1D8K30PEPWMB863TWEWXW0N.jpg",
+        "emdash_content_id": "01M1D8K6YKVCJT493MWDSQ687S",
+        "emdash_media_id": "01M1D8K2FXG0CVJEMEDFK53NP9",
+        "r2_object_key": "01M1D8K2FXDH3EYHRPTRA64AD6.01M1D8K30PEPWMB863TWEWXW0N.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "461474dc1d49c2a4eac11a0d88900fed2ebc69d38cc17949cd89f77c24623405",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:16:07+00:00",
+        "public_asset": {
+          "sha256": "461474dc1d49c2a4eac11a0d88900fed2ebc69d38cc17949cd89f77c24623405",
+          "bytes": 1558429,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:16:07+00:00"
+        }
       }
     },
     {
@@ -188,7 +219,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-9d4fcS8",
         "filename": "PXL_20230222_012036382.jpg",
         "format": "JPG",
-        "archived_md5": "233bcab1c23c395299a2ffcc58a2fee0"
+        "archived_md5": "233bcab1c23c395299a2ffcc58a2fee0",
+        "collected": false
       },
       "display": {
         "title": "琵琶湖の東あたり",
@@ -215,15 +247,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_crf42c6sxlvouhqpbyvi5gxecq",
-        "media_path": "/media/kph_crf42c6sxlvouhqpbyvi5gxecq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8KEQ8RPTKA9C2RQH24SH8.01M1D8KFBT0MWH9TRJVRC6HSYB.jpg",
+        "emdash_content_id": "01M1D8KKA3GC6A7WY9X2JM5QY1",
+        "emdash_media_id": "01M1D8KEQ8DGEC0RNDV6KTA98E",
+        "r2_object_key": "01M1D8KEQ8RPTKA9C2RQH24SH8.01M1D8KFBT0MWH9TRJVRC6HSYB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9d75bd4a165ae54e8c6ae48585ef66e6dd94c2525c09b0f5f0b7b9aecb55c83c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:16:20+00:00",
+        "public_asset": {
+          "sha256": "9d75bd4a165ae54e8c6ae48585ef66e6dd94c2525c09b0f5f0b7b9aecb55c83c",
+          "bytes": 2977463,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:16:20+00:00"
+        }
       }
     },
     {
@@ -236,7 +277,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-G8gwLb3",
         "filename": "PXL_20230222_013244678.jpg",
         "format": "JPG",
-        "archived_md5": "a52c3ea5c33b619d1ffc5103a562ff7c"
+        "archived_md5": "a52c3ea5c33b619d1ffc5103a562ff7c",
+        "collected": false
       },
       "display": {
         "title": "到着",
@@ -263,15 +305,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_bh6hk5jwebmy2wwrfhi7q6z7fq",
-        "media_path": "/media/kph_bh6hk5jwebmy2wwrfhi7q6z7fq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8KV11NFZC86GY3PAMVMHS.01M1D8KVNMV30QJZ6H37Q8E74D.jpg",
+        "emdash_content_id": "01M1D8M013DS4ZADWJ2AYAB6SG",
+        "emdash_media_id": "01M1D8KV11EW4WGN957PE260T3",
+        "r2_object_key": "01M1D8KV11NFZC86GY3PAMVMHS.01M1D8KVNMV30QJZ6H37Q8E74D.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d6448921406a42e548fafbf0faa5ebeb4f5eefdaead22d51442485c38602f6c9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:16:33+00:00",
+        "public_asset": {
+          "sha256": "d6448921406a42e548fafbf0faa5ebeb4f5eefdaead22d51442485c38602f6c9",
+          "bytes": 4215291,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:16:33+00:00"
+        }
       }
     },
     {
@@ -284,7 +335,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-M3J7W9s",
         "filename": "PXL_20230222_015820472.jpg",
         "format": "JPG",
-        "archived_md5": "f7e19d08e3ac3246ed3d2a31e3917366"
+        "archived_md5": "f7e19d08e3ac3246ed3d2a31e3917366",
+        "collected": false
       },
       "display": {
         "title": "京都市役所前",
@@ -311,15 +363,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_onf5ycnspl3qnrlhrehsuee32u",
-        "media_path": "/media/kph_onf5ycnspl3qnrlhrehsuee32u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8M9ZANCJJG0V0ESQQY7MK.01M1D8MAJF9AXNWCMM61V9G09Q.jpg",
+        "emdash_content_id": "01M1D8MEZWDH40DZQTAJ1FTHRJ",
+        "emdash_media_id": "01M1D8M9ZAQRDFMAEP0XHKCCDC",
+        "r2_object_key": "01M1D8M9ZANCJJG0V0ESQQY7MK.01M1D8MAJF9AXNWCMM61V9G09Q.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9c7a205c7dfa84dd693e342ebb61ed870c0c718ebff7c61f5a7e0e9d3866f887",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:16:48+00:00",
+        "public_asset": {
+          "sha256": "9c7a205c7dfa84dd693e342ebb61ed870c0c718ebff7c61f5a7e0e9d3866f887",
+          "bytes": 4514229,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:16:48+00:00"
+        }
       }
     },
     {
@@ -332,7 +393,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-3xVk5TN",
         "filename": "PXL_20230222_015826709.jpg",
         "format": "JPG",
-        "archived_md5": "e332862c133c53fd2ae7b568f87ae9a8"
+        "archived_md5": "e332862c133c53fd2ae7b568f87ae9a8",
+        "collected": false
       },
       "display": {
         "title": "御池大橋をのぞむ",
@@ -359,15 +421,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_fcgjudvfwz3r7tpqxnfrltzkbi",
-        "media_path": "/media/kph_fcgjudvfwz3r7tpqxnfrltzkbi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8PGG6DK9CGHJ5WGZ2AXW0.01M1D8PHA0QCG8EQNJKW2XJ5N3.jpg",
+        "emdash_content_id": "01M1D8PNRKY0JDZ9MFVS8Q5PCV",
+        "emdash_media_id": "01M1D8PGG6FDDZFGVZ8QHAVJMT",
+        "r2_object_key": "01M1D8PGG6DK9CGHJ5WGZ2AXW0.01M1D8PHA0QCG8EQNJKW2XJ5N3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cc01a67264de9113eda7a253bc6658ebfccea51fc522d2791a6116aaf5873c02",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:18:01+00:00",
+        "public_asset": {
+          "sha256": "cc01a67264de9113eda7a253bc6658ebfccea51fc522d2791a6116aaf5873c02",
+          "bytes": 4266295,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:18:01+00:00"
+        }
       }
     },
     {
@@ -380,7 +451,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-H4mRWHt",
         "filename": "PXL_20230222_020751789.MOTION-02.ORIGINAL.jpg",
         "format": "JPG",
-        "archived_md5": "a01c0ee1d64bdca125718f24d508cf78"
+        "archived_md5": "a01c0ee1d64bdca125718f24d508cf78",
+        "collected": false
       },
       "display": {
         "title": "御池大橋から見た鴨川",
@@ -407,15 +479,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gfvlecrlij7re4dntgmdhyc5le",
-        "media_path": "/media/kph_gfvlecrlij7re4dntgmdhyc5le",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8RPR804ZQBX2AESMZQ3GJ.01M1D8RQ9RX3T2P439RWSHNZF7.jpg",
+        "emdash_content_id": "01M1D8RVCPDJ8K81H0A6RQ81GW",
+        "emdash_media_id": "01M1D8RPR8THZM7J5D38D42GGG",
+        "r2_object_key": "01M1D8RPR804ZQBX2AESMZQ3GJ.01M1D8RQ9RX3T2P439RWSHNZF7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "483b44a13b98bac0274b7fd4bc8c1ce73daf2e112452323430d98bbe97eb0edc",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:19:12+00:00",
+        "public_asset": {
+          "sha256": "483b44a13b98bac0274b7fd4bc8c1ce73daf2e112452323430d98bbe97eb0edc",
+          "bytes": 3772769,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:19:12+00:00"
+        }
       }
     },
     {
@@ -428,7 +509,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-Sh35Z2P",
         "filename": "PXL_20230222_022538660.jpg",
         "format": "JPG",
-        "archived_md5": "e52f3c8062ceddcd9d065a1471c12f81"
+        "archived_md5": "e52f3c8062ceddcd9d065a1471c12f81",
+        "collected": false
       },
       "display": {
         "title": "ずんどう屋",
@@ -455,15 +537,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_cg7v2g4rkmbby6up6rtn32gnhu",
-        "media_path": "/media/kph_cg7v2g4rkmbby6up6rtn32gnhu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8TW988WH3FAPEK0B0HY6R.01M1D8TWXNECX2A49446CE5J2Z.jpg",
+        "emdash_content_id": "01M1D8V0V2VM9A1MYD72SN3VHV",
+        "emdash_media_id": "01M1D8TW98Q157JKKMRVQRDW37",
+        "r2_object_key": "01M1D8TW988WH3FAPEK0B0HY6R.01M1D8TWXNECX2A49446CE5J2Z.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d1352eb44f73d5849747783156cd1f9a476413348a843d141bf40f50c87f369a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:20:23+00:00",
+        "public_asset": {
+          "sha256": "d1352eb44f73d5849747783156cd1f9a476413348a843d141bf40f50c87f369a",
+          "bytes": 2383656,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:20:23+00:00"
+        }
       }
     },
     {
@@ -476,7 +567,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-WSzM5hm",
         "filename": "PXL_20230222_045818946.jpg",
         "format": "JPG",
-        "archived_md5": "b407533a4b6c31342ffcf75888916c73"
+        "archived_md5": "b407533a4b6c31342ffcf75888916c73",
+        "collected": false
       },
       "display": {
         "title": "ホテルの部屋から見た景色",
@@ -503,15 +595,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5r2ocvvlac5qij4p4vcaof5gr4",
-        "media_path": "/media/kph_5r2ocvvlac5qij4p4vcaof5gr4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8X1VH2GYFKZD7RD9QVVDZ.01M1D8X2MP0AMW9AD94A73ZM0S.jpg",
+        "emdash_content_id": "01M1D8X78BF49XN3XWSNM2P6J5",
+        "emdash_media_id": "01M1D8X1VHVYE4NQRSQ1VQYKSM",
+        "r2_object_key": "01M1D8X1VH2GYFKZD7RD9QVVDZ.01M1D8X2MP0AMW9AD94A73ZM0S.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f75d50c4600b21e1a726835638135a7b7338ccde217862cad839d7a0980543f6",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:21:35+00:00",
+        "public_asset": {
+          "sha256": "f75d50c4600b21e1a726835638135a7b7338ccde217862cad839d7a0980543f6",
+          "bytes": 4935911,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:21:35+00:00"
+        }
       }
     },
     {
@@ -524,7 +625,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-Csq7JcN",
         "filename": "PXL_20230222_174337340.jpg",
         "format": "JPG",
-        "archived_md5": "ad87bed0ba9992c37432b8c49736ca78"
+        "archived_md5": "ad87bed0ba9992c37432b8c49736ca78",
+        "collected": false
       },
       "display": {
         "title": "御池通",
@@ -551,15 +653,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_aa7r4asdjfnahqbwuqkme5gpea",
-        "media_path": "/media/kph_aa7r4asdjfnahqbwuqkme5gpea",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8Z83605408XM5A23MPDD2.01M1D8Z8P5JW6WVPM7AFA03HP5.jpg",
+        "emdash_content_id": "01M1D8ZD3ADJ6EZFS5RVPQC2K9",
+        "emdash_media_id": "01M1D8Z836X8VPZ2309V8PY3HP",
+        "r2_object_key": "01M1D8Z83605408XM5A23MPDD2.01M1D8Z8P5JW6WVPM7AFA03HP5.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "86b20491af8317f369ef19074cf1b85dc1dc2b1e9e37aa5d81c6355bd6714f3c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:22:48+00:00",
+        "public_asset": {
+          "sha256": "86b20491af8317f369ef19074cf1b85dc1dc2b1e9e37aa5d81c6355bd6714f3c",
+          "bytes": 1705357,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:22:48+00:00"
+        }
       }
     },
     {
@@ -572,7 +683,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-cgTbstp",
         "filename": "PXL_20230222_174509153.jpg",
         "format": "JPG",
-        "archived_md5": "4bf8c1152741aa6054c670468fdcc25a"
+        "archived_md5": "4bf8c1152741aa6054c670468fdcc25a",
+        "collected": false
       },
       "display": {
         "title": "夜の高瀬川",
@@ -599,15 +711,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_voqol76vhvbinxngdralwholf4",
-        "media_path": "/media/kph_voqol76vhvbinxngdralwholf4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D8ZNWTS80MBX37R8A7D3G8.01M1D8ZPF5MT0GJZV0KTQVY8S3.jpg",
+        "emdash_content_id": "01M1D8ZV94CBBM9WQY81G3QGY6",
+        "emdash_media_id": "01M1D8ZNWT42F4RVCZVZC1H8GG",
+        "r2_object_key": "01M1D8ZNWTS80MBX37R8A7D3G8.01M1D8ZPF5MT0GJZV0KTQVY8S3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3ee36ec3d030acceb19d1dc3e8638961fa053e8d5edcd22d010a8c97cd91cca5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:23:01+00:00",
+        "public_asset": {
+          "sha256": "3ee36ec3d030acceb19d1dc3e8638961fa053e8d5edcd22d010a8c97cd91cca5",
+          "bytes": 2325887,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:23:01+00:00"
+        }
       }
     },
     {
@@ -620,7 +741,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-5hhRmdg",
         "filename": "PXL_20230223_054546362.jpg",
         "format": "JPG",
-        "archived_md5": "bc3d9075b87c4994cd9be8c5b8df2fda"
+        "archived_md5": "bc3d9075b87c4994cd9be8c5b8df2fda",
+        "collected": false
       },
       "display": {
         "title": "御池大橋手前",
@@ -647,15 +769,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_od3mxkaqomub2l6q4n5zs6w7ym",
-        "media_path": "/media/kph_od3mxkaqomub2l6q4n5zs6w7ym",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D91WFD0M6SEBHWRYWH3GJR.01M1D91X4F17YSXRR25JKCVB4E.jpg",
+        "emdash_content_id": "01M1D921R8GP3MK1HWET42KM61",
+        "emdash_media_id": "01M1D91WFDHXHBZJJX42DKQZZT",
+        "r2_object_key": "01M1D91WFD0M6SEBHWRYWH3GJR.01M1D91X4F17YSXRR25JKCVB4E.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "868c8871f9a9c58fbf0b89a178f1ec6f7a669e41d06681e1e9812334f1840e7e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:24:14+00:00",
+        "public_asset": {
+          "sha256": "868c8871f9a9c58fbf0b89a178f1ec6f7a669e41d06681e1e9812334f1840e7e",
+          "bytes": 5249911,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:24:14+00:00"
+        }
       }
     },
     {
@@ -668,7 +799,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-dWXMBzT",
         "filename": "PXL_20230223_054625997.jpg",
         "format": "JPG",
-        "archived_md5": "da2c2343bf20df7a671148524f963186"
+        "archived_md5": "da2c2343bf20df7a671148524f963186",
+        "collected": false
       },
       "display": {
         "title": "鴨川",
@@ -695,15 +827,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_z6vwsm2fsfyve6bexrtzesajea",
-        "media_path": "/media/kph_z6vwsm2fsfyve6bexrtzesajea",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D943B3KJBCVB4GCYEX5W2S.01M1D943W9MPG40CESTASCS2NZ.jpg",
+        "emdash_content_id": "01M1D947RF9PF9Z9J24E0FYN02",
+        "emdash_media_id": "01M1D943B33BR7VMRFP6QF5TJG",
+        "r2_object_key": "01M1D943B3KJBCVB4GCYEX5W2S.01M1D943W9MPG40CESTASCS2NZ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7fbae9434f0c08c60404d00959af8a5020129c954524306a9dea58c33b8dd29c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:25:25+00:00",
+        "public_asset": {
+          "sha256": "7fbae9434f0c08c60404d00959af8a5020129c954524306a9dea58c33b8dd29c",
+          "bytes": 3264624,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:25:25+00:00"
+        }
       }
     },
     {
@@ -716,7 +857,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-pcB7XpR",
         "filename": "PXL_20230223_055652773.jpg",
         "format": "JPG",
-        "archived_md5": "706b7c81d8210e8a191dd8cf6eb0ab1c"
+        "archived_md5": "706b7c81d8210e8a191dd8cf6eb0ab1c",
+        "collected": false
       },
       "display": {
         "title": "川端通りから二条通へ",
@@ -743,15 +885,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gaw5frvgjnniulqqno7g6twi3e",
-        "media_path": "/media/kph_gaw5frvgjnniulqqno7g6twi3e",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D969BJ48PNRBWP8VV9WRG5.01M1D96A0MQPFF1ZP16QT28FGJ.jpg",
+        "emdash_content_id": "01M1D96E53S63H757QED25T1KX",
+        "emdash_media_id": "01M1D969BJA16T4Q83ECD6RJVY",
+        "r2_object_key": "01M1D969BJ48PNRBWP8VV9WRG5.01M1D96A0MQPFF1ZP16QT28FGJ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "30bbdc53b095c979a4f2b3fa65af91261abefcd66eadf37e81c0087e3676dfa2",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:26:37+00:00",
+        "public_asset": {
+          "sha256": "30bbdc53b095c979a4f2b3fa65af91261abefcd66eadf37e81c0087e3676dfa2",
+          "bytes": 4490518,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:26:37+00:00"
+        }
       }
     },
     {
@@ -764,7 +915,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-HSjrLcz",
         "filename": "PXL_20230223_060043641.jpg",
         "format": "JPG",
-        "archived_md5": "b70017d7204603e5fc8d873baa9452bb"
+        "archived_md5": "b70017d7204603e5fc8d873baa9452bb",
+        "collected": false
       },
       "display": {
         "title": "二条通から東大路通へ",
@@ -791,15 +943,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lojaann3hhtifjkwfparnadb3e",
-        "media_path": "/media/kph_lojaann3hhtifjkwfparnadb3e",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D98F2DNRVWWYNWTPGECMZ5.01M1D98FKZGW1NEYY537E5F70E.jpg",
+        "emdash_content_id": "01M1D98KKG7S1WDWW7PSKJK4ZF",
+        "emdash_media_id": "01M1D98F2DESC5X2T469GD65Q9",
+        "r2_object_key": "01M1D98F2DNRVWWYNWTPGECMZ5.01M1D98FKZGW1NEYY537E5F70E.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f6dd2a8234ed1a1dd8534363067b310d89fe3fa6e68493161e39e7026bc66f19",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:27:48+00:00",
+        "public_asset": {
+          "sha256": "f6dd2a8234ed1a1dd8534363067b310d89fe3fa6e68493161e39e7026bc66f19",
+          "bytes": 3580526,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:27:48+00:00"
+        }
       }
     },
     {
@@ -812,7 +973,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-wpFTT34",
         "filename": "PXL_20230223_060311448.jpg",
         "format": "JPG",
-        "archived_md5": "5d793f06d4beb0c35442285c6b39d341"
+        "archived_md5": "5d793f06d4beb0c35442285c6b39d341",
+        "collected": false
       },
       "display": {
         "title": "琵琶湖疎水が見えてきた",
@@ -839,15 +1001,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_i4ba6o5qt45uiimgigvlr6ncem",
-        "media_path": "/media/kph_i4ba6o5qt45uiimgigvlr6ncem",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9AM5J4SFK038T7ZKM6XQW.01M1D9AMRT8Y1ASVJYXZJ1QT48.jpg",
+        "emdash_content_id": "01M1D9AT007TD7T52F9YA2YWR6",
+        "emdash_media_id": "01M1D9AM5JR71MFBR5NPWHGPS8",
+        "r2_object_key": "01M1D9AM5J4SFK038T7ZKM6XQW.01M1D9AMRT8Y1ASVJYXZJ1QT48.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "78da0305b7a8b077b002304bca445e05bdc8368d90cde706fbec67de7b6502d5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:29:01+00:00",
+        "public_asset": {
+          "sha256": "78da0305b7a8b077b002304bca445e05bdc8368d90cde706fbec67de7b6502d5",
+          "bytes": 5338499,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:29:01+00:00"
+        }
       }
     },
     {
@@ -860,7 +1031,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-zQJ9cmB",
         "filename": "PXL_20230223_060341107.jpg",
         "format": "JPG",
-        "archived_md5": "1ed45b4cd881c22d55a0f88dbef96c41"
+        "archived_md5": "1ed45b4cd881c22d55a0f88dbef96c41",
+        "collected": false
       },
       "display": {
         "title": "琵琶湖疎水",
@@ -887,15 +1059,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pufpujiomu4ubzqcmx34f4cbbe",
-        "media_path": "/media/kph_pufpujiomu4ubzqcmx34f4cbbe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9CTYQJPKD7V6YMD5DSF7V.01M1D9CVG7MMRX0JHZRYMFEC5V.jpg",
+        "emdash_content_id": "01M1D9CZXNAPYF09GHN6J1K2VD",
+        "emdash_media_id": "01M1D9CTYQ5W1P451XQDZQS3B0",
+        "r2_object_key": "01M1D9CTYQJPKD7V6YMD5DSF7V.01M1D9CVG7MMRX0JHZRYMFEC5V.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8888719effaefe23de91f051f6299e43982aa45298444fc6989e2874ca7c38c0",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:30:12+00:00",
+        "public_asset": {
+          "sha256": "8888719effaefe23de91f051f6299e43982aa45298444fc6989e2874ca7c38c0",
+          "bytes": 4134720,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:30:12+00:00"
+        }
       }
     },
     {
@@ -908,7 +1089,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-4DLHRxs",
         "filename": "PXL_20230223_060716717.jpg",
         "format": "JPG",
-        "archived_md5": "61671a23efe0781b30beb7d386276641"
+        "archived_md5": "61671a23efe0781b30beb7d386276641",
+        "collected": false
       },
       "display": {
         "title": "東大路通から丸太町通へ",
@@ -935,15 +1117,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gwol6qna63nntkht22ukua7axy",
-        "media_path": "/media/kph_gwol6qna63nntkht22ukua7axy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9F21KSWGXH5KTVSCTNPMN.01M1D9F2MV54W9N89B5YX6MHQJ.jpg",
+        "emdash_content_id": "01M1D9F6WVHNRNN3FPH75B1TW9",
+        "emdash_media_id": "01M1D9F21K4EY8YMPB120YP1R5",
+        "r2_object_key": "01M1D9F21KSWGXH5KTVSCTNPMN.01M1D9F2MV54W9N89B5YX6MHQJ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "15021280bd1d791017a99254fd6b5f32038e00720e88c429d3b35f5642531806",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:31:25+00:00",
+        "public_asset": {
+          "sha256": "15021280bd1d791017a99254fd6b5f32038e00720e88c429d3b35f5642531806",
+          "bytes": 4712582,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:31:25+00:00"
+        }
       }
     },
     {
@@ -956,7 +1147,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-hcqwTXg",
         "filename": "PXL_20230223_061051885.jpg",
         "format": "JPG",
-        "archived_md5": "d5fc4dae4836d3f727c8dc0a983b88bc"
+        "archived_md5": "d5fc4dae4836d3f727c8dc0a983b88bc",
+        "collected": false
       },
       "display": {
         "title": "丸太町通は平安神宮の裏手なのか",
@@ -983,15 +1175,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_t46y46db3qwusx7jxtc3bvceau",
-        "media_path": "/media/kph_t46y46db3qwusx7jxtc3bvceau",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9H7FHCKHTWDC8JXKY7JNR.01M1D9H83QHZYDBTWF8DAT52G9.jpg",
+        "emdash_content_id": "01M1D9HCCY90167ZBBCZC2CC9X",
+        "emdash_media_id": "01M1D9H7FHZKE4KSGWKCTZKJWP",
+        "r2_object_key": "01M1D9H7FHCKHTWDC8JXKY7JNR.01M1D9H83QHZYDBTWF8DAT52G9.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f41e91e32aac0db20cf75d5dd81a9f4a1b70a9315a623dea5d51a8c3053e2892",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:32:36+00:00",
+        "public_asset": {
+          "sha256": "f41e91e32aac0db20cf75d5dd81a9f4a1b70a9315a623dea5d51a8c3053e2892",
+          "bytes": 3468354,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:32:36+00:00"
+        }
       }
     },
     {
@@ -1004,7 +1205,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-qqw59vM",
         "filename": "PXL_20230223_061058120.jpg",
         "format": "JPG",
-        "archived_md5": "68f3efed168e85cf2e768ab77da6fe6c"
+        "archived_md5": "68f3efed168e85cf2e768ab77da6fe6c",
+        "collected": false
       },
       "display": {
         "title": "平安神宮裏手の塀",
@@ -1031,15 +1233,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_op53qxewspwghki5mdrjo77te4",
-        "media_path": "/media/kph_op53qxewspwghki5mdrjo77te4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9K6HDZN345B3SVW7PR06W.01M1D9K76SWN29W69Z831CCPM3.jpg",
+        "emdash_content_id": "01M1D9KBFNE1ENMBF8H4WP93P0",
+        "emdash_media_id": "01M1D9K6HD725SV3PPZRK9WFHK",
+        "r2_object_key": "01M1D9K6HDZN345B3SVW7PR06W.01M1D9K76SWN29W69Z831CCPM3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "dcb9a2224bad2757b2cbf4d44c30b5b39d4022ac32d96cb66049064834abf661",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:33:41+00:00",
+        "public_asset": {
+          "sha256": "dcb9a2224bad2757b2cbf4d44c30b5b39d4022ac32d96cb66049064834abf661",
+          "bytes": 4536917,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:33:41+00:00"
+        }
       }
     },
     {
@@ -1052,7 +1263,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-8Lz28PB",
         "filename": "PXL_20230223_062052618.jpg",
         "format": "JPG",
-        "archived_md5": "c7e84eaf3f101933adc46ec67ecb7d47"
+        "archived_md5": "c7e84eaf3f101933adc46ec67ecb7d47",
+        "collected": false
       },
       "display": {
         "title": "岡崎神社発見",
@@ -1079,15 +1291,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uxzeqgitqvanqoozorqeh2ox6m",
-        "media_path": "/media/kph_uxzeqgitqvanqoozorqeh2ox6m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9NDD8MRTGQ6JDYNZF9K8X.01M1D9NE4YG8A1642DYE4JJBPM.jpg",
+        "emdash_content_id": "01M1D9NJES1HKRVQBSTRGDZ50W",
+        "emdash_media_id": "01M1D9NDD8ZBT15TWZM25PTQB8",
+        "r2_object_key": "01M1D9NDD8MRTGQ6JDYNZF9K8X.01M1D9NE4YG8A1642DYE4JJBPM.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "df3b570cb2634b7ee611f6db217c550238bc15e2fe68974e8c570acec7e1e76c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:34:53+00:00",
+        "public_asset": {
+          "sha256": "df3b570cb2634b7ee611f6db217c550238bc15e2fe68974e8c570acec7e1e76c",
+          "bytes": 5377537,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:34:53+00:00"
+        }
       }
     },
     {
@@ -1100,7 +1321,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-bhMwNt6",
         "filename": "PXL_20230223_063152362.jpg",
         "format": "JPG",
-        "archived_md5": "252fabe5a478cfa466e4a2fa5c3d32cf"
+        "archived_md5": "252fabe5a478cfa466e4a2fa5c3d32cf",
+        "collected": false
       },
       "display": {
         "title": "哲学の道",
@@ -1127,15 +1349,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_khlhzh33vqazdpwh3u4fa7imka",
-        "media_path": "/media/kph_khlhzh33vqazdpwh3u4fa7imka",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9QMGAMJSHB2MHNMHSMBHS.01M1D9QN3897S23VK8HX7GA4YZ.jpg",
+        "emdash_content_id": "01M1D9QSZ63MZMVY74XXB97QK0",
+        "emdash_media_id": "01M1D9QMGA008YF98FBMJ5XJHC",
+        "r2_object_key": "01M1D9QMGAMJSHB2MHNMHSMBHS.01M1D9QN3897S23VK8HX7GA4YZ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b3338d852e0a5b7fd68eba726ec3f10cfb74629ab37cc56aa63dd541fea2d5ff",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:36:07+00:00",
+        "public_asset": {
+          "sha256": "b3338d852e0a5b7fd68eba726ec3f10cfb74629ab37cc56aa63dd541fea2d5ff",
+          "bytes": 6532879,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:36:07+00:00"
+        }
       }
     },
     {
@@ -1148,7 +1379,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-bnMcMtK",
         "filename": "PXL_20230223_063253527.jpg",
         "format": "JPG",
-        "archived_md5": "125f627c0a5c1698fd317ad76b7a7e14"
+        "archived_md5": "125f627c0a5c1698fd317ad76b7a7e14",
+        "collected": false
       },
       "display": {
         "title": "哲学の道",
@@ -1175,15 +1407,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_xcc5sswcnnpoalbpoqhue4tiou",
-        "media_path": "/media/kph_xcc5sswcnnpoalbpoqhue4tiou",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9SV3C0H0KQS9A10X0RCKH.01M1D9SVP620Y5QN573D98P9C8.jpg",
+        "emdash_content_id": "01M1D9T0MPVNMM9YYAAT4ASB4A",
+        "emdash_media_id": "01M1D9SV3C5KY90V9QA7BYEZ18",
+        "r2_object_key": "01M1D9SV3C0H0KQS9A10X0RCKH.01M1D9SVP620Y5QN573D98P9C8.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a1523e2db6f5c601b91d7281558cb418659806ecbe720bb10cf768a2fd26b661",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:37:19+00:00",
+        "public_asset": {
+          "sha256": "a1523e2db6f5c601b91d7281558cb418659806ecbe720bb10cf768a2fd26b661",
+          "bytes": 5513516,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:37:19+00:00"
+        }
       }
     },
     {
@@ -1196,7 +1437,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-pTZGFrq",
         "filename": "PXL_20230223_063747231.jpg",
         "format": "JPG",
-        "archived_md5": "e81d03aff5ac9908e2696b509953440d"
+        "archived_md5": "e81d03aff5ac9908e2696b509953440d",
+        "collected": false
       },
       "display": {
         "title": "哲学の道を銀閣寺方面へ",
@@ -1223,15 +1465,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5kihwxj2wz4tel75ehdybjqsmi",
-        "media_path": "/media/kph_5kihwxj2wz4tel75ehdybjqsmi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9W1PTQSMKH1MKNDNP78T9.01M1D9W2NWBF7QQ0C9K3YTJR4G.jpg",
+        "emdash_content_id": "01M1D9W7TGM1NDZX9YKXD3R6XP",
+        "emdash_media_id": "01M1D9W1PTCKCKEFZHVZT8YKRD",
+        "r2_object_key": "01M1D9W1PTQSMKH1MKNDNP78T9.01M1D9W2NWBF7QQ0C9K3YTJR4G.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "94ca9cc2d9edb8e61b40546bd827948b13f978eee9c1f0087f397e37fff5865a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:38:32+00:00",
+        "public_asset": {
+          "sha256": "94ca9cc2d9edb8e61b40546bd827948b13f978eee9c1f0087f397e37fff5865a",
+          "bytes": 4612482,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:38:32+00:00"
+        }
       }
     },
     {
@@ -1244,7 +1495,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-j3JnsZX",
         "filename": "PXL_20230223_063943433.jpg",
         "format": "JPG",
-        "archived_md5": "b1daccddbefc2898354c1c1176407910"
+        "archived_md5": "b1daccddbefc2898354c1c1176407910",
+        "collected": false
       },
       "display": {
         "title": "哲学の道",
@@ -1271,15 +1523,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ffehobl2pe6yccqegig2n77vpq",
-        "media_path": "/media/kph_ffehobl2pe6yccqegig2n77vpq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1D9Y9990Y33B5QS9HZN046J.01M1D9Y9ZBAMT7YQ1DRDRR56NZ.jpg",
+        "emdash_content_id": "01M1D9YEP6DA4F3ZEKFFS3M0MD",
+        "emdash_media_id": "01M1D9Y999ZEPN95GCDVK4D2F6",
+        "r2_object_key": "01M1D9Y9990Y33B5QS9HZN046J.01M1D9Y9ZBAMT7YQ1DRDRR56NZ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f3cf3dd152db652497ac9a069cfbc8b7d740c7345e38b8342c1ca080be1cea41",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:39:45+00:00",
+        "public_asset": {
+          "sha256": "f3cf3dd152db652497ac9a069cfbc8b7d740c7345e38b8342c1ca080be1cea41",
+          "bytes": 7451509,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:39:45+00:00"
+        }
       }
     },
     {
@@ -1292,7 +1553,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-QM4kk3T",
         "filename": "PXL_20230223_064340862.MP.jpg",
         "format": "JPG",
-        "archived_md5": "cd8a0456fbf0e4c4eb4d484d8c735fcf"
+        "archived_md5": "cd8a0456fbf0e4c4eb4d484d8c735fcf",
+        "collected": false
       },
       "display": {
         "title": "京湯どうふ 㐂さ起",
@@ -1319,15 +1581,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_47uhtviibpbfvbri6hcx5o33di",
-        "media_path": "/media/kph_47uhtviibpbfvbri6hcx5o33di",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DA0GEEB9NRJSWJNTM7CX0C.01M1DA0H4RSJRBBE0Q7S0CK6ZX.jpg",
+        "emdash_content_id": "01M1DA0NKF3B4BNBG225G46FSJ",
+        "emdash_media_id": "01M1DA0GEE1QFDNAB3BH41W6E1",
+        "r2_object_key": "01M1DA0GEEB9NRJSWJNTM7CX0C.01M1DA0H4RSJRBBE0Q7S0CK6ZX.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "6c710669238d2cc7a10b55925463a06e326b33c1d9dac5d05f32a5bc3d388734",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:40:57+00:00",
+        "public_asset": {
+          "sha256": "6c710669238d2cc7a10b55925463a06e326b33c1d9dac5d05f32a5bc3d388734",
+          "bytes": 8342697,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:40:57+00:00"
+        }
       }
     },
     {
@@ -1340,7 +1611,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-KM3vg3S",
         "filename": "PXL_20230223_064407235.MP.jpg",
         "format": "JPG",
-        "archived_md5": "096c04ad8e0d1b1112faae6885f2d61e"
+        "archived_md5": "096c04ad8e0d1b1112faae6885f2d61e",
+        "collected": false
       },
       "display": {
         "title": "京湯どうふ 㐂さ起 入り口",
@@ -1367,15 +1639,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_linapfwzry4zosgtzvrvvvpw24",
-        "media_path": "/media/kph_linapfwzry4zosgtzvrvvvpw24",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DA2PTS32E3320KGWKK4HM9.01M1DA2QGQ5WVAT7S8HEPX6NQS.jpg",
+        "emdash_content_id": "01M1DA2WRFF0PV3ND4K15WRDB5",
+        "emdash_media_id": "01M1DA2PTSJ1HWNP74XBVZ0K4T",
+        "r2_object_key": "01M1DA2PTS32E3320KGWKK4HM9.01M1DA2QGQ5WVAT7S8HEPX6NQS.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3154d58661eeae60f938e9d661f7e44823500533502c9b09ef700c97cff2c963",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:42:10+00:00",
+        "public_asset": {
+          "sha256": "3154d58661eeae60f938e9d661f7e44823500533502c9b09ef700c97cff2c963",
+          "bytes": 7050713,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:42:10+00:00"
+        }
       }
     },
     {
@@ -1388,7 +1669,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-3RwmdTt",
         "filename": "PXL_20230223_064430505.jpg",
         "format": "JPG",
-        "archived_md5": "3334c7f6c086e10afbaab76d6536200f"
+        "archived_md5": "3334c7f6c086e10afbaab76d6536200f",
+        "collected": false
       },
       "display": {
         "title": "銀閣の方へ",
@@ -1415,15 +1697,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_btz2vkukecu3z5ic3gz2i2kz5y",
-        "media_path": "/media/kph_btz2vkukecu3z5ic3gz2i2kz5y",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DA50GKVGGAY4XQCGJGZN1P.01M1DA5139VKQ3FJTS1RM16M4V.jpg",
+        "emdash_content_id": "01M1DA55ZHESMAQM8FJTVJV0XY",
+        "emdash_media_id": "01M1DA50GK1T6HY37E27WQKY7C",
+        "r2_object_key": "01M1DA50GKVGGAY4XQCGJGZN1P.01M1DA5139VKQ3FJTS1RM16M4V.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e38c68214fcd8aa1d730cf2b0a3ed03e019b95fe3c83f2bffc86521a5e141cbf",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:43:25+00:00",
+        "public_asset": {
+          "sha256": "e38c68214fcd8aa1d730cf2b0a3ed03e019b95fe3c83f2bffc86521a5e141cbf",
+          "bytes": 6302454,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:43:25+00:00"
+        }
       }
     },
     {
@@ -1436,7 +1727,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-WGb8Xtt",
         "filename": "PXL_20230223_064505487.jpg",
         "format": "JPG",
-        "archived_md5": "682ba139857b711966dcc4c5b5618f38"
+        "archived_md5": "682ba139857b711966dcc4c5b5618f38",
+        "collected": false
       },
       "display": {
         "title": "銀閣感でてきた",
@@ -1463,15 +1755,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7jzkqbjesmytqkqgpf4mhtdagy",
-        "media_path": "/media/kph_7jzkqbjesmytqkqgpf4mhtdagy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DA5ERDDC4T10EW4E2PWNDZ.01M1DA5FB2MVFR0JSDXNXJHTCH.jpg",
+        "emdash_content_id": "01M1DA5KR95P2HE6R8391MWPAN",
+        "emdash_media_id": "01M1DA5ERD23HABAZWGQF8PSFA",
+        "r2_object_key": "01M1DA5ERDDC4T10EW4E2PWNDZ.01M1DA5FB2MVFR0JSDXNXJHTCH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2746225718659072489ab0a442baaf6089f6ebd6a8fd66517dc284cd4769d8d5",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:43:39+00:00",
+        "public_asset": {
+          "sha256": "2746225718659072489ab0a442baaf6089f6ebd6a8fd66517dc284cd4769d8d5",
+          "bytes": 6404924,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:43:39+00:00"
+        }
       }
     },
     {
@@ -1484,7 +1785,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-nRQNCM7",
         "filename": "PXL_20230223_065023923.jpg",
         "format": "JPG",
-        "archived_md5": "45fc0e388ee619edfdba0111881c726a"
+        "archived_md5": "45fc0e388ee619edfdba0111881c726a",
+        "collected": false
       },
       "display": {
         "title": "銀閣到着",
@@ -1511,15 +1813,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hg3ppqtqhelalhre6zpzltskqi",
-        "media_path": "/media/kph_hg3ppqtqhelalhre6zpzltskqi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DA5WPQQ9R7GE6R82WS1TGH.01M1DA5XCJA1Q9MVCR2N7Y2CED.jpg",
+        "emdash_content_id": "01M1DA61PZM42M8SDJ88A9TRMC",
+        "emdash_media_id": "01M1DA5WPQ02V3JGP9ZF60WW1D",
+        "r2_object_key": "01M1DA5WPQQ9R7GE6R82WS1TGH.01M1DA5XCJA1Q9MVCR2N7Y2CED.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0c2679c2e36be78d9739bd31696bb283cffe16c9711c6bf064961c0a0ec11f59",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:43:53+00:00",
+        "public_asset": {
+          "sha256": "0c2679c2e36be78d9739bd31696bb283cffe16c9711c6bf064961c0a0ec11f59",
+          "bytes": 5818541,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:43:53+00:00"
+        }
       }
     },
     {
@@ -1532,7 +1843,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-tZfPCRD",
         "filename": "PXL_20230223_065034635.jpg",
         "format": "JPG",
-        "archived_md5": "371c0eca2f758ca6f584fdf88710a8e5"
+        "archived_md5": "371c0eca2f758ca6f584fdf88710a8e5",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺境内図",
@@ -1559,15 +1871,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_oqcemac6yhbwjex6ear4oadpge",
-        "media_path": "/media/kph_oqcemac6yhbwjex6ear4oadpge",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DA808N0DBKZ0PHNA58TT9V.01M1DA80Z6ZCMBEH7C5HKG8189.jpg",
+        "emdash_content_id": "01M1DA85B4J2R2YMVP86GSGZVH",
+        "emdash_media_id": "01M1DA808NZNEX3TTGQG85DYZ3",
+        "r2_object_key": "01M1DA808N0DBKZ0PHNA58TT9V.01M1DA80Z6ZCMBEH7C5HKG8189.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "5fef876f07eb2c802b789f2b800a183e48cd85b66e8d8f69b9cda4326948f75c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:45:03+00:00",
+        "public_asset": {
+          "sha256": "5fef876f07eb2c802b789f2b800a183e48cd85b66e8d8f69b9cda4326948f75c",
+          "bytes": 4695502,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:45:03+00:00"
+        }
       }
     },
     {
@@ -1580,7 +1901,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-kN4SKBB",
         "filename": "PXL_20230223_065126008.jpg",
         "format": "JPG",
-        "archived_md5": "3eecdfaeb87c7f26717cff41fec651e7"
+        "archived_md5": "3eecdfaeb87c7f26717cff41fec651e7",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 竹垣",
@@ -1607,15 +1929,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3wimy4kzngf5mb62ha5fklzbrq",
-        "media_path": "/media/kph_3wimy4kzngf5mb62ha5fklzbrq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAA7QW5H80CVGFJEN01JBM.01M1DAA8D7VN4Z2YBVPMEXBD76.jpg",
+        "emdash_content_id": "01M1DAAD1XVRAF9CFFZ1XXYSYJ",
+        "emdash_media_id": "01M1DAA7QWBMTVHHSTDCX39EC5",
+        "r2_object_key": "01M1DAA7QW5H80CVGFJEN01JBM.01M1DAA8D7VN4Z2YBVPMEXBD76.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2e6360966c910732e07c97245475341cbe7192a1c60f76f3212610221fb729c9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:46:16+00:00",
+        "public_asset": {
+          "sha256": "2e6360966c910732e07c97245475341cbe7192a1c60f76f3212610221fb729c9",
+          "bytes": 5057064,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:46:16+00:00"
+        }
       }
     },
     {
@@ -1628,7 +1959,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-HxBgmHF",
         "filename": "PXL_20230223_065241942.jpg",
         "format": "JPG",
-        "archived_md5": "c6124da42dd264dbbe7b7d00fdba0dda"
+        "archived_md5": "c6124da42dd264dbbe7b7d00fdba0dda",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 入り口",
@@ -1655,15 +1987,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_e7j4unlu2hlynhydoj7phknxtq",
-        "media_path": "/media/kph_e7j4unlu2hlynhydoj7phknxtq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAAPFFF1QHBF5VW65199R6.01M1DAAQ51EH9BQ7WSDRMAJZ8A.jpg",
+        "emdash_content_id": "01M1DAAV8TWFE522QGGZT02780",
+        "emdash_media_id": "01M1DAAPFF9PJJ2GQGKP8YKHYY",
+        "r2_object_key": "01M1DAAPFFF1QHBF5VW65199R6.01M1DAAQ51EH9BQ7WSDRMAJZ8A.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1541d4b70d56ee0113f04f0cb94f1196e169d883dbe3a534df378e94b89a66bf",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:46:30+00:00",
+        "public_asset": {
+          "sha256": "1541d4b70d56ee0113f04f0cb94f1196e169d883dbe3a534df378e94b89a66bf",
+          "bytes": 3885805,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:46:30+00:00"
+        }
       }
     },
     {
@@ -1676,7 +2017,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-8hkS4xw",
         "filename": "PXL_20230223_065316550.jpg",
         "format": "JPG",
-        "archived_md5": "6de940e8bebdf0b62d2266f1b094028c"
+        "archived_md5": "6de940e8bebdf0b62d2266f1b094028c",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 入り口はいったところ",
@@ -1703,15 +2045,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_fpzsslrlwrm5o2nzpe5l2wyysi",
-        "media_path": "/media/kph_fpzsslrlwrm5o2nzpe5l2wyysi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAB3CTDZ4MFGZ1A0Y8ES1Q.01M1DAB447RDAM6SVC8XHB3DHR.jpg",
+        "emdash_content_id": "01M1DAB8K9T9VXHJYZFB87DV80",
+        "emdash_media_id": "01M1DAB3CTER5JWMJ0YSPFPQ2K",
+        "r2_object_key": "01M1DAB3CTDZ4MFGZ1A0Y8ES1Q.01M1DAB447RDAM6SVC8XHB3DHR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b1bdcfed0d9728e81aba22f67f8a91ee86957cdc657ea670a9e59810d7121e0b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:46:44+00:00",
+        "public_asset": {
+          "sha256": "b1bdcfed0d9728e81aba22f67f8a91ee86957cdc657ea670a9e59810d7121e0b",
+          "bytes": 5975999,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:46:44+00:00"
+        }
       }
     },
     {
@@ -1724,7 +2075,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-gzHpD6P",
         "filename": "PXL_20230223_065335887.jpg",
         "format": "JPG",
-        "archived_md5": "d5ee0957fa0353c36e68463b8485ffd9"
+        "archived_md5": "d5ee0957fa0353c36e68463b8485ffd9",
+        "collected": false
       },
       "display": {
         "title": "苔がいい感じ",
@@ -1751,15 +2103,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_z2iqs3htgica6u2kzx7lkycyy4",
-        "media_path": "/media/kph_z2iqs3htgica6u2kzx7lkycyy4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DABGKEQGDRRFCC95WWXPQZ.01M1DABH867F27ZCH4CMSZJ2QH.jpg",
+        "emdash_content_id": "01M1DABNY1J4A0KTCXJBC4BP8G",
+        "emdash_media_id": "01M1DABGKESVMPA6DJ2H3EKE3A",
+        "r2_object_key": "01M1DABGKEQGDRRFCC95WWXPQZ.01M1DABH867F27ZCH4CMSZJ2QH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1ecdd6f1bf822e471c2a195475f36cbfe76ee0d2eacb7882d8419fe3c22fe6b7",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:46:58+00:00",
+        "public_asset": {
+          "sha256": "1ecdd6f1bf822e471c2a195475f36cbfe76ee0d2eacb7882d8419fe3c22fe6b7",
+          "bytes": 3091024,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:46:58+00:00"
+        }
       }
     },
     {
@@ -1772,7 +2133,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-XfJFwjf",
         "filename": "PXL_20230223_065442130.jpg",
         "format": "JPG",
-        "archived_md5": "33b0aa3030caca48181da18411c5a63f"
+        "archived_md5": "33b0aa3030caca48181da18411c5a63f",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 観音堂",
@@ -1799,15 +2161,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_v3f4d4vxn3nnx2gjiaebkeinzu",
-        "media_path": "/media/kph_v3f4d4vxn3nnx2gjiaebkeinzu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DABYPY8PXXWZQ7ZGSFXRTN.01M1DABZ987MGZ5VWJYCEN1YSX.jpg",
+        "emdash_content_id": "01M1DAC34GCK7EENJXGB4JDR5C",
+        "emdash_media_id": "01M1DABYPYVK7TWJP9B8NTYC4G",
+        "r2_object_key": "01M1DABYPY8PXXWZQ7ZGSFXRTN.01M1DABZ987MGZ5VWJYCEN1YSX.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "90e248dac8b6ac40e1324a1f28252143fd36b92e6c791803da91f0920c43ab58",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:47:11+00:00",
+        "public_asset": {
+          "sha256": "90e248dac8b6ac40e1324a1f28252143fd36b92e6c791803da91f0920c43ab58",
+          "bytes": 4952815,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:47:11+00:00"
+        }
       }
     },
     {
@@ -1820,7 +2191,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-WjJjcSw",
         "filename": "PXL_20230223_070639731.jpg",
         "format": "JPG",
-        "archived_md5": "621eb286dcd4d5b6b2177dcc07489b49"
+        "archived_md5": "621eb286dcd4d5b6b2177dcc07489b49",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 観音堂",
@@ -1847,15 +2219,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6ggov3eu4bawamlzav6audocfe",
-        "media_path": "/media/kph_6ggov3eu4bawamlzav6audocfe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DACBFC49G9AG046E2FBQMX.01M1DACC0S9JHS9VTB50BRSKKJ.jpg",
+        "emdash_content_id": "01M1DACGQ325R3FV81NV7X5KZM",
+        "emdash_media_id": "01M1DACBFCJPAN801P7ZNNC0DQ",
+        "r2_object_key": "01M1DACBFC49G9AG046E2FBQMX.01M1DACC0S9JHS9VTB50BRSKKJ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ac31854f08e7f844b215b0ebacd0865da28b6d25562648ea9483508ad4f05d71",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:47:26+00:00",
+        "public_asset": {
+          "sha256": "ac31854f08e7f844b215b0ebacd0865da28b6d25562648ea9483508ad4f05d71",
+          "bytes": 3571307,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:47:26+00:00"
+        }
       }
     },
     {
@@ -1868,7 +2249,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-36TWF5T",
         "filename": "PXL_20230223_070703648.jpg",
         "format": "JPG",
-        "archived_md5": "80ded59080690f30dab0f570935159e6"
+        "archived_md5": "80ded59080690f30dab0f570935159e6",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 東求堂",
@@ -1895,15 +2277,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3aqbbt5ydcw4ettsdn4hezlbxe",
-        "media_path": "/media/kph_3aqbbt5ydcw4ettsdn4hezlbxe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DACTVHVJE3QA9WN69HJGZB.01M1DACVTM8YVR11HDD9Q8W3WP.jpg",
+        "emdash_content_id": "01M1DAD0KXPTEM8PN625499TQM",
+        "emdash_media_id": "01M1DACTVHPP15PSK4TXMFBPHK",
+        "r2_object_key": "01M1DACTVHVJE3QA9WN69HJGZB.01M1DACVTM8YVR11HDD9Q8W3WP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "31dcd28b46c20335133eeca1f240cf5e3ea9c8dc55d8827faca5a49be2ccbc3e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:47:42+00:00",
+        "public_asset": {
+          "sha256": "31dcd28b46c20335133eeca1f240cf5e3ea9c8dc55d8827faca5a49be2ccbc3e",
+          "bytes": 5076205,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:47:42+00:00"
+        }
       }
     },
     {
@@ -1916,7 +2307,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-hBLvkxP",
         "filename": "PXL_20230223_070745672.jpg",
         "format": "JPG",
-        "archived_md5": "f16bc3256867fcc8426fc6cef6afb80b"
+        "archived_md5": "f16bc3256867fcc8426fc6cef6afb80b",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 錦鏡池",
@@ -1943,15 +2335,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gavtwhxifx3ohyvuggkj4wde6u",
-        "media_path": "/media/kph_gavtwhxifx3ohyvuggkj4wde6u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAD947VY1VYNRYFY0SX8S5.01M1DAD9XRN9V20Q30X8CAHEZV.jpg",
+        "emdash_content_id": "01M1DADE0P4WXFKK7RTZ0JEESH",
+        "emdash_media_id": "01M1DAD947NK4YJXKA9RT6T30F",
+        "r2_object_key": "01M1DAD947VY1VYNRYFY0SX8S5.01M1DAD9XRN9V20Q30X8CAHEZV.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c43aecb754be2c5338097f1b2bc957dd5fea921ecb564c638702503e449b84d4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:47:55+00:00",
+        "public_asset": {
+          "sha256": "c43aecb754be2c5338097f1b2bc957dd5fea921ecb564c638702503e449b84d4",
+          "bytes": 5273253,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:47:55+00:00"
+        }
       }
     },
     {
@@ -1964,7 +2365,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-8PkJ54V",
         "filename": "PXL_20230223_070923314.jpg",
         "format": "JPG",
-        "archived_md5": "179efd26ccb58e09ee61e88d10f261a5"
+        "archived_md5": "179efd26ccb58e09ee61e88d10f261a5",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 錦鏡池と東求堂",
@@ -1991,15 +2393,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tdq3qvso5icbsf76cg5d3zdvtu",
-        "media_path": "/media/kph_tdq3qvso5icbsf76cg5d3zdvtu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DADP7J1CYKQRA5XPGW2A6Z.01M1DADPZDHZ46E91E7EDF97VV.jpg",
+        "emdash_content_id": "01M1DADVF4C5E8820C2Y33PK7X",
+        "emdash_media_id": "01M1DADP7JPPPA3EBRZJPGM9NP",
+        "r2_object_key": "01M1DADP7J1CYKQRA5XPGW2A6Z.01M1DADPZDHZ46E91E7EDF97VV.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "aeaaf73f52580d60a353e370dbe2cb38537ad97e435a383edcec18a8d169a5c7",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:48:09+00:00",
+        "public_asset": {
+          "sha256": "aeaaf73f52580d60a353e370dbe2cb38537ad97e435a383edcec18a8d169a5c7",
+          "bytes": 4966388,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:48:09+00:00"
+        }
       }
     },
     {
@@ -2012,7 +2423,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-jgbj9sx",
         "filename": "PXL_20230223_071027885.jpg",
         "format": "JPG",
-        "archived_md5": "3b89ede02587ddf3810779746f6eb76b"
+        "archived_md5": "3b89ede02587ddf3810779746f6eb76b",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 東求堂",
@@ -2039,15 +2451,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ffwyn5h4seb4ss7mwyjjakwy4y",
-        "media_path": "/media/kph_ffwyn5h4seb4ss7mwyjjakwy4y",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAE4RV6AHQQWZDQ4XKC0A9.01M1DAE5DKY94E88J6BFMDPWMS.jpg",
+        "emdash_content_id": "01M1DAE9WHVKAMMTZDDA1N25C2",
+        "emdash_media_id": "01M1DAE4RVPB3SWMQCZPAW8CPP",
+        "r2_object_key": "01M1DAE4RV6AHQQWZDQ4XKC0A9.01M1DAE5DKY94E88J6BFMDPWMS.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "8fede0a8416867aa92b3de0567dfa68a3c3a9f605f830a44b41f2f87eccf50eb",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:48:23+00:00",
+        "public_asset": {
+          "sha256": "8fede0a8416867aa92b3de0567dfa68a3c3a9f605f830a44b41f2f87eccf50eb",
+          "bytes": 6073885,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:48:23+00:00"
+        }
       }
     },
     {
@@ -2060,7 +2481,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-JWfVfD2",
         "filename": "PXL_20230223_071303721.jpg",
         "format": "JPG",
-        "archived_md5": "3a2e4af6038145d5ea5cd837e851d38a"
+        "archived_md5": "3a2e4af6038145d5ea5cd837e851d38a",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 お茶の井",
@@ -2087,15 +2509,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6ynipvq6mo7zjcy4ma3bowc2uy",
-        "media_path": "/media/kph_6ynipvq6mo7zjcy4ma3bowc2uy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAEHZV2Q1B0J24PNHZ0FWC.01M1DAEJNTPPZVB55VET8WW4XP.jpg",
+        "emdash_content_id": "01M1DAEQ4MSFJY4440FBT2KGQ9",
+        "emdash_media_id": "01M1DAEHZV9XWWA3GFMVYTQ0ZH",
+        "r2_object_key": "01M1DAEHZV2Q1B0J24PNHZ0FWC.01M1DAEJNTPPZVB55VET8WW4XP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "32f1d56d62c023aedcb9f225f31396354283a4085dd738213b3c0f6533ed1737",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:48:37+00:00",
+        "public_asset": {
+          "sha256": "32f1d56d62c023aedcb9f225f31396354283a4085dd738213b3c0f6533ed1737",
+          "bytes": 7334119,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:48:37+00:00"
+        }
       }
     },
     {
@@ -2108,7 +2539,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-2xx8GfC",
         "filename": "PXL_20230223_071331243.jpg",
         "format": "JPG",
-        "archived_md5": "d837e46308beabb78aa49724c9ce26fc"
+        "archived_md5": "d837e46308beabb78aa49724c9ce26fc",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 お茶の井 解説",
@@ -2135,15 +2567,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_xiv7kfhxxureai23iuknkubww4",
-        "media_path": "/media/kph_xiv7kfhxxureai23iuknkubww4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAEZN4WX423NRXBE1QZ1J9.01M1DAF0BE9XNPK5PJT6Q0FBBB.jpg",
+        "emdash_content_id": "01M1DAF5K6BW49BTP75Y0AGQ3V",
+        "emdash_media_id": "01M1DAEZN4FGQW0WKTEESYRTGX",
+        "r2_object_key": "01M1DAEZN4WX423NRXBE1QZ1J9.01M1DAF0BE9XNPK5PJT6Q0FBBB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9fa100b1cc43f9df5f4341498583d40dc99f62d0630465c545fa4d122a7e7732",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:48:52+00:00",
+        "public_asset": {
+          "sha256": "9fa100b1cc43f9df5f4341498583d40dc99f62d0630465c545fa4d122a7e7732",
+          "bytes": 5470984,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:48:52+00:00"
+        }
       }
     },
     {
@@ -2156,7 +2597,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-9jBwtbX",
         "filename": "PXL_20230223_071539142.jpg",
         "format": "JPG",
-        "archived_md5": "7976a0421325d0ad41ee3e34df666db3"
+        "archived_md5": "7976a0421325d0ad41ee3e34df666db3",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 丘の上からみた景色",
@@ -2183,15 +2625,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zu7befzx6dkv7mp27bjquczzt4",
-        "media_path": "/media/kph_zu7befzx6dkv7mp27bjquczzt4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAH6H1E3XRBVH93VXAMNMC.01M1DAH7634N6K69SJYQV8VX56.jpg",
+        "emdash_content_id": "01M1DAHBF6X22MFNHBEWY4MS59",
+        "emdash_media_id": "01M1DAH6H115T4WX0CH4MP71M0",
+        "r2_object_key": "01M1DAH6H1E3XRBVH93VXAMNMC.01M1DAH7634N6K69SJYQV8VX56.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7cfd2897517577c0069283ba2d358eab7ff97e60c52d696db9c874fef6f1beae",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:50:04+00:00",
+        "public_asset": {
+          "sha256": "7cfd2897517577c0069283ba2d358eab7ff97e60c52d696db9c874fef6f1beae",
+          "bytes": 4883279,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:50:04+00:00"
+        }
       }
     },
     {
@@ -2204,7 +2655,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-Pk7nkTb",
         "filename": "PXL_20230223_071559252.jpg",
         "format": "JPG",
-        "archived_md5": "17a18ce50e2667fb05e454cd64c19ab5"
+        "archived_md5": "17a18ce50e2667fb05e454cd64c19ab5",
+        "collected": false
       },
       "display": {
         "title": "観音堂・本堂・東求堂",
@@ -2231,15 +2683,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_rbjmpxgsbqwctsmiumywwz2jda",
-        "media_path": "/media/kph_rbjmpxgsbqwctsmiumywwz2jda",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAKBNSGQZZ066P006J1Q1J.01M1DAKC7SJXN4ER2TQFGBFCH6.jpg",
+        "emdash_content_id": "01M1DAKGQJJ7HDEWJ94P1S4BM7",
+        "emdash_media_id": "01M1DAKBNSB53RAM9V2TF6ADK6",
+        "r2_object_key": "01M1DAKBNSGQZZ066P006J1Q1J.01M1DAKC7SJXN4ER2TQFGBFCH6.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3ce85fc56e61896cb7ad819e9a1e94644eac317f2dd554631f63563735235742",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:51:15+00:00",
+        "public_asset": {
+          "sha256": "3ce85fc56e61896cb7ad819e9a1e94644eac317f2dd554631f63563735235742",
+          "bytes": 3588149,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:51:15+00:00"
+        }
       }
     },
     {
@@ -2252,7 +2713,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-Hg7BWpC",
         "filename": "PXL_20230223_071810767.jpg",
         "format": "JPG",
-        "archived_md5": "0ac4cb30356a2ff36f427af0925f5e01"
+        "archived_md5": "0ac4cb30356a2ff36f427af0925f5e01",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 裏手の道",
@@ -2279,15 +2741,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_esfernd4h3henkgycvsl3dmjuy",
-        "media_path": "/media/kph_esfernd4h3henkgycvsl3dmjuy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAKRWX5VZSD3HM3HFKDEC4.01M1DAKSKBCDKEEN8F68N9PJBF.jpg",
+        "emdash_content_id": "01M1DAKY3C2VEMPS14Q94ZM7P4",
+        "emdash_media_id": "01M1DAKRWX1MEH66J0BYBR6XNV",
+        "r2_object_key": "01M1DAKRWX5VZSD3HM3HFKDEC4.01M1DAKSKBCDKEEN8F68N9PJBF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0f96bfa3dc9b307a45bf614e25a41f22382813bd0065266c7d9d9ef439e4c3bc",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:51:28+00:00",
+        "public_asset": {
+          "sha256": "0f96bfa3dc9b307a45bf614e25a41f22382813bd0065266c7d9d9ef439e4c3bc",
+          "bytes": 6202045,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:51:28+00:00"
+        }
       }
     },
     {
@@ -2300,7 +2771,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-4DFpcxH",
         "filename": "PXL_20230223_072023414.jpg",
         "format": "JPG",
-        "archived_md5": "82a89096a5ec7b512aa3c14c42077400"
+        "archived_md5": "82a89096a5ec7b512aa3c14c42077400",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 観音堂",
@@ -2327,15 +2799,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_sceqyhkhy72ec2xhgiva6rfjmm",
-        "media_path": "/media/kph_sceqyhkhy72ec2xhgiva6rfjmm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAM69QP35SPDQ9TTWQJZ1Y.01M1DAM6XQG0P02YHZWVJSM2T3.jpg",
+        "emdash_content_id": "01M1DAMBGVS8BT5EFYZF7Y26VG",
+        "emdash_media_id": "01M1DAM69QY0KGGV2ADEFXCGHM",
+        "r2_object_key": "01M1DAM69QP35SPDQ9TTWQJZ1Y.01M1DAM6XQG0P02YHZWVJSM2T3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "4367d0a6c8fba07e154df1b2586283f97325620bec91a7f697a27504a3805e5d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:51:42+00:00",
+        "public_asset": {
+          "sha256": "4367d0a6c8fba07e154df1b2586283f97325620bec91a7f697a27504a3805e5d",
+          "bytes": 6314672,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:51:42+00:00"
+        }
       }
     },
     {
@@ -2348,7 +2829,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-qr7PdGL",
         "filename": "PXL_20230223_072043929.jpg",
         "format": "JPG",
-        "archived_md5": "bc05e21bbda6cc1b0f30f16a3fc47764"
+        "archived_md5": "bc05e21bbda6cc1b0f30f16a3fc47764",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 観音堂",
@@ -2375,15 +2857,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_wu5bn5loyjtqun5x5bpwybki5a",
-        "media_path": "/media/kph_wu5bn5loyjtqun5x5bpwybki5a",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAMME64Y1P47FQJ4CZ0AN9.01M1DAMN5DYQ2QYXNRGJ8EHFCT.jpg",
+        "emdash_content_id": "01M1DAMSTZKV8J3RQRCQ0R1ET6",
+        "emdash_media_id": "01M1DAMME6JQSXD9KPYSQPRAAD",
+        "r2_object_key": "01M1DAMME64Y1P47FQJ4CZ0AN9.01M1DAMN5DYQ2QYXNRGJ8EHFCT.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "3a4a3d9ea110f088dcb57b4e8630228e8424b13d104558907aafebba92199c97",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:51:56+00:00",
+        "public_asset": {
+          "sha256": "3a4a3d9ea110f088dcb57b4e8630228e8424b13d104558907aafebba92199c97",
+          "bytes": 6377891,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:51:56+00:00"
+        }
       }
     },
     {
@@ -2396,7 +2887,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-m9Vnv63",
         "filename": "PXL_20230223_073518753.jpg",
         "format": "JPG",
-        "archived_md5": "f924eb456cb3111dff449a40d4491b76"
+        "archived_md5": "f924eb456cb3111dff449a40d4491b76",
+        "collected": false
       },
       "display": {
         "title": "ちょっと休憩",
@@ -2423,15 +2915,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_hrpy6r2jcjqwmygt75xwjnnbse",
-        "media_path": "/media/kph_hrpy6r2jcjqwmygt75xwjnnbse",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAN2CCF827Y0MQK5HKQRKT.01M1DAN336AE6GR0DCAF087GP9.jpg",
+        "emdash_content_id": "01M1DAN82HMSM439WR2VQVS2AW",
+        "emdash_media_id": "01M1DAN2CCS83ZJVMN0S5Q9PSS",
+        "r2_object_key": "01M1DAN2CCF827Y0MQK5HKQRKT.01M1DAN336AE6GR0DCAF087GP9.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "dce992fddcc76e9d2ceb30550257812e9128b38ea514679dd0a565cad2b38db3",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:52:11+00:00",
+        "public_asset": {
+          "sha256": "dce992fddcc76e9d2ceb30550257812e9128b38ea514679dd0a565cad2b38db3",
+          "bytes": 6095481,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:52:11+00:00"
+        }
       }
     },
     {
@@ -2444,7 +2945,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-2xDtC4C",
         "filename": "PXL_20230223_074010700.jpg",
         "format": "JPG",
-        "archived_md5": "f3f71c51aec2c906eaa512e79b46016c"
+        "archived_md5": "f3f71c51aec2c906eaa512e79b46016c",
+        "collected": false
       },
       "display": {
         "title": "銀閣寺 表参道",
@@ -2471,15 +2973,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_kwrpm73u7vf72b3e5gpirnrobq",
-        "media_path": "/media/kph_kwrpm73u7vf72b3e5gpirnrobq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DANFV209Y1GBSRNPJ7D17D.01M1DANGFCA3VTCJAWEFNKGFTY.jpg",
+        "emdash_content_id": "01M1DANMYPQ0R6FNX7KCE27E4D",
+        "emdash_media_id": "01M1DANFV2Q0GRXP4PEVJZHGMV",
+        "r2_object_key": "01M1DANFV209Y1GBSRNPJ7D17D.01M1DANGFCA3VTCJAWEFNKGFTY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9efe99133963960c0361c13162ca02f14a4bb5b9c5540b775f442a2c1b862a6b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:52:25+00:00",
+        "public_asset": {
+          "sha256": "9efe99133963960c0361c13162ca02f14a4bb5b9c5540b775f442a2c1b862a6b",
+          "bytes": 4188342,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:52:25+00:00"
+        }
       }
     },
     {
@@ -2492,7 +3003,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-fBhQh53",
         "filename": "PXL_20230223_074040806.jpg",
         "format": "JPG",
-        "archived_md5": "febee0ce23a43e8dfd6a5693fc5d8a4a"
+        "archived_md5": "febee0ce23a43e8dfd6a5693fc5d8a4a",
+        "collected": false
       },
       "display": {
         "title": "観光地感",
@@ -2519,15 +3031,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_u2ogjscm44qk6beiltse6e4tkm",
-        "media_path": "/media/kph_u2ogjscm44qk6beiltse6e4tkm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DANX38ESAKAC6YP4QBR6AV.01M1DANXN3JH1RN5D7M9W0V5YW.jpg",
+        "emdash_content_id": "01M1DAP2RMAT8CK87X08844FDF",
+        "emdash_media_id": "01M1DANX38KQDFYR67GGP4Q9WP",
+        "r2_object_key": "01M1DANX38ESAKAC6YP4QBR6AV.01M1DANXN3JH1RN5D7M9W0V5YW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7e0ab1bdb6bd40887d06953f5c629a5f6563d427f4b2397dc31afd676f372cbe",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:52:39+00:00",
+        "public_asset": {
+          "sha256": "7e0ab1bdb6bd40887d06953f5c629a5f6563d427f4b2397dc31afd676f372cbe",
+          "bytes": 3091030,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:52:39+00:00"
+        }
       }
     },
     {
@@ -2540,7 +3061,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-jCfts6B",
         "filename": "PXL_20230223_074339494.jpg",
         "format": "JPG",
-        "archived_md5": "8334a791e145cb443bb880a9af77e70e"
+        "archived_md5": "8334a791e145cb443bb880a9af77e70e",
+        "collected": false
       },
       "display": {
         "title": "参道を降りたところ",
@@ -2567,15 +3089,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ssxvoie7qjcrnpipa64htyxieu",
-        "media_path": "/media/kph_ssxvoie7qjcrnpipa64htyxieu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAPBAZSYAN0NJ9N9291BZG.01M1DAPC09V31RNF1H6E4VSDQP.jpg",
+        "emdash_content_id": "01M1DAPHMAXVERVFX8328GC5MT",
+        "emdash_media_id": "01M1DAPBAZF2TWDBH7PMXR9EGT",
+        "r2_object_key": "01M1DAPBAZSYAN0NJ9N9291BZG.01M1DAPC09V31RNF1H6E4VSDQP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "668765e3473680448a81adf7099f6d3d6bbf906d6fe8da3df3f36d9e83ed4604",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:52:54+00:00",
+        "public_asset": {
+          "sha256": "668765e3473680448a81adf7099f6d3d6bbf906d6fe8da3df3f36d9e83ed4604",
+          "bytes": 6232554,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:52:54+00:00"
+        }
       }
     },
     {
@@ -2588,7 +3119,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-9nKFp7W",
         "filename": "PXL_20230223_074632133.jpg",
         "format": "JPG",
-        "archived_md5": "e16c9577480e5c3cc4b4da10645b26e6"
+        "archived_md5": "e16c9577480e5c3cc4b4da10645b26e6",
+        "collected": false
       },
       "display": {
         "title": "今出川通りを西へ",
@@ -2615,15 +3147,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_pujbjkcmlvnypdv57lyb63f6hu",
-        "media_path": "/media/kph_pujbjkcmlvnypdv57lyb63f6hu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAPTG5F50D8EN8DMNKATBG.01M1DAPV45CF48Z60836X1552S.jpg",
+        "emdash_content_id": "01M1DAPZXCK4FBG6QR1EJGD4V4",
+        "emdash_media_id": "01M1DAPTG5X7XJ02ZZ4S0PNRBS",
+        "r2_object_key": "01M1DAPTG5F50D8EN8DMNKATBG.01M1DAPV45CF48Z60836X1552S.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a98a0fd5e943777eca4a5412204e3627a3f4fbb7b3b96d7d8b6c5c620f156959",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:53:08+00:00",
+        "public_asset": {
+          "sha256": "a98a0fd5e943777eca4a5412204e3627a3f4fbb7b3b96d7d8b6c5c620f156959",
+          "bytes": 4811439,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:53:08+00:00"
+        }
       }
     },
     {
@@ -2636,7 +3177,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-8DX39k5",
         "filename": "PXL_20230223_075139352.MP.jpg",
         "format": "JPG",
-        "archived_md5": "7f117c182c402444a3307608f9acb200"
+        "archived_md5": "7f117c182c402444a3307608f9acb200",
+        "collected": false
       },
       "display": {
         "title": "イカヅチうどん",
@@ -2663,15 +3205,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lrmqpyo63fpjovn63tvvuemyhi",
-        "media_path": "/media/kph_lrmqpyo63fpjovn63tvvuemyhi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAS2N6YGX1ECV9048YKZW5.01M1DAS36YZNYBXPD7QSEHNRCW.jpg",
+        "emdash_content_id": "01M1DAS7JTBQTNA41GXPEW3BPZ",
+        "emdash_media_id": "01M1DAS2N6A0K9ZHGVT1EGHFD3",
+        "r2_object_key": "01M1DAS2N6YGX1ECV9048YKZW5.01M1DAS36YZNYBXPD7QSEHNRCW.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "69f7bda00fedd7f33ea30af9eccb0265426d83af7052e10c3479dac4055e8b9c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:54:22+00:00",
+        "public_asset": {
+          "sha256": "69f7bda00fedd7f33ea30af9eccb0265426d83af7052e10c3479dac4055e8b9c",
+          "bytes": 4204738,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:54:22+00:00"
+        }
       }
     },
     {
@@ -2684,7 +3235,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-rRH6bZK",
         "filename": "PXL_20230223_075702702.jpg",
         "format": "JPG",
-        "archived_md5": "dba6ef0c125c45ce762b6be3616622ec"
+        "archived_md5": "dba6ef0c125c45ce762b6be3616622ec",
+        "collected": false
       },
       "display": {
         "title": "吉田神社",
@@ -2711,15 +3263,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_wsm2i5miztb2uhrlutce3vbvei",
-        "media_path": "/media/kph_wsm2i5miztb2uhrlutce3vbvei",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DASFXSZ0AWGG64K45MHCTC.01M1DASGMKX47FVX359AFQKWP5.jpg",
+        "emdash_content_id": "01M1DASMQB58K360MCNMKMTQZY",
+        "emdash_media_id": "01M1DASFXSB33VDXPE6DA9J97B",
+        "r2_object_key": "01M1DASFXSZ0AWGG64K45MHCTC.01M1DASGMKX47FVX359AFQKWP5.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "038ac050cfd827262834ee8fc744a673920e764d00379a9022b00ca40469f9f9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:54:35+00:00",
+        "public_asset": {
+          "sha256": "038ac050cfd827262834ee8fc744a673920e764d00379a9022b00ca40469f9f9",
+          "bytes": 3803270,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:54:35+00:00"
+        }
       }
     },
     {
@@ -2732,7 +3293,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-M2sbJbs",
         "filename": "PXL_20230223_075711750.jpg",
         "format": "JPG",
-        "archived_md5": "32a9fe06e8f7c72fb12cbe867211ae26"
+        "archived_md5": "32a9fe06e8f7c72fb12cbe867211ae26",
+        "collected": false
       },
       "display": {
         "title": "吉田神社",
@@ -2759,15 +3321,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_xz6kc5z7u2eujaluugtshldfym",
-        "media_path": "/media/kph_xz6kc5z7u2eujaluugtshldfym",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DASX4ZCZJ5XH501B793M58.01M1DASXQ19B3DSW981K5HM5Z7.jpg",
+        "emdash_content_id": "01M1DAT2BF0V6M5JSJTKPFM7A2",
+        "emdash_media_id": "01M1DASX4ZB0V48J4737T21HN1",
+        "r2_object_key": "01M1DASX4ZCZJ5XH501B793M58.01M1DASXQ19B3DSW981K5HM5Z7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b5cf623942d9079f410b1e325b474801f7b77b15e64d7e83d07b1c51597d16f0",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:54:49+00:00",
+        "public_asset": {
+          "sha256": "b5cf623942d9079f410b1e325b474801f7b77b15e64d7e83d07b1c51597d16f0",
+          "bytes": 3806467,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:54:49+00:00"
+        }
       }
     },
     {
@@ -2780,7 +3351,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-K82xtPL",
         "filename": "PXL_20230223_080408749.jpg",
         "format": "JPG",
-        "archived_md5": "6bc1505c192d68d30a30da0beb3cb59d"
+        "archived_md5": "6bc1505c192d68d30a30da0beb3cb59d",
+        "collected": false
       },
       "display": {
         "title": "京都大の間を抜ける",
@@ -2807,15 +3379,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uyjfnfyzlgep4f5p3mnhpirawu",
-        "media_path": "/media/kph_uyjfnfyzlgep4f5p3mnhpirawu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DATAV645WM4VH7VFDTNNZE.01M1DATBFCGFDD2MY5QGG6EDXX.jpg",
+        "emdash_content_id": "01M1DATG174VPT1QKR9WG0N4BW",
+        "emdash_media_id": "01M1DATAV65EE1FB49S9Z5WB4G",
+        "r2_object_key": "01M1DATAV645WM4VH7VFDTNNZE.01M1DATBFCGFDD2MY5QGG6EDXX.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d0aa9e848ba09eae914b1932e98f65cd91849a76e95f1eb19756acf5960e901a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:55:04+00:00",
+        "public_asset": {
+          "sha256": "d0aa9e848ba09eae914b1932e98f65cd91849a76e95f1eb19756acf5960e901a",
+          "bytes": 5604687,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:55:04+00:00"
+        }
       }
     },
     {
@@ -2828,7 +3409,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-Dz8ZjvC",
         "filename": "PXL_20230223_080623182.jpg",
         "format": "JPG",
-        "archived_md5": "c0ff8402e568be96dc4d2a3b8c99fbe2"
+        "archived_md5": "c0ff8402e568be96dc4d2a3b8c99fbe2",
+        "collected": false
       },
       "display": {
         "title": "百万遍知恩寺",
@@ -2855,15 +3437,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_47rcn6yjgti3zyb3izy7d4qly4",
-        "media_path": "/media/kph_47rcn6yjgti3zyb3izy7d4qly4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAWJ5KCYWAKQFA66AMQQQN.01M1DAWJRQV18KN5N83E4JB8WF.jpg",
+        "emdash_content_id": "01M1DAWQ3N0TMWSQ5CYTP0Y10P",
+        "emdash_media_id": "01M1DAWJ5KSYWMK3QPE3SK11BK",
+        "r2_object_key": "01M1DAWJ5KCYWAKQFA66AMQQQN.01M1DAWJRQV18KN5N83E4JB8WF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "998f656c1f991201f9dfdf90096bc37c74bc86a506fcf26deda45127d48dfc9b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:56:16+00:00",
+        "public_asset": {
+          "sha256": "998f656c1f991201f9dfdf90096bc37c74bc86a506fcf26deda45127d48dfc9b",
+          "bytes": 4675841,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:56:16+00:00"
+        }
       }
     },
     {
@@ -2876,7 +3467,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-qtchDFt",
         "filename": "PXL_20230223_081204873.jpg",
         "format": "JPG",
-        "archived_md5": "f599cb01cc2d279c31de12c3abe54767"
+        "archived_md5": "f599cb01cc2d279c31de12c3abe54767",
+        "collected": false
       },
       "display": {
         "title": "百万遍交差点",
@@ -2903,15 +3495,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_nxzeza4h7pmtplfrwtciuz63wu",
-        "media_path": "/media/kph_nxzeza4h7pmtplfrwtciuz63wu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAWZTNP6BT11G58157J70M.01M1DAX0FBWFE1NJD9V15PNACT.jpg",
+        "emdash_content_id": "01M1DAX50319MT117DBNSCSN0A",
+        "emdash_media_id": "01M1DAWZTNTTNXZCBNZRZSETJ8",
+        "r2_object_key": "01M1DAWZTNP6BT11G58157J70M.01M1DAX0FBWFE1NJD9V15PNACT.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "05b68b2a971ae75af4ec977c048e1b1fa5e999ebf3c10dbc784a2d33ad8386d9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:56:30+00:00",
+        "public_asset": {
+          "sha256": "05b68b2a971ae75af4ec977c048e1b1fa5e999ebf3c10dbc784a2d33ad8386d9",
+          "bytes": 4760603,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:56:30+00:00"
+        }
       }
     },
     {
@@ -2924,7 +3525,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-c79rhdn",
         "filename": "PXL_20230223_082432560.jpg",
         "format": "JPG",
-        "archived_md5": "fde8f9ad8619ef784184837cee3d0f52"
+        "archived_md5": "fde8f9ad8619ef784184837cee3d0f52",
+        "collected": false
       },
       "display": {
         "title": "鴨川デルタ",
@@ -2951,15 +3553,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lmyot5vg724mi4fikc6smu2pdq",
-        "media_path": "/media/kph_lmyot5vg724mi4fikc6smu2pdq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAZ5PHB60X1A089NV32JZ7.01M1DAZ6ABSN99T7ZBHQYZ11T8.jpg",
+        "emdash_content_id": "01M1DAZATMCN35FKT85X6H5DAH",
+        "emdash_media_id": "01M1DAZ5PHY6WWQQ92QFG4XYWE",
+        "r2_object_key": "01M1DAZ5PHB60X1A089NV32JZ7.01M1DAZ6ABSN99T7ZBHQYZ11T8.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "4a0f2b43d6f601cc0d36ebd5f9caa0ed142830650e1ebd41a928cb2ec7cfc58c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:57:42+00:00",
+        "public_asset": {
+          "sha256": "4a0f2b43d6f601cc0d36ebd5f9caa0ed142830650e1ebd41a928cb2ec7cfc58c",
+          "bytes": 4587144,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:57:42+00:00"
+        }
       }
     },
     {
@@ -2972,7 +3583,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-8VsNcHd",
         "filename": "PXL_20230223_082728712.jpg",
         "format": "JPG",
-        "archived_md5": "75d280294c3e3f62b69570b4960d4906"
+        "archived_md5": "75d280294c3e3f62b69570b4960d4906",
+        "collected": false
       },
       "display": {
         "title": "夕暮れの鴨川はとても美しい",
@@ -2999,15 +3611,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5fn5p3gmvhgxxlo7v62tgdamsi",
-        "media_path": "/media/kph_5fn5p3gmvhgxxlo7v62tgdamsi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DAZK95GCD68GE47GACQ9HM.01M1DAZM2P2A4GYAYZG19VBYH4.jpg",
+        "emdash_content_id": "01M1DAZSAJSBDG8QK7GAAWNGGH",
+        "emdash_media_id": "01M1DAZK957FEGC18PGS79ATYP",
+        "r2_object_key": "01M1DAZK95GCD68GE47GACQ9HM.01M1DAZM2P2A4GYAYZG19VBYH4.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "0dcc1c89bce9401168c1f80e8ad10e876776c48752e54fa8ea34617def513f9b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:57:56+00:00",
+        "public_asset": {
+          "sha256": "0dcc1c89bce9401168c1f80e8ad10e876776c48752e54fa8ea34617def513f9b",
+          "bytes": 3691522,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:57:56+00:00"
+        }
       }
     },
     {
@@ -3020,7 +3641,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-B5jtG3G",
         "filename": "PXL_20230224_041957502.jpg",
         "format": "JPG",
-        "archived_md5": "35d13932634781bbad140ffc592b1ca7"
+        "archived_md5": "35d13932634781bbad140ffc592b1ca7",
+        "collected": false
       },
       "display": {
         "title": "広隆寺 総門",
@@ -3047,15 +3669,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uf3ynosyhap7ztrsfcmns5ytca",
-        "media_path": "/media/kph_uf3ynosyhap7ztrsfcmns5ytca",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DB1T22GSDZEZA3H9WSEV1V.01M1DB1TKAFDDA46VNEPJQNHFD.jpg",
+        "emdash_content_id": "01M1DB1ZBSBZC51VG2P1Q03E6G",
+        "emdash_media_id": "01M1DB1T226W5BBFYQWPKQF28X",
+        "r2_object_key": "01M1DB1T22GSDZEZA3H9WSEV1V.01M1DB1TKAFDDA46VNEPJQNHFD.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "92b6f6f621a9b5603cfe437ac8340ef52bae931f8f36ab226397c7fd87b13cfa",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:59:08+00:00",
+        "public_asset": {
+          "sha256": "92b6f6f621a9b5603cfe437ac8340ef52bae931f8f36ab226397c7fd87b13cfa",
+          "bytes": 3484732,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:59:08+00:00"
+        }
       }
     },
     {
@@ -3068,7 +3699,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-PPNRwH4",
         "filename": "PXL_20230224_042217523.jpg",
         "format": "JPG",
-        "archived_md5": "0a082c74d9efe6d1365f8fbc7a47b188"
+        "archived_md5": "0a082c74d9efe6d1365f8fbc7a47b188",
+        "collected": false
       },
       "display": {
         "title": "広隆寺 太子殿",
@@ -3095,15 +3727,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3v3zfne5m52mxdquqojlojfy64",
-        "media_path": "/media/kph_3v3zfne5m52mxdquqojlojfy64",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DB28GD2MYEAGC601K3VYJW.01M1DB292MNBJTBVXHBV4K80JY.jpg",
+        "emdash_content_id": "01M1DB2DSN37ZM6NJKN1JZC6SD",
+        "emdash_media_id": "01M1DB28GD3T3Y9FZGKQ3TSA3K",
+        "r2_object_key": "01M1DB28GD2MYEAGC601K3VYJW.01M1DB292MNBJTBVXHBV4K80JY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ea26c73a19fcb6a329ac3f2677e10d5fd26dc78204e4b20e72de9159d860803e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:59:23+00:00",
+        "public_asset": {
+          "sha256": "ea26c73a19fcb6a329ac3f2677e10d5fd26dc78204e4b20e72de9159d860803e",
+          "bytes": 5158524,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:59:23+00:00"
+        }
       }
     },
     {
@@ -3116,7 +3757,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-NFqHzS3",
         "filename": "PXL_20230224_042715334.jpg",
         "format": "JPG",
-        "archived_md5": "eb13d74fa2220de574a4a3d46af331e3"
+        "archived_md5": "eb13d74fa2220de574a4a3d46af331e3",
+        "collected": false
       },
       "display": {
         "title": "広隆寺 霊宝殿前",
@@ -3143,15 +3785,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_cjczvyagsrrs5bajkv2jpxp3fa",
-        "media_path": "/media/kph_cjczvyagsrrs5bajkv2jpxp3fa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DB2P6VPJGEKKWRSHDB69Q5.01M1DB2PVH60P104JE1PVKWY38.jpg",
+        "emdash_content_id": "01M1DB2W88T1HQX7RP9JPB6Y10",
+        "emdash_media_id": "01M1DB2P6V9B59PGJ7XWFGB9ZY",
+        "r2_object_key": "01M1DB2P6VPJGEKKWRSHDB69Q5.01M1DB2PVH60P104JE1PVKWY38.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d784f2f028deec98de0ee3964892c9981afeba25a8b19ec4c07dd724cee4dac0",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:59:38+00:00",
+        "public_asset": {
+          "sha256": "d784f2f028deec98de0ee3964892c9981afeba25a8b19ec4c07dd724cee4dac0",
+          "bytes": 7178502,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:59:38+00:00"
+        }
       }
     },
     {
@@ -3164,7 +3815,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-zFwQg4H",
         "filename": "PXL_20230224_045629912.jpg",
         "format": "JPG",
-        "archived_md5": "52a4d6a47f91fd3934fd911ed6063f79"
+        "archived_md5": "52a4d6a47f91fd3934fd911ed6063f79",
+        "collected": false
       },
       "display": {
         "title": "広隆寺 楼門前",
@@ -3191,15 +3843,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3wowvelrj3i44jsxo7rvw7iy6m",
-        "media_path": "/media/kph_3wowvelrj3i44jsxo7rvw7iy6m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DB34EXA9S0A20NEVHC2YTV.01M1DB353RSCVYT79KNX8XNXG7.jpg",
+        "emdash_content_id": "01M1DB39ZH14AQH9RYRSQ3G3Z7",
+        "emdash_media_id": "01M1DB34EXG8BB2Z47ZBMSMZ0V",
+        "r2_object_key": "01M1DB34EXA9S0A20NEVHC2YTV.01M1DB353RSCVYT79KNX8XNXG7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "93e6f88d6927f37a8f918d1c9fe60df20472f8419dd9f9a5593ccba97e2a4027",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T01:59:52+00:00",
+        "public_asset": {
+          "sha256": "93e6f88d6927f37a8f918d1c9fe60df20472f8419dd9f9a5593ccba97e2a4027",
+          "bytes": 5035315,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T01:59:52+00:00"
+        }
       }
     },
     {
@@ -3212,7 +3873,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-WVRWNhs",
         "filename": "PXL_20230224_050108524.jpg",
         "format": "JPG",
-        "archived_md5": "82338de9ac14463bf80caa517568c9a0"
+        "archived_md5": "82338de9ac14463bf80caa517568c9a0",
+        "collected": false
       },
       "display": {
         "title": "太秦広隆寺駅",
@@ -3239,15 +3901,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ub6zx4t5shn2c3pxxaktqtxq3u",
-        "media_path": "/media/kph_ub6zx4t5shn2c3pxxaktqtxq3u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DB5B5P6ZMHYH8YEH87W737.01M1DB5BR9VJ08VJTY993HC4X3.jpg",
+        "emdash_content_id": "01M1DB5G4VH4FVG61Z4M51S4WK",
+        "emdash_media_id": "01M1DB5B5PW2CZ2SBBTTA7JP5P",
+        "r2_object_key": "01M1DB5B5P6ZMHYH8YEH87W737.01M1DB5BR9VJ08VJTY993HC4X3.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1132580235f822cbf3979a0213c88453e819bba78c0134929bcbd51d64c9939d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:01:04+00:00",
+        "public_asset": {
+          "sha256": "1132580235f822cbf3979a0213c88453e819bba78c0134929bcbd51d64c9939d",
+          "bytes": 2064033,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:01:04+00:00"
+        }
       }
     },
     {
@@ -3260,7 +3931,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-LqnKGLC",
         "filename": "PXL_20230224_060309322.jpg",
         "format": "JPG",
-        "archived_md5": "f9f85d0c98ec58a5141eed4ebc791edd"
+        "archived_md5": "f9f85d0c98ec58a5141eed4ebc791edd",
+        "collected": false
       },
       "display": {
         "title": "めんや 美鶴",
@@ -3287,15 +3959,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_t6bmasrwvudae3bt2ovkrqcv3m",
-        "media_path": "/media/kph_t6bmasrwvudae3bt2ovkrqcv3m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DB7H8P52QAT7ZRHNV1FER4.01M1DB7HV29RA7JJP31WZRPK6Z.jpg",
+        "emdash_content_id": "01M1DB7NWQCGHT43C5SJ80KZY0",
+        "emdash_media_id": "01M1DB7H8P0WWW9XJTRPXNW6BV",
+        "r2_object_key": "01M1DB7H8P52QAT7ZRHNV1FER4.01M1DB7HV29RA7JJP31WZRPK6Z.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2c9bce9bfd30ed8146f0b7a17075ef5032717d7363008ac44105674e4a514d66",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:02:15+00:00",
+        "public_asset": {
+          "sha256": "2c9bce9bfd30ed8146f0b7a17075ef5032717d7363008ac44105674e4a514d66",
+          "bytes": 1891124,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:02:15+00:00"
+        }
       }
     },
     {
@@ -3308,7 +3989,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-FwQJrHv",
         "filename": "PXL_20230225_023951772.jpg",
         "format": "JPG",
-        "archived_md5": "c053baa1274bb88122ce3bc576edad25"
+        "archived_md5": "c053baa1274bb88122ce3bc576edad25",
+        "collected": false
       },
       "display": {
         "title": "ねじりまんぽ",
@@ -3335,15 +4017,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_itlmi3vsgqc7cwnntpbg5x3ygi",
-        "media_path": "/media/kph_itlmi3vsgqc7cwnntpbg5x3ygi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DB9P4J2FZYMDHQ49GCYM1J.01M1DB9PS7SAP35ASCA1D3G6CY.jpg",
+        "emdash_content_id": "01M1DB9VG6N4SK92HRJ9GYE95P",
+        "emdash_media_id": "01M1DB9P4JKKV7H4B8YFT43469",
+        "r2_object_key": "01M1DB9P4J2FZYMDHQ49GCYM1J.01M1DB9PS7SAP35ASCA1D3G6CY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b2c6240724101641095aec6b45b1342aebf5fda33fd35d41ac83fe113153f7ce",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:03:27+00:00",
+        "public_asset": {
+          "sha256": "b2c6240724101641095aec6b45b1342aebf5fda33fd35d41ac83fe113153f7ce",
+          "bytes": 5551597,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:03:27+00:00"
+        }
       }
     },
     {
@@ -3356,7 +4047,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-gr66TS5",
         "filename": "PXL_20230225_024017140.jpg",
         "format": "JPG",
-        "archived_md5": "6a2f11faf56957c1f722b1228a095eba"
+        "archived_md5": "6a2f11faf56957c1f722b1228a095eba",
+        "collected": false
       },
       "display": {
         "title": "ねじりまんぽ内",
@@ -3383,15 +4075,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_kovgbdppcrmorf3oaqloifa6qq",
-        "media_path": "/media/kph_kovgbdppcrmorf3oaqloifa6qq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBA3JRM6C2BXSSNAC5A6TM.01M1DBA4754FVBAPYZAFKJYM90.jpg",
+        "emdash_content_id": "01M1DBA82FKQYDAT3PZJJGP8ND",
+        "emdash_media_id": "01M1DBA3JR9DPBM907SSMSHJEE",
+        "r2_object_key": "01M1DBA3JRM6C2BXSSNAC5A6TM.01M1DBA4754FVBAPYZAFKJYM90.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "51c7b73fad778cdf12b06806b6f293e98f38fb867cf7576f2e777a634a228365",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:03:39+00:00",
+        "public_asset": {
+          "sha256": "51c7b73fad778cdf12b06806b6f293e98f38fb867cf7576f2e777a634a228365",
+          "bytes": 3316723,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:03:39+00:00"
+        }
       }
     },
     {
@@ -3404,7 +4105,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-9TvHtK6",
         "filename": "PXL_20230225_024130379.jpg",
         "format": "JPG",
-        "archived_md5": "41a26a38d49181c125692ecefc66b5d2"
+        "archived_md5": "41a26a38d49181c125692ecefc66b5d2",
+        "collected": false
       },
       "display": {
         "title": "智水庵と何有荘の間",
@@ -3431,15 +4133,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_l7tverin3f6jcgyuumlfz3kst4",
-        "media_path": "/media/kph_l7tverin3f6jcgyuumlfz3kst4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBAH7V2GQKQJNHAWDBMJ0C.01M1DBAHWDF2WQNM0FH3G7F19T.jpg",
+        "emdash_content_id": "01M1DBAPR7QJEAWF7QXZ9AY675",
+        "emdash_media_id": "01M1DBAH7V4220MFKYHX2M6G5H",
+        "r2_object_key": "01M1DBAH7V2GQKQJNHAWDBMJ0C.01M1DBAHWDF2WQNM0FH3G7F19T.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "47ed186a34ffdacb7dba9f4c9382e776e0376d58d48d1b75a9e728fb14e69d95",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:03:54+00:00",
+        "public_asset": {
+          "sha256": "47ed186a34ffdacb7dba9f4c9382e776e0376d58d48d1b75a9e728fb14e69d95",
+          "bytes": 5162288,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:03:54+00:00"
+        }
       }
     },
     {
@@ -3452,7 +4163,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-HhmVzc7",
         "filename": "PXL_20230225_024654301.jpg",
         "format": "JPG",
-        "archived_md5": "1e7bb5133bf11f5eac520d0ae8764393"
+        "archived_md5": "1e7bb5133bf11f5eac520d0ae8764393",
+        "collected": false
       },
       "display": {
         "title": "金地院",
@@ -3479,15 +4191,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ccbh4qt636t7iq2cycmvvn55am",
-        "media_path": "/media/kph_ccbh4qt636t7iq2cycmvvn55am",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBAZE8BNDH8G2DNQ9G73R6.01M1DBB00X9TFX39Y73V8B50EY.jpg",
+        "emdash_content_id": "01M1DBB49TB2SG7AENDAKB6Y60",
+        "emdash_media_id": "01M1DBAZE8NSYJMA9BRTQCMG1E",
+        "r2_object_key": "01M1DBAZE8BNDH8G2DNQ9G73R6.01M1DBB00X9TFX39Y73V8B50EY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f0f582c116ecd180515cbd11c3ded361e0c6697ea2f4ee5f96233853dcb5a1e1",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:04:08+00:00",
+        "public_asset": {
+          "sha256": "f0f582c116ecd180515cbd11c3ded361e0c6697ea2f4ee5f96233853dcb5a1e1",
+          "bytes": 5255776,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:04:08+00:00"
+        }
       }
     },
     {
@@ -3500,7 +4221,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-JkjwK6m",
         "filename": "PXL_20230225_024817623.jpg",
         "format": "JPG",
-        "archived_md5": "141a4905a999bddecbb15022addecdf5"
+        "archived_md5": "141a4905a999bddecbb15022addecdf5",
+        "collected": false
       },
       "display": {
         "title": "金地院",
@@ -3527,15 +4249,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6djavspvvtryp2hyrbdne7uxs4",
-        "media_path": "/media/kph_6djavspvvtryp2hyrbdne7uxs4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBCCF8W59CPG4J05NM4CQ6.01M1DBCD3TY7QTTDQPT6K04ZPR.jpg",
+        "emdash_content_id": "01M1DBCJ0221NE0DH5A9DXF53H",
+        "emdash_media_id": "01M1DBCCF8G89Q6HSQCDHF8FXF",
+        "r2_object_key": "01M1DBCCF8W59CPG4J05NM4CQ6.01M1DBCD3TY7QTTDQPT6K04ZPR.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "109be4b825f098733fd5bd1d47af7a6016d428f615fef55db0c33631cd2e7e3d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:04:55+00:00",
+        "public_asset": {
+          "sha256": "109be4b825f098733fd5bd1d47af7a6016d428f615fef55db0c33631cd2e7e3d",
+          "bytes": 7705657,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:04:55+00:00"
+        }
       }
     },
     {
@@ -3548,7 +4279,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-85NsVHT",
         "filename": "PXL_20230225_024901745.jpg",
         "format": "JPG",
-        "archived_md5": "3cc97f493e16ec2b31784adcbfa995e6"
+        "archived_md5": "3cc97f493e16ec2b31784adcbfa995e6",
+        "collected": false
       },
       "display": {
         "title": "金地院 東照宮前",
@@ -3575,15 +4307,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ddjwtqbufzpucsvdlsbh7bssce",
-        "media_path": "/media/kph_ddjwtqbufzpucsvdlsbh7bssce",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBCTBJKJV52GJHRK6XDJDH.01M1DBCV0NE88HE1K0MEG2QAGQ.jpg",
+        "emdash_content_id": "01M1DBCZTRGM0DPZ91WHNV0FTF",
+        "emdash_media_id": "01M1DBCTBJRN04FR9PE38NTK5J",
+        "r2_object_key": "01M1DBCTBJKJV52GJHRK6XDJDH.01M1DBCV0NE88HE1K0MEG2QAGQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "986d6515b6b2f2c2e2f49e6e727d54287a0f8d8f4c36a271d66145934d88f12c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:05:09+00:00",
+        "public_asset": {
+          "sha256": "986d6515b6b2f2c2e2f49e6e727d54287a0f8d8f4c36a271d66145934d88f12c",
+          "bytes": 7015250,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:05:09+00:00"
+        }
       }
     },
     {
@@ -3596,7 +4337,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-dw7tH4z",
         "filename": "PXL_20230225_025013490.jpg",
         "format": "JPG",
-        "archived_md5": "fe03149389cfdd3225554e017bf0acdd"
+        "archived_md5": "fe03149389cfdd3225554e017bf0acdd",
+        "collected": false
       },
       "display": {
         "title": "金地院 東照宮",
@@ -3623,15 +4365,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tl65h7rfrmjoyycl7hhgqpmbau",
-        "media_path": "/media/kph_tl65h7rfrmjoyycl7hhgqpmbau",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBD87BQ0BRSEXBMQZJRZBV.01M1DBD8SMAAVYZJP73F123TNG.jpg",
+        "emdash_content_id": "01M1DBDDZ26EGZA6D7V29FRT7J",
+        "emdash_media_id": "01M1DBD87BC1190TNZMW4TSJ95",
+        "r2_object_key": "01M1DBD87BQ0BRSEXBMQZJRZBV.01M1DBD8SMAAVYZJP73F123TNG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d2d3e05f0582d854ab8a3e4ecf25c6c685285fba9669710b3cd11592f2d5e91e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:05:23+00:00",
+        "public_asset": {
+          "sha256": "d2d3e05f0582d854ab8a3e4ecf25c6c685285fba9669710b3cd11592f2d5e91e",
+          "bytes": 5117383,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:05:23+00:00"
+        }
       }
     },
     {
@@ -3644,7 +4395,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-S8BK7fK",
         "filename": "PXL_20230225_025201068.jpg",
         "format": "JPG",
-        "archived_md5": "9a9d7bf011ecbbd8390c592fc53f14b1"
+        "archived_md5": "9a9d7bf011ecbbd8390c592fc53f14b1",
+        "collected": false
       },
       "display": {
         "title": "金地院",
@@ -3671,15 +4423,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_aavyef5r64q7exgut5top2bgwm",
-        "media_path": "/media/kph_aavyef5r64q7exgut5top2bgwm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBDPW8E75QSYSVXTKHSN80.01M1DBDQGPCCD8RZBGDV97745Y.jpg",
+        "emdash_content_id": "01M1DBDW99NQF3KBSH7FM5XC87",
+        "emdash_media_id": "01M1DBDPW8XJ56N3YE1A943QQP",
+        "r2_object_key": "01M1DBDPW8E75QSYSVXTKHSN80.01M1DBDQGPCCD8RZBGDV97745Y.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "488b12fb6e3e1b269bd2589a2b56bc2c088a45c960960d9548221d46218b0e3b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:05:38+00:00",
+        "public_asset": {
+          "sha256": "488b12fb6e3e1b269bd2589a2b56bc2c088a45c960960d9548221d46218b0e3b",
+          "bytes": 6655434,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:05:38+00:00"
+        }
       }
     },
     {
@@ -3692,7 +4453,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-xcWm5hW",
         "filename": "PXL_20230225_025408310.jpg",
         "format": "JPG",
-        "archived_md5": "f2251f884ca1589901fc5e703f0af529"
+        "archived_md5": "f2251f884ca1589901fc5e703f0af529",
+        "collected": false
       },
       "display": {
         "title": "金地院 鶴亀の庭",
@@ -3719,15 +4481,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_rzeastj6xgoccjwieduyt2rybe",
-        "media_path": "/media/kph_rzeastj6xgoccjwieduyt2rybe",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBE4XTVWEVFSMCK3VN76PG.01M1DBE5JB5Q3SX9G941WXP7ZP.jpg",
+        "emdash_content_id": "01M1DBEBEQ4Q2GFXD0XCC03VEK",
+        "emdash_media_id": "01M1DBE4XT7KNEFFS848TPWGYQ",
+        "r2_object_key": "01M1DBE4XTVWEVFSMCK3VN76PG.01M1DBE5JB5Q3SX9G941WXP7ZP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "18a8300a17ed2c32db581c71ffd052e657af354d6e7fa89c77c08922d8896177",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:05:54+00:00",
+        "public_asset": {
+          "sha256": "18a8300a17ed2c32db581c71ffd052e657af354d6e7fa89c77c08922d8896177",
+          "bytes": 7391676,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:05:54+00:00"
+        }
       }
     },
     {
@@ -3740,7 +4511,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-SgjzRNX",
         "filename": "PXL_20230225_025558722.jpg",
         "format": "JPG",
-        "archived_md5": "7fc32f2866110f7576a2950d074d5316"
+        "archived_md5": "7fc32f2866110f7576a2950d074d5316",
+        "collected": false
       },
       "display": {
         "title": "鶴と亀が見える",
@@ -3767,15 +4539,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_by3qyshqztpj3xjxeompr2z3au",
-        "media_path": "/media/kph_by3qyshqztpj3xjxeompr2z3au",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBEM4DHH0QNV22TJYT4CD0.01M1DBEMR628A92WWMRXVWZCCH.jpg",
+        "emdash_content_id": "01M1DBES546H57Q6KEMNQ64XHD",
+        "emdash_media_id": "01M1DBEM4D89NSE3TYRVPWD92E",
+        "r2_object_key": "01M1DBEM4DHH0QNV22TJYT4CD0.01M1DBEMR628A92WWMRXVWZCCH.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e2fec07fbaf2428cb3466ab9dd6c9bc575111c63e0b78b2ed06f9b2bbd610752",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:06:08+00:00",
+        "public_asset": {
+          "sha256": "e2fec07fbaf2428cb3466ab9dd6c9bc575111c63e0b78b2ed06f9b2bbd610752",
+          "bytes": 5227445,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:06:08+00:00"
+        }
       }
     },
     {
@@ -3788,7 +4569,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-5MgS7TB",
         "filename": "PXL_20230225_031242750.jpg",
         "format": "JPG",
-        "archived_md5": "8e37342ecfada48ee6e1fc0651a8d4c4"
+        "archived_md5": "8e37342ecfada48ee6e1fc0651a8d4c4",
+        "collected": false
       },
       "display": {
         "title": "大力邸という食事処があった",
@@ -3815,15 +4597,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ymnw7bdk4kwpuajylxuedvttha",
-        "media_path": "/media/kph_ymnw7bdk4kwpuajylxuedvttha",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBF1Z7W3Y4QS3PQQ9TDVHV.01M1DBF2GNB69DMZY3PYVS53E8.jpg",
+        "emdash_content_id": "01M1DBF6FJXJNCWT4NF8JEGXJJ",
+        "emdash_media_id": "01M1DBF1Z7XTDB3CN4XBWKJCK7",
+        "r2_object_key": "01M1DBF1Z7W3Y4QS3PQQ9TDVHV.01M1DBF2GNB69DMZY3PYVS53E8.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c207f8612561aad21d1780337a370f9041348d47081d61e3377a47228bae46ba",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:06:21+00:00",
+        "public_asset": {
+          "sha256": "c207f8612561aad21d1780337a370f9041348d47081d61e3377a47228bae46ba",
+          "bytes": 3864021,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:06:21+00:00"
+        }
       }
     },
     {
@@ -3836,7 +4627,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-KBvvvXm",
         "filename": "PXL_20230225_032304731.jpg",
         "format": "JPG",
-        "archived_md5": "6438ae20cf9c968c7c065b2e918d8de5"
+        "archived_md5": "6438ae20cf9c968c7c065b2e918d8de5",
+        "collected": false
       },
       "display": {
         "title": "永観堂",
@@ -3863,15 +4655,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_7uyex2mkj5ngujzm4xnw7tal3u",
-        "media_path": "/media/kph_7uyex2mkj5ngujzm4xnw7tal3u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBFEAZCW9FEG2X51XFYQBB.01M1DBFEWKVCAYGEAKZ7ZRZK2Q.jpg",
+        "emdash_content_id": "01M1DBFKNFVFJ53KPH8ER6N115",
+        "emdash_media_id": "01M1DBFEAZM8CTK828DT14XET9",
+        "r2_object_key": "01M1DBFEAZCW9FEG2X51XFYQBB.01M1DBFEWKVCAYGEAKZ7ZRZK2Q.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b18ecd12ad31be909540e9d294c182b2ef6bb7d83a94d97b8aaf8c75d4b98b75",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:06:35+00:00",
+        "public_asset": {
+          "sha256": "b18ecd12ad31be909540e9d294c182b2ef6bb7d83a94d97b8aaf8c75d4b98b75",
+          "bytes": 4858427,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:06:35+00:00"
+        }
       }
     },
     {
@@ -3884,7 +4685,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-pgG7gbH",
         "filename": "PXL_20230225_032422930.MP.jpg",
         "format": "JPG",
-        "archived_md5": "e0a1ecf8d6408221980c220657f11beb"
+        "archived_md5": "e0a1ecf8d6408221980c220657f11beb",
+        "collected": false
       },
       "display": {
         "title": "永観堂 入口",
@@ -3911,15 +4713,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vwwkf55vgzjlj5lgwhujmyf6rm",
-        "media_path": "/media/kph_vwwkf55vgzjlj5lgwhujmyf6rm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBFWYN51Z5D3RYDWDSSEV7.01M1DBFXNX54WKPZJ987DJEJYG.jpg",
+        "emdash_content_id": "01M1DBG2J7HT982Z3EGAYQAB4P",
+        "emdash_media_id": "01M1DBFWYNV9XCZQ20HCSVJ7V8",
+        "r2_object_key": "01M1DBFWYN51Z5D3RYDWDSSEV7.01M1DBFXNX54WKPZJ987DJEJYG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "987e524f489391d7d4c7d0bf47968b2f4f5e689d8be626c22e139f9ef66c29ce",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:06:51+00:00",
+        "public_asset": {
+          "sha256": "987e524f489391d7d4c7d0bf47968b2f4f5e689d8be626c22e139f9ef66c29ce",
+          "bytes": 8593716,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:06:51+00:00"
+        }
       }
     },
     {
@@ -3932,7 +4743,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-JrMb553",
         "filename": "PXL_20230225_032809095.jpg",
         "format": "JPG",
-        "archived_md5": "4fd7c6420e7b9a205854457594f1f9e3"
+        "archived_md5": "4fd7c6420e7b9a205854457594f1f9e3",
+        "collected": false
       },
       "display": {
         "title": "永観堂 伽藍内",
@@ -3959,15 +4771,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_cewhn2q24m6wlsgdiiuggzz6jm",
-        "media_path": "/media/kph_cewhn2q24m6wlsgdiiuggzz6jm",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBGBEVQR1PYFR2XF59B40R.01M1DBGC23EGK43RW5P8KDQ8BA.jpg",
+        "emdash_content_id": "01M1DBGGMPGN09GTVXQWMC9R8V",
+        "emdash_media_id": "01M1DBGBEV3Q4QKTEDFSJAZHTG",
+        "r2_object_key": "01M1DBGBEVQR1PYFR2XF59B40R.01M1DBGC23EGK43RW5P8KDQ8BA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "223a9a5a4fe1074fa5b9a3eb6daef60430ae9c6d515706287d03adaf286572aa",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:07:05+00:00",
+        "public_asset": {
+          "sha256": "223a9a5a4fe1074fa5b9a3eb6daef60430ae9c6d515706287d03adaf286572aa",
+          "bytes": 6132929,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:07:05+00:00"
+        }
       }
     },
     {
@@ -3980,7 +4801,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-ZmpZCjC",
         "filename": "PXL_20230225_034958606.jpg",
         "format": "JPG",
-        "archived_md5": "f4317710aead6376bef07c3e31919db3"
+        "archived_md5": "f4317710aead6376bef07c3e31919db3",
+        "collected": false
       },
       "display": {
         "title": "永観堂 伽藍内",
@@ -4007,15 +4829,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ttsxhrabqzqvqhgyj2hguzmmqu",
-        "media_path": "/media/kph_ttsxhrabqzqvqhgyj2hguzmmqu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBGS5JVKHAVHP59BAXG52E.01M1DBGSV24PVJHVTBCR5542SF.jpg",
+        "emdash_content_id": "01M1DBGYCXRJ2KMSJWY8FYDSNV",
+        "emdash_media_id": "01M1DBGS5JWMCXPPRPY2P9XX29",
+        "r2_object_key": "01M1DBGS5JVKHAVHP59BAXG52E.01M1DBGSV24PVJHVTBCR5542SF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "cc5e9125bc03bf8484ddf1fa151a9d38fae4afb04400175571a186202da3998a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:07:19+00:00",
+        "public_asset": {
+          "sha256": "cc5e9125bc03bf8484ddf1fa151a9d38fae4afb04400175571a186202da3998a",
+          "bytes": 5634905,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:07:19+00:00"
+        }
       }
     },
     {
@@ -4028,7 +4859,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-fpPFtnM",
         "filename": "PXL_20230225_035720035.jpg",
         "format": "JPG",
-        "archived_md5": "0eac29a533e9dd0d841cd1fd0d5ec1f4"
+        "archived_md5": "0eac29a533e9dd0d841cd1fd0d5ec1f4",
+        "collected": false
       },
       "display": {
         "title": "永観堂 阿弥陀堂",
@@ -4055,15 +4887,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_fe4ov2cbjy7x4y3jqbcyi27shq",
-        "media_path": "/media/kph_fe4ov2cbjy7x4y3jqbcyi27shq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBH6MQBZ6AVEF31KM1YEQR.01M1DBH7AZJM1YY742ZWAGW7NA.jpg",
+        "emdash_content_id": "01M1DBHBWSP8CPVCQ4BEE393P2",
+        "emdash_media_id": "01M1DBH6MQG2197BXCTSRHB9HD",
+        "r2_object_key": "01M1DBH6MQBZ6AVEF31KM1YEQR.01M1DBH7AZJM1YY742ZWAGW7NA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1a4612dfe378c454808ff124741db3ec8f97f13c00d368107928fd6a9c796215",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:07:33+00:00",
+        "public_asset": {
+          "sha256": "1a4612dfe378c454808ff124741db3ec8f97f13c00d368107928fd6a9c796215",
+          "bytes": 6652661,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:07:33+00:00"
+        }
       }
     },
     {
@@ -4076,7 +4917,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-ZTtMNPL",
         "filename": "PXL_20230225_040011642.jpg",
         "format": "JPG",
-        "archived_md5": "bd3eb1a526d89f5d3f6386028f6f1572"
+        "archived_md5": "bd3eb1a526d89f5d3f6386028f6f1572",
+        "collected": false
       },
       "display": {
         "title": "永観堂 阿弥陀堂前",
@@ -4103,15 +4945,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_fjlqpqgtq5ibwh737gj4kzvuwy",
-        "media_path": "/media/kph_fjlqpqgtq5ibwh737gj4kzvuwy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBHNB6CJB34ZT22MNBXWBZ.01M1DBHP2HWT771DFB1GEDGHCQ.jpg",
+        "emdash_content_id": "01M1DBHV083ZDQ964TWQ6TDX3D",
+        "emdash_media_id": "01M1DBHNB6CP1E2JH51K5TR4VD",
+        "r2_object_key": "01M1DBHNB6CJB34ZT22MNBXWBZ.01M1DBHP2HWT771DFB1GEDGHCQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "75fd638e41f7aa296a4a9b6411d25fda3e5a90107ac361d8c5989f6c6793a3f4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:07:48+00:00",
+        "public_asset": {
+          "sha256": "75fd638e41f7aa296a4a9b6411d25fda3e5a90107ac361d8c5989f6c6793a3f4",
+          "bytes": 7416643,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:07:48+00:00"
+        }
       }
     },
     {
@@ -4124,7 +4975,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-5DrHvqv",
         "filename": "PXL_20230225_040542013.jpg",
         "format": "JPG",
-        "archived_md5": "6345488a2cb7a73dd39badfb493c7219"
+        "archived_md5": "6345488a2cb7a73dd39badfb493c7219",
+        "collected": false
       },
       "display": {
         "title": "永観堂 多宝塔から",
@@ -4151,15 +5003,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_cq3n7wmvufzx4k3ggten52z3ga",
-        "media_path": "/media/kph_cq3n7wmvufzx4k3ggten52z3ga",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBJ3AB6Q9KA012NG6J1290.01M1DBJ3VYE5SX5VDJDQ3MWJCG.jpg",
+        "emdash_content_id": "01M1DBJ84XMX52HCQKHDZ4W2R2",
+        "emdash_media_id": "01M1DBJ3ABD9J6JVSX7PDG5NV4",
+        "r2_object_key": "01M1DBJ3AB6Q9KA012NG6J1290.01M1DBJ3VYE5SX5VDJDQ3MWJCG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "93099f9c22a551617eecb1763644762df0cd29eb753e3b61a2e110890d300b2d",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:08:02+00:00",
+        "public_asset": {
+          "sha256": "93099f9c22a551617eecb1763644762df0cd29eb753e3b61a2e110890d300b2d",
+          "bytes": 3879420,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:08:02+00:00"
+        }
       }
     },
     {
@@ -4172,7 +5033,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-DBcV2DT",
         "filename": "PXL_20230225_041506798.jpg",
         "format": "JPG",
-        "archived_md5": "fb1dc430b872774a0c59cfd5de3ba6df"
+        "archived_md5": "fb1dc430b872774a0c59cfd5de3ba6df",
+        "collected": false
       },
       "display": {
         "title": "永観堂",
@@ -4199,15 +5061,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_r2dyv3cuhlpubs2jbrtlyczzou",
-        "media_path": "/media/kph_r2dyv3cuhlpubs2jbrtlyczzou",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBJH27E8PGEPNYHD1PSGCK.01M1DBJHS0FDTWFE01HEN467RB.jpg",
+        "emdash_content_id": "01M1DBJPTYSE6W24GJ1B2VAF7Z",
+        "emdash_media_id": "01M1DBJH27ZD8TJT3X4T2F134S",
+        "r2_object_key": "01M1DBJH27E8PGEPNYHD1PSGCK.01M1DBJHS0FDTWFE01HEN467RB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "55aa3a1b2ca16a9f89a16e9b4e86041a2eb72d6862666391465c92e6d7401c92",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:08:17+00:00",
+        "public_asset": {
+          "sha256": "55aa3a1b2ca16a9f89a16e9b4e86041a2eb72d6862666391465c92e6d7401c92",
+          "bytes": 4385412,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:08:17+00:00"
+        }
       }
     },
     {
@@ -4220,7 +5091,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-VpS93Cv",
         "filename": "PXL_20230225_043114200.jpg",
         "format": "JPG",
-        "archived_md5": "d756ce3ce6e57b515219af3d77d0f818"
+        "archived_md5": "d756ce3ce6e57b515219af3d77d0f818",
+        "collected": false
       },
       "display": {
         "title": "ロリアンという味のある喫茶でランチ",
@@ -4247,15 +5119,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5iiwy5f2wmvsmm7mbdhyq7goiq",
-        "media_path": "/media/kph_5iiwy5f2wmvsmm7mbdhyq7goiq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBJZFPSK95JJA0MZDC8QFP.01M1DBK05Q02GVP2W7CEWEMH00.jpg",
+        "emdash_content_id": "01M1DBK4TZ6QZXK351NKK2KFKJ",
+        "emdash_media_id": "01M1DBJZFPYT2G6M197XDSQ7JP",
+        "r2_object_key": "01M1DBJZFPSK95JJA0MZDC8QFP.01M1DBK05Q02GVP2W7CEWEMH00.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "93e23373464ae72b1b6b389657820d78b3f0b4fcc3463cebb0f7875167621c1c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:08:31+00:00",
+        "public_asset": {
+          "sha256": "93e23373464ae72b1b6b389657820d78b3f0b4fcc3463cebb0f7875167621c1c",
+          "bytes": 2784776,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:08:31+00:00"
+        }
       }
     },
     {
@@ -4268,7 +5149,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-mnfPqRn",
         "filename": "PXL_20230225_044654421.jpg",
         "format": "JPG",
-        "archived_md5": "82446ec5b7758e38270936463658f0bd"
+        "archived_md5": "82446ec5b7758e38270936463658f0bd",
+        "collected": false
       },
       "display": {
         "title": "ロリアン 概観",
@@ -4295,15 +5177,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6c4acdvatqwgpaln4yu7dcizwu",
-        "media_path": "/media/kph_6c4acdvatqwgpaln4yu7dcizwu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBKDHCA54FY9TJZQ8WJ7GM.01M1DBKEMZGW92D8VAF79RJB54.jpg",
+        "emdash_content_id": "01M1DBKJKABZF8ER60Z6JVFVC6",
+        "emdash_media_id": "01M1DBKDHCB9CKNHAQP293W9B6",
+        "r2_object_key": "01M1DBKDHCA54FY9TJZQ8WJ7GM.01M1DBKEMZGW92D8VAF79RJB54.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "15163a451670e8428870d16c059102f55590eef5a2fe234970fdcc59e7cccd7a",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:08:45+00:00",
+        "public_asset": {
+          "sha256": "15163a451670e8428870d16c059102f55590eef5a2fe234970fdcc59e7cccd7a",
+          "bytes": 4180853,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:08:45+00:00"
+        }
       }
     },
     {
@@ -4316,7 +5207,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-tQMHQjr",
         "filename": "PXL_20230225_045046751.jpg",
         "format": "JPG",
-        "archived_md5": "138b192e1acfb6215934826d3afa2918"
+        "archived_md5": "138b192e1acfb6215934826d3afa2918",
+        "collected": false
       },
       "display": {
         "title": "東山中高の脇を流れているのは琵琶湖疎水かな",
@@ -4343,15 +5235,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lvckklkuzxt2q5uykbzirmmja4",
-        "media_path": "/media/kph_lvckklkuzxt2q5uykbzirmmja4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBKW0AS0PAQN6E6WJMVTTJ.01M1DBKWN2AYEPSSEJWPK8CDFB.jpg",
+        "emdash_content_id": "01M1DBM16B3VHATJD7YCW0XBC5",
+        "emdash_media_id": "01M1DBKW0AYT21JHRYVS0HJ7BM",
+        "r2_object_key": "01M1DBKW0AS0PAQN6E6WJMVTTJ.01M1DBKWN2AYEPSSEJWPK8CDFB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "30d010887c43821684546239784b602ed6c51e9d112dff38a2359471d08e2c37",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:09:00+00:00",
+        "public_asset": {
+          "sha256": "30d010887c43821684546239784b602ed6c51e9d112dff38a2359471d08e2c37",
+          "bytes": 4546481,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:09:00+00:00"
+        }
       }
     },
     {
@@ -4364,7 +5265,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-4DMg69j",
         "filename": "PXL_20230225_045051394.jpg",
         "format": "JPG",
-        "archived_md5": "f8960c9a86a35d0e0d7dcfe337bdde5f"
+        "archived_md5": "f8960c9a86a35d0e0d7dcfe337bdde5f",
+        "collected": false
       },
       "display": {
         "title": "西の方を向く",
@@ -4391,15 +5293,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_czgucylrwutrwzm4sbuw5pnwhu",
-        "media_path": "/media/kph_czgucylrwutrwzm4sbuw5pnwhu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBM9WJNDW07FAZRXT3BY63.01M1DBMAFX2RARP7JJAVJXWGFN.jpg",
+        "emdash_content_id": "01M1DBMEQMT6FNN4HC90137NGQ",
+        "emdash_media_id": "01M1DBM9WJ73E11M7QYF0G4M0Y",
+        "r2_object_key": "01M1DBM9WJNDW07FAZRXT3BY63.01M1DBMAFX2RARP7JJAVJXWGFN.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "6053ffbf98001cc677012534de6b122b08b5204ec44b01794681ef4c0a4efcab",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:09:14+00:00",
+        "public_asset": {
+          "sha256": "6053ffbf98001cc677012534de6b122b08b5204ec44b01794681ef4c0a4efcab",
+          "bytes": 6642428,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:09:14+00:00"
+        }
       }
     },
     {
@@ -4412,7 +5323,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-kWJkDKq",
         "filename": "PXL_20230225_045145935.jpg",
         "format": "JPG",
-        "archived_md5": "e770f8e132687a2acb99ccb169029227"
+        "archived_md5": "e770f8e132687a2acb99ccb169029227",
+        "collected": false
       },
       "display": {
         "title": "琵琶湖疎水側を散歩",
@@ -4439,15 +5351,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_72xlszeouuzz7wnuylr274y2zu",
-        "media_path": "/media/kph_72xlszeouuzz7wnuylr274y2zu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBMQRM96QNAXM0TB4ZTHC6.01M1DBMRD0M52N9S2WVHJ8JPJA.jpg",
+        "emdash_content_id": "01M1DBMX99G0AD38FFZ9YX3Q5W",
+        "emdash_media_id": "01M1DBMQRMQ8KX21G9ZJ0HVZN3",
+        "r2_object_key": "01M1DBMQRM96QNAXM0TB4ZTHC6.01M1DBMRD0M52N9S2WVHJ8JPJA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "25bd69a366f53c3c478409361e46400c294d313a4097bf01d7ed07a9922b4187",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:09:29+00:00",
+        "public_asset": {
+          "sha256": "25bd69a366f53c3c478409361e46400c294d313a4097bf01d7ed07a9922b4187",
+          "bytes": 6891280,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:09:29+00:00"
+        }
       }
     },
     {
@@ -4460,7 +5381,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-BP6N2p8",
         "filename": "PXL_20230225_071942315.jpg",
         "format": "JPG",
-        "archived_md5": "2de26e9308f426e5d08643fd1d79e01e"
+        "archived_md5": "2de26e9308f426e5d08643fd1d79e01e",
+        "collected": false
       },
       "display": {
         "title": "京都駅 原了郭",
@@ -4487,15 +5409,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vghaaqe3smasmzpu4wcue7zqti",
-        "media_path": "/media/kph_vghaaqe3smasmzpu4wcue7zqti",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBN5EW65PGFQDFW2BPZMBQ.01M1DBN6610QQRQF2QFDFXRK75.jpg",
+        "emdash_content_id": "01M1DBNB6ZMK96V45T049PJZTW",
+        "emdash_media_id": "01M1DBN5EW3MGN0QKG4Q41X1CT",
+        "r2_object_key": "01M1DBN5EW65PGFQDFW2BPZMBQ.01M1DBN6610QQRQF2QFDFXRK75.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7aef1563b9b91b96d9a799da1731c9582a7118be453ed4f856eafae6daf9ef11",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:09:43+00:00",
+        "public_asset": {
+          "sha256": "7aef1563b9b91b96d9a799da1731c9582a7118be453ed4f856eafae6daf9ef11",
+          "bytes": 2616964,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:09:43+00:00"
+        }
       }
     },
     {
@@ -4508,7 +5439,8 @@
         "web_uri": "https://kanolog.smugmug.com/20230222Kyoto/i-pXpMQ5N",
         "filename": "PXL_20230225_081428870.jpg",
         "format": "JPG",
-        "archived_md5": "8216647d7a90d3a38514c5da6ca88c83"
+        "archived_md5": "8216647d7a90d3a38514c5da6ca88c83",
+        "collected": false
       },
       "display": {
         "title": "出発！",
@@ -4535,15 +5467,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_csbtf3xuigfn2ol2hfsaquzsje",
-        "media_path": "/media/kph_csbtf3xuigfn2ol2hfsaquzsje",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DBNMERRY87PPXPGPTFQ3GM.01M1DBNN0S7DED835WX0WETQSY.jpg",
+        "emdash_content_id": "01M1DBNST82PZTCGGPMHVBD7Y5",
+        "emdash_media_id": "01M1DBNMERYPNAPK5MZFNT6QTW",
+        "r2_object_key": "01M1DBNMERRY87PPXPGPTFQ3GM.01M1DBNN0S7DED835WX0WETQSY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "4029d1a2ee061493a80c6753348c8c1068cd51bcafc547b7f2fecc7a565a8fd6",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T02:09:58+00:00",
+        "public_asset": {
+          "sha256": "4029d1a2ee061493a80c6753348c8c1068cd51bcafc547b7f2fecc7a565a8fd6",
+          "bytes": 4169856,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T02:09:58+00:00"
+        }
       }
     }
   ]

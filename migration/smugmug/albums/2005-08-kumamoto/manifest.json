@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-08-31T17:31:28+00:00",
+  "generated_at": "2026-09-01T04:43:10+00:00",
   "scope": "public SmugMug album migration",
   "privacy": {
     "public_assets_only": true,
@@ -20,7 +20,8 @@
       "service": "smugmug",
       "user": "kanolog",
       "album_key": "qP9pBZ",
-      "web_uri": "https://kanolog.smugmug.com/20050813kumamoto"
+      "web_uri": "https://kanolog.smugmug.com/20050813kumamoto",
+      "highlight_image_key": "kk8LBdD"
     },
     "title": "Kumamoto, 2005/08",
     "description": "仲の良い後輩と4人で熊本旅行しました。",
@@ -30,7 +31,7 @@
     "source_protected_flag": false,
     "asset_count": 6,
     "destination": {
-      "emdash_content_id": null
+      "emdash_content_id": "01M1DFPTPS120C697AC3RKKPNB"
     }
   },
   "assets": [
@@ -44,7 +45,8 @@
         "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-kk8LBdD",
         "filename": "52466259799.jpg",
         "format": "JPG",
-        "archived_md5": "c15369925b65d0e2fb87b3325b42d98c"
+        "archived_md5": "c15369925b65d0e2fb87b3325b42d98c",
+        "collected": false
       },
       "display": {
         "title": "阿蘇山中腹",
@@ -71,15 +73,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_uekqjackxbi7n2yye6m5uzqesa",
-        "media_path": "/media/kph_uekqjackxbi7n2yye6m5uzqesa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFQ2DYM2BV0GKF7W396VW5.01M1DFQ2ZG8TD2D1YFNY3QWDPP.jpg",
+        "emdash_content_id": "01M1DFQ74F3FHSYFSCX7H72DJ4",
+        "emdash_media_id": "01M1DFQ2DYP1C0W1T917CJ5CNF",
+        "r2_object_key": "01M1DFQ2DYM2BV0GKF7W396VW5.01M1DFQ2ZG8TD2D1YFNY3QWDPP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "e6eb3651f5fecd753a894a5fe32ec2db24006403ac29df2c0aa15fb7c4865428",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:20:38+00:00",
+        "public_asset": {
+          "sha256": "e6eb3651f5fecd753a894a5fe32ec2db24006403ac29df2c0aa15fb7c4865428",
+          "bytes": 46033,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:20:38+00:00"
+        }
       }
     },
     {
@@ -92,7 +103,8 @@
         "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-QWrNgTk",
         "filename": "51144959322.jpg",
         "format": "JPG",
-        "archived_md5": "87114c90aa3eb7c88fbaa4da76d1d73e"
+        "archived_md5": "87114c90aa3eb7c88fbaa4da76d1d73e",
+        "collected": false
       },
       "display": {
         "title": "久々の阿蘇で",
@@ -119,15 +131,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ydk6bj3wcu7y6d3j6lbcoyxlci",
-        "media_path": "/media/kph_ydk6bj3wcu7y6d3j6lbcoyxlci",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFQEAJ73J30Y46EXW38C2B.01M1DFQEST7TKYQ3K6DTX2MKSG.jpg",
+        "emdash_content_id": "01M1DFQKATF85NV7PYNWSMZN84",
+        "emdash_media_id": "01M1DFQEAJCVHNXD3R4NX1B1TE",
+        "r2_object_key": "01M1DFQEAJ73J30Y46EXW38C2B.01M1DFQEST7TKYQ3K6DTX2MKSG.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "fa9342f260ae5c94e24e5202360026d17762169e1ab355e54d9fd374aebb69a1",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:20:51+00:00",
+        "public_asset": {
+          "sha256": "fa9342f260ae5c94e24e5202360026d17762169e1ab355e54d9fd374aebb69a1",
+          "bytes": 34028,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:20:51+00:00"
+        }
       }
     },
     {
@@ -140,7 +161,8 @@
         "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-khM4q3B",
         "filename": "51145856003.jpg",
         "format": "JPG",
-        "archived_md5": "90f918431c8721eab4c5d0813bd8db3c"
+        "archived_md5": "90f918431c8721eab4c5d0813bd8db3c",
+        "collected": false
       },
       "display": {
         "title": "黒亭のラーメン",
@@ -167,15 +189,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_tuxrai5qzr6jtqn6gfdtnpz6by",
-        "media_path": "/media/kph_tuxrai5qzr6jtqn6gfdtnpz6by",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFQTG81ETCTT03A104WS55.01M1DFQV1THCDF12JSQTFQQMS2.jpg",
+        "emdash_content_id": "01M1DFQZ15D4A72PWR2T6QS02X",
+        "emdash_media_id": "01M1DFQTG8SV76QHRBCJH812GH",
+        "r2_object_key": "01M1DFQTG81ETCTT03A104WS55.01M1DFQV1THCDF12JSQTFQQMS2.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "07b61c8bb4ac7b1697f3fc56a2e76ef082a166e1462ef71448e22da5b79e797c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:21:03+00:00",
+        "public_asset": {
+          "sha256": "07b61c8bb4ac7b1697f3fc56a2e76ef082a166e1462ef71448e22da5b79e797c",
+          "bytes": 66041,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:21:03+00:00"
+        }
       }
     },
     {
@@ -188,7 +219,8 @@
         "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-Hm79CGv",
         "filename": "51146744440.jpg",
         "format": "JPG",
-        "archived_md5": "eb416cafd1b754a9b21a2223dacc6e57"
+        "archived_md5": "eb416cafd1b754a9b21a2223dacc6e57",
+        "collected": false
       },
       "display": {
         "title": "夕食の懐石料理",
@@ -215,15 +247,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_v7hthq4rzhd2dkgt7svpa7bpai",
-        "media_path": "/media/kph_v7hthq4rzhd2dkgt7svpa7bpai",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFR6B63YRV6ACYJAGC5QJV.01M1DFR6W4R8SH3HZG8GGX2X35.jpg",
+        "emdash_content_id": "01M1DFRAJHKM3BB8V263D2GBHG",
+        "emdash_media_id": "01M1DFR6B6GYA3TS8MN9AEQC57",
+        "r2_object_key": "01M1DFR6B63YRV6ACYJAGC5QJV.01M1DFR6W4R8SH3HZG8GGX2X35.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d49908d56a53d13d99e80c8c3654ce1d451a12856c405f8664cdf7829651dada",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:21:15+00:00",
+        "public_asset": {
+          "sha256": "d49908d56a53d13d99e80c8c3654ce1d451a12856c405f8664cdf7829651dada",
+          "bytes": 65515,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:21:15+00:00"
+        }
       }
     },
     {
@@ -236,7 +277,8 @@
         "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-t3NC6Sf",
         "filename": "51144964562.jpg",
         "format": "JPG",
-        "archived_md5": "62cc07e9a0b5618456ddfeab7bc99306"
+        "archived_md5": "62cc07e9a0b5618456ddfeab7bc99306",
+        "collected": false
       },
       "display": {
         "title": "再会",
@@ -263,15 +305,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gn5rr5wmeutdukl4gdg2eureti",
-        "media_path": "/media/kph_gn5rr5wmeutdukl4gdg2eureti",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFRHXAH0X884BEQ90M5JPW.01M1DFRJE103REH2M3F5WYXFXY.jpg",
+        "emdash_content_id": "01M1DFRP8993AV8FETCAEVE6YP",
+        "emdash_media_id": "01M1DFRHXAHZN6GJA3VTPM6SHN",
+        "r2_object_key": "01M1DFRHXAH0X884BEQ90M5JPW.01M1DFRJE103REH2M3F5WYXFXY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "79b1f0d5bdfe8bed8e45765b3c72d30391fc864e2b5940a0bfe6a50b5359dddd",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:21:27+00:00",
+        "public_asset": {
+          "sha256": "79b1f0d5bdfe8bed8e45765b3c72d30391fc864e2b5940a0bfe6a50b5359dddd",
+          "bytes": 54461,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:21:27+00:00"
+        }
       }
     },
     {
@@ -284,7 +335,8 @@
         "web_uri": "https://kanolog.smugmug.com/20050813kumamoto/i-BxxHCcN",
         "filename": "51145856158.jpg",
         "format": "JPG",
-        "archived_md5": "d2279fa1d397f3fdeb84f46f1efbea6b"
+        "archived_md5": "d2279fa1d397f3fdeb84f46f1efbea6b",
+        "collected": false
       },
       "display": {
         "title": "黒豚のヒレカツ",
@@ -311,15 +363,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_jcjycedtntewshqhbptazafhyu",
-        "media_path": "/media/kph_jcjycedtntewshqhbptazafhyu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1DFRXXCC5CHCMMTCC28FSGD.01M1DFRYD0HG3AEMWHGB23RZAP.jpg",
+        "emdash_content_id": "01M1DFS2KQA6K1QS6AMTFH5FMQ",
+        "emdash_media_id": "01M1DFRXXCMHAZTPN1W80JN20C",
+        "r2_object_key": "01M1DFRXXCC5CHCMMTCC28FSGD.01M1DFRYD0HG3AEMWHGB23RZAP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "bc1d02178f5b5323ad328bd57e05d10c6c351cba79449fbf0ce5171c355d5d60",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-09-01T03:21:40+00:00",
+        "public_asset": {
+          "sha256": "bc1d02178f5b5323ad328bd57e05d10c6c351cba79449fbf0ce5171c355d5d60",
+          "bytes": 86397,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-09-01T03:21:40+00:00"
+        }
       }
     }
   ]

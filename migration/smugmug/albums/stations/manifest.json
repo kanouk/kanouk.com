@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-08-31T17:28:59+00:00",
+  "generated_at": "2026-09-01T04:40:32+00:00",
   "scope": "public SmugMug album migration",
   "privacy": {
     "public_assets_only": true,
@@ -20,7 +20,8 @@
       "service": "smugmug",
       "user": "kanolog",
       "album_key": "8PdRPg",
-      "web_uri": "https://kanolog.smugmug.com/Stations"
+      "web_uri": "https://kanolog.smugmug.com/Stations",
+      "highlight_image_key": "P9Xd9wz"
     },
     "title": "Stations",
     "description": "",
@@ -30,7 +31,7 @@
     "source_protected_flag": false,
     "asset_count": 23,
     "destination": {
-      "emdash_content_id": null
+      "emdash_content_id": "01M1CHMF9B634JTJ99DFT5FNAD"
     }
   },
   "assets": [
@@ -44,7 +45,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-hVGRFSQ",
         "filename": "52466261509.jpg",
         "format": "JPG",
-        "archived_md5": "ee3c47eda59b60118b785f922370718b"
+        "archived_md5": "ee3c47eda59b60118b785f922370718b",
+        "collected": false
       },
       "display": {
         "title": "北千住駅前",
@@ -71,15 +73,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_z7u55idpc43resz47snqpaxgoa",
-        "media_path": "/media/kph_z7u55idpc43resz47snqpaxgoa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CWTWFH5EG1G0MS16DZFBW7.jpg",
+        "emdash_content_id": "01M1CHMTETZXXCFTNW31VQDF2V",
+        "emdash_media_id": "01M1CWTWVNGPTAFNN4ESCJZ8K3",
+        "r2_object_key": "01M1CWTWFH5EG1G0MS16DZFBW7.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "03be3d4c13b84e038356a69ce08de1b29e398fb3731920d65316f380402f9c28",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:50:38+00:00",
+        "public_asset": {
+          "sha256": "03be3d4c13b84e038356a69ce08de1b29e398fb3731920d65316f380402f9c28",
+          "bytes": 202412,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:50:38+00:00"
+        }
       }
     },
     {
@@ -92,7 +103,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-rhXXHR3",
         "filename": "2257271867.jpg",
         "format": "JPG",
-        "archived_md5": "17346664e6f64bf1fc0d4d389f1b88ad"
+        "archived_md5": "17346664e6f64bf1fc0d4d389f1b88ad",
+        "collected": false
       },
       "display": {
         "title": "蕨駅前 その1",
@@ -119,15 +131,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_sy47pjbydpkjwyqjo5lpdrxqby",
-        "media_path": "/media/kph_sy47pjbydpkjwyqjo5lpdrxqby",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CVRSAS0KD9V5ZFGDE59FAV.jpg",
+        "emdash_content_id": "01M1CVRVRRKJQ17CCMQ5WPT2KA",
+        "emdash_media_id": "01M1CVRSTCY8DYA47Z62X5RPBB",
+        "r2_object_key": "01M1CVRSAS0KD9V5ZFGDE59FAV.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "7cc74ae67e0d27f1c1c711c860dcdd68369c3f715805ab2f0e0bb91e047f2c78",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:32:01+00:00",
+        "public_asset": {
+          "sha256": "7cc74ae67e0d27f1c1c711c860dcdd68369c3f715805ab2f0e0bb91e047f2c78",
+          "bytes": 98794,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:32:01+00:00"
+        }
       }
     },
     {
@@ -140,7 +161,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-p3DhrHW",
         "filename": "2668019340.jpg",
         "format": "JPG",
-        "archived_md5": "669936a68237654f20ea5fa87df9d064"
+        "archived_md5": "669936a68237654f20ea5fa87df9d064",
+        "collected": false
       },
       "display": {
         "title": "鮫洲駅",
@@ -167,15 +189,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_gwu5osrv4nkh5aw4ogu2knv6h4",
-        "media_path": "/media/kph_gwu5osrv4nkh5aw4ogu2knv6h4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CHN13XZ1V5HD2HWAQ5EPNB.jpg",
+        "emdash_content_id": "01M1CHN40NWT39HKW9Y3H82KS9",
+        "emdash_media_id": "01M1CHN1PD73085NMW1WDB5YFM",
+        "r2_object_key": "01M1CHN13XZ1V5HD2HWAQ5EPNB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "485e4637d43113cd7c9ccac6e75f15ba59d58600e5758c535a909f01f1f5d09c",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:35:14+00:00",
+        "public_asset": {
+          "sha256": "485e4637d43113cd7c9ccac6e75f15ba59d58600e5758c535a909f01f1f5d09c",
+          "bytes": 805639,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:35:14+00:00"
+        }
       }
     },
     {
@@ -188,7 +219,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-ch5TZVX",
         "filename": "2831178789.jpg",
         "format": "JPG",
-        "archived_md5": "3ac06d74d334aadce00a55ed5117a9e9"
+        "archived_md5": "3ac06d74d334aadce00a55ed5117a9e9",
+        "collected": false
       },
       "display": {
         "title": "武蔵中原駅",
@@ -215,15 +247,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_mfqmlpipkhtd4t3febf5tmzoru",
-        "media_path": "/media/kph_mfqmlpipkhtd4t3febf5tmzoru",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CHNDWAM9A7EXWRBXXBG0ZA.jpg",
+        "emdash_content_id": "01M1CHNGMVX74SKW3SW4XY0WXA",
+        "emdash_media_id": "01M1CHNE6FGN6TSAKPVES7MC17",
+        "r2_object_key": "01M1CHNDWAM9A7EXWRBXXBG0ZA.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b05390b303fef4103a1c932a9f15a8cbbdb6011bcd4b7353301b285019290de2",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:35:27+00:00",
+        "public_asset": {
+          "sha256": "b05390b303fef4103a1c932a9f15a8cbbdb6011bcd4b7353301b285019290de2",
+          "bytes": 127155,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:35:27+00:00"
+        }
       }
     },
     {
@@ -236,7 +277,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-RHvPLCP",
         "filename": "2831178683.jpg",
         "format": "JPG",
-        "archived_md5": "9de72b90b50a1702a0217631ca11e30b"
+        "archived_md5": "9de72b90b50a1702a0217631ca11e30b",
+        "collected": false
       },
       "display": {
         "title": "平和台駅",
@@ -263,15 +305,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_66ov52eg2oi5p7md3kwdqfi2aa",
-        "media_path": "/media/kph_66ov52eg2oi5p7md3kwdqfi2aa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CVS3P47H7RED352V4M73Y8.jpg",
+        "emdash_content_id": "01M1CVS65TQSW34ZDDH2J99QGM",
+        "emdash_media_id": "01M1CVS3YK134RFPQT15WC01DH",
+        "r2_object_key": "01M1CVS3P47H7RED352V4M73Y8.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "eac729f65782e0eceb3dd5915256b597ba4573e9a2c695b2f2074ee713743acd",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:32:11+00:00",
+        "public_asset": {
+          "sha256": "eac729f65782e0eceb3dd5915256b597ba4573e9a2c695b2f2074ee713743acd",
+          "bytes": 84867,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:32:11+00:00"
+        }
       }
     },
     {
@@ -284,7 +335,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-2nmhphf",
         "filename": "2832012774.jpg",
         "format": "JPG",
-        "archived_md5": "0f781596489e69a8e56996af076bad4d"
+        "archived_md5": "0f781596489e69a8e56996af076bad4d",
+        "collected": false
       },
       "display": {
         "title": "上野駅",
@@ -311,15 +363,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_f745iiy3uytodvis62vvhnoi5m",
-        "media_path": "/media/kph_f745iiy3uytodvis62vvhnoi5m",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CHNVYC03G1EMX267X033P0.jpg",
+        "emdash_content_id": "01M1CHNZ2GXEHEV69GYB6Q0NSA",
+        "emdash_media_id": "01M1CHNW7N35QW3GYYXFDE1D0K",
+        "r2_object_key": "01M1CHNVYC03G1EMX267X033P0.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "504bc610c0d8a2b20bd19b827a5edf0e930f369bb5c7d204a5219d0329170804",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:35:41+00:00",
+        "public_asset": {
+          "sha256": "504bc610c0d8a2b20bd19b827a5edf0e930f369bb5c7d204a5219d0329170804",
+          "bytes": 109986,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:35:41+00:00"
+        }
       }
     },
     {
@@ -332,7 +393,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-nfbTJcb",
         "filename": "2832012440.jpg",
         "format": "JPG",
-        "archived_md5": "402746df0fc53af9c50f83461e8e8d28"
+        "archived_md5": "402746df0fc53af9c50f83461e8e8d28",
+        "collected": false
       },
       "display": {
         "title": "西巣鴨駅",
@@ -359,15 +421,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_dm2k5pji2sz7aztrerxk5gusz4",
-        "media_path": "/media/kph_dm2k5pji2sz7aztrerxk5gusz4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CWNMRKP8GH4EXA0G4ZAM4K.jpg",
+        "emdash_content_id": "01M1CWNQ61PSQDSFK104RJQA48",
+        "emdash_media_id": "01M1CWNN2CVGP80DSDPQBQSMSE",
+        "r2_object_key": "01M1CWNMRKP8GH4EXA0G4ZAM4K.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9c701ad9e261c2553973526c01e562c45cbe91a7b10937d859a438ecfe6424df",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:47:46+00:00",
+        "public_asset": {
+          "sha256": "9c701ad9e261c2553973526c01e562c45cbe91a7b10937d859a438ecfe6424df",
+          "bytes": 146551,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:47:46+00:00"
+        }
       }
     },
     {
@@ -380,7 +451,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-P9Xd9wz",
         "filename": "52466260619.jpg",
         "format": "JPG",
-        "archived_md5": "8f2fa0b56c3537da56b866e372b876eb"
+        "archived_md5": "8f2fa0b56c3537da56b866e372b876eb",
+        "collected": false
       },
       "display": {
         "title": "板橋本町駅",
@@ -407,15 +479,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_5kr3skhnxa46isros45iikkc2u",
-        "media_path": "/media/kph_5kr3skhnxa46isros45iikkc2u",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CW1BA5Z12C7F963GQPZ4TP.jpg",
+        "emdash_content_id": "01M1CW1EFYPHRB10HNGMVZDBH4",
+        "emdash_media_id": "01M1CW1BW5642GD1BAYS0KQH9X",
+        "r2_object_key": "01M1CW1BA5Z12C7F963GQPZ4TP.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "a118051b057ebc2eb0c622d11a3df34ecedd8bb45abc4b4c410d9810a5a89fce",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:36:43+00:00",
+        "public_asset": {
+          "sha256": "a118051b057ebc2eb0c622d11a3df34ecedd8bb45abc4b4c410d9810a5a89fce",
+          "bytes": 166577,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:36:43+00:00"
+        }
       }
     },
     {
@@ -428,7 +509,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-DdshWCp",
         "filename": "PXL_20201110_002545355.MP.jpg",
         "format": "JPG",
-        "archived_md5": "11f97c1568df476fa923fa84824ef1b5"
+        "archived_md5": "11f97c1568df476fa923fa84824ef1b5",
+        "collected": true
       },
       "display": {
         "title": "",
@@ -455,15 +537,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_6jzffzwdyyrph2jbgbnaneoozq",
-        "media_path": "/media/kph_6jzffzwdyyrph2jbgbnaneoozq",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CHZGDFYE6DB6RSG705MDF5.jpg",
+        "emdash_content_id": "01M1CHZKARJHJGCMHP27JGXF7Z",
+        "emdash_media_id": "01M1CHZGTW19JYQ8SQ55N84JNS",
+        "r2_object_key": "01M1CHZGDFYE6DB6RSG705MDF5.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "981f72a7edc96e966fe77b7dc72bdf06b38b02e57b6086a6a30d087db4f41103",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:40:57+00:00",
+        "public_asset": {
+          "sha256": "981f72a7edc96e966fe77b7dc72bdf06b38b02e57b6086a6a30d087db4f41103",
+          "bytes": 2843280,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:40:57+00:00"
+        }
       }
     },
     {
@@ -476,7 +567,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-HCNsTnG",
         "filename": "PXL_20201110_014153408.MP.jpg",
         "format": "JPG",
-        "archived_md5": "b8d12930aaea33b876733ae17d423cf9"
+        "archived_md5": "b8d12930aaea33b876733ae17d423cf9",
+        "collected": true
       },
       "display": {
         "title": "",
@@ -503,15 +595,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ylnpajihzfo7zm6hyzkzxg33uu",
-        "media_path": "/media/kph_ylnpajihzfo7zm6hyzkzxg33uu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CJ1NQE4FW0V2VQHBFFJ3WY.jpg",
+        "emdash_content_id": "01M1CJ1RJS4HQ0K65WPJ5MG34B",
+        "emdash_media_id": "01M1CJ1P0GXA1WAA90HK6M9VM6",
+        "r2_object_key": "01M1CJ1NQE4FW0V2VQHBFFJ3WY.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "ddb970de2314993be6bfc93a051a9bc88947dd4232582d0d1375a6599a0bcdc4",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:42:08+00:00",
+        "public_asset": {
+          "sha256": "ddb970de2314993be6bfc93a051a9bc88947dd4232582d0d1375a6599a0bcdc4",
+          "bytes": 1603708,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:42:08+00:00"
+        }
       }
     },
     {
@@ -524,7 +625,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-xkDHSWh",
         "filename": "52464032213.jpg",
         "format": "JPG",
-        "archived_md5": "628d980d518475c9ef5e4e00909a800a"
+        "archived_md5": "628d980d518475c9ef5e4e00909a800a",
+        "collected": false
       },
       "display": {
         "title": "新大久保駅",
@@ -551,15 +653,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_n5x3jhfqd5od4a4ascsjb6wsqi",
-        "media_path": "/media/kph_n5x3jhfqd5od4a4ascsjb6wsqi",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CJ3TWR6SFHBZKHXTTFJDDQ.jpg",
+        "emdash_content_id": "01M1CJ3XKRZBTTC7GP7YY88S4N",
+        "emdash_media_id": "01M1CJ3VCAVDYGB85JE3VP9DKC",
+        "r2_object_key": "01M1CJ3TWR6SFHBZKHXTTFJDDQ.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1fa9c6f0c015d2ed40e3e0a80f313565d178ed8bbcd364bcf156f412fe699ab0",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:43:18+00:00",
+        "public_asset": {
+          "sha256": "1fa9c6f0c015d2ed40e3e0a80f313565d178ed8bbcd364bcf156f412fe699ab0",
+          "bytes": 1874109,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:43:18+00:00"
+        }
       }
     },
     {
@@ -572,7 +683,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-vNhWF3Z",
         "filename": "PXL_20220116_103537070.MP.jpg",
         "format": "JPG",
-        "archived_md5": "c02c672fb0e90031ce51edaa196e031e"
+        "archived_md5": "c02c672fb0e90031ce51edaa196e031e",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -599,15 +711,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_2tylqheig7geuy5ws7ojh7cyw4",
-        "media_path": "/media/kph_2tylqheig7geuy5ws7ojh7cyw4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CJ5ZBARD25NDMMBGP05ZA5.jpg",
+        "emdash_content_id": "01M1CJ62K38JHMH5Z9WGT5AJFR",
+        "emdash_media_id": "01M1CJ60CFZ07Z1T1F5W40ZKZB",
+        "r2_object_key": "01M1CJ5ZBARD25NDMMBGP05ZA5.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "78f57d297d46ef114dc75b43fb65e0e181c61394fa58486c148274e3c7ea56cf",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:44:29+00:00",
+        "public_asset": {
+          "sha256": "78f57d297d46ef114dc75b43fb65e0e181c61394fa58486c148274e3c7ea56cf",
+          "bytes": 5084352,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:44:29+00:00"
+        }
       }
     },
     {
@@ -620,7 +741,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-qL47N8H",
         "filename": "PXL_20221025_002436495.jpg",
         "format": "JPG",
-        "archived_md5": "2b7567856d81a27cf61d0a1b703dfe25"
+        "archived_md5": "2b7567856d81a27cf61d0a1b703dfe25",
+        "collected": false
       },
       "display": {
         "title": "大井町駅",
@@ -647,15 +769,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_3b2ermd57psojt2k2rwpw6phay",
-        "media_path": "/media/kph_3b2ermd57psojt2k2rwpw6phay",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CW1Q45KRAS3945KZ3RYSDB.jpg",
+        "emdash_content_id": "01M1CW1SB6H2MGCVJW3BA8HBY9",
+        "emdash_media_id": "01M1CW1QJ7W53KXB6X68FVHVHC",
+        "r2_object_key": "01M1CW1Q45KRAS3945KZ3RYSDB.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "d9cd78c19084bb4c7073735f5f326b8826174da90b610efff48338bdd3c4c2db",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:36:54+00:00",
+        "public_asset": {
+          "sha256": "d9cd78c19084bb4c7073735f5f326b8826174da90b610efff48338bdd3c4c2db",
+          "bytes": 1690878,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:36:54+00:00"
+        }
       }
     },
     {
@@ -668,7 +799,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-JqR6rqG",
         "filename": "PXL_20221102_071604852.MP.jpg",
         "format": "JPG",
-        "archived_md5": "e3bbcaedf65e2f3f7850e1d1eb1f2404"
+        "archived_md5": "e3bbcaedf65e2f3f7850e1d1eb1f2404",
+        "collected": false
       },
       "display": {
         "title": "京都駅",
@@ -695,15 +827,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vp65yaemzlnayrw5fmkyxfiqpy",
-        "media_path": "/media/kph_vp65yaemzlnayrw5fmkyxfiqpy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CJ7BY73JS77V2D1JB8T1E0.jpg",
+        "emdash_content_id": "01M1CJ7EJNB6F606WMMY284DR4",
+        "emdash_media_id": "01M1CJ7CEQS3KN7D9M9S9TPTJH",
+        "r2_object_key": "01M1CJ7BY73JS77V2D1JB8T1E0.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "eb40dde9d41797007aba3237ddd923c5c90f6a3e4690b7326de82ea4c1b3f02b",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:45:14+00:00",
+        "public_asset": {
+          "sha256": "eb40dde9d41797007aba3237ddd923c5c90f6a3e4690b7326de82ea4c1b3f02b",
+          "bytes": 6578175,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:45:14+00:00"
+        }
       }
     },
     {
@@ -716,7 +857,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-ZsmZHBr",
         "filename": "PXL_20221107_103203873.MP.jpg",
         "format": "JPG",
-        "archived_md5": "8c5cbef91a9fd74a9321f92bd24904d2"
+        "archived_md5": "8c5cbef91a9fd74a9321f92bd24904d2",
+        "collected": false
       },
       "display": {
         "title": "恵比寿駅",
@@ -743,15 +885,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_55opuptbpx3yddsuplux5qzjbu",
-        "media_path": "/media/kph_55opuptbpx3yddsuplux5qzjbu",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CW220DNDQEKMVV48CF7903.jpg",
+        "emdash_content_id": "01M1CW24TDE4DM5ACG6W5A6NMM",
+        "emdash_media_id": "01M1CW22EARAKYM0SWRECKZQTP",
+        "r2_object_key": "01M1CW220DNDQEKMVV48CF7903.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "2228561463a3df362be7d9d36e69725d4c525686c4b0ce5699e556c30a94665e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:37:06+00:00",
+        "public_asset": {
+          "sha256": "2228561463a3df362be7d9d36e69725d4c525686c4b0ce5699e556c30a94665e",
+          "bytes": 6718571,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:37:06+00:00"
+        }
       }
     },
     {
@@ -764,7 +915,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-MGTbxdf",
         "filename": "PXL_20221108_005108778.jpg",
         "format": "JPG",
-        "archived_md5": "9468db5eb268c5e10a9c11a84639088d"
+        "archived_md5": "9468db5eb268c5e10a9c11a84639088d",
+        "collected": false
       },
       "display": {
         "title": "田町駅",
@@ -791,15 +943,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_vgpgrjfykjh2gigzsn3wpis62q",
-        "media_path": "/media/kph_vgpgrjfykjh2gigzsn3wpis62q",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CW2EPSC5YQBKD5CZ052GQC.jpg",
+        "emdash_content_id": "01M1CW2GZ22MSXN0R6HFFX7Z9C",
+        "emdash_media_id": "01M1CW2F2R4NS4KA60NQ2EYXRS",
+        "r2_object_key": "01M1CW2EPSC5YQBKD5CZ052GQC.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "fb715cbf84d994b6d09eace11f876bf58caaef7d9755140c3571cc5adad81001",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:37:17+00:00",
+        "public_asset": {
+          "sha256": "fb715cbf84d994b6d09eace11f876bf58caaef7d9755140c3571cc5adad81001",
+          "bytes": 3136256,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:37:17+00:00"
+        }
       }
     },
     {
@@ -812,7 +973,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-kbS9Cxk",
         "filename": "PXL_20221115_004151921.jpg",
         "format": "JPG",
-        "archived_md5": "4f61e62bcdcc2c3438eac0ec404d1641"
+        "archived_md5": "4f61e62bcdcc2c3438eac0ec404d1641",
+        "collected": false
       },
       "display": {
         "title": "下赤塚駅",
@@ -839,15 +1001,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_ryygzbzlkjfvakjfu34t3sb6z4",
-        "media_path": "/media/kph_ryygzbzlkjfvakjfu34t3sb6z4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CW2T61XE90PKZKCRSV4J3N.jpg",
+        "emdash_content_id": "01M1CW2WFM8VVF4E13QGFZGX68",
+        "emdash_media_id": "01M1CW2TKXNA264WM2D1FSVNBV",
+        "r2_object_key": "01M1CW2T61XE90PKZKCRSV4J3N.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "c8888d2597358d5bc2f9886853c063acb51727f33bd5566619e72ccdf3c17ffe",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:37:30+00:00",
+        "public_asset": {
+          "sha256": "c8888d2597358d5bc2f9886853c063acb51727f33bd5566619e72ccdf3c17ffe",
+          "bytes": 4494404,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:37:30+00:00"
+        }
       }
     },
     {
@@ -860,7 +1031,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-2JKtmt4",
         "filename": "PXL_20221115_032132446.jpg",
         "format": "JPG",
-        "archived_md5": "9f00160426b5f2e35f7e1dc4f24a2bad"
+        "archived_md5": "9f00160426b5f2e35f7e1dc4f24a2bad",
+        "collected": false
       },
       "display": {
         "title": "高島平駅",
@@ -887,15 +1059,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_g2qzdh5hx6hti4xc7tdncz75ny",
-        "media_path": "/media/kph_g2qzdh5hx6hti4xc7tdncz75ny",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CWWZPP81BTBCYFJ9X7XXYF.jpg",
+        "emdash_content_id": "01M1CJ9T901T9VDX9DK8VJ56JS",
+        "emdash_media_id": "01M1CWX044FTJSJRHM8M5V87H5",
+        "r2_object_key": "01M1CWWZPP81BTBCYFJ9X7XXYF.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1183f59c024a87737cf563bd019eb40d8b0ddc31ba943cf7b9ce1ef57c3f7cf9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:51:47+00:00",
+        "public_asset": {
+          "sha256": "1183f59c024a87737cf563bd019eb40d8b0ddc31ba943cf7b9ce1ef57c3f7cf9",
+          "bytes": 3706013,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:51:47+00:00"
+        }
       }
     },
     {
@@ -908,7 +1089,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-Dbhjr4S",
         "filename": "PXL_20221127_053008216.jpg",
         "format": "JPG",
-        "archived_md5": "d71a88199e5ff7f86fe96cec7cca99d0"
+        "archived_md5": "d71a88199e5ff7f86fe96cec7cca99d0",
+        "collected": false
       },
       "display": {
         "title": "東所沢駅",
@@ -935,15 +1117,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_2pisrpzkm24jvw6jvuzavjo5a4",
-        "media_path": "/media/kph_2pisrpzkm24jvw6jvuzavjo5a4",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CWZ3Q3FE33GE8YEJM0WSCK.jpg",
+        "emdash_content_id": "01M1CJBSPSBKPQYT9J0FVRK85V",
+        "emdash_media_id": "01M1CWZ41MWHVEWARY28GZQKTW",
+        "r2_object_key": "01M1CWZ3Q3FE33GE8YEJM0WSCK.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "b75ee0f970990f76e786d349bc17e724bdfa6ca24955765b64b8f7ae5b363c61",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:52:57+00:00",
+        "public_asset": {
+          "sha256": "b75ee0f970990f76e786d349bc17e724bdfa6ca24955765b64b8f7ae5b363c61",
+          "bytes": 3876183,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:52:57+00:00"
+        }
       }
     },
     {
@@ -956,7 +1147,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-T5ts4x3",
         "filename": "PXL_20221204_052341872.jpg",
         "format": "JPG",
-        "archived_md5": "2ab468fa989574930101d454a8598560"
+        "archived_md5": "2ab468fa989574930101d454a8598560",
+        "collected": false
       },
       "display": {
         "title": "上野駅",
@@ -983,15 +1175,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_zgqnqn2eollzewh3a3eynr7wqy",
-        "media_path": "/media/kph_zgqnqn2eollzewh3a3eynr7wqy",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CJBXY2XVSZE79XBZHF3B5V.jpg",
+        "emdash_content_id": "01M1CJC0D772GQPPYY0GBZR4HW",
+        "emdash_media_id": "01M1CJBYBNXRYASRJ1BJ3ETJEB",
+        "r2_object_key": "01M1CJBXY2XVSZE79XBZHF3B5V.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "6ef3e25e7424195188b08a214093dfd8dcbceb42bc56fac6ef797219bfd38449",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:47:43+00:00",
+        "public_asset": {
+          "sha256": "6ef3e25e7424195188b08a214093dfd8dcbceb42bc56fac6ef797219bfd38449",
+          "bytes": 3367531,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:47:43+00:00"
+        }
       }
     },
     {
@@ -1004,7 +1205,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-3hpx3SB",
         "filename": "PXL_20221204_071121273.jpg",
         "format": "JPG",
-        "archived_md5": "2b5277a1b6f284ec896850bcc202de6b"
+        "archived_md5": "2b5277a1b6f284ec896850bcc202de6b",
+        "collected": false
       },
       "display": {
         "title": "上野広小路駅",
@@ -1031,15 +1233,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_br7pxzu63mdfut66wcy42tmtom",
-        "media_path": "/media/kph_br7pxzu63mdfut66wcy42tmtom",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CW5BA6X13ZRXVVV01SNX7K.jpg",
+        "emdash_content_id": "01M1CW5DMZM4DJFCT56X843DQV",
+        "emdash_media_id": "01M1CW5BN870TQDF3TWX7HX6Y5",
+        "r2_object_key": "01M1CW5BA6X13ZRXVVV01SNX7K.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "1d62fa8c12be4ca48579f63492f97d86b448980adf33514abe20380c3e2f408f",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T21:38:53+00:00",
+        "public_asset": {
+          "sha256": "1d62fa8c12be4ca48579f63492f97d86b448980adf33514abe20380c3e2f408f",
+          "bytes": 3270731,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T21:38:53+00:00"
+        }
       }
     },
     {
@@ -1052,7 +1263,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-WHTkF9Q",
         "filename": "PXL_20221210_001726186.MP.jpg",
         "format": "JPG",
-        "archived_md5": "a71ca3209d8c6164d09e9b3a9fc7a088"
+        "archived_md5": "a71ca3209d8c6164d09e9b3a9fc7a088",
+        "collected": false
       },
       "display": {
         "title": "光が丘駅",
@@ -1079,15 +1291,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_lwuhwkg3ajcvuwnvhdf7t52f64",
-        "media_path": "/media/kph_lwuhwkg3ajcvuwnvhdf7t52f64",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CJE3Y435EP05B4DHJ4Q3XC.jpg",
+        "emdash_content_id": "01M1CJE6HN3MJ49EE42M4NV1N4",
+        "emdash_media_id": "01M1CJE4A92G7J32VVFS00H000",
+        "r2_object_key": "01M1CJE3Y435EP05B4DHJ4Q3XC.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "9e417b7f0dbff9259b09d53f041ccd48dbe2c2e51a8734d85f430335957273a9",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:48:55+00:00",
+        "public_asset": {
+          "sha256": "9e417b7f0dbff9259b09d53f041ccd48dbe2c2e51a8734d85f430335957273a9",
+          "bytes": 6259347,
+          "gps_present": true,
+          "gps_preserved": true,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:48:55+00:00"
+        }
       }
     },
     {
@@ -1100,7 +1321,8 @@
         "web_uri": "https://kanolog.smugmug.com/Stations/i-QmR9rWf",
         "filename": "PXL_20221210_072441098.jpg",
         "format": "JPG",
-        "archived_md5": "dab7d051841db62cf433bd252782d0c5"
+        "archived_md5": "dab7d051841db62cf433bd252782d0c5",
+        "collected": false
       },
       "display": {
         "title": "",
@@ -1127,15 +1349,24 @@
       },
       "destination": {
         "photo_path": "/photos/kph_nfg2rc7eowah6jkuwkc3lvtefa",
-        "media_path": "/media/kph_nfg2rc7eowah6jkuwkc3lvtefa",
-        "emdash_content_id": null,
-        "emdash_media_id": null,
-        "r2_object_key": null
+        "media_path": "/_emdash/api/media/file/01M1CJEEMB6S6W5JT80QE0NSB0.jpg",
+        "emdash_content_id": "01M1CJEH901B3JY2GYG84V3V2S",
+        "emdash_media_id": "01M1CJEF9HTTTWRQ0HWHXX9ZYV",
+        "r2_object_key": "01M1CJEEMB6S6W5JT80QE0NSB0.jpg"
       },
       "verification": {
-        "source_md5_verified": false,
-        "sha256": null,
-        "r2_roundtrip_verified": false
+        "source_md5_verified": true,
+        "sha256": "f6d3c52d39468d68bc22cc7e004108607f846a01b98e870521fa96ed5d2b3e4e",
+        "r2_roundtrip_verified": true,
+        "verified_at": "2026-08-31T18:49:06+00:00",
+        "public_asset": {
+          "sha256": "f6d3c52d39468d68bc22cc7e004108607f846a01b98e870521fa96ed5d2b3e4e",
+          "bytes": 2233813,
+          "gps_present": false,
+          "gps_preserved": false,
+          "metadata_policy": "Source EXIF retained; coordinates stored outside Git",
+          "recorded_at": "2026-08-31T18:49:06+00:00"
+        }
       }
     }
   ]
