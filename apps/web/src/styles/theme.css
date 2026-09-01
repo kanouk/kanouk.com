@@ -567,8 +567,11 @@ main:focus { outline: none; }
 	padding-inline: var(--gutter);
 	border-bottom: 1px solid var(--rule);
 }
-.photo-brand { display: inline-flex; align-items: baseline; gap: 0.55rem; color: var(--ink); text-decoration: none; }
-.photo-brand span { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.025em; }
+.photo-brand { display: inline-flex; align-items: center; gap: 0.65rem; color: var(--ink); text-decoration: none; }
+.photo-brand__mark { display: grid; width: 2rem; height: 2rem; border: 1px solid var(--rule); color: var(--accent-strong); place-items: center; transition: border-color 180ms ease, transform 180ms ease; }
+.photo-brand:hover .photo-brand__mark { border-color: var(--accent); transform: rotate(12deg); }
+.photo-brand__copy { display: inline-flex; align-items: baseline; gap: 0.55rem; }
+.photo-brand__copy > span { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.025em; }
 .photo-brand small { color: var(--ink-muted); font-family: var(--font-code); font-size: 0.63rem; letter-spacing: 0.11em; text-transform: uppercase; }
 .site-switcher { display: flex; gap: var(--space-5); }
 .site-switcher a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--ink-soft); font-size: var(--step--1); text-decoration: none; }
@@ -634,7 +637,7 @@ main:focus { outline: none; }
 .photo-card img { width: 100%; height: auto; background: var(--paper-muted); }
 .photo-card img[data-low-resolution="true"] { width: auto; max-width: 100%; margin-inline: auto; }
 .photo-card > span:not(.video-badge) { display: block; margin-top: var(--space-3); padding-top: var(--space-2); border-top: 1px solid var(--rule-soft); color: var(--ink-soft); font-size: 0.72rem; }
-.video-badge { position: absolute; top: var(--space-3); right: var(--space-3); padding: 0.25rem 0.5rem; background: rgb(10 12 9 / 82%); color: #fff; font-size: 0.68rem; }
+.video-badge { position: absolute; top: var(--space-3); right: var(--space-3); display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.55rem; background: rgb(10 12 9 / 82%); color: #fff; font-size: 0.68rem; }
 
 .photo-page { padding-block: clamp(2.5rem, 6vw, 5rem); }
 .photo-page figure { margin-top: clamp(2rem, 5vw, 4rem); }

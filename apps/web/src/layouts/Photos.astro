@@ -1,7 +1,7 @@
 ---
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
-import { Search } from "lucide-astro";
+import { Aperture, Search } from "lucide-astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import "../styles/tokens.css";
@@ -47,7 +47,12 @@ const pageCtx = createPublicPageContext({
 		<EmDashBodyStart page={pageCtx} />
 		<a class="skip-link" href="#photo-main">本文へ移動</a>
 		<header class="photo-header">
-			<a class="photo-brand" href="/albums"><span>kanouk.com</span><small>Photos</small></a>
+			<a class="photo-brand" href="/albums">
+				<span class="photo-brand__mark" aria-hidden="true">
+					<Aperture size={17} strokeWidth={1.6} />
+				</span>
+				<span class="photo-brand__copy"><span>kanouk.com</span><small>Photos</small></span>
+			</a>
 			<nav class="site-switcher" aria-label="サイト切り替え">
 				<a aria-current="page" href="/albums">写真</a>
 				<a class="photo-search-link" href={searchUrl} aria-label="写真を検索">

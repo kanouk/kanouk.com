@@ -1,6 +1,6 @@
 ---
 import { getEmDashCollection, getEmDashEntry } from "emdash";
-import { ArrowLeft, Images } from "lucide-astro";
+import { ArrowLeft, CirclePlay, Images } from "lucide-astro";
 import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
@@ -66,7 +66,12 @@ const locationPhotos = photos.flatMap((photo) => {
 			{photos.map((photo) => (
 				<a class="photo-card" href={`/photos/${photo.id}`} aria-label={photo.data.alt || photo.data.title}>
 					<YohakuImage image={photo.data.image} />
-					{photo.data.kind === "video" && <span class="video-badge">動画</span>}
+					{photo.data.kind === "video" && (
+						<span class="video-badge">
+							<CirclePlay size={14} strokeWidth={1.8} aria-hidden="true" />
+							<span>動画</span>
+						</span>
+					)}
 					{photo.data.title && <span>{photo.data.title}</span>}
 				</a>
 			))}
