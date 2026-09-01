@@ -39,6 +39,26 @@ function imageDisplayWidth(value, intrinsicWidth) {
 	return undefined;
 }
 
+const WORDPRESS_IMAGE_SIZE_WIDTHS = {
+	thumbnail: 150,
+	medium: 300,
+	medium_large: 768,
+	large: 1024,
+};
+
+function wordpressImageSizeWidth(block, classes, sourceUrl) {
+	const sizeSlug = String(
+		block.attrs.sizeSlug || classes.match(/\bsize-([a-z0-9_-]+)\b/i)?.[1] || "",
+	).toLowerCase();
+	if (WORDPRESS_IMAGE_SIZE_WIDTHS[sizeSlug]) return WORDPRESS_IMAGE_SIZE_WIDTHS[sizeSlug];
+
+	// Classic and migrated blocks sometimes omit sizeSlug while retaining a
+	// WordPress-generated derivative URL such as photo-300x225.jpg. EmDash stores
+	// the original asset, so keep the derivative's intended presentation width.
+	const derivativeWidth = String(sourceUrl || "").match(/-(\d{2,5})x\d{2,5}(?=\.[a-z0-9]+(?:[?#]|$))/i)?.[1];
+	return derivativeWidth ? Number(derivativeWidth) : undefined;
+}
+
 function imageNode(block, tools) {
 	const html = String(block.innerHTML || "");
 	const imageHtml = html.match(/<img\b[^>]*>/i)?.[0] || "";
@@ -68,7 +88,8 @@ function imageNode(block, tools) {
 		caption: matchClassText(html, "wp-element-caption") || safeText(html.match(/<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/i)?.[1] || ""),
 		width,
 		height,
-		displayWidth: imageDisplayWidth(block.attrs.width || styleWidth, width),
+		displayWidth: imageDisplayWidth(block.attrs.width || styleWidth, width)
+			?? wordpressImageSizeWidth(block, classes, sourceUrl),
 		alignment,
 		visualStyle,
 	};

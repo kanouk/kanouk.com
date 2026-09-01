@@ -67,6 +67,20 @@ test("preserves WordPress image size, alignment, caption, and photo-frame meanin
 	});
 });
 
+test("preserves WordPress preset image size when the block omits a numeric width", () => {
+	const post = {
+		id: 13,
+		content: `<!-- wp:image {"id":7817,"sizeSlug":"medium","linkDestination":"none","className":"is-style-photo_frame"} -->
+			<figure class="wp-block-image size-medium is-style-photo_frame">
+				<img src="https://example.test/photo-300x225.jpg" alt="" class="wp-image-7817" />
+				<figcaption class="wp-element-caption">特大吉</figcaption>
+			</figure><!-- /wp:image -->`,
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0].displayWidth, 300);
+	assert.equal(blocks[0].visualStyle, "photo-frame");
+});
+
 test("converts classic artwork metadata tables to portable tables", () => {
 	const post = {
 		id: 2,
