@@ -111,10 +111,19 @@ function stableJson(value) {
 	return JSON.stringify(value);
 }
 
+function legacyStableJson(value) {
+	if (Array.isArray(value)) return `[${value.map(legacyStableJson).join(",")}]`;
+	if (value && typeof value === "object") {
+		return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${legacyStableJson(value[key])}`).join(",")}}`;
+	}
+	return JSON.stringify(value);
+}
+
 export function storedMigrationDataMatches(item, desired) {
 	const data = item?.data;
 	if (!data) return false;
-	return data.source_metadata?.migration_fingerprint === desired.fingerprint
+	const storedFingerprint = data.source_metadata?.migration_fingerprint;
+	return (storedFingerprint === desired.fingerprint || storedFingerprint === desired.legacyFingerprint)
 		&& data.title === desired.data.title
 		&& data.source_url === desired.data.source_url
 		&& data.source_id === desired.data.source_id
@@ -443,8 +452,9 @@ function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, qu
 		},
 	};
 	const fingerprint = sha256(stableJson(desired));
+	const legacyFingerprint = sha256(legacyStableJson(desired));
 	desired.data.source_metadata = { ...baseMetadata, migration_fingerprint: fingerprint };
-	return { ...desired, fingerprint, oldUrl, targetUrl };
+	return { ...desired, fingerprint, legacyFingerprint, oldUrl, targetUrl };
 }
 
 class ApiClient {

@@ -93,6 +93,9 @@ test("stored migration comparison follows JSON transport semantics", () => {
 	};
 
 	assert.equal(storedMigrationDataMatches(stored, desired), true);
+	stored.data.source_metadata.migration_fingerprint = "legacy-fingerprint";
+	desired.legacyFingerprint = "legacy-fingerprint";
+	assert.equal(storedMigrationDataMatches(stored, desired), true);
 });
 
 test("a matching published draft is not treated as live convergence", () => {
