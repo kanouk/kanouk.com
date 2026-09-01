@@ -16,6 +16,8 @@ python3 scripts/migration/verify_public_site.py
 
 `verify_public_site.py` は次をread-onlyで検査します。
 
+同じテスト列はGitHub Actionsの`Verify Yohaku`でも直列実行します。認証情報の保存先を増やさないため、CIはbuildとstaging readbackまでに限定し、deploy・D1 migration・rollbackはPrivate Vault credentialを使うローカルguard経路のままです。
+
 1. カノログtopが200で読める。
 2. 記事一覧が200で読める。
 3. アルバム一覧が200で読める。
