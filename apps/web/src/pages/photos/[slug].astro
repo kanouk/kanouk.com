@@ -183,25 +183,25 @@ const exifDetails = [
 			</figcaption>
 		</figure>
 		<div class="photo-tools" role="group" aria-label="写真の表示と共有">
-			<button type="button" data-photo-fullscreen>
+			<button type="button" data-photo-fullscreen aria-label="写真を全画面で表示">
 				<Expand size={16} strokeWidth={1.75} aria-hidden="true" />
 				<span>全画面</span>
 			</button>
-			<button type="button" data-photo-share>
+			<button type="button" data-photo-share aria-label="写真を共有">
 				<Share2 size={16} strokeWidth={1.75} aria-hidden="true" />
 				<span>共有</span>
 			</button>
 			{downloadUrl && (
-				<a href={downloadUrl} download>
+				<a href={downloadUrl} download aria-label="写真をダウンロード">
 					<Download size={16} strokeWidth={1.75} aria-hidden="true" />
-					<span>ダウンロード</span>
+					<span>保存</span>
 				</a>
 			)}
 			{slideshowNextUrl && (
-				<button type="button" data-photo-slideshow aria-pressed="false">
+				<button type="button" data-photo-slideshow aria-pressed="false" aria-label="スライドショーを開始">
 					<Play class="photo-tool-play" size={16} strokeWidth={1.75} aria-hidden="true" />
 					<Pause class="photo-tool-pause" size={16} strokeWidth={1.75} aria-hidden="true" />
-					<span data-photo-slideshow-label>スライドショー</span>
+					<span data-photo-slideshow-label>自動再生</span>
 				</button>
 			)}
 			<span class="photo-tool-status" role="status" aria-live="polite" />
@@ -306,7 +306,8 @@ const exifDetails = [
 		if (slideshowTimer) window.clearTimeout(slideshowTimer);
 		slideshowTimer = undefined;
 		slideshowButton?.setAttribute("aria-pressed", "false");
-		if (slideshowLabel) slideshowLabel.textContent = "スライドショー";
+		slideshowButton?.setAttribute("aria-label", "スライドショーを開始");
+		if (slideshowLabel) slideshowLabel.textContent = "自動再生";
 		const current = new URL(window.location.href);
 		current.searchParams.delete("slideshow");
 		window.history.replaceState(null, "", current);
@@ -315,6 +316,7 @@ const exifDetails = [
 	const startSlideshow = () => {
 		if (!slideshowNextUrl) return;
 		slideshowButton?.setAttribute("aria-pressed", "true");
+		slideshowButton?.setAttribute("aria-label", "スライドショーを停止");
 		if (slideshowLabel) slideshowLabel.textContent = "停止";
 		announce("6秒ごとに次の写真へ進みます");
 		slideshowTimer = window.setTimeout(() => navigate(slideshowUrl(slideshowNextUrl)), 6000);
