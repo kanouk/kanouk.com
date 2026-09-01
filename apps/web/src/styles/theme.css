@@ -494,7 +494,8 @@ main:focus { outline: none; }
 }
 .article-lead { grid-column: 1; width: 100%; margin: 0 0 clamp(2.25rem, 5vw, 4rem); }
 .article-hero { grid-column: 1; width: 100%; max-height: 72vh; margin: 0 0 clamp(3rem, 7vw, 5.5rem); overflow: hidden; background: var(--paper-muted); }
-.article-hero img { width: auto; max-width: 100%; max-height: 72vh; margin-inline: auto; object-fit: contain; }
+.article-hero img { width: 100%; height: auto; max-height: 72vh; margin-inline: auto; object-fit: contain; }
+.article-hero img[data-low-resolution="true"] { width: auto; max-width: 100%; }
 .article-grid { display: contents; }
 .article-main { grid-column: 1; }
 .article-sidebar { grid-column: 2; }

@@ -106,6 +106,7 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn(".article-lead { grid-column: 1;", theme)
         self.assertIn(".article-hero { grid-column: 1;", theme)
         self.assertIn(".article-main { grid-column: 1;", theme)
+        self.assertIn(".article-hero img { width: 100%; height: auto;", theme)
 
 
 if __name__ == "__main__":
