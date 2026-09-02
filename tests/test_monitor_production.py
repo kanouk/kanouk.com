@@ -406,13 +406,23 @@ class MonitorProductionTests(unittest.TestCase):
             },
         )
 
-    def test_search_console_snapshot_proves_no_mutation(self) -> None:
+    def test_search_console_snapshot_records_verified_owner_without_token(self) -> None:
         snapshot = module.load_search_console_access_snapshot()
-        self.assertEqual(snapshot["result"], "access_denied")
+        self.assertEqual(snapshot["result"], "verified_owner")
         self.assertEqual(snapshot["target_property"], "sc-domain:kanouk.com")
-        self.assertFalse(snapshot["ownership_verification_performed"])
-        self.assertFalse(snapshot["sitemap_submission_performed"])
-        self.assertFalse(snapshot["mutable_actions_performed"])
+        self.assertEqual(snapshot["account_email"], "kanouk@gmail.com")
+        self.assertTrue(snapshot["ownership_verification_performed"])
+        self.assertEqual(snapshot["ownership_verification_method"], "dns_txt")
+        self.assertTrue(snapshot["sitemap_submission_performed"])
+        self.assertTrue(snapshot["mutable_actions_performed"])
+        self.assertFalse(snapshot["verification_token_recorded"])
+        self.assertEqual(
+            [row["url"] for row in snapshot["submitted_sitemaps"]],
+            [
+                "https://blog.kanouk.com/sitemap.xml",
+                "https://photos.kanouk.com/sitemap.xml",
+            ],
+        )
 
     def test_billing_summary_omits_account_identity(self) -> None:
         report = module.summarize_cloudflare_billing_rows(

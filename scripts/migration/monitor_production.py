@@ -913,8 +913,16 @@ def load_search_console_access_snapshot() -> dict[str, Any]:
         ) from error
     if not isinstance(snapshot, dict):
         raise MonitorError("Search Console access snapshot is invalid")
-    if snapshot.get("mutable_actions_performed") is not False:
-        raise MonitorError("Search Console access snapshot is not read-only")
+    if snapshot.get("result") not in {"access_denied", "verified_owner"}:
+        raise MonitorError("Search Console access snapshot has an unexpected result")
+    if snapshot.get("target_property") != "sc-domain:kanouk.com":
+        raise MonitorError("Search Console access snapshot targets the wrong property")
+    if snapshot.get("account_email") != "kanouk@gmail.com":
+        raise MonitorError("Search Console access snapshot used the wrong account")
+    if snapshot.get("verification_token_recorded") is not False:
+        raise MonitorError(
+            "Search Console access snapshot recorded a verification token"
+        )
     return snapshot
 
 

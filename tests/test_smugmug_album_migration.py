@@ -255,6 +255,36 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertEqual(payload["sort_method"], "position")
         self.assertEqual(payload["sort_direction"], "asc")
 
+    def test_prefers_node_cover_over_highlight_for_album_cover(self) -> None:
+        first = asset()
+        first["source"]["image_key"] = "first"
+        first["destination"] = {"emdash_media_id": "first-media"}
+        first["verification"] = {"r2_roundtrip_verified": True}
+        highlighted = asset()
+        highlighted["id"] = "kph_highlighted"
+        highlighted["source"]["image_key"] = "highlight"
+        highlighted["destination"] = {"emdash_media_id": "highlight-media"}
+        highlighted["verification"] = {"r2_roundtrip_verified": True}
+        node_cover = asset()
+        node_cover["id"] = "kph_node_cover"
+        node_cover["source"]["image_key"] = "node-cover"
+        node_cover["destination"] = {"emdash_media_id": "node-cover-media"}
+        node_cover["verification"] = {"r2_roundtrip_verified": True}
+        manifest = {
+            "album": {
+                "source": {
+                    "cover_image_key": "node-cover",
+                    "node_cover_image_key": "node-cover",
+                    "highlight_image_key": "highlight",
+                    "cover_image_source": "node_cover",
+                }
+            },
+            "assets": [first, highlighted, node_cover],
+        }
+        self.assertEqual(
+            module.preferred_cover_asset(manifest)["id"], "kph_node_cover"
+        )
+
     def test_prefers_smugmug_highlight_for_album_cover(self) -> None:
         first = asset()
         first["source"]["image_key"] = "first"
@@ -272,6 +302,147 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         self.assertEqual(
             module.preferred_cover_asset(manifest)["id"], "kph_highlighted"
         )
+
+    def test_falls_back_to_first_verified_asset_when_no_source_cover(self) -> None:
+        first = asset()
+        first["id"] = "kph_first"
+        first["source"]["image_key"] = "first"
+        first["destination"] = {"emdash_media_id": "first-media"}
+        first["verification"] = {"r2_roundtrip_verified": True}
+        second = asset()
+        second["id"] = "kph_second"
+        second["source"]["image_key"] = "second"
+        second["destination"] = {"emdash_media_id": "second-media"}
+        second["verification"] = {"r2_roundtrip_verified": True}
+        manifest = {"album": {"source": {}}, "assets": [first, second]}
+        self.assertEqual(module.preferred_cover_asset(manifest)["id"], "kph_first")
+
+    def test_ensure_album_cover_updates_published_image_without_media_upload(self) -> None:
+        cover = asset()
+        cover["id"] = "kph_cover"
+        cover["source"]["image_key"] = "node-cover"
+        cover["display"]["alt"] = "Izumo rope"
+        cover["destination"] = {"emdash_media_id": "node-cover-media"}
+        cover["verification"] = {"r2_roundtrip_verified": True}
+        first = asset()
+        first["source"]["image_key"] = "first"
+        first["destination"] = {"emdash_media_id": "first-media"}
+        first["verification"] = {"r2_roundtrip_verified": True}
+        manifest = {
+            "album": {
+                "destination": {"emdash_content_id": "album-id"},
+                "source": {
+                    "cover_image_key": "node-cover",
+                    "node_cover_image_key": "node-cover",
+                },
+            },
+            "assets": [first, cover],
+        }
+        commands: list[list[str]] = []
+
+        def fake_get(collection, identifier, *, env, token, published=False):
+            if published and commands:
+                return {
+                    "data": {"cover_image": {"id": "node-cover-media"}},
+                    "_rev": "rev-published",
+                }
+            return {
+                "data": {"cover_image": {"id": "first-media"}},
+                "_rev": "rev-1",
+            }
+
+        def fake_run(args, env, *, token):
+            commands.append(list(args))
+            return {}
+
+        with (
+            patch.object(module, "get_content_by_identifier", side_effect=fake_get),
+            patch.object(module, "run_emdash", side_effect=fake_run) as run,
+            patch.object(module, "upload_media") as upload,
+        ):
+            changed = module.ensure_album_cover(manifest, env={}, token="token")
+        self.assertTrue(changed)
+        upload.assert_not_called()
+        self.assertEqual(run.call_count, 2)
+        self.assertEqual(commands[0][:3], ["content", "update", "albums"])
+        self.assertEqual(json.loads(commands[0][commands[0].index("--data") + 1]), {
+            "cover_image": {
+                "id": "node-cover-media",
+                "provider": "local",
+                "alt": "Izumo rope",
+            }
+        })
+        self.assertEqual(commands[1], ["content", "publish", "albums", "album-id"])
+
+    def test_ensure_album_cover_publishes_stale_public_cover_without_reupload(self) -> None:
+        cover = asset()
+        cover["source"]["image_key"] = "node-cover"
+        cover["destination"] = {"emdash_media_id": "node-cover-media"}
+        cover["verification"] = {"r2_roundtrip_verified": True}
+        manifest = {
+            "album": {
+                "destination": {"emdash_content_id": "album-id"},
+                "source": {"cover_image_key": "node-cover"},
+            },
+            "assets": [cover],
+        }
+        commands: list[list[str]] = []
+
+        def fake_get(collection, identifier, *, env, token, published=False):
+            if published and not commands:
+                return {
+                    "data": {"cover_image": {"id": "first-media"}},
+                    "_rev": "rev-published",
+                }
+            if published:
+                return {
+                    "data": {"cover_image": {"id": "node-cover-media"}},
+                    "_rev": "rev-published",
+                }
+            return {
+                "data": {"cover_image": {"id": "node-cover-media"}},
+                "_rev": "rev-draft",
+            }
+
+        with (
+            patch.object(module, "get_content_by_identifier", side_effect=fake_get),
+            patch.object(
+                module, "run_emdash", side_effect=lambda args, env, token: commands.append(list(args))
+            ) as run,
+            patch.object(module, "upload_media") as upload,
+        ):
+            changed = module.ensure_album_cover(manifest, env={}, token="token")
+        self.assertTrue(changed)
+        upload.assert_not_called()
+        self.assertEqual(run.call_count, 1)
+        self.assertEqual(commands, [["content", "publish", "albums", "album-id"]])
+        cover = asset()
+        cover["source"]["image_key"] = "node-cover"
+        cover["destination"] = {"emdash_media_id": "node-cover-media"}
+        cover["verification"] = {"r2_roundtrip_verified": True}
+        manifest = {
+            "album": {
+                "destination": {"emdash_content_id": "album-id"},
+                "source": {"cover_image_key": "node-cover"},
+            },
+            "assets": [cover],
+        }
+        with (
+            patch.object(
+                module,
+                "get_content_by_identifier",
+                return_value={
+                    "data": {"cover_image": {"id": "node-cover-media"}},
+                    "_rev": "rev-1",
+                },
+            ),
+            patch.object(module, "run_emdash") as run,
+            patch.object(module, "upload_media") as upload,
+        ):
+            changed = module.ensure_album_cover(manifest, env={}, token="token")
+        self.assertFalse(changed)
+        run.assert_not_called()
+        upload.assert_not_called()
 
     def test_reconcile_existing_image_restores_manifest_destination(self) -> None:
         candidate = asset()

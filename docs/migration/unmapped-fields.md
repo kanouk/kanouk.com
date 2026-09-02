@@ -38,7 +38,7 @@
 - 36アルバムがdownload許可、4アルバムが不許可。新UIもこの設定を尊重する。
 - protected設定は7アルバム／339資産。公開API上の対象2,168件はすべて`CanShare=true`。
 - title 934件、caption 687件、keyword利用2件。コメントは全アルバム合計0件。
-- source highlight imageをカバー選択へ保持し、未取得時だけ決定的fallbackを使う。
+- sourceの一覧タイル用`NodeCoverImage`をカバー選択へ優先し、無ければ`HighlightImage`、未取得時だけ決定的fallbackを使う。
 - 公開JPEGが有効でもsource MD5と一致しない場合は縮小版を採用しない。
 - 40 album、2,168 assetすべてverified。pending 0、重複ID 0、manifest不一致0。
 
@@ -48,7 +48,7 @@
 - `pending_owner_auth` 236件を原本一致へ収束。
 - 12 MP4、poster、Range、mobile表示を確認。
 - metadata backfillを完了し、EXIF／GPS／keywordを保持。
-- source highlight、件数、position、title、caption、日時をmanifestへ保持。
+- source highlight、NodeCover、件数、position、title、caption、日時をmanifestへ保持。
 
 ## EmDash / Yohakuで確認済み
 

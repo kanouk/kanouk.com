@@ -138,9 +138,33 @@ class YohakuDesignContractTests(unittest.TestCase):
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()
         self.assertNotIn('class="article-meta-col"', article)
-        self.assertIn('class="article-tags"', article)
+        self.assertIn('class="article-meta-tags"', article)
         self.assertIn(".article-lead { grid-column: 1;", theme)
         self.assertIn(".article-main { grid-column: 1;", theme)
+
+    def test_home_cards_and_sidebar_share_the_requested_visual_language(self) -> None:
+        home = (WEB_ROOT / "src/pages/index.astro").read_text()
+        card = (WEB_ROOT / "src/components/PostCard.astro").read_text()
+        sidebar = (WEB_ROOT / "src/components/SidebarTaxonomies.astro").read_text()
+        theme = (WEB_ROOT / "src/styles/theme.css").read_text()
+        self.assertNotIn("getPostExcerpt", home)
+        self.assertNotIn("excerpt={", home)
+        self.assertLess(card.index('class="card-media"'), card.index('class="card-body"'))
+        self.assertIn('class="card-categories"', card)
+        self.assertIn('class="card-category"', card)
+        self.assertIn('class="widget__title"', sidebar)
+        self.assertIn("<Folder", sidebar)
+        self.assertIn("<Tags", sidebar)
+        self.assertIn("border-radius: 999px", theme)
+        self.assertIn(".widget-categories > li:last-child { border-bottom: 0; }", theme)
+
+    def test_article_taxonomies_and_age_use_publication_context(self) -> None:
+        article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
+        self.assertIn('getEntryTerms("posts", post.data.id, "category")', article)
+        self.assertIn('getEntryTerms("posts", post.data.id, "tag")', article)
+        self.assertIn('class="card-category"', article)
+        self.assertIn('class="article-meta-tags"', article)
+        self.assertIn("post.data.publishedAt ?? post.data.createdAt", article)
 
     def test_article_detail_uses_requested_content_order(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()

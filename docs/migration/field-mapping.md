@@ -60,7 +60,7 @@ WordPressテーマ名やプラグイン名を新しい名前空間へ残しま�
 | `AlbumKey` | `source_album_key` | source identityとして保持 |
 | `Name` / `Title` | `title` | 表示名を保持 |
 | `Description` | `description` | 値がある場合に保持 |
-| highlight image | `cover_image` | source highlightを優先。未取得時だけ決定的fallback |
+| highlight / node cover image | `cover_image` | 一覧タイルは`NodeCoverImage`を優先。無い場合だけ`HighlightImage`。どちらも無い場合のみ移行済み先頭画像。source image keyはmanifestへ保存し、既存アルバムへ再適用する |
 | first/last capture time | `captured_from` / `captured_to` | verified assetから算出 |
 | `SortMethod` | `sort_method` | 撮影日順または手動positionを保持 |
 | `SortDirection` | `sort_direction` | asc / descを保持 |

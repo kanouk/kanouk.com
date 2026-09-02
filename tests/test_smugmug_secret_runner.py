@@ -70,6 +70,8 @@ class SmugMugCredentialTests(unittest.TestCase):
     def test_only_allows_read_only_scripts(self) -> None:
         command = runner.normalized_command(["audit_smugmug.py", "--help"])
         self.assertEqual(Path(command[1]).name, "audit_smugmug.py")
+        command = runner.normalized_command(["apply_smugmug_album_covers.py", "--help"])
+        self.assertEqual(Path(command[1]).name, "apply_smugmug_album_covers.py")
         with self.assertRaisesRegex(
             runner.SmugMugCredentialError, "allowlisted script"
         ):

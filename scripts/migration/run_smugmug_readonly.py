@@ -16,6 +16,7 @@ DEFAULT_CREDENTIAL_FILE = Path(
 ) / "10_sensitive/api-keys/SmugMug.md"
 SCRIPT_ROOT = Path(__file__).resolve().parent
 ALLOWED_SCRIPTS = {
+    "apply_smugmug_album_covers.py",
     "audit_smugmug.py",
     "backfill_smugmug_metadata.py",
     "build_smugmug_catalog.py",

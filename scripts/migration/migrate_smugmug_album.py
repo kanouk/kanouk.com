@@ -121,22 +121,26 @@ def get_content_by_identifier(
     *,
     env: Mapping[str, str],
     token: str,
+    published: bool = False,
 ) -> dict[str, Any] | None:
     """Read content by id or slug, returning None only for a real 404."""
+    command = [
+        "bunx",
+        "emdash",
+        "content",
+        "get",
+        collection,
+        identifier,
+        "--raw",
+        "--url",
+        EXPECTED_URL,
+        "--json",
+    ]
+    if published:
+        command.append("--published")
     for attempt in range(1, 6):
         result = subprocess.run(
-            [
-                "bunx",
-                "emdash",
-                "content",
-                "get",
-                collection,
-                identifier,
-                "--raw",
-                "--url",
-                EXPECTED_URL,
-                "--json",
-            ],
+            command,
             cwd=WEB_ROOT,
             env=dict(env),
             capture_output=True,
@@ -1133,6 +1137,15 @@ def replace_asset_media(
         destination["poster_r2_object_key"] = poster_media["storageKey"]
 
 
+def preferred_cover_image_key(manifest: Mapping[str, Any]) -> str | None:
+    source = manifest.get("album", {}).get("source", {}) or {}
+    for field in ("cover_image_key", "node_cover_image_key", "highlight_image_key"):
+        value = source.get(field)
+        if isinstance(value, str) and value:
+            return value
+    return None
+
+
 def preferred_cover_asset(manifest: Mapping[str, Any]) -> Mapping[str, Any] | None:
     assets = [
         asset
@@ -1140,21 +1153,31 @@ def preferred_cover_asset(manifest: Mapping[str, Any]) -> Mapping[str, Any] | No
         if asset.get("verification", {}).get("r2_roundtrip_verified")
         and asset.get("destination", {}).get("emdash_media_id")
     ]
-    highlight_key = (
-        manifest.get("album", {}).get("source", {}).get("highlight_image_key")
-    )
-    if highlight_key:
-        highlighted = next(
-            (
-                asset
-                for asset in assets
-                if asset.get("source", {}).get("image_key") == highlight_key
-            ),
-            None,
-        )
-        if highlighted is not None:
-            return highlighted
-    return assets[0] if assets else None
+    if not assets:
+        return None
+    by_key = {
+        str(asset.get("source", {}).get("image_key")): asset
+        for asset in assets
+        if asset.get("source", {}).get("image_key")
+    }
+    source = manifest.get("album", {}).get("source", {}) or {}
+    for field in ("cover_image_key", "node_cover_image_key", "highlight_image_key"):
+        key = source.get(field)
+        if isinstance(key, str) and key in by_key:
+            return by_key[key]
+    return assets[0]
+
+
+def cover_media_id(asset: Mapping[str, Any]) -> str | None:
+    destination = asset.get("destination", {})
+    media_id = destination.get("poster_media_id") or destination.get("emdash_media_id")
+    return str(media_id) if isinstance(media_id, str) and media_id else None
+
+
+def publish_album_cover(
+    album_id: str, *, env: Mapping[str, str], token: str
+) -> None:
+    run_emdash(["content", "publish", "albums", album_id], env, token=token)
 
 
 def ensure_album_cover(
@@ -1166,10 +1189,18 @@ def ensure_album_cover(
     cover_asset = preferred_cover_asset(manifest)
     if cover_asset is None:
         return False
-    destination = cover_asset.get("destination", {})
-    cover_media_id = destination.get("poster_media_id") or destination.get(
-        "emdash_media_id"
+    expected_media_id = cover_media_id(cover_asset)
+    if expected_media_id is None:
+        return False
+    published = get_content_by_identifier(
+        "albums", album_id, env=env, token=token, published=True
     )
+    published_data = published.get("data") if isinstance(published, dict) else None
+    published_cover = (
+        published_data.get("cover_image") if isinstance(published_data, dict) else None
+    )
+    if isinstance(published_cover, dict) and published_cover.get("id") == expected_media_id:
+        return False
     current = get_content_by_identifier(
         "albums", album_id, env=env, token=token
     )
@@ -1180,31 +1211,42 @@ def ensure_album_cover(
     if not isinstance(data, dict) or not isinstance(revision, str):
         raise AlbumMigrationError("EmDash album cover readback has no revision")
     existing = data.get("cover_image")
-    if isinstance(existing, dict) and existing.get("id") == cover_media_id:
-        return False
-    run_emdash(
-        [
-            "content",
-            "update",
-            "albums",
-            album_id,
-            "--rev",
-            revision,
-            "--data",
-            json.dumps(
-                {
-                    "cover_image": {
-                        "id": cover_media_id,
-                        "provider": "local",
-                        "alt": str(cover_asset.get("display", {}).get("alt") or ""),
-                    }
-                },
-                ensure_ascii=False,
-            ),
-        ],
-        env,
-        token=token,
+    if not (isinstance(existing, dict) and existing.get("id") == expected_media_id):
+        run_emdash(
+            [
+                "content",
+                "update",
+                "albums",
+                album_id,
+                "--rev",
+                revision,
+                "--data",
+                json.dumps(
+                    {
+                        "cover_image": {
+                            "id": expected_media_id,
+                            "provider": "local",
+                            "alt": str(cover_asset.get("display", {}).get("alt") or ""),
+                        }
+                    },
+                    ensure_ascii=False,
+                ),
+            ],
+            env,
+            token=token,
+        )
+    publish_album_cover(album_id, env=env, token=token)
+    readback = get_content_by_identifier(
+        "albums", album_id, env=env, token=token, published=True
     )
+    readback_data = readback.get("data") if isinstance(readback, dict) else None
+    readback_cover = (
+        readback_data.get("cover_image") if isinstance(readback_data, dict) else None
+    )
+    if not (
+        isinstance(readback_cover, dict) and readback_cover.get("id") == expected_media_id
+    ):
+        raise AlbumMigrationError("Published album cover readback mismatch")
     return True
 
 

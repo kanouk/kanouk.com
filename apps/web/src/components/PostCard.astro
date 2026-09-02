@@ -37,33 +37,39 @@ const formattedDate = date
 
 <article class:list={["post-card", { "post-card--list": variant === "list" }]}>
 	<a href={href} class="card-link">
-		{
-			featuredImage ? (
-				<div class="card-image">
-					<YohakuImage image={featuredImage} crop />
+		<div class="card-media">
+			{
+				featuredImage ? (
+					<div class="card-image">
+						<YohakuImage image={featuredImage} crop />
+					</div>
+				) : (
+					<div class="card-image">
+						<img
+							src="/kanolog-no-image.png"
+							alt=""
+							width="768"
+							height="403"
+							loading="lazy"
+							decoding="async"
+							class="card-no-image"
+						/>
+					</div>
+				)
+			}
+			{(categories?.length ?? 0) > 0 && (
+				<div class="card-categories" aria-label="カテゴリー">
+					{categories?.slice(0, 1).map((category) => (
+						<span class="card-category">{category.label}</span>
+					))}
 				</div>
-			) : (
-				<div class="card-image">
-					<img
-						src="/kanolog-no-image.png"
-						alt=""
-						width="768"
-						height="403"
-						loading="lazy"
-						decoding="async"
-						class="card-no-image"
-					/>
-				</div>
-			)
-		}
+			)}
+		</div>
 		<div class="card-body">
 			<h2 class="card-title">{title}</h2>
 			{
-				((categories?.length ?? 0) > 0 || (tags?.length ?? 0) > 0) && (
-					<div class="card-taxonomies" aria-label="カテゴリーとタグ">
-						{categories?.slice(0, 1).map((category) => (
-							<span class="card-category">{category.label}</span>
-						))}
+				(tags?.length ?? 0) > 0 && (
+					<div class="card-taxonomies" aria-label="タグ">
 						{tags?.slice(0, 2).map((tag) => (
 							<span class="card-tag">{tag.label}</span>
 						))}

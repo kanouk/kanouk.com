@@ -130,9 +130,16 @@ python3 scripts/migration/run_smugmug_readonly.py \
   --catalog migration/smugmug/catalog.json \
   --apply --continue-on-error
 
+python3 scripts/migration/run_smugmug_readonly.py \
+  apply_smugmug_album_covers.py \
+  --catalog migration/smugmug/catalog.json \
+  --refresh-from-smugmug --apply
+
 python3 scripts/migration/report_smugmug_migration.py \
   --catalog migration/smugmug/catalog.json
 ```
+
+アルバムカバーの再適用は写真を再download / 再uploadしません。`NodeCoverImage`、無ければ`HighlightImage`、どちらも無ければ移行済み先頭画像を使い、公開`cover_image`が既に一致していれば変更しません。`--apply`後は`photos.kanouk.com/albums`をno-cacheで読み、一覧キャッシュが新しい代表画像を返すまで待ちます。
 
 reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true`になるまで完了扱いにしません。owner APIで公開catalog外のalbumが見えても自動追加・公開せず、40公開albumとの全件性比較だけを記録します。成功後にWordPress全件再import、全sitemap監査、backup／restore drillをもう一度実行します。
 

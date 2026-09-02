@@ -21,6 +21,7 @@ if str(SCRIPT_ROOT) not in sys.path:
 from audit_smugmug import SmugMugClient, now_iso  # noqa: E402
 from build_smugmug_pilot_manifest import (  # noqa: E402
     album_highlight_image_key,
+    album_node_cover_image_key,
     assert_sanitized,
     manifest as album_manifest,
     merge_verified_progress,
@@ -92,6 +93,7 @@ def build(
             user=user,
             slug=slug,
             highlight_image_key=album_highlight_image_key(client, album),
+            node_cover_image_key=album_node_cover_image_key(client, album),
         )
         payload["scope"] = "public SmugMug album migration"
         path = output_dir / slug / "manifest.json"
