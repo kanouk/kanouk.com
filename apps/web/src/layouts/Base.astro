@@ -3,6 +3,7 @@ import { getEmDashCollection, getSiteSettings } from "emdash";
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import LiveSearch from "emdash/ui/search";
+import { Images, Search } from "lucide-astro";
 import ProfileCard from "../components/ProfileCard.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import YohakuHead from "../components/YohakuHead.astro";
@@ -42,7 +43,7 @@ const canonical = canonicalProp === false
 	? null
 	: canonicalProp ?? new URL(Astro.url.pathname, "https://blog.kanouk.com").toString();
 
-const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(await getSiteSettings());
+const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
 const FOOTER_EXCLUDED_PAGE_SLUGS = new Set(["sample_search", "sample-page-nocalog"]);
 const { entries: pageCandidates } = await getEmDashCollection("pages", {
@@ -105,22 +106,25 @@ const pageCtx = createPublicPageContext({
 		<header class="site-header">
 			<div class="site-header__inner">
 				<a href="/" class="site-brand" aria-label={`${siteTitle} ホーム`}>
-					{siteLogo && (
-						<img src={siteLogo.url} alt="" class="site-brand__image" />
-					)}
-					<span class="site-brand__copy">
-						<span class="site-brand__name">{siteTitle}</span>
-						<span class="site-brand__tagline">{siteTagline}</span>
-					</span>
+					<img
+						src="/kanolog-logo.png"
+						alt={siteTitle}
+						width="900"
+						height="200"
+						class="site-brand__image"
+					/>
 				</a>
 
 				<nav class="site-nav" aria-label="主要ナビゲーション">
-					<a href="/posts" aria-current={isArticleSurface ? "page" : undefined}>記事</a>
-					<a href={photosUrl}>写真</a>
-					<a href="/search" aria-current={isSearchPage ? "page" : undefined}>検索</a>
+					<a href="/category/stream" aria-current={currentPath.startsWith("/category/stream") ? "page" : undefined}>カノログ（雑記）</a>
+					<a href="/category/pattern" aria-current={currentPath.startsWith("/category/pattern") ? "page" : undefined}>パターン大全</a>
+					<a href="/category/shortcut" aria-current={currentPath.startsWith("/category/shortcut") ? "page" : undefined}>ショートカット</a>
+					<a href="/pages/artcert" aria-current={currentPath.startsWith("/pages/artcert") ? "page" : undefined}>美術検定 対策問題</a>
 				</nav>
 
 				<div class="site-tools">
+					<a href={photosUrl} class="site-utility-link"><Images size={15} strokeWidth={1.7} aria-hidden="true" /><span>写真</span></a>
+					<a href="/search" class="site-utility-link" aria-current={isSearchPage ? "page" : undefined}><Search size={15} strokeWidth={1.7} aria-hidden="true" /><span>検索</span></a>
 					<LiveSearch
 						placeholder="記事を検索"
 						class="site-search"
@@ -181,7 +185,9 @@ const pageCtx = createPublicPageContext({
 			document.addEventListener("keydown", (event) => {
 				if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
 					event.preventDefault();
-					(document.querySelector(".site-search-input") as HTMLInputElement | null)?.focus();
+					const input = document.querySelector(".site-search-input") as HTMLInputElement | null;
+					if (input && getComputedStyle(input).display !== "none") input.focus();
+					else window.location.assign("/search");
 				}
 			});
 		</script>

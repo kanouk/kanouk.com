@@ -1,7 +1,6 @@
 ---
-import type { MediaValue, ContentBylineCredit } from "emdash";
+import type { MediaValue } from "emdash";
 import YohakuImage from "./YohakuImage.astro";
-import YohakuImagePlaceholder from "./YohakuImagePlaceholder.astro";
 
 interface Props {
 	title: string;
@@ -10,8 +9,8 @@ interface Props {
 	href: string;
 	date?: Date;
 	readingTime?: number;
+	categories?: Array<{ slug: string; label: string }>;
 	tags?: Array<{ slug: string; label: string }>;
-	bylines?: ContentBylineCredit[];
 	variant?: "card" | "list";
 }
 
@@ -22,8 +21,8 @@ const {
 	href,
 	date,
 	readingTime,
+	categories,
 	tags,
-	bylines,
 	variant = "card",
 } = Astro.props;
 
@@ -45,77 +44,38 @@ const formattedDate = date
 				</div>
 			) : (
 				<div class="card-image">
-					<YohakuImagePlaceholder />
+					<img
+						src="/kanolog-no-image.png"
+						alt=""
+						width="768"
+						height="403"
+						loading="lazy"
+						decoding="async"
+						class="card-no-image"
+					/>
 				</div>
 			)
 		}
 		<div class="card-body">
-			<div class="card-meta">
-				{
-					bylines && bylines.length > 0 && (
-						<>
-							<div class="card-bylines">
-								{bylines.slice(0, 1).map((credit) => (
-									<span class="card-byline">
-										{(credit.byline.avatarStorageKey || credit.byline.avatarMediaId) && (
-											<img
-												src={`/_emdash/api/media/file/${credit.byline.avatarStorageKey || credit.byline.avatarMediaId}`}
-												alt={credit.byline.displayName}
-												class="card-byline-avatar"
-											/>
-										)}
-										<span class="card-byline-name">
-											{credit.byline.displayName}
-										</span>
-									</span>
-								))}
-								{bylines.length > 1 && (
-									<span
-										class="byline-more"
-										data-tooltip={bylines
-											.slice(1)
-											.map((c) => c.byline.displayName)
-											.join(", ")}
-										title={bylines
-											.slice(1)
-											.map((c) => c.byline.displayName)
-											.join(", ")}
-										tabindex="0"
-									>
-										+{bylines.length - 1}
-									</span>
-								)}
-							</div>
-							{(formattedDate || readingTime) && <span class="meta-dot" />}
-						</>
-					)
-				}
-				{formattedDate && <time>{formattedDate}</time>}
-				{formattedDate && readingTime && <span class="meta-dot" />}
-				{readingTime && <span>{readingTime}分</span>}
-			</div>
 			<h2 class="card-title">{title}</h2>
-			{excerpt && <p class="card-excerpt">{excerpt}</p>}
 			{
-				variant === "list" && tags && tags.length > 0 && (
-					<div class="card-tags card-tags--labels" aria-label="タグ">
-						{tags.slice(0, 2).map((tag) => (
+				((categories?.length ?? 0) > 0 || (tags?.length ?? 0) > 0) && (
+					<div class="card-taxonomies" aria-label="カテゴリーとタグ">
+						{categories?.slice(0, 1).map((category) => (
+							<span class="card-category">{category.label}</span>
+						))}
+						{tags?.slice(0, 2).map((tag) => (
 							<span class="card-tag">{tag.label}</span>
 						))}
 					</div>
 				)
 			}
+			{excerpt && <p class="card-excerpt">{excerpt}</p>}
+			<div class="card-meta">
+				{formattedDate && <time>{formattedDate}</time>}
+				{formattedDate && readingTime && <span class="meta-dot" />}
+				{readingTime && <span>{readingTime}分</span>}
+			</div>
 		</div>
 	</a>
-	{
-		variant !== "list" && tags && tags.length > 0 && (
-			<div class="card-tags">
-				{tags.slice(0, 2).map((tag) => (
-					<a href={`/tag/${tag.slug}`} class="card-tag">
-						{tag.label}
-					</a>
-				))}
-			</div>
-		)
-	}
 </article>

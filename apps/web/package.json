@@ -14,7 +14,7 @@
     "preview": "astro preview",
     "deploy": "astro build && python3 ../../scripts/cloudflare/run_wrangler_kanouk.py deploy",
     "migrate:status": "python3 ../../scripts/cloudflare/run_emdash_migration_kanouk.py --status --json --wrangler-config wrangler.jsonc",
-    "test:migration": "node --test scripts/photo-url.test.mjs scripts/wordpress/*.test.mjs",
+		"test:migration": "node --test scripts/album-order.test.mjs scripts/author-age.test.mjs scripts/photo-url.test.mjs scripts/wordpress/*.test.mjs",
     "typecheck": "astro check"
   },
   "dependencies": {

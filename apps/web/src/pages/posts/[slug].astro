@@ -23,6 +23,7 @@ import {
 	resolvePublicMediaUrl,
 } from "../../utils/media-url";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
+import { calculateAge } from "../../utils/author-age.mjs";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { routeSlugCandidates } from "../../utils/route-slug";
 
@@ -76,6 +77,7 @@ const seo = {
 
 // Bylines are already hydrated by getEmDashEntry
 const bylines = post.data.bylines ?? [];
+const authorAge = calculateAge("1977-06-18");
 
 // Get reading time
 const readingTime = getReadingTime(post.data.content);
@@ -93,10 +95,22 @@ const [categoryTerms, tagTerms] = await Promise.all([
 	getTaxonomyTerms("category", { includeCounts: true }),
 	getTaxonomyTerms("tag", { includeCounts: true }),
 ]);
-const sidebarCategories = flattenTerms(categoryTerms).filter((term) => (term.count ?? 0) > 0);
+const sidebarCategoryOrder = new Map([
+	["stream", 0],
+	["shortcut", 1],
+	["pattern", 2],
+	["matome", 3],
+]);
+const sidebarCategories = flattenTerms(categoryTerms)
+	.filter((term) => (term.count ?? 0) > 0)
+	.sort((left, right) => {
+		const leftOrder = sidebarCategoryOrder.get(left.slug) ?? Number.MAX_SAFE_INTEGER;
+		const rightOrder = sidebarCategoryOrder.get(right.slug) ?? Number.MAX_SAFE_INTEGER;
+		return leftOrder - rightOrder || left.label.localeCompare(right.label, "ja");
+	});
 const sidebarTags = flattenTerms(tagTerms)
 	.filter((term) => (term.count ?? 0) > 0)
-	.slice(0, 20);
+	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
 
 // Fetch a few extra recent posts in case the current post is among them.
 const { entries: recentPosts } = await getEmDashCollection("posts", {
@@ -107,15 +121,14 @@ const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);
 
 // Single batched query for related-posts tags, rather than one
 // getEntryTerms() call per related post.
-const otherTagsByEntry = await getTermsForEntries(
-	"posts",
-	otherPosts.map((p) => p.data.id),
-	"tag",
-);
+const [otherCategoriesByEntry, otherTagsByEntry] = await Promise.all([
+	getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "category"),
+	getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "tag"),
+]);
 const otherPostsWithTags = otherPosts.map((p) => ({
 	post: p,
+	categories: otherCategoriesByEntry.get(p.data.id) ?? [],
 	tags: otherTagsByEntry.get(p.data.id) ?? [],
-	bylines: p.data.bylines ?? [],
 }));
 
 const publishDate =
@@ -172,7 +185,7 @@ const titleSegments = Array.from(
 								{bylines.map((credit, i) => (
 									<>
 										{i > 0 && ", "}
-										{credit.byline.displayName}
+								{i === 0 ? `${credit.byline.displayName}（${authorAge}歳）` : credit.byline.displayName}
 									</>
 								))}
 							</span>
@@ -268,7 +281,12 @@ const titleSegments = Array.from(
 								<div class="widget__content">
 									<ul class="widget-tags__cloud">
 										{sidebarTags.map((tag) => (
-											<li><a href={`/tag/${tag.slug}`} class="widget-tags__link">{tag.label}</a></li>
+											<li>
+												<a href={`/tag/${tag.slug}`} class="widget-tags__link">
+													<span>{tag.label}</span>
+													<span class="widget-tags__count" aria-label={`${tag.count}件`}>{tag.count}</span>
+												</a>
+											</li>
 										))}
 									</ul>
 								</div>
@@ -287,7 +305,7 @@ const titleSegments = Array.from(
 					<h2 class="more-title">続けて読む</h2>
 					<div class="more-grid">
 						{otherPostsWithTags.map(
-							({ post: p, tags: postTags, bylines: postBylines }) => (
+							({ post: p, categories: postCategories, tags: postTags }) => (
 								<PostCard
 									title={p.data.title}
 									excerpt={getPostExcerpt(p.data.excerpt, p.data.content)}
@@ -295,8 +313,8 @@ const titleSegments = Array.from(
 									href={`/posts/${p.data.id}`}
 									date={p.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(p.data.content)}
+									categories={postCategories.map((category) => ({ slug: category.slug, label: category.label }))}
 									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}
-									bylines={postBylines}
 								/>
 							)
 						)}

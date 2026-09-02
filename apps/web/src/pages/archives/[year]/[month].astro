@@ -48,8 +48,8 @@ const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
 							href={`/posts/${post.data.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
+							categories={(post.data.terms?.category ?? []).map((category) => ({ slug: category.slug, label: category.label }))}
 							tags={(post.data.terms?.tag ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
-							bylines={post.data.bylines ?? []}
 						/>
 					</div>
 				);

@@ -72,6 +72,7 @@ const filteredPosts = posts.map((post) => ({
 							href={`/posts/${post.data.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
+							categories={[{ slug: term.slug, label: term.label }]}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
 						/>
 					))}

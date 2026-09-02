@@ -18,19 +18,17 @@ const { entries: posts, hasMore = false, cacheHint } = await getEmDashCollection
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
-// Single batched query for tags across all posts, instead of one
-// getEntryTerms() call per post (which would be N round-trips).
-// Bylines are already hydrated on entry.data.bylines.
-const tagsByEntry = await getTermsForEntries(
-	"posts",
-	posts.map((p) => p.data.id),
-	"tag",
-);
+// Resolve list taxonomies in two batched queries instead of one round-trip per
+// post. The historical card order is category, then tag.
+const [categoriesByEntry, tagsByEntry] = await Promise.all([
+	getTermsForEntries("posts", posts.map((p) => p.data.id), "category"),
+	getTermsForEntries("posts", posts.map((p) => p.data.id), "tag"),
+]);
 
 const postsWithTags = posts.map((post) => ({
 	post,
+	categories: categoriesByEntry.get(post.data.id) ?? [],
 	tags: tagsByEntry.get(post.data.id) ?? [],
-	bylines: post.data.bylines ?? [],
 	excerpt: getPostExcerpt(post.data.excerpt, post.data.content, 180),
 }));
 
@@ -57,50 +55,28 @@ const formatDate = (date: Date) =>
 				<p class="empty">公開中の記事はまだありません。</p>
 			) : (
 				<div class="posts-list">
-					{postsWithTags.map(({ post, tags, bylines, excerpt }) => (
+					{postsWithTags.map(({ post, categories, tags, excerpt }) => (
 						<article class="post-item">
 							<a href={`/posts/${post.data.id}`} class="post-link">
+								<h2 class="post-title">{post.data.title}</h2>
 								<div class="post-meta">
-									{bylines.length > 0 && (
-										<>
-											<div class="post-bylines">
-												{bylines.slice(0, 2).map((credit, index) => (
-													<>
-														{index > 0 && <span class="byline-sep">,</span>}
-														<span class="post-byline">
-													{(credit.byline.avatarStorageKey || credit.byline.avatarMediaId) && (
-														<img
-															src={`/_emdash/api/media/file/${credit.byline.avatarStorageKey || credit.byline.avatarMediaId}`}
-																	alt={credit.byline.displayName}
-																	class="post-byline-avatar"
-																/>
-															)}
-															<span class="post-byline-name">
-																{credit.byline.displayName}
-															</span>
-														</span>
-													</>
-												))}
-												{bylines.length > 2 && (
-													<span class="byline-more">+{bylines.length - 2}</span>
-												)}
-											</div>
-											<span class="meta-dot" />
-										</>
-									)}
 									{post.data.publishedAt && (
 										<time>{formatDate(post.data.publishedAt)}</time>
 									)}
 									{post.data.publishedAt && <span class="meta-dot" />}
 									<span>{getReadingTime(post.data.content)}分</span>
 								</div>
-								<h2 class="post-title">{post.data.title}</h2>
 								{excerpt && (
 									<p class="post-excerpt">{excerpt}</p>
 								)}
 							</a>
-							{tags.length > 0 && (
+							{(categories.length > 0 || tags.length > 0) && (
 								<div class="post-tags">
+									{categories.slice(0, 1).map((category) => (
+										<a href={`/category/${category.slug}`} class="post-category">
+											{category.label}
+										</a>
+									))}
 									{tags.slice(0, 3).map((t) => (
 										<a href={`/tag/${t.slug}`} class="post-tag">
 											{t.label}
