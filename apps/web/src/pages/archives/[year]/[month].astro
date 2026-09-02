@@ -3,7 +3,7 @@ import { getEmDashCollection } from "emdash";
 import { ArrowLeft, CalendarDays } from "lucide-astro";
 import PostCard from "../../../components/PostCard.astro";
 import Base from "../../../layouts/Base.astro";
-import { getReadingTime } from "../../../utils/reading-time";
+import { getPostExcerpt, getReadingTime } from "../../../utils/reading-time";
 import { getPostArchiveMonths, japanDateParts, japanMonthRange } from "../../../utils/post-archives";
 
 const year = Number(Astro.params.year);
@@ -43,7 +43,7 @@ const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
 					<div id={day ? `day-${String(day).padStart(2, "0")}` : undefined}>
 						<PostCard
 							title={post.data.title ?? "無題"}
-							excerpt={post.data.excerpt}
+							excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
 							featuredImage={post.data.featured_image}
 							href={`/posts/${post.id}`}
 							date={post.data.publishedAt ?? undefined}

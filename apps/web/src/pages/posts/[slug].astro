@@ -17,7 +17,7 @@ import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
-import { getReadingTime } from "../../utils/reading-time";
+import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { routeSlugCandidates } from "../../utils/route-slug";
 
@@ -281,7 +281,7 @@ const publishDate =
 							({ post: p, tags: postTags, bylines: postBylines }) => (
 								<PostCard
 									title={p.data.title}
-									excerpt={p.data.excerpt}
+									excerpt={getPostExcerpt(p.data.excerpt, p.data.content)}
 									featuredImage={p.data.featured_image}
 									href={`/posts/${p.id}`}
 									date={p.data.publishedAt ?? undefined}

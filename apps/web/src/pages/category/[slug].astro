@@ -7,7 +7,7 @@ import {
 import Base from "../../layouts/Base.astro";
 import ArchivePagination from "../../components/ArchivePagination.astro";
 import PostCard from "../../components/PostCard.astro";
-import { getReadingTime } from "../../utils/reading-time";
+import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { routeSlugCandidates } from "../../utils/route-slug";
 
 const slugCandidates = routeSlugCandidates(Astro.params.slug);
@@ -67,7 +67,7 @@ const filteredPosts = posts.map((post) => ({
 					{filteredPosts.map(({ post, tags }) => (
 						<PostCard
 							title={post.data.title}
-							excerpt={post.data.excerpt}
+							excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
 							featuredImage={post.data.featured_image}
 							href={`/posts/${post.id}`}
 							date={post.data.publishedAt ?? undefined}

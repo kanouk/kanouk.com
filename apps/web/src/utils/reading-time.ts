@@ -46,6 +46,24 @@ export function extractText(blocks: PortableTextBlock[] | undefined): string {
 }
 
 /**
+ * Build a restrained list/RSS excerpt when WordPress did not store one.
+ * The content model remains authoritative; this only provides a reading cue.
+ */
+export function getPostExcerpt(
+	excerpt: string | null | undefined,
+	content: PortableTextBlock[] | undefined,
+	maxLength = 120,
+): string | undefined {
+	const normalizedExcerpt = excerpt?.replace(WHITESPACE_REGEX, " ").trim();
+	if (normalizedExcerpt) return normalizedExcerpt;
+
+	const text = extractText(content).replace(WHITESPACE_REGEX, " ").trim();
+	if (!text) return undefined;
+	if (text.length <= maxLength) return text;
+	return `${text.slice(0, maxLength).trimEnd()}…`;
+}
+
+/**
  * Calculate reading time in minutes from Portable Text content
  */
 export function getReadingTime(content: PortableTextBlock[] | undefined): number {

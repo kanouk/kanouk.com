@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { getEmDashCollection, getSiteSettings } from "emdash";
 
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { getPostExcerpt } from "../utils/reading-time";
 
 export const GET: APIRoute = async ({ site, url }) => {
 	const siteUrl = site?.toString() || url.origin;
@@ -19,7 +20,7 @@ export const GET: APIRoute = async ({ site, url }) => {
 
 			const postUrl = `${siteUrl}/posts/${post.id}`;
 			const title = escapeXml(post.data.title || "Untitled");
-			const description = escapeXml(post.data.excerpt || "");
+			const description = escapeXml(getPostExcerpt(post.data.excerpt, post.data.content, 240) || "");
 
 			return `    <item>
       <title>${title}</title>
