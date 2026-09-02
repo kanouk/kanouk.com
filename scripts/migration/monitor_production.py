@@ -553,6 +553,52 @@ query Monitor($accountTag: string, $start: Time, $end: Time, $scriptName: string
 
 
 def summarize_platform_usage(account: Mapping[str, Any]) -> dict[str, Any]:
+    account_cpu_time_us = 0.0
+    account_cpu_groups: list[dict[str, Any]] = []
+    for row in account.get("workersOverviewDataAdaptiveGroups") or []:
+        sums = row.get("sum") if isinstance(row.get("sum"), Mapping) else {}
+        dimensions = (
+            row.get("dimensions")
+            if isinstance(row.get("dimensions"), Mapping)
+            else {}
+        )
+        cpu_time_us = float(sums.get("standardCpuTimeUs") or 0)
+        account_cpu_time_us += cpu_time_us
+        account_cpu_groups.append(
+            {
+                "usage_model": int(dimensions.get("usageModel") or 0),
+                "standard_cpu_time_us": round(cpu_time_us, 3),
+            }
+        )
+    account_cpu_groups.sort(key=lambda row: row["usage_model"])
+
+    yohaku_cpu_time_us = 0.0
+    yohaku_cpu_groups: list[dict[str, Any]] = []
+    for row in account.get("workersOverviewRequestsAdaptiveGroups") or []:
+        sums = row.get("sum") if isinstance(row.get("sum"), Mapping) else {}
+        dimensions = (
+            row.get("dimensions")
+            if isinstance(row.get("dimensions"), Mapping)
+            else {}
+        )
+        cpu_time_us = float(sums.get("cpuTimeUs") or 0)
+        yohaku_cpu_time_us += cpu_time_us
+        yohaku_cpu_groups.append(
+            {
+                "script_name": str(dimensions.get("scriptName") or ""),
+                "status": int(dimensions.get("status") or 0),
+                "usage_model": int(dimensions.get("usageModel") or 0),
+                "cpu_time_us": round(cpu_time_us, 3),
+            }
+        )
+    yohaku_cpu_groups.sort(
+        key=lambda row: (
+            row["script_name"],
+            row["status"],
+            row["usage_model"],
+        )
+    )
+
     d1_totals = {
         "read_queries": 0,
         "write_queries": 0,
@@ -659,6 +705,39 @@ def summarize_platform_usage(account: Mapping[str, Any]) -> dict[str, Any]:
         key=lambda row: row["date"],
     )
     return {
+        "workers_cpu": {
+            "account_month_to_date": {
+                "standard_cpu_time_us": round(account_cpu_time_us, 3),
+                "standard_cpu_time_ms": round(account_cpu_time_us / 1000, 3),
+                "groups": account_cpu_groups,
+                "scope": "account-wide",
+            },
+            "yohaku_since_cutover": {
+                "cpu_time_us": round(yohaku_cpu_time_us, 3),
+                "cpu_time_ms": round(yohaku_cpu_time_us / 1000, 3),
+                "groups": yohaku_cpu_groups,
+                "scope": WORKER_SERVICE,
+            },
+            "source": (
+                "Cloudflare GraphQL workersOverviewDataAdaptiveGroups and "
+                "workersOverviewRequestsAdaptiveGroups"
+            ),
+            "source_docs": [
+                (
+                    "https://developers.cloudflare.com/analytics/graphql-api/"
+                    "features/data-sets/"
+                ),
+                (
+                    "https://developers.cloudflare.com/analytics/graphql-api/"
+                    "sampling/"
+                ),
+            ],
+            "measurement": "adaptive_sampling_estimate",
+            "comparison_warning": (
+                "Account-wide and script-specific values are independently "
+                "sampled estimates and can differ slightly."
+            ),
+        },
         "d1": d1_totals,
         "d1_storage": d1_storage,
         "r2_operations": operation_rows,
@@ -675,7 +754,9 @@ def summarize_platform_usage(account: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def quota_observation(used: int, included: int) -> dict[str, int | bool]:
+def quota_observation(
+    used: int | float, included: int
+) -> dict[str, int | float | bool]:
     return {
         "used": used,
         "included": included,
@@ -729,10 +810,24 @@ def build_cost_baseline(
         if isinstance(images.get("month_to_date"), Mapping)
         else {}
     )
+    workers_cpu = (
+        platform.get("workers_cpu")
+        if isinstance(platform.get("workers_cpu"), Mapping)
+        else {}
+    )
+    account_cpu = (
+        workers_cpu.get("account_month_to_date")
+        if isinstance(workers_cpu.get("account_month_to_date"), Mapping)
+        else {}
+    )
     observations = {
-        "workers_requests": quota_observation(
+        "workers_requests_yohaku_since_cutover": quota_observation(
             int(worker.get("requests") or 0),
             int(worker_pricing["included_requests_month"]),
+        ),
+        "workers_cpu_time_account_month_to_date": quota_observation(
+            float(account_cpu.get("standard_cpu_time_ms") or 0),
+            int(worker_pricing["included_cpu_ms_month"]),
         ),
         "d1_rows_read": quota_observation(
             int(d1.get("rows_read") or 0),
@@ -792,10 +887,13 @@ def build_cost_baseline(
         ),
         "estimate_status": "provisional_floor_only",
         "unknowns": [
-            "Workers CPU time and CPU overage",
             "actual account-wide billable usage and invoice",
             "other resources sharing account-wide included quotas",
             "Yohaku-only attribution within account-wide Images metrics",
+            (
+                "difference between adaptive GraphQL usage estimates and the "
+                "final invoice meter"
+            ),
         ],
         "normalization_warning": (
             "The observation starts at cutover and includes migration, backup, "
@@ -809,17 +907,45 @@ def build_cost_baseline(
 def platform_usage(
     *, account_id: str, token: str, start: datetime, end: datetime
 ) -> dict[str, Any]:
+    month_start_time = end.astimezone(timezone.utc).replace(
+        day=1, hour=0, minute=0, second=0, microsecond=0
+    )
     query = """
 query PlatformUsage(
   $accountTag: string
   $startDate: Date
   $endDate: Date
   $monthStart: Date
+  $startTime: Time
+  $monthStartTime: Time
+  $endTime: Time
+  $scriptName: string
   $databaseId: string
   $bucketName: string
 ) {
   viewer {
     accounts(filter: {accountTag: $accountTag}) {
+      workersOverviewDataAdaptiveGroups(
+        limit: 10000
+        filter: {
+          datetime_geq: $monthStartTime
+          datetime_leq: $endTime
+        }
+      ) {
+        sum { standardCpuTimeUs }
+        dimensions { usageModel }
+      }
+      workersOverviewRequestsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          scriptName: $scriptName
+          datetime_geq: $startTime
+          datetime_leq: $endTime
+        }
+      ) {
+        sum { cpuTimeUs }
+        dimensions { scriptName status usageModel }
+      }
       d1AnalyticsAdaptiveGroups(
         limit: 10000
         filter: {
@@ -897,6 +1023,10 @@ query PlatformUsage(
             "startDate": start.date().isoformat(),
             "endDate": end.date().isoformat(),
             "monthStart": end.date().replace(day=1).isoformat(),
+            "startTime": iso_z(start),
+            "monthStartTime": iso_z(month_start_time),
+            "endTime": iso_z(end),
+            "scriptName": WORKER_SERVICE,
             "databaseId": DATABASE_ID,
             "bucketName": R2_BUCKET_NAME,
         },
@@ -915,6 +1045,14 @@ query PlatformUsage(
             "Cloudflare GraphQL did not return exactly one platform account"
         )
     report = summarize_platform_usage(accounts[0])
+    report["workers_cpu"]["account_month_to_date"]["datetime_range"] = {
+        "start": iso_z(month_start_time),
+        "end": iso_z(end),
+    }
+    report["workers_cpu"]["yohaku_since_cutover"]["datetime_range"] = {
+        "start": iso_z(start),
+        "end": iso_z(end),
+    }
     report.update(
         {
             "status": "usage_observed",
@@ -1109,7 +1247,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
     worker_ok = metrics["errors"] == 0
     navigation_ok = not not_found["internal_referrer_rows"]
     return {
-        "report_version": 5,
+        "report_version": 6,
         "checkpoint": checkpoint,
         "checkpoint_due": checkpoint_due(checkpoint, observed_at),
         "observed_at": observed_at.isoformat(),

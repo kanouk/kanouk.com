@@ -153,6 +153,30 @@ class MonitorProductionTests(unittest.TestCase):
         report = module.summarize_platform_usage(
             {
                 "accountName": "must not leak",
+                "workersOverviewDataAdaptiveGroups": [
+                    {
+                        "sum": {"standardCpuTimeUs": 422_107_792},
+                        "dimensions": {"usageModel": 3},
+                    }
+                ],
+                "workersOverviewRequestsAdaptiveGroups": [
+                    {
+                        "sum": {"cpuTimeUs": 369_765_841},
+                        "dimensions": {
+                            "scriptName": "kanouk-emdash-staging",
+                            "status": 1,
+                            "usageModel": 3,
+                        },
+                    },
+                    {
+                        "sum": {"cpuTimeUs": 52_529_280},
+                        "dimensions": {
+                            "scriptName": "kanouk-emdash-staging",
+                            "status": 7,
+                            "usageModel": 3,
+                        },
+                    },
+                ],
                 "d1AnalyticsAdaptiveGroups": [
                     {
                         "sum": {
@@ -211,6 +235,20 @@ class MonitorProductionTests(unittest.TestCase):
             }
         )
         self.assertEqual(report["d1"]["read_queries"], 14)
+        self.assertEqual(
+            report["workers_cpu"]["account_month_to_date"][
+                "standard_cpu_time_ms"
+            ],
+            422_107.792,
+        )
+        self.assertEqual(
+            report["workers_cpu"]["yohaku_since_cutover"]["cpu_time_ms"],
+            422_295.121,
+        )
+        self.assertEqual(
+            report["workers_cpu"]["measurement"],
+            "adaptive_sampling_estimate",
+        )
         self.assertEqual(report["d1"]["rows_read"], 120)
         self.assertEqual(
             report["d1_storage"]["database_size_bytes"], 76337150
@@ -227,6 +265,11 @@ class MonitorProductionTests(unittest.TestCase):
         report = module.build_cost_baseline(
             {"requests": 23_243},
             {
+                "workers_cpu": {
+                    "account_month_to_date": {
+                        "standard_cpu_time_ms": 422_107.792
+                    }
+                },
                 "d1": {"rows_read": 11_041_025, "rows_written": 7_268},
                 "d1_storage": {"database_size_bytes": 76_337_150},
                 "r2_operations": [
@@ -261,7 +304,21 @@ class MonitorProductionTests(unittest.TestCase):
             ["images_unique_transformations_account_month_to_date"]["used"],
             242,
         )
-        self.assertIn("Workers CPU time and CPU overage", report["unknowns"])
+        self.assertEqual(
+            report["observations"]
+            ["workers_cpu_time_account_month_to_date"]["used"],
+            422_107.792,
+        )
+        self.assertNotIn(
+            "Workers CPU time and CPU overage", report["unknowns"]
+        )
+        self.assertIn(
+            (
+                "difference between adaptive GraphQL usage estimates and the "
+                "final invoice meter"
+            ),
+            report["unknowns"],
+        )
 
     def test_billing_summary_omits_account_identity(self) -> None:
         report = module.summarize_cloudflare_billing_rows(

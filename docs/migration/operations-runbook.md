@@ -186,6 +186,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 11:57 JST、監視実行器をreport version 5へ更新し、Images unique transformationsをaccount-wide analyticsからread-onlyで取得しました。9月累計242件、9月2日分7件で、月5,000件の無料枠に対する残りは4,758件です。Yohakuだけへの帰属はdataset上分離できないため、account-wide実測とYohaku contract上限を別々に保持します。
 
+12:08 JST、監視実行器をreport version 6へ更新し、Workers StandardのCPU合計をCloudflare GraphQLからread-onlyで取得しました。9月のaccount-wide推定は4,163,572.355 CPU ms、切替後のYohaku Worker推定は422,358.830 CPU msです。前者を月30,000,000 CPU msの同梱枠と比較し、残り25,836,427.645 CPU msを確認しました。`AdaptiveGroups`の値は適応サンプリング推定であり、account-wideとWorker単体は独立に推定されるため厳密な差し引きには使いません。CPU未観測は解消しましたが、確定請求は請求明細のmeterを正本とします。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。

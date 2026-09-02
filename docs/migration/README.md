@@ -18,6 +18,7 @@
 - Gutenberg引用271コンテンツ／370ブロックを`yohaku.quote`へ再変換し、欠落本文0をD1で確認。長文・複数段落・箇条書き引用を390／1440pxとlight／darkで再確認済み
 - `kanouk.com`を`kanouk@gmail.com`側Cloudflareへ追加し、2026-09-02にnameserver切替、zone active、2 Custom Domain、TLS、本番readbackまで完了
 - 旧カノログのGA4 `G-94EQ0WN7B9`をproduction 2ホストだけへ継承。stagingはanalyticsなし・`noindex`のまま維持
+- Workers CPUは9月account-wide 4,163,572.355 ms、切替後Yohaku 422,358.830 msをread-onlyで観測。月30,000,000 ms枠内だが、GraphQLの適応サンプリング推定なので確定請求とは分離
 - WordPress停止、SmugMug解約は未実施し、今回も対象外とする
 
 ## データの流れ

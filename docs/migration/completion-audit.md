@@ -60,6 +60,7 @@
 - 11:36 JSTに監視reportをversion 3へ更新し、現在の最小権限tokenで取得できるD1 query/row数とR2 operation/storageをGraphQLからread-onlyで統合した。同時にR2 inventoryをEmDash media tableと照合し、参照済み3,507件に加えて未追跡39件を検出した。不要とは推測せず、R2全3,546件を新backupへ保全した。
 - 11:50 JSTに監視reportをversion 4へ更新し、Workers／D1／R2／Imagesの公式料金snapshotとYohaku resource usageを比較した。観測済み項目は同梱／無料枠内で、Workers Paid最低額は年$60、SmugMug年$100との差額上限は年$40。ただしCPU、Images実測、account-wide請求が未確認なので`provisional_floor_only`であり、確定削減額とはしていない。
 - 11:57 JSTに監視reportをversion 5へ更新し、Images unique transformationsをaccount-wideで実測した。9月累計242件／9月2日7件で、無料枠5,000件に対する残りは4,758件。Yohaku contract上限3,507件も枠内だが、Yohaku単体への帰属は分離できないためaccount-wide実測と設計上限を混同しない。
+- 12:08 JSTに監視reportをversion 6へ更新し、Workers CPUをGraphQLの公式`workersOverviewDataAdaptiveGroups`／`workersOverviewRequestsAdaptiveGroups`から取得した。9月account-wideは4,163,572.355 CPU ms、切替後Yohakuは422,358.830 CPU ms。月30,000,000 CPU ms枠に対するaccount-wide残量は25,836,427.645 CPU msで、現時点は枠内。値は適応サンプリング推定のため請求meterとは区別し、確定請求待ちは維持する。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査

@@ -330,6 +330,51 @@
       "search_console": "authentication_scope_missing",
       "cloudflare_billable_usage": "authentication_scope_missing",
       "verified": true
+    },
+    {
+      "observed_at": "2026-09-02T12:08:31+09:00",
+      "elapsed": "interim_5h14m",
+      "monitor_report_version": 6,
+      "representative_readback": {
+        "blog_checks": 17,
+        "blog_failed": 0,
+        "photos_checks": 13,
+        "photos_failed": 0,
+        "staging_checks": 17,
+        "staging_failed": 0
+      },
+      "worker_invocations": {
+        "requests": 23479,
+        "errors": 0,
+        "subrequests": 1430,
+        "error_rate_percent": 0.0
+      },
+      "workers_cpu": {
+        "measurement": "adaptive_sampling_estimate",
+        "account_month_to_date_standard_cpu_ms": 4163572.355,
+        "yohaku_since_cutover_cpu_ms": 422358.83,
+        "included_cpu_ms_month": 30000000,
+        "account_headroom_cpu_ms": 25836427.645,
+        "above_included": false
+      },
+      "cost_baseline": {
+        "estimate_status": "provisional_floor_only",
+        "all_measured_or_bounded_yohaku_usage_below_included_units": true,
+        "minimum_account_cost_usd_month": 5.0,
+        "minimum_account_cost_usd_year": 60.0,
+        "smugmug_reference_cost_usd_year": 100.0,
+        "savings_ceiling_before_unknown_overages_usd_year": 40.0,
+        "unknowns": [
+          "actual account-wide billable usage and invoice",
+          "other resources sharing account-wide included quotas",
+          "Yohaku-only attribution within account-wide Images metrics",
+          "difference between adaptive GraphQL usage estimates and the final invoice meter"
+        ]
+      },
+      "ga4_standard_report": "pending_standard_processing_or_no_traffic",
+      "search_console": "authentication_scope_missing",
+      "cloudflare_billable_usage": "authentication_scope_missing",
+      "verified": true
     }
   ],
   "retained_sources": {
