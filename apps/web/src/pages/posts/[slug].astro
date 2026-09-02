@@ -2,8 +2,8 @@
 import {
 	getEmDashEntry,
 	getEmDashCollection,
+	getEntryTerms,
 	getTermsForEntries,
-	getTaxonomyTerms,
 	getSeoMeta,
 	getSiteSettings,
 } from "emdash";
@@ -16,6 +16,7 @@ import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
 import ProfileCard from "../../components/ProfileCard.astro";
+import SidebarTaxonomies from "../../components/SidebarTaxonomies.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
 import {
 	absoluteMediaUrl,
@@ -77,40 +78,18 @@ const seo = {
 
 // Bylines are already hydrated by getEmDashEntry
 const bylines = post.data.bylines ?? [];
-const authorAge = calculateAge("1977-06-18");
+const authorAgeAtPublication = calculateAge(
+	"1977-06-18",
+	post.data.publishedAt ?? post.data.createdAt,
+);
 
 // Get reading time
 const readingTime = getReadingTime(post.data.content);
 
-// This post's tags are already hydrated onto the entry by getEmDashEntry —
-// no extra query needed.
-const tags = post.data.terms?.tag ?? [];
-const categories = post.data.terms?.category ?? [];
-
-type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
-function flattenTerms(terms: SidebarTerm[]): SidebarTerm[] {
-	return terms.flatMap((term) => [term, ...flattenTerms(term.children)]);
-}
-const [categoryTerms, tagTerms] = await Promise.all([
-	getTaxonomyTerms("category", { includeCounts: true }),
-	getTaxonomyTerms("tag", { includeCounts: true }),
+const [categories, tags] = await Promise.all([
+	getEntryTerms("posts", post.data.id, "category"),
+	getEntryTerms("posts", post.data.id, "tag"),
 ]);
-const sidebarCategoryOrder = new Map([
-	["stream", 0],
-	["shortcut", 1],
-	["pattern", 2],
-	["matome", 3],
-]);
-const sidebarCategories = flattenTerms(categoryTerms)
-	.filter((term) => (term.count ?? 0) > 0)
-	.sort((left, right) => {
-		const leftOrder = sidebarCategoryOrder.get(left.slug) ?? Number.MAX_SAFE_INTEGER;
-		const rightOrder = sidebarCategoryOrder.get(right.slug) ?? Number.MAX_SAFE_INTEGER;
-		return leftOrder - rightOrder || left.label.localeCompare(right.label, "ja");
-	});
-const sidebarTags = flattenTerms(tagTerms)
-	.filter((term) => (term.count ?? 0) > 0)
-	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
 
 // Fetch a few extra recent posts in case the current post is among them.
 const { entries: recentPosts } = await getEmDashCollection("posts", {
@@ -168,11 +147,8 @@ const titleSegments = Array.from(
 				{
 					categories.length > 0 && (
 						<span class="article-meta-categories">
-							{categories.map((category, index) => (
-								<>
-									{index > 0 && ", "}
-									<a href={`/category/${category.slug}`}>{category.label}</a>
-								</>
+							{categories.map((category) => (
+								<a href={`/category/${category.slug}`} class="card-category">{category.label}</a>
 							))}
 						</span>
 					)
@@ -185,7 +161,7 @@ const titleSegments = Array.from(
 								{bylines.map((credit, i) => (
 									<>
 										{i > 0 && ", "}
-								{i === 0 ? `${credit.byline.displayName}（${authorAge}歳）` : credit.byline.displayName}
+										{i === 0 ? `${credit.byline.displayName}（${authorAgeAtPublication}歳）` : credit.byline.displayName}
 									</>
 								))}
 							</span>
@@ -195,6 +171,13 @@ const titleSegments = Array.from(
 				{(publishDate || categories.length > 0 || bylines.length > 0) && <span class="meta-dot" />}
 				<span>{readingTime}分</span>
 			</div>
+			{tags.length > 0 && (
+				<nav class="article-meta-tags" aria-label="記事のタグ">
+					{tags.map((tag) => (
+						<a href={`/tag/${tag.slug}`} class="card-tag">{tag.label}</a>
+					))}
+				</nav>
+			)}
 			{
 				post.data.excerpt && (
 					<p class="article-excerpt" {...post.edit.excerpt}>{post.data.excerpt}</p>
@@ -218,16 +201,6 @@ const titleSegments = Array.from(
 						components={{ type: { image: YohakuPortableImage } }}
 					/>
 				</div>
-
-				{
-					tags.length > 0 && (
-						<nav class="article-tags" aria-label="記事のタグ">
-							{tags.map((tag) => (
-								<a href={`/tag/${tag.slug}`}>{tag.label}</a>
-							))}
-						</nav>
-					)
-				}
 
 				<div class="article-comments">
 					<Comments collection="posts" contentId={post.data.id} threaded />
@@ -258,40 +231,7 @@ const titleSegments = Array.from(
 								</form>
 							</div>
 						</section>
-						{sidebarCategories.length > 0 && (
-							<section class="widget">
-								<h3 class="widget__title">カテゴリー</h3>
-								<div class="widget__content">
-									<ul class="widget-categories">
-										{sidebarCategories.map((category) => (
-											<li>
-												<a href={`/category/${category.slug}`} class="widget-categories__link">
-													{category.label}
-												</a>
-												<span class="widget-categories__count">{category.count}</span>
-											</li>
-										))}
-									</ul>
-								</div>
-							</section>
-						)}
-						{sidebarTags.length > 0 && (
-							<section class="widget">
-								<h3 class="widget__title">タグ</h3>
-								<div class="widget__content">
-									<ul class="widget-tags__cloud">
-										{sidebarTags.map((tag) => (
-											<li>
-												<a href={`/tag/${tag.slug}`} class="widget-tags__link">
-													<span>{tag.label}</span>
-													<span class="widget-tags__count" aria-label={`${tag.count}件`}>{tag.count}</span>
-												</a>
-											</li>
-										))}
-									</ul>
-								</div>
-							</section>
-						)}
+						<SidebarTaxonomies />
 					</div>
 				</div>
 			</aside>

@@ -1,41 +1,13 @@
 ---
-import { getTaxonomyTerms } from "emdash";
-import { Tags } from "lucide-astro";
 import PostArchiveNav from "./PostArchiveNav.astro";
 import ProfileCard from "./ProfileCard.astro";
+import SidebarTaxonomies from "./SidebarTaxonomies.astro";
 
 interface Props {
 	latestDate?: Date | null;
 }
 
-type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
-
 const { latestDate } = Astro.props;
-
-function flattenTerms(terms: SidebarTerm[]): SidebarTerm[] {
-	return terms.flatMap((term) => [term, ...flattenTerms(term.children)]);
-}
-
-const [categoryTerms, tagTerms] = await Promise.all([
-	getTaxonomyTerms("category", { includeCounts: true }),
-	getTaxonomyTerms("tag", { includeCounts: true }),
-]);
-const categoryOrder = new Map([
-	["stream", 0],
-	["shortcut", 1],
-	["pattern", 2],
-	["matome", 3],
-]);
-const categories = flattenTerms(categoryTerms)
-	.filter((term) => (term.count ?? 0) > 0)
-	.sort((left, right) => {
-		const leftOrder = categoryOrder.get(left.slug) ?? Number.MAX_SAFE_INTEGER;
-		const rightOrder = categoryOrder.get(right.slug) ?? Number.MAX_SAFE_INTEGER;
-		return leftOrder - rightOrder || left.label.localeCompare(right.label, "ja");
-	});
-const tags = flattenTerms(tagTerms)
-	.filter((term) => (term.count ?? 0) > 0)
-	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
 ---
 
 <aside class="home-sidebar" aria-label="ブログ案内">
@@ -43,37 +15,6 @@ const tags = flattenTerms(tagTerms)
 
 	<div class="sidebar-widgets home-sidebar__widgets">
 		<PostArchiveNav date={latestDate} />
-		{categories.length > 0 && (
-			<section class="widget">
-				<h2 class="widget__title">カテゴリー</h2>
-				<div class="widget__content">
-					<ul class="widget-categories">
-						{categories.map((category) => (
-							<li>
-								<a href={`/category/${category.slug}`} class="widget-categories__link">{category.label}</a>
-								<span class="widget-categories__count">{category.count}</span>
-							</li>
-						))}
-					</ul>
-				</div>
-			</section>
-		)}
-		{tags.length > 0 && (
-			<section class="widget">
-				<h2 class="widget__title"><Tags size={14} strokeWidth={1.7} aria-hidden="true" /> トピック</h2>
-				<div class="widget__content">
-					<ul class="widget-tags__cloud">
-						{tags.map((tag) => (
-							<li>
-								<a href={`/tag/${tag.slug}`} class="widget-tags__link">
-									<span>{tag.label}</span>
-									<span class="widget-tags__count" aria-label={`${tag.count}件`}>{tag.count}</span>
-								</a>
-							</li>
-						))}
-					</ul>
-				</div>
-			</section>
-		)}
+		<SidebarTaxonomies />
 	</div>
 </aside>

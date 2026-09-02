@@ -1,0 +1,71 @@
+---
+import { getTaxonomyTerms } from "emdash";
+import { Folder, Tags } from "lucide-astro";
+
+type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
+
+function flattenTerms(terms: SidebarTerm[]): SidebarTerm[] {
+	return terms.flatMap((term) => [term, ...flattenTerms(term.children)]);
+}
+
+const [categoryTerms, tagTerms] = await Promise.all([
+	getTaxonomyTerms("category", { includeCounts: true }),
+	getTaxonomyTerms("tag", { includeCounts: true }),
+]);
+const categoryOrder = new Map([
+	["stream", 0],
+	["shortcut", 1],
+	["pattern", 2],
+	["matome", 3],
+]);
+const categories = flattenTerms(categoryTerms)
+	.filter((term) => (term.count ?? 0) > 0)
+	.sort((left, right) => {
+		const leftOrder = categoryOrder.get(left.slug) ?? Number.MAX_SAFE_INTEGER;
+		const rightOrder = categoryOrder.get(right.slug) ?? Number.MAX_SAFE_INTEGER;
+		return leftOrder - rightOrder || left.label.localeCompare(right.label, "ja");
+	});
+const tags = flattenTerms(tagTerms)
+	.filter((term) => (term.count ?? 0) > 0)
+	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
+---
+
+{categories.length > 0 && (
+	<section class="widget">
+		<h3 class="widget__title">
+			<Folder size={14} strokeWidth={1.7} aria-hidden="true" />
+			<span>カテゴリー</span>
+		</h3>
+		<div class="widget__content">
+			<ul class="widget-categories">
+				{categories.map((category) => (
+					<li>
+						<a href={`/category/${category.slug}`} class="widget-categories__link">{category.label}</a>
+						<span class="widget-categories__count">{category.count}</span>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+)}
+
+{tags.length > 0 && (
+	<section class="widget">
+		<h3 class="widget__title">
+			<Tags size={14} strokeWidth={1.7} aria-hidden="true" />
+			<span>トピック</span>
+		</h3>
+		<div class="widget__content">
+			<ul class="widget-tags__cloud">
+				{tags.map((tag) => (
+					<li>
+						<a href={`/tag/${tag.slug}`} class="widget-tags__link">
+							<span>{tag.label}</span>
+							<span class="widget-tags__count" aria-label={`${tag.count}件`}>{tag.count}</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+)}
