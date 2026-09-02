@@ -732,12 +732,12 @@ main:focus { outline: none; }
 .album-card:hover .album-copy h2 { color: var(--accent-strong); }
 .album-card:hover .album-arrow { color: var(--accent-strong); transform: translate(0.15rem, -0.15rem); }
 
-.album-page { padding-block: clamp(2.5rem, 6vw, 5rem); }
-.album-page > header { max-width: var(--measure); margin-block: clamp(3rem, 7vw, 6rem); }
+.album-page { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.album-page > header { max-width: var(--measure); margin-block: clamp(2rem, 4vw, 3.5rem); }
 .album-page > header h1 { font-size: var(--step-3); }
 .album-page > header > p:not(.count) { margin-top: var(--space-4); color: var(--ink-soft); }
 .album-page .count { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: var(--space-4); color: var(--accent-strong); font-size: var(--step--1); font-weight: 600; }
-.album-map { margin-bottom: clamp(2.5rem, 6vw, 5rem); border-block: 1px solid var(--rule); }
+.album-map { margin-bottom: clamp(2.5rem, 5vw, 3.75rem); border-block: 1px solid var(--rule); }
 .album-map-toggle { display: flex; align-items: center; gap: 0.55rem; width: 100%; min-height: 3.5rem; padding: 0; border: 0; background: transparent; color: var(--ink); font-size: var(--step--1); font-weight: 600; text-align: left; }
 .album-map-toggle svg { color: var(--accent-strong); }
 .album-map-toggle small { margin-left: auto; color: var(--ink-muted); font-size: 0.7rem; font-weight: 400; }
@@ -757,7 +757,7 @@ main:focus { outline: none; }
 .video-badge { position: absolute; top: var(--space-3); right: var(--space-3); display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.55rem; background: rgb(10 12 9 / 82%); color: #fff; font-size: 0.68rem; }
 
 .photo-page { padding-block: clamp(2.5rem, 6vw, 5rem); }
-.photo-page figure { margin-top: clamp(2rem, 5vw, 4rem); }
+.photo-page figure { margin-top: clamp(2rem, 4vw, 3rem); }
 .photo-page .media { position: relative; display: flex; align-items: center; justify-content: center; min-height: min(52vh, 34rem); padding: clamp(0.5rem, 2vw, 1.5rem); background: var(--photo-stage); }
 .photo-page .media :where(img, video) { width: auto; max-width: 100%; max-height: 86vh; object-fit: contain; }
 .media-navigation { position: absolute; z-index: 2; top: 50%; display: grid; width: 2.75rem; height: 3.75rem; border: 1px solid rgb(255 255 255 / 20%); background: rgb(5 6 5 / 52%); color: #fff; text-decoration: none; transform: translateY(-50%); place-items: center; backdrop-filter: blur(8px); transition: background-color var(--transition), border-color var(--transition), opacity var(--transition); }
