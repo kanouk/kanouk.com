@@ -20,7 +20,7 @@
 - 旧カノログのGA4 `G-94EQ0WN7B9`をproduction 2ホストだけへ継承。stagingはanalyticsなし・`noindex`のまま維持
 - Workers CPUは9月account-wide 4,163,572.355 ms、切替後Yohaku 422,358.830 msをread-onlyで観測。月30,000,000 ms枠内だが、GraphQLの適応サンプリング推定なので確定請求とは分離
 - Cloudflare Billingの初回read-only確認では従量課金$0.00、9月1日の支払済み請求$5.50。同額が毎月続く場合は年$66／SmugMugとの差年$34だが、単一請求からの暫定値
-- Search Consoleは`kanouk@gmail.com`のログイン済み画面でも`sc-domain:kanouk.com`へのアクセス拒否を確認。所有権証明とsitemap送信は実行せず、明示承認待ち
+- Search Consoleは`kanouk@gmail.com`で`sc-domain:kanouk.com`をDNS TXT方式により所有権確認済み。blog／photosのsitemap indexはともに送信・初回取得成功
 - GA4 Realtime APIで対象stream `2210574206`（カノログ）の1 view／1 active userを確認。RealtimeはhostName非対応のため、host別確定は標準report待ち
 - WordPress停止、SmugMug解約は未実施し、今回も対象外とする
 
@@ -61,7 +61,7 @@ SmugMug代替は既製の別サービスではなく、このリポジトリで�
 ## 完了後の任意運用事項
 
 1. 自動の経時監視スケジュールは、価値が限定的という2026-09-02のユーザー判断により削除済み。実行器は残し、障害調査や費用再測定が必要な場合だけ手動で使う。
-2. Search Console所有権証明とsitemap送信は外部権限・設定の変更を伴うため、移行実装とは分離し、実行時に明示承認を得る。
+2. Search Console所有権証明とblog／photosのsitemap送信は、2026-09-02の明示承認後に完了。検出ページ数はGoogle側の非同期処理で更新される。
 3. 初回請求$5.50と現時点の従量課金$0.00は確認済み。同額が続く場合は年$66、SmugMugとの差は年$34という暫定値であり、確定値が必要なら請求期間実績を再測定する。
 4. 旧WordPress／SmugMugは停止・解約せず、別途判断する。
 

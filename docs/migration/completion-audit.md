@@ -24,7 +24,7 @@
 | #7 意味ブロック | 達成 | 1,854件/16,701 block、`htmlBlock` 0、10種類の編集UI/renderer、公開crawlのshortcode/Gutenberg comment 0。引用271コンテンツ／370ブロックの本文欠落0 | なし |
 | #8 SmugMug完全移行 | 達成 | 40 album/2,168 assetすべてverified、重複ID/manifest不一致/pending 0、GPS/EXIF保持、metadata backfill済み | なし |
 | #9 WordPress完全移行 | 達成 | 2,028 media verified、1,854 content再実行`skipped_verified`、comments 127、旧WP/SmugMug/shortcode/Gutenberg comment 0 | nocalog/art-quizのWXR後非公開差分は管理認証外のためunknownとして記録済み |
-| #10 URL/SEO/切替 | 達成 | nameserver切替、zone active、2 Custom Domain、TLS、host分離308、canonical/robots/OGP/JSON-LD、代表readback 26/26が合格。本番4,056 page・6,490 internal linkを再監査し、残存参照0。一時timeout 4件は対象再監査12/12で200 | なし。Search Console所有権証明とsitemap送信は、明示承認を要する独立した外部操作 |
+| #10 URL/SEO/切替 | 達成 | nameserver切替、zone active、2 Custom Domain、TLS、host分離308、canonical/robots/OGP/JSON-LD、代表readback 26/26が合格。本番4,056 page・6,490 internal linkを再監査し、残存参照0。一時timeout 4件は対象再監査12/12で200。Search Console所有権確認とblog／photos sitemap送信も成功 | なし |
 | #11 監視/backup/実費 | 達成（今回範囲） | 監視実行器、D1 SQLとR2全3,546 object/6,978,619,128 bytesの保全、別SQLite復元、40,273 row、integrity/foreign key、全object hash、初回本番監視、請求画面のread-only snapshotを実証 | なし。将来の請求期間実績は確定値が必要になった時点で任意に再測定する。解約はしない |
 
 ## 2026-09-02 Yohaku staging QA
@@ -63,6 +63,7 @@
 - 12:08 JSTに監視reportをversion 6へ更新し、Workers CPUをGraphQLの公式`workersOverviewDataAdaptiveGroups`／`workersOverviewRequestsAdaptiveGroups`から取得した。9月account-wideは4,163,572.355 CPU ms、切替後Yohakuは422,358.830 CPU ms。月30,000,000 CPU ms枠に対するaccount-wide残量は25,836,427.645 CPU msで、現時点は枠内。値は適応サンプリング推定のため請求meterとは区別し、確定請求待ちは維持する。
 - 12:17 JSTにCloudflare Billing画面をread-only確認し、8月31日〜9月2日の従量課金合計$0.00、cycle予測$0.00、全表示metricのbillable usage 0を確認した。9月1日の$5.50請求は支払済み。report version 7へ機微情報を除いたsnapshotを統合した。同額が毎月続く場合の年額$66／SmugMugとの差年$34は、単一請求からの暫定値であり、請求内訳や将来の従量課金を推測しない。
 - 12:26 JSTにSearch Consoleのログイン済み画面で`kanouk@gmail.com`の`sc-domain:kanouk.com`アクセス拒否を確認し、report version 8へread-only snapshotを統合した。所有権証明、アクセス要求、sitemap送信は行っていない。property accessは未完了で、次の外部変更は明示承認待ち。
+- 14:33 JST、ユーザーの明示承認後にGoogleのCloudflare直接連携は使わず、DNS TXT方式で`sc-domain:kanouk.com`の所有権を確認した。検証用TXTはCloudflare権威DNSと1.1.1.1の双方で公開済み。`https://blog.kanouk.com/sitemap.xml`と`https://photos.kanouk.com/sitemap.xml`を送信し、両方が「サイトマップ インデックス／成功しました」になった。送信直後の検出ページ数0はGoogle側の非同期処理中として記録し、完了を推測しない。
 - 12:34 JSTにreport version 9へGA4 Realtime APIを追加し、property `256487934`／stream `2210574206`（カノログ）の直近30分に1 view／1 active userを確認した。Realtime APIはhostName非対応なので、対象streamの受信とhost別標準reportを混同しない。標準reportはAPI 200／0行のため処理待ちまたは無流入として継続監視する。
 - 12:53 JST、production実画面で40アルバムを全件遅延読込し、`Kyoto, 2004/07`だけが原寸480pxを559pxへ拡大していたことを検出した。一覧をdesktop 3列／tablet 2列／mobile 1列、カード上限480pxの共通契約へ変更し、Worker version `6e869a6e-a160-4044-80cf-08d17a187861`へdeployした。1280px本番では3列・各356px、40/40読込、拡大0、横overflow 0を実測。responsive契約を自動検査へ追加し、Python 141件、変換32件、Astro typecheck/build、CI `33588640407`、3ホストreadbackが合格した。
 - 13:00 JST、低解像度coverにも残っていたhover時1.5% zoomを追監査し、`data-low-resolution="true"`だけを共通hover selectorから除外した。commit `bf12620`、Worker version `4196f87d-685b-4a25-9386-dc314a9596d7`で、対象coverは原寸480px／表示356px、低解像度属性あり、zoom selector対象外。本番readback 17/17、CI `33589125921`が合格した。
@@ -114,7 +115,7 @@ python3 scripts/migration/verify_cloudflare_backup.py \
 
 ## 完了後の外部操作・任意観測
 
-- Search Consoleの`kanouk@gmail.com`所有権証明とsitemap送信は、外部権限・設定を変更する独立操作。移行実装の完了ゲートにはせず、実行時に明示承認を得る。
+- Search Consoleの`kanouk@gmail.com`所有権証明とblog／photos sitemap送信は明示承認後に完了。検証用DNS TXTは所有権維持のため残す。
 - GA4の新host別標準report、将来の請求期間実績、24時間・1週間・1か月・3か月の経時観測は、必要になった時点で手動実行できる。自動スケジュールは2026-09-02のユーザー指示で削除済み。
 
 ## 現在の完了判定

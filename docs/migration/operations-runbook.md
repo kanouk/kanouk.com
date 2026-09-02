@@ -162,7 +162,7 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 実行器は`kanouk@gmail.com`の最小権限tokenだけを使い、zone、Custom Domain、blog/photos/staging readback、Worker invocation error、D1の404 referrerを取得します。zone HTTP Analyticsは現在の最小権限tokenに`Zone Analytics Read`がないため、権限を勝手に広げず`not_available_to_minimum_scope_token`として記録します。Worker runtime errorと実media readbackは別経路で継続監視できます。
 
-監視JSONはGoogle Application Default Credentialsを使い、GA4標準reportの`hostName`別`screenPageViews`／`activeUsers`をread-onlyで取得します。Search Consoleもsites listだけを試し、スコープ不足・所有権未確認は状態として記録します。所有権付与やsitemap送信は行いません。Cloudflare billable usage APIも最大31日ずつread-onlyで取得し、権限不足は明示します。同APIはCloudflare公式仕様上、billing integrationが完了するまでcost fieldを返さない場合があるため、usage取得成功だけで実費確定とはしません。
+監視JSONはGoogle Application Default Credentialsを使い、GA4標準reportの`hostName`別`screenPageViews`／`activeUsers`をread-onlyで取得します。Search Console UIでは所有権確認とsitemap送信が完了していますが、ADCのAPI scopeは別物なので、sites listのスコープ不足はそのまま状態として記録します。Cloudflare billable usage APIも最大31日ずつread-onlyで取得し、権限不足は明示します。同APIはCloudflare公式仕様上、billing integrationが完了するまでcost fieldを返さない場合があるため、usage取得成功だけで実費確定とはしません。
 
 ### 初回監視結果
 
@@ -191,6 +191,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 12:17 JST、`kanouk@gmail.com`のCloudflare Billingをブラウザでread-only確認しました。8月31日〜9月2日の従量課金合計とcycle予測はいずれも$0.00で、表示されたR2／KV／D1／Workers／Imagesはすべてbillable usage 0でした。9月1日の請求$5.50は`Paid`です。請求番号、支払い方法、請求先住所は記録せず、請求内訳も開いていないため$5.50の構成は推測しません。同額が12か月続き、追加従量課金がなければ年間$66、SmugMug年$100との差は年$34ですが、単一請求からの暫定値として扱います。機微情報を除いた表示値は`cloudflare-billing-snapshot-2026-09-02.json`へ保存しました。
 
 12:26 JST、`kanouk@gmail.com`でGoogle Search Consoleの`sc-domain:kanouk.com`をread-only確認し、「このプロパティへのアクセス権がありません」を確認しました。所有権証明ボタンは押さず、sitemap送信もしていません。APIのscope不足とは別に、ログイン済みUIでもproperty accessがないことをreport version 8と`search-console-access-2026-09-02.json`へ記録しました。次の外部変更は所有権証明であり、実行時の明示承認が必要です。
+
+14:33 JST、ユーザーの明示承認後にGoogleのCloudflare直接連携を使わず、DNS TXT方式で`sc-domain:kanouk.com`の所有権を確認しました。検証用TXTはCloudflare権威DNSと1.1.1.1で公開を確認しています。blog／photosのsitemap indexを送信し、両方が「成功しました」になりました。検出ページ数は送信直後0のため、Google側の非同期処理中として扱います。検証用TXTは所有権維持のため削除しません。
 
 12:34 JST、監視実行器をreport version 9へ更新し、GA4 Realtime Data APIをread-onlyで追加しました。property `256487934`のexpected stream `2210574206`（カノログ）で直近30分の1 view／1 active userをHTTP 200で確認しました。Realtime APIは`hostName` dimensionを提供しないため、これは対象streamへの受信確認であり、`blog.kanouk.com`／`photos.kanouk.com`のhost別帰属を証明しません。host別は標準`runReport`の処理待ちとして分離します。
 

@@ -1,13 +1,42 @@
 {
-  "observed_at": "2026-09-02T12:26:00+09:00",
-  "source": "Google Search Console authenticated browser read-only view",
+  "observed_at": "2026-09-02T14:33:00+09:00",
+  "source": "Google Search Console authenticated browser and Cloudflare DNS dashboard",
   "account_email": "kanouk@gmail.com",
   "target_property": "sc-domain:kanouk.com",
-  "result": "access_denied",
-  "visible_message": "このプロパティへのアクセス権がありません",
+  "result": "verified_owner",
+  "visible_message": "所有権を証明しました",
   "ownership_verification_available": true,
-  "ownership_verification_performed": false,
-  "sitemap_submission_performed": false,
-  "next_action": "explicit_user_approval_required_for_ownership_verification",
-  "mutable_actions_performed": false
+  "ownership_verification_performed": true,
+  "ownership_verification_method": "dns_txt",
+  "verification_record_present": true,
+  "verification_token_recorded": false,
+  "sitemap_submission_performed": true,
+  "submitted_sitemaps": [
+    {
+      "url": "https://blog.kanouk.com/sitemap.xml",
+      "type": "sitemap_index",
+      "status": "success",
+      "submitted_on": "2026-09-02",
+      "last_read_on": "2026-09-02",
+      "detected_pages": 0,
+      "processing_state": "new_submission_processing"
+    },
+    {
+      "url": "https://photos.kanouk.com/sitemap.xml",
+      "type": "sitemap_index",
+      "status": "success",
+      "submitted_on": "2026-09-02",
+      "last_read_on": "2026-09-02",
+      "detected_pages": 0,
+      "processing_state": "new_submission_processing"
+    }
+  ],
+  "next_action": "none_required; detected page counts update asynchronously",
+  "mutable_actions_performed": true,
+  "mutable_actions": [
+    "cloudflare_dns_verification_txt_created",
+    "search_console_ownership_verified",
+    "blog_sitemap_submitted",
+    "photos_sitemap_submitted"
+  ]
 }
