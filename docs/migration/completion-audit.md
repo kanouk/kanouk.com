@@ -56,6 +56,7 @@
 - 同種事故をHTMLのreadback成功だけで見逃さないよう、`verify_public_site.py`へ実stylesheetのstatus、Content-Type、byte数、Yohaku design tokenを検査する`design-stylesheet`項目を追加した。追加後はblog 17/17、photos 13/13、staging 17/17が合格した。
 - 京都旅行記事の移行元SmugMugリンク情報は、旧サービスへ戻すのではなく新写真サービスへ変換した。公開記事`/posts/01M1CRQ1A4HMKFDBB6H3VKK0QE`の実リンクはSmugMug 0件、`photos.kanouk.com` 10件である。
 - 11:00 JSTの暫定監視はzone／Custom Domain／公開readback／Worker errorが合格した。404台帳にmobile Safariから各1回だけ記録された旧クライアント用`/open/`系requestは、現在のHTML・CSS・JSに参照がなく再発もないため、現行サイトの壊れた内部導線とは分離して記録する。
+- 11:15 JSTに監視reportをversion 2へ更新し、GA4標準report、Search Console sites list、Cloudflare billable usageをread-onlyで統合した。GA4 APIは200で当日分が処理待ち、Search Consoleとbillable usageは現行credentialのscope不足による403を明示できる。権限追加、所有権付与、sitemap送信、請求設定変更はしていない。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査

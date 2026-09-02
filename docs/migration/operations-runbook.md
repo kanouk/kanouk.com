@@ -162,7 +162,7 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 実行器は`kanouk@gmail.com`の最小権限tokenだけを使い、zone、Custom Domain、blog/photos/staging readback、Worker invocation error、D1の404 referrerを取得します。zone HTTP Analyticsは現在の最小権限tokenに`Zone Analytics Read`がないため、権限を勝手に広げず`not_available_to_minimum_scope_token`として記録します。Worker runtime errorと実media readbackは別経路で継続監視できます。
 
-GA4はGoogle Analytics Data API、Search Consoleは所有権とsitemap状態を別途読み戻し、Cloudflare JSONへ未確認値を混ぜません。
+監視JSONはGoogle Application Default Credentialsを使い、GA4標準reportの`hostName`別`screenPageViews`／`activeUsers`をread-onlyで取得します。Search Consoleもsites listだけを試し、スコープ不足・所有権未確認は状態として記録します。所有権付与やsitemap送信は行いません。Cloudflare billable usage APIも最大31日ずつread-onlyで取得し、権限不足は明示します。同APIはCloudflare公式仕様上、billing integrationが完了するまでcost fieldを返さない場合があるため、usage取得成功だけで実費確定とはしません。
 
 ### 初回監視結果
 
@@ -177,6 +177,8 @@ GA4はGoogle Analytics Data API、Search Consoleは所有権とsitemap状態を�
 08:56 JST、Gutenberg引用のnested paragraph/listを既存変換器が読まず、一部引用本文が空になる不具合を修正しました。`--only-quotes`の読み取りドライランで271件すべてが更新対象、対象外更新0、失敗0を確認してから、更新前D1をSQLへ退避・別SQLite復元検証し、271/271件を更新・再公開しました。更新後の再実行は271/271 `skipped_verified`、失敗0です。原本370引用に対し、公開posts 366、公開page 2、private revision 2、本文欠落0です。Worker version `44c7961e-7790-40ca-84e2-a748bd5e5254`で長文、複数段落、箇条書き、light／dark、390／1440px、横overflow 0を実画面確認し、3ホストの代表readbackも再合格しています。
 
 09:16 JST、共通監視実行器の初回暫定runが合格しました。切替から約2時間23分でzone active、Custom Domain 2件、blog 14/14・photos 12/12・staging 14/14、Worker 18,727 invocation中runtime error 0、内部／外部referrer付き404 0でした。GA4はproperty `256487934`、stream `2210574206`、measurement ID `G-94EQ0WN7B9`を管理画面で照合し、Realtimeでactive users 4・page views 9を受信しています。host別帰属は標準reportの処理待ちです。
+
+11:15 JST、監視実行器をreport version 2へ更新し、GA4／Search Console／Cloudflare billing usageのread-only観測を統合しました。GA4 Data APIはHTTP 200で、当日分の標準reportはまだ0行のため`pending_standard_processing_or_no_traffic`。Search Consoleは現在のADCに`webmasters.readonly`がなくHTTP 403、Cloudflare billable usageは最小権限tokenでHTTP 403として記録します。いずれも権限追加・設定変更・送信操作は行っていません。
 
 ## Cloudflare staging backup
 

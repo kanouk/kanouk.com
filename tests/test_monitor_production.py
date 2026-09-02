@@ -105,6 +105,70 @@ class MonitorProductionTests(unittest.TestCase):
             ["/open/visitors/info/gets"],
         )
 
+    def test_ga4_report_keeps_host_level_metrics(self) -> None:
+        report = module.summarize_ga4_report(
+            {
+                "rows": [
+                    {
+                        "dimensionValues": [{"value": "blog.kanouk.com"}],
+                        "metricValues": [{"value": "8"}, {"value": "3"}],
+                    },
+                    {
+                        "dimensionValues": [{"value": "kanolog.net"}],
+                        "metricValues": [{"value": "21"}, {"value": "19"}],
+                    },
+                ]
+            }
+        )
+        self.assertEqual(report["production_hosts_observed"], ["blog.kanouk.com"])
+        self.assertEqual(
+            report["production_rows"][0],
+            {
+                "host_name": "blog.kanouk.com",
+                "screen_page_views": 8,
+                "active_users": 3,
+            },
+        )
+
+    def test_search_console_summary_finds_domain_property(self) -> None:
+        report = module.summarize_search_console_sites(
+            {
+                "siteEntry": [
+                    {
+                        "siteUrl": "sc-domain:kanouk.com",
+                        "permissionLevel": "siteOwner",
+                    }
+                ]
+            }
+        )
+        self.assertEqual(
+            report["target_site"],
+            {
+                "site_url": "sc-domain:kanouk.com",
+                "permission_level": "siteOwner",
+            },
+        )
+
+    def test_billing_summary_omits_account_identity(self) -> None:
+        report = module.summarize_cloudflare_billing_rows(
+            [
+                {
+                    "BillingAccountName": "Private account name",
+                    "ChargePeriodStart": "2026-09-01T00:00:00Z",
+                    "ChargePeriodEnd": "2026-09-02T00:00:00Z",
+                    "ConsumedQuantity": 100,
+                    "ConsumedUnit": "Requests",
+                    "BilledCost": 0,
+                    "BillingCurrency": "USD",
+                    "x_ProductFamilyName": "Workers",
+                    "x_BillableMetricName": "Workers Standard Requests",
+                }
+            ]
+        )
+        self.assertEqual(report["product_families"], ["Workers"])
+        self.assertTrue(report["cost_fields_present"])
+        self.assertNotIn("BillingAccountName", report["records"][0])
+
 
 if __name__ == "__main__":
     unittest.main()
