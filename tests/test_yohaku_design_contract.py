@@ -78,34 +78,42 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn('class:list={["yohaku-image", className]}', component)
         self.assertIn("aspect-ratio: var(--yohaku-image-ratio, auto)", css)
 
-    def test_japanese_font_hierarchy_uses_only_two_network_weights(self) -> None:
+    def test_public_typography_uses_system_fonts_without_network_bootstrap(self) -> None:
         config = (WEB_ROOT / "astro.config.mjs").read_text()
-        noto = re.search(
-            r'name:\s*"Noto Sans JP"(?P<body>.*?)(?:\n\s*\},)',
-            config,
-            re.DOTALL,
-        )
-        self.assertIsNotNone(noto)
-        self.assertIn("weights: [400, 600]", noto.group("body"))
+        head = (WEB_ROOT / "src/components/YohakuHead.astro").read_text()
+        css = (WEB_ROOT / "src/styles/theme.css").read_text()
+        self.assertNotIn("fontProviders", config)
+        self.assertNotIn("<Font", head)
+        self.assertNotIn('from "astro:assets"', head)
+        self.assertIn("--font-body: -apple-system", css)
+        self.assertIn('--font-mono: "SFMono-Regular"', css)
 
-    def test_list_images_use_one_bounded_cloudflare_preview_preset(self) -> None:
+    def test_public_images_use_bounded_responsive_cloudflare_variants(self) -> None:
         component = (WEB_ROOT / "src/components/YohakuImage.astro").read_text()
         worker = (WEB_ROOT / "src/worker.ts").read_text()
-        self.assertIn("(preview || cropSafely) && !lowResolution && previewKey", component)
-        self.assertIn("/_yohaku/media/preview-v1/", component)
-        self.assertIn('const PREVIEW_PREFIX = "/_yohaku/media/preview-v1/"', worker)
-        self.assertIn("const PREVIEW_WIDTH = 1200", worker)
-        self.assertIn('format: "webp"', worker)
+        self.assertIn("(preview || cropSafely) && !lowResolution", component)
+        self.assertIn("/_yohaku/media/preview-v2/", component)
+        self.assertIn("/_yohaku/media/external-v1/", component)
+        self.assertIn("const allowedWidths = [320, 480, 768, 1200, 1600]", component)
+        self.assertIn(
+            "const RESPONSIVE_WIDTHS = new Set([320, 480, 768, 1200, 1600])",
+            worker,
+        )
+        self.assertIn('format: "avif" | "webp"', worker)
         self.assertIn('fit: "scale-down"', worker)
-        self.assertIn('quality: 85', worker)
+        self.assertIn('format === "avif" ? 62 : 78', worker)
+        self.assertIn("isTrustedLegacyImageUrl", worker)
+        self.assertIn('<source type="image/avif"', component)
+        self.assertIn("srcset={webpSrcset}", component)
+        self.assertIn("sizes={responsiveSizes}", component)
 
         portable = (WEB_ROOT / "src/components/YohakuPortableImage.astro").read_text()
         album_archive = (WEB_ROOT / "src/pages/albums/index.astro").read_text()
         album_detail = (WEB_ROOT / "src/pages/albums/[slug].astro").read_text()
         self.assertIn("<YohakuImage", portable)
         self.assertIn("preview", portable)
-        self.assertIn("priority={index === 0}", album_archive)
-        self.assertIn("preview priority={index === 0}", album_detail)
+        self.assertIn("priority={index < 4}", album_archive)
+        self.assertIn("preview priority={index < 3}", album_detail)
 
     def test_album_archive_bounds_cover_size_across_breakpoints(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
@@ -192,9 +200,11 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn('href="/favicon.svg"', head)
         self.assertIn('href="/kano-profile.png"', head)
 
-    def test_article_archive_selector_covers_the_full_migrated_history(self) -> None:
+    def test_article_archive_selector_is_bounded_with_full_history_link(self) -> None:
         archive_nav = (WEB_ROOT / "src/components/PostArchiveNav.astro").read_text()
-        self.assertIn("getPostArchiveMonths(240)", archive_nav)
+        self.assertIn("getPostArchiveMonths(24)", archive_nav)
+        self.assertIn('href="/archives"', archive_nav)
+        self.assertIn("selectedArchive", archive_nav)
         self.assertIn(
             "selected={archive.year === selected.year && archive.month === selected.month}",
             archive_nav,
