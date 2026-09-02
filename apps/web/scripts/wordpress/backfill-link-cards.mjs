@@ -194,6 +194,30 @@ export function resolveSourceCard(card, sourceTargets) {
 	};
 }
 
+export function publicFeaturedImage(value) {
+	if (!value || typeof value !== "object") return undefined;
+	if (typeof value.src === "string" && value.src.trim()) return value.src.trim();
+	const storageKey = value.meta?.storageKey;
+	if (value.provider === "local" && typeof storageKey === "string" && storageKey.trim()) {
+		return `/_emdash/api/media/file/${encodeURIComponent(storageKey.trim())}`;
+	}
+	return undefined;
+}
+
+export function portableTextExcerpt(value, maxLength = 180) {
+	const parts = [];
+	const visit = (node) => {
+		if (Array.isArray(node)) return node.forEach(visit);
+		if (!node || typeof node !== "object") return;
+		if (node._type === "span" && typeof node.text === "string") parts.push(node.text);
+		else if (node._type === "block") visit(node.children);
+	};
+	visit(value);
+	const text = parts.join(" ").replace(/\s+/g, " ").trim();
+	if (!text) return undefined;
+	return text.length > maxLength ? `${text.slice(0, maxLength).trimEnd()}…` : text;
+}
+
 export function repairLinkCards(content, sourceCards, sourceTargets) {
 	let cardIndex = 0;
 	let changedFields = 0;
@@ -219,7 +243,9 @@ export function repairLinkCards(content, sourceCards, sourceTargets) {
 		for (const field of ["title", "description", "imageUrl", "caption"]) {
 			const current = String(copy[field] || "").trim();
 			const genericTitle = field === "title" && current === "関連記事";
-			if ((!current || genericTitle) && source[field]) {
+			const staleMediaId = field === "imageUrl"
+				&& /^\/_emdash\/api\/media\/file\/01[A-Z0-9]{24}$/.test(current);
+			if ((!current || genericTitle || staleMediaId) && source[field]) {
 				copy[field] = source[field];
 				changedFields++;
 			}
@@ -242,8 +268,8 @@ async function listSourceTargets(origin, token) {
 			result.set(sourceId, {
 				id: item.id,
 				title: item.data?.title,
-				excerpt: item.data?.excerpt,
-				featuredImage: item.data?.featured_image?.src,
+				excerpt: item.data?.excerpt || portableTextExcerpt(item.data?.content),
+				featuredImage: publicFeaturedImage(item.data?.featured_image),
 				content: item.data?.content,
 			});
 		}

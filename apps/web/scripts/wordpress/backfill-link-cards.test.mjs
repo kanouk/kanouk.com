@@ -4,11 +4,33 @@ import test from "node:test";
 import {
 	repairLinkCards,
 	mergeSourceCards,
+	portableTextExcerpt,
+	publicFeaturedImage,
 	renderedLinkCards,
 	resolveSourceCard,
 	sourceLinkCards,
 	wxrContentById,
 } from "./backfill-link-cards.mjs";
+
+test("converts local and external featured images to public card URLs", () => {
+	assert.equal(
+		publicFeaturedImage({ id: "01MEDIA", provider: "local", meta: { storageKey: "01IMAGE.png" } }),
+		"/_emdash/api/media/file/01IMAGE.png",
+	);
+	assert.equal(
+		publicFeaturedImage({ id: "", provider: "external", src: "https://example.com/cover.jpg" }),
+		"https://example.com/cover.jpg",
+	);
+	assert.equal(publicFeaturedImage(undefined), undefined);
+});
+
+test("builds a concise preview from portable text paragraphs", () => {
+	assert.equal(portableTextExcerpt([
+		{ _type: "block", children: [{ _type: "span", text: "前から気になっていた" }] },
+		{ _type: "yohaku.linkCard", title: "カード名" },
+		{ _type: "block", children: [{ _type: "span", text: "Aesop の香水。" }] },
+	]), "前から気になっていた Aesop の香水。");
+});
 
 test("extracts one requested WordPress item without taking neighboring content", () => {
 	const xml = `<rss><channel><item><wp:post_id>1</wp:post_id><content:encoded><![CDATA[first]]></content:encoded></item><item><wp:post_id>2</wp:post_id><content:encoded><![CDATA[second]]></content:encoded></item></channel></rss>`;
@@ -66,4 +88,18 @@ test("repairs only an empty card and preserves a deliberately replaced destinati
 	assert.equal(result.value[0].id, "/posts/TARGET");
 	assert.equal(result.value[0].title, "Aesop Tacitを買ってみた");
 	assert.equal(result.value[1].id, "https://perfume.fm/perfumes/diptyque-orpheon");
+});
+
+test("replaces a mistaken media record URL with the storage-key URL", () => {
+	const targets = new Map([["kanolog:8790", {
+		id: "TARGET",
+		title: "Aesop Tacitを買ってみた",
+		featuredImage: "/_emdash/api/media/file/STORAGE.png",
+	}]]);
+	const result = repairLinkCards(
+		[{ _type: "yohaku.linkCard", id: "/posts/TARGET", imageUrl: "/_emdash/api/media/file/01M1DEAQK6X29C5BD8QQDH12VK" }],
+		[{ _type: "yohaku.linkCard", id: "wordpress://kanolog/post/8790" }],
+		targets,
+	);
+	assert.equal(result.value[0].imageUrl, "/_emdash/api/media/file/STORAGE.png");
 });
