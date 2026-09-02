@@ -374,7 +374,48 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
         })
         self.assertEqual(commands[1], ["content", "publish", "albums", "album-id"])
 
-    def test_ensure_album_cover_is_idempotent_when_published_cover_matches(self) -> None:
+    def test_ensure_album_cover_publishes_stale_public_cover_without_reupload(self) -> None:
+        cover = asset()
+        cover["source"]["image_key"] = "node-cover"
+        cover["destination"] = {"emdash_media_id": "node-cover-media"}
+        cover["verification"] = {"r2_roundtrip_verified": True}
+        manifest = {
+            "album": {
+                "destination": {"emdash_content_id": "album-id"},
+                "source": {"cover_image_key": "node-cover"},
+            },
+            "assets": [cover],
+        }
+        commands: list[list[str]] = []
+
+        def fake_get(collection, identifier, *, env, token, published=False):
+            if published and not commands:
+                return {
+                    "data": {"cover_image": {"id": "first-media"}},
+                    "_rev": "rev-published",
+                }
+            if published:
+                return {
+                    "data": {"cover_image": {"id": "node-cover-media"}},
+                    "_rev": "rev-published",
+                }
+            return {
+                "data": {"cover_image": {"id": "node-cover-media"}},
+                "_rev": "rev-draft",
+            }
+
+        with (
+            patch.object(module, "get_content_by_identifier", side_effect=fake_get),
+            patch.object(
+                module, "run_emdash", side_effect=lambda args, env, token: commands.append(list(args))
+            ) as run,
+            patch.object(module, "upload_media") as upload,
+        ):
+            changed = module.ensure_album_cover(manifest, env={}, token="token")
+        self.assertTrue(changed)
+        upload.assert_not_called()
+        self.assertEqual(run.call_count, 1)
+        self.assertEqual(commands, [["content", "publish", "albums", "album-id"]])
         cover = asset()
         cover["source"]["image_key"] = "node-cover"
         cover["destination"] = {"emdash_media_id": "node-cover-media"}

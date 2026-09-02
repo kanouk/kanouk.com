@@ -44,6 +44,7 @@ from migrate_smugmug_album import (  # noqa: E402
     preferred_cover_asset,
 )
 from run_emdash_kanouk import (  # noqa: E402
+    EmDashGuardError,
     child_environment,
     load_credential,
     preflight,
@@ -299,9 +300,14 @@ def main() -> None:
         print(json.dumps(summary, ensure_ascii=False, indent=2))
         return
 
-    credential = load_credential()
-    env = child_environment(credential)
-    preflight(env)
+    try:
+        credential = load_credential()
+        env = child_environment(credential)
+        preflight(env)
+    except EmDashGuardError as exc:
+        summary["error"] = str(exc)
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        raise SystemExit(f"EmDash cover apply blocked: {exc}") from exc
     updated = 0
     unchanged = 0
     for path, manifest in rows:
