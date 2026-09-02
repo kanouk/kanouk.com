@@ -17,11 +17,13 @@
 			"labelSingular": "Post",
 			"supports": ["drafts", "revisions", "search", "seo"],
 			"sortOrder": 10,
+			"dateField": "published_on",
 			"fields": [
 				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
 				{ "slug": "featured_image", "label": "Featured Image", "type": "image" },
 				{ "slug": "content", "label": "Content", "type": "portableText", "searchable": true },
 				{ "slug": "excerpt", "label": "Excerpt", "type": "text" },
+				{ "slug": "published_on", "label": "Published On", "type": "datetime", "indexed": true },
 				{ "slug": "source_url", "label": "Source URL", "type": "string", "indexed": true },
 				{ "slug": "source_id", "label": "Source ID", "type": "string", "indexed": true },
 				{ "slug": "source_metadata", "label": "Source Metadata", "type": "json" }

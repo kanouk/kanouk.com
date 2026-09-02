@@ -9,6 +9,7 @@ import {
 	extractModifiedDates,
 	featuredMediaValue,
 	loadContentIds,
+	migrationData,
 	recordsWithWordPressQuotes,
 	rewriteMediaReferences,
 	rewriteLegacySiteReferences,
@@ -17,6 +18,50 @@ import {
 	storedMigrationDataMatches,
 	storedMigrationItemIsConverged,
 } from "./import-wxr.mjs";
+
+test("post migration keeps the admin list date aligned with the WordPress publication date", () => {
+	const record = {
+		slug: "dated-post",
+		source: { id: "kanolog", origin: "https://kanolog.net" },
+		wxr: { posts: [] },
+		attachmentMap: new Map(),
+		post: {
+			id: 42,
+			postType: "post",
+			status: "publish",
+			postDateGmt: "2024-07-12 03:04:05",
+			postDate: "2024-07-12 12:04:05",
+			pubDate: "Fri, 12 Jul 2024 03:04:05 +0000",
+			postName: "dated-post",
+			title: "Dated post",
+			content: "",
+			excerpt: "",
+			categories: [],
+			tags: [],
+			meta: new Map(),
+		},
+	};
+	const desired = migrationData(
+		record,
+		new Map(),
+		buildMediaMappings(),
+		buildSmugMugMappings([]),
+		new Map(),
+		new Map(),
+		new Map(),
+	);
+	assert.equal(desired.publishedAt, "2024-07-12T03:04:05.000Z");
+	assert.equal(desired.data.published_on, desired.publishedAt);
+	const stored = {
+		data: {
+			...desired.data,
+			source_metadata: { migration_fingerprint: desired.fingerprint },
+		},
+	};
+	assert.equal(storedMigrationDataMatches(stored, desired), true);
+	stored.data.published_on = "2026-09-02T00:00:00.000Z";
+	assert.equal(storedMigrationDataMatches(stored, desired), false);
+});
 
 test("quote-only import scope selects only records with a Gutenberg quote block", () => {
 	const records = [

@@ -138,6 +138,7 @@ export function storedMigrationDataMatches(item, desired) {
 		&& data.title === desired.data.title
 		&& data.source_url === desired.data.source_url
 		&& data.source_id === desired.data.source_id
+		&& (desired.collection !== "posts" || data.published_on === desired.data.published_on)
 		&& stableJson(data.content ?? []) === stableJson(desired.data.content ?? []);
 }
 
@@ -562,7 +563,7 @@ function countType(nodes, type) {
 	return total;
 }
 
-function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes, contentIds) {
+export function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes, contentIds) {
 	const { post, source, wxr, modified } = record;
 	const reusableBlocks = new Map(
 		wxr.posts.filter((candidate) => candidate.postType === "wp_block").map((candidate) => [String(candidate.id), candidate]),
@@ -608,6 +609,11 @@ function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, le
 		source_metadata: baseMetadata,
 	};
 	if (collection === "posts") {
+		// EmDash's admin list intentionally uses a collection-specific datetime
+		// field when one is configured. Keep that supported field aligned with
+		// the system publication timestamp so migrated posts display their real
+		// WordPress date instead of the import/update date.
+		data.published_on = date;
 		data.excerpt = post.excerpt || undefined;
 		const attachmentUrl = record.attachmentMap.get(String(post.meta.get("_thumbnail_id") || ""));
 		if (attachmentUrl) data.featured_image = featuredMediaValue(attachmentUrl, mediaMappings);
@@ -706,19 +712,30 @@ async function ensureSchema(client, apply) {
 	for (const collectionSlug of ["posts", "pages"]) {
 		const collection = collections.get(collectionSlug);
 		if (!collection) throw new Error(`Required collection is missing: ${collectionSlug}`);
-		if (collectionSlug === "posts" && collection.urlPattern !== "/posts/{id}" && apply) {
-			await client.put("/_emdash/api/schema/collections/posts", {
-				urlPattern: "/posts/{id}",
-			});
-		}
 		const existing = new Set((collection.fields || []).map((field) => field.slug));
 		for (const field of [
+			...(collectionSlug === "posts"
+				? [{ slug: "published_on", label: "Published On", type: "datetime", indexed: true }]
+				: []),
 			{ slug: "source_url", label: "Source URL", type: "string", indexed: true },
 			{ slug: "source_id", label: "Source ID", type: "string", indexed: true },
 			{ slug: "source_metadata", label: "Source Metadata", type: "json" },
 		]) {
 			if (!existing.has(field.slug) && apply) {
 				await client.post(`/_emdash/api/schema/collections/${collectionSlug}/fields`, field);
+			}
+		}
+		if (collectionSlug === "posts" && apply) {
+			if (collection.urlPattern !== "/posts/{id}") {
+				await client.put("/_emdash/api/schema/collections/posts", {
+					urlPattern: "/posts/{id}",
+				});
+			}
+			// EmDash 0.35 validates dateField internally but does not yet expose it
+			// through the collection-update HTTP schema. Fresh databases receive it
+			// from seed.json; initialized databases need the guarded D1 migration.
+			if (collection.dateField !== "published_on") {
+				throw new Error('Posts collection dateField must be "published_on" before importing');
 			}
 		}
 	}
