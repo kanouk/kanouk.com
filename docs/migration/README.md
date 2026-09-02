@@ -19,6 +19,7 @@
 - `kanouk.com`を`kanouk@gmail.com`側Cloudflareへ追加し、2026-09-02にnameserver切替、zone active、2 Custom Domain、TLS、本番readbackまで完了
 - 旧カノログのGA4 `G-94EQ0WN7B9`をproduction 2ホストだけへ継承。stagingはanalyticsなし・`noindex`のまま維持
 - Workers CPUは9月account-wide 4,163,572.355 ms、切替後Yohaku 422,358.830 msをread-onlyで観測。月30,000,000 ms枠内だが、GraphQLの適応サンプリング推定なので確定請求とは分離
+- Cloudflare Billingの初回read-only確認では従量課金$0.00、9月1日の支払済み請求$5.50。同額が毎月続く場合は年$66／SmugMugとの差年$34だが、単一請求からの暫定値
 - WordPress停止、SmugMug解約は未実施し、今回も対象外とする
 
 ## データの流れ
@@ -51,12 +52,13 @@ SmugMug代替は既製の別サービスではなく、このリポジトリで�
 - [unmapped-fields.md](unmapped-fields.md): 未完了事項と最終ゲート
 - [completion-audit.md](completion-audit.md): Issue #1〜#11の証拠ベース完了監査
 - [operations-runbook.md](operations-runbook.md): deploy後監視、backup、復元、rollback、コスト測定
+- [cloudflare-billing-snapshot-2026-09-02.json](cloudflare-billing-snapshot-2026-09-02.json): 機微情報を除いた初回請求・従量課金snapshot
 - `scripts/migration/monitor_production.py`: 時刻ゲート付きの本番監視JSON（Cloudflare、公開readback、404）
 
 ## 残っているゲート
 
 1. 24時間、1週間、1か月、3か月の時点でWorker error、404、Search Console、GA4、Core Web Vitalsを監視する。
-2. Cloudflareの請求期間後にWorkers／R2／D1／Imagesの実費を確定し、年$100削減の成否を判定する。
+2. 初回請求$5.50と現時点の従量課金$0.00は確認済み。1か月時点の請求期間実績で年$100削減の成否を確定する。
 3. 旧WordPress／SmugMugは停止・解約せず、監視結果を材料に別途判断する。
 
 ## アカウントと秘密情報

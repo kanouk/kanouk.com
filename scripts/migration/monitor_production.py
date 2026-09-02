@@ -42,6 +42,10 @@ WORKER_SERVICE = "kanouk-emdash-staging"
 DATABASE_NAME = "kanouk-content-staging"
 DATABASE_ID = "30d6fc05-588e-4c4c-9e96-2b77fe35dd82"
 R2_BUCKET_NAME = "kanouk-public-media-staging"
+CF_BILLING_SNAPSHOT_PATH = (
+    REPO_ROOT
+    / "docs/migration/cloudflare-billing-snapshot-2026-09-02.json"
+)
 PRODUCTION_HOSTS = ("blog.kanouk.com", "photos.kanouk.com")
 STAGING_URL = "https://kanouk-emdash-staging.kanouk.workers.dev"
 GA4_PROPERTY_ID = "256487934"
@@ -765,8 +769,26 @@ def quota_observation(
     }
 
 
+def load_billing_dashboard_snapshot() -> dict[str, Any]:
+    try:
+        snapshot = json.loads(CF_BILLING_SNAPSHOT_PATH.read_text())
+    except (OSError, json.JSONDecodeError) as error:
+        raise MonitorError(
+            "Cloudflare billing dashboard snapshot is unavailable"
+        ) from error
+    if not isinstance(snapshot, dict):
+        raise MonitorError("Cloudflare billing dashboard snapshot is invalid")
+    if snapshot.get("mutable_actions_performed") is not False:
+        raise MonitorError(
+            "Cloudflare billing dashboard snapshot is not read-only"
+        )
+    return snapshot
+
+
 def build_cost_baseline(
-    worker: Mapping[str, Any], platform: Mapping[str, Any]
+    worker: Mapping[str, Any],
+    platform: Mapping[str, Any],
+    billing_snapshot: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     d1 = platform.get("d1") if isinstance(platform.get("d1"), Mapping) else {}
     d1_storage = (
@@ -862,6 +884,22 @@ def build_cost_baseline(
         row["above_included"] is False for row in observations.values()
     )
     monthly_floor = float(worker_pricing["paid_minimum_usd_month"])
+    billing_usage = (
+        billing_snapshot.get("billable_usage")
+        if isinstance(billing_snapshot, Mapping)
+        and isinstance(billing_snapshot.get("billable_usage"), Mapping)
+        else {}
+    )
+    latest_invoice = (
+        billing_snapshot.get("latest_invoice")
+        if isinstance(billing_snapshot, Mapping)
+        and isinstance(billing_snapshot.get("latest_invoice"), Mapping)
+        else {}
+    )
+    paid_invoice_usd = float(latest_invoice.get("amount_usd") or 0)
+    annualized_paid_invoice = round(paid_invoice_usd * 12, 2)
+    observed_monthly_floor = paid_invoice_usd or monthly_floor
+    observed_annual_floor = round(observed_monthly_floor * 12, 2)
     return {
         "pricing_snapshot": PRICING_SNAPSHOT,
         "scope": (
@@ -879,15 +917,52 @@ def build_cost_baseline(
         "all_measured_or_bounded_yohaku_usage_below_included_units": (
             all_observed_below_included and not unclassified
         ),
-        "minimum_account_cost_usd_month": monthly_floor,
-        "minimum_account_cost_usd_year": monthly_floor * 12,
+        "minimum_account_cost_usd_month": observed_monthly_floor,
+        "minimum_account_cost_usd_year": observed_annual_floor,
+        "minimum_account_cost_basis": (
+            "single_paid_invoice"
+            if paid_invoice_usd
+            else "official_pre_tax_floor"
+        ),
+        "official_subscription_floor_before_tax_usd_month": monthly_floor,
+        "official_subscription_floor_before_tax_usd_year": monthly_floor * 12,
         "smugmug_reference_cost_usd_year": 100.0,
         "savings_ceiling_before_unknown_overages_usd_year": (
-            100.0 - monthly_floor * 12
+            round(100.0 - observed_annual_floor, 2)
         ),
-        "estimate_status": "provisional_floor_only",
+        "billing_dashboard_snapshot": {
+            "observed_at": (
+                billing_snapshot.get("observed_at")
+                if isinstance(billing_snapshot, Mapping)
+                else None
+            ),
+            "current_cycle_usage_cost_usd": float(
+                billing_usage.get("total_usage_cost_usd") or 0
+            ),
+            "projected_cycle_usage_cost_usd": float(
+                billing_usage.get("projected_cycle_usage_cost_usd") or 0
+            ),
+            "all_usage_within_included_tiers": (
+                billing_usage.get("all_usage_within_included_tiers") is True
+            ),
+            "latest_paid_invoice_usd": paid_invoice_usd,
+            "latest_paid_invoice_date": latest_invoice.get("date"),
+            "latest_paid_invoice_status": latest_invoice.get("status"),
+            "invoice_line_items_inspected": (
+                latest_invoice.get("line_items_inspected") is True
+            ),
+            "annualized_cash_cost_if_invoice_amount_recurs_usd_year": (
+                annualized_paid_invoice
+            ),
+            "savings_if_invoice_amount_recurs_before_usage_overage_usd_year": (
+                round(100.0 - annualized_paid_invoice, 2)
+            ),
+            "annualization_status": "provisional_single_paid_invoice",
+        },
+        "estimate_status": "provisional_single_paid_invoice_observed",
         "unknowns": [
-            "actual account-wide billable usage and invoice",
+            "future billing-cycle usage cost and invoice amount",
+            "whether the single paid invoice amount recurs unchanged",
             "other resources sharing account-wide included quotas",
             "Yohaku-only attribution within account-wide Images metrics",
             (
@@ -1220,7 +1295,12 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
         start=CUTOVER_AT,
         end=observed_at,
     )
-    cost_baseline = build_cost_baseline(metrics, cloudflare_platform_usage)
+    billing_dashboard_snapshot = load_billing_dashboard_snapshot()
+    cost_baseline = build_cost_baseline(
+        metrics,
+        cloudflare_platform_usage,
+        billing_snapshot=billing_dashboard_snapshot,
+    )
     not_found = query_404_log(env=env)
     google_observations = collect_google_observations(observed_at)
     billing_usage = cloudflare_billing_usage(
@@ -1247,7 +1327,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
     worker_ok = metrics["errors"] == 0
     navigation_ok = not not_found["internal_referrer_rows"]
     return {
-        "report_version": 6,
+        "report_version": 7,
         "checkpoint": checkpoint,
         "checkpoint_due": checkpoint_due(checkpoint, observed_at),
         "observed_at": observed_at.isoformat(),
@@ -1266,6 +1346,9 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
         "external_services": {
             **google_observations,
             "cloudflare_billing_usage": billing_usage,
+            "cloudflare_billing_dashboard_snapshot": (
+                billing_dashboard_snapshot
+            ),
             "cloudflare_platform_usage": cloudflare_platform_usage,
             "cloudflare_cost_baseline": cost_baseline,
             "cloudflare_zone_http_analytics": (

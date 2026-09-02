@@ -188,6 +188,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 12:08 JST、監視実行器をreport version 6へ更新し、Workers StandardのCPU合計をCloudflare GraphQLからread-onlyで取得しました。9月のaccount-wide推定は4,163,572.355 CPU ms、切替後のYohaku Worker推定は422,358.830 CPU msです。前者を月30,000,000 CPU msの同梱枠と比較し、残り25,836,427.645 CPU msを確認しました。`AdaptiveGroups`の値は適応サンプリング推定であり、account-wideとWorker単体は独立に推定されるため厳密な差し引きには使いません。CPU未観測は解消しましたが、確定請求は請求明細のmeterを正本とします。
 
+12:17 JST、`kanouk@gmail.com`のCloudflare Billingをブラウザでread-only確認しました。8月31日〜9月2日の従量課金合計とcycle予測はいずれも$0.00で、表示されたR2／KV／D1／Workers／Imagesはすべてbillable usage 0でした。9月1日の請求$5.50は`Paid`です。請求番号、支払い方法、請求先住所は記録せず、請求内訳も開いていないため$5.50の構成は推測しません。同額が12か月続き、追加従量課金がなければ年間$66、SmugMug年$100との差は年$34ですが、単一請求からの暫定値として扱います。機微情報を除いた表示値は`cloudflare-billing-snapshot-2026-09-02.json`へ保存しました。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。

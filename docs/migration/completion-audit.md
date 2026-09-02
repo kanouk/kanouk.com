@@ -61,6 +61,7 @@
 - 11:50 JSTに監視reportをversion 4へ更新し、Workers／D1／R2／Imagesの公式料金snapshotとYohaku resource usageを比較した。観測済み項目は同梱／無料枠内で、Workers Paid最低額は年$60、SmugMug年$100との差額上限は年$40。ただしCPU、Images実測、account-wide請求が未確認なので`provisional_floor_only`であり、確定削減額とはしていない。
 - 11:57 JSTに監視reportをversion 5へ更新し、Images unique transformationsをaccount-wideで実測した。9月累計242件／9月2日7件で、無料枠5,000件に対する残りは4,758件。Yohaku contract上限3,507件も枠内だが、Yohaku単体への帰属は分離できないためaccount-wide実測と設計上限を混同しない。
 - 12:08 JSTに監視reportをversion 6へ更新し、Workers CPUをGraphQLの公式`workersOverviewDataAdaptiveGroups`／`workersOverviewRequestsAdaptiveGroups`から取得した。9月account-wideは4,163,572.355 CPU ms、切替後Yohakuは422,358.830 CPU ms。月30,000,000 CPU ms枠に対するaccount-wide残量は25,836,427.645 CPU msで、現時点は枠内。値は適応サンプリング推定のため請求meterとは区別し、確定請求待ちは維持する。
+- 12:17 JSTにCloudflare Billing画面をread-only確認し、8月31日〜9月2日の従量課金合計$0.00、cycle予測$0.00、全表示metricのbillable usage 0を確認した。9月1日の$5.50請求は支払済み。report version 7へ機微情報を除いたsnapshotを統合した。同額が毎月続く場合の年額$66／SmugMugとの差年$34は、単一請求からの暫定値であり、請求内訳や将来の従量課金を推測しない。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査

@@ -1,0 +1,113 @@
+{
+  "observed_at": "2026-09-02T12:17:00+09:00",
+  "source": "Cloudflare Dashboard Billing read-only view",
+  "account_email": "kanouk@gmail.com",
+  "subscriptions": [
+    {
+      "product": "Workers Paid",
+      "status": "Active",
+      "renews_on": "2026-09-30"
+    },
+    {
+      "product": "R2 Paid",
+      "status": "Active",
+      "renews_on": "2026-09-30"
+    },
+    {
+      "product": "Images Stream Basic",
+      "status": "Active",
+      "renews_on": "2026-09-30"
+    },
+    {
+      "product": "kanouk.com Free Plan",
+      "status": "Active",
+      "renews_on": null
+    }
+  ],
+  "billable_usage": {
+    "usage_observed_from": "2026-08-31",
+    "usage_observed_to": "2026-09-02",
+    "billing_cycle_from": "2026-08-31",
+    "billing_cycle_to": "2026-09-29",
+    "observed_cycle_days": 3,
+    "cycle_days": 30,
+    "total_usage_cost_usd": 0.0,
+    "projected_cycle_usage_cost_usd": 0.0,
+    "average_daily_usage_cost_usd": 0.0,
+    "all_usage_within_included_tiers": true,
+    "products": [
+      {
+        "metric": "R2 Data Storage",
+        "total_usage_display": "0.07 GB-months",
+        "billable_usage_display": "0 GB-months",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "R2 Storage Class B Operations",
+        "total_usage_display": "1.42k",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "R2 Storage Class A Operations",
+        "total_usage_display": "679",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "KV Read Operations",
+        "total_usage_display": "56",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "D1 - Rows Read",
+        "total_usage_display": "401.62M",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "D1 - Rows Written",
+        "total_usage_display": "744.6k",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "D1 - Storage GB-mo",
+        "total_usage_display": "0 GB-months",
+        "billable_usage_display": "0 GB-months",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "Workers CPU ms",
+        "total_usage_display": "150.63k",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "Workers Standard Requests",
+        "total_usage_display": "3.86k",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      },
+      {
+        "metric": "Images Transformed",
+        "total_usage_display": "223",
+        "billable_usage_display": "0",
+        "usage_cost_usd": 0.0
+      }
+    ]
+  },
+  "latest_invoice": {
+    "date": "2026-09-01",
+    "amount_usd": 5.5,
+    "status": "Paid",
+    "line_items_inspected": false
+  },
+  "privacy": {
+    "invoice_number_recorded": false,
+    "payment_method_recorded": false,
+    "billing_address_recorded": false
+  },
+  "mutable_actions_performed": false
+}

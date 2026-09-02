@@ -282,15 +282,35 @@ class MonitorProductionTests(unittest.TestCase):
                     "month_to_date": {"transformations": 242}
                 },
             },
+            billing_snapshot={
+                "observed_at": "2026-09-02T12:17:00+09:00",
+                "billable_usage": {
+                    "total_usage_cost_usd": 0.0,
+                    "projected_cycle_usage_cost_usd": 0.0,
+                    "all_usage_within_included_tiers": True,
+                },
+                "latest_invoice": {
+                    "date": "2026-09-01",
+                    "amount_usd": 5.5,
+                    "status": "Paid",
+                    "line_items_inspected": False,
+                },
+            },
         )
         self.assertTrue(
             report[
                 "all_measured_or_bounded_yohaku_usage_below_included_units"
             ]
         )
-        self.assertEqual(report["minimum_account_cost_usd_year"], 60.0)
+        self.assertEqual(report["minimum_account_cost_usd_year"], 66.0)
         self.assertEqual(
-            report["savings_ceiling_before_unknown_overages_usd_year"], 40.0
+            report["minimum_account_cost_basis"], "single_paid_invoice"
+        )
+        self.assertEqual(
+            report["official_subscription_floor_before_tax_usd_year"], 60.0
+        )
+        self.assertEqual(
+            report["savings_ceiling_before_unknown_overages_usd_year"], 34.0
         )
         self.assertEqual(
             report["observations"]["r2_class_a_operations"]["used"], 18
@@ -298,7 +318,10 @@ class MonitorProductionTests(unittest.TestCase):
         self.assertEqual(
             report["observations"]["r2_class_b_operations"]["used"], 211
         )
-        self.assertEqual(report["estimate_status"], "provisional_floor_only")
+        self.assertEqual(
+            report["estimate_status"],
+            "provisional_single_paid_invoice_observed",
+        )
         self.assertEqual(
             report["observations"]
             ["images_unique_transformations_account_month_to_date"]["used"],
@@ -318,6 +341,40 @@ class MonitorProductionTests(unittest.TestCase):
                 "final invoice meter"
             ),
             report["unknowns"],
+        )
+        self.assertEqual(
+            report["billing_dashboard_snapshot"]
+            ["latest_paid_invoice_usd"],
+            5.5,
+        )
+        self.assertEqual(
+            report["billing_dashboard_snapshot"]
+            ["annualized_cash_cost_if_invoice_amount_recurs_usd_year"],
+            66.0,
+        )
+        self.assertEqual(
+            report["billing_dashboard_snapshot"]
+            [
+                "savings_if_invoice_amount_recurs_before_usage_overage_usd_year"
+            ],
+            34.0,
+        )
+        self.assertIn(
+            "whether the single paid invoice amount recurs unchanged",
+            report["unknowns"],
+        )
+
+    def test_billing_dashboard_snapshot_excludes_payment_details(self) -> None:
+        snapshot = module.load_billing_dashboard_snapshot()
+        self.assertEqual(snapshot["latest_invoice"]["amount_usd"], 5.5)
+        self.assertFalse(snapshot["mutable_actions_performed"])
+        self.assertEqual(
+            snapshot["privacy"],
+            {
+                "invoice_number_recorded": False,
+                "payment_method_recorded": False,
+                "billing_address_recorded": False,
+            },
         )
 
     def test_billing_summary_omits_account_identity(self) -> None:

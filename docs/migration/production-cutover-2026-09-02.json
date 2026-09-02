@@ -375,6 +375,50 @@
       "search_console": "authentication_scope_missing",
       "cloudflare_billable_usage": "authentication_scope_missing",
       "verified": true
+    },
+    {
+      "observed_at": "2026-09-02T12:19:16+09:00",
+      "elapsed": "interim_5h25m",
+      "monitor_report_version": 7,
+      "representative_readback": {
+        "blog_checks": 17,
+        "blog_failed": 0,
+        "photos_checks": 13,
+        "photos_failed": 0,
+        "staging_checks": 17,
+        "staging_failed": 0
+      },
+      "cloudflare_billing_dashboard": {
+        "snapshot": "cloudflare-billing-snapshot-2026-09-02.json",
+        "usage_observed_from": "2026-08-31",
+        "usage_observed_to": "2026-09-02",
+        "current_cycle_usage_cost_usd": 0.0,
+        "projected_cycle_usage_cost_usd": 0.0,
+        "all_usage_within_included_tiers": true,
+        "latest_paid_invoice_date": "2026-09-01",
+        "latest_paid_invoice_usd": 5.5,
+        "invoice_line_items_inspected": false,
+        "annualized_cash_cost_if_invoice_amount_recurs_usd_year": 66.0,
+        "savings_if_invoice_amount_recurs_before_usage_overage_usd_year": 34.0,
+        "annualization_status": "provisional_single_paid_invoice"
+      },
+      "cost_baseline": {
+        "estimate_status": "provisional_single_paid_invoice_observed",
+        "minimum_account_cost_usd_year": 66.0,
+        "minimum_account_cost_basis": "single_paid_invoice",
+        "official_subscription_floor_before_tax_usd_year": 60.0,
+        "smugmug_reference_cost_usd_year": 100.0,
+        "savings_ceiling_before_unknown_overages_usd_year": 34.0,
+        "unknowns": [
+          "future billing-cycle usage cost and invoice amount",
+          "whether the single paid invoice amount recurs unchanged",
+          "other resources sharing account-wide included quotas",
+          "Yohaku-only attribution within account-wide Images metrics",
+          "difference between adaptive GraphQL usage estimates and the final invoice meter"
+        ]
+      },
+      "mutable_billing_actions_performed": false,
+      "verified": true
     }
   ],
   "retained_sources": {
