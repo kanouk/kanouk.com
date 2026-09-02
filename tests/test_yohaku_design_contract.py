@@ -53,14 +53,14 @@ class YohakuDesignContractTests(unittest.TestCase):
 
     def test_image_lists_do_not_add_mechanical_rules_below_every_image(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
-        album_copy = re.search(r"\.album-copy\s*\{([^}]*)\}", css)
+        album_overlay = re.search(r"\.album-overlay\s*\{([^}]*)\}", css)
         photo_copy = re.search(
             r"\.photo-card\s*>\s*span:not\(\.video-badge\)\s*\{([^}]*)\}",
             css,
         )
-        self.assertIsNotNone(album_copy)
+        self.assertIsNotNone(album_overlay)
         self.assertIsNotNone(photo_copy)
-        self.assertNotIn("border-top", album_copy.group(1))
+        self.assertNotIn("border-top", album_overlay.group(1))
         self.assertNotIn("border-top", photo_copy.group(1))
 
     def test_japanese_headings_disable_proportional_compression(self) -> None:
@@ -111,21 +111,27 @@ class YohakuDesignContractTests(unittest.TestCase):
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
         album_grid = re.search(r"\.album-grid\s*\{([^}]*)\}", css)
         album_card = re.search(r"\.album-card\s*\{([^}]*)\}", css)
+        album_cover = re.search(r"\.album-card \.cover\s*\{([^}]*)\}", css)
+        album_overlay = re.search(r"\.album-overlay\s*\{([^}]*)\}", css)
         self.assertIsNotNone(album_grid)
         self.assertIsNotNone(album_card)
-        self.assertIn("repeat(3, minmax(0, 1fr))", album_grid.group(1))
-        self.assertIn("max-width: 30rem", album_card.group(1))
+        self.assertIsNotNone(album_cover)
+        self.assertIsNotNone(album_overlay)
+        self.assertIn("repeat(auto-fill, minmax(11.25rem, 1fr))", album_grid.group(1))
+        self.assertIn("position: relative", album_card.group(1))
+        self.assertIn("aspect-ratio: 1", album_cover.group(1))
+        self.assertIn("position: absolute", album_overlay.group(1))
         self.assertIn(
             '.album-card:hover .cover img:not([data-low-resolution="true"])',
             css,
         )
-        self.assertRegex(
+        self.assertIn(
+            '.album-card .cover img[data-low-resolution="true"]',
             css,
-            r"@media \(max-width: 68rem\)[\s\S]*?\.album-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)",
         )
         self.assertRegex(
             css,
-            r"@media \(max-width: 34rem\)[\s\S]*?\.album-grid\s*\{[^}]*grid-template-columns:\s*1fr",
+            r"@media \(max-width: 34rem\)[\s\S]*?\.album-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)",
         )
 
     def test_article_uses_one_reading_axis_without_duplicate_left_metadata(self) -> None:
