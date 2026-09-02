@@ -71,7 +71,7 @@ const generatedSeo = getSeoMeta(post, {
 // The public contract is the stable EmDash content ID; legacy slugs redirect.
 const seo = {
 	...generatedSeo,
-	canonical: new URL(canonicalPostPath, Astro.url.origin).toString(),
+	canonical: new URL(canonicalPostPath, "https://blog.kanouk.com").toString(),
 };
 
 // Bylines are already hydrated by getEmDashEntry
