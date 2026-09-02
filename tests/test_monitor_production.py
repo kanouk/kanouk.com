@@ -83,9 +83,14 @@ class MonitorProductionTests(unittest.TestCase):
                     "hits": 3,
                     "referrer": "https://example.com/reference",
                 },
+                {
+                    "path": "/open/visitors/info/gets",
+                    "hits": 1,
+                    "referrer": "https://photos.kanouk.com/",
+                },
             ]
         )
-        self.assertEqual(report["hits"], 9)
+        self.assertEqual(report["hits"], 10)
         self.assertEqual(report["monitor_hits"], 4)
         self.assertEqual(
             [row["path"] for row in report["internal_referrer_rows"]],
@@ -94,6 +99,10 @@ class MonitorProductionTests(unittest.TestCase):
         self.assertEqual(
             [row["path"] for row in report["external_referrer_rows"]],
             ["/old"],
+        )
+        self.assertEqual(
+            [row["path"] for row in report["legacy_client_rows"]],
+            ["/open/visitors/info/gets"],
         )
 
 

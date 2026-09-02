@@ -41,6 +41,7 @@ WORKER_SERVICE = "kanouk-emdash-staging"
 DATABASE_NAME = "kanouk-content-staging"
 PRODUCTION_HOSTS = ("blog.kanouk.com", "photos.kanouk.com")
 STAGING_URL = "https://kanouk-emdash-staging.kanouk.workers.dev"
+LEGACY_CLIENT_PATH_PREFIXES = ("/open/",)
 CHECKPOINT_SECONDS = {
     "interim": 0,
     "24h": 24 * 60 * 60,
@@ -221,6 +222,7 @@ def classify_404_rows(
 ) -> dict[str, Any]:
     internal_rows: list[dict[str, Any]] = []
     external_rows: list[dict[str, Any]] = []
+    legacy_client_rows: list[dict[str, Any]] = []
     monitor_hits = 0
     total_hits = 0
     for source in rows:
@@ -231,7 +233,9 @@ def classify_404_rows(
         referrer = str(row.get("referrer") or "")
         if path == "/definitely-missing-yohaku-monitor":
             monitor_hits += hits
-        if any(f"//{host}/" in referrer for host in PRODUCTION_HOSTS):
+        if path.startswith(LEGACY_CLIENT_PATH_PREFIXES):
+            legacy_client_rows.append(row)
+        elif any(f"//{host}/" in referrer for host in PRODUCTION_HOSTS):
             internal_rows.append(row)
         elif referrer:
             external_rows.append(row)
@@ -241,6 +245,7 @@ def classify_404_rows(
         "monitor_hits": monitor_hits,
         "internal_referrer_rows": internal_rows,
         "external_referrer_rows": external_rows,
+        "legacy_client_rows": legacy_client_rows,
     }
 
 
@@ -249,7 +254,8 @@ def query_404_log(*, env: Mapping[str, str]) -> dict[str, Any]:
         "%Y-%m-%d %H:%M:%S"
     )
     sql = (
-        "SELECT path,hits,created_at,last_seen_at,COALESCE(referrer,'') AS referrer "
+        "SELECT path,hits,created_at,last_seen_at,COALESCE(referrer,'') AS referrer,"
+        "COALESCE(user_agent,'') AS user_agent "
         "FROM _emdash_404_log "
         f"WHERE datetime(COALESCE(last_seen_at,created_at)) >= datetime('{start_sql}') "
         "ORDER BY datetime(COALESCE(last_seen_at,created_at)) DESC LIMIT 500;"
