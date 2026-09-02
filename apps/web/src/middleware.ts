@@ -22,6 +22,19 @@ async function filteredSitemapIndex(response: Response, photoHost: boolean) {
 	});
 }
 
+async function canonicalizedPhotoSitemap(response: Response) {
+	if (!response.ok) return response;
+	const xml = (await response.text()).replaceAll(
+		"https://blog.kanouk.com/",
+		"https://photos.kanouk.com/",
+	);
+	return new Response(xml, {
+		status: response.status,
+		statusText: response.statusText,
+		headers: response.headers,
+	});
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
 	const isPhotoHost = PHOTO_HOSTS.has(context.url.hostname);
 	const isBlogHost = BLOG_HOSTS.has(context.url.hostname);
@@ -37,10 +50,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		: isPhotoHost && context.url.pathname === "/search"
 			? await context.rewrite("/photo-search")
 			: await next();
-	const routedResponse =
+	let routedResponse =
 		context.url.pathname === "/sitemap.xml" && (isPhotoHost || isBlogHost)
 			? await filteredSitemapIndex(response, isPhotoHost)
 			: response;
+	if (isPhotoHost && /^\/sitemap-(?:albums|photos)\.xml$/.test(context.url.pathname)) {
+		routedResponse = await canonicalizedPhotoSitemap(routedResponse);
+	}
 
 	if (
 		context.url.hostname.endsWith(".workers.dev") ||

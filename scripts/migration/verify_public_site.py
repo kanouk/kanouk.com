@@ -441,6 +441,21 @@ def main() -> None:
         for expected in expected_sitemaps:
             if expected not in sitemap_text:
                 sitemap_failures.append(f"missing {expected}")
+        if parsed.hostname == "photos.kanouk.com":
+            photo_sitemap_status, _, photo_sitemap_body, _ = fetch(
+                urljoin(base_url, "/sitemap-photos.xml")
+            )
+            photo_sitemap_text = photo_sitemap_body.decode("utf-8", errors="replace")
+            if photo_sitemap_status != 200:
+                sitemap_failures.append(
+                    f"photo sitemap status={photo_sitemap_status}, expected=200"
+                )
+            if "https://photos.kanouk.com/p/" not in photo_sitemap_text:
+                sitemap_failures.append("photo sitemap has no canonical /p/ URL")
+            if "https://blog.kanouk.com/" in photo_sitemap_text:
+                sitemap_failures.append("photo sitemap contains the blog origin")
+            if "https://photos.kanouk.com/photos/" in photo_sitemap_text:
+                sitemap_failures.append("photo sitemap contains the legacy /photos/ path")
         if args.expect_preview_noindex and "noindex" not in header(headers, "X-Robots-Tag").lower():
             sitemap_failures.append("preview noindex header missing")
         checks.append(
