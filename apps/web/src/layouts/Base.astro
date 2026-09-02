@@ -51,6 +51,16 @@ const { entries: pages } = await getEmDashCollection("pages", {
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
 const photosUrl = isPreviewHost ? "/albums" : "https://photos.kanouk.com/albums";
 const isLoggedIn = !!Astro.locals.user;
+const currentPath = Astro.url.pathname;
+const isSearchPage = currentPath === "/search";
+const isArticleSurface = !isSearchPage && (
+	currentPath === "/" ||
+	currentPath.startsWith("/posts") ||
+	currentPath.startsWith("/archives") ||
+	currentPath.startsWith("/category/") ||
+	currentPath.startsWith("/tag/") ||
+	currentPath.startsWith("/pages/")
+);
 
 const pageCtx = createPublicPageContext({
 	Astro,
@@ -94,9 +104,9 @@ const pageCtx = createPublicPageContext({
 				</a>
 
 				<nav class="site-nav" aria-label="主要ナビゲーション">
-					<a href="/posts">記事</a>
+					<a href="/posts" aria-current={isArticleSurface ? "page" : undefined}>記事</a>
 					<a href={photosUrl}>写真</a>
-					<a href="/search">検索</a>
+					<a href="/search" aria-current={isSearchPage ? "page" : undefined}>検索</a>
 				</nav>
 
 				<div class="site-tools">

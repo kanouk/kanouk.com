@@ -21,6 +21,7 @@ const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.ho
 const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 const canonicalPath = Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname;
+const isSearchPage = Astro.url.pathname === "/photo-search" || Astro.url.pathname === "/search";
 const canonical = new URL(canonicalPath, "https://photos.kanouk.com").toString();
 const absoluteImage = image ? new URL(image, "https://photos.kanouk.com").toString() : null;
 const pageCtx = createPublicPageContext({
@@ -58,8 +59,8 @@ const pageCtx = createPublicPageContext({
 				<span class="photo-brand__copy"><span>kanouk.com</span><small>Photos</small></span>
 			</a>
 			<nav class="site-switcher" aria-label="サイト切り替え">
-				<a aria-current="page" href="/albums">写真</a>
-				<a class="photo-search-link" href={searchUrl} aria-label="写真を検索">
+				<a aria-current={!isSearchPage ? "page" : undefined} href="/albums">写真</a>
+				<a class="photo-search-link" href={searchUrl} aria-label="写真を検索" aria-current={isSearchPage ? "page" : undefined}>
 					<Search size={16} strokeWidth={1.75} aria-hidden="true" />
 					<span>検索</span>
 				</a>
