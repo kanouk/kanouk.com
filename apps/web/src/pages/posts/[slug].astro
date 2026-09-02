@@ -17,6 +17,11 @@ import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
+import {
+	absoluteMediaUrl,
+	resolveFirstPortableImageUrl,
+	resolvePublicMediaUrl,
+} from "../../utils/media-url";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { routeSlugCandidates } from "../../utils/route-slug";
@@ -41,28 +46,13 @@ if (!post) {
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
-// Get featured image URL for OG fallback
-// The image may have src (external) or meta.storageKey (local)
-function getImageUrl(img: unknown): string | undefined {
-	if (!img || typeof img !== "object") return undefined;
-	const image = img as Record<string, unknown>;
-	// Check for direct src
-	if (typeof image.src === "string" && image.src) {
-		return image.src.startsWith("http")
-			? image.src
-			: `${Astro.url.origin}${image.src}`;
-	}
-	// Build from storageKey for local images
-	const meta = image.meta as Record<string, unknown> | undefined;
-	const storageKey =
-		(typeof meta?.storageKey === "string" ? meta.storageKey : undefined) ||
-		(typeof image.id === "string" ? image.id : undefined);
-	if (storageKey) {
-		return `${Astro.url.origin}/_emdash/api/media/file/${storageKey}`;
-	}
-	return undefined;
-}
-const featuredImageUrl = getImageUrl(post.data.featured_image);
+// Prefer the cover for social previews, then fall back to the first article image.
+// The public page remains list-first and does not invent a visible hero image.
+const featuredImageUrl = absoluteMediaUrl(
+	resolvePublicMediaUrl(post.data.featured_image)
+		?? resolveFirstPortableImageUrl(post.data.content),
+	Astro.url.origin,
+);
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 
 // Generate SEO meta from content
