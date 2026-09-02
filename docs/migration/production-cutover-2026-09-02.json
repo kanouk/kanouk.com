@@ -66,7 +66,7 @@
     }
   },
   "verification": {
-    "python_tests": 136,
+    "python_tests": 137,
     "wordpress_conversion_tests": 28,
     "astro_typecheck_errors": 0,
     "astro_typecheck_warnings": 0,
@@ -276,9 +276,9 @@
       }
     },
     {
-      "observed_at": "2026-09-02T11:45:38+09:00",
-      "elapsed": "interim_4h51m",
-      "monitor_report_version": 3,
+      "observed_at": "2026-09-02T11:50:31+09:00",
+      "elapsed": "interim_4h56m",
+      "monitor_report_version": 4,
       "representative_readback": {
         "blog_checks": 17,
         "blog_failed": 0,
@@ -288,9 +288,9 @@
         "staging_failed": 0
       },
       "worker_invocations": {
-        "requests": 23243,
+        "requests": 23289,
         "errors": 0,
-        "subrequests": 1377,
+        "subrequests": 1385,
         "error_rate_percent": 0.0
       },
       "not_found_log": {
@@ -301,13 +301,28 @@
         "external_referrer_rows": 0
       },
       "cloudflare_platform_usage": {
-        "d1_read_queries": 41388,
-        "d1_write_queries": 5160,
-        "d1_rows_read": 11041025,
-        "d1_rows_written": 7268,
+        "d1_read_queries": 41742,
+        "d1_write_queries": 5183,
+        "d1_rows_read": 11209615,
+        "d1_rows_written": 7294,
+        "d1_storage_bytes": 76337150,
         "r2_requests": 229,
         "r2_object_count": 3546,
         "r2_payload_bytes": 6978619128
+      },
+      "cost_baseline": {
+        "estimate_status": "provisional_floor_only",
+        "all_measured_or_bounded_yohaku_usage_below_included_units": true,
+        "minimum_account_cost_usd_month": 5.0,
+        "minimum_account_cost_usd_year": 60.0,
+        "smugmug_reference_cost_usd_year": 100.0,
+        "savings_ceiling_before_unknown_overages_usd_year": 40.0,
+        "unknowns": [
+          "Workers CPU time and CPU overage",
+          "actual account-wide billable usage and invoice",
+          "other resources sharing account-wide included quotas",
+          "observed Images unique transformation count"
+        ]
       },
       "ga4_standard_report": "pending_standard_processing_or_no_traffic",
       "search_console": "authentication_scope_missing",

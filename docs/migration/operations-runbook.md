@@ -182,6 +182,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 11:36 JST、監視実行器をreport version 3へ更新し、D1のquery／row数とR2のoperation／storage量をCloudflare GraphQLからread-onlyで取得しました。R2 inventory 3,546件／6,978,619,128 bytesに対し、EmDash media APIが追跡するのは3,507件／6,933,980,178 bytesです。差分39件／44,638,950 bytesは現行media tableから参照されていませんが、不要とは推測せず、R2全件backupへ含めます。
 
+11:50 JST、監視実行器をreport version 4へ更新し、公式料金snapshotとYohaku単体の利用量を同じJSONで比較できるようにしました。Workers／D1／R2の同梱枠はaccount-wideであり、切替当日の値にはmigration、backup、検証、monitor自身のtrafficも含まれるため、通常月へ年率換算しません。確定請求やCPU usageと、観測可能なresource usageを混同しない構造です。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。
@@ -239,7 +241,22 @@ WXR、SmugMug manifest、WordPress media ledger、旧新URL ledgerはR2 backup�
 - https://developers.cloudflare.com/d1/platform/pricing/
 - https://developers.cloudflare.com/images/pricing/
 
-2026-09-01時点の概算では、Workers Paidの最低額が月$5なら年$60です。SmugMug年$100だけとの単純比較は年約$40削減ですが、最終R2総量、request実績、WordPress hosting費を含めた実測後に確定します。無料枠に収まるという仮定で完了扱いにはしません。
+2026-09-02 11:50 JSTの暫定baseline:
+
+| 項目 | Yohaku観測値 | 月間同梱／無料枠 | 判定 |
+|---|---:|---:|---|
+| Workers requests | 23,289 | 10,000,000 | 枠内 |
+| D1 rows read | 11,209,615 | 25,000,000,000 | 枠内 |
+| D1 rows written | 7,294 | 50,000,000 | 枠内 |
+| D1 storage | 76,337,150 bytes | 5,000,000,000 bytes | 枠内 |
+| R2 storage snapshot | 6,978,619,128 bytes | 10,000,000,000 bytes-month | 枠内 |
+| R2 Class A | 18 | 1,000,000 | 枠内 |
+| R2 Class B | 211 | 10,000,000 | 枠内 |
+| Images unique transformations | 現行contract上限3,507 | 5,000 | 上限でも枠内 |
+
+現在のWorkers Paid最低額は月$5／年$60です。観測済みresourceだけなら追加overageは示されておらず、SmugMug年$100との差は最大年$40です。ただし、これは削減額の確定値ではありません。Workers CPU、実際のImages unique transformations、同じaccount内の他resource、Cloudflare請求明細が未確認なので`provisional_floor_only`とします。1週間では通常trafficとの分離、1か月では請求明細と再backupを確認してから実費を確定します。
+
+Workers Paid最低額だけなら年$60ですが、SmugMug年$100との差額をそのまま確定削減額にはしません。request／CPU／storage／operation／ImagesとWordPress hosting費を実測し、Cloudflareの請求期間後に確定します。
 
 ## 解約判断
 

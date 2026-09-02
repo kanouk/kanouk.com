@@ -54,6 +54,58 @@ CHECKPOINT_SECONDS = {
     "1mo": 30 * 24 * 60 * 60,
     "3mo": 90 * 24 * 60 * 60,
 }
+PRICING_SNAPSHOT = {
+    "checked_on": "2026-09-02",
+    "sources": {
+        "workers": "https://developers.cloudflare.com/workers/platform/pricing/",
+        "d1": "https://developers.cloudflare.com/d1/platform/pricing/",
+        "r2": "https://developers.cloudflare.com/r2/pricing/",
+        "images": "https://developers.cloudflare.com/images/pricing/",
+    },
+    "workers": {
+        "paid_minimum_usd_month": 5.0,
+        "included_requests_month": 10_000_000,
+        "included_cpu_ms_month": 30_000_000,
+    },
+    "d1": {
+        "included_rows_read_month": 25_000_000_000,
+        "included_rows_written_month": 50_000_000,
+        "included_storage_bytes": 5_000_000_000,
+    },
+    "r2_standard": {
+        "included_storage_bytes_month": 10_000_000_000,
+        "included_class_a_operations_month": 1_000_000,
+        "included_class_b_operations_month": 10_000_000,
+    },
+    "images_free": {"included_unique_transformations_month": 5_000},
+}
+R2_CLASS_A_ACTIONS = {
+    "CompleteMultipartUpload",
+    "CopyObject",
+    "CreateMultipartUpload",
+    "LifecycleStorageTierTransition",
+    "ListBuckets",
+    "ListMultipartUploads",
+    "ListObjects",
+    "ListParts",
+    "PutBucket",
+    "PutBucketCors",
+    "PutBucketEncryption",
+    "PutBucketLifecycleConfiguration",
+    "PutObject",
+    "UploadPart",
+    "UploadPartCopy",
+}
+R2_CLASS_B_ACTIONS = {
+    "GetBucketCors",
+    "GetBucketEncryption",
+    "GetBucketLocation",
+    "GetBucketLifecycleConfiguration",
+    "GetObject",
+    "HeadBucket",
+    "HeadObject",
+    "UsageSummary",
+}
 
 
 class MonitorError(RuntimeError):
@@ -520,6 +572,21 @@ def summarize_platform_usage(account: Mapping[str, Any]) -> dict[str, Any]:
         for target, source in d1_fields.items():
             d1_totals[target] += int(sums.get(source) or 0)
 
+    d1_storage_rows = account.get("d1StorageAdaptiveGroups") or []
+    d1_storage: dict[str, Any] | None = None
+    if d1_storage_rows:
+        row = d1_storage_rows[0]
+        maxima = row.get("max") if isinstance(row.get("max"), Mapping) else {}
+        dimensions = (
+            row.get("dimensions")
+            if isinstance(row.get("dimensions"), Mapping)
+            else {}
+        )
+        d1_storage = {
+            "date": dimensions.get("date"),
+            "database_size_bytes": int(maxima.get("databaseSizeBytes") or 0),
+        }
+
     operation_rows: list[dict[str, Any]] = []
     for row in account.get("r2OperationsAdaptiveGroups") or []:
         sums = row.get("sum") if isinstance(row.get("sum"), Mapping) else {}
@@ -567,9 +634,125 @@ def summarize_platform_usage(account: Mapping[str, Any]) -> dict[str, Any]:
         }
     return {
         "d1": d1_totals,
+        "d1_storage": d1_storage,
         "r2_operations": operation_rows,
         "r2_request_count": sum(row["requests"] for row in operation_rows),
         "r2_storage": latest_storage,
+    }
+
+
+def quota_observation(used: int, included: int) -> dict[str, int | bool]:
+    return {
+        "used": used,
+        "included": included,
+        "headroom": max(included - used, 0),
+        "above_included": used > included,
+    }
+
+
+def build_cost_baseline(
+    worker: Mapping[str, Any], platform: Mapping[str, Any]
+) -> dict[str, Any]:
+    d1 = platform.get("d1") if isinstance(platform.get("d1"), Mapping) else {}
+    d1_storage = (
+        platform.get("d1_storage")
+        if isinstance(platform.get("d1_storage"), Mapping)
+        else {}
+    )
+    r2_storage = (
+        platform.get("r2_storage")
+        if isinstance(platform.get("r2_storage"), Mapping)
+        else {}
+    )
+    r2_class_a = 0
+    r2_class_b = 0
+    unclassified: list[dict[str, Any]] = []
+    for row in platform.get("r2_operations") or []:
+        if not isinstance(row, Mapping):
+            continue
+        action = str(row.get("action_type") or "unknown")
+        requests = int(row.get("requests") or 0)
+        if action in R2_CLASS_A_ACTIONS:
+            r2_class_a += requests
+        elif action in R2_CLASS_B_ACTIONS:
+            r2_class_b += requests
+        else:
+            unclassified.append(
+                {"action_type": action, "requests": requests}
+            )
+
+    worker_pricing = PRICING_SNAPSHOT["workers"]
+    d1_pricing = PRICING_SNAPSHOT["d1"]
+    r2_pricing = PRICING_SNAPSHOT["r2_standard"]
+    image_pricing = PRICING_SNAPSHOT["images_free"]
+    observations = {
+        "workers_requests": quota_observation(
+            int(worker.get("requests") or 0),
+            int(worker_pricing["included_requests_month"]),
+        ),
+        "d1_rows_read": quota_observation(
+            int(d1.get("rows_read") or 0),
+            int(d1_pricing["included_rows_read_month"]),
+        ),
+        "d1_rows_written": quota_observation(
+            int(d1.get("rows_written") or 0),
+            int(d1_pricing["included_rows_written_month"]),
+        ),
+        "d1_storage": quota_observation(
+            int(d1_storage.get("database_size_bytes") or 0),
+            int(d1_pricing["included_storage_bytes"]),
+        ),
+        "r2_storage": quota_observation(
+            int(r2_storage.get("payload_bytes") or 0),
+            int(r2_pricing["included_storage_bytes_month"]),
+        ),
+        "r2_class_a_operations": quota_observation(
+            r2_class_a,
+            int(r2_pricing["included_class_a_operations_month"]),
+        ),
+        "r2_class_b_operations": quota_observation(
+            r2_class_b,
+            int(r2_pricing["included_class_b_operations_month"]),
+        ),
+        "images_unique_transformations_contract_upper_bound": quota_observation(
+            3_507,
+            int(image_pricing["included_unique_transformations_month"]),
+        ),
+    }
+    all_observed_below_included = all(
+        row["above_included"] is False for row in observations.values()
+    )
+    monthly_floor = float(worker_pricing["paid_minimum_usd_month"])
+    return {
+        "pricing_snapshot": PRICING_SNAPSHOT,
+        "scope": (
+            "Yohaku Worker, D1 database and R2 bucket only; included quotas "
+            "and the Workers subscription are account-wide."
+        ),
+        "observations": observations,
+        "unclassified_r2_operations": unclassified,
+        "all_measured_or_bounded_yohaku_usage_below_included_units": (
+            all_observed_below_included and not unclassified
+        ),
+        "minimum_account_cost_usd_month": monthly_floor,
+        "minimum_account_cost_usd_year": monthly_floor * 12,
+        "smugmug_reference_cost_usd_year": 100.0,
+        "savings_ceiling_before_unknown_overages_usd_year": (
+            100.0 - monthly_floor * 12
+        ),
+        "estimate_status": "provisional_floor_only",
+        "unknowns": [
+            "Workers CPU time and CPU overage",
+            "actual account-wide billable usage and invoice",
+            "other resources sharing account-wide included quotas",
+            "observed Images unique transformation count",
+        ],
+        "normalization_warning": (
+            "The observation starts at cutover and includes migration, backup, "
+            "verification and monitoring traffic. Do not annualize it as a "
+            "normal month."
+        ),
+        "mutable_actions_performed": False,
     }
 
 
@@ -601,6 +784,18 @@ query PlatformUsage(
           rowsWritten
           queryBatchResponseBytes
         }
+        dimensions { date }
+      }
+      d1StorageAdaptiveGroups(
+        limit: 100
+        orderBy: [date_DESC]
+        filter: {
+          date_geq: $startDate
+          date_leq: $endDate
+          databaseId: $databaseId
+        }
+      ) {
+        max { databaseSizeBytes }
         dimensions { date }
       }
       r2OperationsAdaptiveGroups(
@@ -821,6 +1016,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
         start=CUTOVER_AT,
         end=observed_at,
     )
+    cost_baseline = build_cost_baseline(metrics, cloudflare_platform_usage)
     not_found = query_404_log(env=env)
     google_observations = collect_google_observations(observed_at)
     billing_usage = cloudflare_billing_usage(
@@ -847,7 +1043,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
     worker_ok = metrics["errors"] == 0
     navigation_ok = not not_found["internal_referrer_rows"]
     return {
-        "report_version": 3,
+        "report_version": 4,
         "checkpoint": checkpoint,
         "checkpoint_due": checkpoint_due(checkpoint, observed_at),
         "observed_at": observed_at.isoformat(),
@@ -867,6 +1063,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
             **google_observations,
             "cloudflare_billing_usage": billing_usage,
             "cloudflare_platform_usage": cloudflare_platform_usage,
+            "cloudflare_cost_baseline": cost_baseline,
             "cloudflare_zone_http_analytics": (
                 "not_available_to_minimum_scope_token"
             ),

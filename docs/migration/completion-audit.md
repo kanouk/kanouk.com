@@ -58,6 +58,7 @@
 - 11:00 JSTの暫定監視はzone／Custom Domain／公開readback／Worker errorが合格した。404台帳にmobile Safariから各1回だけ記録された旧クライアント用`/open/`系requestは、現在のHTML・CSS・JSに参照がなく再発もないため、現行サイトの壊れた内部導線とは分離して記録する。
 - 11:15 JSTに監視reportをversion 2へ更新し、GA4標準report、Search Console sites list、Cloudflare billable usageをread-onlyで統合した。GA4 APIは200で当日分が処理待ち、Search Consoleとbillable usageは現行credentialのscope不足による403を明示できる。権限追加、所有権付与、sitemap送信、請求設定変更はしていない。
 - 11:36 JSTに監視reportをversion 3へ更新し、現在の最小権限tokenで取得できるD1 query/row数とR2 operation/storageをGraphQLからread-onlyで統合した。同時にR2 inventoryをEmDash media tableと照合し、参照済み3,507件に加えて未追跡39件を検出した。不要とは推測せず、R2全3,546件を新backupへ保全した。
+- 11:50 JSTに監視reportをversion 4へ更新し、Workers／D1／R2／Imagesの公式料金snapshotとYohaku resource usageを比較した。観測済み項目は同梱／無料枠内で、Workers Paid最低額は年$60、SmugMug年$100との差額上限は年$40。ただしCPU、Images実測、account-wide請求が未確認なので`provisional_floor_only`であり、確定削減額とはしていない。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査

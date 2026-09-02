@@ -173,6 +173,12 @@ class MonitorProductionTests(unittest.TestCase):
                         }
                     },
                 ],
+                "d1StorageAdaptiveGroups": [
+                    {
+                        "max": {"databaseSizeBytes": 76337150},
+                        "dimensions": {"date": "2026-09-02"},
+                    }
+                ],
                 "r2OperationsAdaptiveGroups": [
                     {
                         "sum": {"requests": 8},
@@ -198,9 +204,44 @@ class MonitorProductionTests(unittest.TestCase):
         )
         self.assertEqual(report["d1"]["read_queries"], 14)
         self.assertEqual(report["d1"]["rows_read"], 120)
+        self.assertEqual(
+            report["d1_storage"]["database_size_bytes"], 76337150
+        )
         self.assertEqual(report["r2_request_count"], 8)
         self.assertEqual(report["r2_storage"]["object_count"], 3546)
         self.assertNotIn("accountName", report)
+
+    def test_cost_baseline_keeps_floor_separate_from_unknown_invoice(self) -> None:
+        report = module.build_cost_baseline(
+            {"requests": 23_243},
+            {
+                "d1": {"rows_read": 11_041_025, "rows_written": 7_268},
+                "d1_storage": {"database_size_bytes": 76_337_150},
+                "r2_operations": [
+                    {"action_type": "ListObjects", "requests": 18},
+                    {"action_type": "GetObject", "requests": 187},
+                    {"action_type": "HeadBucket", "requests": 24},
+                ],
+                "r2_storage": {"payload_bytes": 6_978_619_128},
+            },
+        )
+        self.assertTrue(
+            report[
+                "all_measured_or_bounded_yohaku_usage_below_included_units"
+            ]
+        )
+        self.assertEqual(report["minimum_account_cost_usd_year"], 60.0)
+        self.assertEqual(
+            report["savings_ceiling_before_unknown_overages_usd_year"], 40.0
+        )
+        self.assertEqual(
+            report["observations"]["r2_class_a_operations"]["used"], 18
+        )
+        self.assertEqual(
+            report["observations"]["r2_class_b_operations"]["used"], 211
+        )
+        self.assertEqual(report["estimate_status"], "provisional_floor_only")
+        self.assertIn("Workers CPU time and CPU overage", report["unknowns"])
 
     def test_billing_summary_omits_account_identity(self) -> None:
         report = module.summarize_cloudflare_billing_rows(
