@@ -847,7 +847,7 @@ main:focus { outline: none; }
 .albums-page { padding-block: var(--page-space); }
 .albums-page .page-header { margin-bottom: clamp(2.75rem, 6vw, 4.5rem); }
 .albums-page .page-header h1 { font-size: var(--heading-page); }
-.album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: clamp(0.55rem, 1.2vw, 0.9rem); }
+.album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(11.25rem, 1fr)); gap: clamp(0.55rem, 1.2vw, 0.9rem); }
 .album-card { position: relative; display: block; width: 100%; overflow: hidden; color: inherit; text-decoration: none; }
 .album-card .cover { position: relative; display: grid; aspect-ratio: 1; overflow: hidden; background: var(--paper-muted); place-items: center; }
 .album-card .cover.placeholder { position: relative; color: var(--accent-strong); }
@@ -860,7 +860,7 @@ main:focus { outline: none; }
 .album-card .cover img[data-low-resolution="true"] { position: relative; inset: auto; width: auto; max-width: 100%; height: auto; max-height: 100%; object-fit: contain; }
 .album-card:hover .cover img:not([data-low-resolution="true"]) { transform: scale(1.015); }
 .album-overlay { position: absolute; inset: auto 0 0; z-index: 1; display: flex; min-height: 34%; align-items: flex-end; justify-content: flex-end; padding: 1.8rem 0.65rem 0.55rem; background: linear-gradient(180deg, transparent, rgb(5 8 8 / 78%)); pointer-events: none; }
-.album-overlay h2 { color: #fff; font-size: clamp(0.7rem, 0.66rem + 0.18vw, 0.8rem); font-weight: 600; letter-spacing: 0; line-height: 1.35; text-align: right; text-shadow: 0 1px 2px rgb(0 0 0 / 65%); }
+.album-overlay h2 { color: #fff; font-size: clamp(0.64rem, 0.55rem + 0.35vw, 0.78rem); font-weight: 600; letter-spacing: 0; line-height: 1.35; text-align: right; text-shadow: 0 1px 2px rgb(0 0 0 / 65%); white-space: nowrap; }
 .album-card:hover .album-overlay h2 { color: #fff; }
 
 .album-page { padding-block: clamp(2.5rem, 5vw, 4rem); }
