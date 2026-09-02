@@ -22,13 +22,17 @@ interface Props {
 const { node } = Astro.props;
 const assetUrl = node?.asset?.url;
 const bareStorageKey = assetUrl && /^[A-Za-z0-9._-]+$/.test(assetUrl) ? assetUrl : undefined;
+const mediaFileStorageKey = assetUrl?.match(/^\/_emdash\/api\/media\/file\/([^/?#]+)$/)?.[1];
+const storageKey = bareStorageKey || (mediaFileStorageKey
+	? decodeURIComponent(mediaFileStorageKey)
+	: undefined);
 const src = bareStorageKey
 	? `/_emdash/api/media/file/${encodeURIComponent(bareStorageKey)}`
 	: assetUrl ||
 		(node?.asset?._ref
 			? `/_emdash/api/media/file/${encodeURIComponent(node.asset._ref)}`
 			: undefined);
-const mediaId = bareStorageKey || node?.asset?._ref || "";
+const mediaId = node?.asset?._ref || storageKey || "";
 ---
 
 {
@@ -42,13 +46,14 @@ const mediaId = bareStorageKey || node?.asset?._ref || "";
 			style={node.displayWidth ? `--image-display-width:${node.displayWidth}px` : undefined}
 		>
 			<YohakuImage
-				image={{
-					id: mediaId,
-					src,
-					alt: node.alt || "",
-					width: node.width,
-					height: node.height,
-				}}
+			image={{
+				id: mediaId,
+				src,
+				alt: node.alt || "",
+				width: node.width,
+				height: node.height,
+				meta: storageKey ? { storageKey } : undefined,
+			}}
 				preview
 			/>
 			{node.caption && <figcaption>{node.caption}</figcaption>}
