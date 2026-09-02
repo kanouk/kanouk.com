@@ -115,6 +115,10 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIsNotNone(album_card)
         self.assertIn("repeat(3, minmax(0, 1fr))", album_grid.group(1))
         self.assertIn("max-width: 30rem", album_card.group(1))
+        self.assertIn(
+            '.album-card:hover .cover img:not([data-low-resolution="true"])',
+            css,
+        )
         self.assertRegex(
             css,
             r"@media \(max-width: 68rem\)[\s\S]*?\.album-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)",

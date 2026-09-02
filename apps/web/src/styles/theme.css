@@ -780,7 +780,7 @@ main:focus { outline: none; }
 .album-card .cover.placeholder::after { width: 1px; height: 22%; background: var(--accent); transform: rotate(35deg); }
 .album-card .cover.placeholder svg { position: relative; z-index: 1; padding: 0.35rem; background: var(--paper-muted); box-sizing: content-box; }
 .album-card .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms cubic-bezier(.2,.65,.25,1); }
-.album-card:hover .cover img { transform: scale(1.015); }
+.album-card:hover .cover img:not([data-low-resolution="true"]) { transform: scale(1.015); }
 .album-copy { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.45rem var(--space-3); margin-top: var(--space-4); }
 .album-copy h2 { font-size: var(--step-1); letter-spacing: 0; }
 .album-copy p { grid-column: 1 / -1; color: var(--ink-muted); font-size: var(--step--1); }
