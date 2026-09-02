@@ -81,6 +81,38 @@ test("preserves WordPress preset image size when the block omits a numeric width
 	assert.equal(blocks[0].visualStyle, "photo-frame");
 });
 
+test("preserves nested Gutenberg quote paragraphs and citation as one semantic quote", () => {
+	const post = {
+		id: 8436,
+		content: `<!-- wp:quote -->
+			<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+			<p>それはつまり「モノ」を作らず、ひたすらに「コト」を生み出してきた、ということです。</p>
+			<!-- /wp:paragraph --><!-- wp:paragraph -->
+			<p><strong>次の段落</strong>も引用の一部です。</p>
+			<!-- /wp:paragraph --><cite>山口周</cite></blockquote>
+			<!-- /wp:quote -->`,
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks.length, 1);
+	assert.equal(blocks[0]._type, "yohaku.quote");
+	assert.equal(blocks[0].source, "山口周");
+	assert.deepEqual(blocks[0].content.map((block) => block.style), ["normal", "normal"]);
+	assert.match(blocks[0].content[0].children.map((child) => child.text).join(""), /「コト」を生み出してきた/);
+	assert.match(blocks[0].content[1].children.map((child) => child.text).join(""), /次の段落も引用の一部/);
+	assert.deepEqual(blocks[0].content[1].children[0].marks, ["strong"]);
+});
+
+test("preserves classic WordPress quote HTML without nested Gutenberg blocks", () => {
+	const post = {
+		id: 139,
+		content: '<!-- wp:quote --><blockquote class="wp-block-quote"><p>最初の段落</p><p>次の段落<br>改行</p></blockquote><!-- /wp:quote -->',
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0]._type, "yohaku.quote");
+	assert.match(blocks[0].content[0].children.map((child) => child.text).join(""), /最初の段落/);
+	assert.match(blocks[0].content[0].children.map((child) => child.text).join(""), /次の段落/);
+});
+
 test("converts classic artwork metadata tables to portable tables", () => {
 	const post = {
 		id: 2,

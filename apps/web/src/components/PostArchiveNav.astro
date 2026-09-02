@@ -12,7 +12,10 @@ const date = suppliedDate ?? new Date();
 const selected = japanDateParts(date);
 const { start, end } = japanMonthRange(selected.year, selected.month);
 const [archives, monthResult] = await Promise.all([
-	getPostArchiveMonths(36),
+	// Keep the selector and calendar on the same month even for the oldest
+	// migrated posts. The archive spans 2004 onward, so a recent-only list
+	// silently made the browser select the newest option on older articles.
+	getPostArchiveMonths(240),
 	getEmDashCollection("posts", {
 		status: "published",
 		where: {

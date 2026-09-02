@@ -33,7 +33,7 @@ WXR本文にはGutenberg標準ブロックのほか、SWELL/LOOS、JIN、Pochipp
 - `yohaku.siteSearch`
 - `yohaku.steps`
 
-1,854コンテンツを17,055ブロックへ変換した監査では、通常のフォールバック `htmlBlock` は0件です。つまり「機械的にHTML化する」のではなく、標準Portable Textと汎用的なYohaku意味ブロックで保持します。
+1,854コンテンツを16,701ブロックへ変換した監査では、通常のフォールバック `htmlBlock` は0件です。Gutenberg引用370件は複数段落・list・inline mark・出典を`yohaku.quote`一つにまとめます。つまり「機械的にHTML化する」のではなく、標準Portable Textと汎用的なYohaku意味ブロックで保持します。
 
 ## SmugMug
 

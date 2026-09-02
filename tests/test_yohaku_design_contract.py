@@ -117,6 +117,31 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn(".article-main { grid-column: 1;", theme)
         self.assertIn(".article-hero img { width: 100%; height: auto;", theme)
 
+    def test_article_archive_selector_covers_the_full_migrated_history(self) -> None:
+        archive_nav = (WEB_ROOT / "src/components/PostArchiveNav.astro").read_text()
+        self.assertIn("getPostArchiveMonths(240)", archive_nav)
+        self.assertIn(
+            "selected={archive.year === selected.year && archive.month === selected.month}",
+            archive_nav,
+        )
+
+    def test_semantic_quote_resets_the_generic_blockquote_frame(self) -> None:
+        quote = (
+            WEB_ROOT
+            / "plugins/yohaku-content-blocks/src/astro/Quote.astro"
+        ).read_text()
+        components = (
+            WEB_ROOT
+            / "plugins/yohaku-content-blocks/src/astro/index.ts"
+        ).read_text()
+        self.assertIn('class="yohaku-quote__body"', quote)
+        body = re.search(r"\.yohaku-quote__body\s*\{([^}]*)\}", quote)
+        self.assertIsNotNone(body)
+        self.assertIn("padding: 0", body.group(1))
+        self.assertIn("border: 0", body.group(1))
+        self.assertIn("font: inherit", body.group(1))
+        self.assertIn('"yohaku.quote": Quote', components)
+
 
 if __name__ == "__main__":
     unittest.main()

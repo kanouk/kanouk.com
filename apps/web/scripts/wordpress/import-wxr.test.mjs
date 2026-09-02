@@ -9,6 +9,7 @@ import {
 	extractModifiedDates,
 	featuredMediaValue,
 	loadContentIds,
+	recordsWithWordPressQuotes,
 	rewriteMediaReferences,
 	rewriteLegacySiteReferences,
 	rewriteSmugMugReferences,
@@ -16,6 +17,16 @@ import {
 	storedMigrationDataMatches,
 	storedMigrationItemIsConverged,
 } from "./import-wxr.mjs";
+
+test("quote-only import scope selects only records with a Gutenberg quote block", () => {
+	const records = [
+		{ post: { content: '<!-- wp:quote --><blockquote>引用</blockquote><!-- /wp:quote -->' } },
+		{ post: { content: '<!-- wp:quote {"className":"large"} /-->' } },
+		{ post: { content: '<blockquote>Gutenbergコメントのない引用</blockquote>' } },
+		{ post: { content: '<!-- wp:paragraph --><p>本文</p><!-- /wp:paragraph -->' } },
+	];
+	assert.deepEqual(recordsWithWordPressQuotes(records), records.slice(0, 2));
+});
 
 test("destination slugs preserve unique slugs and namespace collisions", () => {
 	const records = [

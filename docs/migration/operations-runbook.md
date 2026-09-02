@@ -155,6 +155,12 @@ reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true
 
 修正後は両production hostでGA4 loaderとmeasurement IDを読み戻し、stagingではGA4なし・`X-Robots-Tag: noindex`を維持しています。GA4 realtimeとSearch Consoleは外部反映を未確認のためpendingです。
 
+08:22 JSTまでのproduction実画面監査では、blog home／記事／検索／商品カード／クイズと、photosのalbum一覧／詳細／photo詳細を確認しました。商品画像、クイズの回答feedback、dark mode、写真の前後導線は成立しています。320 / 390 / 768 / 1024 / 1440pxで記事、home、商品カード、album、photo詳細を表示し、全幅で横overflow 0を実測しました。古い記事で月選択肢が直近36か月に限られ、カレンダーの対象月と選択表示が一致しない問題を発見したため、全移行期間240か月へ拡張しました。version `6da4bad2-7704-41e4-988a-48fca2611a23`で2008年6月の記事が同月を選択表示し、blog 14/14、photos 12/12、staging 14/14のreadbackが再合格しています。
+
+同時点の404 logは、`.git`／`.env`／WordPress batch APIなどreferrerなしの自動探索と、monitor自身の意図的404が中心でした。正規ページからの壊れた導線を示すreferrer付き404は確認していません。経時監視では件数だけでなくpathとreferrerを分けて評価します。
+
+08:56 JST、Gutenberg引用のnested paragraph/listを既存変換器が読まず、一部引用本文が空になる不具合を修正しました。`--only-quotes`の読み取りドライランで271件すべてが更新対象、対象外更新0、失敗0を確認してから、更新前D1をSQLへ退避・別SQLite復元検証し、271/271件を更新・再公開しました。更新後の再実行は271/271 `skipped_verified`、失敗0です。原本370引用に対し、公開posts 366、公開page 2、private revision 2、本文欠落0です。Worker version `44c7961e-7790-40ca-84e2-a748bd5e5254`で長文、複数段落、箇条書き、light／dark、390／1440px、横overflow 0を実画面確認し、3ホストの代表readbackも再合格しています。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLと全media byteを保存します。

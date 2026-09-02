@@ -20,8 +20,8 @@
 | #3 データ構造監査 | 達成 | `source-schema.md`、`field-mapping.md`、WXR/SmugMug catalog実測 | なし。最終値だけ台帳から更新する |
 | #4 Cloudflare基盤 | 達成 | `kanouk@gmail.com` account guard、Worker/D1/R2/KV、公開readback、`kanouk.com` zone作成 | custom domainの公開切替は#10 |
 | #5 写真パイロット | 達成 | 固定ID、GPS保持、R2 roundtrip、写真・動画・地図・UIの実証 | なし |
-| #6 Yohakuデザイン | 達成 | 共通token/component、blog/photos UI、dark mode、320/390/1440px、単一記事軸、画像比率、キーボード、contrast、Lighthouse中央値、独自ドメインの同一Worker readbackを最終データで確認 | なし。今後の意匠調整は移行完了条件と分離する |
-| #7 意味ブロック | 達成 | 1,854件/17,055 block、`htmlBlock` 0、9種類の編集UI/renderer、公開crawlのshortcode/Gutenberg comment 0 | なし |
+| #6 Yohakuデザイン | 達成 | 共通token/component、blog/photos UI、dark mode、320/390/1440px、単一記事軸、画像比率、キーボード、contrast、Lighthouse中央値、独自ドメインの実画面・操作を最終データで確認。古い記事の月選択不整合も本番QAで修正 | なし。今後の意匠調整は移行完了条件と分離する |
+| #7 意味ブロック | 達成 | 1,854件/16,701 block、`htmlBlock` 0、10種類の編集UI/renderer、公開crawlのshortcode/Gutenberg comment 0。引用271コンテンツ／370ブロックの本文欠落0 | なし |
 | #8 SmugMug完全移行 | 達成 | 40 album/2,168 assetすべてverified、重複ID/manifest不一致/pending 0、GPS/EXIF保持、metadata backfill済み | なし |
 | #9 WordPress完全移行 | 達成 | 2,028 media verified、1,854 content再実行`skipped_verified`、comments 127、旧WP/SmugMug/shortcode/Gutenberg comment 0 | nocalog/art-quizのWXR後非公開差分は管理認証外のためunknownとして記録済み |
 | #10 URL/SEO/切替 | 達成 | nameserver切替、zone active、2 Custom Domain、TLS、host分離308、canonical/robots/OGP/JSON-LD、代表readback 26/26が合格。本番4,056 page・6,490 internal linkを再監査し、残存参照0。一時timeout 4件は対象再監査12/12で200 | なし。Search Consoleの反映は非同期監視として#11で扱う |
@@ -34,7 +34,7 @@
 - mobile Lighthouse 2回の中央値: アルバム一覧 Performance 96.5、Accessibility 100、Best Practices 100、LCP 2.481秒、CLS 0.00165、TBT 0ms。
 - stagingは意図的に`noindex`のため、Lighthouse SEO categoryの点数は本番SEO判定に使わない。canonical、robots、OGP、JSON-LD、sitemapは`verify_public_site.py`と全sitemap crawlで別検証済み。
 - `preview-v1`は1200×900 WebPの実readbackで204,708 bytes、`cf-resized: internal=ok`、1年immutable cacheを確認。低解像度原本は変形せず、1条件だけを共通componentから利用する。
-- Python 125件、WordPress変換25件、Astro typecheck 0 error/warning/hint、production build、staging公開readback 14/14が合格。
+- Python 127件、WordPress変換28件、Astro typecheck 0 error/warning/hint、production build、staging公開readback 14/14が合格。
 
 ## 2026-09-02 production cutover
 
@@ -47,6 +47,11 @@
 - apex `kanouk.com`は200、`www.kanouk.com`はapexへの301を維持した。旧WordPress / SmugMugは停止・解約・削除していない。
 - 旧カノログと同じGA4 measurement ID `G-94EQ0WN7B9`をproduction 2ホストだけへ復元した。Worker version `86d6efcb-7a33-48db-85be-d7f66c29fe7b`のHTMLで両ホストのtagを読み戻し、stagingではtagなし・`noindex`を維持した。GA4 realtimeの外部反映はpendingとして扱う。
 - 切替約1時間後にzone active、Custom Domain 2件、代表readback 26/26、active deployment error rate 0%、asset 5xx 0を再確認した。GA4欠落はこの時点で発見し、上記versionで是正した。
+- productionの実画面でblog home、記事、検索、Pochipp由来商品カード、クイズ、album一覧／詳細、photo詳細を再確認した。商品画像、クイズ回答feedback、dark mode、写真の次移動は実操作で合格した。
+- 320 / 390 / 768 / 1024 / 1440pxで記事、home、商品カード、album、photo詳細を再表示し、全幅で横overflow 0を実測した。
+- 2008年の記事でカレンダーは2008年6月なのに月選択が最新月になる不整合を検出した。全移行期間240か月を選択肢へ含め、Worker version `6da4bad2-7704-41e4-988a-48fca2611a23`で2008年6月が選択されることを本番readbackした。
+- Gutenbergの現行引用は本文をnested paragraph/listへ持つため、既存変換器が外側HTMLだけを読んで64ブロックを空文字にしていた。全引用を汎用`yohaku.quote`へ再変換し、271コンテンツ／370ブロックを更新、公開366・公開page 2・private revision 2の本文欠落0をD1で確認した。更新後の再実行は271/271 `skipped_verified`、失敗0。更新前D1は52MBのSQLへ退避し、SHA-256 `8405e6f961da5ff73f914d8fb61c7d8e2a1aa372981f0a9069c7d156f3406f53`、別SQLiteのintegrity `ok`、記事1,848件を確認した。
+- Worker version `44c7961e-7790-40ca-84e2-a748bd5e5254`で長文・複数段落・箇条書き引用を本番表示した。本文17.6px／スマホ16.062px、行高約1.92、左線1本、390／1440pxの横overflow 0、light／darkを実測し、blog 14/14、photos 12/12、staging 14/14も再合格した。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査

@@ -77,6 +77,15 @@ export function createPlugin() {
 					],
 				},
 				{
+					type: "yohaku.quote",
+					label: "引用",
+					description: "出典のある文章を、本文と区別して示します",
+					fields: [
+						{ type: "text_input", action_id: "body", label: "引用文" },
+						{ type: "text_input", action_id: "source", label: "出典" },
+					],
+				},
+				{
 					type: "yohaku.linkCard",
 					label: "リンクカード",
 					icon: "link-external",

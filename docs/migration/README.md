@@ -14,6 +14,8 @@
 - staging全4 sitemap・4,056ページ・内部リンク6,302件と、切替後のhost別4 sitemap・4,056ページ・内部リンク6,490件を巡回。残存参照はいずれも0件で、本番の一時timeout 4件も対象再監査12/12で200
 - D1 SQLとR2全3,507 object（6,933,980,178 bytes）のbackup／別SQLite復元／全byte hash照合に成功。85 table／40,974 row、integrity `ok`、foreign key違反0
 - Yohakuのブログ／写真UI、ダークモード、検索、地図、EXIF、共有、全画面、スライドショー、キーボード／スワイプ移動をステージングへ実装済み
+- production実画面で商品カード画像、クイズ回答、写真前後移動、dark modeを再確認。古い記事の月選択不整合を全期間対応へ修正済み
+- Gutenberg引用271コンテンツ／370ブロックを`yohaku.quote`へ再変換し、欠落本文0をD1で確認。長文・複数段落・箇条書き引用を390／1440pxとlight／darkで再確認済み
 - `kanouk.com`を`kanouk@gmail.com`側Cloudflareへ追加し、2026-09-02にnameserver切替、zone active、2 Custom Domain、TLS、本番readbackまで完了
 - 旧カノログのGA4 `G-94EQ0WN7B9`をproduction 2ホストだけへ継承。stagingはanalyticsなし・`noindex`のまま維持
 - WordPress停止、SmugMug解約は未実施し、今回も対象外とする

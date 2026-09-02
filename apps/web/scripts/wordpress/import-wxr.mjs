@@ -68,6 +68,7 @@ function parseArgs(argv) {
 		ledger: DEFAULT_LEDGER,
 		mediaLedger: DEFAULT_MEDIA_LEDGER,
 		limit: undefined,
+		onlyQuotes: false,
 	};
 	for (let i = 0; i < argv.length; i++) {
 		const value = argv[i];
@@ -75,6 +76,7 @@ function parseArgs(argv) {
 		else if (value === "--dry-run") args.apply = false;
 		else if (value === "--concurrency") args.concurrency = Number(argv[++i]);
 		else if (value === "--limit") args.limit = Number(argv[++i]);
+		else if (value === "--only-quotes") args.onlyQuotes = true;
 		else if (value === "--ledger") args.ledger = path.resolve(argv[++i]);
 		else if (value === "--media-ledger") args.mediaLedger = path.resolve(argv[++i]);
 		else throw new Error(`Unknown argument: ${value}`);
@@ -86,6 +88,10 @@ function parseArgs(argv) {
 		throw new Error("--limit must be a positive integer");
 	}
 	return args;
+}
+
+export function recordsWithWordPressQuotes(records) {
+	return records.filter((record) => /<!--\s+wp:quote(?:\s|\/|-->)/i.test(record.post.content || ""));
 }
 
 function sha256(value) {
@@ -1005,7 +1011,8 @@ async function main() {
 	const mediaMappings = buildMediaMappings(mediaLedger);
 	const smugMugMappings = buildSmugMugMappings(await loadSmugMugManifests());
 	const quizzes = await loadQuizMap();
-	const records = args.limit ? allRecords.slice(0, args.limit) : allRecords;
+	const filteredRecords = args.onlyQuotes ? recordsWithWordPressQuotes(allRecords) : allRecords;
+	const records = args.limit ? filteredRecords.slice(0, args.limit) : filteredRecords;
 	const contentIds = await loadContentIds(readClient, ["posts", "pages", "url_mappings"]);
 	await ensureSchema(client, args.apply);
 	const bylines = await ensureBylines(client, DEFAULT_SOURCES, args.apply);

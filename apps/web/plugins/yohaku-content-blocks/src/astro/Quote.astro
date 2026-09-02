@@ -1,0 +1,62 @@
+---
+import { Quote } from "lucide-astro";
+import { PortableText } from "emdash/ui";
+
+const { content, body, source } = Astro.props.node;
+---
+
+<figure class="yohaku-quote">
+	<Quote class="yohaku-quote__mark" size={24} strokeWidth={1.6} aria-hidden="true" />
+	<blockquote class="yohaku-quote__body">
+		{Array.isArray(content) ? <PortableText value={content} /> : body && <p>{body}</p>}
+	</blockquote>
+	{source && <figcaption>— {source}</figcaption>}
+</figure>
+
+<style>
+	.yohaku-quote {
+		position: relative;
+		margin: clamp(2rem, 5vw, 3rem) 0;
+		padding: clamp(1.35rem, 4vw, 2rem) clamp(1.25rem, 4.5vw, 2.25rem);
+		border-inline-start: 2px solid var(--accent, var(--color-brand));
+		background: var(--paper-muted, var(--color-bg-subtle));
+		color: var(--ink-soft, var(--color-text-secondary));
+	}
+
+	.yohaku-quote__mark {
+		display: block;
+		margin-bottom: 0.8rem;
+		color: var(--accent, var(--color-brand));
+		opacity: 0.78;
+	}
+
+	.yohaku-quote__body {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		color: inherit;
+		font: inherit;
+		line-height: var(--line-body, 1.9);
+	}
+
+	.yohaku-quote :global(p),
+	.yohaku-quote :global(ul),
+	.yohaku-quote :global(ol) {
+		margin-block: 0.85em;
+	}
+
+	.yohaku-quote__body :global(:first-child) {
+		margin-top: 0;
+	}
+
+	.yohaku-quote__body :global(:last-child) {
+		margin-bottom: 0;
+	}
+
+	figcaption {
+		margin-top: 1rem;
+		color: var(--ink-muted, var(--color-muted));
+		font-size: 0.76rem;
+		letter-spacing: 0.03em;
+	}
+</style>

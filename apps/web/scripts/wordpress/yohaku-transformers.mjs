@@ -183,6 +183,31 @@ function tableNode(html, keyGenerator) {
 	};
 }
 
+function quoteNode(block, options, tools) {
+	const citation = safeText(
+		String(block.innerHTML || "").match(/<cite\b[^>]*>([\s\S]*?)<\/cite>/i)?.[1] || "",
+	);
+	const withoutCitation = String(block.innerHTML || "").replace(
+		/<cite\b[^>]*>[\s\S]*?<\/cite>/gi,
+		"",
+	);
+	const content = (
+		Array.isArray(block.innerBlocks) && block.innerBlocks.length > 0
+			? tools.transformBlocks(block.innerBlocks)
+			: htmlToPortableText(withoutCitation, options)
+	).map((child) =>
+		child?._type === "block" && child.style === "blockquote"
+			? { ...child, style: "normal" }
+			: child,
+	);
+	return {
+		_type: "yohaku.quote",
+		_key: tools.generateKey(),
+		content,
+		source: citation || undefined,
+	};
+}
+
 export function createDeterministicKeyGenerator(namespace) {
 	let index = 0;
 	return () =>
@@ -237,6 +262,14 @@ export function convertPostContent(post, context) {
 	let customTransformers;
 	const options = () => ({ customTransformers, keyGenerator, generateKeys: true });
 	customTransformers = {
+		// The upstream core/quote transformer reads only the outer block HTML.
+		// Gutenberg stores modern quote text in nested paragraph/list blocks, so
+		// that path emitted an empty blockquote for otherwise valid source data.
+		// Keep the quote as one semantic container and render its nested Portable
+		// Text rather than flattening paragraphs, lists, links, or inline marks.
+		"core/quote": (block, transformOptions, tools) => [
+			quoteNode(block, transformOptions, tools),
+		],
 		"core/image": (block, _options, tools) => [imageNode(block, tools)],
 		"core/block": (block) => {
 			const reusable = context.reusableBlocks.get(String(block.attrs.ref || ""));

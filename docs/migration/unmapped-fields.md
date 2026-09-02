@@ -16,7 +16,7 @@
 - 状態はpublish 1,848、draft 3、private 3。privateは公開せず元状態をmetadataへ保持する。
 - WXR添付2,027件にarchiveから回収した1件を加え、2,028件すべてをsource／R2 readback hash一致でverified。JPEG / PNG / GIF / WebP / SVG / PDF / XLSX / MP3を含む。
 - コメントは127件（approved 65、pending 62）。IPとUser-Agentは移行しない。
-- 17,055ブロックへ変換し、通常の`htmlBlock`は0件。テーマ／プラグイン名ではなく`yohaku.*`の意味ブロックへ正規化する。
+- 16,701ブロックへ変換し、通常の`htmlBlock`は0件。テーマ／プラグイン名ではなく`yohaku.*`の意味ブロックへ正規化する。引用370件は`yohaku.quote`へまとめ、本文欠落0をD1で確認済み。
 - kanolog管理者RESTでPochipp 590件、再利用ブロック3件、menu item 10件、featured media付き投稿93件を確認した。
 - kanologの現在公開投稿は1,370件。WXR公開1,368件との差は保存済みREST deltaの2件と一致する。
 - nocalogは公開183投稿・1ページ・62添付、art-quizは公開291投稿・603添付で、現在RESTとWXR公開件数が一致する。

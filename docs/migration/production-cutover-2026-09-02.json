@@ -13,7 +13,7 @@
   },
   "worker": {
     "service": "kanouk-emdash-staging",
-    "version": "86d6efcb-7a33-48db-85be-d7f66c29fe7b",
+    "version": "44c7961e-7790-40ca-84e2-a748bd5e5254",
     "custom_domains": [
       "blog.kanouk.com",
       "photos.kanouk.com"
@@ -65,8 +65,8 @@
     }
   },
   "verification": {
-    "python_tests": 125,
-    "wordpress_conversion_tests": 25,
+    "python_tests": 127,
+    "wordpress_conversion_tests": 28,
     "astro_typecheck_errors": 0,
     "astro_typecheck_warnings": 0,
     "build": "passed",
@@ -105,6 +105,86 @@
         "blog_failed": 0,
         "photos_checks": 12,
         "photos_failed": 0
+      }
+    },
+    {
+      "observed_at": "2026-09-02T08:22:00+09:00",
+      "elapsed": "production_visual_and_interaction_qa",
+      "worker_version": "6da4bad2-7704-41e4-988a-48fca2611a23",
+      "production_pages_checked": [
+        "blog_home",
+        "blog_article",
+        "blog_search",
+        "product_card_article",
+        "quiz_page",
+        "photo_album_index",
+        "photo_album_detail",
+        "photo_detail"
+      ],
+      "interaction_checks": {
+        "photo_next_navigation": "passed",
+        "quiz_answer_feedback": "passed",
+        "dark_mode": "passed",
+        "historical_archive_month_selection": "passed_after_fix"
+      },
+      "responsive_viewports": {
+        "checked_widths_css_px": [320, 390, 768, 1024, 1440],
+        "horizontal_overflow_failures": 0
+      },
+      "archive_selector_fix": {
+        "reason": "Older article months were not present in the recent-only selector",
+        "verified_example": "2008-06",
+        "full_history_month_limit": 240
+      },
+      "representative_readback": {
+        "blog_checks": 14,
+        "blog_failed": 0,
+        "photos_checks": 12,
+        "photos_failed": 0,
+        "staging_checks": 14,
+        "staging_failed": 0
+      }
+    },
+    {
+      "observed_at": "2026-09-02T08:56:00+09:00",
+      "elapsed": "quote_content_repair",
+      "worker_version": "44c7961e-7790-40ca-84e2-a748bd5e5254",
+      "root_cause": "Gutenberg stores modern quote text in nested paragraph/list blocks while the previous converter read only outer HTML",
+      "quote_migration": {
+        "selected_entries": 271,
+        "updated_entries": 271,
+        "failed_entries": 0,
+        "post_apply_skipped_verified": 271,
+        "post_apply_failures": 0,
+        "source_quote_blocks": 370,
+        "public_post_quote_blocks": 366,
+        "public_page_quote_blocks": 2,
+        "private_revision_quote_blocks": 2,
+        "empty_quote_blocks": 0
+      },
+      "prewrite_backup": {
+        "d1_sql_bytes": 54448388,
+        "sha256": "8405e6f961da5ff73f914d8fb61c7d8e2a1aa372981f0a9069c7d156f3406f53",
+        "sqlite_integrity": "ok",
+        "restored_post_rows": 1848
+      },
+      "visual_readback": {
+        "desktop_width_css_px": 1440,
+        "mobile_width_css_px": 390,
+        "light_mode": "passed",
+        "dark_mode": "passed",
+        "long_quote": "passed",
+        "multi_paragraph_quote": "passed",
+        "list_quote": "passed",
+        "horizontal_overflow_failures": 0
+      },
+      "representative_readback": {
+        "blog_checks": 14,
+        "blog_failed": 0,
+        "photos_checks": 12,
+        "photos_failed": 0,
+        "staging_checks": 14,
+        "staging_failed": 0
       }
     }
   ],
