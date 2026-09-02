@@ -13,7 +13,8 @@
   },
   "worker": {
     "service": "kanouk-emdash-staging",
-    "version": "44c7961e-7790-40ca-84e2-a748bd5e5254",
+    "cutover_version": "44c7961e-7790-40ca-84e2-a748bd5e5254",
+    "version": "941ac25a-102b-4414-8b0f-10f561224054",
     "custom_domains": [
       "blog.kanouk.com",
       "photos.kanouk.com"
@@ -65,12 +66,27 @@
     }
   },
   "verification": {
-    "python_tests": 127,
+    "python_tests": 136,
     "wordpress_conversion_tests": 28,
     "astro_typecheck_errors": 0,
     "astro_typecheck_warnings": 0,
     "build": "passed",
     "diff_check": "passed"
+  },
+  "backup_restore": {
+    "backup_version": 2,
+    "path": "/Users/kanouk/Documents/Private_External_Imports/kanouk-cloudflare-backups/20260902T023451Z",
+    "media_count": 3507,
+    "media_total_bytes": 6933980178,
+    "r2_object_count": 3546,
+    "r2_total_bytes": 6978619128,
+    "untracked_r2_count": 39,
+    "untracked_r2_total_bytes": 44638950,
+    "d1_tables_restored": 85,
+    "d1_rows_restored": 40273,
+    "d1_integrity": "ok",
+    "d1_foreign_key_violations": 0,
+    "verified": true
   },
   "analytics": {
     "ga4_measurement_id": "G-94EQ0WN7B9",
@@ -232,6 +248,70 @@
         "internal_referrer_rows": 0,
         "external_referrer_rows": 0
       },
+      "verified": true
+    },
+    {
+      "observed_at": "2026-09-02T10:53:28+09:00",
+      "elapsed": "css_asset_delivery_recovery",
+      "worker_version": "941ac25a-102b-4414-8b0f-10f561224054",
+      "root_cause": "HTML was served by the Worker while generated CSS was not forwarded through the ASSETS binding",
+      "css_readback": {
+        "status": 200,
+        "content_type": "text/css",
+        "bytes": 70404
+      },
+      "representative_readback": {
+        "blog_checks": 17,
+        "blog_failed": 0,
+        "photos_checks": 13,
+        "photos_failed": 0,
+        "staging_checks": 17,
+        "staging_failed": 0
+      },
+      "responsive_visual_readback": {
+        "desktop_width_css_px": 1440,
+        "mobile_width_css_px": 390,
+        "horizontal_overflow_failures": 0,
+        "verified": true
+      }
+    },
+    {
+      "observed_at": "2026-09-02T11:45:38+09:00",
+      "elapsed": "interim_4h51m",
+      "monitor_report_version": 3,
+      "representative_readback": {
+        "blog_checks": 17,
+        "blog_failed": 0,
+        "photos_checks": 13,
+        "photos_failed": 0,
+        "staging_checks": 17,
+        "staging_failed": 0
+      },
+      "worker_invocations": {
+        "requests": 23243,
+        "errors": 0,
+        "subrequests": 1377,
+        "error_rate_percent": 0.0
+      },
+      "not_found_log": {
+        "rows": 24,
+        "hits": 201,
+        "monitor_hits": 144,
+        "internal_referrer_rows": 0,
+        "external_referrer_rows": 0
+      },
+      "cloudflare_platform_usage": {
+        "d1_read_queries": 41388,
+        "d1_write_queries": 5160,
+        "d1_rows_read": 11041025,
+        "d1_rows_written": 7268,
+        "r2_requests": 229,
+        "r2_object_count": 3546,
+        "r2_payload_bytes": 6978619128
+      },
+      "ga4_standard_report": "pending_standard_processing_or_no_traffic",
+      "search_console": "authentication_scope_missing",
+      "cloudflare_billable_usage": "authentication_scope_missing",
       "verified": true
     }
   ],
