@@ -96,7 +96,8 @@ python3 scripts/migration/verify_cloudflare_backup.py \
 
 ## 現在の外部ゲート
 
-- Search Console／GA4の外部反映と、24時間・1週間・1か月・3か月の経時監視
+- Search Consoleの`kanouk@gmail.com`所有権証明とsitemap送信
+- GA4の新host別標準reportと、24時間・1週間・1か月・3か月の経時監視
 
 ## 完了を宣言しない理由
 

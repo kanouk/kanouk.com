@@ -149,6 +149,19 @@ reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true
 
 検索エンジン側の処理待ちは即時合格とせず、pendingとして次の監視時点へ持ち越します。
 
+各時点のCloudflare・公開画面・404台帳は、同じread-only実行器でJSON化します。`--checkpoint`の時刻に達していない場合は終了コード2となり、早すぎる観測を正式な24時間／1週間監視として扱いません。
+
+```sh
+cd /Users/kanouk/projects/kanouk.com
+python3 scripts/migration/monitor_production.py \
+  --checkpoint 24h \
+  --output docs/migration/monitoring/2026-09-03-24h.json
+```
+
+実行器は`kanouk@gmail.com`の最小権限tokenだけを使い、zone、Custom Domain、blog/photos/staging readback、Worker invocation error、D1の404 referrerを取得します。zone HTTP Analyticsは現在の最小権限tokenに`Zone Analytics Read`がないため、権限を勝手に広げず`not_available_to_minimum_scope_token`として記録します。Worker runtime errorと実media readbackは別経路で継続監視できます。
+
+GA4はGoogle Analytics Data API、Search Consoleは所有権とsitemap状態を別途読み戻し、Cloudflare JSONへ未確認値を混ぜません。
+
 ### 初回監視結果
 
 2026-09-02 08:03 JST（切替約1時間後）に、zone `active`、Custom Domain 2件、blog 14/14・photos 12/12の代表readback、active deployment error rate 0%、asset 5xx 0を確認しました。旧カノログのGA4 measurement IDが初期releaseへ入っていないことを同時に検出したため、production hostだけで有効になるよう修正し、Worker version `86d6efcb-7a33-48db-85be-d7f66c29fe7b`へdeployしました。
@@ -160,6 +173,8 @@ reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true
 同時点の404 logは、`.git`／`.env`／WordPress batch APIなどreferrerなしの自動探索と、monitor自身の意図的404が中心でした。正規ページからの壊れた導線を示すreferrer付き404は確認していません。経時監視では件数だけでなくpathとreferrerを分けて評価します。
 
 08:56 JST、Gutenberg引用のnested paragraph/listを既存変換器が読まず、一部引用本文が空になる不具合を修正しました。`--only-quotes`の読み取りドライランで271件すべてが更新対象、対象外更新0、失敗0を確認してから、更新前D1をSQLへ退避・別SQLite復元検証し、271/271件を更新・再公開しました。更新後の再実行は271/271 `skipped_verified`、失敗0です。原本370引用に対し、公開posts 366、公開page 2、private revision 2、本文欠落0です。Worker version `44c7961e-7790-40ca-84e2-a748bd5e5254`で長文、複数段落、箇条書き、light／dark、390／1440px、横overflow 0を実画面確認し、3ホストの代表readbackも再合格しています。
+
+09:16 JST、共通監視実行器の初回暫定runが合格しました。切替から約2時間23分でzone active、Custom Domain 2件、blog 14/14・photos 12/12・staging 14/14、Worker 18,727 invocation中runtime error 0、内部／外部referrer付き404 0でした。GA4はproperty `256487934`、stream `2210574206`、measurement ID `G-94EQ0WN7B9`を管理画面で照合し、Realtimeでactive users 4・page views 9を受信しています。host別帰属は標準reportの処理待ちです。
 
 ## Cloudflare staging backup
 

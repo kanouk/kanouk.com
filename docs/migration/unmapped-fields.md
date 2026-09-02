@@ -8,7 +8,8 @@
 |---|---|---|
 | nocalog / art-quiz現在の非公開差分 | 公開REST件数はWXRと一致、管理者認証は未所持 | WXRの下書き・非公開を正本として保持し、公開差分がないことを明記 |
 | DNS / 本番URL | nameserver変更、zone active、2 Custom Domain、TLS、本番readback、全件crawl済み | なし。経時監視は別行で継続 |
-| 検索・分析の外部処理 | custom domain公開済み。GA4 tagはproductionのみreadback済み。Search Console／GA4 realtimeの反映は非同期 | 24時間・1週間・1か月・3か月の時点で確認し、pendingを事実として記録 |
+| GA4 | `G-94EQ0WN7B9`はproperty `256487934`／stream `2210574206`と実画面照合。productionだけにtagがあり、Realtimeでactive users 4・page views 9を受信 | 24時間時点の標準reportで`hostName`別に新2ホストを帰属確認 |
+| Search Console | `sc-domain:kanouk.com`は存在するが、`kanouk@gmail.com`では所有権証明が必要。sitemapは未送信 | 所有権を付与する操作は権限変更になるため、本人の操作時確認後にDNS証明し、blog/photos sitemapを送信 |
 
 ## WordPressで確認済み
 

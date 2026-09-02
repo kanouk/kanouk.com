@@ -74,11 +74,27 @@
   },
   "analytics": {
     "ga4_measurement_id": "G-94EQ0WN7B9",
+    "ga4_property_id": "256487934",
+    "ga4_data_stream_id": "2210574206",
+    "ga4_stream_name": "カノログ",
+    "ga4_stream_url": "https://kanolog.net",
     "production_hosts_only": true,
     "blog_tag_readback": "passed",
     "photos_tag_readback": "passed",
     "staging_tag_absent": true,
-    "realtime_status": "pending_external_confirmation"
+    "realtime_observed_at": "2026-09-02T09:14:00+09:00",
+    "realtime_active_users": 4,
+    "realtime_page_views": 9,
+    "realtime_status": "receiving_data",
+    "production_host_attribution": "pending_standard_report"
+  },
+  "search_console": {
+    "observed_at": "2026-09-02T09:13:00+09:00",
+    "existing_property": "sc-domain:kanouk.com",
+    "account_email": "kanouk@gmail.com",
+    "access": "ownership_verification_required",
+    "sitemap_submission": "blocked_until_ownership_verification",
+    "ownership_verification_performed": false
   },
   "monitoring_checkpoints": [
     {
@@ -186,6 +202,37 @@
         "staging_checks": 14,
         "staging_failed": 0
       }
+    },
+    {
+      "observed_at": "2026-09-02T09:16:59+09:00",
+      "elapsed": "interim_2h23m",
+      "monitor_report_version": 1,
+      "zone_status": "active",
+      "custom_domains_connected": 2,
+      "representative_readback": {
+        "blog_checks": 14,
+        "blog_failed": 0,
+        "photos_checks": 12,
+        "photos_failed": 0,
+        "staging_checks": 14,
+        "staging_failed": 0
+      },
+      "worker_invocations": {
+        "requests": 18727,
+        "errors": 0,
+        "subrequests": 739,
+        "error_rate_percent": 0.0,
+        "client_disconnected": 3152,
+        "success": 15575
+      },
+      "not_found_log": {
+        "rows": 18,
+        "hits": 134,
+        "monitor_hits": 89,
+        "internal_referrer_rows": 0,
+        "external_referrer_rows": 0
+      },
+      "verified": true
     }
   ],
   "retained_sources": {

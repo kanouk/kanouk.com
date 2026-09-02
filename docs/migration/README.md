@@ -50,6 +50,7 @@ SmugMug代替は既製の別サービスではなく、このリポジトリで�
 - [unmapped-fields.md](unmapped-fields.md): 未完了事項と最終ゲート
 - [completion-audit.md](completion-audit.md): Issue #1〜#11の証拠ベース完了監査
 - [operations-runbook.md](operations-runbook.md): deploy後監視、backup、復元、rollback、コスト測定
+- `scripts/migration/monitor_production.py`: 時刻ゲート付きの本番監視JSON（Cloudflare、公開readback、404）
 
 ## 残っているゲート
 
