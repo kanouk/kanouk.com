@@ -373,6 +373,9 @@ main:focus { outline: none; }
 .featured-image-link { display: block; color: inherit; }
 .featured-image { display: grid; aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-muted); place-items: center; }
 .featured-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms cubic-bezier(.2,.65,.25,1); }
+.featured-image img[src*=".png"],
+.card-image img[src*=".png"],
+.article-hero img[src*=".png"] { background: #fff; }
 .featured-image img[data-low-resolution="true"] { width: auto; max-width: 100%; height: auto; max-height: 100%; object-fit: contain; }
 .featured-image-link:hover img { transform: scale(1.018); }
 .image-placeholder { position: relative; display: grid; width: 100%; height: 100%; overflow: hidden; background: var(--paper-muted); color: var(--ink-muted); place-items: center; }
