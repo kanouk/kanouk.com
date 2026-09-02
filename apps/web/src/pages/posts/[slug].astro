@@ -212,7 +212,7 @@ const publishDate =
 			{/* Right gutter: TOC + compact content discovery */}
 			<aside class="article-sidebar">
 				<div class="sidebar-sticky">
-					<nav class="toc" aria-label="目次">
+					<nav class="toc" aria-label="目次" hidden>
 						<h4 class="toc-title">目次</h4>
 						<div class="toc-content" id="toc-content">
 							<!-- Populated by JS -->
@@ -307,11 +307,11 @@ const publishDate =
 
 			const headings = content.querySelectorAll("h2, h3");
 			if (headings.length === 0) {
-				// Hide TOC if no headings
-				const toc = document.querySelector(".toc") as HTMLElement | null;
-				if (toc) toc.style.display = "none";
 				return;
 			}
+
+			const toc = tocContainer.closest(".toc") as HTMLElement | null;
+			if (toc) toc.hidden = false;
 
 			const list = document.createElement("ul");
 			list.className = "toc-list";
