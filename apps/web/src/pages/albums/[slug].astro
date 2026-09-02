@@ -5,6 +5,7 @@ import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
+import { photoPath } from "../../utils/photo-url.mjs";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
@@ -45,7 +46,7 @@ const locationPhotos = photos.flatMap((photo) => {
 		latitude,
 		longitude,
 		title: photo.data.title || photo.data.alt || "写真を見る",
-		href: `/photos/${photo.id}`,
+		href: photoPath(photo.id),
 	}];
 });
 const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
@@ -75,7 +76,7 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 
 		<div class="photo-grid">
 			{photos.map((photo, index) => (
-				<a class="photo-card" href={`/photos/${photo.id}`} aria-label={photo.data.alt || photo.data.title}>
+				<a class="photo-card" href={photoPath(photo.id)} aria-label={photo.data.alt || photo.data.title}>
 					<YohakuImage image={photo.data.image} preview priority={index === 0} />
 					{photo.data.kind === "video" && (
 						<span class="video-badge">

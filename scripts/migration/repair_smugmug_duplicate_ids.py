@@ -81,7 +81,7 @@ def repair(catalog_path: Path, *, apply: bool) -> dict[str, Any]:
             asset["id"] = replacement
             asset.setdefault("source", {})["stable_id_scope"] = "album-image"
             destination = asset.setdefault("destination", {})
-            destination["photo_path"] = f"/photos/{replacement}"
+            destination["photo_path"] = f"/p/{replacement}"
             destination["media_path"] = f"/media/{replacement}"
             changes.append(
                 {

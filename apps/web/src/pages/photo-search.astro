@@ -4,6 +4,7 @@ export const prerender = false;
 import { search } from "emdash";
 import { Image as ImageIcon, Images, Search } from "lucide-astro";
 import Photos from "../layouts/Photos.astro";
+import { photoPath } from "../utils/photo-url.mjs";
 
 const query = Astro.url.searchParams.get("q")?.trim() || "";
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
@@ -15,7 +16,7 @@ const { items: results } = query
 const resultUrl = (collection: string, slug: string | null, id: string) =>
 	collection === "albums"
 		? `/albums/${slug ?? id}`
-		: `/photos/${slug ?? id}`;
+		: photoPath(slug ?? id);
 ---
 
 <Photos

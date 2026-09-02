@@ -488,10 +488,11 @@ export function buildSmugMugMappings(manifests) {
 		for (const asset of manifest?.assets || []) {
 			const key = asset?.source?.image_key;
 			const destination = asset?.destination;
+			const photoSlug = String(asset?.id || destination?.photo_path?.split("/").filter(Boolean).at(-1) || "");
 			if (!key || !destination?.emdash_content_id || !destination?.emdash_media_id
-				|| !destination?.r2_object_key || !asset?.verification?.r2_roundtrip_verified) continue;
+				|| !destination?.r2_object_key || !photoSlug || !asset?.verification?.r2_roundtrip_verified) continue;
 			assets.set(String(key), {
-				photoTarget: `https://photos.kanouk.com${destination.photo_path}`,
+				photoTarget: `https://photos.kanouk.com/p/${encodeURIComponent(photoSlug)}`,
 				mediaTarget: `https://photos.kanouk.com/_emdash/api/media/file/${encodeURIComponent(destination.r2_object_key)}`,
 				mediaPath: `/_emdash/api/media/file/${encodeURIComponent(destination.r2_object_key)}`,
 				mediaId: destination.emdash_media_id,
@@ -796,6 +797,13 @@ async function ensureSchema(client, apply) {
 				throw new Error('Posts collection dateField must be "published_on" before importing');
 			}
 		}
+	}
+	const photosCollection = collections.get("photos");
+	if (!photosCollection) throw new Error("Required collection is missing: photos");
+	if (apply && photosCollection.urlPattern !== "/p/{slug}") {
+		await client.put("/_emdash/api/schema/collections/photos", {
+			urlPattern: "/p/{slug}",
+		});
 	}
 }
 

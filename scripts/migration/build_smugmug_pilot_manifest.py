@@ -127,7 +127,7 @@ def sanitized_asset(
             "uploaded_at": timestamp_source(image.get("DateTimeUploaded")),
         },
         "destination": {
-            "photo_path": f"/photos/{media_id}",
+            "photo_path": f"/p/{media_id}",
             "media_path": f"/media/{media_id}",
             "emdash_content_id": None,
             "emdash_media_id": None,
@@ -168,7 +168,7 @@ def manifest(
         },
         "url_contract": {
             "album_path": f"/albums/{slug}",
-            "photo_path_template": "/photos/{media_id}",
+            "photo_path_template": "/p/{media_id}",
             "media_path_template": "/media/{media_id}",
         },
         "album": {

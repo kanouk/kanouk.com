@@ -390,7 +390,7 @@ def main() -> None:
             require_og_image=True,
         )
 
-        photo_match = re.search(r'href="(/photos/[^"?#]+)"', album_html)
+        photo_match = re.search(r'href="(/p/[^"?#]+)"', album_html)
         if not photo_match:
             raise RuntimeError("no published photo found for SEO readback")
         photo_path = unescape(photo_match.group(1))

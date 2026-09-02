@@ -118,7 +118,7 @@ verified         公開readbackまで確認済みか
 |---|---|
 | カノログ一覧・記事 | `https://blog.kanouk.com/...` |
 | 公開アルバム | `https://photos.kanouk.com/albums/...` |
-| 公開写真・動画 | `https://photos.kanouk.com/photos/...` |
+| 公開写真・動画 | `https://photos.kanouk.com/p/...` |
 | media byte | 生のR2管理URLを出さずWorker配信URLを使用 |
 
 旧WordPress記事は可能な限りpathを維持します。custom domain DNSは全件監査合格後にユーザーが明示承認済みです。旧domain側の301は旧ホスト側の管理条件と外部参照を確認してから別工程で設定し、旧サービスの停止・解約とは分離します。

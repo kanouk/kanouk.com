@@ -3,7 +3,7 @@ import { defineMiddleware } from "astro:middleware";
 const PHOTO_HOSTS = new Set(["photos.kanouk.com", "photos-staging.kanouk.com"]);
 const BLOG_HOSTS = new Set(["blog.kanouk.com", "blog-staging.kanouk.com"]);
 
-const PHOTO_ROUTE = /^\/(?:albums|photos|media)(?:\/|$)/;
+const PHOTO_ROUTE = /^\/(?:albums|p|photos|media)(?:\/|$)/;
 const BLOG_ROUTE = /^\/(?:posts|pages|category|tag|archives)(?:\/|$)/;
 
 async function filteredSitemapIndex(response: Response, photoHost: boolean) {

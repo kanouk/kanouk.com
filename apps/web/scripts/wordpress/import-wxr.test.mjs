@@ -444,6 +444,7 @@ test("verified SmugMug assets rewrite image, photo, and album URLs", () => {
 			destination: { emdash_content_id: "album-id" },
 		},
 		assets: [{
+			id: "kph-stable",
 			source: { image_key: "abc123" },
 			destination: {
 				photo_path: "/photos/kph-stable",
@@ -461,7 +462,7 @@ test("verified SmugMug assets rewrite image, photo, and album URLs", () => {
 	], mappings);
 	assert.equal(result.value[0].asset._ref, "media-id");
 	assert.equal(result.value[0].asset.url, "/_emdash/api/media/file/01ABC.jpg");
-	assert.match(result.value[1].html, /https:\/\/photos\.kanouk\.com\/photos\/kph-stable/);
+	assert.match(result.value[1].html, /https:\/\/photos\.kanouk\.com\/p\/kph-stable/);
 	assert.match(result.value[2].html, /https:\/\/photos\.kanouk\.com\/albums\/stations/);
 	assert.equal(result.rewrites, 3);
 });

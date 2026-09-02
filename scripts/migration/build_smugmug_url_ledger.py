@@ -33,6 +33,10 @@ def image_key(url: str) -> str | None:
     return match.group(1) if match else None
 
 
+def canonical_photo_path(asset: dict[str, Any]) -> str:
+    return f"/p/{asset['id']}"
+
+
 def build(
     manifest: dict[str, Any],
     article: str,
@@ -59,7 +63,7 @@ def build(
         path = (
             asset["destination"]["media_path"]
             if host == "photos.smugmug.com"
-            else asset["destination"]["photo_path"]
+            else canonical_photo_path(asset)
         )
         replacements[url] = f"{destination_origin.rstrip('/')}{path}"
 
@@ -75,7 +79,7 @@ def build(
                 "source_image_key": key,
                 "media_id": asset["id"],
                 "old_urls": grouped[key],
-                "new_photo_url": f"{destination_origin.rstrip('/')}{asset['destination']['photo_path']}",
+                "new_photo_url": f"{destination_origin.rstrip('/')}{canonical_photo_path(asset)}",
                 "new_media_url": f"{destination_origin.rstrip('/')}{asset['destination']['media_path']}",
             }
         )

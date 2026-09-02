@@ -18,7 +18,7 @@ class VerifyPublicSiteTests(unittest.TestCase):
     def test_seo_parser_collects_canonical_meta_and_jsonld(self) -> None:
         parser = module.SeoParser()
         parser.feed(
-            '<link rel="canonical" href="https://photos.kanouk.com/photos/example">'
+            '<link rel="canonical" href="https://photos.kanouk.com/p/example">'
             '<link rel="stylesheet preload" href="/_astro/theme.example.css">'
             '<meta property="og:title" content="Example">'
             '<meta property="og:image" content="https://photos.kanouk.com/media/example.jpg">'
@@ -28,7 +28,7 @@ class VerifyPublicSiteTests(unittest.TestCase):
         )
         self.assertEqual(
             parser.canonicals,
-            ["https://photos.kanouk.com/photos/example"],
+            ["https://photos.kanouk.com/p/example"],
         )
         self.assertEqual(parser.meta["og:title"], ["Example"])
         self.assertEqual(parser.jsonld_types, ["ImageObject"])

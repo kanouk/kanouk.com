@@ -48,7 +48,7 @@ class SmugMugUrlLedgerTests(unittest.TestCase):
         self.assertEqual(ledger["replacement_occurrences"], 2)
         self.assertEqual(ledger["remaining_smugmug_urls_after_dry_run"], [])
         self.assertIn("https://photos.kanouk.com/media/kph_stable", transformed)
-        self.assertIn("https://photos.kanouk.com/photos/kph_stable", transformed)
+        self.assertIn("https://photos.kanouk.com/p/kph_stable", transformed)
 
     def test_reports_unmatched_source_url(self) -> None:
         ledger, _ = ledger_module.build(
