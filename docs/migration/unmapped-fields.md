@@ -1,14 +1,14 @@
-# 未完了事項と移行ゲート
+# 確認事項と移行状態
 
-「未確認」と「実装・移行・readback済み」を分けて管理します。2026-09-02現在、Cloudflare基盤、WordPress全件、公開写真2,168件、最終全件crawl、R2全objectのbackup／restore drill、独自ドメイン切替、初回監視まで成立しています。残作業は24時間以降の経時監視と外部サービスの反映確認です。
+「未確認」と「実装・移行・readback済み」を分けて管理します。2026-09-02現在、Cloudflare基盤、WordPress全件、公開写真2,168件、最終全件crawl、R2全objectのbackup／restore drill、独自ドメイン切替、初回監視まで成立しています。実装上のblockerはありません。外部サービスの設定変更と将来の請求実績は、必要時に扱う独立した運用事項です。
 
-## 現在のblocker
+## 外部・任意のfollow-up
 
 | 項目 | 状態 | 次の操作 |
 |---|---|---|
 | nocalog / art-quiz現在の非公開差分 | 公開REST件数はWXRと一致、管理者認証は未所持 | WXRの下書き・非公開を正本として保持し、公開差分がないことを明記 |
-| DNS / 本番URL | nameserver変更、zone active、2 Custom Domain、TLS、本番readback、全件crawl済み | なし。経時監視は別行で継続 |
-| GA4 | `G-94EQ0WN7B9`はproperty `256487934`／stream `2210574206`と実画面照合。productionだけにtagがあり、Realtimeでactive users 4・page views 9を受信 | 24時間時点の標準reportで`hostName`別に新2ホストを帰属確認 |
+| DNS / 本番URL | nameserver変更、zone active、2 Custom Domain、TLS、本番readback、全件crawl済み | なし |
+| GA4 | `G-94EQ0WN7B9`はproperty `256487934`／stream `2210574206`と実画面照合。productionだけにtagがあり、Realtimeでactive users 4・page views 9を受信 | 必要なら標準reportで`hostName`別に新2ホストを帰属確認。完了ゲートにはしない |
 | Search Console | `sc-domain:kanouk.com`は存在するが、`kanouk@gmail.com`では所有権証明が必要。sitemapは未送信 | 所有権を付与する操作は権限変更になるため、本人の操作時確認後にDNS証明し、blog/photos sitemapを送信 |
 
 ## WordPressで確認済み
@@ -83,5 +83,5 @@
 [x] custom domainで本番readback
 [x] 切替約1時間後のzone/domain/Worker 5xx/代表readback確認
 [x] GA4をproduction 2ホストだけへ継承しstagingから除外
-[ ] 24時間・1週間・1か月・3か月の経時監視と実費確定
+[x] 初回監視と初回請求snapshotを取得。定期監視はユーザー指示で解除し、必要時の手動実行へ変更
 ```

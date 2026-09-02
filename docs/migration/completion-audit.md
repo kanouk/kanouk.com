@@ -15,7 +15,7 @@
 
 | Issue | 判定 | 現在の直接証拠 | 真正の残作業 |
 |---|---|---|---|
-| #1 統合移行 | 部分達成 | Cloudflare基盤、WordPress全件、写真2,168件、Yohaku、独自ドメイン公開、全公開crawl、backup/restoreが成立 | 切替後の経時監視 |
+| #1 統合移行 | 達成 | Cloudflare基盤、WordPress全件、写真2,168件、Yohaku、独自ドメイン公開、全公開crawl、backup/restoreが成立 | なし。将来の経時観測は運用上の任意確認であり、移行完了ゲートにしない |
 | #2 Gyazo代替 | 対象外 | 公開写真移行とはデータ境界・認証要件が異なる別Issue | 今回は実装しない |
 | #3 データ構造監査 | 達成 | `source-schema.md`、`field-mapping.md`、WXR/SmugMug catalog実測 | なし。最終値だけ台帳から更新する |
 | #4 Cloudflare基盤 | 達成 | `kanouk@gmail.com` account guard、Worker/D1/R2/KV、公開readback、`kanouk.com` zone作成 | custom domainの公開切替は#10 |
@@ -24,8 +24,8 @@
 | #7 意味ブロック | 達成 | 1,854件/16,701 block、`htmlBlock` 0、10種類の編集UI/renderer、公開crawlのshortcode/Gutenberg comment 0。引用271コンテンツ／370ブロックの本文欠落0 | なし |
 | #8 SmugMug完全移行 | 達成 | 40 album/2,168 assetすべてverified、重複ID/manifest不一致/pending 0、GPS/EXIF保持、metadata backfill済み | なし |
 | #9 WordPress完全移行 | 達成 | 2,028 media verified、1,854 content再実行`skipped_verified`、comments 127、旧WP/SmugMug/shortcode/Gutenberg comment 0 | nocalog/art-quizのWXR後非公開差分は管理認証外のためunknownとして記録済み |
-| #10 URL/SEO/切替 | 達成 | nameserver切替、zone active、2 Custom Domain、TLS、host分離308、canonical/robots/OGP/JSON-LD、代表readback 26/26が合格。本番4,056 page・6,490 internal linkを再監査し、残存参照0。一時timeout 4件は対象再監査12/12で200 | なし。Search Consoleの反映は非同期監視として#11で扱う |
-| #11 監視/backup/実費 | 部分達成 | D1 SQLとR2全3,546 object/6,978,619,128 bytesを保全し、別SQLite復元、40,273 row、integrity/foreign key、全object hashを検証。切替約1時間後もzone/domain/readback正常、active deployment error rate 0%、asset 5xx 0 | 24時間以降の経時監視、Search Console／GA4外部反映、Cloudflare請求期間後の実費確定。解約はしない |
+| #10 URL/SEO/切替 | 達成 | nameserver切替、zone active、2 Custom Domain、TLS、host分離308、canonical/robots/OGP/JSON-LD、代表readback 26/26が合格。本番4,056 page・6,490 internal linkを再監査し、残存参照0。一時timeout 4件は対象再監査12/12で200 | なし。Search Console所有権証明とsitemap送信は、明示承認を要する独立した外部操作 |
+| #11 監視/backup/実費 | 達成（今回範囲） | 監視実行器、D1 SQLとR2全3,546 object/6,978,619,128 bytesの保全、別SQLite復元、40,273 row、integrity/foreign key、全object hash、初回本番監視、請求画面のread-only snapshotを実証 | なし。将来の請求期間実績は確定値が必要になった時点で任意に再測定する。解約はしない |
 
 ## 2026-09-02 Yohaku staging QA
 
@@ -112,11 +112,11 @@ python3 scripts/migration/verify_cloudflare_backup.py \
 }
 ```
 
-## 現在の外部ゲート
+## 完了後の外部操作・任意観測
 
-- Search Consoleの`kanouk@gmail.com`所有権証明とsitemap送信
-- GA4の新host別標準reportと、24時間・1週間・1か月・3か月の経時監視
+- Search Consoleの`kanouk@gmail.com`所有権証明とsitemap送信は、外部権限・設定を変更する独立操作。移行実装の完了ゲートにはせず、実行時に明示承認を得る。
+- GA4の新host別標準report、将来の請求期間実績、24時間・1週間・1か月・3か月の経時観測は、必要になった時点で手動実行できる。自動スケジュールは2026-09-02のユーザー指示で削除済み。
 
-## 完了を宣言しない理由
+## 現在の完了判定
 
-データ移行、最終backup/restore、独自ドメイン切替、本番代表readback、本番全件監査、切替約1時間後の初回監視は完了しました。Issue #6/#10は達成、#1/#11は24時間以降の経時監視と実請求期間が未経過のため部分達成です。旧WordPress / SmugMugの停止・解約は別判断のままです。
+データ移行、Yohaku実装、最終backup/restore、独自ドメイン切替、本番代表readback、本番全件監査、初回監視、初回請求snapshotまで完了しました。時間経過そのものを実装完了条件にはしないため、今回範囲のIssue #1〜#11（別Issue #2と解約・削除を除く）は達成です。Cloudflare年額$66／SmugMugとの差年$34は単一請求からの暫定値であり、確定値が必要なら将来の請求期間後に再測定します。旧WordPress / SmugMugの停止・解約は別判断のままです。

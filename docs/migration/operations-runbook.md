@@ -136,7 +136,7 @@ python3 scripts/migration/report_smugmug_migration.py \
 
 reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true`になるまで完了扱いにしません。owner APIで公開catalog外のalbumが見えても自動追加・公開せず、40公開albumとの全件性比較だけを記録します。成功後にWordPress全件再import、全sitemap監査、backup／restore drillをもう一度実行します。
 
-## 切替後の監視時点
+## 切替後の任意監視時点
 
 | 時点 | 必須確認 |
 |---|---|
@@ -147,7 +147,7 @@ reportは2,168 verified、duplicate ID 0、manifest mismatch 0、`complete: true
 | 1か月 | index coverage、GA4比較、実費、backup/restore再実行、旧環境依存 |
 | 3か月 | 旧URL残存、コスト、運用品質をまとめ、旧サービスを残す／解約候補にする判断材料を提示 |
 
-検索エンジン側の処理待ちは即時合格とせず、pendingとして次の監視時点へ持ち越します。
+この表は障害調査や費用再測定を行う場合の観点であり、時間経過を移行実装の完了ゲートにはしません。検索エンジン側の処理待ちは、観測した場合も即時合格とせずpendingとして記録します。
 
 各時点のCloudflare・公開画面・404台帳は、同じread-only実行器でJSON化します。`--checkpoint`の時刻に達していない場合は終了コード2となり、早すぎる観測を正式な24時間／1週間監視として扱いません。
 
@@ -158,7 +158,7 @@ python3 scripts/migration/monitor_production.py \
   --output docs/migration/monitoring/2026-09-03-24h.json
 ```
 
-Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`）を、各checkpointにつき一回だけ07:15 JSTに実行する。初回は2026-09-03の24時間監視で、合格後に同じautomationを1週間、1か月、3か月の順へ更新し、3か月完了後はpauseする。別automationを重複作成しない。automationはローカル記録、テスト、commit/push、公開readbackまで行うが、旧WordPress／SmugMugの停止・削除・解約、Search Consoleの所有権・sitemap・設定変更、GitHub Issue本文・コメント・状態変更は、実行時のユーザー明示承認なしに行わない。
+Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`）は、経時監視の価値が限定的という2026-09-02のユーザー判断により削除済みです。自動スケジュールを再作成しません。確認が必要になった場合は上記実行器を手動で使い、旧WordPress／SmugMugの停止・削除・解約、Search Consoleの所有権・sitemap・設定変更、GitHub Issue本文・コメント・状態変更は、実行時のユーザー明示承認なしに行いません。
 
 実行器は`kanouk@gmail.com`の最小権限tokenだけを使い、zone、Custom Domain、blog/photos/staging readback、Worker invocation error、D1の404 referrerを取得します。zone HTTP Analyticsは現在の最小権限tokenに`Zone Analytics Read`がないため、権限を勝手に広げず`not_available_to_minimum_scope_token`として記録します。Worker runtime errorと実media readbackは別経路で継続監視できます。
 
@@ -268,7 +268,7 @@ WXR、SmugMug manifest、WordPress media ledger、旧新URL ledgerはR2 backup�
 | R2 Class B | 211 | 10,000,000 | 枠内 |
 | Images unique transformations | account-wide月累計242（Yohaku contract上限3,507） | 5,000 | 実測・上限とも枠内 |
 
-現在のWorkers Paid最低額は月$5／年$60です。観測済みresourceだけなら追加overageは示されておらず、SmugMug年$100との差は最大年$40です。ただし、これは削減額の確定値ではありません。Workers CPU、同じaccount内の他resource、Cloudflare請求明細が未確認なので`provisional_floor_only`とします。1週間では通常trafficとの分離、1か月では請求明細と再backupを確認してから実費を確定します。
+Cloudflare Billingのread-only確認では、9月1日の支払済み請求が$5.50、8月31日〜9月2日の従量課金合計とcycle予測は$0.00、表示されたCPUを含む全metricのbillable usageは0でした。同額が12か月続き追加従量課金がなければ年$66、SmugMug年$100との差は年$34です。ただし単一請求からの暫定値であり、確定値が必要になった時点で請求期間実績を再測定します。
 
 Workers Paid最低額だけなら年$60ですが、SmugMug年$100との差額をそのまま確定削減額にはしません。request／CPU／storage／operation／ImagesとWordPress hosting費を実測し、Cloudflareの請求期間後に確定します。
 

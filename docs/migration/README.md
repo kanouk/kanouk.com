@@ -58,11 +58,12 @@ SmugMug代替は既製の別サービスではなく、このリポジトリで�
 - [search-console-access-2026-09-02.json](search-console-access-2026-09-02.json): 対象propertyのread-onlyアクセス確認結果
 - `scripts/migration/monitor_production.py`: 時刻ゲート付きの本番監視JSON（Cloudflare、公開readback、404）
 
-## 残っているゲート
+## 完了後の任意運用事項
 
-1. 24時間、1週間、1か月、3か月の時点でWorker error、404、Search Console、GA4、Core Web Vitalsを監視する。Search Console所有権証明とsitemap送信は明示承認待ち。
-2. 初回請求$5.50と現時点の従量課金$0.00は確認済み。1か月時点の請求期間実績で年$100削減の成否を確定する。
-3. 旧WordPress／SmugMugは停止・解約せず、監視結果を材料に別途判断する。
+1. 自動の経時監視スケジュールは、価値が限定的という2026-09-02のユーザー判断により削除済み。実行器は残し、障害調査や費用再測定が必要な場合だけ手動で使う。
+2. Search Console所有権証明とsitemap送信は外部権限・設定の変更を伴うため、移行実装とは分離し、実行時に明示承認を得る。
+3. 初回請求$5.50と現時点の従量課金$0.00は確認済み。同額が続く場合は年$66、SmugMugとの差は年$34という暫定値であり、確定値が必要なら請求期間実績を再測定する。
+4. 旧WordPress／SmugMugは停止・解約せず、別途判断する。
 
 ## アカウントと秘密情報
 
