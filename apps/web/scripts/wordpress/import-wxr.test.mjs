@@ -462,7 +462,52 @@ test("verified SmugMug assets rewrite image, photo, and album URLs", () => {
 	], mappings);
 	assert.equal(result.value[0].asset._ref, "media-id");
 	assert.equal(result.value[0].asset.url, "/_emdash/api/media/file/01ABC.jpg");
+	assert.equal(result.value[0].link, "https://photos.kanouk.com/p/kph-stable");
 	assert.match(result.value[1].html, /https:\/\/photos\.kanouk\.com\/p\/kph-stable/);
 	assert.match(result.value[2].html, /https:\/\/photos\.kanouk\.com\/albums\/stations/);
-	assert.equal(result.rewrites, 3);
+	assert.equal(result.rewrites, 4);
+});
+
+test("a bare SmugMug image receives its canonical photo-page link", () => {
+	const mappings = buildSmugMugMappings([{
+		assets: [{
+			id: "kph-stable",
+			source: { image_key: "abc123" },
+			destination: {
+				emdash_content_id: "photo-1",
+				emdash_media_id: "media-1",
+				r2_object_key: "photo.jpg",
+			},
+			verification: { r2_roundtrip_verified: true },
+		}],
+	}]);
+	const result = rewriteSmugMugReferences([{
+		_type: "image",
+		_key: "image-1",
+		asset: { _type: "reference", url: "https://photos.smugmug.com/Trip/i-abc123/0/hash/M/photo.jpg" },
+	}], mappings);
+	assert.equal(result.value[0].link, "https://photos.kanouk.com/p/kph-stable");
+	assert.equal(result.value[0].asset.url, "/_emdash/api/media/file/photo.jpg");
+});
+
+test("a SmugMug image keeps an explicit unrelated destination", () => {
+	const mappings = buildSmugMugMappings([{
+		assets: [{
+			id: "kph-stable",
+			source: { image_key: "abc123" },
+			destination: {
+				emdash_content_id: "photo-1",
+				emdash_media_id: "media-1",
+				r2_object_key: "photo.jpg",
+			},
+			verification: { r2_roundtrip_verified: true },
+		}],
+	}]);
+	const result = rewriteSmugMugReferences([{
+		_type: "image",
+		_key: "image-1",
+		link: "https://example.com/story",
+		asset: { _type: "reference", url: "https://photos.smugmug.com/Trip/i-abc123/0/hash/M/photo.jpg" },
+	}], mappings);
+	assert.equal(result.value[0].link, "https://example.com/story");
 });

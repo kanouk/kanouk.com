@@ -46,6 +46,26 @@ const WORDPRESS_IMAGE_SIZE_WIDTHS = {
 	large: 1024,
 };
 
+const SMUGMUG_IMAGE_SIZE_WIDTHS = {
+	Th: 150,
+	S: 400,
+	M: 600,
+	L: 800,
+	XL: 1024,
+	X2: 1280,
+	X3: 1600,
+	X4: 2048,
+	X5: 2560,
+};
+
+function smugMugImageSizeWidth(sourceUrl) {
+	let parsed;
+	try { parsed = new URL(sourceUrl); } catch { return undefined; }
+	if (parsed.hostname.toLowerCase() !== "photos.smugmug.com") return undefined;
+	const size = parsed.pathname.match(/\/(Th|S|M|L|XL|X2|X3|X4|X5|O)\//)?.[1];
+	return size ? SMUGMUG_IMAGE_SIZE_WIDTHS[size] : undefined;
+}
+
 function wordpressImageSizeWidth(block, classes, sourceUrl) {
 	const sizeSlug = String(
 		block.attrs.sizeSlug || classes.match(/\bsize-([a-z0-9_-]+)\b/i)?.[1] || "",
@@ -94,6 +114,10 @@ function imageNode(block, tools) {
 		width,
 		height,
 		displayWidth: imageDisplayWidth(block.attrs.width || styleWidth, width)
+			// SmugMug renditions have a real browser-visible width. Prefer it to a
+			// WordPress preset such as `size-large`; otherwise a migrated original
+			// asset is enlarged beyond the size used by the source article.
+			?? smugMugImageSizeWidth(sourceUrl)
 			?? wordpressImageSizeWidth(block, classes, sourceUrl),
 		alignment,
 		visualStyle,
