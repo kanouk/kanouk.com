@@ -82,6 +82,17 @@ def child_environment(
     return env
 
 
+def requires_smugmug_credentials(args: Sequence[str]) -> bool:
+    result = list(args)
+    if result[:1] == ["--"]:
+        result = result[1:]
+    if not result:
+        return True
+    if result[0] == "apply_smugmug_album_covers.py":
+        return "--refresh-from-smugmug" in result
+    return True
+
+
 def normalized_command(args: Sequence[str]) -> list[str]:
     result = list(args)
     if result[:1] == ["--"]:
@@ -99,11 +110,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     try:
         command = normalized_command(args)
-        credentials = load_credentials()
+        env = dict(os.environ)
+        if requires_smugmug_credentials(args):
+            env = child_environment(load_credentials(), env)
         return subprocess.run(
             command,
             cwd=SCRIPT_ROOT.parents[1],
-            env=child_environment(credentials),
+            env=env,
             check=False,
         ).returncode
     except SmugMugCredentialError as exc:

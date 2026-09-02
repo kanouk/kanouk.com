@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 MODULE_PATH = (
@@ -66,6 +68,53 @@ class SmugMugCredentialTests(unittest.TestCase):
                 runner.SmugMugCredentialError, "incomplete owner credentials"
             ):
                 runner.load_credentials(path)
+
+    def test_cover_apply_without_refresh_does_not_need_smugmug_credentials(self) -> None:
+        self.assertFalse(
+            runner.requires_smugmug_credentials(
+                [
+                    "apply_smugmug_album_covers.py",
+                    "--catalog",
+                    "migration/smugmug/catalog.json",
+                    "--apply",
+                ]
+            )
+        )
+        self.assertTrue(
+            runner.requires_smugmug_credentials(
+                [
+                    "apply_smugmug_album_covers.py",
+                    "--catalog",
+                    "migration/smugmug/catalog.json",
+                    "--refresh-from-smugmug",
+                    "--apply",
+                ]
+            )
+        )
+        self.assertTrue(
+            runner.requires_smugmug_credentials(["audit_smugmug.py", "--help"])
+        )
+
+    def test_cover_apply_does_not_open_smugmug_vault(self) -> None:
+        with (
+            patch.object(runner, "load_credentials") as load,
+            patch.object(
+                runner.subprocess,
+                "run",
+                return_value=subprocess.CompletedProcess([], 0),
+            ) as run,
+        ):
+            code = runner.main(
+                [
+                    "apply_smugmug_album_covers.py",
+                    "--catalog",
+                    "migration/smugmug/catalog.json",
+                    "--apply",
+                ]
+            )
+        self.assertEqual(code, 0)
+        load.assert_not_called()
+        run.assert_called_once()
 
     def test_only_allows_read_only_scripts(self) -> None:
         command = runner.normalized_command(["audit_smugmug.py", "--help"])

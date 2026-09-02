@@ -307,7 +307,11 @@ def main() -> None:
     except EmDashGuardError as exc:
         summary["error"] = str(exc)
         print(json.dumps(summary, ensure_ascii=False, indent=2))
-        raise SystemExit(f"EmDash cover apply blocked: {exc}") from exc
+        raise SystemExit(
+            "EmDash cover apply blocked: "
+            f"{exc}. Recorded covers do not need SmugMug.md; "
+            "run this on the machine that has Private Vault EmDash-kanouk.md."
+        ) from exc
     updated = 0
     unchanged = 0
     for path, manifest in rows:
