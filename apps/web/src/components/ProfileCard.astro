@@ -1,0 +1,28 @@
+---
+import { Github, Twitter } from "lucide-astro";
+---
+
+<section class="profile-card">
+	<div class="profile-card__visual">
+		<img
+			src="/kano-profile.png"
+			alt="カノ"
+			width="150"
+			height="150"
+			class="profile-card__image"
+		/>
+	</div>
+	<div class="profile-card__body">
+		<h2>カノ</h2>
+		<p class="profile-card__type">INFP</p>
+		<div class="profile-card__copy">
+			<p>こんにちは！カノといいます👓</p>
+			<p>インターネットやテクノロジー、歴史（世界史・日本史）、美術、お寺や仏像などが好きです。メガネのせいか真面目っぽく見えるらしいですが、基本的には昔から楽観的で適当な性格です。</p>
+			<p>このブログは昔からずっと個人的な日記みたいな感じで書いてきていて、基本的には自分用の個人的なログになりますが、興味のあるところだけ読んでいただけるとうれしいです。コメントやTwitterのフォローなどは大歓迎です。</p>
+		</div>
+		<nav class="profile-card__social" aria-label="カノのソーシャルリンク">
+			<a href="https://twitter.com/kanouk" aria-label="X / Twitter"><Twitter size={17} strokeWidth={1.7} /></a>
+			<a href="https://github.com/kanouk" aria-label="GitHub"><Github size={17} strokeWidth={1.7} /></a>
+		</nav>
+	</div>
+</section>

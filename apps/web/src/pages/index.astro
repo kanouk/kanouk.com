@@ -42,7 +42,7 @@ const tagsByEntry = await getTermsForEntries(
 					<section class="home-main" aria-labelledby="latest-posts-title">
 						<header class="section-header home-section-header">
 							<h1 class="section-title" id="latest-posts-title">新着記事</h1>
-							{hasMorePosts && <a href="/posts" class="section-link">すべての記事</a>}
+							{hasMorePosts && <a href="/posts" class="section-link">すべての記事 <span aria-hidden="true">→</span></a>}
 						</header>
 						<div class="home-posts">
 							{visiblePosts.map((post) => (

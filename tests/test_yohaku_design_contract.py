@@ -46,9 +46,9 @@ class YohakuDesignContractTests(unittest.TestCase):
         ]
         self.assertEqual(offenders, [])
 
-    def test_article_lead_hero_and_body_share_one_reading_axis(self) -> None:
+    def test_article_lead_and_body_share_one_reading_axis(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
-        for selector in (".article-lead", ".article-hero", ".article-main"):
+        for selector in (".article-lead", ".article-main"):
             self.assertRegex(css, rf"{re.escape(selector)}\s*\{{[^}}]*grid-column:\s*1;")
 
     def test_image_lists_do_not_add_mechanical_rules_below_every_image(self) -> None:
@@ -134,9 +134,33 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertNotIn('class="article-meta-col"', article)
         self.assertIn('class="article-tags"', article)
         self.assertIn(".article-lead { grid-column: 1;", theme)
-        self.assertIn(".article-hero { grid-column: 1;", theme)
         self.assertIn(".article-main { grid-column: 1;", theme)
-        self.assertIn(".article-hero img { width: 100%; height: auto;", theme)
+
+    def test_article_detail_uses_requested_content_order(self) -> None:
+        article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
+        theme = (WEB_ROOT / "src/styles/theme.css").read_text()
+        title = article.index('class="article-title"')
+        metadata = article.index('class="article-meta"')
+        toc = article.index('class="toc article-toc"')
+        body = article.index('class="article-content"')
+        self.assertLess(title, metadata)
+        self.assertLess(metadata, toc)
+        self.assertLess(toc, body)
+        self.assertNotIn('class="article-hero"', article)
+        self.assertIn("word-break: auto-phrase", theme)
+        self.assertIn('new Intl.Segmenter("ja", { granularity: "word" })', article)
+        self.assertIn(".article-title__segment { white-space: nowrap; }", theme)
+
+    def test_profile_and_kano_favicon_are_shared_across_blog_pages(self) -> None:
+        base = (WEB_ROOT / "src/layouts/Base.astro").read_text()
+        article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
+        profile = (WEB_ROOT / "src/components/ProfileCard.astro").read_text()
+        head = (WEB_ROOT / "src/components/YohakuHead.astro").read_text()
+        self.assertIn("hasPageProfileSidebar", base)
+        self.assertIn("<ProfileCard />", article)
+        self.assertIn('src="/kano-profile.png"', profile)
+        self.assertIn('href="/favicon.svg"', head)
+        self.assertIn('href="/kano-profile.png"', head)
 
     def test_article_archive_selector_covers_the_full_migrated_history(self) -> None:
         archive_nav = (WEB_ROOT / "src/components/PostArchiveNav.astro").read_text()

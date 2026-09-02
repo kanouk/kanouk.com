@@ -15,7 +15,7 @@ import { Search } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
-import YohakuImage from "../../components/YohakuImage.astro";
+import ProfileCard from "../../components/ProfileCard.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
 import {
 	absoluteMediaUrl,
@@ -83,6 +83,7 @@ const readingTime = getReadingTime(post.data.content);
 // This post's tags are already hydrated onto the entry by getEmDashEntry —
 // no extra query needed.
 const tags = post.data.terms?.tag ?? [];
+const categories = post.data.terms?.category ?? [];
 
 type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
 function flattenTerms(terms: SidebarTerm[]): SidebarTerm[] {
@@ -122,7 +123,11 @@ const publishDate =
 		year: "numeric",
 		month: "2-digit",
 		day: "2-digit",
-	}) ?? null;
+		}) ?? null;
+const titleSegments = Array.from(
+	new Intl.Segmenter("ja", { granularity: "word" }).segment(post.data.title),
+	({ segment }) => segment,
+);
 ---
 
 <Base
@@ -139,10 +144,30 @@ const publishDate =
 >
 	<article class="article">
 		<header class="article-lead">
-			<div class="article-meta">
+			<h1 class="article-title" {...post.edit.title}>
+				{titleSegments.map((segment) => <span class="article-title__segment">{segment}</span>)}
+			</h1>
+			<div class="article-meta" aria-label="記事情報">
+				{
+					publishDate && <time datetime={post.data.publishedAt?.toISOString()}>{publishDate}</time>
+				}
+				{publishDate && categories.length > 0 && <span class="meta-dot" />}
+				{
+					categories.length > 0 && (
+						<span class="article-meta-categories">
+							{categories.map((category, index) => (
+								<>
+									{index > 0 && ", "}
+									<a href={`/category/${category.slug}`}>{category.label}</a>
+								</>
+							))}
+						</span>
+					)
+				}
 				{
 					bylines.length > 0 && (
 						<>
+							{(publishDate || categories.length > 0) && <span class="meta-dot" />}
 							<span class="article-meta-byline">
 								{bylines.map((credit, i) => (
 									<>
@@ -151,21 +176,12 @@ const publishDate =
 									</>
 								))}
 							</span>
-							<span class="meta-dot" />
 						</>
 					)
 				}
-				{
-					publishDate && (
-						<>
-							<time>{publishDate}</time>
-							<span class="meta-dot" />
-						</>
-					)
-				}
+				{(publishDate || categories.length > 0 || bylines.length > 0) && <span class="meta-dot" />}
 				<span>{readingTime}分</span>
 			</div>
-			<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
 			{
 				post.data.excerpt && (
 					<p class="article-excerpt" {...post.edit.excerpt}>{post.data.excerpt}</p>
@@ -173,19 +189,16 @@ const publishDate =
 			}
 		</header>
 
-		{/* The title establishes context before the optional visual. */}
-		{
-			post.data.featured_image && (
-				<div class="article-hero" {...post.edit.featured_image}>
-					<YohakuImage image={post.data.featured_image} priority />
-				</div>
-			)
-		}
-
 		{/* Reading column plus a separate discovery rail. */}
 		<div class="article-grid">
 			{/* Main content */}
 			<div class="article-main">
+				<nav class="toc article-toc" aria-label="目次" hidden>
+					<h2 class="toc-title">目次</h2>
+					<div class="toc-content" id="toc-content">
+						<!-- Populated by JS -->
+					</div>
+				</nav>
 				<div class="article-content">
 					<PortableText
 						value={post.data.content}
@@ -209,15 +222,10 @@ const publishDate =
 				</div>
 			</div>
 
-			{/* Right gutter: TOC + compact content discovery */}
+			{/* Right gutter: profile + compact content discovery */}
 			<aside class="article-sidebar">
 				<div class="sidebar-sticky">
-					<nav class="toc" aria-label="目次" hidden>
-						<h4 class="toc-title">目次</h4>
-						<div class="toc-content" id="toc-content">
-							<!-- Populated by JS -->
-						</div>
-					</nav>
+					<ProfileCard />
 					<div class="sidebar-widgets">
 						<PostArchiveNav date={post.data.publishedAt} />
 						<section class="widget">

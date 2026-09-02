@@ -3,6 +3,7 @@ import { getEmDashCollection, getSiteSettings } from "emdash";
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import LiveSearch from "emdash/ui/search";
+import ProfileCard from "../components/ProfileCard.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
@@ -67,6 +68,10 @@ const isArticleSurface = !isSearchPage && (
 	currentPath.startsWith("/tag/") ||
 	currentPath.startsWith("/pages/")
 );
+const isPostDetail = /^\/posts\/[^/]+\/?$/.test(currentPath);
+const hasPageProfileSidebar = currentPath !== "/"
+	&& !isPostDetail
+	&& (isArticleSurface || isSearchPage);
 
 const pageCtx = createPublicPageContext({
 	Astro,
@@ -130,7 +135,16 @@ const pageCtx = createPublicPageContext({
 		</header>
 
 		<main id="main-content" tabindex="-1">
-			<slot />
+			{hasPageProfileSidebar ? (
+				<div class="page-with-profile">
+					<div class="page-with-profile__main"><slot /></div>
+					<aside class="page-with-profile__aside" aria-label="プロフィール">
+						<div class="page-with-profile__sticky"><ProfileCard /></div>
+					</aside>
+				</div>
+			) : (
+				<slot />
+			)}
 		</main>
 
 		<footer class="site-footer">
