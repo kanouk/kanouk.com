@@ -200,6 +200,14 @@ class MonitorProductionTests(unittest.TestCase):
                         "dimensions": {"date": "2026-09-02"},
                     }
                 ],
+                "imagesUniqueTransformations": [
+                    {"date": "2026-09-01", "transformations": 0},
+                    {"date": "2026-09-02", "transformations": 7},
+                ],
+                "imagesUniqueTransformationsAccumulatedSinceStartOfMonth": [
+                    {"date": "2026-09-01", "transformations": 223},
+                    {"date": "2026-09-02", "transformations": 242},
+                ],
             }
         )
         self.assertEqual(report["d1"]["read_queries"], 14)
@@ -209,6 +217,10 @@ class MonitorProductionTests(unittest.TestCase):
         )
         self.assertEqual(report["r2_request_count"], 8)
         self.assertEqual(report["r2_storage"]["object_count"], 3546)
+        self.assertEqual(
+            report["images_unique_transformations"]["month_to_date"],
+            {"date": "2026-09-02", "transformations": 242},
+        )
         self.assertNotIn("accountName", report)
 
     def test_cost_baseline_keeps_floor_separate_from_unknown_invoice(self) -> None:
@@ -223,6 +235,9 @@ class MonitorProductionTests(unittest.TestCase):
                     {"action_type": "HeadBucket", "requests": 24},
                 ],
                 "r2_storage": {"payload_bytes": 6_978_619_128},
+                "images_unique_transformations": {
+                    "month_to_date": {"transformations": 242}
+                },
             },
         )
         self.assertTrue(
@@ -241,6 +256,11 @@ class MonitorProductionTests(unittest.TestCase):
             report["observations"]["r2_class_b_operations"]["used"], 211
         )
         self.assertEqual(report["estimate_status"], "provisional_floor_only")
+        self.assertEqual(
+            report["observations"]
+            ["images_unique_transformations_account_month_to_date"]["used"],
+            242,
+        )
         self.assertIn("Workers CPU time and CPU overage", report["unknowns"])
 
     def test_billing_summary_omits_account_identity(self) -> None:

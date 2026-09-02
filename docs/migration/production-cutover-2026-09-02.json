@@ -276,9 +276,9 @@
       }
     },
     {
-      "observed_at": "2026-09-02T11:50:31+09:00",
-      "elapsed": "interim_4h56m",
-      "monitor_report_version": 4,
+      "observed_at": "2026-09-02T11:57:25+09:00",
+      "elapsed": "interim_5h03m",
+      "monitor_report_version": 5,
       "representative_readback": {
         "blog_checks": 17,
         "blog_failed": 0,
@@ -288,9 +288,9 @@
         "staging_failed": 0
       },
       "worker_invocations": {
-        "requests": 23289,
+        "requests": 23353,
         "errors": 0,
-        "subrequests": 1385,
+        "subrequests": 1398,
         "error_rate_percent": 0.0
       },
       "not_found_log": {
@@ -301,14 +301,16 @@
         "external_referrer_rows": 0
       },
       "cloudflare_platform_usage": {
-        "d1_read_queries": 41742,
-        "d1_write_queries": 5183,
-        "d1_rows_read": 11209615,
-        "d1_rows_written": 7294,
+        "d1_read_queries": 42278,
+        "d1_write_queries": 5234,
+        "d1_rows_read": 11434827,
+        "d1_rows_written": 7349,
         "d1_storage_bytes": 76337150,
         "r2_requests": 229,
         "r2_object_count": 3546,
-        "r2_payload_bytes": 6978619128
+        "r2_payload_bytes": 6978619128,
+        "images_unique_transformations_account_month_to_date": 242,
+        "images_unique_transformations_latest_day": 7
       },
       "cost_baseline": {
         "estimate_status": "provisional_floor_only",
@@ -321,7 +323,7 @@
           "Workers CPU time and CPU overage",
           "actual account-wide billable usage and invoice",
           "other resources sharing account-wide included quotas",
-          "observed Images unique transformation count"
+          "Yohaku-only attribution within account-wide Images metrics"
         ]
       },
       "ga4_standard_report": "pending_standard_processing_or_no_traffic",

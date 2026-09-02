@@ -184,6 +184,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 11:50 JST、監視実行器をreport version 4へ更新し、公式料金snapshotとYohaku単体の利用量を同じJSONで比較できるようにしました。Workers／D1／R2の同梱枠はaccount-wideであり、切替当日の値にはmigration、backup、検証、monitor自身のtrafficも含まれるため、通常月へ年率換算しません。確定請求やCPU usageと、観測可能なresource usageを混同しない構造です。
 
+11:57 JST、監視実行器をreport version 5へ更新し、Images unique transformationsをaccount-wide analyticsからread-onlyで取得しました。9月累計242件、9月2日分7件で、月5,000件の無料枠に対する残りは4,758件です。Yohakuだけへの帰属はdataset上分離できないため、account-wide実測とYohaku contract上限を別々に保持します。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。
@@ -252,9 +254,9 @@ WXR、SmugMug manifest、WordPress media ledger、旧新URL ledgerはR2 backup�
 | R2 storage snapshot | 6,978,619,128 bytes | 10,000,000,000 bytes-month | 枠内 |
 | R2 Class A | 18 | 1,000,000 | 枠内 |
 | R2 Class B | 211 | 10,000,000 | 枠内 |
-| Images unique transformations | 現行contract上限3,507 | 5,000 | 上限でも枠内 |
+| Images unique transformations | account-wide月累計242（Yohaku contract上限3,507） | 5,000 | 実測・上限とも枠内 |
 
-現在のWorkers Paid最低額は月$5／年$60です。観測済みresourceだけなら追加overageは示されておらず、SmugMug年$100との差は最大年$40です。ただし、これは削減額の確定値ではありません。Workers CPU、実際のImages unique transformations、同じaccount内の他resource、Cloudflare請求明細が未確認なので`provisional_floor_only`とします。1週間では通常trafficとの分離、1か月では請求明細と再backupを確認してから実費を確定します。
+現在のWorkers Paid最低額は月$5／年$60です。観測済みresourceだけなら追加overageは示されておらず、SmugMug年$100との差は最大年$40です。ただし、これは削減額の確定値ではありません。Workers CPU、同じaccount内の他resource、Cloudflare請求明細が未確認なので`provisional_floor_only`とします。1週間では通常trafficとの分離、1か月では請求明細と再backupを確認してから実費を確定します。
 
 Workers Paid最低額だけなら年$60ですが、SmugMug年$100との差額をそのまま確定削減額にはしません。request／CPU／storage／operation／ImagesとWordPress hosting費を実測し、Cloudflareの請求期間後に確定します。
 

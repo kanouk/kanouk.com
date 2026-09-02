@@ -632,12 +632,46 @@ def summarize_platform_usage(account: Mapping[str, Any]) -> dict[str, Any]:
             "metadata_bytes": int(maxima.get("metadataSize") or 0),
             "upload_count": int(maxima.get("uploadCount") or 0),
         }
+
+    images_daily = sorted(
+        (
+            {
+                "date": str(row.get("date") or ""),
+                "transformations": int(row.get("transformations") or 0),
+            }
+            for row in account.get("imagesUniqueTransformations") or []
+            if isinstance(row, Mapping) and row.get("date")
+        ),
+        key=lambda row: row["date"],
+    )
+    images_accumulated = sorted(
+        (
+            {
+                "date": str(row.get("date") or ""),
+                "transformations": int(row.get("transformations") or 0),
+            }
+            for row in account.get(
+                "imagesUniqueTransformationsAccumulatedSinceStartOfMonth"
+            )
+            or []
+            if isinstance(row, Mapping) and row.get("date")
+        ),
+        key=lambda row: row["date"],
+    )
     return {
         "d1": d1_totals,
         "d1_storage": d1_storage,
         "r2_operations": operation_rows,
         "r2_request_count": sum(row["requests"] for row in operation_rows),
         "r2_storage": latest_storage,
+        "images_unique_transformations": {
+            "daily": images_daily,
+            "latest_daily": images_daily[-1] if images_daily else None,
+            "month_to_date": (
+                images_accumulated[-1] if images_accumulated else None
+            ),
+            "scope": "account-wide",
+        },
     }
 
 
@@ -685,6 +719,16 @@ def build_cost_baseline(
     d1_pricing = PRICING_SNAPSHOT["d1"]
     r2_pricing = PRICING_SNAPSHOT["r2_standard"]
     image_pricing = PRICING_SNAPSHOT["images_free"]
+    images = (
+        platform.get("images_unique_transformations")
+        if isinstance(platform.get("images_unique_transformations"), Mapping)
+        else {}
+    )
+    images_month_to_date = (
+        images.get("month_to_date")
+        if isinstance(images.get("month_to_date"), Mapping)
+        else {}
+    )
     observations = {
         "workers_requests": quota_observation(
             int(worker.get("requests") or 0),
@@ -714,8 +758,8 @@ def build_cost_baseline(
             r2_class_b,
             int(r2_pricing["included_class_b_operations_month"]),
         ),
-        "images_unique_transformations_contract_upper_bound": quota_observation(
-            3_507,
+        "images_unique_transformations_account_month_to_date": quota_observation(
+            int(images_month_to_date.get("transformations") or 0),
             int(image_pricing["included_unique_transformations_month"]),
         ),
     }
@@ -730,6 +774,12 @@ def build_cost_baseline(
             "and the Workers subscription are account-wide."
         ),
         "observations": observations,
+        "images_yohaku_contract": {
+            "tracked_media": 3_507,
+            "unique_parameter_sets_per_media": 1,
+            "current_monthly_upper_bound": 3_507,
+            "upper_bound_below_free_limit": True,
+        },
         "unclassified_r2_operations": unclassified,
         "all_measured_or_bounded_yohaku_usage_below_included_units": (
             all_observed_below_included and not unclassified
@@ -745,7 +795,7 @@ def build_cost_baseline(
             "Workers CPU time and CPU overage",
             "actual account-wide billable usage and invoice",
             "other resources sharing account-wide included quotas",
-            "observed Images unique transformation count",
+            "Yohaku-only attribution within account-wide Images metrics",
         ],
         "normalization_warning": (
             "The observation starts at cutover and includes migration, backup, "
@@ -764,6 +814,7 @@ query PlatformUsage(
   $accountTag: string
   $startDate: Date
   $endDate: Date
+  $monthStart: Date
   $databaseId: string
   $bucketName: string
 ) {
@@ -821,6 +872,20 @@ query PlatformUsage(
         max { objectCount payloadSize metadataSize uploadCount }
         dimensions { date }
       }
+      imagesUniqueTransformations(
+        limit: 100
+        filter: { date_geq: $monthStart date_leq: $endDate }
+      ) {
+        date
+        transformations
+      }
+      imagesUniqueTransformationsAccumulatedSinceStartOfMonth(
+        limit: 100
+        filter: { date_geq: $monthStart date_leq: $endDate }
+      ) {
+        date
+        transformations
+      }
     }
   }
 }
@@ -831,6 +896,7 @@ query PlatformUsage(
             "accountTag": account_id,
             "startDate": start.date().isoformat(),
             "endDate": end.date().isoformat(),
+            "monthStart": end.date().replace(day=1).isoformat(),
             "databaseId": DATABASE_ID,
             "bucketName": R2_BUCKET_NAME,
         },
@@ -1043,7 +1109,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
     worker_ok = metrics["errors"] == 0
     navigation_ok = not not_found["internal_referrer_rows"]
     return {
-        "report_version": 4,
+        "report_version": 5,
         "checkpoint": checkpoint,
         "checkpoint_due": checkpoint_due(checkpoint, observed_at),
         "observed_at": observed_at.isoformat(),
