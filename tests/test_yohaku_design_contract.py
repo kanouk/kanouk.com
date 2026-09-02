@@ -107,6 +107,23 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn("priority={index === 0}", album_archive)
         self.assertIn("preview priority={index === 0}", album_detail)
 
+    def test_album_archive_bounds_cover_size_across_breakpoints(self) -> None:
+        css = (WEB_ROOT / "src/styles/theme.css").read_text()
+        album_grid = re.search(r"\.album-grid\s*\{([^}]*)\}", css)
+        album_card = re.search(r"\.album-card\s*\{([^}]*)\}", css)
+        self.assertIsNotNone(album_grid)
+        self.assertIsNotNone(album_card)
+        self.assertIn("repeat(3, minmax(0, 1fr))", album_grid.group(1))
+        self.assertIn("max-width: 30rem", album_card.group(1))
+        self.assertRegex(
+            css,
+            r"@media \(max-width: 68rem\)[\s\S]*?\.album-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)",
+        )
+        self.assertRegex(
+            css,
+            r"@media \(max-width: 34rem\)[\s\S]*?\.album-grid\s*\{[^}]*grid-template-columns:\s*1fr",
+        )
+
     def test_article_uses_one_reading_axis_without_duplicate_left_metadata(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()

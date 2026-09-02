@@ -28,6 +28,7 @@ Yohakuは、カノログと公開写真アーカイブに共通する表示設�
 ## 色と操作
 
 - lightは白と#181a18付近、darkは#111211と#f2f3f2付近。青系accentはリンク、現在位置、意味のあるLucide iconに限定する。
+- アルバム一覧はdesktop 3列、tablet 2列、mobile 1列とし、カード幅を30rem（480px）以内へ制限する。小さい原本を一覧都合で拡大せず、同じ4:3 crop契約の中で余白と密度を整える。
 - 引用は`yohaku.quote`で本文、複数段落、箇条書き、inline mark、出典を一つの意味単位として保持する。本文と同じ文字サイズ・行間を使い、淡い面、accentの左線1本、控えめなQuote iconで本文との差を示す。
 - 操作対象は原則44px相当の高さを確保し、hoverだけでなくkeyboard focusを明示する。
 - motionは内容理解を助ける短い変化だけにし、`prefers-reduced-motion`を尊重する。
