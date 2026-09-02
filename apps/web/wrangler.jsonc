@@ -42,6 +42,13 @@
 			"id": "27e8e784a40a4b9085155f7ef257f1df",
 		},
 	],
+	"send_email": [
+		{
+			"name": "EMAIL",
+			"allowed_destination_addresses": ["kanouk@gmail.com"],
+			"allowed_sender_addresses": ["no-reply@mail.kanouk.com"],
+		},
+	],
 	// General maintenance plus the bounded Media Usage lane (see src/worker.ts)
 	"triggers": {
 		"crons": ["* * * * *", "*/2 * * * *"],

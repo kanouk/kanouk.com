@@ -1,6 +1,7 @@
 import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
+import { cloudflareEmail } from "@emdash-cms/cloudflare/plugins";
 import { formsPlugin } from "@emdash-cms/plugin-forms";
 import { defineConfig, fontProviders } from "astro/config";
 import emdash from "emdash/astro";
@@ -18,9 +19,16 @@ export default defineConfig({
 	integrations: [
 		react(),
 			emdash({
+				siteUrl: "https://blog.kanouk.com",
 				database: d1({ binding: "DB", session: "auto" }),
 				storage: r2({ binding: "MEDIA" }),
-				plugins: [formsPlugin(), yohakuContentBlocks()],
+				plugins: [
+					formsPlugin(),
+					yohakuContentBlocks(),
+					cloudflareEmail({
+						from: { email: "no-reply@mail.kanouk.com", name: "カノログ" },
+					}),
+				],
 			}),
 	],
 	fonts: [

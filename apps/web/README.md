@@ -66,6 +66,8 @@ python3 ../../scripts/cloudflare/run_emdash_migration_kanouk.py \
 
 - Staging URL: `https://kanouk-emdash-staging.kanouk.workers.dev`
 - 管理者: `kanouk@gmail.com` / 表示名「カノ」 / passkey認証
+- 本番管理URL: `https://blog.kanouk.com/_emdash/admin`
+- 本番の初回ログイン／復旧は`kanouk@gmail.com`宛てのマジックリンクを使い、その後`blog.kanouk.com`用passkeyを追加する。認証メールはCloudflare Email Sendingの`no-reply@mail.kanouk.com`から送信し、Worker bindingは送信元と宛先をこの組み合わせに限定する。
 - EmDash migration: 69件適用済み。再適用確認は `pending: none` / `unknownApplied: none` / `executed: none`
 - Synthetic fixture: post 1、page 1、album 1、photo 1、media 1、user 1
 
