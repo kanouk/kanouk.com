@@ -59,6 +59,20 @@ class CloudflareBackupTests(unittest.TestCase):
             )
             self.assertEqual(size, 6)
 
+    def test_storage_destination_preserves_nested_keys(self) -> None:
+        destination = module.storage_destination(
+            Path("/backup"), "legacy/2026/photo.jpg"
+        )
+        self.assertEqual(
+            destination, Path("/backup/objects/legacy/2026/photo.jpg")
+        )
+
+    def test_storage_destination_rejects_traversal_and_absolute_paths(self) -> None:
+        for key in ("../secret", "nested/../../secret", "/absolute/photo.jpg"):
+            with self.subTest(key=key):
+                with self.assertRaises(RuntimeError):
+                    module.storage_destination(Path("/backup"), key)
+
 
 if __name__ == "__main__":
     unittest.main()

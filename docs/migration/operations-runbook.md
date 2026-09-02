@@ -180,9 +180,11 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 11:15 JST、監視実行器をreport version 2へ更新し、GA4／Search Console／Cloudflare billing usageのread-only観測を統合しました。GA4 Data APIはHTTP 200で、当日分の標準reportはまだ0行のため`pending_standard_processing_or_no_traffic`。Search Consoleは現在のADCに`webmasters.readonly`がなくHTTP 403、Cloudflare billable usageは最小権限tokenでHTTP 403として記録します。いずれも権限追加・設定変更・送信操作は行っていません。
 
+11:36 JST、監視実行器をreport version 3へ更新し、D1のquery／row数とR2のoperation／storage量をCloudflare GraphQLからread-onlyで取得しました。R2 inventory 3,546件／6,978,619,128 bytesに対し、EmDash media APIが追跡するのは3,507件／6,933,980,178 bytesです。差分39件／44,638,950 bytesは現行media tableから参照されていませんが、不要とは推測せず、R2全件backupへ含めます。
+
 ## Cloudflare staging backup
 
-最終import後、Privateの外部原本領域へD1 SQLと全media byteを保存します。
+最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。
 
 ```sh
 cd /Users/kanouk/projects/kanouk.com
@@ -190,7 +192,7 @@ cd /Users/kanouk/projects/kanouk.com
 # 件数と総byteのdry-run
 python3 scripts/migration/backup_cloudflare_staging.py
 
-# D1 export + 全media download + hash台帳
+# D1 export + R2全object download + hash台帳
 python3 scripts/migration/backup_cloudflare_staging.py --apply --concurrency 4
 
 # 上の出力に表示されたbackup directoryを指定
@@ -202,13 +204,15 @@ python3 scripts/migration/verify_cloudflare_backup.py \
 backupは次を満たした場合だけ成功です。
 
 - D1 SQLのSHA-256とbyte数がmanifestに一致。
-- 全mediaのSHA-256とbyte数がmanifestに一致。
-- media合計byteがmanifestと一致。
+- R2全objectのSHA-256とbyte数がmanifestに一致。
+- EmDash mediaがR2 inventoryの部分集合であり、両方の件数・合計byteがmanifestに一致。
 - D1 SQLを一時SQLiteへ流し込める。
 - `PRAGMA integrity_check`が`ok`。
 - 復元後のtable数が0ではない。
 
 WXR、SmugMug manifest、WordPress media ledger、旧新URL ledgerはR2 backupとは別に保存します。credential、PAT、Application Passwordはbackupへ混ぜません。
+
+2026-09-02のversion 2 backupは`20260902T023451Z`です。R2全3,546件／6,978,619,128 bytesを照合し、EmDash追跡3,507件と未追跡39件を分けてmanifestへ記録しました。別SQLiteへの復元は85 table／40,273 row、`integrity_check=ok`、foreign key違反0です。
 
 ## rollbackの境界
 

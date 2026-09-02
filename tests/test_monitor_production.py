@@ -149,6 +149,59 @@ class MonitorProductionTests(unittest.TestCase):
             },
         )
 
+    def test_platform_usage_summarizes_d1_and_r2_without_identity(self) -> None:
+        report = module.summarize_platform_usage(
+            {
+                "accountName": "must not leak",
+                "d1AnalyticsAdaptiveGroups": [
+                    {
+                        "sum": {
+                            "readQueries": 10,
+                            "writeQueries": 2,
+                            "rowsRead": 100,
+                            "rowsWritten": 3,
+                            "queryBatchResponseBytes": 2048,
+                        }
+                    },
+                    {
+                        "sum": {
+                            "readQueries": 4,
+                            "writeQueries": 1,
+                            "rowsRead": 20,
+                            "rowsWritten": 2,
+                            "queryBatchResponseBytes": 512,
+                        }
+                    },
+                ],
+                "r2OperationsAdaptiveGroups": [
+                    {
+                        "sum": {"requests": 8},
+                        "dimensions": {
+                            "actionType": "GetObject",
+                            "actionStatus": "success",
+                            "responseStatusCode": 200,
+                        },
+                    }
+                ],
+                "r2StorageAdaptiveGroups": [
+                    {
+                        "max": {
+                            "objectCount": 3546,
+                            "payloadSize": 6978619128,
+                            "metadataSize": 102348,
+                            "uploadCount": 0,
+                        },
+                        "dimensions": {"date": "2026-09-02"},
+                    }
+                ],
+            }
+        )
+        self.assertEqual(report["d1"]["read_queries"], 14)
+        self.assertEqual(report["d1"]["rows_read"], 120)
+        self.assertEqual(report["r2_request_count"], 8)
+        self.assertEqual(report["r2_storage"]["object_count"], 3546)
+        self.assertNotIn("accountName", report)
+
     def test_billing_summary_omits_account_identity(self) -> None:
         report = module.summarize_cloudflare_billing_rows(
             [

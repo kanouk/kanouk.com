@@ -105,13 +105,25 @@ def backup_summary(
     d1 = manifest.get("d1") or {}
     media_count = int(manifest.get("media_count") or 0)
     media_total_bytes = int(manifest.get("media_total_bytes") or 0)
-    manifest_complete = bool(d1.get("sha256")) and media_count > 0 and media_total_bytes > 0
+    r2_object_count = int(manifest.get("r2_object_count") or media_count)
+    r2_total_bytes = int(manifest.get("r2_total_bytes") or media_total_bytes)
+    manifest_complete = (
+        bool(d1.get("sha256"))
+        and media_count > 0
+        and media_total_bytes > 0
+        and r2_object_count >= media_count
+        and r2_total_bytes >= media_total_bytes
+    )
     verification = load_json(verification_path) if verification_path else None
     restore_verified = bool(
         verification
         and verification.get("verified") is True
         and int(verification.get("media_count") or 0) == media_count
         and int(verification.get("media_total_bytes") or 0) == media_total_bytes
+        and int(verification.get("r2_object_count") or media_count)
+        == r2_object_count
+        and int(verification.get("r2_total_bytes") or media_total_bytes)
+        == r2_total_bytes
         and verification.get("d1_integrity") == "ok"
         and int(verification.get("d1_foreign_key_violations") or 0) == 0
     )
@@ -123,6 +135,12 @@ def backup_summary(
         "d1_sha256_present": bool(d1.get("sha256")),
         "media_count": media_count,
         "media_total_bytes": media_total_bytes,
+        "r2_object_count": r2_object_count,
+        "r2_total_bytes": r2_total_bytes,
+        "untracked_r2_count": int(manifest.get("untracked_r2_count") or 0),
+        "untracked_r2_total_bytes": int(
+            manifest.get("untracked_r2_total_bytes") or 0
+        ),
         "manifest_complete": manifest_complete,
         "verified": manifest_complete and restore_verified,
     }

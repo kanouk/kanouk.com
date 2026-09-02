@@ -35,15 +35,51 @@ def main() -> None:
     d1_hash, d1_size = file_hash(d1_path, "sha256")
     if d1_hash != manifest["d1"]["sha256"] or d1_size != manifest["d1"]["bytes"]:
         raise SystemExit("D1 export checksum mismatch")
-    verified_bytes = 0
-    for item in manifest["media"]:
+    objects = manifest.get("r2_objects") or manifest["media"]
+    verified_by_key: dict[str, int] = {}
+    for item in objects:
+        storage_key = str(item["storage_key"])
+        if storage_key in verified_by_key:
+            raise SystemExit(f"Duplicate backup storage key: {storage_key}")
         path = args.backup / item["relative_path"]
         sha256, size = file_hash(path, "sha256")
         if sha256 != item["sha256"] or size != item["bytes"]:
             raise SystemExit(f"Media checksum mismatch: {item['storage_key']}")
-        verified_bytes += size
-    if verified_bytes != manifest["media_total_bytes"]:
+        verified_by_key[storage_key] = size
+    media_keys = [str(item["storage_key"]) for item in manifest["media"]]
+    if len(media_keys) != len(set(media_keys)):
+        raise SystemExit("Duplicate EmDash media storage key")
+    if len(media_keys) != int(manifest["media_count"]):
+        raise SystemExit("EmDash media count mismatch")
+    if any(key not in verified_by_key for key in media_keys):
+        raise SystemExit("EmDash media is missing from the R2 backup inventory")
+    verified_media_bytes = sum(verified_by_key[key] for key in media_keys)
+    if verified_media_bytes != manifest["media_total_bytes"]:
         raise SystemExit("Media byte total mismatch")
+    verified_r2_bytes = sum(verified_by_key.values())
+    expected_r2_bytes = int(
+        manifest.get("r2_total_bytes") or manifest["media_total_bytes"]
+    )
+    if verified_r2_bytes != expected_r2_bytes:
+        raise SystemExit("R2 object byte total mismatch")
+    if len(objects) != int(manifest.get("r2_object_count") or len(manifest["media"])):
+        raise SystemExit("R2 object count mismatch")
+    untracked_keys = set(verified_by_key) - set(media_keys)
+    verified_untracked_bytes = sum(
+        verified_by_key[key] for key in untracked_keys
+    )
+    if len(untracked_keys) != int(manifest.get("untracked_r2_count") or 0):
+        raise SystemExit("Untracked R2 object count mismatch")
+    if verified_untracked_bytes != int(
+        manifest.get("untracked_r2_total_bytes") or 0
+    ):
+        raise SystemExit("Untracked R2 object byte total mismatch")
+    if manifest.get("untracked_r2") is not None:
+        declared_untracked = {
+            str(item["storage_key"]) for item in manifest["untracked_r2"]
+        }
+        if declared_untracked != untracked_keys:
+            raise SystemExit("Untracked R2 inventory mismatch")
     with tempfile.TemporaryDirectory(prefix="kanouk-d1-restore-") as directory:
         database = Path(directory) / "restore.sqlite3"
         connection = sqlite3.connect(database)
@@ -71,7 +107,11 @@ def main() -> None:
     receipt = {
         "verified": True,
         "media_count": len(manifest["media"]),
-        "media_total_bytes": verified_bytes,
+        "media_total_bytes": verified_media_bytes,
+        "r2_object_count": len(objects),
+        "r2_total_bytes": verified_r2_bytes,
+        "untracked_r2_count": len(untracked_keys),
+        "untracked_r2_total_bytes": verified_untracked_bytes,
         "d1_tables_restored": table_count,
         "d1_rows_restored": sum(restored_counts.values()),
         "d1_integrity": integrity,

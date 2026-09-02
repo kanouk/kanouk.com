@@ -40,6 +40,8 @@ ZONE_ID = "929ba1aeb538cc8977baca490e55351a"
 ZONE_NAME = "kanouk.com"
 WORKER_SERVICE = "kanouk-emdash-staging"
 DATABASE_NAME = "kanouk-content-staging"
+DATABASE_ID = "30d6fc05-588e-4c4c-9e96-2b77fe35dd82"
+R2_BUCKET_NAME = "kanouk-public-media-staging"
 PRODUCTION_HOSTS = ("blog.kanouk.com", "photos.kanouk.com")
 STAGING_URL = "https://kanouk-emdash-staging.kanouk.workers.dev"
 GA4_PROPERTY_ID = "256487934"
@@ -498,6 +500,173 @@ query Monitor($accountTag: string, $start: Time, $end: Time, $scriptName: string
     return summarize_worker_metrics(rows)
 
 
+def summarize_platform_usage(account: Mapping[str, Any]) -> dict[str, Any]:
+    d1_totals = {
+        "read_queries": 0,
+        "write_queries": 0,
+        "rows_read": 0,
+        "rows_written": 0,
+        "query_batch_response_bytes": 0,
+    }
+    d1_fields = {
+        "read_queries": "readQueries",
+        "write_queries": "writeQueries",
+        "rows_read": "rowsRead",
+        "rows_written": "rowsWritten",
+        "query_batch_response_bytes": "queryBatchResponseBytes",
+    }
+    for row in account.get("d1AnalyticsAdaptiveGroups") or []:
+        sums = row.get("sum") if isinstance(row.get("sum"), Mapping) else {}
+        for target, source in d1_fields.items():
+            d1_totals[target] += int(sums.get(source) or 0)
+
+    operation_rows: list[dict[str, Any]] = []
+    for row in account.get("r2OperationsAdaptiveGroups") or []:
+        sums = row.get("sum") if isinstance(row.get("sum"), Mapping) else {}
+        dimensions = (
+            row.get("dimensions")
+            if isinstance(row.get("dimensions"), Mapping)
+            else {}
+        )
+        operation_rows.append(
+            {
+                "action_type": str(dimensions.get("actionType") or "unknown"),
+                "action_status": str(
+                    dimensions.get("actionStatus") or "unknown"
+                ),
+                "response_status_code": int(
+                    dimensions.get("responseStatusCode") or 0
+                ),
+                "requests": int(sums.get("requests") or 0),
+            }
+        )
+    operation_rows.sort(
+        key=lambda row: (
+            row["action_type"],
+            row["action_status"],
+            row["response_status_code"],
+        )
+    )
+
+    storage_rows = account.get("r2StorageAdaptiveGroups") or []
+    latest_storage: dict[str, Any] | None = None
+    if storage_rows:
+        row = storage_rows[0]
+        maxima = row.get("max") if isinstance(row.get("max"), Mapping) else {}
+        dimensions = (
+            row.get("dimensions")
+            if isinstance(row.get("dimensions"), Mapping)
+            else {}
+        )
+        latest_storage = {
+            "date": dimensions.get("date"),
+            "object_count": int(maxima.get("objectCount") or 0),
+            "payload_bytes": int(maxima.get("payloadSize") or 0),
+            "metadata_bytes": int(maxima.get("metadataSize") or 0),
+            "upload_count": int(maxima.get("uploadCount") or 0),
+        }
+    return {
+        "d1": d1_totals,
+        "r2_operations": operation_rows,
+        "r2_request_count": sum(row["requests"] for row in operation_rows),
+        "r2_storage": latest_storage,
+    }
+
+
+def platform_usage(
+    *, account_id: str, token: str, start: datetime, end: datetime
+) -> dict[str, Any]:
+    query = """
+query PlatformUsage(
+  $accountTag: string
+  $startDate: Date
+  $endDate: Date
+  $databaseId: string
+  $bucketName: string
+) {
+  viewer {
+    accounts(filter: {accountTag: $accountTag}) {
+      d1AnalyticsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          date_geq: $startDate
+          date_leq: $endDate
+          databaseId: $databaseId
+        }
+      ) {
+        sum {
+          readQueries
+          writeQueries
+          rowsRead
+          rowsWritten
+          queryBatchResponseBytes
+        }
+        dimensions { date }
+      }
+      r2OperationsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          date_geq: $startDate
+          date_leq: $endDate
+          bucketName: $bucketName
+        }
+      ) {
+        sum { requests }
+        dimensions { actionType actionStatus responseStatusCode }
+      }
+      r2StorageAdaptiveGroups(
+        limit: 100
+        orderBy: [date_DESC]
+        filter: {
+          date_geq: $startDate
+          date_leq: $endDate
+          bucketName: $bucketName
+        }
+      ) {
+        max { objectCount payloadSize metadataSize uploadCount }
+        dimensions { date }
+      }
+    }
+  }
+}
+"""
+    payload = {
+        "query": query,
+        "variables": {
+            "accountTag": account_id,
+            "startDate": start.date().isoformat(),
+            "endDate": end.date().isoformat(),
+            "databaseId": DATABASE_ID,
+            "bucketName": R2_BUCKET_NAME,
+        },
+    }
+    response = cloudflare_json(
+        "/graphql", token=token, method="POST", payload=payload
+    )
+    if response.get("errors"):
+        raise MonitorError("Cloudflare GraphQL returned platform usage errors")
+    accounts = (
+        ((response.get("data") or {}).get("viewer") or {}).get("accounts")
+        or []
+    )
+    if len(accounts) != 1:
+        raise MonitorError(
+            "Cloudflare GraphQL did not return exactly one platform account"
+        )
+    report = summarize_platform_usage(accounts[0])
+    report.update(
+        {
+            "status": "usage_observed",
+            "date_range": {
+                "start": start.date().isoformat(),
+                "end": end.date().isoformat(),
+            },
+            "mutable_actions_performed": False,
+        }
+    )
+    return report
+
+
 def run_public_readback(base_url: str, *, preview: bool) -> dict[str, Any]:
     command = [
         sys.executable,
@@ -646,6 +815,12 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
         start=CUTOVER_AT,
         end=observed_at,
     )
+    cloudflare_platform_usage = platform_usage(
+        account_id=credential["account_id"],
+        token=credential["api_token"],
+        start=CUTOVER_AT,
+        end=observed_at,
+    )
     not_found = query_404_log(env=env)
     google_observations = collect_google_observations(observed_at)
     billing_usage = cloudflare_billing_usage(
@@ -672,7 +847,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
     worker_ok = metrics["errors"] == 0
     navigation_ok = not not_found["internal_referrer_rows"]
     return {
-        "report_version": 2,
+        "report_version": 3,
         "checkpoint": checkpoint,
         "checkpoint_due": checkpoint_due(checkpoint, observed_at),
         "observed_at": observed_at.isoformat(),
@@ -691,6 +866,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
         "external_services": {
             **google_observations,
             "cloudflare_billing_usage": billing_usage,
+            "cloudflare_platform_usage": cloudflare_platform_usage,
             "cloudflare_zone_http_analytics": (
                 "not_available_to_minimum_scope_token"
             ),

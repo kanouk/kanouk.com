@@ -222,6 +222,10 @@ class MigrationCompletionAuditTests(unittest.TestCase):
                     "d1": {"sha256": "abc"},
                     "media_count": 1,
                     "media_total_bytes": 42,
+                    "r2_object_count": 2,
+                    "r2_total_bytes": 52,
+                    "untracked_r2_count": 1,
+                    "untracked_r2_total_bytes": 10,
                 },
             )
             backup_verification = write_json(
@@ -230,6 +234,10 @@ class MigrationCompletionAuditTests(unittest.TestCase):
                     "verified": True,
                     "media_count": 1,
                     "media_total_bytes": 42,
+                    "r2_object_count": 2,
+                    "r2_total_bytes": 52,
+                    "untracked_r2_count": 1,
+                    "untracked_r2_total_bytes": 10,
                     "d1_integrity": "ok",
                     "d1_foreign_key_violations": 0,
                 },

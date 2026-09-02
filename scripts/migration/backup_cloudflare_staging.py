@@ -8,7 +8,7 @@ from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import sys
 import tempfile
@@ -42,6 +42,7 @@ DEFAULT_BACKUP_ROOT = Path(
 )
 DATABASE_NAME = "kanouk-content-staging"
 DATABASE_ID = "30d6fc05-588e-4c4c-9e96-2b77fe35dd82"
+R2_BUCKET_NAME = "kanouk-public-media-staging"
 STORAGE_KEY = re.compile(r"^[A-Za-z0-9._-]+$")
 FTS_VIRTUAL_TABLE = re.compile(r"^_emdash_fts_[A-Za-z0-9_]+$")
 FTS_SHADOW_TABLE = re.compile(
@@ -91,6 +92,50 @@ def list_media(token: str) -> list[dict[str, Any]]:
         cursor = page.get("nextCursor")
         if not isinstance(cursor, str) or not cursor:
             return items
+
+
+def list_r2_objects(account_id: str, token: str) -> list[dict[str, Any]]:
+    objects: list[dict[str, Any]] = []
+    cursor: str | None = None
+    while True:
+        query: dict[str, str | int] = {"per_page": 1000}
+        if cursor:
+            query["cursor"] = cursor
+        request = Request(
+            (
+                "https://api.cloudflare.com/client/v4/accounts/"
+                f"{account_id}/r2/buckets/{R2_BUCKET_NAME}/objects?"
+                f"{urlencode(query)}"
+            ),
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/json",
+                "User-Agent": "kanouk-backup/2.0",
+            },
+        )
+        with urlopen(request, timeout=120) as response:
+            payload = json.load(response)
+        if not isinstance(payload, dict) or payload.get("success") is not True:
+            raise RuntimeError("Cloudflare R2 listing was unsuccessful")
+        page = payload.get("result") or []
+        if not isinstance(page, list):
+            raise RuntimeError("Cloudflare R2 listing returned invalid objects")
+        objects.extend(item for item in page if isinstance(item, dict))
+        result_info = payload.get("result_info") or {}
+        cursor = result_info.get("cursor")
+        if not result_info.get("is_truncated") or not isinstance(cursor, str):
+            return objects
+
+
+def storage_destination(output_root: Path, storage_key: str) -> Path:
+    key_path = PurePosixPath(storage_key)
+    if (
+        key_path.is_absolute()
+        or not key_path.parts
+        or any(part in {"", ".", ".."} for part in key_path.parts)
+    ):
+        raise RuntimeError("R2 object has an unsafe storage key")
+    return output_root / "objects" / Path(*key_path.parts)
 
 
 def hash_file(path: Path) -> tuple[str, str, int]:
@@ -155,6 +200,7 @@ def media_entry(
         "sha256": sha256,
         "verification": verification,
         "status": item.get("status"),
+        "tracking": "emdash",
     }
 
 
@@ -162,7 +208,7 @@ def download_media(item: dict[str, Any], output_root: Path, token: str) -> dict[
     storage_key = item.get("storageKey")
     if not isinstance(storage_key, str) or not STORAGE_KEY.fullmatch(storage_key):
         raise RuntimeError("Media item has an unsafe storage key")
-    destination = output_root / "objects" / storage_key
+    destination = storage_destination(output_root, storage_key)
     destination.parent.mkdir(parents=True, exist_ok=True)
     expected_size = item.get("size")
     if not isinstance(expected_size, int) or expected_size < 0:
@@ -247,6 +293,107 @@ def download_media(item: dict[str, Any], output_root: Path, token: str) -> dict[
                 second.unlink(missing_ok=True)
         time.sleep(min(0.75 * 2 ** (attempt - 1), 8))
     raise RuntimeError(f"Media backup verification failed: {item.get('id')} ({last_detail})")
+
+
+def r2_entry(
+    item: dict[str, Any],
+    destination: Path,
+    output_root: Path,
+    sha1: str,
+    sha256: str,
+    size: int,
+    verification: str,
+) -> dict[str, Any]:
+    http_metadata = item.get("http_metadata")
+    content_type = (
+        http_metadata.get("contentType")
+        if isinstance(http_metadata, dict)
+        else None
+    )
+    return {
+        "id": None,
+        "filename": item.get("key"),
+        "mime_type": content_type,
+        "storage_key": item.get("key"),
+        "relative_path": str(destination.relative_to(output_root)),
+        "bytes": size,
+        "sha1": sha1,
+        "sha256": sha256,
+        "verification": verification,
+        "status": "untracked_r2",
+        "tracking": "untracked_r2",
+        "etag": item.get("etag"),
+        "last_modified": item.get("last_modified"),
+    }
+
+
+def download_r2_object(
+    item: dict[str, Any], output_root: Path, account_id: str, token: str
+) -> dict[str, Any]:
+    storage_key = item.get("key")
+    if not isinstance(storage_key, str) or not storage_key:
+        raise RuntimeError("R2 object has no storage key")
+    expected_size = item.get("size")
+    if not isinstance(expected_size, int) or expected_size < 0:
+        raise RuntimeError("R2 object has an invalid size")
+    destination = storage_destination(output_root, storage_key)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    url = (
+        "https://api.cloudflare.com/client/v4/accounts/"
+        f"{account_id}/r2/buckets/{R2_BUCKET_NAME}/objects/"
+        f"{quote(storage_key, safe='')}"
+    )
+    existing = hash_file(destination) if destination.is_file() else None
+    last_detail = "verification did not match"
+    for attempt in range(1, 6):
+        first: Path | None = None
+        second: Path | None = None
+        try:
+            first, sha1, sha256, size = download_once(
+                url, destination.parent, token
+            )
+            if size != expected_size:
+                last_detail = f"size mismatch on attempt {attempt}"
+                continue
+            if existing is not None and existing[2] == size and existing[1] == sha256:
+                return r2_entry(
+                    item,
+                    destination,
+                    output_root,
+                    existing[0],
+                    existing[1],
+                    existing[2],
+                    "double_download_sha256",
+                )
+            second, second_sha1, second_sha256, second_size = download_once(
+                url, destination.parent, token
+            )
+            if second_size != size or second_sha256 != sha256:
+                last_detail = f"independent SHA-256 mismatch on attempt {attempt}"
+                continue
+            first.chmod(0o600)
+            first.replace(destination)
+            first = None
+            return r2_entry(
+                item,
+                destination,
+                output_root,
+                second_sha1,
+                second_sha256,
+                second_size,
+                "double_download_sha256",
+            )
+        except (HTTPError, URLError, TimeoutError, OSError) as exc:
+            last_detail = f"{type(exc).__name__} on attempt {attempt}"
+        finally:
+            if first is not None:
+                first.unlink(missing_ok=True)
+            if second is not None:
+                second.unlink(missing_ok=True)
+        time.sleep(min(0.75 * 2 ** (attempt - 1), 8))
+    raise RuntimeError(
+        f"R2 object backup verification failed: {storage_key} ({last_detail})"
+    )
 
 
 class D1Client:
@@ -479,13 +626,50 @@ def main() -> None:
     env = emdash_environment(credential)
     emdash_preflight(env)
     media = list_media(credential["token"])
+    cloudflare_credential = load_cloudflare_credential()
+    cloudflare_env = cloudflare_environment(cloudflare_credential)
+    cloudflare_preflight(cloudflare_credential, cloudflare_env)
+    r2_objects = list_r2_objects(
+        cloudflare_credential["account_id"],
+        cloudflare_credential["api_token"],
+    )
+    media_by_key = {
+        str(item.get("storageKey")): item
+        for item in media
+        if item.get("storageKey")
+    }
+    if len(media_by_key) != len(media):
+        raise RuntimeError("EmDash media storage keys are missing or duplicated")
+    r2_by_key = {
+        str(item.get("key")): item for item in r2_objects if item.get("key")
+    }
+    if len(r2_by_key) != len(r2_objects):
+        raise RuntimeError("R2 object keys are missing or duplicated")
+    missing_from_r2 = sorted(set(media_by_key) - set(r2_by_key))
+    if missing_from_r2:
+        raise RuntimeError(
+            f"{len(missing_from_r2)} EmDash media object(s) are missing from R2"
+        )
+    untracked_keys = sorted(set(r2_by_key) - set(media_by_key))
     if not args.apply:
         print(
             json.dumps(
                 {
                     "apply": False,
                     "media_count": len(media),
-                    "total_bytes": sum(int(item.get("size") or 0) for item in media),
+                    "media_total_bytes": sum(
+                        int(item.get("size") or 0) for item in media
+                    ),
+                    "r2_object_count": len(r2_objects),
+                    "r2_total_bytes": sum(
+                        int(item.get("size") or 0) for item in r2_objects
+                    ),
+                    "untracked_r2_count": len(untracked_keys),
+                    "untracked_r2_total_bytes": sum(
+                        int(r2_by_key[key].get("size") or 0)
+                        for key in untracked_keys
+                    ),
+                    "missing_from_r2_count": 0,
                 }
             )
         )
@@ -506,38 +690,73 @@ def main() -> None:
     d1_export = export_d1(d1_path)
     entries: list[dict[str, Any]] = []
     with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
-        futures: dict[Future[dict[str, Any]], str] = {
-            executor.submit(download_media, item, output_root, credential["token"]): str(
-                item.get("id")
-            )
-            for item in media
-        }
+        futures: dict[Future[dict[str, Any]], str] = {}
+        for storage_key, item in r2_by_key.items():
+            if storage_key in media_by_key:
+                future = executor.submit(
+                    download_media,
+                    media_by_key[storage_key],
+                    output_root,
+                    credential["token"],
+                )
+            else:
+                future = executor.submit(
+                    download_r2_object,
+                    item,
+                    output_root,
+                    cloudflare_credential["account_id"],
+                    cloudflare_credential["api_token"],
+                )
+            futures[future] = storage_key
         for index, future in enumerate(as_completed(futures), 1):
             entries.append(future.result())
             if index % 25 == 0 or index == len(futures):
-                print(f"[{index}/{len(futures)}] media verified", flush=True)
+                print(f"[{index}/{len(futures)}] R2 objects verified", flush=True)
     entries.sort(key=lambda item: str(item["storage_key"]))
+    media_entries = [item for item in entries if item["tracking"] == "emdash"]
+    untracked_entries = [
+        item for item in entries if item["tracking"] == "untracked_r2"
+    ]
     d1_bytes = d1_path.read_bytes()
     manifest = {
-        "backup_version": 1,
+        "backup_version": 2,
         "generated_at": now_iso(),
         "source": EXPECTED_URL,
         "database": DATABASE_NAME,
+        "r2_bucket": R2_BUCKET_NAME,
         "d1": {
             "relative_path": "d1.sql",
             "bytes": len(d1_bytes),
             "sha256": hashlib.sha256(d1_bytes).hexdigest(),
             **d1_export,
         },
-        "media_count": len(entries),
-        "media_total_bytes": sum(int(item["bytes"]) for item in entries),
+        "media_count": len(media_entries),
+        "media_total_bytes": sum(int(item["bytes"]) for item in media_entries),
         "media_verification_counts": {
+            verification: sum(
+                item["verification"] == verification for item in media_entries
+            )
+            for verification in sorted(
+                {str(item["verification"]) for item in media_entries}
+            )
+        },
+        "media": media_entries,
+        "r2_object_count": len(entries),
+        "r2_total_bytes": sum(int(item["bytes"]) for item in entries),
+        "r2_verification_counts": {
             verification: sum(
                 item["verification"] == verification for item in entries
             )
-            for verification in sorted({str(item["verification"]) for item in entries})
+            for verification in sorted(
+                {str(item["verification"]) for item in entries}
+            )
         },
-        "media": entries,
+        "r2_objects": entries,
+        "untracked_r2_count": len(untracked_entries),
+        "untracked_r2_total_bytes": sum(
+            int(item["bytes"]) for item in untracked_entries
+        ),
+        "untracked_r2": untracked_entries,
     }
     write_json_atomic(output_root / "manifest.json", manifest)
     print(
@@ -545,8 +764,11 @@ def main() -> None:
             {
                 "apply": True,
                 "output": str(output_root),
-                "media_count": len(entries),
+                "media_count": len(media_entries),
                 "media_total_bytes": manifest["media_total_bytes"],
+                "r2_object_count": len(entries),
+                "r2_total_bytes": manifest["r2_total_bytes"],
+                "untracked_r2_count": len(untracked_entries),
                 "d1_sha256": manifest["d1"]["sha256"],
             }
         )

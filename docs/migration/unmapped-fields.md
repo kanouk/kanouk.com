@@ -1,6 +1,6 @@
 # 未完了事項と移行ゲート
 
-「未確認」と「実装・移行・readback済み」を分けて管理します。2026-09-02現在、Cloudflare基盤、WordPress全件、公開写真2,168件、最終全件crawl、backup／restore drill、独自ドメイン切替、初回監視まで成立しています。残作業は24時間以降の経時監視と外部サービスの反映確認です。
+「未確認」と「実装・移行・readback済み」を分けて管理します。2026-09-02現在、Cloudflare基盤、WordPress全件、公開写真2,168件、最終全件crawl、R2全objectのbackup／restore drill、独自ドメイン切替、初回監視まで成立しています。残作業は24時間以降の経時監視と外部サービスの反映確認です。
 
 ## 現在のblocker
 
@@ -60,6 +60,7 @@
 - production host別のblog / photoルーティングとsitemap分離。workers.devはnoindexのQA面として維持。
 - 移行済み記事の管理画面で`yohaku.steps`が「手順」として表示され、専用フォームを開いて再編集できることを確認。変更を破棄した後、公開3 stepsが未変更であることもreadback済み。
 - SmugMug代替は、EmDashのcontent type／media APIを利用するこのリポジトリ独自の公開写真UI。EmDash coreのforkではない。
+- R2 inventoryは3,546件／6,978,619,128 bytes。EmDash media tableが参照する3,507件との差分39件／44,638,950 bytesも、由来を推測して削除せずversion 2 backupへ保全した。
 
 ## 最終チェック
 
@@ -82,5 +83,5 @@
 [x] custom domainで本番readback
 [x] 切替約1時間後のzone/domain/Worker 5xx/代表readback確認
 [x] GA4をproduction 2ホストだけへ継承しstagingから除外
-[ ] 1週間・1か月・3か月の経時監視と実費確定
+[ ] 24時間・1週間・1か月・3か月の経時監視と実費確定
 ```

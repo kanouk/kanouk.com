@@ -25,7 +25,7 @@
 | #8 SmugMug完全移行 | 達成 | 40 album/2,168 assetすべてverified、重複ID/manifest不一致/pending 0、GPS/EXIF保持、metadata backfill済み | なし |
 | #9 WordPress完全移行 | 達成 | 2,028 media verified、1,854 content再実行`skipped_verified`、comments 127、旧WP/SmugMug/shortcode/Gutenberg comment 0 | nocalog/art-quizのWXR後非公開差分は管理認証外のためunknownとして記録済み |
 | #10 URL/SEO/切替 | 達成 | nameserver切替、zone active、2 Custom Domain、TLS、host分離308、canonical/robots/OGP/JSON-LD、代表readback 26/26が合格。本番4,056 page・6,490 internal linkを再監査し、残存参照0。一時timeout 4件は対象再監査12/12で200 | なし。Search Consoleの反映は非同期監視として#11で扱う |
-| #11 監視/backup/実費 | 部分達成 | D1 SQLとR2 3,507 object/6,933,980,178 bytesを保全し、別SQLite復元、40,974 row、integrity/foreign key、全media hashを検証。切替約1時間後もzone/domain/readback正常、active deployment error rate 0%、asset 5xx 0 | 24時間以降の経時監視、Search Console／GA4外部反映、Cloudflare請求期間後の実費確定。解約はしない |
+| #11 監視/backup/実費 | 部分達成 | D1 SQLとR2全3,546 object/6,978,619,128 bytesを保全し、別SQLite復元、40,273 row、integrity/foreign key、全object hashを検証。切替約1時間後もzone/domain/readback正常、active deployment error rate 0%、asset 5xx 0 | 24時間以降の経時監視、Search Console／GA4外部反映、Cloudflare請求期間後の実費確定。解約はしない |
 
 ## 2026-09-02 Yohaku staging QA
 
@@ -57,6 +57,7 @@
 - 京都旅行記事の移行元SmugMugリンク情報は、旧サービスへ戻すのではなく新写真サービスへ変換した。公開記事`/posts/01M1CRQ1A4HMKFDBB6H3VKK0QE`の実リンクはSmugMug 0件、`photos.kanouk.com` 10件である。
 - 11:00 JSTの暫定監視はzone／Custom Domain／公開readback／Worker errorが合格した。404台帳にmobile Safariから各1回だけ記録された旧クライアント用`/open/`系requestは、現在のHTML・CSS・JSに参照がなく再発もないため、現行サイトの壊れた内部導線とは分離して記録する。
 - 11:15 JSTに監視reportをversion 2へ更新し、GA4標準report、Search Console sites list、Cloudflare billable usageをread-onlyで統合した。GA4 APIは200で当日分が処理待ち、Search Consoleとbillable usageは現行credentialのscope不足による403を明示できる。権限追加、所有権付与、sitemap送信、請求設定変更はしていない。
+- 11:36 JSTに監視reportをversion 3へ更新し、現在の最小権限tokenで取得できるD1 query/row数とR2 operation/storageをGraphQLからread-onlyで統合した。同時にR2 inventoryをEmDash media tableと照合し、参照済み3,507件に加えて未追跡39件を検出した。不要とは推測せず、R2全3,546件を新backupへ保全した。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査
@@ -92,8 +93,12 @@ python3 scripts/migration/verify_cloudflare_backup.py \
   "verified": true,
   "media_count": 3507,
   "media_total_bytes": 6933980178,
+  "r2_object_count": 3546,
+  "r2_total_bytes": 6978619128,
+  "untracked_r2_count": 39,
+  "untracked_r2_total_bytes": 44638950,
   "d1_tables_restored": 85,
-  "d1_rows_restored": 40974,
+  "d1_rows_restored": 40273,
   "d1_integrity": "ok",
   "d1_foreign_key_violations": 0
 }

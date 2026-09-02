@@ -12,7 +12,7 @@
 - SmugMug は40アルバム、2,168アセット（JPEG 2,156、MP4 12）を固定ID付きmanifestへ収録。所有者OAuthで原本を回収し、GPSを削除せず2,168件すべてをR2 readbackまでverified
 - コメント127件を公開65／保留62の状態を保って移行し、IPアドレスとUser-Agentは保存していない
 - staging全4 sitemap・4,056ページ・内部リンク6,302件と、切替後のhost別4 sitemap・4,056ページ・内部リンク6,490件を巡回。残存参照はいずれも0件で、本番の一時timeout 4件も対象再監査12/12で200
-- D1 SQLとR2全3,507 object（6,933,980,178 bytes）のbackup／別SQLite復元／全byte hash照合に成功。85 table／40,974 row、integrity `ok`、foreign key違反0
+- D1 SQLとR2全3,546 object（6,978,619,128 bytes）のbackup／別SQLite復元／全byte hash照合に成功。85 table／40,273 row、integrity `ok`、foreign key違反0。うち3,507件はEmDash media、39件（44,638,950 bytes）は現行media tableから参照されないR2 objectとして削除せず保全
 - Yohakuのブログ／写真UI、ダークモード、検索、地図、EXIF、共有、全画面、スライドショー、キーボード／スワイプ移動をステージングへ実装済み
 - production実画面で商品カード画像、クイズ回答、写真前後移動、dark modeを再確認。古い記事の月選択不整合を全期間対応へ修正済み
 - Gutenberg引用271コンテンツ／370ブロックを`yohaku.quote`へ再変換し、欠落本文0をD1で確認。長文・複数段落・箇条書き引用を390／1440pxとlight／darkで再確認済み
