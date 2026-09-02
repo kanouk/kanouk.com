@@ -52,6 +52,9 @@
 - 2008年の記事でカレンダーは2008年6月なのに月選択が最新月になる不整合を検出した。全移行期間240か月を選択肢へ含め、Worker version `6da4bad2-7704-41e4-988a-48fca2611a23`で2008年6月が選択されることを本番readbackした。
 - Gutenbergの現行引用は本文をnested paragraph/listへ持つため、既存変換器が外側HTMLだけを読んで64ブロックを空文字にしていた。全引用を汎用`yohaku.quote`へ再変換し、271コンテンツ／370ブロックを更新、公開366・公開page 2・private revision 2の本文欠落0をD1で確認した。更新後の再実行は271/271 `skipped_verified`、失敗0。更新前D1は52MBのSQLへ退避し、SHA-256 `8405e6f961da5ff73f914d8fb61c7d8e2a1aa372981f0a9069c7d156f3406f53`、別SQLiteのintegrity `ok`、記事1,848件を確認した。
 - Worker version `44c7961e-7790-40ca-84e2-a748bd5e5254`で長文・複数段落・箇条書き引用を本番表示した。本文17.6px／スマホ16.062px、行高約1.92、左線1本、390／1440pxの横overflow 0、light／darkを実測し、blog 14/14、photos 12/12、staging 14/14も再合格した。
+- その後、HTMLは200でも`/_astro/*.css`だけが応答を返さず、公開画面が未装飾になる配信障害を検出した。該当CSSをWorkerから明示的に`ASSETS` bindingへ転送する構成へ変更し、Worker version `941ac25a-102b-4414-8b0f-10f561224054`で復旧した。blog／photos／stagingのCSSが200、`text/css`、70,404 bytesで返ること、PC／mobileの実画面でYohakuのレイアウト、画像比率、横overflow 0が復元したことを確認した。
+- 同種事故をHTMLのreadback成功だけで見逃さないよう、`verify_public_site.py`へ実stylesheetのstatus、Content-Type、byte数、Yohaku design tokenを検査する`design-stylesheet`項目を追加した。追加後はblog 17/17、photos 13/13、staging 17/17が合格した。
+- 京都旅行記事の移行元SmugMugリンク情報は、旧サービスへ戻すのではなく新写真サービスへ変換した。公開記事`/posts/01M1CRQ1A4HMKFDBB6H3VKK0QE`の実リンクはSmugMug 0件、`photos.kanouk.com` 10件である。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査

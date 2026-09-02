@@ -34,14 +34,19 @@ class SeoParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.canonicals: list[str] = []
+        self.stylesheets: list[str] = []
         self.meta: dict[str, list[str]] = {}
         self.jsonld_types: list[str] = []
         self._jsonld_parts: list[str] | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {key.lower(): value or "" for key, value in attrs}
-        if tag.lower() == "link" and values.get("rel", "").lower() == "canonical":
-            self.canonicals.append(values.get("href", ""))
+        if tag.lower() == "link":
+            rels = values.get("rel", "").lower().split()
+            if "canonical" in rels:
+                self.canonicals.append(values.get("href", ""))
+            if "stylesheet" in rels:
+                self.stylesheets.append(values.get("href", ""))
         if tag.lower() == "meta":
             key = values.get("property") or values.get("name")
             if key:
@@ -196,6 +201,56 @@ def add_media_check(checks: list[Check], *, name: str, url: str) -> None:
     )
 
 
+def add_stylesheet_check(
+    checks: list[Check], *, base_url: str, html: str
+) -> None:
+    parser = SeoParser()
+    parser.feed(html)
+    stylesheets = [urljoin(base_url, href) for href in parser.stylesheets if href]
+    if not stylesheets:
+        checks.append(
+            Check(
+                name="design-stylesheet",
+                url=base_url,
+                ok=False,
+                status=None,
+                elapsed_ms=0,
+                detail="no external stylesheet found",
+            )
+        )
+        return
+
+    for index, stylesheet_url in enumerate(stylesheets, start=1):
+        status, headers, body, elapsed_ms = fetch(
+            stylesheet_url,
+            headers={"Accept": "text/css,*/*;q=0.1"},
+            max_bytes=256 * 1024,
+        )
+        failures: list[str] = []
+        if status != 200:
+            failures.append(f"status={status}, expected=200")
+        if "text/css" not in header(headers, "Content-Type").lower():
+            failures.append("response is not CSS")
+        if len(body) < 1024:
+            failures.append(f"stylesheet is unexpectedly small ({len(body)} bytes)")
+        if b"--paper:" not in body and b".site" not in body:
+            failures.append("Yohaku design tokens are missing")
+        checks.append(
+            Check(
+                name=(
+                    "design-stylesheet"
+                    if len(stylesheets) == 1
+                    else f"design-stylesheet-{index}"
+                ),
+                url=stylesheet_url,
+                ok=not failures,
+                status=status,
+                elapsed_ms=elapsed_ms,
+                detail="ok" if not failures else "; ".join(failures),
+            )
+        )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -225,6 +280,7 @@ def main() -> None:
             marker="<h1>アルバム</h1>" if is_photos_host else "カノログ",
             expect_preview_noindex=args.expect_preview_noindex,
         )
+        add_stylesheet_check(checks, base_url=base_url, html=home_html)
         posts_html = add_page_check(
             checks,
             name="post-archive",

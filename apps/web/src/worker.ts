@@ -4,6 +4,7 @@ export { PluginBridge };
 
 const PREVIEW_PREFIX = "/_yohaku/media/preview-v1/";
 const PREVIEW_WIDTH = 1200;
+const ASTRO_STYLESHEET = /^\/_astro\/[^/]+\.css$/;
 type HandlerFetch = typeof handler.fetch;
 type HandlerRequest = Parameters<HandlerFetch>[0];
 type HandlerEnv = Parameters<HandlerFetch>[1];
@@ -23,6 +24,15 @@ export default {
 	...handler,
 	async fetch(request: HandlerRequest, env: HandlerEnv, context: HandlerContext) {
 		const url = new URL(request.url);
+		if (
+			(request.method === "GET" || request.method === "HEAD") &&
+			ASTRO_STYLESHEET.test(url.pathname)
+		) {
+			const assets = (env as HandlerEnv & {
+				ASSETS?: { fetch(input: Request): Promise<Response> };
+			}).ASSETS;
+			if (assets) return assets.fetch(request);
+		}
 		if (
 			(request.method === "GET" || request.method === "HEAD") &&
 			url.pathname.startsWith(PREVIEW_PREFIX)
