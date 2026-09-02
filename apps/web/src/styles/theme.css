@@ -676,6 +676,9 @@ main:focus { outline: none; }
 	background: var(--paper-raised);
 	box-shadow: 0 0.7rem 2rem color-mix(in srgb, var(--ink) 8%, transparent);
 }
+.yohaku-portable-image__link { display: inline-block; max-width: 100%; color: inherit; text-decoration: none; }
+.yohaku-portable-image__link img { transition: opacity var(--transition); }
+.yohaku-portable-image__link:hover img { opacity: 0.92; }
 .yohaku-portable-image.style-border img { border: 1px solid var(--rule); }
 .yohaku-portable-image.style-shadow img { box-shadow: 0 0.7rem 2rem color-mix(in srgb, var(--ink) 10%, transparent); }
 .yohaku-portable-image.align-left,

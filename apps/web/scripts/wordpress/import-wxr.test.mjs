@@ -86,6 +86,28 @@ test("legacy post, archive, category, and tag links resolve to canonical targets
 	assert.equal(result.rewrites, 8);
 });
 
+test("legacy post links use an existing EmDash content ID as the stable public URL", () => {
+	const source = {
+		id: "kanolog",
+		origin: "https://kanolog.net",
+		wxr: { categories: [], tags: [] },
+	};
+	const records = [{
+		source,
+		slug: "%e4%ba%ac%e9%83%bd",
+		post: {
+			id: 8655,
+			postType: "post",
+			postDate: "2024-07-01 00:00:00",
+			link: "https://kanolog.net/archives/8655",
+		},
+	}];
+	const contentIds = new Map([["posts:%e4%ba%ac%e9%83%bd", "01M1CRQ1A4HMKFDBB6H3VKK0QE"]]);
+	const mappings = buildLegacyLinkMappings(records, [source], new Map(), contentIds);
+	const result = rewriteLegacySiteReferences("https://kanolog.net/archives/8655", mappings);
+	assert.equal(result.value, "https://blog.kanouk.com/posts/01M1CRQ1A4HMKFDBB6H3VKK0QE");
+});
+
 test("semantic internal link cards resolve site-scoped WordPress IDs", () => {
 	const sources = [
 		{ id: "kanolog", origin: "https://kanolog.net", wxr: { categories: [], tags: [] } },

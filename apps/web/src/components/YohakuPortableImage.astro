@@ -13,6 +13,7 @@ interface ImageNode {
 	displayWidth?: number;
 	alignment?: "left" | "center" | "right" | "wide" | "full";
 	visualStyle?: "photo-frame" | "border" | "shadow";
+	link?: string;
 }
 
 interface Props {
@@ -33,6 +34,14 @@ const src = bareStorageKey
 			? `/_emdash/api/media/file/${encodeURIComponent(node.asset._ref)}`
 			: undefined);
 const mediaId = node?.asset?._ref || storageKey || "";
+const imageValue = {
+	id: mediaId,
+	src,
+	alt: node.alt || "",
+	width: node.width,
+	height: node.height,
+	meta: storageKey ? { storageKey } : undefined,
+};
 ---
 
 {
@@ -45,17 +54,13 @@ const mediaId = node?.asset?._ref || storageKey || "";
 			]}
 			style={node.displayWidth ? `--image-display-width:${node.displayWidth}px` : undefined}
 		>
-			<YohakuImage
-			image={{
-				id: mediaId,
-				src,
-				alt: node.alt || "",
-				width: node.width,
-				height: node.height,
-				meta: storageKey ? { storageKey } : undefined,
-			}}
-				preview
-			/>
+			{node.link ? (
+				<a href={node.link} class="yohaku-portable-image__link">
+					<YohakuImage image={imageValue} preview />
+				</a>
+			) : (
+				<YohakuImage image={imageValue} preview />
+			)}
 			{node.caption && <figcaption>{node.caption}</figcaption>}
 		</figure>
 	)

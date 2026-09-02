@@ -51,7 +51,7 @@ const tagsByEntry = await getTermsForEntries(
 									title={post.data.title ?? "無題"}
 									excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
 									featuredImage={post.data.featured_image}
-									href={`/posts/${post.id}`}
+									href={`/posts/${post.data.id}`}
 									date={post.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(post.data.content)}
 									tags={(tagsByEntry.get(post.data.id) ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}

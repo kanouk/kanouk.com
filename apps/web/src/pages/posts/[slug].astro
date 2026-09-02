@@ -38,13 +38,18 @@ for (const legacySlug of slugCandidates.slice(1)) {
 	if (postResult.entry) break;
 	postResult = await getEmDashEntry("posts", legacySlug);
 }
-const { entry: post, cacheHint } = postResult;
+const { entry: post, cacheHint, isPreview } = postResult;
 
 if (!post) {
 	return Astro.redirect("/404");
 }
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const canonicalPostPath = `/posts/${post.data.id}`;
+if (!isPreview && slug !== post.data.id) {
+	return Astro.redirect(canonicalPostPath, 308);
+}
 
 // Prefer the cover for social previews, then fall back to the first article image.
 // The public page remains list-first and does not invent a visible hero image.
@@ -56,12 +61,18 @@ const featuredImageUrl = absoluteMediaUrl(
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 
 // Generate SEO meta from content
-const seo = getSeoMeta(post, {
+const generatedSeo = getSeoMeta(post, {
 	siteTitle,
 	siteUrl: Astro.url.origin,
-	path: `/posts/${post.id}`,
+	path: canonicalPostPath,
 	defaultOgImage: featuredImageUrl,
 });
+// The stored WordPress canonical can contain a percent-encoded Japanese slug.
+// The public contract is the stable EmDash content ID; legacy slugs redirect.
+const seo = {
+	...generatedSeo,
+	canonical: new URL(canonicalPostPath, Astro.url.origin).toString(),
+};
 
 // Bylines are already hydrated by getEmDashEntry
 const bylines = post.data.bylines ?? [];
@@ -273,7 +284,7 @@ const publishDate =
 									title={p.data.title}
 									excerpt={getPostExcerpt(p.data.excerpt, p.data.content)}
 									featuredImage={p.data.featured_image}
-									href={`/posts/${p.id}`}
+									href={`/posts/${p.data.id}`}
 									date={p.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(p.data.content)}
 									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}

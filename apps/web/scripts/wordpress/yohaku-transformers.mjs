@@ -62,11 +62,15 @@ function wordpressImageSizeWidth(block, classes, sourceUrl) {
 function imageNode(block, tools) {
 	const html = String(block.innerHTML || "");
 	const imageHtml = html.match(/<img\b[^>]*>/i)?.[0] || "";
+	const linkHtml = html.match(/<a\b[^>]*>/i)?.[0] || "";
 	const figureClass = htmlAttribute(html.match(/<figure\b[^>]*>/i)?.[0] || "", "class") || "";
 	const imageClass = htmlAttribute(imageHtml, "class") || "";
 	const classes = `${figureClass} ${imageClass}`;
 	const sourceUrl = htmlAttribute(imageHtml, "src") || "";
 	const sourceId = block.attrs.id || imageClass.match(/\bwp-image-(\d+)\b/)?.[1] || sourceUrl;
+	// WordPress sometimes serializes an empty `wp:image` placeholder. Keeping
+	// it would create a zero-source media block that can never render or edit.
+	if (!sourceId && !sourceUrl) return null;
 	const style = htmlAttribute(imageHtml, "style") || "";
 	const styleWidth = style.match(/(?:^|;)\s*width\s*:\s*([^;]+)/i)?.[1];
 	const width = numericImageDimension(htmlAttribute(imageHtml, "width"));
@@ -84,6 +88,7 @@ function imageNode(block, tools) {
 		_type: "image",
 		_key: tools.generateKey(),
 		asset: { _type: "reference", _ref: String(sourceId), url: sourceUrl },
+		link: htmlAttribute(linkHtml, "href") || undefined,
 		alt: htmlAttribute(imageHtml, "alt") || "",
 		caption: matchClassText(html, "wp-element-caption") || safeText(html.match(/<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/i)?.[1] || ""),
 		width,
@@ -270,7 +275,10 @@ export function convertPostContent(post, context) {
 		"core/quote": (block, transformOptions, tools) => [
 			quoteNode(block, transformOptions, tools),
 		],
-		"core/image": (block, _options, tools) => [imageNode(block, tools)],
+		"core/image": (block, _options, tools) => {
+			const image = imageNode(block, tools);
+			return image ? [image] : [];
+		},
 		"core/block": (block) => {
 			const reusable = context.reusableBlocks.get(String(block.attrs.ref || ""));
 			return reusable ? gutenbergToPortableText(reusable.content || "", options()) : [];
@@ -295,8 +303,8 @@ export function convertPostContent(post, context) {
 			_key: tools.generateKey(),
 			id: block.attrs.postId
 				? `wordpress://${context.siteId}/post/${block.attrs.postId}`
-				: undefined,
-			title: String(block.attrs.postTitle || "関連記事"),
+				: String(block.attrs.linkData?.url || block.attrs.url || "") || undefined,
+			title: String(block.attrs.postTitle || block.attrs.cardTitle || "関連記事"),
 		}],
 		"jin-gb-block/blog-card": (block, _options, tools) => [{
 			_type: "yohaku.linkCard",

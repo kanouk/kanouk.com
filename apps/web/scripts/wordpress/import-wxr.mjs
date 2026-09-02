@@ -69,6 +69,7 @@ function parseArgs(argv) {
 		mediaLedger: DEFAULT_MEDIA_LEDGER,
 		limit: undefined,
 		onlyQuotes: false,
+		sourceIds: [],
 	};
 	for (let i = 0; i < argv.length; i++) {
 		const value = argv[i];
@@ -77,6 +78,7 @@ function parseArgs(argv) {
 		else if (value === "--concurrency") args.concurrency = Number(argv[++i]);
 		else if (value === "--limit") args.limit = Number(argv[++i]);
 		else if (value === "--only-quotes") args.onlyQuotes = true;
+		else if (value === "--source-id") args.sourceIds.push(String(argv[++i] || ""));
 		else if (value === "--ledger") args.ledger = path.resolve(argv[++i]);
 		else if (value === "--media-ledger") args.mediaLedger = path.resolve(argv[++i]);
 		else throw new Error(`Unknown argument: ${value}`);
@@ -86,6 +88,9 @@ function parseArgs(argv) {
 	}
 	if (args.limit !== undefined && (!Number.isInteger(args.limit) || args.limit < 1)) {
 		throw new Error("--limit must be a positive integer");
+	}
+	if (args.sourceIds.some((value) => !/^[a-z0-9_-]+:\d+$/i.test(value))) {
+		throw new Error("--source-id must use <site>:<wordpress-id>");
 	}
 	return args;
 }
@@ -195,8 +200,12 @@ function sourceUrl(record) {
 	return record.post.link || `${record.source.origin}/?p=${record.post.id}`;
 }
 
-function targetPath(record) {
-	return `/${record.post.postType === "page" ? "pages" : "posts"}/${record.slug}`;
+function targetPath(record, contentIds) {
+	const collection = record.post.postType === "page" ? "pages" : "posts";
+	const stableId = collection === "posts"
+		? contentIds?.get(`${collection}:${record.slug}`)
+		: undefined;
+	return `/${collection}/${stableId || record.slug}`;
 }
 
 function comparableLegacyUrl(value) {
@@ -238,11 +247,11 @@ function addExactLegacyMapping(mappings, source, target) {
 	else if (existing !== target) mappings.set(key, null);
 }
 
-export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs) {
+export function buildLegacyLinkMappings(records, loadedSources, taxonomySlugs, contentIds) {
 	const mappings = new Map();
 	const archiveYears = new Set();
 	for (const record of records) {
-		const target = TARGET_ORIGIN + targetPath(record);
+		const target = TARGET_ORIGIN + targetPath(record, contentIds);
 		const id = String(record.post.id);
 		for (const candidate of [
 			sourceUrl(record),
@@ -553,7 +562,7 @@ function countType(nodes, type) {
 	return total;
 }
 
-function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes) {
+function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes, contentIds) {
 	const { post, source, wxr, modified } = record;
 	const reusableBlocks = new Map(
 		wxr.posts.filter((candidate) => candidate.postType === "wp_block").map((candidate) => [String(candidate.id), candidate]),
@@ -570,7 +579,7 @@ function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, le
 	const content = legacyLinkRewrite.value;
 	const collection = post.postType === "page" ? "pages" : "posts";
 	const oldUrl = sourceUrl(record);
-	const targetUrl = TARGET_ORIGIN + targetPath(record);
+	const targetUrl = TARGET_ORIGIN + targetPath(record, contentIds);
 	const date = parseWxrDate(post.postDateGmt, post.pubDate, post.postDate)?.toISOString();
 	const baseMetadata = {
 		system: "wordpress",
@@ -697,6 +706,11 @@ async function ensureSchema(client, apply) {
 	for (const collectionSlug of ["posts", "pages"]) {
 		const collection = collections.get(collectionSlug);
 		if (!collection) throw new Error(`Required collection is missing: ${collectionSlug}`);
+		if (collectionSlug === "posts" && collection.urlPattern !== "/posts/{id}" && apply) {
+			await client.put("/_emdash/api/schema/collections/posts", {
+				urlPattern: "/posts/{id}",
+			});
+		}
 		const existing = new Set((collection.fields || []).map((field) => field.slug));
 		for (const field of [
 			{ slug: "source_url", label: "Source URL", type: "string", indexed: true },
@@ -1011,19 +1025,23 @@ async function main() {
 	const mediaMappings = buildMediaMappings(mediaLedger);
 	const smugMugMappings = buildSmugMugMappings(await loadSmugMugManifests());
 	const quizzes = await loadQuizMap();
-	const filteredRecords = args.onlyQuotes ? recordsWithWordPressQuotes(allRecords) : allRecords;
+	const quoteFilteredRecords = args.onlyQuotes ? recordsWithWordPressQuotes(allRecords) : allRecords;
+	const selectedSourceIds = new Set(args.sourceIds);
+	const filteredRecords = selectedSourceIds.size
+		? quoteFilteredRecords.filter((record) => selectedSourceIds.has(`${record.source.id}:${record.post.id}`))
+		: quoteFilteredRecords;
 	const records = args.limit ? filteredRecords.slice(0, args.limit) : filteredRecords;
 	const contentIds = await loadContentIds(readClient, ["posts", "pages", "url_mappings"]);
 	await ensureSchema(client, args.apply);
 	const bylines = await ensureBylines(client, DEFAULT_SOURCES, args.apply);
 	const taxonomySlugs = await ensureTaxonomies(client, loadedSources, args.apply);
-	const legacyLinkMappings = buildLegacyLinkMappings(allRecords, loadedSources, taxonomySlugs);
+	const legacyLinkMappings = buildLegacyLinkMappings(allRecords, loadedSources, taxonomySlugs, contentIds);
 	const counts = {};
 	const failures = [];
 	const ledgerItems = [];
 	await mapLimit(records, args.concurrency, async (record, index) => {
 		try {
-			const desired = migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes);
+			const desired = migrationData(record, taxonomySlugs, mediaMappings, smugMugMappings, legacyLinkMappings, quizzes, contentIds);
 			const status = await upsertContent(client, record, desired, bylines.get(record.source.id), args.apply, contentIds);
 			await upsertUrlMapping(client, desired, record, args.apply, contentIds);
 			counts[status] = (counts[status] || 0) + 1;

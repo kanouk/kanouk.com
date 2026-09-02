@@ -43,6 +43,17 @@ test("keeps a theme post link site-scoped until canonical URL resolution", () =>
 	assert.equal(blocks[0].id, "wordpress://test/post/42");
 });
 
+test("preserves an external SWELL post-link URL and its semantic title", () => {
+	const post = {
+		id: 12,
+		content: '<!-- wp:loos/post-link {"cardTitle":"Kyoto, 2024/07","linkData":{"url":"https://kanolog.smugmug.com/20240726Kyoto"}} /-->',
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0]._type, "yohaku.linkCard");
+	assert.equal(blocks[0].id, "https://kanolog.smugmug.com/20240726Kyoto");
+	assert.equal(blocks[0].title, "Kyoto, 2024/07");
+});
+
 test("preserves WordPress image size, alignment, caption, and photo-frame meaning", () => {
 	const post = {
 		id: 12,
@@ -57,6 +68,7 @@ test("preserves WordPress image size, alignment, caption, and photo-frame meanin
 		_type: "image",
 		_key: blocks[0]._key,
 		asset: { _type: "reference", _ref: "123", url: "https://example.test/photo.jpg" },
+		link: undefined,
 		alt: "sample",
 		caption: "旅先の写真",
 		width: 840,
@@ -65,6 +77,17 @@ test("preserves WordPress image size, alignment, caption, and photo-frame meanin
 		alignment: "center",
 		visualStyle: "photo-frame",
 	});
+});
+
+test("preserves the destination of a linked WordPress image", () => {
+	const post = {
+		id: 15,
+		content: `<!-- wp:image {"id":123} -->
+			<figure class="wp-block-image"><a href="https://kanolog.smugmug.com/Trip/i-abc123/A"><img src="https://photos.smugmug.com/Trip/i-abc123/0/hash/L/photo.jpg" /></a></figure>
+			<!-- /wp:image -->`,
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0].link, "https://kanolog.smugmug.com/Trip/i-abc123/A");
 });
 
 test("preserves WordPress preset image size when the block omits a numeric width", () => {
@@ -79,6 +102,14 @@ test("preserves WordPress preset image size when the block omits a numeric width
 	const blocks = convertPostContent(post, context);
 	assert.equal(blocks[0].displayWidth, 300);
 	assert.equal(blocks[0].visualStyle, "photo-frame");
+});
+
+test("drops empty Gutenberg image placeholders", () => {
+	const post = {
+		id: 14,
+		content: "<!-- wp:image --><!-- /wp:image -->",
+	};
+	assert.deepEqual(convertPostContent(post, context), []);
 });
 
 test("preserves nested Gutenberg quote paragraphs and citation as one semantic quote", () => {

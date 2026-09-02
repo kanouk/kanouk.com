@@ -45,7 +45,7 @@ const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
 							title={post.data.title ?? "無題"}
 							excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
 							featuredImage={post.data.featured_image}
-							href={`/posts/${post.id}`}
+							href={`/posts/${post.data.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
 							tags={(post.data.terms?.tag ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
