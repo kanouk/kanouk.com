@@ -377,6 +377,14 @@ class MonitorProductionTests(unittest.TestCase):
             },
         )
 
+    def test_search_console_snapshot_proves_no_mutation(self) -> None:
+        snapshot = module.load_search_console_access_snapshot()
+        self.assertEqual(snapshot["result"], "access_denied")
+        self.assertEqual(snapshot["target_property"], "sc-domain:kanouk.com")
+        self.assertFalse(snapshot["ownership_verification_performed"])
+        self.assertFalse(snapshot["sitemap_submission_performed"])
+        self.assertFalse(snapshot["mutable_actions_performed"])
+
     def test_billing_summary_omits_account_identity(self) -> None:
         report = module.summarize_cloudflare_billing_rows(
             [

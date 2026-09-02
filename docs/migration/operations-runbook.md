@@ -190,6 +190,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 12:17 JST、`kanouk@gmail.com`のCloudflare Billingをブラウザでread-only確認しました。8月31日〜9月2日の従量課金合計とcycle予測はいずれも$0.00で、表示されたR2／KV／D1／Workers／Imagesはすべてbillable usage 0でした。9月1日の請求$5.50は`Paid`です。請求番号、支払い方法、請求先住所は記録せず、請求内訳も開いていないため$5.50の構成は推測しません。同額が12か月続き、追加従量課金がなければ年間$66、SmugMug年$100との差は年$34ですが、単一請求からの暫定値として扱います。機微情報を除いた表示値は`cloudflare-billing-snapshot-2026-09-02.json`へ保存しました。
 
+12:26 JST、`kanouk@gmail.com`でGoogle Search Consoleの`sc-domain:kanouk.com`をread-only確認し、「このプロパティへのアクセス権がありません」を確認しました。所有権証明ボタンは押さず、sitemap送信もしていません。APIのscope不足とは別に、ログイン済みUIでもproperty accessがないことをreport version 8と`search-console-access-2026-09-02.json`へ記録しました。次の外部変更は所有権証明であり、実行時の明示承認が必要です。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。

@@ -106,9 +106,11 @@
   },
   "search_console": {
     "observed_at": "2026-09-02T09:13:00+09:00",
+    "browser_observed_at": "2026-09-02T12:26:00+09:00",
     "existing_property": "sc-domain:kanouk.com",
     "account_email": "kanouk@gmail.com",
-    "access": "ownership_verification_required",
+    "access": "access_denied_in_authenticated_browser",
+    "visible_message": "このプロパティへのアクセス権がありません",
     "sitemap_submission": "blocked_until_ownership_verification",
     "ownership_verification_performed": false
   },
@@ -418,6 +420,39 @@
         ]
       },
       "mutable_billing_actions_performed": false,
+      "verified": true
+    },
+    {
+      "observed_at": "2026-09-02T12:27:27+09:00",
+      "elapsed": "interim_5h33m",
+      "monitor_report_version": 8,
+      "representative_readback": {
+        "blog_checks": 17,
+        "blog_failed": 0,
+        "photos_checks": 13,
+        "photos_failed": 0,
+        "staging_checks": 17,
+        "staging_failed": 0
+      },
+      "worker_invocations": {
+        "requests": 23662,
+        "errors": 0,
+        "subrequests": 1469,
+        "error_rate_percent": 0.0
+      },
+      "not_found_log": {
+        "internal_referrer_rows": 0
+      },
+      "search_console": {
+        "api_status": "authentication_scope_missing",
+        "browser_snapshot": "search-console-access-2026-09-02.json",
+        "browser_result": "access_denied",
+        "ownership_verification_available": true,
+        "ownership_verification_performed": false,
+        "sitemap_submission_performed": false,
+        "next_action": "explicit_user_approval_required_for_ownership_verification",
+        "mutable_actions_performed": false
+      },
       "verified": true
     }
   ],

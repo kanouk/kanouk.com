@@ -46,6 +46,10 @@ CF_BILLING_SNAPSHOT_PATH = (
     REPO_ROOT
     / "docs/migration/cloudflare-billing-snapshot-2026-09-02.json"
 )
+SEARCH_CONSOLE_ACCESS_SNAPSHOT_PATH = (
+    REPO_ROOT
+    / "docs/migration/search-console-access-2026-09-02.json"
+)
 PRODUCTION_HOSTS = ("blog.kanouk.com", "photos.kanouk.com")
 STAGING_URL = "https://kanouk-emdash-staging.kanouk.workers.dev"
 GA4_PROPERTY_ID = "256487934"
@@ -785,6 +789,20 @@ def load_billing_dashboard_snapshot() -> dict[str, Any]:
     return snapshot
 
 
+def load_search_console_access_snapshot() -> dict[str, Any]:
+    try:
+        snapshot = json.loads(SEARCH_CONSOLE_ACCESS_SNAPSHOT_PATH.read_text())
+    except (OSError, json.JSONDecodeError) as error:
+        raise MonitorError(
+            "Search Console access snapshot is unavailable"
+        ) from error
+    if not isinstance(snapshot, dict):
+        raise MonitorError("Search Console access snapshot is invalid")
+    if snapshot.get("mutable_actions_performed") is not False:
+        raise MonitorError("Search Console access snapshot is not read-only")
+    return snapshot
+
+
 def build_cost_baseline(
     worker: Mapping[str, Any],
     platform: Mapping[str, Any],
@@ -1296,6 +1314,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
         end=observed_at,
     )
     billing_dashboard_snapshot = load_billing_dashboard_snapshot()
+    search_console_access_snapshot = load_search_console_access_snapshot()
     cost_baseline = build_cost_baseline(
         metrics,
         cloudflare_platform_usage,
@@ -1327,7 +1346,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
     worker_ok = metrics["errors"] == 0
     navigation_ok = not not_found["internal_referrer_rows"]
     return {
-        "report_version": 7,
+        "report_version": 8,
         "checkpoint": checkpoint,
         "checkpoint_due": checkpoint_due(checkpoint, observed_at),
         "observed_at": observed_at.isoformat(),
@@ -1345,6 +1364,9 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
         "not_found_log": not_found,
         "external_services": {
             **google_observations,
+            "search_console_browser_snapshot": (
+                search_console_access_snapshot
+            ),
             "cloudflare_billing_usage": billing_usage,
             "cloudflare_billing_dashboard_snapshot": (
                 billing_dashboard_snapshot
