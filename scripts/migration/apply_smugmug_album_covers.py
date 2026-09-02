@@ -70,7 +70,10 @@ class AlbumCoverParser(HTMLParser):
             self._in_card = True
         if tag == "img" and self._in_card and self._slug and self._slug not in self.covers:
             src = attributes.get("src") or ""
-            if "/_yohaku/media/preview-v1/" in src:
+            if (
+                "/_yohaku/media/preview-v1/" in src
+                or "/_emdash/api/media/file/" in src
+            ):
                 self.covers[self._slug] = src.rsplit("/", 1)[-1]
 
     def handle_endtag(self, tag: str) -> None:

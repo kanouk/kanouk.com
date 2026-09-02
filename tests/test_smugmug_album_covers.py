@@ -75,6 +75,20 @@ class SmugMugAlbumCoverApplyTests(unittest.TestCase):
             },
         )
 
+    def test_parses_low_resolution_cover_from_original_media_url(self) -> None:
+        parser = module.AlbumCoverParser()
+        parser.feed(
+            '<a class="album-card" href="/albums/2005-05-kumamoto">'
+            '<div class="cover">'
+            '<img src="/_emdash/api/media/file/01MEDIA.01FILE.jpg" '
+            'alt="熊本城" data-low-resolution="true">'
+            "</div></a>"
+        )
+        self.assertEqual(
+            parser.covers,
+            {"2005-05-kumamoto": "01MEDIA.01FILE.jpg"},
+        )
+
     def test_public_cover_match_accepts_storage_key_prefix(self) -> None:
         mismatches = module.public_covers_match(
             {"shimane": "01COVER.01FILE.jpg"},
