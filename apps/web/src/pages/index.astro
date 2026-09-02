@@ -1,25 +1,17 @@
 ---
-import {
-	getEmDashCollection,
-	getTermsForEntries,
-	getSiteSettings,
-} from "emdash";
-import YohakuImage from "../components/YohakuImage.astro";
-import YohakuImagePlaceholder from "../components/YohakuImagePlaceholder.astro";
-import Base from "../layouts/Base.astro";
+import { getEmDashCollection, getTermsForEntries, getSiteSettings } from "emdash";
+import BlogSidebar from "../components/BlogSidebar.astro";
 import PostCard from "../components/PostCard.astro";
+import Base from "../layouts/Base.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
-// Limit to what we render (1 featured + 3 grid). The archive remains the
-// complete browsing surface; the home page stays focused and lightweight.
-// instead of fetching every post and discarding the tail in JS.
-const POSTS_PER_PAGE = 4;
+const POSTS_PER_PAGE = 10;
 
 const [{ entries: posts, cacheHint }, settings] = await Promise.all([
 	getEmDashCollection("posts", {
 		orderBy: { published_at: "desc" },
-		limit: POSTS_PER_PAGE + 1, // +1 to detect "view all" need
+		limit: POSTS_PER_PAGE + 1,
 	}),
 	getSiteSettings(),
 ]);
@@ -27,174 +19,49 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings);
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
-// Trim the lookahead post used to detect overflow
 const visiblePosts = posts.slice(0, POSTS_PER_PAGE);
 const hasMorePosts = posts.length > POSTS_PER_PAGE;
-
-// Find the first post with a featured image for the hero
-const featuredPost = visiblePosts.find((p) => p.data.featured_image) ?? visiblePosts[0];
-const featuredIndex = featuredPost ? visiblePosts.indexOf(featuredPost) : -1;
-
-// Get remaining posts (exclude featured if found, limit to 3 for grid)
-const gridPosts = visiblePosts.filter((_, i) => i !== featuredIndex).slice(0, 3);
-
-// Single batched query for tags across the featured post + grid posts.
-// Avoids the N+1 pattern of calling getEntryTerms() per entry.
-// Bylines are already hydrated on entry.data.bylines by getEmDashCollection.
-const tagEntryIds = [
-	...(featuredPost ? [featuredPost.data.id] : []),
-	...gridPosts.map((p) => p.data.id),
-];
-const tagsByEntry = await getTermsForEntries("posts", tagEntryIds, "tag");
-
-const featuredTags = featuredPost
-	? (tagsByEntry.get(featuredPost.data.id) ?? []).map((t) => ({
-			slug: t.slug,
-			label: t.label,
-		}))
-	: [];
-const featuredBylines = featuredPost?.data.bylines ?? [];
-
-const gridPostsWithTags = gridPosts.map((post) => ({
-	post,
-	tags: (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
-		slug: t.slug,
-		label: t.label,
-	})),
-	bylines: post.data.bylines ?? [],
-}));
-
-// Format date helper
-function formatDate(date: Date | null | undefined) {
-	if (!date) return null;
-	return date.toLocaleDateString("ja-JP", {
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-	});
-}
+const tagsByEntry = await getTermsForEntries(
+	"posts",
+	visiblePosts.map((post) => post.data.id),
+	"tag",
+);
 ---
 
 <Base title={siteTitle} description={siteTagline}>
 	{
-		posts.length === 0 ? (
+		visiblePosts.length === 0 ? (
 			<section class="empty-state">
 				<h2>記事はまだありません</h2>
 				<p>公開された記事がここに並びます。</p>
-				<a href="/_emdash/admin/content/posts/new" class="btn">
-					記事を作成
-				</a>
+				<a href="/_emdash/admin/content/posts/new" class="btn">記事を作成</a>
 			</section>
 		) : (
 			<div class="home-content">
-				{/* Featured Post - Side by side */}
-				{featuredPost && (
-					<section class="featured-section">
-						<div class="featured-grid">
-							{featuredPost.data.featured_image ? (
-								<a
-									href={`/posts/${featuredPost.id}`}
-									class="featured-image-link"
-									aria-label={`${featuredPost.data.title}を読む`}
-								>
-									<div class="featured-image">
-										<YohakuImage image={featuredPost.data.featured_image} priority crop />
-									</div>
-								</a>
-							) : (
-								<div class="featured-image">
-									<YohakuImagePlaceholder />
-								</div>
-							)}
-							<div class="featured-content">
-								<div class="featured-meta">
-									{featuredBylines.length > 0 && (
-										<>
-											<div class="featured-bylines">
-												{featuredBylines.slice(0, 2).map((credit, index) => (
-													<>
-														{index > 0 && <span class="byline-sep">,</span>}
-														<span class="featured-byline">
-															{credit.byline.avatarMediaId && (
-																<img
-																	src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
-																	alt={credit.byline.displayName}
-																	class="featured-byline-avatar"
-																/>
-															)}
-															<span class="featured-byline-name">
-																{credit.byline.displayName}
-															</span>
-														</span>
-													</>
-												))}
-												{featuredBylines.length > 2 && (
-													<span class="byline-more">
-														+{featuredBylines.length - 2}
-													</span>
-												)}
-											</div>
-											<span class="meta-dot" />
-										</>
-									)}
-									{formatDate(featuredPost.data.publishedAt) && (
-										<time>{formatDate(featuredPost.data.publishedAt)}</time>
-									)}
-									<span class="meta-dot" />
-									<span>
-										{getReadingTime(featuredPost.data.content)}分
-									</span>
-								</div>
-								<a
-									href={`/posts/${featuredPost.id}`}
-									class="featured-title-link"
-								>
-									<h1 class="featured-title">{featuredPost.data.title}</h1>
-								</a>
-								{featuredPost.data.excerpt && (
-									<p class="featured-excerpt">{featuredPost.data.excerpt}</p>
-								)}
-								{featuredTags.length > 0 && (
-									<div class="featured-tags">
-										{featuredTags.map((tag) => (
-											<a href={`/tag/${tag.slug}`} class="featured-tag">
-												{tag.label}
-											</a>
-										))}
-									</div>
-								)}
-							</div>
-						</div>
-					</section>
-				)}
-
-				{/* Latest Posts */}
-				{gridPostsWithTags.length > 0 && (
-					<section class="posts-section">
-						<header class="section-header">
-							<h2 class="section-title">新しい記事</h2>
-							{hasMorePosts && (
-								<a href="/posts" class="section-link">
-									すべての記事
-								</a>
-							)}
+				<div class="home-shell">
+					<section class="home-main" aria-labelledby="latest-posts-title">
+						<header class="section-header home-section-header">
+							<h1 class="section-title" id="latest-posts-title">新着記事</h1>
+							{hasMorePosts && <a href="/posts" class="section-link">すべての記事</a>}
 						</header>
-						<div class="posts-grid">
-							{gridPostsWithTags.map(({ post, tags, bylines }) => (
+						<div class="home-posts">
+							{visiblePosts.map((post) => (
 								<PostCard
+									variant="list"
 									title={post.data.title ?? "無題"}
 									excerpt={post.data.excerpt}
 									featuredImage={post.data.featured_image}
 									href={`/posts/${post.id}`}
 									date={post.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(post.data.content)}
-									tags={tags}
-									bylines={bylines}
+									tags={(tagsByEntry.get(post.data.id) ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
+									bylines={post.data.bylines ?? []}
 								/>
 							))}
 						</div>
 					</section>
-				)}
+					<BlogSidebar latestDate={visiblePosts[0]?.data.publishedAt} />
+				</div>
 			</div>
 		)
 	}

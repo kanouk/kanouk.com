@@ -1,0 +1,78 @@
+---
+import { getTaxonomyTerms } from "emdash";
+import { Github, Glasses, Tags, Twitter } from "lucide-astro";
+import PostArchiveNav from "./PostArchiveNav.astro";
+
+interface Props {
+	latestDate?: Date | null;
+}
+
+type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
+
+const { latestDate } = Astro.props;
+
+function flattenTerms(terms: SidebarTerm[]): SidebarTerm[] {
+	return terms.flatMap((term) => [term, ...flattenTerms(term.children)]);
+}
+
+const [categoryTerms, tagTerms] = await Promise.all([
+	getTaxonomyTerms("category", { includeCounts: true }),
+	getTaxonomyTerms("tag", { includeCounts: true }),
+]);
+const categories = flattenTerms(categoryTerms).filter((term) => (term.count ?? 0) > 0);
+const tags = flattenTerms(tagTerms)
+	.filter((term) => (term.count ?? 0) > 0)
+	.slice(0, 20);
+---
+
+<aside class="home-sidebar" aria-label="ブログ案内">
+	<section class="profile-card">
+		<div class="profile-card__visual" aria-hidden="true">
+			<span class="profile-card__mark"><Glasses size={34} strokeWidth={1.45} /></span>
+		</div>
+		<div class="profile-card__body">
+			<h2>カノ</h2>
+			<p class="profile-card__type">INFP</p>
+			<div class="profile-card__copy">
+				<p>こんにちは！カノといいます👓</p>
+				<p>インターネットやテクノロジー、歴史（世界史・日本史）、美術、お寺や仏像などが好きです。メガネのせいか真面目っぽく見えるらしいですが、基本的には昔から楽観的で適当な性格です。</p>
+				<p>このブログは昔からずっと個人的な日記みたいな感じで書いてきていて、基本的には自分用の個人的なログになりますが、興味のあるところだけ読んでいただけるとうれしいです。コメントやTwitterのフォローなどは大歓迎です。</p>
+			</div>
+			<nav class="profile-card__social" aria-label="カノのソーシャルリンク">
+				<a href="https://twitter.com/kanouk" aria-label="X / Twitter"><Twitter size={17} strokeWidth={1.7} /></a>
+				<a href="https://github.com/kanouk" aria-label="GitHub"><Github size={17} strokeWidth={1.7} /></a>
+			</nav>
+		</div>
+	</section>
+
+	<div class="sidebar-widgets home-sidebar__widgets">
+		<PostArchiveNav date={latestDate} />
+		{categories.length > 0 && (
+			<section class="widget">
+				<h2 class="widget__title">カテゴリー</h2>
+				<div class="widget__content">
+					<ul class="widget-categories">
+						{categories.map((category) => (
+							<li>
+								<a href={`/category/${category.slug}`} class="widget-categories__link">{category.label}</a>
+								<span class="widget-categories__count">{category.count}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+		)}
+		{tags.length > 0 && (
+			<section class="widget">
+				<h2 class="widget__title"><Tags size={14} strokeWidth={1.7} aria-hidden="true" /> トピック</h2>
+				<div class="widget__content">
+					<ul class="widget-tags__cloud">
+						{tags.map((tag) => (
+							<li><a href={`/tag/${tag.slug}`} class="widget-tags__link">{tag.label}</a></li>
+						))}
+					</ul>
+				</div>
+			</section>
+		)}
+	</div>
+</aside>

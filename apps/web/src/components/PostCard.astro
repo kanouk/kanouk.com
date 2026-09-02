@@ -12,6 +12,7 @@ interface Props {
 	readingTime?: number;
 	tags?: Array<{ slug: string; label: string }>;
 	bylines?: ContentBylineCredit[];
+	variant?: "card" | "list";
 }
 
 const {
@@ -23,6 +24,7 @@ const {
 	readingTime,
 	tags,
 	bylines,
+	variant = "card",
 } = Astro.props;
 
 const formattedDate = date
@@ -34,7 +36,7 @@ const formattedDate = date
 	: null;
 ---
 
-<article class="post-card">
+<article class:list={["post-card", { "post-card--list": variant === "list" }]}>
 	<a href={href} class="card-link">
 		{
 			featuredImage ? (
@@ -94,10 +96,19 @@ const formattedDate = date
 			</div>
 			<h2 class="card-title">{title}</h2>
 			{excerpt && <p class="card-excerpt">{excerpt}</p>}
+			{
+				variant === "list" && tags && tags.length > 0 && (
+					<div class="card-tags card-tags--labels" aria-label="タグ">
+						{tags.slice(0, 2).map((tag) => (
+							<span class="card-tag">{tag.label}</span>
+						))}
+					</div>
+				)
+			}
 		</div>
 	</a>
 	{
-		tags && tags.length > 0 && (
+		variant !== "list" && tags && tags.length > 0 && (
 			<div class="card-tags">
 				{tags.slice(0, 2).map((tag) => (
 					<a href={`/tag/${tag.slug}`} class="card-tag">
