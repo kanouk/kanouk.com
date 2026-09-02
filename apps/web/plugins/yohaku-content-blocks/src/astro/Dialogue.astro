@@ -1,13 +1,149 @@
 ---
-const { speaker, body, text } = Astro.props.node;
+const {
+	speaker = "",
+	body,
+	text,
+	avatarUrl = "",
+	avatarShape = "circle",
+	align = "left",
+	bubbleStyle = "speaking",
+} = Astro.props.node;
 const value = body || text || "";
+const initial = Array.from(String(speaker).trim())[0] || "・";
 ---
-<figure class="yohaku-dialogue">
-	<blockquote>{value}</blockquote>
-	{speaker && <figcaption>— {speaker}</figcaption>}
+<figure
+	class:list={[
+		"yohaku-dialogue",
+		align === "right" && "is-right",
+		bubbleStyle === "thinking" && "is-thinking",
+	]}
+>
+	<div class="yohaku-dialogue__profile">
+		{avatarUrl ? (
+			<img
+				class:list={["yohaku-dialogue__avatar", avatarShape === "square" && "is-square"]}
+				src={avatarUrl}
+				alt=""
+				width="72"
+				height="72"
+				loading="lazy"
+				decoding="async"
+			/>
+		) : (
+			<span class="yohaku-dialogue__avatar yohaku-dialogue__fallback" aria-hidden="true">{initial}</span>
+		)}
+		{speaker && <figcaption>{speaker}</figcaption>}
+	</div>
+	<div class="yohaku-dialogue__bubble" aria-label={speaker ? `${speaker}の発言` : "発言"}>
+		<p>{value}</p>
+	</div>
 </figure>
 <style>
-	.yohaku-dialogue { margin: 2.25rem 0; padding-left: clamp(1rem, 5vw, 2.75rem); }
-	blockquote { margin: 0; font-family: var(--font-heading); font-size: 1.08rem; line-height: 1.85; }
-	figcaption { margin-top: 0.55rem; color: var(--color-muted); font-size: 0.75rem; letter-spacing: 0.04em; }
+	figure.yohaku-dialogue {
+		display: flex;
+		align-items: flex-start;
+		gap: clamp(0.8rem, 2.4vw, 1.15rem);
+		margin: 2rem 0;
+	}
+
+	.yohaku-dialogue.is-right { flex-direction: row-reverse; }
+
+	.yohaku-dialogue__profile {
+		display: grid;
+		flex: 0 0 4.5rem;
+		justify-items: center;
+		gap: 0.45rem;
+		width: 4.5rem;
+	}
+
+	.yohaku-dialogue__avatar {
+		display: grid;
+		width: 4rem;
+		height: 4rem;
+		box-sizing: border-box;
+		place-items: center;
+		border: 1px solid var(--color-border);
+		border-radius: 50%;
+		background: var(--color-bg);
+		object-fit: cover;
+		box-shadow: 0 0.25rem 1rem color-mix(in srgb, var(--color-text) 8%, transparent);
+	}
+
+	.yohaku-dialogue__avatar.is-square { border-radius: 20%; }
+
+	.yohaku-dialogue__fallback {
+		color: var(--color-text-secondary);
+		font-size: 1rem;
+		font-weight: 650;
+	}
+
+	figcaption {
+		max-width: 100%;
+		color: var(--color-text-secondary);
+		font-size: 0.72rem;
+		font-weight: 600;
+		line-height: 1.35;
+		letter-spacing: 0.02em;
+		text-align: center;
+		word-break: break-word;
+	}
+
+	.yohaku-dialogue__bubble {
+		position: relative;
+		min-width: 0;
+		padding: 0.95rem 1.1rem;
+		border: 1px solid var(--color-border);
+		border-radius: 0.85rem;
+		background: var(--color-bg-subtle);
+		box-shadow: 0 0.35rem 1.5rem color-mix(in srgb, var(--color-text) 5%, transparent);
+	}
+
+	.yohaku-dialogue__bubble::before {
+		position: absolute;
+		top: 1.25rem;
+		left: -0.4rem;
+		width: 0.72rem;
+		height: 0.72rem;
+		border-bottom: 1px solid var(--color-border);
+		border-left: 1px solid var(--color-border);
+		background: var(--color-bg-subtle);
+		content: "";
+		transform: rotate(45deg);
+	}
+
+	.is-right .yohaku-dialogue__bubble::before {
+		right: -0.4rem;
+		left: auto;
+		border: 0;
+		border-top: 1px solid var(--color-border);
+		border-right: 1px solid var(--color-border);
+	}
+
+	.is-thinking .yohaku-dialogue__bubble::before {
+		width: 0.55rem;
+		height: 0.55rem;
+		border: 1px solid var(--color-border);
+		border-radius: 50%;
+		transform: none;
+	}
+
+	.yohaku-dialogue__bubble p {
+		margin: 0;
+		color: var(--color-text);
+		font-family: var(--font-body);
+		font-size: 0.98rem;
+		font-weight: 400;
+		line-height: 1.85;
+		letter-spacing: 0.01em;
+		white-space: pre-line;
+	}
+
+	@media (max-width: 520px) {
+		figure.yohaku-dialogue { gap: 0.7rem; }
+		.yohaku-dialogue__profile { flex-basis: 3.3rem; width: 3.3rem; }
+		.yohaku-dialogue__avatar { width: 3rem; height: 3rem; }
+		.yohaku-dialogue__bubble { padding: 0.8rem 0.9rem; }
+		.yohaku-dialogue__bubble::before { top: 1rem; }
+		figcaption { font-size: 0.68rem; }
+	}
 </style>

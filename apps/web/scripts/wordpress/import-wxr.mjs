@@ -16,6 +16,14 @@ const DEFAULT_SOURCES = [
 		restDeltaFile: "/Users/kanouk/Documents/Private_External_Imports/blog/kanolog-rest-delta.2026-09-01.json",
 		bylineSlug: "kanouk",
 		bylineName: "カノ",
+		avatarSourceUrl: "https://kanolog.net/wp-content/uploads/2022/08/プロフィールアイコン_メイン-1.png",
+		dialogueProfiles: {
+			"5877": {
+				speaker: "カノ",
+				avatarUrl: "https://kanolog.net/wp-content/uploads/2022/08/プロフィールアイコン_メイン-1.png",
+				avatarShape: "square",
+			},
+		},
 	},
 	{
 		id: "nocalog",
@@ -23,6 +31,19 @@ const DEFAULT_SOURCES = [
 		file: "/Users/kanouk/Documents/Private_External_Imports/blog/nocalog-noca.WordPress.2026-07-10.xml",
 		bylineSlug: "noca",
 		bylineName: "noca",
+		avatarSourceUrl: "http://nocalog.net/wp-content/uploads/2021/07/profile6.png",
+		dialogueProfiles: {
+			"1": {
+				speaker: "noca",
+				avatarUrl: "http://nocalog.net/wp-content/uploads/2021/07/profile6.png",
+				avatarShape: "circle",
+			},
+			"5877": {
+				speaker: "カノ",
+				avatarUrl: "https://kanolog.net/wp-content/uploads/2022/08/プロフィールアイコン_メイン-1.png",
+				avatarShape: "square",
+			},
+		},
 	},
 	{
 		id: "art-quiz",
@@ -34,6 +55,7 @@ const DEFAULT_SOURCES = [
 ];
 
 const TARGET_ORIGIN = "https://blog.kanouk.com";
+const CONTENT_LOCALE = "ja";
 const DEFAULT_LEDGER = path.resolve("../../migration/wordpress/runtime/import-ledger.json");
 const DEFAULT_MEDIA_LEDGER = path.resolve("../../migration/wordpress/runtime/media-ledger.json");
 const DEFAULT_SMUGMUG_MANIFEST_ROOT = path.resolve("../../migration/smugmug");
@@ -69,6 +91,7 @@ function parseArgs(argv) {
 		mediaLedger: DEFAULT_MEDIA_LEDGER,
 		limit: undefined,
 		onlyQuotes: false,
+		onlyDialogues: false,
 		sourceIds: [],
 	};
 	for (let i = 0; i < argv.length; i++) {
@@ -78,6 +101,7 @@ function parseArgs(argv) {
 		else if (value === "--concurrency") args.concurrency = Number(argv[++i]);
 		else if (value === "--limit") args.limit = Number(argv[++i]);
 		else if (value === "--only-quotes") args.onlyQuotes = true;
+		else if (value === "--only-dialogues") args.onlyDialogues = true;
 		else if (value === "--source-id") args.sourceIds.push(String(argv[++i] || ""));
 		else if (value === "--ledger") args.ledger = path.resolve(argv[++i]);
 		else if (value === "--media-ledger") args.mediaLedger = path.resolve(argv[++i]);
@@ -97,6 +121,10 @@ function parseArgs(argv) {
 
 export function recordsWithWordPressQuotes(records) {
 	return records.filter((record) => /<!--\s+wp:quote(?:\s|\/|-->)/i.test(record.post.content || ""));
+}
+
+export function recordsWithWordPressDialogues(records) {
+	return records.filter((record) => /<!--\s+wp:loos\/balloon(?:\s|\/|-->)/i.test(record.post.content || ""));
 }
 
 function sha256(value) {
@@ -570,6 +598,7 @@ export function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappi
 	);
 	const convertedContent = convertPostContent(post, {
 		siteId: source.id,
+		dialogueProfiles: source.dialogueProfiles || {},
 		products: buildProductMap(wxr.posts),
 		reusableBlocks,
 		quizzes,
@@ -625,6 +654,7 @@ export function migrationData(record, taxonomySlugs, mediaMappings, smugMugMappi
 	const desired = {
 		collection,
 		slug: record.slug,
+		locale: CONTENT_LOCALE,
 		status: post.status === PUBLISHED_STATUS ? "published" : "draft",
 		createdAt: date,
 		publishedAt: post.status === PUBLISHED_STATUS ? date : undefined,
@@ -687,19 +717,33 @@ class ApiClient {
 	put(pathname, body) { return this.request(pathname, { method: "PUT", body: JSON.stringify(body) }); }
 }
 
-async function ensureBylines(client, sources, apply) {
+async function ensureBylines(client, sources, mediaMappings, apply) {
 	const response = await client.get("/_emdash/api/admin/bylines?limit=100");
 	const existing = new Map((response.data?.items || []).map((item) => [item.slug, item]));
 	const result = new Map();
 	for (const source of sources) {
 		let byline = existing.get(source.bylineSlug);
+		const avatarMediaId = source.avatarSourceUrl
+			? findMediaMapping(source.avatarSourceUrl, mediaMappings)?.mediaId
+			: undefined;
+		if (source.avatarSourceUrl && !avatarMediaId) {
+			throw new Error(`Migrated avatar media is missing for byline ${source.bylineSlug}`);
+		}
 		if (!byline && apply) {
 			const created = await client.post("/_emdash/api/admin/bylines", {
 				slug: source.bylineSlug,
 				displayName: source.bylineName,
+				...(avatarMediaId ? { avatarMediaId } : {}),
 				isGuest: false,
+				locale: CONTENT_LOCALE,
 			});
 			byline = created.data;
+		}
+		if (byline && avatarMediaId && byline.avatarMediaId !== avatarMediaId && apply) {
+			const updated = await client.put(`/_emdash/api/admin/bylines/${byline.id}`, {
+				avatarMediaId,
+			});
+			byline = updated.data;
 		}
 		result.set(source.id, byline?.id || null);
 	}
@@ -707,8 +751,19 @@ async function ensureBylines(client, sources, apply) {
 }
 
 async function ensureSchema(client, apply) {
-	const response = await client.get("/_emdash/api/schema");
-	const collections = new Map((response.data?.collections || []).map((collection) => [collection.slug, collection]));
+	const [exportResponse, registryResponse] = await Promise.all([
+		client.get("/_emdash/api/schema"),
+		client.get("/_emdash/api/schema/collections"),
+	]);
+	const registryCollections = new Map(
+		(registryResponse.data?.items || []).map((collection) => [collection.slug, collection]),
+	);
+	const collections = new Map(
+		(exportResponse.data?.collections || []).map((collection) => [
+			collection.slug,
+			{ ...collection, ...registryCollections.get(collection.slug) },
+		]),
+	);
 	for (const collectionSlug of ["posts", "pages"]) {
 		const collection = collections.get(collectionSlug);
 		if (!collection) throw new Error(`Required collection is missing: ${collectionSlug}`);
@@ -731,9 +786,9 @@ async function ensureSchema(client, apply) {
 					urlPattern: "/posts/{id}",
 				});
 			}
-			// EmDash 0.35 validates dateField internally but does not yet expose it
-			// through the collection-update HTTP schema. Fresh databases receive it
-			// from seed.json; initialized databases need the guarded D1 migration.
+			// The type-generation schema export intentionally omits routing and date
+			// metadata. Validate against the collection-registry endpoint so a correct
+			// D1 date_field is not mistaken for a missing migration.
 			if (collection.dateField !== "published_on") {
 				throw new Error('Posts collection dateField must be "published_on" before importing');
 			}
@@ -742,14 +797,18 @@ async function ensureSchema(client, apply) {
 }
 
 async function ensureTaxonomies(client, loadedSources, apply) {
-	const definitions = await client.get("/_emdash/api/taxonomies");
+	const definitions = await client.get(`/_emdash/api/taxonomies?locale=${CONTENT_LOCALE}`);
 	const existingDefs = new Map((definitions.data?.taxonomies || []).map((item) => [item.name, item]));
 	for (const definition of [
 		{ name: "category", label: "カテゴリー", labelSingular: "カテゴリー", hierarchical: true },
 		{ name: "tag", label: "タグ", labelSingular: "タグ", hierarchical: false },
 	]) {
 		if (!existingDefs.has(definition.name) && apply) {
-			await client.post("/_emdash/api/taxonomies", { ...definition, collections: ["posts"] });
+			await client.post("/_emdash/api/taxonomies", {
+				...definition,
+				collections: ["posts"],
+				locale: CONTENT_LOCALE,
+			});
 		}
 	}
 
@@ -760,12 +819,16 @@ async function ensureTaxonomies(client, loadedSources, apply) {
 	}
 	const mapping = new Map();
 	for (const taxonomy of ["category", "tag"]) {
-		const listed = await client.get(`/_emdash/api/taxonomies/${taxonomy}/terms?includeCounts=false`);
+		const listed = await client.get(`/_emdash/api/taxonomies/${taxonomy}/terms?locale=${CONTENT_LOCALE}&includeCounts=false`);
 		const existing = new Map(flattenTerms(listed.data?.terms || []).map((term) => [term.slug, term]));
 		for (const term of [...desired.values()].filter((item) => item.taxonomy === taxonomy).sort((a, b) => a.slug.localeCompare(b.slug))) {
 			mapping.set(`${taxonomy}:${term.slug}`, term.slug);
 			if (!existing.has(term.slug) && apply) {
-				await client.post(`/_emdash/api/taxonomies/${taxonomy}/terms`, { slug: term.slug, label: term.label });
+				await client.post(`/_emdash/api/taxonomies/${taxonomy}/terms`, {
+					slug: term.slug,
+					label: term.label,
+					locale: CONTENT_LOCALE,
+				});
 			}
 		}
 	}
@@ -800,6 +863,7 @@ function contentBody(desired, bylineId) {
 	return {
 		data: desired.data,
 		slug: desired.slug,
+		locale: desired.locale,
 		...(desired.status === "draft" ? { status: "draft" } : {}),
 		...(bylineId ? { bylines: [{ bylineId }] } : {}),
 		...(Object.keys(desired.taxonomies).length ? { taxonomies: desired.taxonomies } : {}),
@@ -907,7 +971,11 @@ async function upsertUrlMapping(client, desired, record, apply, contentIds) {
 	if (current?.item?.data?.target_url === desired.targetUrl && current.item.status === "published") return;
 	if (!apply) return;
 	if (!current) {
-		const created = await client.post("/_emdash/api/content/url_mappings", { data, slug });
+		const created = await client.post("/_emdash/api/content/url_mappings", {
+			data,
+			slug,
+			locale: CONTENT_LOCALE,
+		});
 		contentIds.set(`url_mappings:${slug}`, created.data.item.id);
 		await client.post(`/_emdash/api/content/url_mappings/${encodeURIComponent(created.data.item.id)}/publish`, {});
 	} else {
@@ -1042,15 +1110,19 @@ async function main() {
 	const mediaMappings = buildMediaMappings(mediaLedger);
 	const smugMugMappings = buildSmugMugMappings(await loadSmugMugManifests());
 	const quizzes = await loadQuizMap();
-	const quoteFilteredRecords = args.onlyQuotes ? recordsWithWordPressQuotes(allRecords) : allRecords;
+	const scopedRecords = args.onlyQuotes
+		? recordsWithWordPressQuotes(allRecords)
+		: args.onlyDialogues
+			? recordsWithWordPressDialogues(allRecords)
+			: allRecords;
 	const selectedSourceIds = new Set(args.sourceIds);
 	const filteredRecords = selectedSourceIds.size
-		? quoteFilteredRecords.filter((record) => selectedSourceIds.has(`${record.source.id}:${record.post.id}`))
-		: quoteFilteredRecords;
+		? scopedRecords.filter((record) => selectedSourceIds.has(`${record.source.id}:${record.post.id}`))
+		: scopedRecords;
 	const records = args.limit ? filteredRecords.slice(0, args.limit) : filteredRecords;
 	const contentIds = await loadContentIds(readClient, ["posts", "pages", "url_mappings"]);
 	await ensureSchema(client, args.apply);
-	const bylines = await ensureBylines(client, DEFAULT_SOURCES, args.apply);
+	const bylines = await ensureBylines(client, DEFAULT_SOURCES, mediaMappings, args.apply);
 	const taxonomySlugs = await ensureTaxonomies(client, loadedSources, args.apply);
 	const legacyLinkMappings = buildLegacyLinkMappings(allRecords, loadedSources, taxonomySlugs, contentIds);
 	const counts = {};

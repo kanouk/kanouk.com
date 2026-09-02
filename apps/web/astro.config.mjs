@@ -9,6 +9,11 @@ import { yohakuContentBlocks } from "yohaku-content-blocks";
 
 export default defineConfig({
 	output: "server",
+	i18n: {
+		defaultLocale: "ja",
+		locales: ["ja"],
+		routing: { prefixDefaultLocale: false },
+	},
 	// Keep the pilot on R2 without enabling billable Cloudflare Images transforms.
 	// Responsive variants are a post-migration optimization decision.
 	adapter: cloudflare({ imageService: "passthrough" }),

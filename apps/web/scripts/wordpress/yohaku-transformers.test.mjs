@@ -4,6 +4,13 @@ import { buildProductMap, convertPostContent } from "./yohaku-transformers.mjs";
 
 const context = {
 	siteId: "test",
+	dialogueProfiles: {
+		"7": {
+			speaker: "カノ",
+			avatarUrl: "https://example.test/kano.png",
+			avatarShape: "square",
+		},
+	},
 	reusableBlocks: new Map(),
 	products: new Map([
 		["42", { title: "Sample", primaryUrl: "https://example.test/item" }],
@@ -31,6 +38,33 @@ test("converts a theme balloon to semantic dialogue deterministically", () => {
 	assert.deepEqual(first, second);
 	assert.equal(first[0]._type, "yohaku.dialogue");
 	assert.equal(first[0].body, "Hello");
+	assert.equal(first[0].speaker, "カノ");
+	assert.equal(first[0].avatarUrl, "https://example.test/kano.png");
+	assert.equal(first[0].avatarShape, "square");
+	assert.equal(first[0].align, "left");
+});
+
+test("preserves per-block dialogue identity and presentation over the site profile", () => {
+	const post = {
+		id: 2,
+		content: '<!-- wp:loos/balloon {"balloonID":"7","balloonName":"別の話者","balloonIcon":"https://example.test/other.png","balloonShape":"circle","balloonAlign":"right","balloonType":"thinking"} --><p>考え中</p><!-- /wp:loos/balloon -->',
+	};
+	const [dialogue] = convertPostContent(post, context);
+	assert.equal(dialogue.speaker, "別の話者");
+	assert.equal(dialogue.avatarUrl, "https://example.test/other.png");
+	assert.equal(dialogue.avatarShape, "circle");
+	assert.equal(dialogue.align, "right");
+	assert.equal(dialogue.bubbleStyle, "thinking");
+});
+
+test("recovers a speaker from a legacy inline avatar without a balloon ID", () => {
+	const post = {
+		id: 3,
+		content: '<!-- wp:loos/balloon {"balloonIcon":"http://example.test/kano.png"} --><p>Hello</p><!-- /wp:loos/balloon -->',
+	};
+	const [dialogue] = convertPostContent(post, context);
+	assert.equal(dialogue.speaker, "カノ");
+	assert.equal(dialogue.avatarUrl, "http://example.test/kano.png");
 });
 
 test("keeps a theme post link site-scoped until canonical URL resolution", () => {

@@ -11,6 +11,7 @@ import {
 	loadContentIds,
 	migrationData,
 	recordsWithWordPressQuotes,
+	recordsWithWordPressDialogues,
 	rewriteMediaReferences,
 	rewriteLegacySiteReferences,
 	rewriteSmugMugReferences,
@@ -71,6 +72,16 @@ test("quote-only import scope selects only records with a Gutenberg quote block"
 		{ post: { content: '<!-- wp:paragraph --><p>本文</p><!-- /wp:paragraph -->' } },
 	];
 	assert.deepEqual(recordsWithWordPressQuotes(records), records.slice(0, 2));
+});
+
+test("dialogue-only import scope selects only SWELL balloon blocks", () => {
+	const records = [
+		{ post: { content: '<!-- wp:loos/balloon {"balloonID":"5877"} --><p>発言</p><!-- /wp:loos/balloon -->' } },
+		{ post: { content: '<!-- wp:loos/balloon {"balloonID":"5877"} /-->' } },
+		{ post: { content: '<blockquote>引用</blockquote>' } },
+		{ post: { content: '<!-- wp:paragraph --><p>本文</p><!-- /wp:paragraph -->' } },
+	];
+	assert.deepEqual(recordsWithWordPressDialogues(records), records.slice(0, 2));
 });
 
 test("destination slugs preserve unique slugs and namespace collisions", () => {

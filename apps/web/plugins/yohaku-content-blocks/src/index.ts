@@ -70,10 +70,29 @@ export function createPlugin() {
 				{
 					type: "yohaku.dialogue",
 					label: "会話・発言",
-					description: "人物の発言を、読み上げ可能な引用として示します",
+					description: "人物名とアイコンを添えた吹き出しとして示します",
 					fields: [
 						{ type: "text_input", action_id: "speaker", label: "話者" },
 						{ type: "text_input", action_id: "body", label: "発言" },
+						{ type: "text_input", action_id: "avatarUrl", label: "アイコン画像URL" },
+						{
+							type: "select",
+							action_id: "avatarShape",
+							label: "アイコン形状",
+							options: [
+								{ label: "円形", value: "circle" },
+								{ label: "角丸四角", value: "square" },
+							],
+						},
+						{
+							type: "select",
+							action_id: "align",
+							label: "配置",
+							options: [
+								{ label: "左", value: "left" },
+								{ label: "右", value: "right" },
+							],
+						},
 					],
 				},
 				{

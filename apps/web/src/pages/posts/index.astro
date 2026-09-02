@@ -68,9 +68,9 @@ const formatDate = (date: Date) =>
 													<>
 														{index > 0 && <span class="byline-sep">,</span>}
 														<span class="post-byline">
-															{credit.byline.avatarMediaId && (
-																<img
-																	src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
+													{(credit.byline.avatarStorageKey || credit.byline.avatarMediaId) && (
+														<img
+															src={`/_emdash/api/media/file/${credit.byline.avatarStorageKey || credit.byline.avatarMediaId}`}
 																	alt={credit.byline.displayName}
 																	class="post-byline-avatar"
 																/>

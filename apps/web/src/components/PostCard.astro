@@ -57,9 +57,9 @@ const formattedDate = date
 							<div class="card-bylines">
 								{bylines.slice(0, 1).map((credit) => (
 									<span class="card-byline">
-										{credit.byline.avatarMediaId && (
+										{(credit.byline.avatarStorageKey || credit.byline.avatarMediaId) && (
 											<img
-												src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
+												src={`/_emdash/api/media/file/${credit.byline.avatarStorageKey || credit.byline.avatarMediaId}`}
 												alt={credit.byline.displayName}
 												class="card-byline-avatar"
 											/>

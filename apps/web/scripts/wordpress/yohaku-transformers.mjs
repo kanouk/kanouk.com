@@ -114,6 +114,44 @@ function productNode(product, sourceId, key) {
 	};
 }
 
+function comparableAvatarUrl(value) {
+	try {
+		const parsed = new URL(value);
+		return `${parsed.hostname.toLowerCase()}${decodeURIComponent(parsed.pathname)}`;
+	} catch {
+		return String(value || "");
+	}
+}
+
+function dialogueNode(block, context, tools) {
+	const sourceSpeakerId = String(block.attrs.balloonID || "");
+	const directAvatarUrl = String(block.attrs.balloonIcon || "").trim();
+	const profile = context.dialogueProfiles?.[sourceSpeakerId]
+		|| Object.values(context.dialogueProfiles || {}).find((candidate) =>
+			directAvatarUrl
+			&& comparableAvatarUrl(candidate.avatarUrl) === comparableAvatarUrl(directAvatarUrl),
+		)
+		|| {};
+	const speaker = String(
+		block.attrs.balloonTitle || block.attrs.balloonName || profile.speaker || "",
+	).trim();
+	const avatarUrl = String(directAvatarUrl || profile.avatarUrl || "").trim();
+	const sourceShape = String(block.attrs.balloonShape || profile.avatarShape || "circle");
+	const sourceAlign = String(block.attrs.balloonAlign || profile.align || "left");
+	const sourceBubbleStyle = String(block.attrs.balloonType || profile.bubbleStyle || "speaking");
+	return {
+		_type: "yohaku.dialogue",
+		_key: tools.generateKey(),
+		speaker: speaker || undefined,
+		body: safeText(block.innerHTML),
+		avatarUrl: avatarUrl || undefined,
+		avatarShape: sourceShape === "square" ? "square" : "circle",
+		align: sourceAlign === "right" ? "right" : "left",
+		bubbleStyle: sourceBubbleStyle === "thinking" ? "thinking" : "speaking",
+		sourceSpeakerId,
+	};
+}
+
 function parsePochippData(value) {
 	if (!value) return {};
 	if (typeof value === "object") return value;
@@ -292,12 +330,7 @@ export function convertPostContent(post, context) {
 				language: String(block.attrs.langType || block.attrs.langName || "text").toLowerCase(),
 			}];
 		},
-		"loos/balloon": (block, _options, tools) => [{
-			_type: "yohaku.dialogue",
-			_key: tools.generateKey(),
-			body: safeText(block.innerHTML),
-			sourceSpeakerId: String(block.attrs.balloonID || ""),
-		}],
+		"loos/balloon": (block, _options, tools) => [dialogueNode(block, context, tools)],
 		"loos/post-link": (block, _options, tools) => [{
 			_type: "yohaku.linkCard",
 			_key: tools.generateKey(),
