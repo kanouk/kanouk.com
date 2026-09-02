@@ -717,7 +717,7 @@ class ApiClient {
 	put(pathname, body) { return this.request(pathname, { method: "PUT", body: JSON.stringify(body) }); }
 }
 
-async function ensureBylines(client, sources, mediaMappings, apply) {
+export async function ensureBylines(client, sources, mediaMappings, apply) {
 	const response = await client.get("/_emdash/api/admin/bylines?limit=100");
 	const existing = new Map((response.data?.items || []).map((item) => [item.slug, item]));
 	const result = new Map();
@@ -726,7 +726,10 @@ async function ensureBylines(client, sources, mediaMappings, apply) {
 		const avatarMediaId = source.avatarSourceUrl
 			? findMediaMapping(source.avatarSourceUrl, mediaMappings)?.mediaId
 			: undefined;
-		if (source.avatarSourceUrl && !avatarMediaId) {
+		// A completed migration can legitimately run after the temporary media
+		// ledger has been removed. In that case, preserve the existing byline's
+		// avatar instead of blocking an unrelated content-only repair.
+		if (source.avatarSourceUrl && !avatarMediaId && !byline) {
 			throw new Error(`Migrated avatar media is missing for byline ${source.bylineSlug}`);
 		}
 		if (!byline && apply) {

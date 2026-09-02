@@ -6,6 +6,7 @@ import {
 	buildLegacyLinkMappings,
 	buildMediaMappings,
 	buildSmugMugMappings,
+	ensureBylines,
 	extractModifiedDates,
 	featuredMediaValue,
 	loadContentIds,
@@ -19,6 +20,23 @@ import {
 	storedMigrationDataMatches,
 	storedMigrationItemIsConverged,
 } from "./import-wxr.mjs";
+
+test("content-only repairs preserve an existing byline when the temporary media ledger is absent", async () => {
+	const client = {
+		async get() {
+			return { data: { items: [{ id: "byline-id", slug: "kanouk", avatarMediaId: "existing-avatar" }] } };
+		},
+		async post() { throw new Error("unexpected create"); },
+		async put() { throw new Error("unexpected update"); },
+	};
+	const result = await ensureBylines(client, [{
+		id: "kanolog",
+		bylineSlug: "kanouk",
+		bylineName: "カノ",
+		avatarSourceUrl: "https://kanolog.net/profile.png",
+	}], buildMediaMappings(), true);
+	assert.equal(result.get("kanolog"), "byline-id");
+});
 
 test("post migration keeps the admin list date aligned with the WordPress publication date", () => {
 	const record = {
