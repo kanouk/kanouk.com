@@ -454,6 +454,35 @@
         "mutable_actions_performed": false
       },
       "verified": true
+    },
+    {
+      "observed_at": "2026-09-02T12:34:01+09:00",
+      "elapsed": "interim_5h40m",
+      "monitor_report_version": 9,
+      "representative_readback": {
+        "blog_checks": 17,
+        "blog_failed": 0,
+        "photos_checks": 13,
+        "photos_failed": 0,
+        "staging_checks": 17,
+        "staging_failed": 0
+      },
+      "ga4": {
+        "property_id": "256487934",
+        "standard_report_status": "pending_standard_processing_or_no_traffic",
+        "standard_report_api_status": 200,
+        "standard_report_rows": 0,
+        "realtime_status": "expected_stream_data_observed",
+        "realtime_api_status": 200,
+        "stream_id": "2210574206",
+        "stream_name": "カノログ",
+        "minute_range": "last_30_minutes",
+        "screen_page_views": 1,
+        "active_users": 1,
+        "host_attribution": "not_available_in_realtime_api",
+        "mutable_actions_performed": false
+      },
+      "verified": true
     }
   ],
   "retained_sources": {

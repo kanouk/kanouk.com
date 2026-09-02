@@ -53,6 +53,8 @@ SEARCH_CONSOLE_ACCESS_SNAPSHOT_PATH = (
 PRODUCTION_HOSTS = ("blog.kanouk.com", "photos.kanouk.com")
 STAGING_URL = "https://kanouk-emdash-staging.kanouk.workers.dev"
 GA4_PROPERTY_ID = "256487934"
+GA4_STREAM_ID = "2210574206"
+GA4_STREAM_NAME = "カノログ"
 SEARCH_CONSOLE_SITE = "sc-domain:kanouk.com"
 LEGACY_CLIENT_PATH_PREFIXES = ("/open/",)
 CHECKPOINT_SECONDS = {
@@ -373,6 +375,44 @@ def summarize_ga4_report(payload: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def summarize_ga4_realtime_report(
+    payload: Mapping[str, Any],
+) -> dict[str, Any]:
+    rows: list[dict[str, Any]] = []
+    for source in payload.get("rows") or []:
+        if not isinstance(source, Mapping):
+            continue
+        dimensions = source.get("dimensionValues") or []
+        metrics = source.get("metricValues") or []
+        stream_id = (
+            str(dimensions[0].get("value") or "") if dimensions else ""
+        )
+        stream_name = (
+            str(dimensions[1].get("value") or "")
+            if len(dimensions) >= 2
+            else ""
+        )
+        if not stream_id:
+            continue
+        rows.append(
+            {
+                "stream_id": stream_id,
+                "stream_name": stream_name,
+                "screen_page_views": int(metrics[0].get("value") or 0)
+                if len(metrics) >= 1
+                else 0,
+                "active_users": int(metrics[1].get("value") or 0)
+                if len(metrics) >= 2
+                else 0,
+            }
+        )
+    expected_stream = next(
+        (row for row in rows if row["stream_id"] == GA4_STREAM_ID),
+        None,
+    )
+    return {"rows": rows, "expected_stream": expected_stream}
+
+
 def summarize_search_console_sites(
     payload: Mapping[str, Any],
 ) -> dict[str, Any]:
@@ -399,7 +439,11 @@ def collect_google_observations(observed_at: datetime) -> dict[str, Any]:
             "detail": auth_error,
             "mutable_actions_performed": False,
         }
-        return {"ga4": unavailable, "search_console": unavailable.copy()}
+        return {
+            "ga4": unavailable,
+            "ga4_realtime": unavailable.copy(),
+            "search_console": unavailable.copy(),
+        }
 
     ga4_payload = {
         "dateRanges": [
@@ -448,6 +492,73 @@ def collect_google_observations(observed_at: datetime) -> dict[str, Any]:
             "mutable_actions_performed": False,
         }
 
+    realtime_payload = {
+        "dimensions": [{"name": "streamId"}, {"name": "streamName"}],
+        "metrics": [
+            {"name": "screenPageViews"},
+            {"name": "activeUsers"},
+        ],
+        "minuteRanges": [
+            {
+                "name": "last_30_minutes",
+                "startMinutesAgo": 29,
+                "endMinutesAgo": 0,
+            }
+        ],
+        "limit": "100",
+    }
+    realtime_status, realtime_result, realtime_error = google_json(
+        (
+            "https://analyticsdata.googleapis.com/v1beta/properties/"
+            f"{GA4_PROPERTY_ID}:runRealtimeReport"
+        ),
+        token=token,
+        method="POST",
+        payload=realtime_payload,
+    )
+    if realtime_status == 200:
+        ga4_realtime = summarize_ga4_realtime_report(realtime_result)
+        expected_stream = ga4_realtime.get("expected_stream")
+        has_realtime_data = (
+            isinstance(expected_stream, Mapping)
+            and (
+                int(expected_stream.get("screen_page_views") or 0) > 0
+                or int(expected_stream.get("active_users") or 0) > 0
+            )
+        )
+        ga4_realtime.update(
+            {
+                "status": (
+                    "expected_stream_data_observed"
+                    if has_realtime_data
+                    else "no_realtime_traffic"
+                ),
+                "api_status": realtime_status,
+                "property_id": GA4_PROPERTY_ID,
+                "expected_stream_id": GA4_STREAM_ID,
+                "expected_stream_name": GA4_STREAM_NAME,
+                "minute_range": realtime_payload["minuteRanges"][0],
+                "attribution_note": (
+                    "Realtime API does not expose hostName. This confirms the "
+                    "expected property stream, not a specific production host."
+                ),
+                "source": (
+                    "https://developers.google.com/analytics/devguides/"
+                    "reporting/data/v1/realtime-api-schema"
+                ),
+                "mutable_actions_performed": False,
+            }
+        )
+    else:
+        ga4_realtime = {
+            "status": "api_unavailable",
+            "api_status": realtime_status,
+            "detail": realtime_error,
+            "property_id": GA4_PROPERTY_ID,
+            "expected_stream_id": GA4_STREAM_ID,
+            "mutable_actions_performed": False,
+        }
+
     search_status, search_result, search_error = google_json(
         "https://www.googleapis.com/webmasters/v3/sites",
         token=token,
@@ -477,7 +588,11 @@ def collect_google_observations(observed_at: datetime) -> dict[str, Any]:
             "target_site": None,
             "mutable_actions_performed": False,
         }
-    return {"ga4": ga4, "search_console": search_console}
+    return {
+        "ga4": ga4,
+        "ga4_realtime": ga4_realtime,
+        "search_console": search_console,
+    }
 
 
 def summarize_worker_metrics(
@@ -1346,7 +1461,7 @@ def collect(checkpoint: str, observed_at: datetime) -> dict[str, Any]:
     worker_ok = metrics["errors"] == 0
     navigation_ok = not not_found["internal_referrer_rows"]
     return {
-        "report_version": 8,
+        "report_version": 9,
         "checkpoint": checkpoint,
         "checkpoint_due": checkpoint_due(checkpoint, observed_at),
         "observed_at": observed_at.isoformat(),

@@ -21,6 +21,7 @@
 - Workers CPUは9月account-wide 4,163,572.355 ms、切替後Yohaku 422,358.830 msをread-onlyで観測。月30,000,000 ms枠内だが、GraphQLの適応サンプリング推定なので確定請求とは分離
 - Cloudflare Billingの初回read-only確認では従量課金$0.00、9月1日の支払済み請求$5.50。同額が毎月続く場合は年$66／SmugMugとの差年$34だが、単一請求からの暫定値
 - Search Consoleは`kanouk@gmail.com`のログイン済み画面でも`sc-domain:kanouk.com`へのアクセス拒否を確認。所有権証明とsitemap送信は実行せず、明示承認待ち
+- GA4 Realtime APIで対象stream `2210574206`（カノログ）の1 view／1 active userを確認。RealtimeはhostName非対応のため、host別確定は標準report待ち
 - WordPress停止、SmugMug解約は未実施し、今回も対象外とする
 
 ## データの流れ

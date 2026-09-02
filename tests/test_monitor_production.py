@@ -120,13 +120,42 @@ class MonitorProductionTests(unittest.TestCase):
                 ]
             }
         )
-        self.assertEqual(report["production_hosts_observed"], ["blog.kanouk.com"])
+        self.assertEqual(
+            report["production_hosts_observed"], ["blog.kanouk.com"]
+        )
         self.assertEqual(
             report["production_rows"][0],
             {
                 "host_name": "blog.kanouk.com",
                 "screen_page_views": 8,
                 "active_users": 3,
+            },
+        )
+
+    def test_ga4_realtime_report_identifies_expected_stream(self) -> None:
+        report = module.summarize_ga4_realtime_report(
+            {
+                "rows": [
+                    {
+                        "dimensionValues": [
+                            {"value": "2210574206"},
+                            {"value": "カノログ"},
+                        ],
+                        "metricValues": [
+                            {"value": "3"},
+                            {"value": "2"},
+                        ],
+                    }
+                ]
+            }
+        )
+        self.assertEqual(
+            report["expected_stream"],
+            {
+                "stream_id": "2210574206",
+                "stream_name": "カノログ",
+                "screen_page_views": 3,
+                "active_users": 2,
             },
         )
 

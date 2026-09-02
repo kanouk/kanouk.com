@@ -192,6 +192,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 12:26 JST、`kanouk@gmail.com`でGoogle Search Consoleの`sc-domain:kanouk.com`をread-only確認し、「このプロパティへのアクセス権がありません」を確認しました。所有権証明ボタンは押さず、sitemap送信もしていません。APIのscope不足とは別に、ログイン済みUIでもproperty accessがないことをreport version 8と`search-console-access-2026-09-02.json`へ記録しました。次の外部変更は所有権証明であり、実行時の明示承認が必要です。
 
+12:34 JST、監視実行器をreport version 9へ更新し、GA4 Realtime Data APIをread-onlyで追加しました。property `256487934`のexpected stream `2210574206`（カノログ）で直近30分の1 view／1 active userをHTTP 200で確認しました。Realtime APIは`hostName` dimensionを提供しないため、これは対象streamへの受信確認であり、`blog.kanouk.com`／`photos.kanouk.com`のhost別帰属を証明しません。host別は標準`runReport`の処理待ちとして分離します。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。
