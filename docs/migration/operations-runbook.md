@@ -158,6 +158,8 @@ python3 scripts/migration/monitor_production.py \
   --output docs/migration/monitoring/2026-09-03-24h.json
 ```
 
+Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`）を、各checkpointにつき一回だけ07:15 JSTに実行する。初回は2026-09-03の24時間監視で、合格後に同じautomationを1週間、1か月、3か月の順へ更新し、3か月完了後はpauseする。別automationを重複作成しない。automationはローカル記録、テスト、commit/push、公開readbackまで行うが、旧WordPress／SmugMugの停止・削除・解約、Search Consoleの所有権・sitemap・設定変更、GitHub Issue本文・コメント・状態変更は、実行時のユーザー明示承認なしに行わない。
+
 実行器は`kanouk@gmail.com`の最小権限tokenだけを使い、zone、Custom Domain、blog/photos/staging readback、Worker invocation error、D1の404 referrerを取得します。zone HTTP Analyticsは現在の最小権限tokenに`Zone Analytics Read`がないため、権限を勝手に広げず`not_available_to_minimum_scope_token`として記録します。Worker runtime errorと実media readbackは別経路で継続監視できます。
 
 GA4はGoogle Analytics Data API、Search Consoleは所有権とsitemap状態を別途読み戻し、Cloudflare JSONへ未確認値を混ぜません。
