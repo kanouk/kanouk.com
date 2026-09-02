@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 import sys
 import tempfile
-from typing import Any, Iterable
+from typing import Any, Iterable, Mapping
 
 SCRIPT_ROOT = Path(__file__).resolve().parent
 if str(SCRIPT_ROOT) not in sys.path:
@@ -141,6 +141,60 @@ def sanitized_asset(
     }
 
 
+COVER_IMAGE_SOURCES = ("node_cover", "highlight", "first_asset")
+
+
+def image_key_from_response(response: Mapping[str, Any] | None) -> str | None:
+    if not isinstance(response, dict):
+        return None
+    for key in ("Image", "AlbumImage", "HighlightImage", "NodeCoverImage"):
+        candidate = response.get(key)
+        if isinstance(candidate, dict) and candidate.get("ImageKey"):
+            return str(candidate["ImageKey"])
+    return None
+
+
+def album_uri_image_key(
+    client: SmugMugClient, album: Mapping[str, Any], uri_name: str
+) -> str | None:
+    uri = ((album.get("Uris") or {}).get(uri_name) or {}).get("Uri")
+    if not uri:
+        return None
+    return image_key_from_response(client.get(uri))
+
+
+def resolve_album_cover_source(
+    node_cover_image_key: str | None,
+    highlight_image_key: str | None,
+    first_asset_key: str | None,
+) -> tuple[str | None, str | None]:
+    """Pick the listing cover with SmugMug homepage priority."""
+    if node_cover_image_key:
+        return node_cover_image_key, "node_cover"
+    if highlight_image_key:
+        return highlight_image_key, "highlight"
+    if first_asset_key:
+        return first_asset_key, "first_asset"
+    return None, None
+
+
+def record_album_cover_fields(
+    source: dict[str, Any],
+    *,
+    node_cover_image_key: str | None,
+    highlight_image_key: str | None,
+    first_asset_key: str | None,
+) -> dict[str, Any]:
+    cover_image_key, cover_image_source = resolve_album_cover_source(
+        node_cover_image_key, highlight_image_key, first_asset_key
+    )
+    source["node_cover_image_key"] = node_cover_image_key
+    source["highlight_image_key"] = highlight_image_key
+    source["cover_image_key"] = cover_image_key
+    source["cover_image_source"] = cover_image_source
+    return source
+
+
 def manifest(
     album: dict[str, Any],
     images: Iterable[dict[str, Any]],
@@ -148,6 +202,7 @@ def manifest(
     user: str,
     slug: str,
     highlight_image_key: str | None = None,
+    node_cover_image_key: str | None = None,
 ) -> dict[str, Any]:
     album_key = str(album["AlbumKey"])
     assets = [
@@ -156,6 +211,19 @@ def manifest(
     ]
     assets.sort(key=lambda item: (int(item["position"]), item["id"]))
     album_id = stable_id("kal", "smugmug-album", album_key)
+    first_asset_key = assets[0]["source"]["image_key"] if assets else None
+    source = {
+        "service": "smugmug",
+        "user": user,
+        "album_key": album_key,
+        "web_uri": album.get("WebUri"),
+    }
+    record_album_cover_fields(
+        source,
+        node_cover_image_key=node_cover_image_key,
+        highlight_image_key=highlight_image_key,
+        first_asset_key=first_asset_key,
+    )
     return {
         "manifest_version": 1,
         "generated_at": now_iso(),
@@ -174,13 +242,7 @@ def manifest(
         "album": {
             "id": album_id,
             "slug": slug,
-            "source": {
-                "service": "smugmug",
-                "user": user,
-                "album_key": album_key,
-                "web_uri": album.get("WebUri"),
-                "highlight_image_key": highlight_image_key,
-            },
+            "source": source,
             "title": album.get("Title") or album.get("Name") or slug,
             "description": album.get("Description") or "",
             "sort_method": album.get("SortMethod"),
@@ -265,17 +327,11 @@ def find_album(client: SmugMugClient, user: str, album_key: str) -> dict[str, An
 
 
 def album_highlight_image_key(client: SmugMugClient, album: dict[str, Any]) -> str | None:
-    highlight_uri = ((album.get("Uris") or {}).get("HighlightImage") or {}).get(
-        "Uri"
-    )
-    if not highlight_uri:
-        return None
-    response = client.get(highlight_uri)
-    for key in ("Image", "AlbumImage", "HighlightImage"):
-        candidate = response.get(key)
-        if isinstance(candidate, dict) and candidate.get("ImageKey"):
-            return str(candidate["ImageKey"])
-    return None
+    return album_uri_image_key(client, album, "HighlightImage")
+
+
+def album_node_cover_image_key(client: SmugMugClient, album: dict[str, Any]) -> str | None:
+    return album_uri_image_key(client, album, "NodeCoverImage")
 
 
 def write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
@@ -330,6 +386,7 @@ def main() -> None:
         user=args.user,
         slug=args.slug,
         highlight_image_key=album_highlight_image_key(client, album),
+        node_cover_image_key=album_node_cover_image_key(client, album),
     )
     output = Path(args.output)
     if output.exists():

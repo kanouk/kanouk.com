@@ -57,7 +57,7 @@ WXR本文にはGutenberg標準ブロックのほか、SWELL/LOOS、JIN、Pochipp
 
 ### SmugMugで保持する構造
 
-アルバムではsource identity、名前・説明、highlight、並び順、download可否、公開設定とraw metadataを保持します。写真・動画ではsource identity、ファイル名、形式、原本hash、寸法、撮影日時、title、caption、keyword、EXIF、GPS、album内positionとraw metadataを保持します。
+アルバムではsource identity、名前・説明、一覧タイル用cover（`NodeCoverImage`優先）、highlight、並び順、download可否、公開設定とraw metadataを保持します。写真・動画ではsource identity、ファイル名、形式、原本hash、寸法、撮影日時、title、caption、keyword、EXIF、GPS、album内positionとraw metadataを保持します。
 
 GPSは削除しません。正規化した緯度・経度・高度を写真レコードへ保存し、写真詳細とアルバム地図に使います。公開JPEGが表示できてもsource MD5と一致しない場合は原本とみなさず、`pending_owner_auth`へ分類します。
 

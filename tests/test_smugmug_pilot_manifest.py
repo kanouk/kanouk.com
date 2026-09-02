@@ -76,6 +76,7 @@ class SmugMugPilotManifestTests(unittest.TestCase):
             user="kanolog",
             slug="2024-06-kyoto",
             highlight_image_key="second",
+            node_cover_image_key="first",
         )
         self.assertEqual(payload["url_contract"]["album_path"], "/albums/2024-06-kyoto")
         self.assertEqual(payload["assets"][0]["source"]["image_key"], "second")
@@ -84,9 +85,46 @@ class SmugMugPilotManifestTests(unittest.TestCase):
             payload["album"]["source"]["highlight_image_key"], "second"
         )
         self.assertEqual(
+            payload["album"]["source"]["node_cover_image_key"], "first"
+        )
+        self.assertEqual(
+            payload["album"]["source"]["cover_image_key"], "first"
+        )
+        self.assertEqual(
+            payload["album"]["source"]["cover_image_source"], "node_cover"
+        )
+        self.assertEqual(
             payload["assets"][0]["timestamps"]["captured_at"]["timezone_status"],
             "unknown",
         )
+
+    def test_cover_priority_prefers_node_cover_then_highlight_then_first(self) -> None:
+        self.assertEqual(
+            manifest_module.resolve_album_cover_source("node", "highlight", "first"),
+            ("node", "node_cover"),
+        )
+        self.assertEqual(
+            manifest_module.resolve_album_cover_source(None, "highlight", "first"),
+            ("highlight", "highlight"),
+        )
+        self.assertEqual(
+            manifest_module.resolve_album_cover_source(None, None, "first"),
+            ("first", "first_asset"),
+        )
+        self.assertEqual(
+            manifest_module.resolve_album_cover_source(None, None, None),
+            (None, None),
+        )
+
+    def test_image_key_from_response_reads_cover_and_highlight_envelopes(self) -> None:
+        self.assertEqual(
+            manifest_module.image_key_from_response(
+                {"Image": {"ImageKey": "cover-key"}}
+            ),
+            "cover-key",
+        )
+        self.assertIsNone(manifest_module.image_key_from_response({"Image": {}}))
+        self.assertIsNone(manifest_module.image_key_from_response({"Locator": "Image"}))
 
     def test_rejects_credential_bearing_url(self) -> None:
         with self.assertRaisesRegex(ValueError, "Credential-bearing URL"):

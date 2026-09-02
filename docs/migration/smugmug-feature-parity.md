@@ -21,7 +21,7 @@
 | SmugMug側の機能 | Yohaku / EmDash側 | 状態 |
 |---|---|---|
 | アルバム一覧・詳細 | 安定slug、source順、title、description、件数 | 実装済み |
-| highlight cover | source highlightを優先、未取得時だけfallback | 実装・全件照合済み |
+| highlight cover | `NodeCoverImage`を優先、無ければ`HighlightImage`、未取得時だけ先頭画像 | 実装・40件のsource key記録済み |
 | 写真・動画詳細 | 固定ID、原寸比を保つ表示、MP4 controls/poster | 実装・全動画監査済み |
 | Lightbox | Fullscreen APIによる全画面表示 | 実装済み |
 | 前後移動 | link、左右キー、mobile swipe | 実装済み |
