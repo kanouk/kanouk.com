@@ -149,6 +149,21 @@ test("preserves WordPress preset image size when the block omits a numeric width
 	assert.equal(blocks[0].visualStyle, "photo-frame");
 });
 
+test("preserves a SmugMug rendition's smaller display width over a WordPress preset", () => {
+	const post = {
+		id: 16,
+		content: `<!-- wp:image {"sizeSlug":"large","className":"is-style-photo_frame"} -->
+			<figure class="wp-block-image size-large is-style-photo_frame">
+				<img src="https://photos.smugmug.com/Trip/i-abc123/0/hash/M/photo-M.jpg" alt="" />
+				<figcaption class="wp-element-caption">旅先の写真</figcaption>
+			</figure><!-- /wp:image -->`,
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0].displayWidth, 600);
+	assert.equal(blocks[0].visualStyle, "photo-frame");
+	assert.equal(blocks[0].caption, "旅先の写真");
+});
+
 test("drops empty Gutenberg image placeholders", () => {
 	const post = {
 		id: 14,

@@ -514,7 +514,13 @@ function matchSmugMugUrl(value, mappings) {
 		const isMedia = host === "photos.smugmug.com"
 			|| /\.(?:avif|gif|jpe?g|png|webp|svg|mp4|mov|webm)$/i.test(parsed.pathname);
 		return isMedia
-			? { target: asset.mediaTarget, localPath: asset.mediaPath, mediaId: asset.mediaId, kind: "media" }
+			? {
+				target: asset.mediaTarget,
+				localPath: asset.mediaPath,
+				mediaId: asset.mediaId,
+				photoTarget: asset.photoTarget,
+				kind: "media",
+			}
 			: { target: asset.photoTarget, kind: "photo" };
 	}
 	return mappings.albums.get(comparableUrl(value));
@@ -541,6 +547,13 @@ export function rewriteSmugMugReferences(value, mappings) {
 			const match = sourceUrl ? matchSmugMugUrl(sourceUrl, mappings) : undefined;
 			if (match?.kind === "media") {
 				copy.asset = { ...copy.asset, _type: "reference", _ref: match.mediaId, url: match.localPath, provider: "local" };
+				// Some source articles embed a SmugMug image without wrapping it in
+				// the corresponding photo-page anchor. The local media replacement
+				// still has an unambiguous photo identity, so retain that relationship.
+				if (!copy.link && match.photoTarget) {
+					copy.link = match.photoTarget;
+					rewrites++;
+				}
 			}
 		}
 		return copy;
