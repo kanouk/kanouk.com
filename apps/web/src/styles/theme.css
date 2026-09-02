@@ -966,10 +966,19 @@ main:focus { outline: none; }
 @media (max-width: 48rem) {
 	:root { --header-height: 4rem; --gutter: clamp(1rem, 5vw, 1.5rem); }
 	.site-header { position: relative; }
-	.site-header__inner { gap: var(--space-2) var(--space-4); }
-	.site-brand__image { height: 2rem; }
-	.site-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
-	.site-nav a { justify-content: center; padding-inline: 0.25rem; font-size: 0.7rem; text-align: center; white-space: nowrap; }
+	.site-header__inner { grid-template-columns: minmax(0, 1fr) auto; width: 100%; gap: var(--space-2) var(--space-4); }
+	.site-brand { min-width: 0; }
+	.site-brand__image { width: min(8.5rem, 100%); height: auto; }
+	.site-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; overflow: hidden; }
+	.site-nav a { min-width: 0; min-height: 3.25rem; justify-content: center; padding-inline: 0.2rem; font-size: 0.7rem; line-height: 1.35; text-align: center; white-space: normal; }
+	.site-tools { width: 4.5rem; min-width: 0; max-width: 4.5rem; gap: var(--space-2); overflow: hidden; }
+	.site-tools > :where(emdash-live-search, .site-search, .site-admin) { display: none !important; }
+	.home-section-header,
+	.post-card--list,
+	.post-card--list .card-link,
+	.post-card--list .card-image,
+	.post-card--list .card-body { width: 100%; min-width: 0; }
+	.home-section-header .section-link { flex: none; white-space: nowrap; }
 	.featured-grid { grid-template-columns: 1fr; gap: var(--space-5); }
 	.featured-content { padding-block: 0; }
 	.featured-title { font-size: var(--heading-section); }
