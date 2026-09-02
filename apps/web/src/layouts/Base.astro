@@ -43,11 +43,17 @@ const canonical = canonicalProp === false
 
 const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(await getSiteSettings());
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
-const { entries: pages } = await getEmDashCollection("pages", {
+const FOOTER_EXCLUDED_PAGE_SLUGS = new Set(["sample_search", "sample-page-nocalog"]);
+const { entries: pageCandidates } = await getEmDashCollection("pages", {
 	status: "published",
 	orderBy: { published_at: "desc" },
-	limit: 4,
+	limit: 8,
 });
+// Preserve imported sample routes, but do not promote theme/demo artifacts in
+// the permanent site navigation.
+const pages = pageCandidates
+	.filter((page) => !FOOTER_EXCLUDED_PAGE_SLUGS.has(page.data.slug || page.id))
+	.slice(0, 4);
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
 const photosUrl = isPreviewHost ? "/albums" : "https://photos.kanouk.com/albums";
 const isLoggedIn = !!Astro.locals.user;

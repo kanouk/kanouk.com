@@ -175,6 +175,27 @@ def add_page_check(
     return text
 
 
+def add_media_check(checks: list[Check], *, name: str, url: str) -> None:
+    status, headers, body, elapsed_ms = fetch(url, max_bytes=1024)
+    failures: list[str] = []
+    if status != 200:
+        failures.append(f"status={status}, expected=200")
+    if not header(headers, "Content-Type").lower().startswith(("image/", "video/")):
+        failures.append("response is not image/video media")
+    if not body:
+        failures.append("empty media response")
+    checks.append(
+        Check(
+            name=name,
+            url=url,
+            ok=not failures,
+            status=status,
+            elapsed_ms=elapsed_ms,
+            detail="ok" if not failures else "; ".join(failures),
+        )
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -264,6 +285,30 @@ def main() -> None:
                 expected_canonical=urljoin("https://blog.kanouk.com", post_path),
                 expected_jsonld="BlogPosting",
                 require_og_image=True,
+            )
+
+            # This legacy article uses a migrated WordPress media id whose R2
+            # storage key differs from that id. It guards the renderer contract
+            # that previously produced a thin, broken photo-frame placeholder.
+            legacy_media_path = "/posts/post-dc5c"
+            legacy_media_html = add_page_check(
+                checks,
+                name="legacy-inline-media-post",
+                url=urljoin(base_url, legacy_media_path),
+                expected_status=200,
+                marker='class="yohaku-portable-image style-photo-frame"',
+                expect_preview_noindex=args.expect_preview_noindex,
+            )
+            legacy_media_match = re.search(
+                r'<img\s[^>]*src="([^"]*?/_yohaku/media/preview-v1/[^"]+)"',
+                legacy_media_html,
+            )
+            if not legacy_media_match:
+                raise RuntimeError("legacy inline media URL was not rendered")
+            add_media_check(
+                checks,
+                name="legacy-inline-media-readback",
+                url=urljoin(base_url, unescape(legacy_media_match.group(1))),
             )
 
         album_match = re.search(r'href="(/albums/[^"?#]+)"', albums_html)
