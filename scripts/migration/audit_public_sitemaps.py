@@ -36,6 +36,7 @@ FORBIDDEN = {
         rb"\[(?:quiz|pochipp|swell|jin|speech_balloon|blogcard)(?:\s|\])",
         re.IGNORECASE,
     ),
+    "plugin_placeholder": re.compile(rb"Plugin block:\s*[^<(]+", re.IGNORECASE),
 }
 SMUGMUG_REFERENCE = re.compile(
     rb"(?:https?:)?//[^\s\"'<>]*(?:smugmug\.com|smugmugcdn\.com)[^\s\"'<>]*",

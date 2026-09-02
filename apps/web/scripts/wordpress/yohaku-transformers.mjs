@@ -331,14 +331,22 @@ export function convertPostContent(post, context) {
 			}];
 		},
 		"loos/balloon": (block, _options, tools) => [dialogueNode(block, context, tools)],
-		"loos/post-link": (block, _options, tools) => [{
-			_type: "yohaku.linkCard",
-			_key: tools.generateKey(),
-			id: block.attrs.postId
-				? `wordpress://${context.siteId}/post/${block.attrs.postId}`
-				: String(block.attrs.linkData?.url || block.attrs.url || "") || undefined,
-			title: String(block.attrs.postTitle || block.attrs.cardTitle || "関連記事"),
-		}],
+		"loos/post-link": (block, _options, tools) => {
+			const linkData = block.attrs.linkData || {};
+			const sourcePostId = block.attrs.postId || (
+				(linkData.kind === "post-type" || linkData.type === "post") ? linkData.id : undefined
+			);
+			return [{
+				_type: "yohaku.linkCard",
+				_key: tools.generateKey(),
+				id: sourcePostId
+					? `wordpress://${context.siteId}/post/${sourcePostId}`
+					: String(linkData.url || block.attrs.url || "") || undefined,
+				title: String(
+					block.attrs.postTitle || block.attrs.cardTitle || linkData.title || "関連記事",
+				),
+			}];
+		},
 		"jin-gb-block/blog-card": (block, _options, tools) => [{
 			_type: "yohaku.linkCard",
 			_key: tools.generateKey(),

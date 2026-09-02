@@ -88,6 +88,17 @@ test("preserves an external SWELL post-link URL and its semantic title", () => {
 	assert.equal(blocks[0].title, "Kyoto, 2024/07");
 });
 
+test("uses nested SWELL link data for an internal post card", () => {
+	const post = {
+		id: 13,
+		content: '<!-- wp:loos/post-link {"linkData":{"title":"Aesop Tacitを買ってみた","id":8790,"url":"https://kanolog.net/stream/8790","kind":"post-type","type":"post"},"icon":"link"} /-->',
+	};
+	const blocks = convertPostContent(post, context);
+	assert.equal(blocks[0]._type, "yohaku.linkCard");
+	assert.equal(blocks[0].id, "wordpress://test/post/8790");
+	assert.equal(blocks[0].title, "Aesop Tacitを買ってみた");
+});
+
 test("preserves WordPress image size, alignment, caption, and photo-frame meaning", () => {
 	const post = {
 		id: 12,

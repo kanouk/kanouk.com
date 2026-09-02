@@ -4,7 +4,7 @@ import type { PluginDescriptor } from "emdash";
 export function yohakuContentBlocks(): PluginDescriptor {
 	return {
 		id: "yohaku-content-blocks",
-		version: "0.1.0",
+		version: "0.2.0",
 		entrypoint: "yohaku-content-blocks",
 		componentsEntry: "yohaku-content-blocks/astro",
 		options: {},
@@ -14,7 +14,7 @@ export function yohakuContentBlocks(): PluginDescriptor {
 export function createPlugin() {
 	return definePlugin({
 		id: "yohaku-content-blocks",
-		version: "0.1.0",
+		version: "0.2.0",
 		hooks: {
 			"page:metadata": ({ page }) => {
 				if (!page.canonical) return null;

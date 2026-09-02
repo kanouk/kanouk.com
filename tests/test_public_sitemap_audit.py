@@ -41,6 +41,7 @@ class PublicSitemapAuditTests(unittest.TestCase):
             "legacy_site_link": b'<a href="https://art-quiz.com/sample">',
             "gutenberg_comment": b"<!-- wp:paragraph -->",
             "legacy_shortcode": b"[pochipp id=12]",
+            "plugin_placeholder": b"Plugin block: yohaku.linkCard (edit in admin)",
         }
         for name, sample in samples.items():
             with self.subTest(name=name):
