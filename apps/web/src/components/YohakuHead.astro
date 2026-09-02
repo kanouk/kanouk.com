@@ -1,6 +1,4 @@
 ---
-import { Font } from "astro:assets";
-
 const GA4_MEASUREMENT_ID = "G-94EQ0WN7B9";
 const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 	Astro.url.hostname,
@@ -12,19 +10,73 @@ const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/kano-profile.png" type="image/png" />
 <link rel="apple-touch-icon" href="/kano-profile.png" />
-<Font cssVariable="--font-body" />
-<Font cssVariable="--font-mono" />
+<!-- Reserve the responsive site chrome before the full stylesheet arrives. -->
+<style is:inline>
+	:root { --critical-header-height: 4.5rem; --critical-gutter: clamp(1rem, 4vw, 3rem); }
+	*, *::before, *::after { box-sizing: border-box; }
+	body { margin: 0; }
+	img, svg { display: block; max-width: 100%; }
+	.site-header__inner {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: clamp(1.25rem, 2.8vw, 2.5rem);
+		width: min(100%, 80rem);
+		min-height: var(--critical-header-height);
+		margin-inline: auto;
+		padding-inline: var(--critical-gutter);
+	}
+	.site-brand { display: inline-flex; align-items: center; width: max-content; }
+	.site-brand__image { width: auto; height: 2.4rem; }
+	.site-nav { display: flex; align-items: center; justify-content: center; gap: clamp(0.9rem, 1.8vw, 1.6rem); min-width: 0; }
+	.site-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+	.site-tools { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; min-width: 0; }
+	.photo-header { display: flex; align-items: center; justify-content: space-between; min-height: var(--critical-header-height); }
+	@media (max-width: 68rem) {
+		.site-header__inner { grid-template-columns: 1fr auto; padding-block: 0.45rem; }
+		.site-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; width: 100%; padding-top: 0.2rem; }
+		.site-tools { grid-column: 2; gap: 0.75rem; }
+		.site-search, .site-admin { display: none; }
+	}
+	@media (max-width: 48rem) {
+		:root { --critical-header-height: 4rem; --critical-gutter: clamp(1rem, 5vw, 1.5rem); }
+		.site-header__inner { grid-template-columns: minmax(0, 1fr) auto; width: 100%; gap: 0.5rem 1rem; }
+		.site-brand { min-width: 0; }
+		.site-brand__image { width: min(8.5rem, 100%); height: auto; }
+		.site-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; overflow: hidden; }
+		.site-nav a { min-width: 0; min-height: 3.25rem; justify-content: center; padding-inline: 0.2rem; }
+		.site-tools { width: 4.5rem; min-width: 0; max-width: 4.5rem; gap: 0.5rem; overflow: hidden; }
+		.site-tools > :where(emdash-live-search, .site-search, .site-admin) { display: none !important; }
+	}
+</style>
 {analyticsEnabled && (
-	<>
-		<link rel="preconnect" href="https://www.googletagmanager.com" />
-		<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}></script>
-		<script is:inline define:vars={{ GA4_MEASUREMENT_ID }}>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag("js", new Date());
-			gtag("config", GA4_MEASUREMENT_ID);
-		</script>
-	</>
+	<script is:inline define:vars={{ GA4_MEASUREMENT_ID }}>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag("js", new Date());
+		gtag("config", GA4_MEASUREMENT_ID);
+
+		var analyticsLoaded = false;
+		function loadAnalytics() {
+			if (analyticsLoaded) return;
+			analyticsLoaded = true;
+			var script = document.createElement("script");
+			script.async = true;
+			script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GA4_MEASUREMENT_ID);
+			document.head.appendChild(script);
+		}
+		function loadAnalyticsWhenIdle() {
+			if ("requestIdleCallback" in window) {
+				window.requestIdleCallback(loadAnalytics, { timeout: 2000 });
+			} else {
+				window.setTimeout(loadAnalytics, 0);
+			}
+		}
+		if (document.readyState === "complete") loadAnalyticsWhenIdle();
+		else window.addEventListener("load", loadAnalyticsWhenIdle, { once: true });
+		window.addEventListener("pointerdown", loadAnalytics, { once: true, passive: true });
+		window.addEventListener("keydown", loadAnalytics, { once: true });
+	</script>
 )}
 <script is:inline>
 	(function () {

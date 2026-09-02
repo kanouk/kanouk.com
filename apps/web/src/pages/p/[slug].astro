@@ -16,6 +16,7 @@ import {
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
+import { getPhotoNavigation } from "../../utils/photo-navigation";
 import { photoPath } from "../../utils/photo-url.mjs";
 
 const { slug } = Astro.params;
@@ -25,34 +26,26 @@ const { entry: photo, cacheHint: photoCache } = await getEmDashEntry("photos", s
 if (!photo) return Astro.redirect("/404");
 if (Astro.cache?.enabled) Astro.cache.set(photoCache);
 
-const { entries: albums, cacheHint: albumCache } = await getEmDashCollection("albums", {
-	status: "published",
-	limit: 100,
-});
-if (Astro.cache?.enabled) Astro.cache.set(albumCache);
-const album = albums.find((candidate) => candidate.data.id === photo.data.album);
-
-const albumPhotos = [];
-let albumPhotosCursor: string | undefined;
-do {
-	const page = await getEmDashCollection("photos", {
+const [albumResult, navigation] = await Promise.all([
+	getEmDashCollection("albums", {
 		status: "published",
-		where: { album: photo.data.album },
-		orderBy: { position: "asc" },
-		limit: 100,
-		cursor: albumPhotosCursor,
-	});
-	if (Astro.cache?.enabled) Astro.cache.set(page.cacheHint);
-	albumPhotos.push(...page.entries);
-	albumPhotosCursor = page.nextCursor;
-} while (albumPhotosCursor);
-const photoIndex = albumPhotos.findIndex((candidate) => candidate.data.id === photo.data.id);
-const previousPhoto = photoIndex > 0 ? albumPhotos[photoIndex - 1] : undefined;
-const nextPhoto = photoIndex >= 0 ? albumPhotos[photoIndex + 1] : undefined;
-const firstPhoto = albumPhotos[0];
-const previousUrl = previousPhoto ? photoPath(previousPhoto.id) : undefined;
-const nextUrl = nextPhoto ? photoPath(nextPhoto.id) : undefined;
-const slideshowNextUrl = nextUrl || (firstPhoto && firstPhoto.id !== photo.data.id ? photoPath(firstPhoto.id) : undefined);
+		where: { id: photo.data.album },
+		limit: 1,
+	}),
+	getPhotoNavigation(photo.data.album, photo.data.id),
+]);
+if (Astro.cache?.enabled) {
+	Astro.cache.set(albumResult.cacheHint);
+	Astro.cache.set({ tags: ["albums", "photos"] });
+}
+const album = albumResult.entries[0];
+const previousUrl = navigation?.previousId ? photoPath(navigation.previousId) : undefined;
+const nextUrl = navigation?.nextId ? photoPath(navigation.nextId) : undefined;
+const slideshowNextUrl = nextUrl || (
+	navigation?.firstId && navigation.firstId !== photo.data.id
+		? photoPath(navigation.firstId)
+		: undefined
+);
 const downloadUrl = album?.data.allow_downloads ? `/media/${photo.id}` : undefined;
 const videoStorageKey = photo.data.video?.meta?.storageKey;
 const posterSource = resolvePublicMediaUrl(photo.data.image);
@@ -165,14 +158,14 @@ const exifDetails = [
 		data-next-url={nextUrl}
 		data-slideshow-next-url={slideshowNextUrl}
 	>
-		<a class="back" href={album ? `/albums/${album.id}` : "/albums"}>
+		<a class="back" href={album ? `/albums/${album.id}` : "/albums"} data-astro-prefetch="hover">
 			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
 			<span>{album?.data.title || "すべてのアルバム"}</span>
 		</a>
 		<figure>
 			<div class="media" {...photo.edit.image}>
 				{previousUrl && (
-					<a class="media-navigation media-navigation--previous" href={previousUrl} aria-label="前の写真">
+					<a class="media-navigation media-navigation--previous" href={previousUrl} aria-label="前の写真" data-astro-prefetch="hover">
 						<ArrowLeft size={22} strokeWidth={1.6} aria-hidden="true" />
 					</a>
 				)}
@@ -183,11 +176,11 @@ const exifDetails = [
 							動画を再生できないブラウザです。
 						</video>
 					) : (
-						<YohakuImage image={photo.data.image} priority />
+						<YohakuImage image={photo.data.image} preview priority sizes="(max-width: 1600px) 100vw, 1600px" />
 					)
 				}
 				{nextUrl && (
-					<a class="media-navigation media-navigation--next" href={nextUrl} aria-label="次の写真">
+					<a class="media-navigation media-navigation--next" href={nextUrl} aria-label="次の写真" data-astro-prefetch="hover">
 						<ArrowRight size={22} strokeWidth={1.6} aria-hidden="true" />
 					</a>
 				)}
@@ -196,7 +189,7 @@ const exifDetails = [
 				<h1 {...photo.edit.title}>{photo.data.title}</h1>
 				{photo.data.caption && <p {...photo.edit.caption}>{photo.data.caption}</p>}
 				<div class="photo-context">
-					<span>{photoIndex + 1} / {albumPhotos.length}</span>
+					<span>{navigation?.position ?? 1} / {navigation?.total ?? 1}</span>
 					{formattedDate && <time>{formattedDate}</time>}
 				</div>
 			</figcaption>
@@ -226,16 +219,16 @@ const exifDetails = [
 			<span class="photo-tool-status" role="status" aria-live="polite" />
 		</div>
 		<nav class="photo-navigation" aria-label="アルバム内の写真移動">
-			{previousPhoto ? (
-				<a href={photoPath(previousPhoto.id)}>
+			{navigation?.previousId ? (
+				<a href={photoPath(navigation.previousId)} data-astro-prefetch="hover">
 					<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
 					<span>前の写真</span>
 				</a>
 			) : (
 				<span />
 			)}
-			{nextPhoto ? (
-				<a href={photoPath(nextPhoto.id)}>
+			{navigation?.nextId ? (
+				<a href={photoPath(navigation.nextId)} data-astro-prefetch="hover">
 					<span>次の写真</span>
 					<ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
 				</a>

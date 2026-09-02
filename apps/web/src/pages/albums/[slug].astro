@@ -60,7 +60,7 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 	content={{ collection: "albums", id: album.data.id, slug: album.id }}
 >
 	<article class="album-page">
-		<a class="back" href="/albums">
+		<a class="back" href="/albums" data-astro-prefetch="hover">
 			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
 			<span>すべてのアルバム</span>
 		</a>
@@ -76,8 +76,8 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 
 		<div class="photo-grid">
 			{photos.map((photo, index) => (
-				<a class="photo-card" href={photoPath(photo.id)} aria-label={photo.data.alt || photo.data.title}>
-					<YohakuImage image={photo.data.image} preview priority={index === 0} />
+				<a class="photo-card" href={photoPath(photo.id)} aria-label={photo.data.alt || photo.data.title} data-astro-prefetch="hover">
+					<YohakuImage image={photo.data.image} preview priority={index < 3} sizes="(max-width: 719px) calc(100vw - 2rem), (max-width: 1100px) 50vw, 28rem" />
 					{photo.data.kind === "video" && (
 						<span class="video-badge">
 							<CirclePlay size={14} strokeWidth={1.8} aria-hidden="true" />

@@ -1,0 +1,59 @@
+---
+import { getTaxonomyTerms } from "emdash";
+import { Folder, Tags } from "lucide-astro";
+import Base from "../layouts/Base.astro";
+
+type Term = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
+
+function flattenTerms(terms: Term[]): Term[] {
+	return terms.flatMap((term) => [term, ...flattenTerms(term.children)]);
+}
+
+const [categoryTerms, tagTerms] = await Promise.all([
+	getTaxonomyTerms("category", { includeCounts: true }),
+	getTaxonomyTerms("tag", { includeCounts: true }),
+]);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
+
+const categories = flattenTerms(categoryTerms)
+	.filter((term) => (term.count ?? 0) > 0)
+	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
+const tags = flattenTerms(tagTerms)
+	.filter((term) => (term.count ?? 0) > 0)
+	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
+---
+
+<Base title="カテゴリー・トピック" description="カノログの記事をカテゴリーやトピックから探す">
+	<section class="archive-section topics-index">
+		<header class="archive-header">
+			<p class="archive-label">記事をテーマから探す</p>
+			<h1 class="archive-title">カテゴリー・トピック</h1>
+		</header>
+		<div class="topics-groups">
+			<section>
+				<h2><Folder size={17} strokeWidth={1.7} aria-hidden="true" />カテゴリー</h2>
+				<ul>
+					{categories.map((category) => (
+						<li>
+							<a href={`/category/${category.slug}`} data-astro-prefetch="hover">
+								<span>{category.label}</span><small>{category.count}件</small>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+			<section>
+				<h2><Tags size={17} strokeWidth={1.7} aria-hidden="true" />トピック</h2>
+				<ul>
+					{tags.map((tag) => (
+						<li>
+							<a href={`/tag/${tag.slug}`} data-astro-prefetch="hover">
+								<span>{tag.label}</span><small>{tag.count}件</small>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		</div>
+	</section>
+</Base>

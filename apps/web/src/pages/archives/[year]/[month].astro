@@ -37,7 +37,7 @@ const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
 			<p class="archive-count">{posts.length}件の記事</p>
 		</header>
 		<div class="posts-grid">
-			{posts.map((post) => {
+			{posts.map((post, index) => {
 				const day = post.data.publishedAt instanceof Date ? japanDateParts(post.data.publishedAt).day : undefined;
 				return (
 					<div id={day ? `day-${String(day).padStart(2, "0")}` : undefined}>
@@ -50,6 +50,7 @@ const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
 							readingTime={getReadingTime(post.data.content)}
 							categories={(post.data.terms?.category ?? []).map((category) => ({ slug: category.slug, label: category.label }))}
 							tags={(post.data.terms?.tag ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
+							priority={index < 2}
 						/>
 					</div>
 				);

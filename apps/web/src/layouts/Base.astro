@@ -46,11 +46,13 @@ const canonical = canonicalProp === false
 const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
 const FOOTER_EXCLUDED_PAGE_SLUGS = new Set(["sample_search", "sample-page-nocalog"]);
-const { entries: pageCandidates } = await getEmDashCollection("pages", {
+const pageResult = await getEmDashCollection("pages", {
 	status: "published",
 	orderBy: { published_at: "desc" },
 	limit: 8,
 });
+if (Astro.cache?.enabled) Astro.cache.set(pageResult.cacheHint);
+const pageCandidates = pageResult.entries;
 // Preserve imported sample routes, but do not promote theme/demo artifacts in
 // the permanent site navigation.
 const pages = pageCandidates
@@ -105,7 +107,7 @@ const pageCtx = createPublicPageContext({
 
 		<header class="site-header">
 			<div class="site-header__inner">
-				<a href="/" class="site-brand" aria-label={`${siteTitle} ホーム`}>
+				<a href="/" class="site-brand" aria-label={`${siteTitle} ホーム`} data-astro-prefetch="hover">
 					<img
 						src="/kanolog-logo.png"
 						alt={siteTitle}
@@ -116,15 +118,15 @@ const pageCtx = createPublicPageContext({
 				</a>
 
 				<nav class="site-nav" aria-label="主要ナビゲーション">
-					<a href="/category/stream" aria-current={currentPath.startsWith("/category/stream") ? "page" : undefined}>カノログ（雑記）</a>
-					<a href="/category/pattern" aria-current={currentPath.startsWith("/category/pattern") ? "page" : undefined}>パターン大全</a>
-					<a href="/category/shortcut" aria-current={currentPath.startsWith("/category/shortcut") ? "page" : undefined}>ショートカット</a>
-					<a href="/pages/artcert" aria-current={currentPath.startsWith("/pages/artcert") ? "page" : undefined}>美術検定 対策問題</a>
+					<a href="/category/stream" data-astro-prefetch="hover" aria-current={currentPath.startsWith("/category/stream") ? "page" : undefined}>カノログ（雑記）</a>
+					<a href="/category/pattern" data-astro-prefetch="hover" aria-current={currentPath.startsWith("/category/pattern") ? "page" : undefined}>パターン大全</a>
+					<a href="/category/shortcut" data-astro-prefetch="hover" aria-current={currentPath.startsWith("/category/shortcut") ? "page" : undefined}>ショートカット</a>
+					<a href="/pages/artcert" data-astro-prefetch="hover" aria-current={currentPath.startsWith("/pages/artcert") ? "page" : undefined}>美術検定 対策問題</a>
 				</nav>
 
 				<div class="site-tools">
 					<a href={photosUrl} class="site-utility-link"><Images size={15} strokeWidth={1.7} aria-hidden="true" /><span>写真</span></a>
-					<a href="/search" class="site-utility-link" aria-current={isSearchPage ? "page" : undefined}><Search size={15} strokeWidth={1.7} aria-hidden="true" /><span>検索</span></a>
+					<a href="/search" class="site-utility-link" data-astro-prefetch="hover" aria-current={isSearchPage ? "page" : undefined}><Search size={15} strokeWidth={1.7} aria-hidden="true" /><span>検索</span></a>
 					<LiveSearch
 						placeholder="記事を検索"
 						class="site-search"

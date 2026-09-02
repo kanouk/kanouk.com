@@ -52,15 +52,15 @@ const pageCtx = createPublicPageContext({
 		<EmDashBodyStart page={pageCtx} />
 		<a class="skip-link" href="#photo-main">本文へ移動</a>
 		<header class="photo-header">
-			<a class="photo-brand" href="/albums">
+			<a class="photo-brand" href="/albums" data-astro-prefetch="hover">
 				<span class="photo-brand__mark" aria-hidden="true">
 					<Aperture size={17} strokeWidth={1.6} />
 				</span>
 				<span class="photo-brand__copy"><span>kanouk.com</span><small>Photos</small></span>
 			</a>
 			<nav class="site-switcher" aria-label="サイト切り替え">
-				<a aria-current={!isSearchPage ? "page" : undefined} href="/albums">写真</a>
-				<a class="photo-search-link" href={searchUrl} aria-label="写真を検索" aria-current={isSearchPage ? "page" : undefined}>
+				<a aria-current={!isSearchPage ? "page" : undefined} href="/albums" data-astro-prefetch="hover">写真</a>
+				<a class="photo-search-link" href={searchUrl} data-astro-prefetch="hover" aria-label="写真を検索" aria-current={isSearchPage ? "page" : undefined}>
 					<Search size={16} strokeWidth={1.75} aria-hidden="true" />
 					<span>検索</span>
 				</a>

@@ -12,6 +12,7 @@ const [categoryTerms, tagTerms] = await Promise.all([
 	getTaxonomyTerms("category", { includeCounts: true }),
 	getTaxonomyTerms("tag", { includeCounts: true }),
 ]);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
 const categoryOrder = new Map([
 	["stream", 0],
 	["shortcut", 1],
@@ -25,9 +26,10 @@ const categories = flattenTerms(categoryTerms)
 		const rightOrder = categoryOrder.get(right.slug) ?? Number.MAX_SAFE_INTEGER;
 		return leftOrder - rightOrder || left.label.localeCompare(right.label, "ja");
 	});
-const tags = flattenTerms(tagTerms)
+const allTags = flattenTerms(tagTerms)
 	.filter((term) => (term.count ?? 0) > 0)
-	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
+	.sort((left, right) => (right.count ?? 0) - (left.count ?? 0) || left.label.localeCompare(right.label, "ja"));
+const tags = allTags.slice(0, 24);
 ---
 
 {categories.length > 0 && (
@@ -40,7 +42,7 @@ const tags = flattenTerms(tagTerms)
 			<ul class="widget-categories">
 				{categories.map((category) => (
 					<li>
-						<a href={`/category/${category.slug}`} class="widget-categories__link">{category.label}</a>
+						<a href={`/category/${category.slug}`} class="widget-categories__link" data-astro-prefetch="hover">{category.label}</a>
 						<span class="widget-categories__count">{category.count}</span>
 					</li>
 				))}
@@ -59,13 +61,16 @@ const tags = flattenTerms(tagTerms)
 			<ul class="widget-tags__cloud">
 				{tags.map((tag) => (
 					<li>
-						<a href={`/tag/${tag.slug}`} class="widget-tags__link">
+						<a href={`/tag/${tag.slug}`} class="widget-tags__link" data-astro-prefetch="hover">
 							<span>{tag.label}</span>
 							<span class="widget-tags__count" aria-label={`${tag.count}件`}>{tag.count}</span>
 						</a>
 					</li>
 				))}
 			</ul>
+			{allTags.length > tags.length && (
+				<p class="widget__more"><a href="/topics" data-astro-prefetch="hover">すべてのトピックを見る →</a></p>
+			)}
 		</div>
 	</section>
 )}

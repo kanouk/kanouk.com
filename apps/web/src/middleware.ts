@@ -38,6 +38,14 @@ async function canonicalizedPhotoSitemap(response: Response) {
 export const onRequest = defineMiddleware(async (context, next) => {
 	const isPhotoHost = PHOTO_HOSTS.has(context.url.hostname);
 	const isBlogHost = BLOG_HOSTS.has(context.url.hostname);
+	const requestHasPrivateState =
+		!new Set(["GET", "HEAD"]).has(context.request.method) ||
+		Boolean(context.request.headers.get("authorization")) ||
+		Boolean(context.cookies.get("astro-session")) ||
+		context.cookies.get("emdash-edit-mode")?.value === "true" ||
+		context.url.searchParams.has("_preview") ||
+		new Set(["/search", "/photo-search"]).has(context.url.pathname) ||
+		context.url.pathname.startsWith("/_emdash/");
 	if (isPhotoHost && BLOG_ROUTE.test(context.url.pathname)) {
 		return context.redirect(`https://blog.kanouk.com${context.url.pathname}${context.url.search}`, 308);
 	}
@@ -63,6 +71,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		context.url.hostname.includes("staging")
 	) {
 		routedResponse.headers.set("X-Robots-Tag", "noindex, nofollow");
+	}
+
+	// Route rules cache public HTML only. Authenticated/editor/preview responses
+	// and cookie-setting responses must never enter the shared edge cache.
+	if (requestHasPrivateState || routedResponse.headers.has("set-cookie")) {
+		context.cache.set(false);
+		routedResponse.headers.set("Cache-Control", "private, no-store");
 	}
 
 	return routedResponse;
