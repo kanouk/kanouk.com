@@ -64,6 +64,7 @@
 - 12:17 JSTにCloudflare Billing画面をread-only確認し、8月31日〜9月2日の従量課金合計$0.00、cycle予測$0.00、全表示metricのbillable usage 0を確認した。9月1日の$5.50請求は支払済み。report version 7へ機微情報を除いたsnapshotを統合した。同額が毎月続く場合の年額$66／SmugMugとの差年$34は、単一請求からの暫定値であり、請求内訳や将来の従量課金を推測しない。
 - 12:26 JSTにSearch Consoleのログイン済み画面で`kanouk@gmail.com`の`sc-domain:kanouk.com`アクセス拒否を確認し、report version 8へread-only snapshotを統合した。所有権証明、アクセス要求、sitemap送信は行っていない。property accessは未完了で、次の外部変更は明示承認待ち。
 - 12:34 JSTにreport version 9へGA4 Realtime APIを追加し、property `256487934`／stream `2210574206`（カノログ）の直近30分に1 view／1 active userを確認した。Realtime APIはhostName非対応なので、対象streamの受信とhost別標準reportを混同しない。標準reportはAPI 200／0行のため処理待ちまたは無流入として継続監視する。
+- 12:53 JST、production実画面で40アルバムを全件遅延読込し、`Kyoto, 2004/07`だけが原寸480pxを559pxへ拡大していたことを検出した。一覧をdesktop 3列／tablet 2列／mobile 1列、カード上限480pxの共通契約へ変更し、Worker version `6e869a6e-a160-4044-80cf-08d17a187861`へdeployした。1280px本番では3列・各356px、40/40読込、拡大0、横overflow 0を実測。responsive契約を自動検査へ追加し、Python 141件、変換32件、Astro typecheck/build、CI `33588640407`、3ホストreadbackが合格した。
 - 機械可読の要約は`production-cutover-2026-09-02.json`を参照する。
 
 ## 機械監査

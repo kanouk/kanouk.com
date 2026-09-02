@@ -194,6 +194,8 @@ Codex heartbeat automation `yohaku-24`（表示名: `Yohaku移行 経時監視`�
 
 12:34 JST、監視実行器をreport version 9へ更新し、GA4 Realtime Data APIをread-onlyで追加しました。property `256487934`のexpected stream `2210574206`（カノログ）で直近30分の1 view／1 active userをHTTP 200で確認しました。Realtime APIは`hostName` dimensionを提供しないため、これは対象streamへの受信確認であり、`blog.kanouk.com`／`photos.kanouk.com`のhost別帰属を証明しません。host別は標準`runReport`の処理待ちとして分離します。
 
+12:53 JST、アルバム一覧40件をproductionブラウザで最後まで遅延読込し、欠損0を確認しました。その過程で2004年7月京都アルバムの480px原本だけが2列レイアウトの559px幅へ拡大されていることを検出したため、一覧をdesktop 3列／tablet 2列／mobile 1列、カード上限480pxへ変更しました。Worker version `6e869a6e-a160-4044-80cf-08d17a187861`の1280px本番は3列・各356px、40/40読込、拡大0、横overflow 0。レスポンシブ契約を`test_yohaku_design_contract.py`へ固定し、Python 141件、WordPress変換32件、typecheck/build、CI `33588640407`、blog 17/17・photos 13/13・staging 17/17が合格しました。
+
 ## Cloudflare staging backup
 
 最終import後、Privateの外部原本領域へD1 SQLとR2全objectを保存します。EmDash media APIだけでなくR2 inventoryを直接列挙し、media tableから参照されないobjectも削除せず保全します。

@@ -483,6 +483,44 @@
         "mutable_actions_performed": false
       },
       "verified": true
+    },
+    {
+      "observed_at": "2026-09-02T12:53:26+09:00",
+      "elapsed": "interim_5h59m_design_refinement",
+      "commit": "a6509e8",
+      "worker_version": "6e869a6e-a160-4044-80cf-08d17a187861",
+      "visual_readback": {
+        "page": "https://photos.kanouk.com/albums",
+        "desktop_width_css_px": 1280,
+        "columns": 3,
+        "card_width_css_px": 356,
+        "album_covers": 40,
+        "loaded_covers": 40,
+        "upscaled_covers": 0,
+        "horizontal_overflow_failures": 0
+      },
+      "responsive_contract": {
+        "desktop_columns": 3,
+        "tablet_columns": 2,
+        "mobile_columns": 1,
+        "card_max_width_css_px": 480,
+        "contract_test": "tests.test_yohaku_design_contract.YohakuDesignContractTests.test_album_archive_bounds_cover_size_across_breakpoints"
+      },
+      "representative_readback": {
+        "blog_checks": 17,
+        "blog_failed": 0,
+        "photos_checks": 13,
+        "photos_failed": 0,
+        "staging_checks": 17,
+        "staging_failed": 0
+      },
+      "worker_invocations": {
+        "requests": 23985,
+        "errors": 0,
+        "error_rate_percent": 0.0
+      },
+      "ci_run_id": 33588640407,
+      "verified": true
     }
   ],
   "retained_sources": {
