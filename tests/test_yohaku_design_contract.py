@@ -78,14 +78,14 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn('class:list={["yohaku-image", className]}', component)
         self.assertIn("aspect-ratio: var(--yohaku-image-ratio, auto)", css)
 
-    def test_public_typography_uses_system_fonts_without_network_bootstrap(self) -> None:
+    def test_public_typography_prefers_local_noto_without_network_bootstrap(self) -> None:
         config = (WEB_ROOT / "astro.config.mjs").read_text()
         head = (WEB_ROOT / "src/components/YohakuHead.astro").read_text()
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
         self.assertNotIn("fontProviders", config)
         self.assertNotIn("<Font", head)
         self.assertNotIn('from "astro:assets"', head)
-        self.assertIn("--font-body: -apple-system", css)
+        self.assertIn('--font-body: "Noto Sans JP"', css)
         self.assertIn('--font-mono: "SFMono-Regular"', css)
 
     def test_public_images_use_bounded_responsive_cloudflare_variants(self) -> None:
@@ -159,7 +159,7 @@ class YohakuDesignContractTests(unittest.TestCase):
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()
         self.assertNotIn('class="article-meta-col"', article)
-        self.assertIn('class="article-meta-tags"', article)
+        self.assertIn('class="article-footer-tags"', article)
         self.assertIn(".article-lead { grid-column: 1;", theme)
         self.assertIn(".article-main { grid-column: 1;", theme)
 
@@ -173,6 +173,17 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertLess(card.index('class="card-media"'), card.index('class="card-body"'))
         self.assertIn('class="card-categories"', card)
         self.assertIn('class="card-category"', card)
+        card_categories = re.search(r"\.card-categories\s*\{([^}]*)\}", theme)
+        self.assertIsNotNone(card_categories)
+        self.assertIn("top: 0", card_categories.group(1))
+        self.assertIn("left: 0", card_categories.group(1))
+        self.assertNotIn("bottom:", card_categories.group(1))
+        category_style = re.search(
+            r"\.card-category,\s*\.post-category\s*\{([^}]*)\}", theme
+        )
+        self.assertIsNotNone(category_style)
+        self.assertIn("background: #45545c", category_style.group(1))
+        self.assertNotIn("background: var(--ink)", category_style.group(1))
         self.assertIn('class="widget__title"', sidebar)
         self.assertIn("<Folder", sidebar)
         self.assertIn("<Tags", sidebar)
@@ -181,26 +192,49 @@ class YohakuDesignContractTests(unittest.TestCase):
 
     def test_article_taxonomies_and_age_use_publication_context(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
+        theme = (WEB_ROOT / "src/styles/theme.css").read_text()
         self.assertIn('getEntryTerms("posts", post.data.id, "category")', article)
         self.assertIn('getEntryTerms("posts", post.data.id, "tag")', article)
         self.assertIn('class="card-category"', article)
-        self.assertIn('class="article-meta-tags"', article)
+        self.assertIn('class="article-footer-tags"', article)
         self.assertIn("post.data.publishedAt ?? post.data.createdAt", article)
+        footer_tag = re.search(r"\.article-footer-tag\s*\{([^}]*)\}", theme)
+        self.assertIsNotNone(footer_tag)
+        self.assertNotIn("border:", footer_tag.group(1))
+        self.assertNotIn("background:", footer_tag.group(1))
 
     def test_article_detail_uses_requested_content_order(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()
+        published = article.index('class="article-published"')
         title = article.index('class="article-title"')
         metadata = article.index('class="article-meta"')
         toc = article.index('class="toc article-toc"')
         body = article.index('class="article-content"')
+        tags = article.index('class="article-footer-tags"')
+        self.assertLess(published, title)
         self.assertLess(title, metadata)
         self.assertLess(metadata, toc)
         self.assertLess(toc, body)
+        self.assertLess(body, tags)
         self.assertNotIn('class="article-hero"', article)
         self.assertIn("word-break: auto-phrase", theme)
         self.assertIn('new Intl.Segmenter("ja", { granularity: "word" })', article)
         self.assertIn(".article-title__segment { white-space: nowrap; }", theme)
+
+    def test_gallery_image_styles_are_scoped_away_from_the_site_logo(self) -> None:
+        gallery = (
+            WEB_ROOT / "plugins/yohaku-content-blocks/src/astro/Gallery.astro"
+        ).read_text()
+        head = (WEB_ROOT / "src/components/YohakuHead.astro").read_text()
+        theme = (WEB_ROOT / "src/styles/theme.css").read_text()
+        self.assertIn(".yohaku-gallery :global(img)", gallery)
+        self.assertNotRegex(gallery, r"(?m)^\s*:global\(img\)\s*\{")
+        self.assertRegex(
+            theme,
+            r"\.site-brand__image\s*\{[^}]*border:\s*0;[^}]*background:\s*transparent;",
+        )
+        self.assertIn("background: transparent", head)
 
     def test_profile_and_kano_favicon_are_shared_across_blog_pages(self) -> None:
         base = (WEB_ROOT / "src/layouts/Base.astro").read_text()

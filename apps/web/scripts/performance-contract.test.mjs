@@ -19,7 +19,7 @@ test("public HTML routes have an edge cache with private-state bypasses", async 
 	assert.match(middleware, /appendVaryHeader\(routedResponse, "Host"\)/);
 });
 
-test("public pages use system fonts instead of route-blocking font bundles", async () => {
+test("public pages prefer local Noto Sans JP without route-blocking font bundles", async () => {
 	const [config, head, theme] = await Promise.all([
 		read("astro.config.mjs"),
 		read("src/components/YohakuHead.astro"),
@@ -28,7 +28,7 @@ test("public pages use system fonts instead of route-blocking font bundles", asy
 	assert.doesNotMatch(config, /fontProviders|\n\s*fonts:/);
 	assert.doesNotMatch(head, /astro:assets|<Font/);
 	assert.match(head, /Reserve the responsive site chrome/);
-	assert.match(theme, /--font-body: -apple-system/);
+	assert.match(theme, /--font-body: "Noto Sans JP"/);
 });
 
 test("analytics waits until the critical page load has completed", async () => {
@@ -58,6 +58,8 @@ test("content images expose responsive AVIF and WebP variants", async () => {
 	assert.match(image, /_yohaku\/media\/external-v1/);
 	assert.match(gallery, /<YohakuImage/);
 	assert.match(gallery, /priority=\{_yohakuPriority && index === 0\}/);
+	assert.match(gallery, /\.yohaku-gallery :global\(img\)/);
+	assert.doesNotMatch(gallery, /^\s*:global\(img\)\s*\{/m);
 	assert.match(post, /new MediaRepository\(await getDb\(\)\)\.findById/);
 	assert.match(post, /\.\.\.firstImageDimensions, _yohakuPriority: true/);
 });
