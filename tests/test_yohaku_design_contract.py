@@ -63,6 +63,21 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertNotIn("border-top", album_overlay.group(1))
         self.assertNotIn("border-top", photo_copy.group(1))
 
+    def test_album_photos_flow_left_to_right_in_chronological_order(self) -> None:
+        css = (WEB_ROOT / "src/styles/theme.css").read_text()
+        photo_grid = re.search(r"\.photo-grid\s*\{([^}]*)\}", css)
+        self.assertIsNotNone(photo_grid)
+        declarations = photo_grid.group(1)
+        self.assertIn("display: grid", declarations)
+        self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr))", declarations)
+        self.assertIn("grid-auto-flow: row", declarations)
+        self.assertNotRegex(declarations, r"(?:^|;)\s*columns\s*:")
+        self.assertIn(
+            ".photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
+            css,
+        )
+        self.assertIn(".photo-grid { grid-template-columns: 1fr; }", css)
+
     def test_japanese_headings_disable_proportional_compression(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
         headings = re.search(r"h1, h2, h3, h4, h5, h6\s*\{([^}]*)\}", css)
