@@ -39,6 +39,20 @@ class VerifyPublicSiteTests(unittest.TestCase):
         parser.feed('<script type="application/ld+json">{broken}</script>')
         self.assertEqual(parser.jsonld_types, ["INVALID"])
 
+    def test_responsive_media_url_uses_the_v2_fallback_image(self) -> None:
+        html = (
+            '<picture><source srcset="/_yohaku/media/preview-v2/320/avif/item.jpg 320w">'
+            '<img src="/_yohaku/media/preview-v2/1200/webp/item.jpg"></picture>'
+        )
+        self.assertEqual(
+            module.responsive_media_url(html),
+            "/_yohaku/media/preview-v2/1200/webp/item.jpg",
+        )
+
+    def test_responsive_media_url_rejects_the_retired_v1_route(self) -> None:
+        html = '<img src="/_yohaku/media/preview-v1/item.jpg">'
+        self.assertIsNone(module.responsive_media_url(html))
+
 
 if __name__ == "__main__":
     unittest.main()

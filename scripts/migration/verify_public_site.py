@@ -143,6 +143,14 @@ def header(headers: Mapping[str, str], name: str) -> str:
     return ""
 
 
+def responsive_media_url(html: str) -> str | None:
+    match = re.search(
+        r'<img\s[^>]*src="([^"]*?/_yohaku/media/preview-v2/[^"]+)"',
+        html,
+    )
+    return unescape(match.group(1)) if match else None
+
+
 def add_page_check(
     checks: list[Check],
     *,
@@ -345,7 +353,7 @@ def main() -> None:
 
             # This legacy article uses a migrated WordPress media id whose R2
             # storage key differs from that id. It guards the renderer contract
-            # that previously produced a thin, broken photo-frame placeholder.
+            # and verifies that the responsive edge rendition is publicly readable.
             legacy_media_path = "/posts/post-dc5c"
             legacy_media_html = add_page_check(
                 checks,
@@ -355,16 +363,13 @@ def main() -> None:
                 marker='class="yohaku-portable-image style-photo-frame"',
                 expect_preview_noindex=args.expect_preview_noindex,
             )
-            legacy_media_match = re.search(
-                r'<img\s[^>]*src="([^"]*?/_yohaku/media/preview-v1/[^"]+)"',
-                legacy_media_html,
-            )
-            if not legacy_media_match:
-                raise RuntimeError("legacy inline media URL was not rendered")
+            legacy_media_url = responsive_media_url(legacy_media_html)
+            if not legacy_media_url:
+                raise RuntimeError("responsive inline media URL was not rendered")
             add_media_check(
                 checks,
                 name="legacy-inline-media-readback",
-                url=urljoin(base_url, unescape(legacy_media_match.group(1))),
+                url=urljoin(base_url, legacy_media_url),
             )
 
         album_match = re.search(r'href="(/albums/[^"?#]+)"', albums_html)
