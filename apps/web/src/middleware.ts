@@ -35,6 +35,15 @@ async function canonicalizedPhotoSitemap(response: Response) {
 	});
 }
 
+function appendVaryHeader(response: Response, value: string) {
+	const values = (response.headers.get("Vary") ?? "")
+		.split(",")
+		.map((entry) => entry.trim())
+		.filter(Boolean);
+	if (values.some((entry) => entry.toLowerCase() === value.toLowerCase())) return;
+	response.headers.append("Vary", value);
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
 	const isPhotoHost = PHOTO_HOSTS.has(context.url.hostname);
 	const isBlogHost = BLOG_HOSTS.has(context.url.hostname);
@@ -65,6 +74,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	if (isPhotoHost && /^\/sitemap-(?:albums|photos)\.xml$/.test(context.url.pathname)) {
 		routedResponse = await canonicalizedPhotoSitemap(routedResponse);
 	}
+
+	// Workers Cache is shared by every hostname attached to this Worker and its
+	// base key omits the host. These sites intentionally render different
+	// responses for the same path, so keep their cached variants isolated.
+	appendVaryHeader(routedResponse, "Host");
 
 	if (
 		context.url.hostname.endsWith(".workers.dev") ||
