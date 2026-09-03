@@ -16,6 +16,7 @@ test("public HTML routes have an edge cache with private-state bypasses", async 
 	assert.match(middleware, /context\.cache\.set\(false\)/);
 	assert.match(middleware, /astro-session/);
 	assert.match(middleware, /set-cookie/);
+	assert.match(middleware, /appendVaryHeader\(routedResponse, "Host"\)/);
 });
 
 test("public pages use system fonts instead of route-blocking font bundles", async () => {
