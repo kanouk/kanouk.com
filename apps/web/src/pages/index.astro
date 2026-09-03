@@ -52,7 +52,7 @@ const [categoriesByEntry, tagsByEntry] = await Promise.all([
 							{hasMorePosts && <a href="/posts" class="section-link">すべての記事 <span aria-hidden="true">→</span></a>}
 						</header>
 						<div class="home-posts">
-							{visiblePosts.map((post) => (
+							{visiblePosts.map((post, index) => (
 								<PostCard
 									variant="list"
 									title={post.data.title ?? "無題"}
@@ -62,6 +62,7 @@ const [categoriesByEntry, tagsByEntry] = await Promise.all([
 									readingTime={getReadingTime(post.data.content)}
 									categories={(categoriesByEntry.get(post.data.id) ?? []).map((category) => ({ slug: category.slug, label: category.label }))}
 									tags={(tagsByEntry.get(post.data.id) ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
+									priority={index < 2}
 								/>
 							))}
 						</div>

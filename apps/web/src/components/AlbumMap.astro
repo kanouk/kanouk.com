@@ -34,8 +34,6 @@ const { markers } = Astro.props;
 }
 
 <script>
-	import L from "leaflet";
-
 	type Marker = {
 		latitude: number;
 		longitude: number;
@@ -51,10 +49,14 @@ const { markers } = Astro.props;
 		const canvas = shell.querySelector<HTMLElement>(".album-map-canvas");
 		if (!toggle || !panel || !canvas) return;
 
-		let map: L.Map | undefined;
+		let map: import("leaflet").Map | undefined;
+		let mapPromise: Promise<void> | undefined;
 		const markers = JSON.parse(shell.dataset.markers || "[]") as Marker[];
-		const initializeMap = () => {
+		const initializeMap = async () => {
 			if (map || markers.length === 0) return;
+			if (mapPromise) return mapPromise;
+			mapPromise = (async () => {
+			const { default: L } = await import("leaflet");
 			map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
 			L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -77,15 +79,17 @@ const { markers } = Astro.props;
 				}).bindPopup(link).addTo(map!);
 			});
 			map.fitBounds(bounds, { padding: [28, 28], maxZoom: 15 });
+			})();
+			return mapPromise;
 		};
 
-		toggle.addEventListener("click", () => {
+		toggle.addEventListener("click", async () => {
 			const open = toggle.getAttribute("aria-expanded") !== "true";
 			toggle.setAttribute("aria-expanded", String(open));
 			panel.hidden = !open;
 			toggle.querySelector("span")!.textContent = open ? "地図を閉じる" : "地図で見る";
 			if (open) {
-				initializeMap();
+				await initializeMap();
 				window.setTimeout(() => map?.invalidateSize(), 0);
 			}
 		});

@@ -4,6 +4,7 @@ import Base from "../../layouts/Base.astro";
 import { getPostArchiveMonths } from "../../utils/post-archives";
 
 const archives = await getPostArchiveMonths(240);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
 const years = Map.groupBy(archives, (archive) => archive.year);
 ---
 

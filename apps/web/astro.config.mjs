@@ -1,9 +1,10 @@
 import cloudflare from "@astrojs/cloudflare";
+import { cacheCloudflare } from "@astrojs/cloudflare/cache";
 import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
 import { cloudflareEmail } from "@emdash-cms/cloudflare/plugins";
 import { formsPlugin } from "@emdash-cms/plugin-forms";
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 import { yohakuContentBlocks } from "yohaku-content-blocks";
 
@@ -14,9 +15,29 @@ export default defineConfig({
 		locales: ["ja"],
 		routing: { prefixDefaultLocale: false },
 	},
-	// Keep the pilot on R2 without enabling billable Cloudflare Images transforms.
-	// Responsive variants are a post-migration optimization decision.
+	// Keep original media in R2; responsive variants are produced at the edge.
 	adapter: cloudflare({ imageService: "passthrough" }),
+	cache: {
+		provider: cacheCloudflare(),
+	},
+	routeRules: {
+		"/": { maxAge: 300, swr: 86400 },
+		"/posts": { maxAge: 300, swr: 86400 },
+		"/posts/[slug]": { maxAge: 300, swr: 86400 },
+		"/pages/[slug]": { maxAge: 300, swr: 86400 },
+		"/category/[slug]": { maxAge: 300, swr: 86400 },
+		"/tag/[slug]": { maxAge: 300, swr: 86400 },
+		"/archives": { maxAge: 300, swr: 86400 },
+		"/archives/[year]/[month]": { maxAge: 300, swr: 86400 },
+		"/topics": { maxAge: 300, swr: 86400 },
+		"/albums": { maxAge: 300, swr: 86400 },
+		"/albums/[slug]": { maxAge: 300, swr: 86400 },
+		"/p/[slug]": { maxAge: 300, swr: 86400 },
+	},
+	prefetch: {
+		prefetchAll: false,
+		defaultStrategy: "hover",
+	},
 	image: {
 		layout: "constrained",
 		responsiveStyles: true,
@@ -35,24 +56,6 @@ export default defineConfig({
 					}),
 				],
 			}),
-	],
-	fonts: [
-		{
-			provider: fontProviders.google(),
-			name: "Noto Sans JP",
-			cssVariable: "--font-body",
-			// Two deliberate weights keep the Japanese hierarchy clear without
-			// multiplying every Unicode-subset request on long articles.
-			weights: [400, 600],
-			fallbacks: ["Hiragino Sans", "Yu Gothic", "sans-serif"],
-		},
-		{
-			provider: fontProviders.google(),
-			name: "JetBrains Mono",
-			cssVariable: "--font-mono",
-			weights: [400, 500],
-			fallbacks: ["monospace"],
-		},
 	],
 	vite: {
 		server: {

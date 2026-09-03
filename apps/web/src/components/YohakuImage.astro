@@ -8,6 +8,7 @@ interface Props {
 	priority?: boolean;
 	crop?: boolean;
 	preview?: boolean;
+	sizes?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
 	priority = false,
 	crop = false,
 	preview = false,
+	sizes,
 } = Astro.props;
 const value = typeof image === "string" ? { id: "", src: image } : image;
 const width = value?.width;
@@ -34,18 +36,100 @@ const originalSrc =
 			: undefined);
 const lowResolution = Boolean(width && height && (width < 640 || height < 480));
 const cropSafely = crop && !lowResolution;
-const previewKey = typeof storageKey === "string" ? storageKey : value?.id;
-const src =
-	(preview || cropSafely) && !lowResolution && previewKey
-		? `/_yohaku/media/preview-v1/${encodeURIComponent(previewKey)}`
-		: originalSrc;
+const mediaFileStorageKey = originalSrc?.match(/^\/_emdash\/api\/media\/file\/([^/?#]+)$/)?.[1];
+const externalUrl = (() => {
+	if (!originalSrc) return undefined;
+	try {
+		const candidate = new URL(originalSrc);
+		return candidate.protocol === "https:" && (
+			candidate.hostname === "kanolog.net" ||
+			candidate.hostname.endsWith(".kanolog.net") ||
+			candidate.hostname === "nocalog.jp" ||
+			candidate.hostname.endsWith(".nocalog.jp")
+		)
+			? candidate.toString()
+			: undefined;
+	} catch {
+		return undefined;
+	}
+})();
+const previewKey =
+	typeof storageKey === "string"
+		? storageKey
+		: mediaFileStorageKey
+			? decodeURIComponent(mediaFileStorageKey)
+			: !externalUrl
+				? value?.id
+				: undefined;
+const responsive = Boolean(
+	(preview || cropSafely) && !lowResolution && (previewKey || externalUrl),
+);
+const allowedWidths = [320, 480, 768, 1200, 1600];
+const firstWidthAboveOriginal = width
+	? allowedWidths.find((candidate) => candidate >= width)
+	: undefined;
+const variantWidths = allowedWidths.filter(
+	(candidate) => !width || candidate <= width || candidate === firstWidthAboveOriginal,
+);
+const encodedSource = previewKey
+	? encodeURIComponent(previewKey)
+	: externalUrl
+		? encodeURIComponent(externalUrl)
+		: "";
+const variantUrl = (variantWidth: number, format: "avif" | "webp") =>
+	previewKey
+		? `/_yohaku/media/preview-v2/${variantWidth}/${format}/${encodedSource}`
+		: `/_yohaku/media/external-v1/${variantWidth}/${format}/${encodedSource}`;
+const avifSrcset = responsive
+	? variantWidths.map((variantWidth) => `${variantUrl(variantWidth, "avif")} ${variantWidth}w`).join(", ")
+	: undefined;
+const webpSrcset = responsive
+	? variantWidths.map((variantWidth) => `${variantUrl(variantWidth, "webp")} ${variantWidth}w`).join(", ")
+	: undefined;
+const fallbackWidth = variantWidths.includes(1200)
+	? 1200
+	: (variantWidths.at(-1) ?? 1200);
+const src = responsive ? variantUrl(fallbackWidth, "webp") : originalSrc;
+const responsiveSizes =
+	sizes ??
+	(crop
+		? "(max-width: 719px) calc(100vw - 2rem), 18rem"
+		: "(max-width: 900px) calc(100vw - 2rem), 48rem");
+const altText = alt ?? value?.alt ?? "";
+const reserveSpace = responsive && !crop && Boolean(width && height);
+const pictureStyle = reserveSpace
+	? `display:block;width:min(100%,${width}px);aspect-ratio:${aspectRatio};--yohaku-image-ratio:${aspectRatio}`
+	: undefined;
 ---
 
 {
-	src && (
+	src && responsive ? (
+		<picture
+			class="yohaku-picture"
+			data-reserve-space={reserveSpace ? "true" : undefined}
+			style={pictureStyle}
+		>
+			<source type="image/avif" srcset={avifSrcset} sizes={responsiveSizes} />
+			<source type="image/webp" srcset={webpSrcset} sizes={responsiveSizes} />
+			<img
+				src={src}
+				srcset={webpSrcset}
+				sizes={responsiveSizes}
+				alt={altText}
+				width={width}
+				height={height}
+				loading={priority ? "eager" : "lazy"}
+				fetchpriority={priority ? "high" : undefined}
+				decoding="async"
+				class:list={["yohaku-image", className]}
+				data-fit={cropSafely ? "crop" : "preserve"}
+				style={aspectRatio ? `--yohaku-image-ratio:${aspectRatio}` : undefined}
+			/>
+		</picture>
+	) : src ? (
 		<img
 			src={src}
-			alt={alt ?? value?.alt ?? ""}
+			alt={altText}
 			width={width}
 			height={height}
 			loading={priority ? "eager" : "lazy"}
@@ -56,5 +140,5 @@ const src =
 			data-low-resolution={lowResolution ? "true" : undefined}
 			style={aspectRatio ? `--yohaku-image-ratio:${aspectRatio}` : undefined}
 		/>
-	)
+	) : null
 }

@@ -11,11 +11,8 @@ const { date: suppliedDate } = Astro.props;
 const date = suppliedDate ?? new Date();
 const selected = japanDateParts(date);
 const { start, end } = japanMonthRange(selected.year, selected.month);
-const [archives, monthResult] = await Promise.all([
-	// Keep the selector and calendar on the same month even for the oldest
-	// migrated posts. The archive spans 2004 onward, so a recent-only list
-	// silently made the browser select the newest option on older articles.
-	getPostArchiveMonths(240),
+const [recentArchives, monthResult] = await Promise.all([
+	getPostArchiveMonths(24),
 	getEmDashCollection("posts", {
 		status: "published",
 		where: {
@@ -42,6 +39,20 @@ const calendarCells = [
 ];
 while (calendarCells.length % 7) calendarCells.push(null);
 const archiveHref = `/archives/${selected.year}/${String(selected.month).padStart(2, "0")}`;
+const selectedArchive = {
+	year: selected.year,
+	month: selected.month,
+	count: monthResult.entries.length,
+	label: `${selected.year}年${selected.month}月`,
+	href: archiveHref,
+};
+const archives = recentArchives.some(
+	(archive) => archive.year === selected.year && archive.month === selected.month,
+)
+	? recentArchives
+	: [...recentArchives, selectedArchive].sort(
+		(left, right) => right.year - left.year || right.month - left.month,
+	);
 ---
 
 <section class="widget widget-archive">
@@ -73,6 +84,7 @@ const archiveHref = `/archives/${selected.year}/${String(selected.month).padStar
 				))}
 			</tbody>
 		</table>
+		<p class="widget__more"><a href="/archives" data-astro-prefetch="hover">すべての月を見る →</a></p>
 	</div>
 </section>
 

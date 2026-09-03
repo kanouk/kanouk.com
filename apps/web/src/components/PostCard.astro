@@ -12,6 +12,7 @@ interface Props {
 	categories?: Array<{ slug: string; label: string }>;
 	tags?: Array<{ slug: string; label: string }>;
 	variant?: "card" | "list";
+	priority?: boolean;
 }
 
 const {
@@ -24,7 +25,13 @@ const {
 	categories,
 	tags,
 	variant = "card",
+	priority = false,
 } = Astro.props;
+
+const imageSizes =
+	variant === "list"
+		? "(max-width: 719px) calc(100vw - 2rem), 15rem"
+		: "(max-width: 719px) calc(100vw - 2rem), (max-width: 1100px) 50vw, 22rem";
 
 const formattedDate = date
 	? date.toLocaleDateString("ja-JP", {
@@ -36,12 +43,12 @@ const formattedDate = date
 ---
 
 <article class:list={["post-card", { "post-card--list": variant === "list" }]}>
-	<a href={href} class="card-link">
+	<a href={href} class="card-link" data-astro-prefetch="hover">
 		<div class="card-media">
 			{
 				featuredImage ? (
 					<div class="card-image">
-						<YohakuImage image={featuredImage} crop />
+						<YohakuImage image={featuredImage} crop priority={priority} sizes={imageSizes} />
 					</div>
 				) : (
 					<div class="card-image">
@@ -50,7 +57,8 @@ const formattedDate = date
 							alt=""
 							width="768"
 							height="403"
-							loading="lazy"
+							loading={priority ? "eager" : "lazy"}
+							fetchpriority={priority ? "high" : undefined}
 							decoding="async"
 							class="card-no-image"
 						/>

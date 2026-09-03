@@ -78,6 +78,23 @@ class SmugMugAlbumMigrationTests(unittest.TestCase):
             payload["source_metadata"]["exif"],
             {"Make": "Google", "Model": "Pixel"},
         )
+        self.assertEqual(payload["source_metadata"]["source_title"], "Title")
+        self.assertEqual(payload["source_metadata"]["source_filename"], "source.jpg")
+
+    def test_untitled_photo_keeps_internal_filename_but_marks_title_as_absent(self) -> None:
+        candidate = asset()
+        candidate["display"]["title"] = ""
+        payload = module.content_payload(
+            candidate,
+            album_id="album-id",
+            source_media_id="source-media",
+            poster_media_id=None,
+            metadata={"captured_at": None, "location": {}},
+            source_sha256="sha",
+        )
+        self.assertEqual(payload["title"], "source.jpg")
+        self.assertIsNone(payload["source_metadata"]["source_title"])
+        self.assertEqual(payload["source_metadata"]["source_filename"], "source.jpg")
 
     def test_video_payload_uses_poster_and_original_video(self) -> None:
         payload = module.content_payload(

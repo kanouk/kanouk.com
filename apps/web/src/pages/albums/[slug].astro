@@ -5,6 +5,7 @@ import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
+import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { photoPath } from "../../utils/photo-url.mjs";
 
 const { slug } = Astro.params;
@@ -42,10 +43,15 @@ const locationPhotos = photos.flatMap((photo) => {
 		longitude < -180 ||
 		longitude > 180
 	) return [];
+	const displayTitle = publicPhotoTitle({
+		title: photo.data.title,
+		sourceSystem: photo.data.source_system,
+		sourceMetadata: photo.data.source_metadata,
+	});
 	return [{
 		latitude,
 		longitude,
-		title: photo.data.title || photo.data.alt || "写真を見る",
+		title: displayTitle || "写真を見る",
 		href: photoPath(photo.id),
 	}];
 });
@@ -60,7 +66,7 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 	content={{ collection: "albums", id: album.data.id, slug: album.id }}
 >
 	<article class="album-page">
-		<a class="back" href="/albums">
+		<a class="back" href="/albums" data-astro-prefetch="hover">
 			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
 			<span>すべてのアルバム</span>
 		</a>
@@ -75,18 +81,29 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 		<AlbumMap markers={locationPhotos} />
 
 		<div class="photo-grid">
-			{photos.map((photo, index) => (
-				<a class="photo-card" href={photoPath(photo.id)} aria-label={photo.data.alt || photo.data.title}>
-					<YohakuImage image={photo.data.image} preview priority={index === 0} />
+			{photos.map((photo, index) => {
+				const displayTitle = publicPhotoTitle({
+					title: photo.data.title,
+					sourceSystem: photo.data.source_system,
+					sourceMetadata: photo.data.source_metadata,
+				});
+				const storedAlt = photo.data.alt?.trim() || photo.data.image?.alt?.trim();
+				const publicAlt = storedAlt && !looksLikeSourceFilename(storedAlt)
+					? storedAlt
+					: displayTitle || photo.data.caption?.trim() || `${album.data.title}の写真 ${index + 1}`;
+				return (
+				<a class="photo-card" href={photoPath(photo.id)} aria-label={publicAlt} data-astro-prefetch="hover">
+					<YohakuImage image={photo.data.image} alt={publicAlt} preview priority={index < 3} sizes="(max-width: 719px) calc(100vw - 2rem), (max-width: 1100px) 50vw, 28rem" />
 					{photo.data.kind === "video" && (
 						<span class="video-badge">
 							<CirclePlay size={14} strokeWidth={1.8} aria-hidden="true" />
 							<span>動画</span>
 						</span>
 					)}
-					{photo.data.title && <span>{photo.data.title}</span>}
+					{displayTitle && <span>{displayTitle}</span>}
 				</a>
-			))}
+				);
+			})}
 		</div>
 	</article>
 </Photos>

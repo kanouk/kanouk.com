@@ -25,9 +25,9 @@ const orderedAlbums = sortAlbumsLikeSmugMug(albums);
 		) : (
 			<div class="album-grid">
 				{orderedAlbums.map((album, index) => (
-					<a class="album-card" href={`/albums/${album.id}`}>
+					<a class="album-card" href={`/albums/${album.id}`} data-astro-prefetch="hover">
 						{album.data.cover_image ? (
-							<div class="cover"><YohakuImage image={album.data.cover_image} crop priority={index === 0} /></div>
+							<div class="cover"><YohakuImage image={album.data.cover_image} crop priority={index < 4} sizes="(max-width: 719px) calc(50vw - 1.3rem), (max-width: 1100px) 33vw, 18rem" /></div>
 						) : (
 							<div class="cover placeholder" aria-hidden="true">
 								<Images size={28} strokeWidth={1.25} />

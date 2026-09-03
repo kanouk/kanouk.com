@@ -6,7 +6,9 @@ import {
 	getTermsForEntries,
 	getSeoMeta,
 	getSiteSettings,
+	MediaRepository,
 } from "emdash";
+import { getDb } from "emdash/runtime";
 import {
 	PortableText,
 } from "emdash/ui";
@@ -53,6 +55,33 @@ if (!isPreview && slug !== post.data.id) {
 	return Astro.redirect(canonicalPostPath, 308);
 }
 
+// WordPress-era portable image snapshots can omit dimensions even though the
+// canonical media row has them. Start the single lookup before the remaining
+// page queries so the LCP image can reserve its exact aspect ratio without
+// extending the critical path in the common case.
+const firstPortableImage = (post.data.content ?? []).find(
+	(block) => block._type === "image",
+) as
+	| {
+			_type: "image";
+			asset?: { _ref?: string };
+			width?: number;
+			height?: number;
+	  }
+	| undefined;
+const firstPortableImageId = firstPortableImage?.asset?._ref;
+const firstImageDimensionsPromise =
+	firstPortableImage &&
+	firstPortableImageId &&
+	(!firstPortableImage.width || !firstPortableImage.height)
+		? (async () => {
+				const media = await new MediaRepository(await getDb()).findById(firstPortableImageId);
+				return media?.width && media.height
+					? { width: media.width, height: media.height }
+					: undefined;
+			})().catch(() => undefined)
+		: Promise.resolve(undefined);
+
 // Prefer the cover for social previews, then fall back to the first article image.
 // The public page remains list-first and does not invent a visible hero image.
 const featuredImageUrl = absoluteMediaUrl(
@@ -85,6 +114,17 @@ const authorAgeAtPublication = calculateAge(
 
 // Get reading time
 const readingTime = getReadingTime(post.data.content);
+const firstImageDimensions = await firstImageDimensionsPromise;
+let firstPortableImagePrioritized = false;
+const prioritizedContent = (post.data.content ?? []).map((block) => {
+	if (!firstPortableImagePrioritized && (block._type === "image" || block._type === "gallery")) {
+		firstPortableImagePrioritized = true;
+		return block === firstPortableImage
+			? { ...block, ...firstImageDimensions, _yohakuPriority: true }
+			: { ...block, _yohakuPriority: true };
+	}
+	return block;
+});
 
 const [categories, tags] = await Promise.all([
 	getEntryTerms("posts", post.data.id, "category"),
@@ -92,10 +132,12 @@ const [categories, tags] = await Promise.all([
 ]);
 
 // Fetch a few extra recent posts in case the current post is among them.
-const { entries: recentPosts } = await getEmDashCollection("posts", {
+const recentPostsResult = await getEmDashCollection("posts", {
 	orderBy: { published_at: "desc" },
 	limit: 4,
 });
+if (Astro.cache?.enabled) Astro.cache.set(recentPostsResult.cacheHint);
+const recentPosts = recentPostsResult.entries;
 const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);
 
 // Single batched query for related-posts tags, rather than one
@@ -197,7 +239,7 @@ const titleSegments = Array.from(
 				</nav>
 				<div class="article-content">
 					<PortableText
-						value={post.data.content}
+						value={prioritizedContent}
 						components={{ type: { image: YohakuPortableImage } }}
 					/>
 				</div>

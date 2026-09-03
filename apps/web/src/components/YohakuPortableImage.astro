@@ -14,6 +14,7 @@ interface ImageNode {
 	alignment?: "left" | "center" | "right" | "wide" | "full";
 	visualStyle?: "photo-frame" | "border" | "shadow";
 	link?: string;
+	_yohakuPriority?: boolean;
 }
 
 interface Props {
@@ -56,10 +57,10 @@ const imageValue = {
 		>
 			{node.link ? (
 				<a href={node.link} class="yohaku-portable-image__link">
-					<YohakuImage image={imageValue} preview />
+					<YohakuImage image={imageValue} preview priority={node._yohakuPriority} sizes="(max-width: 900px) calc(100vw - 2rem), 48rem" />
 				</a>
 			) : (
-				<YohakuImage image={imageValue} preview />
+				<YohakuImage image={imageValue} preview priority={node._yohakuPriority} sizes="(max-width: 900px) calc(100vw - 2rem), 48rem" />
 			)}
 			{node.caption && <figcaption>{node.caption}</figcaption>}
 		</figure>

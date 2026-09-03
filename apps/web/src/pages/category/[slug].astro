@@ -64,7 +64,7 @@ const filteredPosts = posts.map((post) => ({
 				<p class="no-posts">このカテゴリーの記事はまだありません。</p>
 			) : (
 				<div class="posts-grid">
-					{filteredPosts.map(({ post, tags }) => (
+					{filteredPosts.map(({ post, tags }, index) => (
 						<PostCard
 							title={post.data.title}
 							excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
@@ -74,6 +74,7 @@ const filteredPosts = posts.map((post) => ({
 							readingTime={getReadingTime(post.data.content)}
 							categories={[{ slug: term.slug, label: term.label }]}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
+							priority={page === 1 && index < 2}
 						/>
 					))}
 				</div>
