@@ -6,6 +6,7 @@ import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
+import { sortPhotosChronologically } from "../../utils/photo-order.mjs";
 import { photoPath } from "../../utils/photo-url.mjs";
 
 const { slug } = Astro.params;
@@ -29,8 +30,9 @@ do {
 	photos.push(...page.entries);
 	photoCursor = page.nextCursor;
 } while (photoCursor);
+const chronologicalPhotos = sortPhotosChronologically(photos);
 
-const locationPhotos = photos.flatMap((photo) => {
+const locationPhotos = chronologicalPhotos.flatMap((photo) => {
 	const latitude = photo.data.latitude;
 	const longitude = photo.data.longitude;
 	if (
@@ -75,13 +77,13 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 			{album.data.description && <p {...album.edit.description}>{album.data.description}</p>}
 			<p class="count">
 				<Images size={15} strokeWidth={1.75} aria-hidden="true" />
-				<span>{photos.length}点</span>
+				<span>{chronologicalPhotos.length}点</span>
 			</p>
 		</header>
 		<AlbumMap markers={locationPhotos} />
 
 		<div class="photo-grid">
-			{photos.map((photo, index) => {
+			{chronologicalPhotos.map((photo, index) => {
 				const displayTitle = publicPhotoTitle({
 					title: photo.data.title,
 					sourceSystem: photo.data.source_system,

@@ -34,17 +34,31 @@ export async function getPhotoNavigation(
 
 	const result = await database
 		.prepare(`
-			WITH ordered AS (
+			WITH sortable AS (
 				SELECT id,
-				       ROW_NUMBER() OVER (ORDER BY position ASC, id ASC) AS position_index,
-				       COUNT(*) OVER () AS total_count,
-				       LAG(id) OVER (ORDER BY position ASC, id ASC) AS previous_id,
-				       LEAD(id) OVER (ORDER BY position ASC, id ASC) AS next_id,
-				       FIRST_VALUE(id) OVER (ORDER BY position ASC, id ASC) AS first_id
+				       position,
+				       unixepoch(captured_at) AS captured_epoch
 				FROM ec_photos
 				WHERE status = 'published'
 				  AND deleted_at IS NULL
 				  AND album = ?1
+			),
+			ordered AS (
+				SELECT id,
+				       ROW_NUMBER() OVER (
+					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+				       ) AS position_index,
+				       COUNT(*) OVER () AS total_count,
+				       LAG(id) OVER (
+					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+				       ) AS previous_id,
+				       LEAD(id) OVER (
+					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+				       ) AS next_id,
+				       FIRST_VALUE(id) OVER (
+					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+				       ) AS first_id
+				FROM sortable
 			)
 			SELECT previous_id, next_id, first_id, position_index, total_count
 			FROM ordered
