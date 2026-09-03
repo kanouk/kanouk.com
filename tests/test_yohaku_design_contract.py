@@ -55,7 +55,7 @@ class YohakuDesignContractTests(unittest.TestCase):
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
         album_overlay = re.search(r"\.album-overlay\s*\{([^}]*)\}", css)
         photo_copy = re.search(
-            r"\.photo-card\s*>\s*span:not\(\.video-badge\)\s*\{([^}]*)\}",
+            r"\.photo-card__title\s*\{([^}]*)\}",
             css,
         )
         self.assertIsNotNone(album_overlay)
@@ -65,18 +65,35 @@ class YohakuDesignContractTests(unittest.TestCase):
 
     def test_album_photos_flow_left_to_right_in_chronological_order(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
+        page = (WEB_ROOT / "src/pages/albums/[slug].astro").read_text()
         photo_grid = re.search(r"\.photo-grid\s*\{([^}]*)\}", css)
         self.assertIsNotNone(photo_grid)
         declarations = photo_grid.group(1)
         self.assertIn("display: grid", declarations)
-        self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr))", declarations)
+        self.assertIn("grid-template-columns: repeat(auto-fill", declarations)
         self.assertIn("grid-auto-flow: row", declarations)
         self.assertNotRegex(declarations, r"(?:^|;)\s*columns\s*:")
-        self.assertIn(
-            ".photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
+        self.assertIn("chronologicalPhotos.map", page)
+
+    def test_album_thumbnails_are_square_crops_with_a_persistent_size_control(self) -> None:
+        css = (WEB_ROOT / "src/styles/theme.css").read_text()
+        page = (WEB_ROOT / "src/pages/albums/[slug].astro").read_text()
+        size_utility = (WEB_ROOT / "src/utils/photo-grid-size.mjs").read_text()
+        self.assertIn('class="photo-card__media"', page)
+        self.assertIn("crop", page)
+        self.assertRegex(css, r"\.photo-card__media\s*\{[^}]*aspect-ratio:\s*1;")
+        self.assertRegex(
             css,
+            r"\.photo-card__media img\s*\{[^}]*object-fit:\s*cover;",
         )
-        self.assertIn(".photo-grid { grid-template-columns: 1fr; }", css)
+        self.assertIn('type="range"', page)
+        self.assertIn("data-photo-grid-size-input", page)
+        self.assertIn("localStorage.getItem(PHOTO_GRID_SIZE.storageKey)", page)
+        self.assertIn("localStorage.setItem(PHOTO_GRID_SIZE.storageKey", page)
+        self.assertIn('"yohaku:photo-grid-size"', size_utility)
+        self.assertRegex(css, r"\.photo-grid-size\s*\{[^}]*position:\s*fixed;")
+        self.assertRegex(css, r"\.photo-grid-size\s*\{[^}]*right:")
+        self.assertRegex(css, r"\.photo-grid-size\s*\{[^}]*bottom:")
 
     def test_japanese_headings_disable_proportional_compression(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
@@ -128,7 +145,9 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn("<YohakuImage", portable)
         self.assertIn("preview", portable)
         self.assertIn("priority={index < 4}", album_archive)
-        self.assertIn("preview priority={index < 3}", album_detail)
+        self.assertIn("crop", album_detail)
+        self.assertIn("preview", album_detail)
+        self.assertIn("priority={index < 3}", album_detail)
 
     def test_album_archive_bounds_cover_size_across_breakpoints(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()

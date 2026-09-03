@@ -1,11 +1,12 @@
 ---
 import { getEmDashCollection, getEmDashEntry } from "emdash";
-import { ArrowLeft, CirclePlay, Images } from "lucide-astro";
+import { ArrowLeft, CirclePlay, Grid2x2, Grid3x3, Images } from "lucide-astro";
 import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
+import { PHOTO_GRID_SIZE } from "../../utils/photo-grid-size.mjs";
 import { sortPhotosChronologically } from "../../utils/photo-order.mjs";
 import { photoPath } from "../../utils/photo-url.mjs";
 
@@ -82,7 +83,7 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 		</header>
 		<AlbumMap markers={locationPhotos} />
 
-		<div class="photo-grid">
+		<div class="photo-grid" data-photo-grid>
 			{chronologicalPhotos.map((photo, index) => {
 				const displayTitle = publicPhotoTitle({
 					title: photo.data.title,
@@ -95,17 +96,83 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 					: displayTitle || photo.data.caption?.trim() || `${album.data.title}の写真 ${index + 1}`;
 				return (
 				<a class="photo-card" href={photoPath(photo.id)} aria-label={publicAlt} data-astro-prefetch="hover">
-					<YohakuImage image={photo.data.image} alt={publicAlt} preview priority={index < 3} sizes="(max-width: 719px) calc(100vw - 2rem), (max-width: 1100px) 50vw, 28rem" />
-					{photo.data.kind === "video" && (
-						<span class="video-badge">
-							<CirclePlay size={14} strokeWidth={1.8} aria-hidden="true" />
-							<span>動画</span>
-						</span>
-					)}
-					{displayTitle && <span>{displayTitle}</span>}
+					<span class="photo-card__media">
+						<YohakuImage
+							image={photo.data.image}
+							alt={publicAlt}
+							crop
+							preview
+							priority={index < 3}
+							sizes="(max-width: 34rem) 50vw, (max-width: 64rem) 25vw, 20rem"
+						/>
+						{photo.data.kind === "video" && (
+							<span class="video-badge">
+								<CirclePlay size={14} strokeWidth={1.8} aria-hidden="true" />
+								<span>動画</span>
+							</span>
+						)}
+					</span>
+					{displayTitle && <span class="photo-card__title">{displayTitle}</span>}
 				</a>
 				);
 			})}
 		</div>
+
+		<div class="photo-grid-size" data-photo-grid-size hidden>
+			<Grid3x3 size={16} strokeWidth={1.65} aria-hidden="true" />
+			<label class="sr-only" for="photo-grid-size">サムネイルの大きさ</label>
+			<input
+				id="photo-grid-size"
+				type="range"
+				min={PHOTO_GRID_SIZE.min}
+				max={PHOTO_GRID_SIZE.max}
+				step={PHOTO_GRID_SIZE.step}
+				value={PHOTO_GRID_SIZE.defaultValue}
+				data-photo-grid-size-input
+				title="サムネイルの大きさ"
+			/>
+			<Grid2x2 size={17} strokeWidth={1.65} aria-hidden="true" />
+		</div>
 	</article>
 </Photos>
+
+<script>
+	import {
+		PHOTO_GRID_SIZE,
+		normalizePhotoGridSize,
+	} from "../../utils/photo-grid-size.mjs";
+
+	const grid = document.querySelector<HTMLElement>("[data-photo-grid]");
+	const control = document.querySelector<HTMLElement>("[data-photo-grid-size]");
+	const input = control?.querySelector<HTMLInputElement>("[data-photo-grid-size-input]");
+
+	if (grid && control && input) {
+		const applySize = (value: unknown) => {
+			const size = normalizePhotoGridSize(value);
+			grid.style.setProperty("--photo-grid-min", `${size}px`);
+			input.value = String(size);
+			input.setAttribute("aria-valuetext", `サムネイル幅 ${size}px`);
+			return size;
+		};
+
+		let initialSize: number = PHOTO_GRID_SIZE.defaultValue;
+		try {
+			const storedSize = localStorage.getItem(PHOTO_GRID_SIZE.storageKey);
+			if (storedSize !== null) initialSize = normalizePhotoGridSize(storedSize);
+		} catch {
+			// Storage can be unavailable in privacy-restricted browsing contexts.
+		}
+
+		applySize(initialSize);
+		control.hidden = false;
+		input.addEventListener("input", () => applySize(input.value));
+		input.addEventListener("change", () => {
+			const size = applySize(input.value);
+			try {
+				localStorage.setItem(PHOTO_GRID_SIZE.storageKey, String(size));
+			} catch {
+				// The visual control still works when persistence is unavailable.
+			}
+		});
+	}
+</script>
