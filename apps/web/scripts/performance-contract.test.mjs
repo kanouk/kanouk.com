@@ -63,15 +63,20 @@ test("content images expose responsive AVIF and WebP variants", async () => {
 });
 
 test("photo detail navigation is computed in one bounded database query", async () => {
-	const [page, navigation] = await Promise.all([
+	const [page, album, navigation] = await Promise.all([
 		read("src/pages/p/[slug].astro"),
+		read("src/pages/albums/[slug].astro"),
 		read("src/utils/photo-navigation.ts"),
 	]);
 	assert.doesNotMatch(page, /albumPhotosCursor|albumPhotos\.push/);
 	assert.match(page, /where: \{ id: photo\.data\.album \}/);
+	assert.match(album, /sortPhotosChronologically\(photos\)/);
+	assert.match(album, /chronologicalPhotos\.map/);
 	assert.match(navigation, /ROW_NUMBER\(\) OVER/);
 	assert.match(navigation, /LAG\(id\) OVER/);
 	assert.match(navigation, /LEAD\(id\) OVER/);
+	assert.match(navigation, /unixepoch\(captured_at\)/);
+	assert.match(navigation, /captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC/);
 });
 
 test("the album map defers Leaflet until the map is opened", async () => {
