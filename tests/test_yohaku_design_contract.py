@@ -142,6 +142,19 @@ class YohakuDesignContractTests(unittest.TestCase):
             r"@media \(max-width: 34rem\)[\s\S]*?\.album-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)",
         )
 
+    def test_photo_detail_uses_smugmug_style_overlay_without_filename_titles(self) -> None:
+        detail = (WEB_ROOT / "src/pages/p/[slug].astro").read_text()
+        album = (WEB_ROOT / "src/pages/albums/[slug].astro").read_text()
+        css = (WEB_ROOT / "src/styles/theme.css").read_text()
+        self.assertIn("publicPhotoTitle", detail)
+        self.assertIn('class="photo-overlay"', detail)
+        self.assertIn('class="photo-overlay__copy"', detail)
+        self.assertNotIn("<h1 {...photo.edit.title}>{photo.data.title}</h1>", detail)
+        self.assertIn("publicPhotoTitle", album)
+        self.assertIn("linear-gradient(180deg, transparent", css)
+        self.assertIn("text-shadow:", css)
+        self.assertIn(".sr-only { position: absolute !important;", css)
+
     def test_article_uses_one_reading_axis_without_duplicate_left_metadata(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()

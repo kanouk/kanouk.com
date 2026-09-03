@@ -16,6 +16,7 @@ import {
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
+import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { getPhotoNavigation } from "../../utils/photo-navigation";
 import { photoPath } from "../../utils/photo-url.mjs";
 
@@ -124,6 +125,17 @@ const exposureTime = numberValue(exifData.ExposureTime);
 const iso = numberValue(exifData.ISO);
 const focalLength = numberValue(exifData.FocalLength);
 const exposureCompensation = numberValue(exifData.ExposureCompensation);
+const displayTitle = publicPhotoTitle({
+	title: photo.data.title,
+	sourceSystem: photo.data.source_system,
+	sourceMetadata,
+});
+const displayCaption = textValue(photo.data.caption);
+const pageTitle = displayTitle || (album?.data.title ? `${album.data.title}の写真` : "写真");
+const storedAlt = textValue(photo.data.alt) || textValue(photo.data.image?.alt);
+const publicAlt = storedAlt && !looksLikeSourceFilename(storedAlt)
+	? storedAlt
+	: displayTitle || displayCaption || (album?.data.title ? `${album.data.title}の写真` : "写真");
 const exifDetails = [
 	{ label: "カメラ", value: camera },
 	{ label: "レンズ", value: lens },
@@ -146,8 +158,8 @@ const exifDetails = [
 ---
 
 <Photos
-	title={photo.data.title}
-	description={photo.data.caption}
+	title={pageTitle}
+	description={displayCaption}
 	image={posterSource}
 	pageType={photo.data.kind === "video" ? "video" : "image"}
 	content={{ collection: "photos", id: photo.data.id, slug: photo.id }}
@@ -162,6 +174,7 @@ const exifDetails = [
 			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
 			<span>{album?.data.title || "すべてのアルバム"}</span>
 		</a>
+		{!displayTitle && <h1 class="sr-only">{pageTitle}</h1>}
 		<figure>
 			<div class="media" {...photo.edit.image}>
 				{previousUrl && (
@@ -169,25 +182,33 @@ const exifDetails = [
 						<ArrowLeft size={22} strokeWidth={1.6} aria-hidden="true" />
 					</a>
 				)}
-				{
-					videoSource ? (
-						<video controls playsinline preload="metadata" poster={posterSource}>
-							<source src={videoSource} type={photo.data.video?.mimeType || "video/mp4"} />
-							動画を再生できないブラウザです。
-						</video>
-					) : (
-						<YohakuImage image={photo.data.image} preview priority sizes="(max-width: 1600px) 100vw, 1600px" />
-					)
-				}
+				<div class="photo-media-frame">
+					{
+						videoSource ? (
+							<video controls playsinline preload="metadata" poster={posterSource}>
+								<source src={videoSource} type={photo.data.video?.mimeType || "video/mp4"} />
+								動画を再生できないブラウザです。
+							</video>
+						) : (
+							<YohakuImage image={photo.data.image} alt={publicAlt} preview priority sizes="100vw" />
+						)
+					}
+					{(displayTitle || displayCaption) && (
+						<div class="photo-overlay">
+							<div class="photo-overlay__copy">
+								{displayTitle && <h1 id="photo-title" {...photo.edit.title}>{displayTitle}</h1>}
+								{displayCaption && <p {...photo.edit.caption}>{displayCaption}</p>}
+							</div>
+						</div>
+					)}
+				</div>
 				{nextUrl && (
 					<a class="media-navigation media-navigation--next" href={nextUrl} aria-label="次の写真" data-astro-prefetch="hover">
 						<ArrowRight size={22} strokeWidth={1.6} aria-hidden="true" />
 					</a>
 				)}
 			</div>
-			<figcaption>
-				<h1 {...photo.edit.title}>{photo.data.title}</h1>
-				{photo.data.caption && <p {...photo.edit.caption}>{photo.data.caption}</p>}
+			<figcaption class="photo-meta">
 				<div class="photo-context">
 					<span>{navigation?.position ?? 1} / {navigation?.total ?? 1}</span>
 					{formattedDate && <time>{formattedDate}</time>}
@@ -282,7 +303,7 @@ const exifDetails = [
 					</div>
 					<iframe
 						src={mapEmbedUrl}
-						title={`${photo.data.title}の撮影場所`}
+						title={`${displayTitle || album?.data.title || "写真"}の撮影場所`}
 						loading="lazy"
 						referrerpolicy="no-referrer"
 					/>

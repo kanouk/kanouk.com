@@ -761,12 +761,14 @@ def content_payload(
     display = asset.get("display", {})
     source = asset.get("source", {})
     kind = str(asset.get("kind"))
+    source_title = str(display.get("title") or "").strip()
+    source_filename = str(source.get("filename") or "").strip()
     alt = str(display.get("alt") or display.get("title") or source.get("filename") or "")
     captured_at = metadata.get("captured_at") or (
         asset.get("timestamps", {}).get("captured_at", {}).get("normalized")
     )
     payload: dict[str, Any] = {
-        "title": str(display.get("title") or source.get("filename") or asset.get("id")),
+        "title": source_title or source_filename or str(asset.get("id")),
         "kind": kind,
         "image": {
             "id": poster_media_id if kind == "video" else source_media_id,
@@ -793,6 +795,8 @@ def content_payload(
             "public_metadata_policy": "Source EXIF retained",
             "exif": metadata.get("exif") or None,
             "source_integrity": dict(source_integrity or {}) or None,
+            "source_title": source_title or None,
+            "source_filename": source_filename or None,
             "migration": "manifest-v1",
         },
     }

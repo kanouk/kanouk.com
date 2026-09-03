@@ -125,6 +125,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
 html {
 	background: var(--paper);
 	overflow-x: clip;
@@ -906,18 +908,24 @@ main:focus { outline: none; }
 .photo-card:hover > span:not(.video-badge) { color: var(--accent-strong); }
 .video-badge { position: absolute; top: var(--space-3); right: var(--space-3); display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.55rem; background: rgb(10 12 9 / 82%); color: #fff; font-size: 0.68rem; }
 
-.photo-page { padding-block: clamp(2.5rem, 6vw, 5rem); }
-.photo-page figure { margin-top: clamp(2rem, 4vw, 3rem); }
-.photo-page .media { position: relative; display: flex; align-items: center; justify-content: center; min-height: min(52vh, 34rem); padding: clamp(0.5rem, 2vw, 1.5rem); background: var(--photo-stage); }
-.photo-page .media :where(img, video) { width: auto; max-width: 100%; max-height: 86vh; object-fit: contain; }
+.photo-page { position: relative; padding-block: 0 clamp(2rem, 4vw, 4rem); }
+.photo-page > .back { position: absolute; z-index: 3; top: clamp(0.75rem, 2vw, 1.25rem); left: var(--gutter); min-height: var(--control-height); padding-inline: 0.8rem; background: rgb(5 6 5 / 64%); color: #fff; text-decoration: none; text-shadow: 0 1px 2px rgb(0 0 0 / 75%); backdrop-filter: blur(8px); }
+.photo-page figure { width: 100vw; margin-left: calc(50% - 50vw); }
+.photo-page .media { --photo-stage-height: clamp(28rem, calc(100svh - var(--header-height)), 62rem); position: relative; display: flex; align-items: center; justify-content: center; height: var(--photo-stage-height); min-height: min(52vh, 34rem); padding: 0 clamp(0.5rem, 2vw, 1.5rem); overflow: hidden; background: var(--photo-stage); }
+.photo-media-frame { position: relative; display: inline-flex; align-items: center; justify-content: center; width: fit-content; max-width: 100%; max-height: var(--photo-stage-height); overflow: hidden; }
+.photo-page .media .yohaku-picture { display: contents !important; }
+.photo-page .media :where(img, video),
+.photo-page .media .yohaku-image { width: auto; max-width: 100%; height: auto; max-height: var(--photo-stage-height); aspect-ratio: auto; object-fit: contain; }
 .media-navigation { position: absolute; z-index: 2; top: 50%; display: grid; width: 2.75rem; height: 3.75rem; border: 1px solid rgb(255 255 255 / 20%); background: rgb(5 6 5 / 52%); color: #fff; text-decoration: none; transform: translateY(-50%); place-items: center; backdrop-filter: blur(8px); transition: background-color var(--transition), border-color var(--transition), opacity var(--transition); }
 .media-navigation:hover { border-color: rgb(255 255 255 / 48%); background: rgb(5 6 5 / 78%); }
 .media-navigation--previous { left: clamp(0.35rem, 1.5vw, 1.15rem); }
 .media-navigation--next { right: clamp(0.35rem, 1.5vw, 1.15rem); }
-.photo-page figcaption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3) var(--space-6); margin-top: var(--space-5); }
-.photo-page figcaption h1 { font-size: var(--step-1); font-weight: 600; letter-spacing: 0; overflow-wrap: anywhere; }
-.photo-page figcaption p { grid-column: 1; color: var(--ink-soft); }
-.photo-context { grid-column: 2; grid-row: 1; display: flex; align-items: center; gap: var(--space-3); color: var(--ink-muted); font-size: var(--step--1); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.photo-overlay { position: absolute; z-index: 1; inset: auto 0 0; padding: clamp(5rem, 14vh, 9rem) clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem); background: linear-gradient(180deg, transparent, rgb(0 0 0 / 82%)); color: #fff; pointer-events: none; }
+.photo-overlay__copy { width: min(100%, 46rem); text-shadow: 0 1px 3px rgb(0 0 0 / 88%); }
+.photo-overlay h1 { color: #fff; font-size: clamp(1.05rem, 0.9rem + 0.75vw, 1.6rem); font-weight: 600; letter-spacing: 0; line-height: 1.42; overflow-wrap: anywhere; }
+.photo-overlay p { max-width: 62ch; margin-top: 0.3rem; color: rgb(255 255 255 / 92%); font-size: var(--step--1); line-height: 1.65; }
+.photo-meta { display: flex; justify-content: flex-end; width: min(100%, var(--wide)); margin: var(--space-3) auto 0; padding-inline: var(--gutter); }
+.photo-context { display: flex; align-items: center; gap: var(--space-3); color: var(--ink-muted); font-size: var(--step--1); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .photo-tools { display: flex; flex-wrap: wrap; align-items: stretch; width: fit-content; max-width: 100%; margin-top: var(--space-5); border: 1px solid var(--rule-soft); background: var(--paper-raised); }
 .photo-tools :where(button, a) { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: 0.4rem; min-width: 6.5rem; min-height: var(--control-height); padding: 0.45rem 0.85rem; border: 0; border-radius: 0; background: transparent; color: var(--ink-muted); font-size: 0.73rem; font-weight: 500; line-height: 1; text-decoration: none; white-space: nowrap; transition: background-color var(--transition), color var(--transition); }
 .photo-tools :where(button, a) + :where(button, a) { border-left: 1px solid var(--rule-soft); border-radius: 0; }
@@ -1046,9 +1054,9 @@ main:focus { outline: none; }
 	.photo-search-link span { display: none; }
 	.photo-search-form { grid-template-columns: auto minmax(0, 1fr); }
 	.photo-search-form button { grid-column: 1 / -1; margin-bottom: var(--space-3); }
-	.photo-page .media { min-height: 0; margin-inline: calc(-1 * var(--gutter)); padding-inline: 0; }
-	.photo-page figcaption { grid-template-columns: 1fr; }
-	.photo-page figcaption time { grid-column: 1; grid-row: auto; }
+	.photo-page .media { --photo-stage-height: max(20rem, calc(100svh - var(--header-height))); min-height: 20rem; padding-inline: 0; }
+	.photo-overlay { padding: 4.5rem var(--gutter) var(--space-4); }
+	.photo-overlay p { line-height: 1.55; }
 	.photo-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
 	.photo-tools :where(button, a) { min-width: 0; gap: 0.3rem; padding-inline: 0.45rem; font-size: 0.7rem; }
 	.photo-tools :where(button, a) + :where(button, a) { border-left: 0; }
