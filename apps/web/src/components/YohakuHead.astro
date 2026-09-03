@@ -27,7 +27,7 @@ const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 		padding-inline: var(--critical-gutter);
 	}
 	.site-brand { display: inline-flex; align-items: center; width: max-content; }
-	.site-brand__image { width: auto; height: 2.4rem; }
+	.site-brand__image { width: auto; height: 2.4rem; max-height: none; border: 0; background: transparent; object-fit: contain; }
 	.site-nav { display: flex; align-items: center; justify-content: center; gap: clamp(0.9rem, 1.8vw, 1.6rem); min-width: 0; }
 	.site-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 	.site-tools { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; min-width: 0; }
