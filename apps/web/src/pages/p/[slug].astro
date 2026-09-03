@@ -7,11 +7,13 @@ import {
 	Download,
 	ExternalLink,
 	Expand,
+	Info,
 	MapPin,
 	Pause,
 	Play,
 	Share2,
 	Tags,
+	X,
 } from "lucide-astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
@@ -177,6 +179,105 @@ const exifDetails = [
 		{!displayTitle && <h1 class="sr-only">{pageTitle}</h1>}
 		<figure>
 			<div class="media" {...photo.edit.image}>
+				<div class="photo-action-rail" role="group" aria-label="写真の操作">
+					<button type="button" data-photo-fullscreen aria-label="写真を全画面で表示" title="全画面">
+						<Expand size={18} strokeWidth={1.65} aria-hidden="true" />
+						<span class="sr-only">全画面</span>
+					</button>
+					{slideshowNextUrl && (
+						<button type="button" data-photo-slideshow aria-pressed="false" aria-label="スライドショーを開始" title="自動再生">
+							<Play class="photo-tool-play" size={18} strokeWidth={1.65} aria-hidden="true" />
+							<Pause class="photo-tool-pause" size={18} strokeWidth={1.65} aria-hidden="true" />
+							<span class="sr-only" data-photo-slideshow-label>自動再生</span>
+						</button>
+					)}
+					<button
+						type="button"
+						data-photo-info
+						aria-expanded="false"
+						aria-controls="photo-info-panel"
+						aria-label="写真情報を表示"
+						title="写真情報"
+					>
+						<Info size={18} strokeWidth={1.65} aria-hidden="true" />
+						<span class="sr-only">写真情報</span>
+					</button>
+					<button type="button" data-photo-share aria-label="写真を共有" title="共有">
+						<Share2 size={18} strokeWidth={1.65} aria-hidden="true" />
+						<span class="sr-only">共有</span>
+					</button>
+					{downloadUrl && (
+						<a href={downloadUrl} download aria-label="写真をダウンロード" title="保存">
+							<Download size={18} strokeWidth={1.65} aria-hidden="true" />
+							<span class="sr-only">保存</span>
+						</a>
+					)}
+					<span class="sr-only photo-tool-status" role="status" aria-live="polite" />
+				</div>
+				<aside id="photo-info-panel" class="photo-info-panel" data-photo-info-panel aria-label="写真情報" hidden>
+					<header class="photo-info-panel__header">
+						<div>
+							{displayTitle && <p class="photo-info-panel__title">{displayTitle}</p>}
+							{displayCaption && <p class="photo-info-panel__caption">{displayCaption}</p>}
+						</div>
+						<button type="button" data-photo-info-close aria-label="写真情報を閉じる">
+							<X size={20} strokeWidth={1.6} aria-hidden="true" />
+						</button>
+					</header>
+					<div class="photo-info-panel__body">
+						<div class="photo-info-context">
+							<span>{navigation?.position ?? 1} / {navigation?.total ?? 1}</span>
+							{formattedDate && <time>{formattedDate}</time>}
+						</div>
+						{exifDetails.length > 0 && (
+							<section class="photo-info-section photo-info-exif" aria-labelledby="exif-title">
+								<h2 id="exif-title">
+									<Camera size={16} strokeWidth={1.65} aria-hidden="true" />
+									<span>撮影情報</span>
+								</h2>
+								<dl>
+									{exifDetails.map((item) => (
+										<div>
+											<dt>{item.label}</dt>
+											<dd>{item.value}</dd>
+										</div>
+									))}
+								</dl>
+							</section>
+						)}
+						{keywords.length > 0 && (
+							<section class="photo-info-section photo-info-keywords" aria-labelledby="keyword-title">
+								<h2 id="keyword-title">
+									<Tags size={16} strokeWidth={1.65} aria-hidden="true" />
+									<span>キーワード</span>
+								</h2>
+								<ul>
+									{keywords.map((keyword) => <li>{keyword}</li>)}
+								</ul>
+							</section>
+						)}
+						{mapEmbedUrl && mapLinkUrl && (
+							<section class="photo-info-section photo-info-location" aria-labelledby="location-title">
+								<div class="photo-info-location__heading">
+									<h2 id="location-title">
+										<MapPin size={16} strokeWidth={1.65} aria-hidden="true" />
+										<span>撮影場所</span>
+									</h2>
+									<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer" aria-label="OpenStreetMapで撮影場所を見る">
+										<ExternalLink size={15} strokeWidth={1.65} aria-hidden="true" />
+									</a>
+								</div>
+								<iframe
+									data-photo-map
+									data-src={mapEmbedUrl}
+									title={`${displayTitle || album?.data.title || "写真"}の撮影場所`}
+									loading="lazy"
+									referrerpolicy="no-referrer"
+								/>
+							</section>
+						)}
+					</div>
+				</aside>
 				{previousUrl && (
 					<a class="media-navigation media-navigation--previous" href={previousUrl} aria-label="前の写真" data-astro-prefetch="hover">
 						<ArrowLeft size={22} strokeWidth={1.6} aria-hidden="true" />
@@ -208,108 +309,7 @@ const exifDetails = [
 					</a>
 				)}
 			</div>
-			<figcaption class="photo-meta">
-				<div class="photo-context">
-					<span>{navigation?.position ?? 1} / {navigation?.total ?? 1}</span>
-					{formattedDate && <time>{formattedDate}</time>}
-				</div>
-			</figcaption>
 		</figure>
-		<div class="photo-tools" role="group" aria-label="写真の表示と共有">
-			<button type="button" data-photo-fullscreen aria-label="写真を全画面で表示">
-				<Expand size={16} strokeWidth={1.75} aria-hidden="true" />
-				<span>全画面</span>
-			</button>
-			<button type="button" data-photo-share aria-label="写真を共有">
-				<Share2 size={16} strokeWidth={1.75} aria-hidden="true" />
-				<span>共有</span>
-			</button>
-			{downloadUrl && (
-				<a href={downloadUrl} download aria-label="写真をダウンロード">
-					<Download size={16} strokeWidth={1.75} aria-hidden="true" />
-					<span>保存</span>
-				</a>
-			)}
-			{slideshowNextUrl && (
-				<button type="button" data-photo-slideshow aria-pressed="false" aria-label="スライドショーを開始">
-					<Play class="photo-tool-play" size={16} strokeWidth={1.75} aria-hidden="true" />
-					<Pause class="photo-tool-pause" size={16} strokeWidth={1.75} aria-hidden="true" />
-					<span data-photo-slideshow-label>自動再生</span>
-				</button>
-			)}
-			<span class="photo-tool-status" role="status" aria-live="polite" />
-		</div>
-		<nav class="photo-navigation" aria-label="アルバム内の写真移動">
-			{navigation?.previousId ? (
-				<a href={photoPath(navigation.previousId)} data-astro-prefetch="hover">
-					<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
-					<span>前の写真</span>
-				</a>
-			) : (
-				<span />
-			)}
-			{navigation?.nextId ? (
-				<a href={photoPath(navigation.nextId)} data-astro-prefetch="hover">
-					<span>次の写真</span>
-					<ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
-				</a>
-			) : (
-				<span />
-			)}
-		</nav>
-		{
-			exifDetails.length > 0 && (
-				<section class="exif" aria-labelledby="exif-title">
-					<h2 id="exif-title">
-						<Camera size={17} strokeWidth={1.75} aria-hidden="true" />
-						<span>撮影情報</span>
-					</h2>
-					<dl>
-						{exifDetails.map((item) => (
-							<div>
-								<dt>{item.label}</dt>
-								<dd>{item.value}</dd>
-							</div>
-						))}
-					</dl>
-				</section>
-			)
-		}
-		{
-			keywords.length > 0 && (
-				<section class="photo-keywords" aria-labelledby="keyword-title">
-					<h2 id="keyword-title">
-						<Tags size={17} strokeWidth={1.65} aria-hidden="true" />
-						<span>キーワード</span>
-					</h2>
-					<ul>
-						{keywords.map((keyword) => <li>{keyword}</li>)}
-					</ul>
-				</section>
-			)
-		}
-		{
-			mapEmbedUrl && mapLinkUrl && (
-				<section class="location" aria-labelledby="location-title">
-					<div class="location-heading">
-						<h2 id="location-title">
-							<MapPin size={17} strokeWidth={1.75} aria-hidden="true" />
-							<span>撮影場所</span>
-						</h2>
-						<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer">
-							<span>OpenStreetMapで見る</span>
-							<ExternalLink size={14} strokeWidth={1.75} aria-hidden="true" />
-						</a>
-					</div>
-					<iframe
-						src={mapEmbedUrl}
-						title={`${displayTitle || album?.data.title || "写真"}の撮影場所`}
-						loading="lazy"
-						referrerpolicy="no-referrer"
-					/>
-				</section>
-			)
-		}
 	</article>
 </Photos>
 
@@ -322,6 +322,10 @@ const exifDetails = [
 	const status = page?.querySelector<HTMLElement>(".photo-tool-status");
 	const slideshowButton = page?.querySelector<HTMLButtonElement>("[data-photo-slideshow]");
 	const slideshowLabel = slideshowButton?.querySelector<HTMLElement>("[data-photo-slideshow-label]");
+	const infoButton = page?.querySelector<HTMLButtonElement>("[data-photo-info]");
+	const infoPanel = page?.querySelector<HTMLElement>("[data-photo-info-panel]");
+	const infoCloseButton = page?.querySelector<HTMLButtonElement>("[data-photo-info-close]");
+	const infoMap = page?.querySelector<HTMLIFrameElement>("[data-photo-map]");
 	let slideshowTimer: number | undefined;
 
 	const announce = (message: string) => {
@@ -354,6 +358,22 @@ const exifDetails = [
 		announce("6秒ごとに次の写真へ進みます");
 		slideshowTimer = window.setTimeout(() => navigate(slideshowUrl(slideshowNextUrl)), 6000);
 	};
+	const openInfoPanel = () => {
+		if (!infoButton || !infoPanel) return;
+		infoPanel.hidden = false;
+		infoButton.setAttribute("aria-expanded", "true");
+		infoButton.setAttribute("aria-label", "写真情報を閉じる");
+		if (infoMap?.dataset.src && !infoMap.getAttribute("src")) {
+			infoMap.setAttribute("src", infoMap.dataset.src);
+		}
+	};
+	const closeInfoPanel = (restoreFocus = true) => {
+		if (!infoButton || !infoPanel) return;
+		infoPanel.hidden = true;
+		infoButton.setAttribute("aria-expanded", "false");
+		infoButton.setAttribute("aria-label", "写真情報を表示");
+		if (restoreFocus) infoButton.focus();
+	};
 
 	page?.querySelector<HTMLButtonElement>("[data-photo-fullscreen]")?.addEventListener("click", async () => {
 		if (!media) return;
@@ -379,8 +399,17 @@ const exifDetails = [
 		if (slideshowTimer) stopSlideshow();
 		else startSlideshow();
 	});
+	infoButton?.addEventListener("click", () => {
+		if (infoPanel?.hidden) openInfoPanel();
+		else closeInfoPanel(false);
+	});
+	infoCloseButton?.addEventListener("click", () => closeInfoPanel());
 
 	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && infoPanel && !infoPanel.hidden) {
+			closeInfoPanel();
+			return;
+		}
 		if (event.key === "Escape" && slideshowTimer) {
 			stopSlideshow();
 			return;

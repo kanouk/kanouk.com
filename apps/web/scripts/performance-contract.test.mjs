@@ -79,6 +79,22 @@ test("photo detail navigation is computed in one bounded database query", async 
 	assert.match(navigation, /captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC/);
 });
 
+test("photo detail controls and metadata stay inside the viewer", async () => {
+	const [page, theme] = await Promise.all([
+		read("src/pages/p/[slug].astro"),
+		read("src/styles/theme.css"),
+	]);
+	assert.match(page, /class="photo-action-rail"/);
+	assert.match(page, /data-photo-info-panel/);
+	assert.match(page, /data-src=\{mapEmbedUrl\}/);
+	assert.match(page, /infoMap\.setAttribute\("src", infoMap\.dataset\.src\)/);
+	assert.doesNotMatch(page, /class="photo-tools"/);
+	assert.doesNotMatch(page, /class="photo-navigation"/);
+	assert.doesNotMatch(page, /<section class="(?:exif|location)"/);
+	assert.match(theme, /\.photo-media-frame \{[^}]*border: 0;[^}]*outline: 0;[^}]*box-shadow: none;/);
+	assert.match(theme, /\.photo-info-panel\[hidden\] \{ display: none; \}/);
+});
+
 test("the album map defers Leaflet until the map is opened", async () => {
 	const albumMap = await read("src/components/AlbumMap.astro");
 	assert.doesNotMatch(albumMap, /^\s*import L from "leaflet";/m);
