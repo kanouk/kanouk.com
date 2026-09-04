@@ -47,6 +47,16 @@ function appendVaryHeader(response: Response, value: string) {
 export const onRequest = defineMiddleware(async (context, next) => {
 	const isPhotoHost = PHOTO_HOSTS.has(context.url.hostname);
 	const isBlogHost = BLOG_HOSTS.has(context.url.hostname);
+	const crossHostRedirect = (target: string) => {
+		// Route rules are path-based while this Worker serves both hosts. A cached
+		// redirect for /albums on the blog host must never become the /albums
+		// response on the photo host (and vice versa).
+		context.cache.set(false);
+		const response = context.redirect(target, 308);
+		appendVaryHeader(response, "Host");
+		response.headers.set("Cache-Control", "private, no-store");
+		return response;
+	};
 	const requestHasPrivateState =
 		!new Set(["GET", "HEAD"]).has(context.request.method) ||
 		Boolean(context.request.headers.get("authorization")) ||
@@ -57,11 +67,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		new Set(["/search", "/photo-search"]).has(context.url.pathname) ||
 		context.url.pathname.startsWith("/_emdash/");
 	if (isPhotoHost && BLOG_ROUTE.test(context.url.pathname)) {
-		return context.redirect(`https://blog.kanouk.com${context.url.pathname}${context.url.search}`, 308);
+		return crossHostRedirect(`https://blog.kanouk.com${context.url.pathname}${context.url.search}`);
 	}
 	if (isBlogHost && (PHOTO_ROUTE.test(context.url.pathname) || context.url.pathname === "/photo-search")) {
 		const pathname = context.url.pathname === "/photo-search" ? "/search" : context.url.pathname;
-		return context.redirect(`https://photos.kanouk.com${pathname}${context.url.search}`, 308);
+		return crossHostRedirect(`https://photos.kanouk.com${pathname}${context.url.search}`);
 	}
 	const response = isPhotoHost && context.url.pathname === "/"
 		? await context.rewrite("/albums")
