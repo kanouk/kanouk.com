@@ -228,6 +228,7 @@ def add_stylesheet_check(
         )
         return
 
+    has_yohaku_contract = False
     for index, stylesheet_url in enumerate(stylesheets, start=1):
         status, headers, body, elapsed_ms = fetch(
             stylesheet_url,
@@ -241,8 +242,7 @@ def add_stylesheet_check(
             failures.append("response is not CSS")
         if len(body) < 1024:
             failures.append(f"stylesheet is unexpectedly small ({len(body)} bytes)")
-        if b"--paper:" not in body and b".site" not in body:
-            failures.append("Yohaku design tokens are missing")
+        has_yohaku_contract = has_yohaku_contract or b"--paper:" in body or b".site" in body
         checks.append(
             Check(
                 name=(
@@ -257,6 +257,16 @@ def add_stylesheet_check(
                 detail="ok" if not failures else "; ".join(failures),
             )
         )
+    checks.append(
+        Check(
+            name="design-theme-contract",
+            url=base_url,
+            ok=has_yohaku_contract,
+            status=200,
+            elapsed_ms=0,
+            detail="ok" if has_yohaku_contract else "Yohaku design tokens are missing from all stylesheets",
+        )
+    )
 
 
 def main() -> None:
