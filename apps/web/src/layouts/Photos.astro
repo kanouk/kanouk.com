@@ -3,6 +3,7 @@ import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import { Aperture, Search } from "lucide-astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import StudioPhotoAdmin from "../components/StudioPhotoAdmin.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import "../styles/tokens.css";
 import "../styles/theme.css";
@@ -50,6 +51,7 @@ const pageCtx = createPublicPageContext({
 	</head>
 	<body class="site site--photos">
 		<EmDashBodyStart page={pageCtx} />
+		<StudioPhotoAdmin content={content} />
 		<a class="skip-link" href="#photo-main">本文へ移動</a>
 		<header class="photo-header">
 			<a class="photo-brand" href="/albums" data-astro-prefetch="hover">
