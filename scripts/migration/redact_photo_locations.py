@@ -9,8 +9,10 @@ public HTML, and embedded GPS readback before reporting success.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import json
 import mimetypes
+import os
 from pathlib import Path
 import re
 import shutil
@@ -69,6 +71,31 @@ def load_allowlist(path: Path) -> list[str]:
         if value not in result:
             result.append(value)
     return result
+
+
+def write_receipt(allowlist: Path, payload: Mapping[str, Any]) -> Path:
+    """Atomically persist a local receipt without requiring EmDash admin scope."""
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    destination = allowlist.parent / f"{allowlist.stem}.receipt-{stamp}-{uuid.uuid4().hex[:8]}.json"
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=allowlist.parent,
+            prefix=f".{allowlist.stem}.receipt-",
+            suffix=".tmp",
+            delete=False,
+        ) as handle:
+            temporary = Path(handle.name)
+            json.dump(payload, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+        temporary.chmod(0o600)
+        os.replace(temporary, destination)
+    finally:
+        if temporary and temporary.exists():
+            temporary.unlink()
+    return destination
 
 
 def api_request(
@@ -296,17 +323,20 @@ def main(argv: Sequence[str] | None = None) -> int:
             results.append(redact_one(photo_id, credential["token"], args.apply))
         except Exception as exc:
             failures.append({"photo_id": photo_id, "reason": str(exc)})
+    output = {
+        "apply": args.apply,
+        "requested": len(photo_ids),
+        "results": results,
+        "failures": failures,
+        "metadata": {
+            "explicit_allowlist": True,
+            "old_media_retained": True,
+            "status": "partial" if failures else "complete",
+        },
+    }
     if args.apply:
-        try:
-            api_request("POST", "/plugins/yohaku-photo-studio/operations", credential["token"], {
-                "action": "record", "kind": "location-redaction",
-                "status": "partial" if failures else "complete",
-                "targetIds": photo_ids, "failures": failures,
-                "metadata": {"succeeded": len(results), "explicit_allowlist": True, "old_media_retained": True},
-            })
-        except Exception as exc:
-            failures.append({"photo_id": "operation-receipt", "reason": str(exc)})
-    print(json.dumps({"apply": args.apply, "requested": len(photo_ids), "results": results, "failures": failures}, ensure_ascii=False, indent=2))
+        output["receipt"] = str(write_receipt(args.allowlist, output).resolve())
+    print(json.dumps(output, ensure_ascii=False, indent=2))
     return 1 if failures else 0
 
 

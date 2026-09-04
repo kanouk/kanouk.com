@@ -3,7 +3,12 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from scripts.migration.redact_photo_locations import load_allowlist, scrub_location, RedactionError
+from scripts.migration.redact_photo_locations import (
+    RedactionError,
+    load_allowlist,
+    scrub_location,
+    write_receipt,
+)
 
 
 class PhotoLocationRedactionTests(unittest.TestCase):
@@ -32,3 +37,14 @@ class PhotoLocationRedactionTests(unittest.TestCase):
             path.write_text('{"photo_ids": []}')
             with self.assertRaises(RedactionError):
                 load_allowlist(path)
+
+    def test_receipt_is_written_beside_allowlist_without_overwrite(self):
+        with tempfile.TemporaryDirectory() as directory:
+            allowlist = Path(directory) / "approved.json"
+            allowlist.write_text('{"photo_ids":["photo_12345678"]}')
+            payload = {"apply": True, "results": [{"photo_id": "photo_12345678"}]}
+            first = write_receipt(allowlist, payload)
+            second = write_receipt(allowlist, payload)
+            self.assertNotEqual(first, second)
+            self.assertEqual(json.loads(first.read_text()), payload)
+            self.assertEqual(first.stat().st_mode & 0o777, 0o600)

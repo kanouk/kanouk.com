@@ -33,7 +33,7 @@ StudioからD1/R2へ直接書き込みません。標準のEmDash管理画面は
 
 - Content REST API: 一覧、取得、作成、`_rev`付き下書き更新、公開
 - Media REST API: アップロード、SHA重複排除、`includeUsage=1`、個別usage
-- plugin storage: 一括編集、アップロード、移動、並べ替え、位置情報除去の操作レシート
+- plugin storage: ブラウザ管理画面の一括編集、アップロード、移動、並べ替えの操作レシート
 - 管理画面拡張: Public Photosの派生サムネイル、タイトル/キャプション、アルバム、要確認、状態/更新列と、Album内写真パネル
 
 EmDash固有のresponse envelopeは`src/studio/api.ts`で吸収します。競合は409として扱い、無言で上書きしません。一括処理は各対象を最新`_rev`で再取得し、失敗分だけを選択状態に残します。
@@ -73,7 +73,8 @@ allowlistの形式は`{"photo_ids":["..."]}`です。applyは次をfail-closed�
 - 新しいMediaの埋め込みGPSが空
 - CMSの緯度・経度・高度とsource metadata内のlocation/GPSが空
 - 既に公開済みだった写真は再公開し、公開Mediaと公開ページを読み戻す
-- 旧Mediaは削除せず保持し、操作レシートを残す
+- 旧Mediaは削除せず保持する
+- EmDashの移行用PATへ`admin`権限を追加せず、allowlistと同じ場所へ権限`0600`のJSON操作レシートを原子的に保存する
 
 この運用ツールは認証情報で固定されたEmDash環境だけを操作し、D1へ直接書きません。対象ID、成功・失敗、操作IDを残し、失敗したIDだけのallowlistで安全に再開できます。
 
