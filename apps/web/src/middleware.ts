@@ -5,6 +5,7 @@ const BLOG_HOSTS = new Set(["blog.kanouk.com", "blog-staging.kanouk.com"]);
 
 const PHOTO_ROUTE = /^\/(?:albums|p|photos|media)(?:\/|$)/;
 const BLOG_ROUTE = /^\/(?:posts|pages|category|tag|archives)(?:\/|$)/;
+const PUBLIC_MEDIA_READ_ROUTE = /^\/_emdash\/api\/media\/file\//;
 
 async function filteredSitemapIndex(response: Response, photoHost: boolean) {
 	if (!response.ok) return response;
@@ -47,6 +48,12 @@ function appendVaryHeader(response: Response, value: string) {
 export const onRequest = defineMiddleware(async (context, next) => {
 	const isPhotoHost = PHOTO_HOSTS.has(context.url.hostname);
 	const isBlogHost = BLOG_HOSTS.has(context.url.hostname);
+	const blogOrigin = context.url.hostname === "photos-staging.kanouk.com"
+		? "https://blog-staging.kanouk.com"
+		: "https://blog.kanouk.com";
+	const photoOrigin = context.url.hostname === "blog-staging.kanouk.com"
+		? "https://photos-staging.kanouk.com"
+		: "https://photos.kanouk.com";
 	const crossHostRedirect = (target: string) => {
 		// Route rules are path-based while this Worker serves both hosts. A cached
 		// redirect for /albums on the blog host must never become the /albums
@@ -57,21 +64,45 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		response.headers.set("Cache-Control", "private, no-store");
 		return response;
 	};
+	const privateNotFound = () => {
+		context.cache.set(false);
+		const response = new Response("Not Found", {
+			status: 404,
+			headers: { "Cache-Control": "private, no-store" },
+		});
+		appendVaryHeader(response, "Host");
+		return response;
+	};
 	const requestHasPrivateState =
 		!new Set(["GET", "HEAD"]).has(context.request.method) ||
 		Boolean(context.request.headers.get("authorization")) ||
 		Boolean(context.cookies.get("astro-session")) ||
-		Boolean(context.cookies.get("studio-photo-session")) ||
 		context.cookies.get("emdash-edit-mode")?.value === "true" ||
 		context.url.searchParams.has("_preview") ||
 		new Set(["/search", "/photo-search"]).has(context.url.pathname) ||
 		context.url.pathname.startsWith("/_emdash/");
 	if (isPhotoHost && BLOG_ROUTE.test(context.url.pathname)) {
-		return crossHostRedirect(`https://blog.kanouk.com${context.url.pathname}${context.url.search}`);
+		return crossHostRedirect(`${blogOrigin}${context.url.pathname}${context.url.search}`);
+	}
+	if (isPhotoHost && context.url.pathname.startsWith("/_emdash/")) {
+		if (
+			PUBLIC_MEDIA_READ_ROUTE.test(context.url.pathname) &&
+			new Set(["GET", "HEAD"]).has(context.request.method)
+		) {
+			// The Worker validates that the key belongs to an allowed live Photo
+			// before this read-only route reaches EmDash media delivery.
+		} else if (
+			context.url.pathname.startsWith("/_emdash/admin") &&
+			new Set(["GET", "HEAD"]).has(context.request.method)
+		) {
+			return crossHostRedirect(`${blogOrigin}${context.url.pathname}${context.url.search}`);
+		} else {
+			return privateNotFound();
+		}
 	}
 	if (isBlogHost && (PHOTO_ROUTE.test(context.url.pathname) || context.url.pathname === "/photo-search")) {
 		const pathname = context.url.pathname === "/photo-search" ? "/search" : context.url.pathname;
-		return crossHostRedirect(`https://photos.kanouk.com${pathname}${context.url.search}`);
+		return crossHostRedirect(`${photoOrigin}${pathname}${context.url.search}`);
 	}
 	const response = isPhotoHost && context.url.pathname === "/"
 		? await context.rewrite("/albums")

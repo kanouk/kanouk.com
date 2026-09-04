@@ -7,7 +7,7 @@ import { formsPlugin } from "@emdash-cms/plugin-forms";
 import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 import { yohakuContentBlocks } from "yohaku-content-blocks";
-import { yohakuPhotoStudio } from "./src/studio/plugin";
+import { yohakuPhotoTools } from "./src/studio/plugin";
 
 export default defineConfig({
 	output: "server",
@@ -52,7 +52,7 @@ export default defineConfig({
 				plugins: [
 					formsPlugin(),
 					yohakuContentBlocks(),
-					yohakuPhotoStudio(),
+					yohakuPhotoTools(),
 					cloudflareEmail({
 						from: { email: "no-reply@mail.kanouk.com", name: "カノログ" },
 					}),

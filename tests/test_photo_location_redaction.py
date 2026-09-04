@@ -6,6 +6,7 @@ import unittest
 from scripts.migration.redact_photo_locations import (
     RedactionError,
     load_allowlist,
+    reviewed_metadata,
     scrub_location,
     write_receipt,
 )
@@ -23,6 +24,13 @@ class PhotoLocationRedactionTests(unittest.TestCase):
             "camera": "X100",
             "exif": {"ISO": 200},
             "nested": [{"caption": "keep"}],
+        })
+
+    def test_reviewed_metadata_marks_clean_after_removing_location(self):
+        self.assertEqual(reviewed_metadata({"exif": {"GPSLatitude": 35.0}, "camera": "X100"}), {
+            "exif": {},
+            "camera": "X100",
+            "location_review": "clean",
         })
 
     def test_allowlist_must_be_explicit_and_deduplicated(self):

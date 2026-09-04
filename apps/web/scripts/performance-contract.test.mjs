@@ -19,7 +19,7 @@ test("public HTML routes have an edge cache with private-state bypasses", async 
 	assert.match(middleware, /appendVaryHeader\(routedResponse, "Host"\)/);
 	assert.match(middleware, /const crossHostRedirect/);
 	assert.match(middleware, /crossHostRedirect[\s\S]*context\.cache\.set\(false\)[\s\S]*Cache-Control", "private, no-store"/);
-	assert.match(middleware, /return crossHostRedirect\(`https:\/\/photos\.kanouk\.com/);
+	assert.match(middleware, /return crossHostRedirect\(`\$\{photoOrigin\}/);
 });
 
 test("public pages prefer local Noto Sans JP without route-blocking font bundles", async () => {
