@@ -51,6 +51,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		!new Set(["GET", "HEAD"]).has(context.request.method) ||
 		Boolean(context.request.headers.get("authorization")) ||
 		Boolean(context.cookies.get("astro-session")) ||
+		Boolean(context.cookies.get("studio-photo-session")) ||
 		context.cookies.get("emdash-edit-mode")?.value === "true" ||
 		context.url.searchParams.has("_preview") ||
 		new Set(["/search", "/photo-search"]).has(context.url.pathname) ||
