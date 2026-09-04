@@ -169,6 +169,13 @@ def image_data_hash(snapshot: Mapping[str, Any]) -> str:
     return value
 
 
+def reviewed_metadata(value: Any) -> dict[str, Any]:
+    cleaned = scrub_location(value)
+    metadata = cleaned if isinstance(cleaned, dict) else {}
+    metadata["location_review"] = "clean"
+    return metadata
+
+
 def has_embedded_location(snapshot: Mapping[str, Any]) -> bool:
     return any(
         normalized_key(str(key)) in LOCATION_KEYS or normalized_key(str(key)).startswith("gps")
@@ -293,7 +300,7 @@ def redact_one(photo_id: str, token: str, apply: bool) -> dict[str, Any]:
         download(source_url, token, source)
         strip_location(source, output)
         uploaded = multipart_upload(output, token, str(data.get("alt") or ""))
-    updated_metadata = scrub_location(data.get("source_metadata"))
+    updated_metadata = reviewed_metadata(data.get("source_metadata"))
     patch = {
         "image": media_value(uploaded, str(data.get("alt") or "")),
         "latitude": None,

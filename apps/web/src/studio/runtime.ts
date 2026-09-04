@@ -11,7 +11,7 @@ type AuditInput = {
 
 export function createPlugin() {
 	return definePlugin({
-		id: "yohaku-photo-studio",
+		id: "yohaku-photo-tools",
 		version: "1.0.0",
 		capabilities: ["content:read", "content:write", "media:read", "media:write"],
 		storage: {

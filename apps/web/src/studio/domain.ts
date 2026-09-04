@@ -1,10 +1,10 @@
-export type StudioContentData = Record<string, unknown>;
+export type PhotoContentData = Record<string, unknown>;
 
 export type ReviewFlag =
 	| "missing-caption"
 	| "missing-alt"
 	| "has-location"
-	| "broken-media"
+	| "location-unreviewed"
 	| "unpublished";
 
 export type BulkTextMode = "overwrite" | "prepend" | "append";
@@ -22,12 +22,6 @@ const LOCATION_KEYS = new Set([
 
 export function textValue(value: unknown): string {
 	return typeof value === "string" ? value.trim() : "";
-}
-
-export function mediaId(value: unknown): string | null {
-	if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-	const id = (value as Record<string, unknown>).id;
-	return typeof id === "string" && id ? id : null;
 }
 
 export function mediaUrl(value: unknown): string | null {
@@ -78,8 +72,8 @@ export function containsLocationMetadata(value: unknown, depth = 0): boolean {
 }
 
 export function photoReviewFlags(
-	data: StudioContentData,
-	options: { status?: string; knownMediaIds?: ReadonlySet<string> } = {},
+	data: PhotoContentData,
+	options: { status?: string } = {},
 ): ReviewFlag[] {
 	const flags: ReviewFlag[] = [];
 	if (!textValue(data.caption)) flags.push("missing-caption");
@@ -94,12 +88,17 @@ export function photoReviewFlags(
 	) {
 		flags.push("has-location");
 	}
-	const imageId = mediaId(data.image);
-	if (options.knownMediaIds && (!imageId || !options.knownMediaIds.has(imageId))) {
-		flags.push("broken-media");
-	}
+	if (needsLocationReview(data)) flags.push("location-unreviewed");
 	if (options.status && options.status !== "published") flags.push("unpublished");
 	return flags;
+}
+
+export function needsLocationReview(value: unknown): boolean {
+	if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+	const data = value as Record<string, unknown>;
+	if (!data.source_metadata || typeof data.source_metadata !== "object" || Array.isArray(data.source_metadata)) return false;
+	const metadata = data.source_metadata as Record<string, unknown>;
+	return metadata.photo_organizer_upload === true && metadata.location_review !== "clean";
 }
 
 export function applyBulkText(
@@ -108,21 +107,20 @@ export function applyBulkText(
 	mode: BulkTextMode,
 ): string {
 	const existing = textValue(current);
-	const next = value.trim();
-	if (mode === "overwrite") return next;
-	if (!next) return existing;
-	if (!existing) return next;
-	return mode === "prepend" ? `${next}${existing}` : `${existing}${next}`;
+	if (mode === "overwrite") return value.trim();
+	if (!value.trim()) return existing;
+	if (!existing) return value.trim();
+	return mode === "prepend" ? `${value}${existing}` : `${existing}${value}`;
 }
 
 export function applyBulkPatch(
-	data: StudioContentData,
+	data: PhotoContentData,
 	patch: {
 		caption?: { value: string; mode: BulkTextMode };
 		alt?: { value: string; mode: BulkTextMode };
 		album?: string;
 	},
-): StudioContentData {
+): PhotoContentData {
 	const next = { ...data };
 	if (patch.caption) next.caption = applyBulkText(data.caption, patch.caption.value, patch.caption.mode);
 	if (patch.alt) next.alt = applyBulkText(data.alt, patch.alt.value, patch.alt.mode);
@@ -134,33 +132,19 @@ export function sparsePositions(count: number, step = 1024): number[] {
 	return Array.from({ length: Math.max(0, count) }, (_, index) => (index + 1) * step);
 }
 
-export function duplicateGroups<T>(
-	items: readonly T[],
-	identity: (item: T) => string | null | undefined,
-): T[][] {
-	const grouped = new Map<string, T[]>();
-	for (const item of items) {
-		const key = identity(item)?.trim();
-		if (!key) continue;
-		const group = grouped.get(key) ?? [];
-		group.push(item);
-		grouped.set(key, group);
-	}
-	return [...grouped.values()].filter((group) => group.length > 1);
-}
-
-export function sanitizeReturnTo(value: unknown): string {
-	if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//")) {
-		return "/albums";
-	}
-	try {
-		const parsed = new URL(value, "https://photos.kanouk.com");
-		return parsed.origin === "https://photos.kanouk.com"
-			? `${parsed.pathname}${parsed.search}${parsed.hash}`
-			: "/albums";
-	} catch {
-		return "/albums";
-	}
+export function compareCapturedAt(
+	left: unknown,
+	right: unknown,
+	leftPosition = 0,
+	rightPosition = 0,
+	leftId = "",
+	rightId = "",
+): number {
+	const leftTime = Date.parse(textValue(left));
+	const rightTime = Date.parse(textValue(right));
+	const normalizedLeft = Number.isFinite(leftTime) ? leftTime : Number.POSITIVE_INFINITY;
+	const normalizedRight = Number.isFinite(rightTime) ? rightTime : Number.POSITIVE_INFINITY;
+	return normalizedLeft - normalizedRight || leftPosition - rightPosition || leftId.localeCompare(rightId);
 }
 
 export function filenameTitle(filename: string): string {

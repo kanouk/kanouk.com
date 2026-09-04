@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getEmDashEntry } from "emdash";
+import { needsLocationReview } from "../../studio/domain";
 
 export const prerender = false;
 
@@ -8,6 +9,12 @@ export const GET: APIRoute = async ({ params, url }) => {
 	if (!slug) return new Response("Not found", { status: 404 });
 
 	const { entry: photo } = await getEmDashEntry("photos", slug);
+	if (photo && needsLocationReview(photo.data ?? {})) {
+		return new Response("Location metadata review required", {
+			status: 409,
+			headers: { "Cache-Control": "private, no-store" },
+		});
+	}
 	const media = (photo?.data.kind === "video" ? photo.data.video : photo?.data.image) as
 		| { meta?: { storageKey?: unknown } }
 		| null
