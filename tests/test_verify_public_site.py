@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 
 MODULE_PATH = Path(__file__).parents[1] / "scripts/migration/verify_public_site.py"
@@ -52,6 +53,31 @@ class VerifyPublicSiteTests(unittest.TestCase):
     def test_responsive_media_url_rejects_the_retired_v1_route(self) -> None:
         html = '<img src="/_yohaku/media/preview-v1/item.jpg">'
         self.assertIsNone(module.responsive_media_url(html))
+
+    def test_stylesheet_contract_allows_plugin_css_without_theme_tokens(self) -> None:
+        html = (
+            '<link rel="stylesheet" href="/_astro/theme.css">'
+            '<link rel="stylesheet" href="/_astro/plugin.css">'
+        )
+        responses = [
+            (200, {"Content-Type": "text/css"}, b":root{--paper:#fff}" + b" " * 1024, 1),
+            (200, {"Content-Type": "text/css"}, b".plugin{color:blue}" + b" " * 1024, 1),
+        ]
+        checks = []
+        with patch.object(module, "fetch", side_effect=responses):
+            module.add_stylesheet_check(checks, base_url="https://example.com/", html=html)
+        self.assertTrue(all(check.ok for check in checks))
+        self.assertEqual(checks[-1].name, "design-theme-contract")
+
+    def test_stylesheet_contract_fails_when_no_css_has_theme_tokens(self) -> None:
+        html = '<link rel="stylesheet" href="/_astro/plugin.css">'
+        response = (200, {"Content-Type": "text/css"}, b".plugin{color:blue}" + b" " * 1024, 1)
+        checks = []
+        with patch.object(module, "fetch", return_value=response):
+            module.add_stylesheet_check(checks, base_url="https://example.com/", html=html)
+        self.assertTrue(checks[0].ok)
+        self.assertFalse(checks[-1].ok)
+        self.assertIn("missing", checks[-1].detail)
 
 
 if __name__ == "__main__":
