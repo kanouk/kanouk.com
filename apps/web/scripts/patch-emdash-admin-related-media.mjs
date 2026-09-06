@@ -5,6 +5,9 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const PATCH_MARKER = "emdash-kanouk-related-media-picker-v1";
 const VISUAL_PICKER_MARKER = "emdash-kanouk-related-media-visual-picker-v2";
 const DISTRIBUTED_CSS_MARKER = "emdash-kanouk-related-media-distributed-css-v3";
+const LINK_PREVIEW_MARKER = "emdash-kanouk-link-preview-v4";
+const LINK_PREVIEW_SAFE_MARKER = "emdash-kanouk-link-preview-safe-v5";
+const LINK_PREVIEW_HTTPS_MARKER = "emdash-kanouk-link-preview-https-v6";
 
 function replaceExactly(source, before, after, expectedCount = 1) {
   const count = source.split(before).length - 1;
@@ -285,11 +288,292 @@ function upgradeForDistributedAdminCss(source) {
   return patched;
 }
 
+function upgradeLinkCardPreview(source) {
+  let patched = replaceExactly(
+    source,
+    "function PluginBlockModal({ block, initialValues, defaultValues, onClose, onInsert }) {\n\tconst [formValues, setFormValues] = React$1.useState({});\n\tconst inputRef = React$1.useRef(null);",
+    `/* ${LINK_PREVIEW_MARKER} */
+function PluginBlockModal({ block, initialValues, defaultValues, onClose, onInsert }) {
+\tconst [formValues, setFormValues] = React$1.useState({});
+\tconst inputRef = React$1.useRef(null);
+\tconst [linkPreviewState, setLinkPreviewState] = React$1.useState({ status: "idle", message: "" });
+\tconst linkPreviewRequestRef = React$1.useRef(0);
+\tconst linkPreviewManualFieldsRef = React$1.useRef(/* @__PURE__ */ new Set());
+\tconst linkPreviewPreviousUrlRef = React$1.useRef("");`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\tReact$1.useEffect(() => {
+\t\tif (block) {
+\t\t\tsetFormValues(buildPluginBlockFormValues(block, initialValues ?? defaultValues));
+\t\t\tif (!block.fields || block.fields.length === 0) setTimeout(() => inputRef.current?.focus(), 0);
+\t\t}
+\t}, [block, initialValues, defaultValues]);`,
+    `\tReact$1.useEffect(() => {
+\t\tif (block) {
+\t\t\tconst nextValues = buildPluginBlockFormValues(block, initialValues ?? defaultValues);
+\t\t\tsetFormValues(nextValues);
+\t\t\tsetLinkPreviewState({ status: "idle", message: "" });
+\t\t\tlinkPreviewRequestRef.current++;
+\t\t\tlinkPreviewPreviousUrlRef.current = typeof nextValues.id === "string" ? nextValues.id.trim() : "";
+\t\t\tlinkPreviewManualFieldsRef.current = /* @__PURE__ */ new Set(block.type === "yohaku.linkCard" ? ["title", "description", "imageUrl"].filter((key) => typeof initialValues?.[key] === "string" && initialValues[key].trim()) : []);
+\t\t\tif (!block.fields || block.fields.length === 0) setTimeout(() => inputRef.current?.focus(), 0);
+\t\t}
+\t}, [block, initialValues, defaultValues]);`,
+  );
+  patched = replaceExactly(
+    patched,
+    "\t}, [block, initialValues, defaultValues]);\n\tconst handleSubmit = (e) => {",
+    `\t}, [block, initialValues, defaultValues]);
+\tReact$1.useEffect(() => {
+\t\tif (block?.type !== "yohaku.linkCard" || !block.pluginId) return;
+\t\tconst url = typeof formValues.id === "string" ? formValues.id.trim() : "";
+\t\tconst requestVersion = ++linkPreviewRequestRef.current;
+\t\tlet parsed;
+\t\ttry {
+\t\t\tparsed = new URL(url);
+\t\t} catch {
+\t\t\tsetLinkPreviewState(url ? { status: "error", message: "http(s) のURLを入力してください。" } : { status: "idle", message: "" });
+\t\t\treturn;
+\t\t}
+\t\tif (!['http:', 'https:'].includes(parsed.protocol)) {
+\t\t\tsetLinkPreviewState({ status: "error", message: "http(s) のURLを入力してください。" });
+\t\t\treturn;
+\t\t}
+\t\tif (linkPreviewPreviousUrlRef.current && linkPreviewPreviousUrlRef.current !== url) {
+\t\t\tsetFormValues((previous) => {
+\t\t\t\tconst next = { ...previous };
+\t\t\t\tfor (const key of ["title", "description", "imageUrl"]) {
+\t\t\t\t\tif (!linkPreviewManualFieldsRef.current.has(key)) next[key] = "";
+\t\t\t\t}
+\t\t\t\treturn next;
+\t\t\t});
+\t\t}
+\t\tlinkPreviewPreviousUrlRef.current = url;
+\t\tconst controller = new AbortController();
+\t\tconst timer = setTimeout(async () => {
+\t\t\tsetLinkPreviewState({ status: "loading", message: "リンク情報を取得しています…" });
+\t\t\ttry {
+\t\t\t\tconst response = await fetch(\`/_emdash/api/plugins/\${block.pluginId}/link-preview\`, {
+\t\t\t\t\tmethod: "POST",
+\t\t\t\t\theaders: { "Content-Type": "application/json", "X-EmDash-Request": "1" },
+\t\t\t\t\tbody: JSON.stringify({ url }),
+\t\t\t\t\tsignal: controller.signal
+\t\t\t\t});
+\t\t\t\tif (!response.ok) throw new Error(\`リンク情報を取得できませんでした（\${response.status}）\`);
+\t\t\t\tconst body = await response.json();
+\t\t\t\tconst preview = body?.data?.url ? body.data : body?.data?.data ?? body;
+\t\t\t\tif (controller.signal.aborted || requestVersion !== linkPreviewRequestRef.current) return;
+\t\t\t\tsetFormValues((previous) => {
+\t\t\t\t\tconst next = { ...previous };
+\t\t\t\t\tfor (const key of ["title", "description", "imageUrl"]) {
+\t\t\t\t\t\tif (!linkPreviewManualFieldsRef.current.has(key) && typeof preview?.[key] === "string") next[key] = preview[key];
+\t\t\t\t\t}
+\t\t\t\t\treturn next;
+\t\t\t\t});
+\t\t\t\tsetLinkPreviewState({ status: "success", message: "リンク情報を取得しました。必要なら編集できます。" });
+\t\t\t} catch (cause) {
+\t\t\t\tif (controller.signal.aborted || requestVersion !== linkPreviewRequestRef.current) return;
+\t\t\t\tsetLinkPreviewState({ status: "error", message: cause instanceof Error ? cause.message : "リンク情報を取得できませんでした。手動で入力できます。" });
+\t\t\t}
+\t\t}, 500);
+\t\treturn () => {
+\t\t\tclearTimeout(timer);
+\t\t\tcontroller.abort();
+\t\t\tlinkPreviewRequestRef.current++;
+\t\t};
+\t}, [block?.type, block?.pluginId, formValues.id]);
+\tconst handleSubmit = (e) => {`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\tconst handleFieldChange = (actionId, value) => {
+\t\tsetFormValues((prev) => ({`,
+    `\tconst handleFieldChange = (actionId, value) => {
+\t\tif (block?.type === "yohaku.linkCard" && ["title", "description", "imageUrl"].includes(actionId)) linkPreviewManualFieldsRef.current.add(actionId);
+\t\tsetFormValues((prev) => ({`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\tchildren: hasFields ? block.fields.map((field) => /* @__PURE__ */ jsx(BlockKitField, {
+\t\t\t\t\t\tfield,
+\t\t\t\t\t\tpluginId: block.pluginId,
+\t\t\t\t\t\tvalue: formValues[field.action_id],
+\t\t\t\t\t\tformValues,
+\t\t\t\t\t\tonPatch: handleFormPatch,
+\t\t\t\t\t\tonChange: handleFieldChange
+\t\t\t\t\t}, field.action_id)) : /* @__PURE__ */ jsx(Input, {`,
+    `\t\t\t\t\tchildren: [hasFields ? block.fields.map((field) => /* @__PURE__ */ jsx(BlockKitField, {
+\t\t\t\t\t\tfield,
+\t\t\t\t\t\tpluginId: block.pluginId,
+\t\t\t\t\t\tvalue: formValues[field.action_id],
+\t\t\t\t\t\tformValues,
+\t\t\t\t\t\tonPatch: handleFormPatch,
+\t\t\t\t\t\tonChange: handleFieldChange
+\t\t\t\t\t}, field.action_id)) : /* @__PURE__ */ jsx(Input, {`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\t\tvalue: typeof formValues.id === "string" ? formValues.id : "",
+\t\t\t\t\t\tonChange: (e) => handleFieldChange("id", e.target.value)
+\t\t\t\t\t})
+\t\t\t\t}),`,
+    `\t\t\t\t\t\tvalue: typeof formValues.id === "string" ? formValues.id : "",
+\t\t\t\t\t\tonChange: (e) => handleFieldChange("id", e.target.value)
+\t\t\t\t\t}), block?.type === "yohaku.linkCard" && linkPreviewState.message ? /* @__PURE__ */ jsx("p", {
+\t\t\t\t\t\trole: linkPreviewState.status === "error" ? "alert" : "status",
+\t\t\t\t\t\tclassName: linkPreviewState.status === "error" ? "text-sm text-kumo-danger" : "text-sm text-kumo-subtle",
+\t\t\t\t\t\tchildren: linkPreviewState.message
+\t\t\t\t\t}) : null, block?.type === "yohaku.linkCard" && typeof formValues.imageUrl === "string" && formValues.imageUrl.trim() ? /* @__PURE__ */ jsx("img", {
+\t\t\t\t\t\tsrc: formValues.imageUrl.trim(),
+\t\t\t\t\t\talt: "リンク先のプレビュー画像",
+\t\t\t\t\t\tloading: "lazy",
+\t\t\t\t\t\treferrerPolicy: "no-referrer",
+\t\t\t\t\t\tclassName: "max-h-48 w-full rounded-md border border-kumo-line object-cover"
+\t\t\t\t\t}) : null]
+\t\t\t\t}),`,
+  );
+  return patched;
+}
+
+function upgradeLinkCardPreviewSafety(source) {
+  let patched = replaceExactly(
+    source,
+    `/* ${LINK_PREVIEW_MARKER} */`,
+    `/* ${LINK_PREVIEW_MARKER} */\n/* ${LINK_PREVIEW_SAFE_MARKER} */`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\tconst requestVersion = ++linkPreviewRequestRef.current;
+\t\tlet parsed;
+\t\ttry {`,
+    `\t\tconst requestVersion = ++linkPreviewRequestRef.current;
+\t\tif (linkPreviewPreviousUrlRef.current && linkPreviewPreviousUrlRef.current !== url) {
+\t\t\tsetFormValues((previous) => {
+\t\t\t\tconst next = { ...previous };
+\t\t\t\tfor (const key of ["title", "description", "imageUrl"]) {
+\t\t\t\t\tif (!linkPreviewManualFieldsRef.current.has(key)) next[key] = "";
+\t\t\t\t}
+\t\t\t\treturn next;
+\t\t\t});
+\t\t}
+\t\tlinkPreviewPreviousUrlRef.current = url;
+\t\tlet parsed;
+\t\ttry {`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\tif (linkPreviewPreviousUrlRef.current && linkPreviewPreviousUrlRef.current !== url) {
+\t\t\tsetFormValues((previous) => {
+\t\t\t\tconst next = { ...previous };
+\t\t\t\tfor (const key of ["title", "description", "imageUrl"]) {
+\t\t\t\t\tif (!linkPreviewManualFieldsRef.current.has(key)) next[key] = "";
+\t\t\t\t}
+\t\t\t\treturn next;
+\t\t\t});
+\t\t}
+\t\tlinkPreviewPreviousUrlRef.current = url;
+\t\tconst controller = new AbortController();`,
+    `\t\tconst controller = new AbortController();`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\tconst isYohakuAlbum = blockType === "yohaku.album";
+\tconst mediaImageUrl = isYohakuPhoto && typeof data.imageUrl === "string" ? data.imageUrl : "";
+\tconst mediaTitle = isYohakuAlbum && typeof data.albumTitleSnapshot === "string" ? data.albumTitleSnapshot : isYohakuPhoto && typeof data.caption === "string" && data.caption ? data.caption : isYohakuPhoto && typeof data.alt === "string" ? data.alt : "";`,
+    `\tconst isYohakuAlbum = blockType === "yohaku.album";
+\tconst isYohakuLinkCard = blockType === "yohaku.linkCard";
+\tconst mediaImageUrl = (isYohakuPhoto || isYohakuLinkCard) && typeof data.imageUrl === "string" ? data.imageUrl : "";
+\tconst mediaTitle = isYohakuAlbum && typeof data.albumTitleSnapshot === "string" ? data.albumTitleSnapshot : isYohakuLinkCard && typeof data.title === "string" ? data.title : isYohakuPhoto && typeof data.caption === "string" && data.caption ? data.caption : isYohakuPhoto && typeof data.alt === "string" ? data.alt : "";`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\t\t\t\tsrc: mediaImageUrl,
+\t\t\t\t\t\t\t\talt: "",
+\t\t\t\t\t\t\t\tclassName: "h-full w-full object-cover"`,
+    `\t\t\t\t\t\t\t\tsrc: mediaImageUrl,
+\t\t\t\t\t\t\t\talt: "",
+\t\t\t\t\t\t\t\treferrerPolicy: isYohakuLinkCard ? "no-referrer" : void 0,
+\t\t\t\t\t\t\t\tclassName: "h-full w-full object-cover"`,
+  );
+  return patched;
+}
+
+function upgradeLinkCardPreviewHttps(source) {
+  let patched = replaceExactly(
+    source,
+    `/* ${LINK_PREVIEW_SAFE_MARKER} */`,
+    `/* ${LINK_PREVIEW_SAFE_MARKER} */\n/* ${LINK_PREVIEW_HTTPS_MARKER} */`,
+  );
+  patched = replaceExactly(
+    patched,
+    '\tconst [linkPreviewState, setLinkPreviewState] = React$1.useState({ status: "idle", message: "" });',
+    '\tconst [linkPreviewState, setLinkPreviewState] = React$1.useState({ status: "idle", message: "" });\n\tconst [linkPreviewRefreshNonce, setLinkPreviewRefreshNonce] = React$1.useState(0);',
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\tlet parsed;
+\t\ttry {
+\t\t\tparsed = new URL(url);
+\t\t} catch {
+\t\t\tsetLinkPreviewState(url ? { status: "error", message: "http(s) のURLを入力してください。" } : { status: "idle", message: "" });
+\t\t\treturn;
+\t\t}
+\t\tif (!['http:', 'https:'].includes(parsed.protocol)) {
+\t\t\tsetLinkPreviewState({ status: "error", message: "http(s) のURLを入力してください。" });
+\t\t\treturn;
+\t\t}`,
+    `\t\tconst previewUrl = url.startsWith("/") && !url.startsWith("//") ? new URL(url, "https://blog.kanouk.com").href : url;
+\t\tlet parsed;
+\t\ttry {
+\t\t\tparsed = new URL(previewUrl);
+\t\t} catch {
+\t\t\tsetLinkPreviewState(url ? { status: "error", message: "https URL またはサイト内パスを入力してください。" } : { status: "idle", message: "" });
+\t\t\treturn;
+\t\t}
+\t\tif (parsed.protocol !== "https:") {
+\t\t\tsetLinkPreviewState({ status: "error", message: "リンク情報は https URL から取得できます。" });
+\t\t\treturn;
+\t\t}`,
+  );
+  patched = replaceExactly(
+    patched,
+    '\t\t\t\t\tbody: JSON.stringify({ url }),',
+    '\t\t\t\t\tbody: JSON.stringify({ url: previewUrl }),',
+  );
+  patched = replaceExactly(
+    patched,
+    '\t}, [block?.type, block?.pluginId, formValues.id]);',
+    '\t}, [block?.type, block?.pluginId, formValues.id, linkPreviewRefreshNonce]);',
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\t}), block?.type === "yohaku.linkCard" && linkPreviewState.message ? /* @__PURE__ */ jsx("p", {`,
+    `\t\t\t\t\t}), block?.type === "yohaku.linkCard" && typeof formValues.id === "string" && formValues.id.trim() ? /* @__PURE__ */ jsx(Button, {
+\t\t\t\t\t\ttype: "button",
+\t\t\t\t\t\tvariant: "ghost",
+\t\t\t\t\t\tdisabled: linkPreviewState.status === "loading",
+\t\t\t\t\t\tonClick: () => setLinkPreviewRefreshNonce((value) => value + 1),
+\t\t\t\t\t\tchildren: linkPreviewState.status === "loading" ? "リンク情報を取得中…" : "リンク情報を再取得"
+\t\t\t\t\t}) : null, block?.type === "yohaku.linkCard" && linkPreviewState.message ? /* @__PURE__ */ jsx("p", {`,
+  );
+  return patched;
+}
+
 export function patchEmDashRelatedMediaSource(source) {
-  if (source.includes(DISTRIBUTED_CSS_MARKER)) return source;
-  if (source.includes(VISUAL_PICKER_MARKER)) return upgradeForDistributedAdminCss(source);
+  if (source.includes(LINK_PREVIEW_HTTPS_MARKER)) return source;
+  if (source.includes(LINK_PREVIEW_SAFE_MARKER)) return upgradeLinkCardPreviewHttps(source);
+  if (source.includes(LINK_PREVIEW_MARKER)) {
+    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(source));
+  }
+  if (source.includes(DISTRIBUTED_CSS_MARKER)) {
+    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(source)));
+  }
+  if (source.includes(VISUAL_PICKER_MARKER)) {
+    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(source))));
+  }
   if (source.includes(PATCH_MARKER)) {
-    return upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(source));
+    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(source)))));
   }
 
   let patched = replaceExactly(
@@ -414,7 +698,7 @@ export function patchEmDashRelatedMediaSource(source) {
     "setPluginBlockInitialValues(void 0);\n\t\t\t\t\t\t\teditingBlockPosRef.current = null;",
     "setPluginBlockInitialValues(void 0);\n\t\t\t\t\t\t\tsetPluginBlockDefaultValues(void 0);\n\t\t\t\t\t\t\teditingBlockPosRef.current = null;",
   );
-  return upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(patched));
+  return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(patched)))));
 }
 
 async function patchInstalledAdmin() {

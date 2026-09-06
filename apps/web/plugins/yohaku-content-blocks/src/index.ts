@@ -1,5 +1,6 @@
 import { definePlugin } from "emdash";
 import type { PluginDescriptor } from "emdash";
+import { linkPreviewRoutes } from "./link-preview-route";
 import { relatedMediaBlocks, relatedMediaRoutes } from "./related-media";
 
 export function yohakuContentBlocks(): PluginDescriptor {
@@ -16,7 +17,7 @@ export function createPlugin() {
 	return definePlugin({
 		id: "yohaku-content-blocks",
 		version: "0.2.0",
-		capabilities: ["content:read"],
+		capabilities: ["content:read", "network:request:unrestricted"],
 		hooks: {
 			"page:metadata": ({ page }) => {
 				if (!page.canonical) return null;
@@ -48,7 +49,7 @@ export function createPlugin() {
 				return { kind: "jsonld", id: "primary", graph };
 			},
 		},
-		routes: relatedMediaRoutes,
+		routes: { ...relatedMediaRoutes, ...linkPreviewRoutes },
 		admin: {
 			portableTextBlocks: [
 				...relatedMediaBlocks,
@@ -117,6 +118,7 @@ export function createPlugin() {
 						{ type: "text_input", action_id: "id", label: "URL" },
 						{ type: "text_input", action_id: "title", label: "タイトル" },
 						{ type: "text_input", action_id: "description", label: "説明" },
+						{ type: "text_input", action_id: "imageUrl", label: "プレビュー画像URL" },
 					],
 				},
 				{

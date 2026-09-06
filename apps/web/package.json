@@ -16,7 +16,7 @@
     "deploy": "astro build && python3 ../../scripts/cloudflare/run_wrangler_kanouk.py deploy",
     "migrate:status": "python3 ../../scripts/cloudflare/run_emdash_migration_kanouk.py --status --json --wrangler-config wrangler.jsonc",
     "test:migration": "node --test scripts/album-order.test.mjs scripts/author-age.test.mjs scripts/emdash-admin-content-url.test.mjs scripts/emdash-related-media.test.mjs scripts/photo-display.test.mjs scripts/photo-grid-size.test.mjs scripts/photo-order.test.mjs scripts/photo-tools-contract.test.mjs scripts/photo-url.test.mjs scripts/performance-contract.test.mjs scripts/public-media-guard.test.mjs scripts/media-access.test.mjs scripts/studio-domain.test.mjs scripts/wordpress/*.test.mjs",
-    "test:ux": "node --test scripts/photo-search-routing.test.mjs scripts/photo-return.test.mjs scripts/album-articles.test.mjs scripts/article-photo-links.test.mjs scripts/legacy-album-cards.test.mjs scripts/public-design.test.mjs scripts/organizer-workflow.test.mjs",
+    "test:ux": "node --test scripts/photo-search-routing.test.mjs scripts/photo-return.test.mjs scripts/album-articles.test.mjs scripts/article-photo-links.test.mjs scripts/legacy-album-cards.test.mjs scripts/public-design.test.mjs scripts/organizer-workflow.test.mjs scripts/article-social.test.mjs scripts/link-preview.test.mjs scripts/link-card-render.test.mjs",
     "typecheck": "astro check"
   },
   "dependencies": {
