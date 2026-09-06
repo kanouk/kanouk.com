@@ -1,10 +1,13 @@
 import {
 	apiFetch,
 	uploadMedia,
-	type ContentItem,
+	type ContentItem as AdminContentItem,
 	type MediaItem as AdminMediaItem,
 } from "@emdash-cms/admin";
 import { filenameTitle } from "./domain";
+import { attachEditingRevision } from "./organizer-workflow";
+
+export type ContentItem = AdminContentItem & { _rev?: string };
 
 export interface ContentEnvelope {
 	item: ContentItem;
@@ -54,6 +57,11 @@ async function unwrap<T>(response: Response): Promise<T> {
 	return payload.data;
 }
 
+async function unwrapContent(response: Response): Promise<ContentEnvelope> {
+	const envelope = await unwrap<ContentEnvelope>(response);
+	return attachEditingRevision(envelope);
+}
+
 export async function contentPage(
 	collection: "photos" | "albums",
 	options: {
@@ -94,7 +102,7 @@ export async function allContent(
 }
 
 export async function getContent(collection: "photos" | "albums", id: string): Promise<ContentEnvelope> {
-	return unwrap<ContentEnvelope>(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}?locale=ja`));
+	return unwrapContent(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}?locale=ja`));
 }
 
 export async function updateDraft(
@@ -103,7 +111,7 @@ export async function updateDraft(
 	_rev: string,
 	data: Record<string, unknown>,
 ): Promise<ContentEnvelope> {
-	return unwrap<ContentEnvelope>(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}?locale=ja`, {
+	return unwrapContent(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}?locale=ja`, {
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ data, _rev }),
@@ -111,11 +119,11 @@ export async function updateDraft(
 }
 
 export async function publishDraft(collection: "photos" | "albums", id: string): Promise<ContentEnvelope> {
-	return unwrap<ContentEnvelope>(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}/publish?locale=ja`, { method: "POST" }));
+	return unwrapContent(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}/publish?locale=ja`, { method: "POST" }));
 }
 
 async function createDraft(collection: "photos" | "albums", data: Record<string, unknown>): Promise<ContentEnvelope> {
-	return unwrap<ContentEnvelope>(await apiFetch(`/_emdash/api/content/${collection}`, {
+	return unwrapContent(await apiFetch(`/_emdash/api/content/${collection}`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ data, status: "draft", locale: "ja" }),

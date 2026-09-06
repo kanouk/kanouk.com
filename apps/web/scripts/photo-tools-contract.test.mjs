@@ -72,6 +72,18 @@ test("album organizer owns upload, reorder, batch edit and aggregate publish", a
 	assert.match(css, /\.photo-tools-content\.is-mobile-info > \.photo-tools-grid-area/);
 });
 
+test("selected photo and album editors save against their hydrated revision", async () => {
+	const admin = await read("../src/studio/admin.tsx");
+	const photoSave = admin.slice(admin.indexOf("const savePhoto"), admin.indexOf("const publishMany"));
+	const albumSave = admin.slice(admin.indexOf("const saveAlbumDraft"), admin.indexOf("const savePhoto"));
+	assert.match(admin, /getContent\("photos", inspectorPhoto\.id\)/);
+	assert.match(admin, /getContent\("albums", selected\.id\)/);
+	assert.match(photoSave, /updateDraft\("photos", photo\.id, photo\._rev/);
+	assert.doesNotMatch(photoSave, /getContent\("photos", photo\.id\)/);
+	assert.match(albumSave, /updateDraft\("albums", album\.id, album\._rev/);
+	assert.doesNotMatch(albumSave, /getContent\("albums", album\.id\)/);
+});
+
 test("public media classifier and authenticated preview cache path fail closed", async () => {
 	const worker = await read("../src/worker.ts");
 	const mediaRoute = await read("../src/pages/media/[slug].ts");

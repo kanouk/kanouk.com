@@ -69,6 +69,48 @@ test("caption navigation advances only after a successful save", () => {
 	assert.equal(workflow.adjacentPhotoId(ids, "third", 1), null);
 });
 
+test("single-item draft hydration replaces live list data and retains its editing revision", () => {
+	const listed = {
+		id: "photo-1",
+		updatedAt: "2026-09-06T01:00:00.000Z",
+		liveRevisionId: "live-1",
+		draftRevisionId: "draft-1",
+		data: { caption: "published caption" },
+	};
+	const hydratedEnvelope = workflow.attachEditingRevision({
+		_rev: "draft-1:baseline",
+		item: { ...listed, data: { caption: "saved draft caption" } },
+	});
+	const hydrated = hydratedEnvelope.item;
+
+	let items = workflow.mergeEditableItems([listed], [hydrated]);
+	assert.equal(items[0].data.caption, "saved draft caption");
+	assert.equal(items[0]._rev, "draft-1:baseline");
+
+	items = workflow.mergeEditableItems(items, [listed]);
+	assert.equal(items[0].data.caption, "saved draft caption", "a later live list page must not undo hydration");
+	assert.equal(items[0]._rev, "draft-1:baseline");
+});
+
+test("a changed draft identity invalidates a previously hydrated editing baseline", () => {
+	const hydrated = {
+		id: "album-1",
+		updatedAt: "2026-09-06T01:00:00.000Z",
+		draftRevisionId: "draft-1",
+		_rev: "draft-1:baseline",
+		data: { title: "hydrated draft" },
+	};
+	const changedListItem = {
+		...hydrated,
+		draftRevisionId: "draft-2",
+		_rev: undefined,
+		data: { title: "published title" },
+	};
+	const [result] = workflow.mergeEditableItems([hydrated], [changedListItem]);
+	assert.equal(result._rev, undefined);
+	assert.equal(result.draftRevisionId, "draft-2");
+});
+
 test("caption-only saves omit an absent or untouched captured_at value", () => {
 	const empty = workflow.preparePhotoDraftPatch(undefined, {
 		title: "Title",

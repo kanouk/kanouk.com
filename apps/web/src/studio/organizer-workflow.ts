@@ -2,6 +2,43 @@ export const PUBLIC_IMAGE_WIDTHS = [320, 480, 768, 1200, 1600] as const;
 
 export type PublicImageWidth = typeof PUBLIC_IMAGE_WIDTHS[number];
 
+export interface EditableListItem {
+	id: string;
+	updatedAt?: string | null;
+	draftRevisionId?: string | null;
+	_rev?: string;
+}
+
+export function attachEditingRevision<T extends EditableListItem>(
+	envelope: { item: T; _rev: string },
+): { item: T; _rev: string } {
+	return { ...envelope, item: { ...envelope.item, _rev: envelope._rev } };
+}
+
+/**
+ * A collection list contains live data, while a single-item GET overlays its draft.
+ * Keep that hydrated item until the list reports a different draft revision.
+ */
+export function mergeEditableItems<T extends EditableListItem>(
+	current: readonly T[],
+	incoming: readonly T[],
+): T[] {
+	const merged = new Map(current.map((item) => [item.id, item]));
+	for (const item of incoming) {
+		const existing = merged.get(item.id);
+		if (!existing || item._rev) {
+			merged.set(item.id, item);
+			continue;
+		}
+		if (existing._rev) {
+			if (existing.draftRevisionId !== item.draftRevisionId) merged.set(item.id, item);
+			continue;
+		}
+		if (String(item.updatedAt ?? "") > String(existing.updatedAt ?? "")) merged.set(item.id, item);
+	}
+	return [...merged.values()];
+}
+
 export type UploadStage =
 	| "queued"
 	| "uploading-media"

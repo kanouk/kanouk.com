@@ -21,6 +21,7 @@ Implementation scope: issues #56, #57, #58; approved direction in #49.
 - Clean `npm ci`: both EmDash admin patches apply; related-media tests pass against the freshly installed bundle.
 - Real local WYSIWYG: select a photo, set article-only caption, 420px width and border, save and reopen; all values persist. YouTube caption persistence confirmed in the saved revision.
 - Real local Organizer: caption-only save on a photo without a date succeeds and advances to the next photo. Failure leaves the input intact.
+- Draft readback follow-up: selected Album and Photo load their editing revision before accepting edits. Save-and-next followed by a full browser reload retains the new caption. Saves use the loaded revision; a real local API test confirms a stale revision returns 409 without replacing the first save.
 - Local API upload smoke: Media and draft Photo created; anonymous raw/preview requests return 404, authenticated requests return 200 with private/no-store, unreviewed publication returns 409.
 - Public local navigation: photo 7 → photo 8 → close restores album anchor and focus to photo 7. Draft photos and draft reverse article links are excluded.
 - Mobile article: 390px viewport has no horizontal overflow; H3/H4 are distinct and the YouTube caption is visible.

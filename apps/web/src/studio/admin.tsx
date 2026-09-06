@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import type {
 	ContentEditorPanelContext,
 	ContentEditorPanelExtension,
-	ContentItem,
 	ContentListColumnCellContext,
 	ContentListColumnExtension,
 } from "@emdash-cms/admin";
@@ -17,6 +16,7 @@ import {
 	updateDraft,
 	uploadPhotoMedia,
 	type PhotoMediaItem,
+	type ContentItem,
 } from "./api";
 import {
 	applyBulkPatch,
@@ -39,6 +39,7 @@ import {
 	isUploadQueueRetryable,
 	isUploadQueueSettled,
 	dateTimeLocalInputValue,
+	mergeEditableItems,
 	preparePhotoDraftPatch,
 	publicImageVariantPath,
 	retryFailedUploadQueue,
@@ -74,15 +75,6 @@ const FLAG_LABELS: Record<ReviewFlag, string> = {
 
 function dataOf(item: ContentItem): Record<string, unknown> {
 	return item.data ?? {};
-}
-
-function mergeContentItems(current: ContentItem[], incoming: readonly ContentItem[]): ContentItem[] {
-	const merged = new Map(current.map((item) => [item.id, item]));
-	for (const item of incoming) {
-		const existing = merged.get(item.id);
-		if (!existing || String(item.updatedAt ?? "") > String(existing.updatedAt ?? "")) merged.set(item.id, item);
-	}
-	return [...merged.values()];
 }
 
 function labelOf(item: ContentItem): string {
@@ -378,12 +370,19 @@ function AlbumOrganizer({
 	const [undoMove, setUndoMove] = useState<Array<{ id: string; album: string; position: number }> | null>(null);
 	const [mobilePane, setMobilePane] = useState<"photos" | "info">("photos");
 	const [photoDraftDirty, setPhotoDraftDirty] = useState(false);
+	const [photoHydration, setPhotoHydration] = useState<{ identity: string; status: "loading" | "ready" | "error"; error?: unknown } | null>(null);
+	const [photoHydrationRetry, setPhotoHydrationRetry] = useState(0);
+	const photoHydrationSequence = useRef(0);
+	const onPhotoUpdatedRef = useRef(onPhotoUpdated);
 	const [uploadQueue, setUploadQueue] = useState<UploadQueueItem<File, PhotoMediaItem>[]>([]);
 	const [albumDraft, setAlbumDraft] = useState({
 		title: textValue(dataOf(album).title),
 		description: textValue(dataOf(album).description),
 	});
 
+	useEffect(() => {
+		onPhotoUpdatedRef.current = onPhotoUpdated;
+	}, [onPhotoUpdated]);
 	useEffect(() => {
 		setSelectedId(null);
 		setChecked(new Set());
@@ -412,6 +411,31 @@ function AlbumOrganizer({
 	const selectedPhoto = allPhotos.find((photo) => photo.id === selectedId) ?? null;
 	const checkedPhotos = allPhotos.filter((photo) => checked.has(photo.id));
 	const inspectorPhoto = checkedPhotos.length === 1 ? checkedPhotos[0] : selectedPhoto;
+	const inspectorIdentity = inspectorPhoto
+		? `${inspectorPhoto.id}:${inspectorPhoto.draftRevisionId ?? ""}`
+		: "";
+	useEffect(() => {
+		const sequence = ++photoHydrationSequence.current;
+		if (!inspectorPhoto || checkedPhotos.length > 1) {
+			setPhotoHydration(null);
+			return;
+		}
+		if (inspectorPhoto._rev) {
+			setPhotoHydration({ identity: inspectorIdentity, status: "ready" });
+			return;
+		}
+		setPhotoHydration({ identity: inspectorIdentity, status: "loading" });
+		getContent("photos", inspectorPhoto.id).then((result) => {
+			if (photoHydrationSequence.current !== sequence) return;
+			onPhotoUpdatedRef.current(result.item);
+			setPhotoHydration({ identity: inspectorIdentity, status: "ready" });
+		}).catch((cause) => {
+			if (photoHydrationSequence.current !== sequence) return;
+			setPhotoHydration({ identity: inspectorIdentity, status: "error", error: cause });
+		});
+		return () => { photoHydrationSequence.current += 1; };
+	}, [inspectorPhoto?.id, inspectorPhoto?.draftRevisionId, checkedPhotos.length, inspectorIdentity, photoHydrationRetry]);
+	const inspectorReady = Boolean(inspectorPhoto?._rev);
 	const albumDraftDirty = albumDraft.title.trim() !== textValue(dataOf(album).title) || albumDraft.description.trim() !== textValue(dataOf(album).description);
 	const pendingIds = new Set([...albumPhotos.filter(hasPendingChanges).map((photo) => photo.id), ...touchedIds]);
 	const workspacePending = albumDraftDirty || hasPendingChanges(album) || pendingIds.size > 0;
@@ -436,17 +460,17 @@ function AlbumOrganizer({
 	};
 
 	const saveAlbumDraft = async () => {
-		if (!albumDraftDirty || !albumDraft.title.trim()) return;
+		if (!albumDraftDirty || !albumDraft.title.trim() || !album._rev) return;
 		setBusy(true); setError(null); setFailures([]); setMessage("アルバム情報を保存中…");
 		try {
-			const current = await getContent("albums", album.id);
-			const result = await updateDraft("albums", album.id, current._rev, { title: albumDraft.title.trim(), description: albumDraft.description.trim() });
+			const result = await updateDraft("albums", album.id, album._rev, { title: albumDraft.title.trim(), description: albumDraft.description.trim() });
 			onAlbumUpdated(result.item); setMessage("アルバム情報を下書き保存しました");
 		} catch (cause) { setError(new Error(reasonOf(cause))); setMessage(""); }
 		finally { setBusy(false); }
 	};
 
 	const savePhoto = async (photo: ContentItem, patch: Record<string, unknown>): Promise<boolean> => {
+		if (!photo._rev) return false;
 		setBusy(true); setError(null); setMessage("保存中…"); setFailures([]);
 		try {
 			let normalized = patch;
@@ -456,8 +480,7 @@ function AlbumOrganizer({
 				normalized = { ...patch, position: Math.max(0, ...targetPhotos.map((item) => Number(dataOf(item).position) || 0)) + 1024 };
 				setUndoMove([{ id: photo.id, album: textValue(dataOf(photo).album), position: Number(dataOf(photo).position) || 0 }]);
 			}
-			const current = await getContent("photos", photo.id);
-			const result = await updateDraft("photos", photo.id, current._rev, normalized);
+			const result = await updateDraft("photos", photo.id, photo._rev, normalized);
 			onPhotoUpdated(result.item); touch(photo.id); setMessage("写真の下書きを保存しました");
 			if (targetAlbum && targetAlbum !== album.id) {
 				setSelectedId(null);
@@ -584,7 +607,10 @@ function AlbumOrganizer({
 		setBusy(true); setError(null); setFailures([]); setMessage("アルバムの変更を公開中…");
 		const failed: Failure[] = []; let publishedPhotos = 0; let albumSaveFailed = false;
 		if (albumDraftDirty) {
-			try { const current = await getContent("albums", album.id); const result = await updateDraft("albums", album.id, current._rev, { title: albumDraft.title.trim(), description: albumDraft.description.trim() }); onAlbumUpdated(result.item); }
+			try {
+				if (!album._rev) throw new Error("アルバムの編集情報を再読込してください。");
+				const result = await updateDraft("albums", album.id, album._rev, { title: albumDraft.title.trim(), description: albumDraft.description.trim() }); onAlbumUpdated(result.item);
+			}
 			catch (cause) { failed.push({ id: album.id, reason: reasonOf(cause) }); albumSaveFailed = true; }
 		}
 			if (!albumSaveFailed) {
@@ -762,16 +788,21 @@ function AlbumOrganizer({
 						<button className="photo-tools-card__select" type="button" disabled={busy} onClick={() => { if (!canChangeOrganizerContext()) return; setChecked(new Set()); setSelectedId(photo.id); setMobilePane("info"); }}><Preview value={dataOf(photo).image} /><strong>{labelOf(photo)}</strong><small>{textValue(dataOf(photo).captured_at).slice(0, 10) || "撮影日なし"}</small></button>
 						<div className="photo-tools-badges">{isCover && <Badge tone="ok">カバー</Badge>}<Badge tone={hasPendingChanges(photo) ? "warn" : "ok"}>{statusLabel(photo)}</Badge>{flags.filter((flag) => flag !== "unpublished").map((flag) => <Badge key={flag} tone={flag === "has-location" || flag === "location-unreviewed" ? "danger" : "warn"}>{FLAG_LABELS[flag]}</Badge>)}</div>
 						<div className="photo-tools-card__actions"><button disabled={operationLocked || index === 0} onClick={() => moveAt(index, -1)} aria-label="前へ移動">←</button><button disabled={operationLocked || index === albumPhotos.length - 1} onClick={() => moveAt(index, 1)} aria-label="後ろへ移動">→</button><button disabled={operationLocked || isCover} onClick={async () => {
-							setBusy(true); setError(null); try { const current = await getContent("albums", album.id); const result = await updateDraft("albums", album.id, current._rev, { cover_image: dataOf(photo).image }); onAlbumUpdated(result.item); setMessage("カバー写真を下書き保存しました"); } catch (cause) { setError(new Error(reasonOf(cause))); } finally { setBusy(false); }
+							setBusy(true); setError(null); try {
+								if (!album._rev) throw new Error("アルバムの編集情報を再読込してください。");
+								const result = await updateDraft("albums", album.id, album._rev, { cover_image: dataOf(photo).image }); onAlbumUpdated(result.item); setMessage("カバー写真を下書き保存しました");
+							} catch (cause) { setError(new Error(reasonOf(cause))); } finally { setBusy(false); }
 						}}>カバー</button></div>
 					</article>;
 				})}</div> : <p className="photo-tools-empty">{!albumReady ? "このアルバムの写真を読み込んでいます…" : "この条件に合う写真はありません。"}</p>}
 			</section>
 			{checkedPhotos.length > 1
 				? <BulkInspector selected={checkedPhotos} albums={albums} busy={busy} onApply={applyBulk} onMove={moveSelected} onPublish={publishMany} onClear={() => setChecked(new Set())} />
-				: inspectorPhoto && dataOf(inspectorPhoto).album === album.id
+				: inspectorPhoto && dataOf(inspectorPhoto).album === album.id && inspectorReady
 						? <PhotoInspector photo={inspectorPhoto} albums={albums} busy={busy} onSave={savePhoto} onPublish={publishMany} onDirtyChange={setPhotoDraftDirty} previousId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, -1)} nextId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, 1)} onNavigate={(photoId) => { setChecked(new Set()); setSelectedId(photoId); setMobilePane("info"); }} />
-					: <aside className="photo-tools-inspector"><p className="photo-tools-muted">写真を選ぶと、ここで情報を編集できます。</p></aside>}
+					: <aside className="photo-tools-inspector">{photoHydration?.identity === inspectorIdentity && photoHydration.status === "error"
+						? <><ErrorBox error={photoHydration.error} /><button type="button" className="photo-tools-button" onClick={() => setPhotoHydrationRetry((value) => value + 1)}>再試行</button></>
+						: <p className="photo-tools-muted" role={inspectorPhoto ? "status" : undefined}>{inspectorPhoto ? "写真の下書きを読み込んでいます…" : "写真を選ぶと、ここで情報を編集できます。"}</p>}</aside>}
 		</div>
 	</section>;
 }
@@ -790,6 +821,9 @@ export function PhotoOrganizerPage() {
 	const [workspaceBusy, setWorkspaceBusy] = useState(false);
 	const [photoIndexLoading, setPhotoIndexLoading] = useState(true);
 	const [readyAlbumId, setReadyAlbumId] = useState("");
+	const [albumHydration, setAlbumHydration] = useState<{ identity: string; status: "loading" | "ready" | "error"; error?: unknown } | null>(null);
+	const [albumHydrationRetry, setAlbumHydrationRetry] = useState(0);
+	const albumHydrationSequence = useRef(0);
 
 	useEffect(() => {
 		allContent("albums", { orderBy: "captured_from", order: "desc" }).then((albumItems) => {
@@ -798,8 +832,8 @@ export function PhotoOrganizerPage() {
 			setSelectedId(requested && albumItems.some((album) => album.id === requested) ? requested : albumItems[0]?.id ?? "");
 		}).catch(setError).finally(() => setLoading(false));
 		allContent("photos", { orderBy: "captured_at", order: "desc" }, (items) => {
-			setPhotos((current) => mergeContentItems(current, items));
-		}).then((items) => setPhotos((current) => mergeContentItems(current, items)))
+			setPhotos((current) => mergeEditableItems(current, items));
+		}).then((items) => setPhotos((current) => mergeEditableItems(current, items)))
 			.catch(setError)
 			.finally(() => setPhotoIndexLoading(false));
 	}, []);
@@ -811,7 +845,7 @@ export function PhotoOrganizerPage() {
 		allContent("photos", { fieldFilters: { album: selectedId }, orderBy: "position", order: "asc" })
 			.then((items) => {
 				if (cancelled) return;
-				setPhotos((current) => mergeContentItems(current, items));
+				setPhotos((current) => mergeEditableItems(current, items));
 				setReadyAlbumId(selectedId);
 			})
 			.catch((cause) => { if (!cancelled) setError(cause); });
@@ -832,6 +866,29 @@ export function PhotoOrganizerPage() {
 		return result;
 	}, [photos]);
 	const selected = albums.find((album) => album.id === selectedId) ?? null;
+	const selectedIdentity = selected ? `${selected.id}:${selected.draftRevisionId ?? ""}` : "";
+	useEffect(() => {
+		const sequence = ++albumHydrationSequence.current;
+		if (!selected) {
+			setAlbumHydration(null);
+			return;
+		}
+		if (selected._rev) {
+			setAlbumHydration({ identity: selectedIdentity, status: "ready" });
+			return;
+		}
+		setAlbumHydration({ identity: selectedIdentity, status: "loading" });
+		getContent("albums", selected.id).then((result) => {
+			if (albumHydrationSequence.current !== sequence) return;
+			setAlbums((current) => mergeEditableItems(current, [result.item]));
+			setAlbumHydration({ identity: selectedIdentity, status: "ready" });
+		}).catch((cause) => {
+			if (albumHydrationSequence.current !== sequence) return;
+			setAlbumHydration({ identity: selectedIdentity, status: "error", error: cause });
+		});
+		return () => { albumHydrationSequence.current += 1; };
+	}, [selected?.id, selected?.draftRevisionId, selectedIdentity, albumHydrationRetry]);
+	const selectedReady = Boolean(selected?._rev);
 
 	return <main className="photo-tools-shell">
 		<header className="photo-tools-page-header"><div><span className="photo-tools-eyebrow">EmDash 写真管理</span><h1>写真を整理</h1><p>アルバムを選び、写真の追加・編集・並べ替え・公開までを進めます。記事や固定ページはEmDashの各画面で編集してください。</p></div><a className="photo-tools-button" href={`${CORE_ROOT}/content/albums`}>Albums一覧</a></header>
@@ -853,7 +910,13 @@ export function PhotoOrganizerPage() {
 					return <button key={album.id} disabled={workspaceBusy} className={selectedId === album.id ? "is-active" : ""} onClick={() => { if (!canChangeOrganizerContext()) return; if (album.id !== selectedId) { setReadyAlbumId(""); setSelectedId(album.id); } setMobilePane("workspace"); }}><Preview value={dataOf(album).cover_image} size={72} /><span><strong>{labelOf(album)}</strong><small>{photoIndexLoading ? "件数を読込中" : `${count.total}点${count.pending ? `・変更 ${count.pending}` : ""}`}</small><Badge tone={hasPendingChanges(album) ? "warn" : "ok"}>{statusLabel(album)}</Badge></span></button>;
 				})}</div>
 			</aside>
-			{selected ? <AlbumOrganizer key={selected.id} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => current.map((album) => album.id === updated.id ? updated : album))} onPhotoUpdated={(updated) => setPhotos((current) => mergeContentItems(current, [updated]))} onPhotoAdded={(created) => setPhotos((current) => mergeContentItems(current, [created]))} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} /> : <p className="photo-tools-empty">アルバムがありません。「新規」から作成してください。</p>}
+			{selected && selectedReady
+				? <AlbumOrganizer key={selected.id} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => mergeEditableItems(current, [updated]))} onPhotoUpdated={(updated) => setPhotos((current) => mergeEditableItems(current, [updated]))} onPhotoAdded={(created) => setPhotos((current) => mergeEditableItems(current, [created]))} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} />
+				: selected && albumHydration?.identity === selectedIdentity && albumHydration.status === "error"
+					? <section className="photo-tools-workspace"><ErrorBox error={albumHydration.error} /><button type="button" className="photo-tools-button" onClick={() => setAlbumHydrationRetry((value) => value + 1)}>再試行</button></section>
+					: selected
+						? <p className="photo-tools-empty" role="status">アルバムの下書きを読み込んでいます…</p>
+						: <p className="photo-tools-empty">アルバムがありません。「新規」から作成してください。</p>}
 		</div>}
 	</main>;
 }
