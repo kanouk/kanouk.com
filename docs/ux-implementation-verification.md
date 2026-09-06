@@ -5,9 +5,11 @@ Implementation scope: issues #56, #57, #58; approved direction in #49.
 ## Contracts
 
 - EmDash remains the only authoring shell. Its existing WYSIWYG editor gains related-album, album-photo, and captioned YouTube blocks.
-- The explicit `yohaku.album` block is the article/album relationship. Removing it does not remove independently inserted photo blocks. Reverse links use only current published article revisions.
+- New article/album relationships use an explicit `yohaku.album` block. Removing it does not remove independently inserted photo blocks. Reverse links use only current published article revisions and recognize the same exact legacy closing-link pattern as the article renderer.
 - Article photo blocks keep their own caption, alt text, frame and display width. Published output resolves current published Photo and Album records, never a stored preview URL.
-- Existing standard images gain a Photo link only when their Media reference resolves unambiguously. This release does not bulk-rewrite historical article content or SmugMug closing sentences.
+- Existing standard images gain a Photo link only when their Media reference resolves unambiguously. Historical article content is not bulk-rewritten.
+- Follow-up: explicit SmugMug closing sentences with an inline album link or an immediately following album link card render as a cover-image album card when their target resolves to one published album. Unmatched links and unrelated prose remain unchanged; stored editor content is preserved.
+- H4 uses a text-width underline, without a leading symbol; H2 retains its vertical rule and H3 its full-width rule.
 - Album return position is local to the browser session and expires after 30 minutes. Existing image size preferences override the new responsive defaults.
 - Upload retries retain successful Media identity and retry Photo creation without repeating the upload. Files are memory-only; reload does not resume an upload.
 - New uploads remain drafts until the existing explicit location-metadata review process is complete. This release does not add an automatic sanitizer or treat editable review metadata as tamper-resistant attestation.
