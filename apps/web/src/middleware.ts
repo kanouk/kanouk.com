@@ -107,7 +107,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	const response = isPhotoHost && context.url.pathname === "/"
 		? await context.rewrite("/albums")
 		: isPhotoHost && context.url.pathname === "/search"
-			? await context.rewrite("/photo-search")
+			? await context.rewrite(`/photo-search${context.url.search}`)
 			: await next();
 	let routedResponse =
 		context.url.pathname === "/sitemap.xml" && (isPhotoHost || isBlogHost)

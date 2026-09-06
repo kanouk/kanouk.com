@@ -56,6 +56,10 @@ jobs:
         working-directory: apps/web
         run: npm run test:migration
 
+      - name: Test public UX routing
+        working-directory: apps/web
+        run: npm run test:ux
+
       - name: Typecheck and build Yohaku
         working-directory: apps/web
         run: |
