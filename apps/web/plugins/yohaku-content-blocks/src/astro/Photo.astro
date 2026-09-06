@@ -1,0 +1,75 @@
+---
+import { getEmDashCollection } from "emdash";
+import YohakuPortableImage from "../../../../src/components/YohakuPortableImage.astro";
+import { looksLikeSourceFilename, publicPhotoTitle } from "../../../../src/utils/photo-display.mjs";
+
+const node = Astro.props.node as Record<string, unknown>;
+const photoId = typeof node.id === "string" ? node.id.trim() : "";
+const albumId = typeof node.albumId === "string" ? node.albumId.trim() : "";
+const photoResult = photoId
+	? await getEmDashCollection("photos", {
+			status: "published",
+			where: { id: photoId },
+			limit: 1,
+		})
+	: { entries: [], cacheHint: {} };
+const photo = photoResult.entries[0];
+const relationshipMatches = Boolean(photo && albumId && photo.data.album === albumId);
+const albumResult = relationshipMatches
+	? await getEmDashCollection("albums", {
+			status: "published",
+			where: { id: albumId },
+			limit: 1,
+		})
+	: { entries: [], cacheHint: {} };
+if (Astro.cache?.enabled) {
+	Astro.cache.set(photoResult.cacheHint);
+	Astro.cache.set(albumResult.cacheHint);
+}
+const album = albumResult.entries[0];
+const safePhoto = relationshipMatches && album ? photo : undefined;
+const localOrigin = ["localhost", "127.0.0.1"].includes(Astro.url.hostname) || Astro.url.hostname.endsWith("workers.dev");
+const href = safePhoto ? `${localOrigin ? "" : "https://photos.kanouk.com"}/p/${encodeURIComponent(safePhoto.id)}` : "";
+const caption = typeof node.caption === "string" ? node.caption.trim() : "";
+const candidateAlt = typeof node.alt === "string" && node.alt.trim()
+	? node.alt.trim()
+	: typeof safePhoto?.data.alt === "string"
+		? safePhoto.data.alt.trim()
+		: "";
+const displayTitle = safePhoto ? publicPhotoTitle({
+	title: safePhoto.data.title,
+	sourceSystem: safePhoto.data.source_system,
+	sourceMetadata: safePhoto.data.source_metadata,
+}) : "";
+const alt = candidateAlt && !looksLikeSourceFilename(candidateAlt)
+	? candidateAlt
+	: displayTitle || (typeof safePhoto?.data.caption === "string" ? safePhoto.data.caption.trim() : "");
+const requestedWidth = Number(node.displayWidth);
+const displayWidth = Number.isFinite(requestedWidth) ? Math.max(240, Math.min(1600, requestedWidth)) : 480;
+const frame = ["photo-frame", "border", "shadow", "none"].includes(String(node.frame))
+	? String(node.frame)
+	: "photo-frame";
+const liveImage = safePhoto?.data.image && typeof safePhoto.data.image === "object"
+	? safePhoto.data.image as Record<string, unknown>
+	: {};
+const mediaId = typeof liveImage.id === "string" ? liveImage.id : "";
+const imageUrl = typeof liveImage.src === "string"
+	? liveImage.src
+	: typeof liveImage.url === "string"
+		? liveImage.url
+		: "";
+---
+
+{safePhoto && href && (
+	<YohakuPortableImage
+		node={{
+			asset: { _ref: mediaId, url: imageUrl },
+			alt,
+			caption,
+			displayWidth,
+			alignment: "center",
+			visualStyle: frame as "photo-frame" | "border" | "shadow" | "none",
+			link: href,
+		}}
+	/>
+)}

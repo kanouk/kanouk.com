@@ -1,5 +1,6 @@
 import { definePlugin } from "emdash";
 import type { PluginDescriptor } from "emdash";
+import { relatedMediaBlocks, relatedMediaRoutes } from "./related-media";
 
 export function yohakuContentBlocks(): PluginDescriptor {
 	return {
@@ -15,6 +16,7 @@ export function createPlugin() {
 	return definePlugin({
 		id: "yohaku-content-blocks",
 		version: "0.2.0",
+		capabilities: ["content:read"],
 		hooks: {
 			"page:metadata": ({ page }) => {
 				if (!page.canonical) return null;
@@ -46,8 +48,10 @@ export function createPlugin() {
 				return { kind: "jsonld", id: "primary", graph };
 			},
 		},
+		routes: relatedMediaRoutes,
 		admin: {
 			portableTextBlocks: [
+				...relatedMediaBlocks,
 				{
 					type: "yohaku.callout",
 					label: "補足・要点",

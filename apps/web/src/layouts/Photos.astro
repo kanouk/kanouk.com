@@ -17,7 +17,7 @@ interface Props {
 
 const { title, description, image, pageType = "website", content } = Astro.props;
 const fullTitle = `${title} — Photos — kanouk.com`;
-const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
+const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
 const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 const canonicalPath = Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname;

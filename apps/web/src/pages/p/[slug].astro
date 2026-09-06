@@ -21,6 +21,7 @@ import { resolvePublicMediaUrl } from "../../utils/media-url";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { getPhotoNavigation } from "../../utils/photo-navigation";
 import { photoPath } from "../../utils/photo-url.mjs";
+import { albumPhotoAnchor } from "../../utils/photo-return.mjs";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
@@ -171,11 +172,13 @@ const exifDetails = [
 		data-previous-url={previousUrl}
 		data-next-url={nextUrl}
 		data-slideshow-next-url={slideshowNextUrl}
+		data-album-id={album?.data.id}
 	>
-		<a class="back" href={album ? `/albums/${album.id}` : "/albums"} data-astro-prefetch="hover">
-			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
+		<a class="back" data-photo-return href={album ? `/albums/${album.id}#${albumPhotoAnchor(photo.data.id)}` : "/albums"} data-astro-prefetch="hover" aria-label="写真を閉じてアルバムへ戻る">
+			<X size={15} strokeWidth={1.75} aria-hidden="true" />
 			<span>{album?.data.title || "すべてのアルバム"}</span>
 		</a>
+		{navigation && <p class="photo-position" aria-label="アルバム内の位置">{navigation.position} / {navigation.total}</p>}
 		{!displayTitle && <h1 class="sr-only">{pageTitle}</h1>}
 		<figure>
 			<div class="media" {...photo.edit.image}>
@@ -314,7 +317,19 @@ const exifDetails = [
 </Photos>
 
 <script>
+	import { albumPhotoAnchor, photoReturnKey, readPhotoReturn } from "../../utils/photo-return.mjs";
 	const page = document.querySelector<HTMLElement>(".photo-page");
+	const returnLink = page?.querySelector<HTMLAnchorElement>("[data-photo-return]");
+	if (page?.dataset.albumId && returnLink) {
+		try {
+			const returnId = readPhotoReturn(sessionStorage.getItem(photoReturnKey(page.dataset.albumId)), page.dataset.albumId);
+			if (returnId) {
+				const destination = new URL(returnLink.href);
+				destination.hash = albumPhotoAnchor(returnId);
+				returnLink.href = destination.toString();
+			}
+		} catch { /* Fall back to the current photo's anchor. */ }
+	}
 	const media = page?.querySelector<HTMLElement>(".media");
 	const previousUrl = page?.dataset.previousUrl;
 	const nextUrl = page?.dataset.nextUrl;
@@ -386,9 +401,10 @@ const exifDetails = [
 	});
 	page?.querySelector<HTMLButtonElement>("[data-photo-share]")?.addEventListener("click", async () => {
 		try {
-			if (navigator.share) await navigator.share({ title: document.title, url: window.location.href });
+			const shareUrl = new URL(window.location.pathname, window.location.origin).toString();
+			if (navigator.share) await navigator.share({ title: document.title, url: shareUrl });
 			else {
-				await navigator.clipboard.writeText(window.location.href);
+				await navigator.clipboard.writeText(shareUrl);
 				announce("URLをコピーしました");
 			}
 		} catch (error) {
@@ -415,15 +431,19 @@ const exifDetails = [
 			return;
 		}
 		const target = event.target as HTMLElement | null;
-		if (target?.matches("input, textarea, select, button, a, [contenteditable=true]")) return;
-		if (event.key === "ArrowLeft" && previousUrl) navigate(previousUrl);
-		if (event.key === "ArrowRight" && nextUrl) navigate(nextUrl);
+		if (target?.closest("input, textarea, select, [contenteditable=true], video, [data-photo-info-panel]")) return;
+		if (event.key === "Escape" && !document.fullscreenElement) { event.preventDefault(); navigate(returnLink?.href); }
+		if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || target?.closest("button, a, [contenteditable]")) return;
+		if (event.key === "ArrowLeft" && previousUrl) { event.preventDefault(); navigate(previousUrl); }
+		if (event.key === "ArrowRight" && nextUrl) { event.preventDefault(); navigate(nextUrl); }
 	});
 
 	let touchStartX: number | undefined;
 	let touchStartY: number | undefined;
 	media?.addEventListener("pointerdown", (event) => {
-		if ((event.target as HTMLElement).closest("video")) return;
+		touchStartX = undefined;
+		touchStartY = undefined;
+		if (!event.isPrimary || event.pointerType !== "touch" || (event.target as HTMLElement).closest("video, button, a, [data-photo-info-panel]")) return;
 		touchStartX = event.clientX;
 		touchStartY = event.clientY;
 	});
@@ -436,6 +456,7 @@ const exifDetails = [
 		if (Math.abs(deltaX) < 56 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.25) return;
 		navigate(deltaX > 0 ? previousUrl : nextUrl);
 	});
+	media?.addEventListener("pointercancel", () => { touchStartX = undefined; touchStartY = undefined; });
 
 	if (new URL(window.location.href).searchParams.get("slideshow") === "1") startSlideshow();
 </script>

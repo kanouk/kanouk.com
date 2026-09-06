@@ -29,6 +29,8 @@ import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { calculateAge } from "../../utils/author-age.mjs";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { routeSlugCandidates } from "../../utils/route-slug";
+import { env } from "virtual:emdash/env";
+import { articlePhotoLinks } from "../../utils/article-photo-links.mjs";
 
 const slugCandidates = routeSlugCandidates(Astro.params.slug);
 const slug = slugCandidates[0];
@@ -115,15 +117,22 @@ const authorAgeAtPublication = calculateAge(
 // Get reading time
 const readingTime = getReadingTime(post.data.content);
 const firstImageDimensions = await firstImageDimensionsPromise;
+if (!env?.DB) throw new Error("Cloudflare D1 binding DB is unavailable");
+const imagePhotoLinks = await articlePhotoLinks(env.DB, post.data.content);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["photos", "albums"] });
+const photoOrigin = ["localhost", "127.0.0.1"].includes(Astro.url.hostname) || Astro.url.hostname.endsWith("workers.dev") ? "" : "https://photos.kanouk.com";
 let firstPortableImagePrioritized = false;
 const prioritizedContent = (post.data.content ?? []).map((block) => {
+	const mediaId = (block as { asset?: { _ref?: string } }).asset?._ref;
+	const photoId = block._type === "image" && mediaId ? imagePhotoLinks.get(mediaId) : undefined;
+	const linkedBlock = photoId ? { ...block, link: `${photoOrigin}/p/${encodeURIComponent(photoId)}` } : block;
 	if (!firstPortableImagePrioritized && (block._type === "image" || block._type === "gallery")) {
 		firstPortableImagePrioritized = true;
 		return block === firstPortableImage
-			? { ...block, ...firstImageDimensions, _yohakuPriority: true }
-			: { ...block, _yohakuPriority: true };
+			? { ...linkedBlock, ...firstImageDimensions, _yohakuPriority: true }
+			: { ...linkedBlock, _yohakuPriority: true };
 	}
-	return block;
+	return linkedBlock;
 });
 
 const [categories, tags] = await Promise.all([

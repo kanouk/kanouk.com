@@ -1,0 +1,38 @@
+---
+const rawId = typeof Astro.props.node.id === "string" ? Astro.props.node.id.trim() : "";
+const caption = typeof Astro.props.node.caption === "string" ? Astro.props.node.caption.trim() : "";
+let videoId = /^[A-Za-z0-9_-]{11}$/.test(rawId) ? rawId : "";
+if (!videoId) {
+	try {
+		const url = new URL(rawId);
+		const host = url.hostname.toLowerCase().replace(/^www\./, "");
+		if (host === "youtu.be") videoId = url.pathname.split("/").filter(Boolean)[0] || "";
+		if (["youtube.com", "m.youtube.com"].includes(host)) {
+			videoId = url.searchParams.get("v") || url.pathname.match(/^\/(?:embed|shorts)\/([^/?#]+)/)?.[1] || "";
+		}
+	} catch {}
+}
+if (!/^[A-Za-z0-9_-]{11}$/.test(videoId)) videoId = "";
+---
+
+{videoId && (
+	<figure class="yohaku-youtube">
+		<div>
+			<iframe
+				src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+				title={caption || "YouTube video"}
+				loading="lazy"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen
+			></iframe>
+		</div>
+		{caption && <figcaption>{caption}</figcaption>}
+	</figure>
+)}
+
+<style>
+	.yohaku-youtube { margin: clamp(2rem, 5vw, 3rem) 0; }
+	.yohaku-youtube > div { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
+	iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+	figcaption { margin-top: 0.55rem; color: var(--color-muted); font-size: 0.76rem; line-height: 1.65; }
+</style>

@@ -72,19 +72,39 @@ test("album organizer owns upload, reorder, batch edit and aggregate publish", a
 	assert.match(css, /\.photo-tools-content\.is-mobile-info > \.photo-tools-grid-area/);
 });
 
-test("public previews fail closed and unreviewed originals cannot be downloaded", async () => {
+test("public media classifier and authenticated preview cache path fail closed", async () => {
 	const worker = await read("../src/worker.ts");
-	const publicMediaGuard = await read("../src/studio/public-media-guard.ts");
 	const mediaRoute = await read("../src/pages/media/[slug].ts");
-	assert.match(worker, /Image preview is temporarily unavailable/);
-	assert.doesNotMatch(worker, /if \(!transformed\) \{\s*return handler\.fetch/);
+	const {
+		applyMediaAccessHeaders,
+		classifyMediaRead,
+		deniedMediaResponse,
+		mediaPreviewDelivery,
+	} = await import("../src/studio/public-media-guard.ts");
+	const noPublicReference = {
+		prepare() {
+			return { bind: () => ({ first: async () => null }) };
+		},
+	};
+	const rawRequest = new Request(
+		"https://blog.kanouk.com/_emdash/api/media/file/unpublished.jpg",
+	);
+	assert.equal((await classifyMediaRead(rawRequest, noPublicReference)).access, "denied");
+	assert.equal((await classifyMediaRead(rawRequest, noPublicReference, {
+		authenticate: async () => true,
+	})).access, "authenticated");
+	assert.equal(mediaPreviewDelivery("authenticated"), "direct-private");
+	assert.equal(mediaPreviewDelivery("denied"), "deny");
+	const privateResponse = applyMediaAccessHeaders(new Response("image", {
+		headers: { "Cache-Control": "public, max-age=31536000, immutable" },
+	}), "authenticated");
+	assert.equal(privateResponse.headers.get("Cache-Control"), "private, no-store");
+	assert.match(privateResponse.headers.get("Vary") ?? "", /Cookie/);
+	assert.match(privateResponse.headers.get("Vary") ?? "", /Authorization/);
+	assert.equal(deniedMediaResponse().status, 404);
 	assert.match(worker, /PHOTO_PUBLISH_ROUTE/);
 	assert.match(worker, /LOCATION_REVIEW_REQUIRED/);
 	assert.match(worker, /publish\|schedule/);
-	assert.match(worker, /guardPublicOriginalRead/);
-	assert.match(publicMediaGuard, /JOIN revisions AS live ON live\.id = photo\.live_revision_id/);
-	assert.match(publicMediaGuard, /photo\.deleted_at IS NULL/);
-	assert.match(publicMediaGuard, /location_review'\) = 'clean'/);
 	assert.match(mediaRoute, /needsLocationReview/);
 	assert.match(mediaRoute, /Location metadata review required/);
 });

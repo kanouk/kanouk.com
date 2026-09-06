@@ -11,6 +11,7 @@ import { yohakuPhotoTools } from "./src/studio/plugin";
 
 export default defineConfig({
 	output: "server",
+	server: { host: "127.0.0.1" },
 	i18n: {
 		defaultLocale: "ja",
 		locales: ["ja"],
@@ -60,6 +61,9 @@ export default defineConfig({
 			}),
 	],
 	vite: {
+		// Prebundle these SSR imports together. Discovering them after workerd has
+		// loaded the server can invalidate its dependency chunk during local QA.
+		optimizeDeps: { include: ["astro/app/manifest", "@emdash-cms/plugin-forms"] },
 		server: {
 			allowedHosts: [
 				"blog.kanouk.com",
