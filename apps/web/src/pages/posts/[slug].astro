@@ -31,6 +31,11 @@ import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { routeSlugCandidates } from "../../utils/route-slug";
 import { env } from "virtual:emdash/env";
 import { articlePhotoLinks } from "../../utils/article-photo-links.mjs";
+import {
+	comparableAlbumHref,
+	legacySourceUrlVariants,
+	normalizeLegacyAlbumCards,
+} from "../../utils/legacy-album-cards.mjs";
 
 const slugCandidates = routeSlugCandidates(Astro.params.slug);
 const slug = slugCandidates[0];
@@ -57,11 +62,36 @@ if (!isPreview && slug !== post.data.id) {
 	return Astro.redirect(canonicalPostPath, 308);
 }
 
+const legacyAlbumContent = await normalizeLegacyAlbumCards(
+	post.data.content ?? [],
+	async (reference, sourceHref) => {
+		if (reference.kind === "current") {
+			const result = await getEmDashEntry("albums", reference.key);
+			if (Astro.cache?.enabled) Astro.cache.set(result.cacheHint);
+			return result.entry?.data.status === "published" ? result.entry.data.id : "";
+		}
+		const result = await getEmDashCollection("albums", {
+			status: "published",
+			where: { source_url: legacySourceUrlVariants(sourceHref) },
+			limit: 3,
+		});
+		if (Astro.cache?.enabled) Astro.cache.set(result.cacheHint);
+		const sourceKey = comparableAlbumHref(sourceHref);
+		const matches = result.entries.filter((album) =>
+			album.data.status === "published" &&
+			comparableAlbumHref(album.data.source_url) === sourceKey
+		);
+		const uniqueMatches = new Map(matches.map((album) => [album.data.id, album]));
+		return uniqueMatches.size === 1 ? uniqueMatches.values().next().value?.data.id ?? "" : "";
+	},
+);
+const articleContent = legacyAlbumContent.content as NonNullable<typeof post.data.content>;
+
 // WordPress-era portable image snapshots can omit dimensions even though the
 // canonical media row has them. Start the single lookup before the remaining
 // page queries so the LCP image can reserve its exact aspect ratio without
 // extending the critical path in the common case.
-const firstPortableImage = (post.data.content ?? []).find(
+const firstPortableImage = articleContent.find(
 	(block) => block._type === "image",
 ) as
 	| {
@@ -88,7 +118,7 @@ const firstImageDimensionsPromise =
 // The public page remains list-first and does not invent a visible hero image.
 const featuredImageUrl = absoluteMediaUrl(
 	resolvePublicMediaUrl(post.data.featured_image)
-		?? resolveFirstPortableImageUrl(post.data.content),
+		?? resolveFirstPortableImageUrl(articleContent),
 	Astro.url.origin,
 );
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
@@ -115,14 +145,14 @@ const authorAgeAtPublication = calculateAge(
 );
 
 // Get reading time
-const readingTime = getReadingTime(post.data.content);
+const readingTime = getReadingTime(articleContent);
 const firstImageDimensions = await firstImageDimensionsPromise;
 if (!env?.DB) throw new Error("Cloudflare D1 binding DB is unavailable");
-const imagePhotoLinks = await articlePhotoLinks(env.DB, post.data.content);
+const imagePhotoLinks = await articlePhotoLinks(env.DB, articleContent);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["photos", "albums"] });
 const photoOrigin = ["localhost", "127.0.0.1"].includes(Astro.url.hostname) || Astro.url.hostname.endsWith("workers.dev") ? "" : "https://photos.kanouk.com";
 let firstPortableImagePrioritized = false;
-const prioritizedContent = (post.data.content ?? []).map((block) => {
+const prioritizedContent = articleContent.map((block) => {
 	const mediaId = (block as { asset?: { _ref?: string } }).asset?._ref;
 	const photoId = block._type === "image" && mediaId ? imagePhotoLinks.get(mediaId) : undefined;
 	const linkedBlock = photoId ? { ...block, link: `${photoOrigin}/p/${encodeURIComponent(photoId)}` } : block;

@@ -28,7 +28,8 @@ test("profile identity, article hierarchy, and media styles retain distinct cont
 	assert.match(theme, /\.profile-card__copy \{[\s\S]*border-top: 1px solid var\(--rule\);[\s\S]*text-align: left;/);
 	assert.match(theme, /\.article-content > h2,[\s\S]*box-shadow: inset 3px 0 0 var\(--accent\);/);
 	assert.match(theme, /\.article-content > h3,[\s\S]*border-bottom: 1px solid var\(--rule\);/);
-	assert.match(theme, /\.article-content > h4::before,[\s\S]*width: 1rem;[\s\S]*height: 1px;[\s\S]*background: var\(--ink-muted\);/);
+	assert.match(theme, /\.article-content > h4,[\s\S]*text-decoration: underline;[\s\S]*text-decoration-thickness: 2px;/);
+	assert.match(theme, /\.article-content > h4::before,[\s\S]*content: none;/);
 	assert.match(theme, /--image-display-width, 30rem/);
 	assert.match(image, /node\.displayWidth \? `--image-display-width:\$\{node\.displayWidth\}px`/);
 	assert.match(image, /"photo-frame" \| "border" \| "shadow" \| "none"/);
