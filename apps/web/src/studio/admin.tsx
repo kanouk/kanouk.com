@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import type {
 	ContentEditorPanelContext,
 	ContentEditorPanelExtension,
@@ -8,13 +8,15 @@ import type {
 } from "@emdash-cms/admin";
 import {
 	allContent,
+	createPhotoFromMedia,
 	createAlbumDraft,
 	getContent,
 	publishDraft,
 	recordOperation,
 	PhotoToolsApiError,
 	updateDraft,
-	uploadPhoto,
+	uploadPhotoMedia,
+	type PhotoMediaItem,
 } from "./api";
 import {
 	applyBulkPatch,
@@ -28,13 +30,39 @@ import {
 	type BulkTextMode,
 	type ReviewFlag,
 } from "./domain";
+import {
+	PUBLIC_IMAGE_WIDTHS,
+	adjacentPhotoId,
+	canCopyPublishedImageVariants,
+	captionSelectionAfterSave,
+	createUploadQueue,
+	isUploadQueueRetryable,
+	isUploadQueueSettled,
+	dateTimeLocalInputValue,
+	preparePhotoDraftPatch,
+	publicImageVariantPath,
+	retryFailedUploadQueue,
+	updateUploadQueueItem,
+	type UploadQueueItem,
+} from "./organizer-workflow";
 import "./studio.css";
 
 const CORE_ROOT = "/_emdash/admin";
 const ORGANIZER_ROOT = "/_emdash/admin/plugins/yohaku-photo-tools/organize";
 const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
-const ACCEPTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"]);
+const ACCEPTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
 const ACCEPTED_IMAGE_INPUT = [...ACCEPTED_IMAGE_TYPES].join(",");
+
+const UPLOAD_STAGE_LABELS: Record<UploadQueueItem<File, PhotoMediaItem>["stage"], string> = {
+	queued: "待機中",
+	"uploading-media": "Mediaを保存中",
+	"media-ready": "Media保存済み",
+	"creating-photo": "Photo下書きを作成中",
+	"photo-created": "Photo下書き作成済み",
+	"failed-validation": "追加対象外",
+	"failed-media": "Media保存失敗",
+	"failed-photo": "Photo作成失敗",
+};
 
 const FLAG_LABELS: Record<ReviewFlag, string> = {
 	"missing-caption": "キャプションなし",
@@ -124,6 +152,47 @@ function ErrorBox({ error }: { error: unknown }) {
 	</div>;
 }
 
+function PublicPhotoLinks({ photo }: { photo: ContentItem }) {
+	const [copied, setCopied] = useState("");
+	const [copyError, setCopyError] = useState("");
+	const pageUrl = photo.status === "published" ? publicHref(photo, "photo") : null;
+	const derivatives = canCopyPublishedImageVariants(photo)
+		? PUBLIC_IMAGE_WIDTHS.flatMap((width) => {
+			const path = publicImageVariantPath(dataOf(photo).image, width);
+			return path ? [{ width, url: `${photoOrigin()}${path}` }] : [];
+		})
+		: [];
+	const copy = async (label: string, value: string) => {
+		setCopyError("");
+		try {
+			await navigator.clipboard.writeText(value);
+			setCopied(label);
+		} catch {
+			setCopied("");
+			setCopyError("URLをコピーできませんでした。ブラウザのクリップボード権限を確認してください。");
+		}
+	};
+	if (!pageUrl) return null;
+	return <section className="photo-tools-public-links" aria-label="公開URL">
+		<h3>公開URL</h3>
+		<div className="photo-tools-link-row">
+			<span>Photoページ</span>
+			<button type="button" className="photo-tools-button" onClick={() => copy("Photoページ", pageUrl)}>URLをコピー</button>
+			<a className="photo-tools-button" href={pageUrl} target="_blank" rel="noreferrer">開く</a>
+		</div>
+		{derivatives.length > 0
+			? <div className="photo-tools-size-links" aria-label="公開画像サイズ">
+				<span>画像URL（WebP）</span>
+				{derivatives.map(({ width, url }) => <button type="button" className="photo-tools-button" key={width} onClick={() => copy(`${width}px`, url)}>{width}px</button>)}
+			</div>
+			: !canCopyPublishedImageVariants(photo)
+				? <p className="photo-tools-muted">未公開の変更があるため、画像URLは変更の公開後にコピーできます。</p>
+				: <p className="photo-tools-muted">この写真では公開用のサイズ別URLを作成できません。</p>}
+		{copied && <p className="photo-tools-copy-status" role="status">{copied}のURLをコピーしました。</p>}
+		{copyError && <p className="photo-tools-alert photo-tools-alert--error" role="alert">{copyError}</p>}
+	</section>;
+}
+
 type Failure = { id: string; reason: string };
 
 function reasonOf(cause: unknown): string {
@@ -140,34 +209,43 @@ function PhotoInspector({
 	onSave,
 	onPublish,
 	onDirtyChange,
+	previousId,
+	nextId,
+	onNavigate,
 }: {
 	photo: ContentItem;
 	albums: ContentItem[];
 	busy: boolean;
-	onSave: (photo: ContentItem, patch: Record<string, unknown>) => Promise<void>;
+	onSave: (photo: ContentItem, patch: Record<string, unknown>) => Promise<boolean>;
 	onPublish: (ids: string[]) => Promise<void>;
 	onDirtyChange: (dirty: boolean) => void;
+	previousId: string | null;
+	nextId: string | null;
+	onNavigate: (photoId: string) => void;
 }) {
+	const saveInFlight = useRef(false);
+	const [saving, setSaving] = useState(false);
 	const [draft, setDraft] = useState(() => ({
 		title: textValue(dataOf(photo).title),
 		caption: textValue(dataOf(photo).caption),
 		alt: textValue(dataOf(photo).alt),
-		captured_at: textValue(dataOf(photo).captured_at).slice(0, 16),
+		captured_at: dateTimeLocalInputValue(dataOf(photo).captured_at),
 		album: textValue(dataOf(photo).album),
 	}));
 	useEffect(() => setDraft({
 		title: textValue(dataOf(photo).title),
 		caption: textValue(dataOf(photo).caption),
 		alt: textValue(dataOf(photo).alt),
-		captured_at: textValue(dataOf(photo).captured_at).slice(0, 16),
+		captured_at: dateTimeLocalInputValue(dataOf(photo).captured_at),
 		album: textValue(dataOf(photo).album),
 	}), [photo.id, photo.updatedAt]);
 	const dirty =
 		draft.title !== textValue(dataOf(photo).title) ||
 		draft.caption !== textValue(dataOf(photo).caption) ||
 		draft.alt !== textValue(dataOf(photo).alt) ||
-		draft.captured_at !== textValue(dataOf(photo).captured_at).slice(0, 16) ||
+		draft.captured_at !== dateTimeLocalInputValue(dataOf(photo).captured_at) ||
 		draft.album !== textValue(dataOf(photo).album);
+	const preparedDraft = preparePhotoDraftPatch(dataOf(photo).captured_at, draft);
 	useEffect(() => {
 		if (!dirty) return;
 		const warn = (event: BeforeUnloadEvent) => event.preventDefault();
@@ -178,8 +256,28 @@ function PhotoInspector({
 		onDirtyChange(dirty);
 		return () => onDirtyChange(false);
 	}, [dirty, onDirtyChange]);
-	const live = publicHref(photo, "photo");
 	const locationUnreviewed = needsLocationReview(dataOf(photo));
+	const saveDraft = async (targetId: string | null = null) => {
+		if (saveInFlight.current) return;
+		saveInFlight.current = true;
+		setSaving(true);
+		try {
+			if (preparedDraft.dateError) return;
+			const saved = await onSave(photo, preparedDraft.patch);
+			if (targetId) onNavigate(captionSelectionAfterSave(photo.id, targetId, saved));
+		} finally {
+			saveInFlight.current = false;
+			setSaving(false);
+		}
+	};
+	const saveAndNavigate = async (targetId: string | null) => {
+		if (!targetId || saveInFlight.current) return;
+		if (dirty) {
+			await saveDraft(targetId);
+			return;
+		}
+		onNavigate(targetId);
+	};
 	return <aside className="photo-tools-inspector" aria-label="写真情報" data-photo-tools-dirty={dirty ? "true" : undefined}>
 		<header><div><span className="photo-tools-eyebrow">写真情報</span><h2>{labelOf(photo)}</h2></div><Badge tone={dirty || hasPendingChanges(photo) ? "warn" : "ok"}>{dirty ? "未保存" : statusLabel(photo)}</Badge></header>
 		<Preview value={dataOf(photo).image} size={480} />
@@ -188,12 +286,17 @@ function PhotoInspector({
 		<label>代替テキスト<input value={draft.alt} disabled={busy} onChange={(event) => setDraft({ ...draft, alt: event.target.value })} /></label>
 		<label>撮影日<input type="datetime-local" value={draft.captured_at} disabled={busy} onChange={(event) => setDraft({ ...draft, captured_at: event.target.value })} /></label>
 		<label>アルバム<select value={draft.album} disabled={busy} onChange={(event) => setDraft({ ...draft, album: event.target.value })}>{albums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}</option>)}</select></label>
+		<nav className="photo-tools-caption-nav" aria-label="連続キャプション編集">
+			<button type="button" className="photo-tools-button" disabled={busy || saving || !previousId || Boolean(preparedDraft.dateError) || (dirty && (!draft.title.trim() || !draft.alt.trim()))} onClick={() => saveAndNavigate(previousId)}>{dirty ? "保存して前へ" : "前へ"}</button>
+			<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={busy || saving || !dirty || Boolean(preparedDraft.dateError) || !draft.title.trim() || !draft.alt.trim()} onClick={() => saveDraft()}>{saving ? "保存中…" : "下書き保存"}</button>
+			<button type="button" className="photo-tools-button" disabled={busy || saving || !nextId || Boolean(preparedDraft.dateError) || (dirty && (!draft.title.trim() || !draft.alt.trim()))} onClick={() => saveAndNavigate(nextId)}>{dirty ? "保存して次へ" : "次へ"}</button>
+		</nav>
+		{preparedDraft.dateError && <p className="photo-tools-alert photo-tools-alert--error" role="alert">{preparedDraft.dateError}</p>}
 		<div className="photo-tools-actions">
-			<button className="photo-tools-button photo-tools-button--primary" disabled={busy || !dirty || !draft.title.trim() || !draft.alt.trim()} onClick={() => onSave(photo, draft)}>下書き保存</button>
 			<button className="photo-tools-button" disabled={busy || dirty || locationUnreviewed || !hasPendingChanges(photo)} onClick={() => onPublish([photo.id])}>この写真だけ公開</button>
 			<a className="photo-tools-button" href={photoEditHref(photo.id)} onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>詳細編集</a>
-			{live && <a className="photo-tools-button" href={live} target="_blank" rel="noreferrer" onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>Photo公開ページ</a>}
 		</div>
+		<PublicPhotoLinks photo={photo} />
 		{dirty && <p className="photo-tools-muted">この写真の変更を下書き保存すると、公開や並べ替えを再開できます。</p>}
 		{locationUnreviewed && <p className="photo-tools-alert photo-tools-alert--error">原本の位置情報を確認・除去するまで公開できません。</p>}
 	</aside>;
@@ -257,6 +360,7 @@ function AlbumOrganizer({
 	onBusyChange: (busy: boolean) => void;
 	albumReady: boolean;
 }) {
+	const reorderInFlight = useRef(false);
 	const albumPhotos = useMemo(() => allPhotos
 		.filter((photo) => dataOf(photo).album === album.id)
 		.toSorted((left, right) => Number(dataOf(left).position) - Number(dataOf(right).position)), [allPhotos, album.id]);
@@ -274,6 +378,7 @@ function AlbumOrganizer({
 	const [undoMove, setUndoMove] = useState<Array<{ id: string; album: string; position: number }> | null>(null);
 	const [mobilePane, setMobilePane] = useState<"photos" | "info">("photos");
 	const [photoDraftDirty, setPhotoDraftDirty] = useState(false);
+	const [uploadQueue, setUploadQueue] = useState<UploadQueueItem<File, PhotoMediaItem>[]>([]);
 	const [albumDraft, setAlbumDraft] = useState({
 		title: textValue(dataOf(album).title),
 		description: textValue(dataOf(album).description),
@@ -287,6 +392,7 @@ function AlbumOrganizer({
 		setUndoMove(null);
 		setMobilePane("photos");
 		setPhotoDraftDirty(false);
+		setUploadQueue([]);
 		setAlbumDraft({ title: textValue(dataOf(album).title), description: textValue(dataOf(album).description) });
 		setMessage(""); setError(null); setFailures([]);
 	}, [album.id]);
@@ -340,7 +446,7 @@ function AlbumOrganizer({
 		finally { setBusy(false); }
 	};
 
-	const savePhoto = async (photo: ContentItem, patch: Record<string, unknown>) => {
+	const savePhoto = async (photo: ContentItem, patch: Record<string, unknown>): Promise<boolean> => {
 		setBusy(true); setError(null); setMessage("保存中…"); setFailures([]);
 		try {
 			let normalized = patch;
@@ -361,7 +467,14 @@ function AlbumOrganizer({
 					return next;
 				});
 			}
-		} catch (cause) { setError(new Error(reasonOf(cause))); setMessage(""); }
+			return true;
+		} catch (cause) {
+			setError(new Error(cause instanceof PhotoToolsApiError && cause.status === 409
+				? "別の変更と競合しました。入力は保持されています。内容を確認して、もう一度保存してください。"
+				: reasonOf(cause)));
+			setMessage("");
+			return false;
+		}
 		finally { setBusy(false); }
 	};
 
@@ -387,7 +500,8 @@ function AlbumOrganizer({
 	};
 
 	const persistOrder = async (next: ContentItem[]) => {
-		if (photoDraftDirty || !albumReady) return;
+		if (photoDraftDirty || !albumReady || reorderInFlight.current) return;
+		reorderInFlight.current = true;
 		setBusy(true); setError(null); setFailures([]); setMessage("並び順を保存中…");
 		const positions = sparsePositions(next.length);
 		const changed = next.flatMap((photo, index) => Number(dataOf(photo).position) === positions[index] ? [] : [{ photo, position: positions[index] }]);
@@ -407,7 +521,9 @@ function AlbumOrganizer({
 		}
 		retainFailures(failed);
 		await recordOperation({ kind: "album-reorder", status: failed.length ? "partial" : "complete", targetIds: changed.map(({ photo }) => photo.id), failures: failed, metadata: { albumId: album.id } }).catch(() => undefined);
-		setMessage(failed.length ? `並び順を完了できなかったため、保存済みの変更を元へ戻しました（${failed.length}件を確認してください）` : "並び順を下書き保存しました"); setBusy(false);
+		setMessage(failed.length ? `並び順を完了できなかったため、保存済みの変更を元へ戻しました（${failed.length}件を確認してください）` : "並び順を下書き保存しました");
+		setBusy(false);
+		reorderInFlight.current = false;
 	};
 
 	const moveAt = (index: number, delta: number) => {
@@ -503,6 +619,62 @@ function AlbumOrganizer({
 		setMobilePane("info");
 	};
 
+	const executeUploadQueue = async (initial: UploadQueueItem<File, PhotoMediaItem>[]) => {
+		setBusy(true); setError(null); setFailures([]);
+		let working = initial;
+		const updateItem = (id: string, patch: Partial<Omit<UploadQueueItem<File, PhotoMediaItem>, "id" | "file" | "position">>) => {
+			working = updateUploadQueueItem(working, id, patch);
+			setUploadQueue(working);
+		};
+		const created: string[] = [];
+		for (const queued of initial) {
+			let item = working.find((candidate) => candidate.id === queued.id) ?? queued;
+			if (item.stage === "queued") {
+				updateItem(item.id, { stage: "uploading-media", error: undefined });
+				setMessage(`${item.file.name}: Mediaを保存中…`);
+				try {
+					const media = await uploadPhotoMedia(item.file);
+					updateItem(item.id, { stage: "media-ready", media, error: undefined });
+					item = { ...item, stage: "media-ready", media, error: undefined };
+				} catch (cause) {
+					updateItem(item.id, { stage: "failed-media", error: reasonOf(cause) });
+					continue;
+				}
+			}
+			if (item.stage !== "media-ready" || !item.media) continue;
+			updateItem(item.id, { stage: "creating-photo", error: undefined });
+			setMessage(`${item.file.name}: Photo下書きを作成中…`);
+			try {
+				const result = await createPhotoFromMedia(item.media, album.id, item.position);
+				onPhotoAdded(result.item);
+				touch(result.item.id);
+				created.push(result.item.id);
+				updateItem(item.id, { stage: "photo-created", photoId: result.item.id, error: undefined });
+			} catch (cause) {
+				updateItem(item.id, { stage: "failed-photo", media: item.media, error: reasonOf(cause) });
+			}
+		}
+		const failed = working
+			.filter((item) => item.stage.startsWith("failed-"))
+			.map((item) => ({ id: item.file.name, reason: item.error ?? "不明なエラー" }));
+		setFailures(failed);
+		await recordOperation({
+			kind: "photo-upload",
+			status: failed.length ? "partial" : "complete",
+			targetIds: created,
+			failures: failed,
+			metadata: { albumId: album.id, requested: initial.length },
+		}).catch(() => undefined);
+		setMessage(failed.length
+			? `${created.length}点を追加・${failed.length}点が失敗（この画面で失敗分だけ再試行できます）`
+			: `${created.length}点を下書きへ追加しました`);
+		setBusy(false);
+	};
+
+	const orderedVisibleIds = visible.map((photo) => photo.id);
+	const uploadSettled = uploadQueue.filter((item) => isUploadQueueSettled(item.stage)).length;
+	const hasRetryableUpload = uploadQueue.some((item) => isUploadQueueRetryable(item.stage));
+
 	return <section className="photo-tools-workspace" data-photo-tools-busy={busy ? "true" : undefined}>
 		<header className="photo-tools-workspace__header">
 			<div><span className="photo-tools-eyebrow">選択中のアルバム</span><h1>{labelOf(album)}</h1><p>{albumReady ? `${albumPhotos.length}点` : "写真を読込中"}・未公開の変更 {pendingIds.size + (albumDraftDirty || hasPendingChanges(album) ? 1 : 0)}件</p></div>
@@ -526,22 +698,19 @@ function AlbumOrganizer({
 		<div className="photo-tools-toolbar">
 			<label>写真を検索<input type="search" placeholder="タイトル・キャプション・ファイル名" value={search} disabled={busy || !albumReady} onChange={(event) => setSearch(event.target.value)} /></label>
 			<label>要確認<select value={filter} disabled={busy || !albumReady} onChange={(event) => setFilter(event.target.value as "" | ReviewFlag)}><option value="">すべて</option>{Object.entries(FLAG_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-			<label className="photo-tools-button photo-tools-upload">写真を追加<input type="file" accept={ACCEPTED_IMAGE_INPUT} multiple hidden disabled={operationLocked} onChange={async (event) => {
+			<label className="photo-tools-button photo-tools-upload">写真を追加<input type="file" accept={ACCEPTED_IMAGE_INPUT} multiple hidden disabled={operationLocked} onChange={(event) => {
 				const requestedFiles = [...(event.target.files ?? [])];
-				const files = requestedFiles.slice(0, 20);
-				if (!files.length) return;
-				setBusy(true); setError(null); setFailures([]); setMessage(`${files.length}点を追加中…`);
-				let position = Math.max(0, ...albumPhotos.map((photo) => Number(dataOf(photo).position) || 0));
-				const failed: Failure[] = []; const created: string[] = [];
-				for (const file of files) {
-					if (!ACCEPTED_IMAGE_TYPES.has(file.type)) { failed.push({ id: file.name, reason: "JPEG、PNG、WebP、GIF、AVIFだけ追加できます" }); continue; }
-					if (file.size > MAX_UPLOAD_BYTES) { failed.push({ id: file.name, reason: "1枚50MBの上限を超えています" }); continue; }
-					try { position += 1024; const result = await uploadPhoto(file, album.id, position); onPhotoAdded(result.item); touch(result.item.id); created.push(result.item.id); }
-					catch (cause) { failed.push({ id: file.name, reason: reasonOf(cause) }); }
-				}
-				for (const file of requestedFiles.slice(20)) failed.push({ id: file.name, reason: "一度に追加できるのは20枚までです" });
-				setFailures(failed); await recordOperation({ kind: "photo-upload", status: failed.length ? "partial" : "complete", targetIds: created, failures: failed, metadata: { albumId: album.id, requested: files.length } }).catch(() => undefined);
-				setMessage(failed.length ? `${created.length}点を追加・${failed.length}点が失敗` : `${created.length}点を下書きへ追加しました`); setBusy(false); event.target.value = "";
+				if (!requestedFiles.length) return;
+				const queue = createUploadQueue<File, PhotoMediaItem>(requestedFiles, {
+					batchId: String(Date.now()),
+					startPosition: Math.max(0, ...albumPhotos.map((photo) => Number(dataOf(photo).position) || 0)),
+					acceptedTypes: ACCEPTED_IMAGE_TYPES,
+					maxBytes: MAX_UPLOAD_BYTES,
+					maxFiles: 20,
+				});
+				event.currentTarget.value = "";
+				setUploadQueue(queue);
+				void executeUploadQueue(queue);
 			}} /></label>
 			<button className="photo-tools-button" disabled={operationLocked || visible.length === 0} onClick={() => { if (canChangeOrganizerContext()) setChecked(new Set(visible.map((photo) => photo.id))); }}>表示中を全選択</button>
 			<button className="photo-tools-button" disabled={operationLocked || albumPhotos.length < 2} onClick={() => persistOrder([...albumPhotos].sort((left, right) => compareCapturedAt(
@@ -555,6 +724,19 @@ function AlbumOrganizer({
 			{undoOrder && <button className="photo-tools-button" disabled={operationLocked} onClick={() => restore(undoOrder, "order")}>並び順を戻す</button>}
 			{undoMove && <button className="photo-tools-button" disabled={operationLocked} onClick={() => restore(undoMove, "move")}>移動を戻す</button>}
 		</div>
+		{uploadQueue.length > 0 && <section className="photo-tools-upload-queue" aria-label="写真追加の進捗" aria-live="polite">
+			<header>
+				<div><strong>写真追加</strong><span>{uploadSettled}/{uploadQueue.length}件 完了</span></div>
+				<button type="button" className="photo-tools-button" disabled={busy || !hasRetryableUpload} onClick={() => void executeUploadQueue(retryFailedUploadQueue(uploadQueue))}>失敗分だけ再試行</button>
+			</header>
+			<progress aria-label="写真追加の完了件数" max={uploadQueue.length} value={uploadSettled}>{uploadSettled}/{uploadQueue.length}</progress>
+			<ul>{uploadQueue.map((item) => <li key={item.id} data-stage={item.stage}>
+				<span title={item.file.name}>{item.file.name}</span>
+				<strong>{UPLOAD_STAGE_LABELS[item.stage]}</strong>
+				{item.error && <small>{item.error}</small>}
+			</li>)}</ul>
+			<p className="photo-tools-muted">失敗分のファイルは、この画面を開いている間だけ再試行用に保持します。画面を再読み込みした場合は選び直してください。追加した写真は下書きのままです。</p>
+		</section>}
 		{!albumReady && <p className="photo-tools-status" role="status">このアルバムの写真をすべて読み込んでいます。完了すると編集できます。</p>}
 		{photoDraftDirty && <p className="photo-tools-status" role="status">写真情報に未保存の変更があります。下書き保存すると他の操作を再開できます。</p>}
 
@@ -588,7 +770,7 @@ function AlbumOrganizer({
 			{checkedPhotos.length > 1
 				? <BulkInspector selected={checkedPhotos} albums={albums} busy={busy} onApply={applyBulk} onMove={moveSelected} onPublish={publishMany} onClear={() => setChecked(new Set())} />
 				: inspectorPhoto && dataOf(inspectorPhoto).album === album.id
-					? <PhotoInspector photo={inspectorPhoto} albums={albums} busy={busy} onSave={savePhoto} onPublish={publishMany} onDirtyChange={setPhotoDraftDirty} />
+						? <PhotoInspector photo={inspectorPhoto} albums={albums} busy={busy} onSave={savePhoto} onPublish={publishMany} onDirtyChange={setPhotoDraftDirty} previousId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, -1)} nextId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, 1)} onNavigate={(photoId) => { setChecked(new Set()); setSelectedId(photoId); setMobilePane("info"); }} />
 					: <aside className="photo-tools-inspector"><p className="photo-tools-muted">写真を選ぶと、ここで情報を編集できます。</p></aside>}
 		</div>
 	</section>;

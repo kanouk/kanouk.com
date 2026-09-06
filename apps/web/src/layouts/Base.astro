@@ -58,7 +58,7 @@ const pageCandidates = pageResult.entries;
 const pages = pageCandidates
 	.filter((page) => !FOOTER_EXCLUDED_PAGE_SLUGS.has(page.data.slug || page.id))
 	.slice(0, 4);
-const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || Astro.url.hostname === "localhost";
+const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
 const photosUrl = isPreviewHost ? "/albums" : "https://photos.kanouk.com/albums";
 const isLoggedIn = !!Astro.locals.user;
 const currentPath = Astro.url.pathname;

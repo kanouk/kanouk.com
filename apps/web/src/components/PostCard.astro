@@ -65,16 +65,19 @@ const formattedDate = date
 					</div>
 				)
 			}
-			{(categories?.length ?? 0) > 0 && (
-				<div class="card-categories" aria-label="カテゴリー">
-					{categories?.slice(0, 1).map((category) => (
-						<span class="card-category">{category.label}</span>
-					))}
-				</div>
-			)}
 		</div>
 		<div class="card-body">
+			<div class="card-meta">
+				{formattedDate && <time>{formattedDate}</time>}
+				{formattedDate && (categories?.length ?? 0) > 0 && <span class="meta-dot" />}
+				{categories?.slice(0, 1).map((category) => (
+					<span class="card-category">{category.label}</span>
+				))}
+				{(formattedDate || (categories?.length ?? 0) > 0) && readingTime && <span class="meta-dot" />}
+				{readingTime && <span>{readingTime}分で読む</span>}
+			</div>
 			<h2 class="card-title">{title}</h2>
+			{excerpt && <p class="card-excerpt">{excerpt}</p>}
 			{
 				(tags?.length ?? 0) > 0 && (
 					<div class="card-taxonomies" aria-label="タグ">
@@ -84,12 +87,6 @@ const formattedDate = date
 					</div>
 				)
 			}
-			{excerpt && <p class="card-excerpt">{excerpt}</p>}
-			<div class="card-meta">
-				{formattedDate && <time>{formattedDate}</time>}
-				{formattedDate && readingTime && <span class="meta-dot" />}
-				{readingTime && <span>{readingTime}分</span>}
-			</div>
 		</div>
 	</a>
 </article>

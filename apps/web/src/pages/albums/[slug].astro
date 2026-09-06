@@ -1,6 +1,7 @@
 ---
 import { getEmDashCollection, getEmDashEntry } from "emdash";
-import { ArrowLeft, CirclePlay, Grid2x2, Grid3x3, Images } from "lucide-astro";
+import { ArrowLeft, ArrowUpRight, BookOpen, CirclePlay, Grid2x2, Grid3x3, Images } from "lucide-astro";
+import { env } from "virtual:emdash/env";
 import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
@@ -9,6 +10,8 @@ import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-dis
 import { PHOTO_GRID_SIZE } from "../../utils/photo-grid-size.mjs";
 import { sortPhotosChronologically } from "../../utils/photo-order.mjs";
 import { photoPath } from "../../utils/photo-url.mjs";
+import { albumPhotoAnchor } from "../../utils/photo-return.mjs";
+import { relatedAlbumArticles } from "../../utils/album-articles.mjs";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
@@ -59,6 +62,11 @@ const locationPhotos = chronologicalPhotos.flatMap((photo) => {
 	}];
 });
 const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
+if (!env?.DB) throw new Error("Cloudflare D1 binding DB is unavailable");
+const relatedPosts = await relatedAlbumArticles(env.DB, album.data.id);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
+const isLocal = ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
+const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : "https://blog.kanouk.com";
 ---
 
 <Photos
@@ -81,9 +89,22 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 				<span>{chronologicalPhotos.length}点</span>
 			</p>
 		</header>
+		{relatedPosts.length > 0 && (
+			<nav class="album-related-posts" aria-label="関連するブログ記事">
+				<ul class="album-related-posts__list">
+					{relatedPosts.map((post) => (
+						<li class="album-related-posts__item"><a class="album-related-posts__link" href={`${blogOrigin}/posts/${encodeURIComponent(post.id)}`}>
+							<BookOpen size={16} strokeWidth={1.65} aria-hidden="true" />
+							<span>ブログ記事を読む<span class="album-related-posts__post-title">{post.title}</span></span>
+							<ArrowUpRight size={15} strokeWidth={1.65} aria-hidden="true" />
+						</a></li>
+					))}
+				</ul>
+			</nav>
+		)}
 		<AlbumMap markers={locationPhotos} />
 
-		<div class="photo-grid" data-photo-grid>
+		<div class="photo-grid" data-photo-grid data-album-id={album.data.id}>
 			{chronologicalPhotos.map((photo, index) => {
 				const displayTitle = publicPhotoTitle({
 					title: photo.data.title,
@@ -95,7 +116,7 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 					? storedAlt
 					: displayTitle || photo.data.caption?.trim() || `${album.data.title}の写真 ${index + 1}`;
 				return (
-				<a class="photo-card" href={photoPath(photo.id)} aria-label={publicAlt} data-astro-prefetch="hover">
+				<a class="photo-card" id={albumPhotoAnchor(photo.data.id)} data-photo-id={photo.data.id} href={photoPath(photo.id)} aria-label={publicAlt} data-astro-prefetch="hover">
 					<span class="photo-card__media">
 						<YohakuImage
 							image={photo.data.image}
@@ -103,7 +124,7 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 							crop
 							preview
 							priority={index < 3}
-							sizes="(max-width: 34rem) 50vw, (max-width: 64rem) 25vw, 20rem"
+							sizes="(max-width: 40rem) 33vw, (max-width: 64rem) 25vw, 20vw"
 						/>
 						{photo.data.kind === "video" && (
 							<span class="video-badge">
@@ -137,6 +158,7 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 </Photos>
 
 <script>
+	import { photoReturnKey } from "../../utils/photo-return.mjs";
 	import {
 		PHOTO_GRID_SIZE,
 		normalizePhotoGridSize,
@@ -147,23 +169,35 @@ const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 	const input = control?.querySelector<HTMLInputElement>("[data-photo-grid-size-input]");
 
 	if (grid && control && input) {
+		grid.addEventListener("click", (event) => {
+			const target = (event.target as Element).closest<HTMLAnchorElement>("[data-photo-id]");
+			if (!target || !grid.dataset.albumId) return;
+			try {
+				sessionStorage.setItem(photoReturnKey(grid.dataset.albumId), JSON.stringify({
+					albumId: grid.dataset.albumId, photoId: target.dataset.photoId, savedAt: Date.now(),
+				}));
+			} catch { /* Anchor-based return still works without storage. */ }
+		});
+		if (location.hash.startsWith("#photo-")) {
+			const target = document.getElementById(location.hash.slice(1));
+			if (target && grid.contains(target)) target.focus({ preventScroll: true });
+		}
 		const applySize = (value: unknown) => {
 			const size = normalizePhotoGridSize(value);
+			grid.dataset.customSize = "true";
 			grid.style.setProperty("--photo-grid-min", `${size}px`);
 			input.value = String(size);
 			input.setAttribute("aria-valuetext", `サムネイル幅 ${size}px`);
 			return size;
 		};
 
-		let initialSize: number = PHOTO_GRID_SIZE.defaultValue;
 		try {
 			const storedSize = localStorage.getItem(PHOTO_GRID_SIZE.storageKey);
-			if (storedSize !== null) initialSize = normalizePhotoGridSize(storedSize);
+			if (storedSize !== null) applySize(storedSize);
 		} catch {
 			// Storage can be unavailable in privacy-restricted browsing contexts.
 		}
 
-		applySize(initialSize);
 		control.hidden = false;
 		input.addEventListener("input", () => applySize(input.value));
 		input.addEventListener("change", () => {

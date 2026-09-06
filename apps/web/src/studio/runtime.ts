@@ -14,6 +14,9 @@ export function createPlugin() {
 		id: "yohaku-photo-tools",
 		version: "1.0.0",
 		capabilities: ["content:read", "content:write", "media:read", "media:write"],
+		admin: {
+			pages: [{ path: "/organize", label: "写真を整理", icon: "images" }],
+		},
 		storage: {
 			operations: { indexes: ["kind", "status", "createdAt"] },
 		},

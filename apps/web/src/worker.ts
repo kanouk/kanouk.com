@@ -1,6 +1,16 @@
 import handler, { createScheduledHandler, PluginBridge } from "@emdash-cms/cloudflare/worker";
 import { needsLocationReview } from "./studio/domain";
-import { guardPublicOriginalRead, type PublicMediaDatabase } from "./studio/public-media-guard";
+import {
+	addPrivateMediaHeaders,
+	applyMediaAccessHeaders,
+	authenticationHeaders,
+	classifyMediaRead,
+	deniedMediaResponse,
+	mediaPreviewDelivery,
+	publicMediaTransformationRequest,
+	type PublicMediaDatabase,
+	verifyAuthenticatedMediaRead,
+} from "./studio/public-media-guard";
 
 export { PluginBridge };
 
@@ -41,9 +51,7 @@ async function transformImage(
 	format: "avif" | "webp",
 	quality: number,
 ) {
-	const imageRequest = new Request(sourceUrl, {
-		headers: { Accept: "image/*" },
-	});
+	const imageRequest = publicMediaTransformationRequest(sourceUrl);
 	const transformOptions: ImageTransformInit = {
 		cf: {
 			image: {
@@ -65,8 +73,20 @@ async function transformImage(
 	});
 }
 
+function authenticateMediaRequest(
+	request: Request,
+	env: HandlerEnv,
+	context: HandlerContext,
+): Promise<boolean> {
+	return verifyAuthenticatedMediaRead(request, (probe) =>
+		handler.fetch(probe as HandlerRequest, env, context));
+}
+
 async function servePreview(
 	request: HandlerRequest,
+	env: HandlerEnv,
+	context: HandlerContext,
+	database: PublicMediaDatabase,
 	url: URL,
 	encodedKey: string,
 	width: number,
@@ -77,22 +97,42 @@ async function servePreview(
 	try {
 		mediaKey = decodeURIComponent(encodedKey);
 	} catch {
-		return new Response("Invalid media key", { status: 400 });
+		return deniedMediaResponse();
 	}
-	if (!mediaKey || mediaKey.includes("\0")) {
-		return new Response("Invalid media key", { status: 400 });
+	if (!mediaKey || mediaKey.includes("\0") || mediaKey.startsWith("backups/")) {
+		return deniedMediaResponse();
 	}
 
 	const sourceUrl = new URL(
 		`/_emdash/api/media/file/${encodeURIComponent(mediaKey)}`,
 		url,
 	);
-	const transformed = await transformImage(request, sourceUrl, width, format, quality);
+	const sourceRequest = new Request(sourceUrl, {
+		method: request.method,
+		headers: authenticationHeaders(request),
+	});
+	const classification = await classifyMediaRead(sourceRequest, database, {
+		authenticate: (candidate) => authenticateMediaRequest(candidate, env, context),
+	});
+	const delivery = mediaPreviewDelivery(classification.access);
+	if (delivery === "deny") {
+		return deniedMediaResponse();
+	}
+	if (delivery === "direct-private") {
+		const response = await handler.fetch(sourceRequest as HandlerRequest, env, context);
+		return applyMediaAccessHeaders(response, "authenticated");
+	}
+	const transformed = await transformImage(
+		request,
+		sourceUrl,
+		width,
+		format,
+		quality,
+	);
 	if (!transformed) {
-		return new Response("Image preview is temporarily unavailable", {
+		return addPrivateMediaHeaders(new Response("Image preview is temporarily unavailable", {
 			status: 502,
-			headers: { "Cache-Control": "private, no-store" },
-		});
+		}));
 	}
 
 	return transformed;
@@ -134,11 +174,17 @@ export default {
 	...handler,
 	async fetch(request: HandlerRequest, env: HandlerEnv, context: HandlerContext) {
 		const url = new URL(request.url);
-		const guardedOriginal = await guardPublicOriginalRead(
+		const database = (env as HandlerEnv & { DB: PublicMediaDatabase }).DB;
+		const originalAccess = await classifyMediaRead(
 			request,
-			(env as HandlerEnv & { DB: PublicMediaDatabase }).DB,
+			database,
+			{ authenticate: (candidate) => authenticateMediaRequest(candidate, env, context) },
 		);
-		if (guardedOriginal) return guardedOriginal;
+		if (originalAccess.access === "denied") return deniedMediaResponse();
+		if (originalAccess.access === "public" || originalAccess.access === "authenticated") {
+			const response = await handler.fetch(request, env, context);
+			return applyMediaAccessHeaders(response, originalAccess.access);
+		}
 		const blockedPublish = await blockUnreviewedPhotoPublish(request, env, context, url);
 		if (blockedPublish) return blockedPublish;
 		if (
@@ -194,6 +240,9 @@ export default {
 				}
 					return servePreview(
 						request,
+						env,
+						context,
+						database,
 						url,
 					match[3],
 					width,
@@ -204,6 +253,9 @@ export default {
 			if (url.pathname.startsWith(LEGACY_PREVIEW_PREFIX)) {
 					return servePreview(
 						request,
+						env,
+						context,
+						database,
 						url,
 					url.pathname.slice(LEGACY_PREVIEW_PREFIX.length),
 					1200,

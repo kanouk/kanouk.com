@@ -1,0 +1,32 @@
+---
+import { getEmDashCollection } from "emdash";
+import YohakuImage from "../../../../src/components/YohakuImage.astro";
+
+const albumId = typeof Astro.props.node.id === "string" ? Astro.props.node.id.trim() : "";
+const result = albumId
+	? await getEmDashCollection("albums", {
+			status: "published",
+			where: { id: albumId },
+			limit: 1,
+		})
+	: { entries: [], cacheHint: {} };
+if (Astro.cache?.enabled) Astro.cache.set(result.cacheHint);
+const album = result.entries[0];
+const localOrigin = ["localhost", "127.0.0.1"].includes(Astro.url.hostname) || Astro.url.hostname.endsWith("workers.dev");
+const href = album ? `${localOrigin ? "" : "https://photos.kanouk.com"}/albums/${encodeURIComponent(album.id)}` : "";
+---
+
+{album && href && (
+	<a class="album-feature-card" href={href}>
+		<span class:list={["album-feature-card__cover", !album.data.cover_image && "album-feature-card__cover--placeholder"]} aria-hidden="true">
+			{album.data.cover_image && (
+				<YohakuImage image={album.data.cover_image} alt="" crop preview sizes="9rem" />
+			)}
+		</span>
+		<span class="album-feature-card__copy">
+			<span class="album-feature-card__meta">関連アルバム</span>
+			<strong class="album-feature-card__title">{album.data.title}</strong>
+			<span class="album-feature-card__action" aria-hidden="true">アルバムを見る ↗</span>
+		</span>
+	</a>
+)}

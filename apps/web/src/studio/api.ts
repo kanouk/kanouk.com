@@ -17,7 +17,7 @@ export interface ContentPage {
 	total?: number;
 }
 
-interface PhotoMediaItem extends AdminMediaItem {
+export interface PhotoMediaItem extends AdminMediaItem {
 	contentHash?: string | null;
 }
 
@@ -133,8 +133,15 @@ export function createAlbumDraft(title: string): Promise<ContentEnvelope> {
 	});
 }
 
-export async function uploadPhoto(file: File, albumId: string, position: number): Promise<ContentEnvelope> {
-	const media = await uploadMedia(file) as PhotoMediaItem;
+export async function uploadPhotoMedia(file: File): Promise<PhotoMediaItem> {
+	return uploadMedia(file) as Promise<PhotoMediaItem>;
+}
+
+export async function createPhotoFromMedia(
+	media: PhotoMediaItem,
+	albumId: string,
+	position: number,
+): Promise<ContentEnvelope> {
 	const title = filenameTitle(media.filename);
 	return createDraft("photos", {
 		title,
@@ -164,6 +171,11 @@ export async function uploadPhoto(file: File, albumId: string, position: number)
 			...(media.contentHash ? { content_hash: media.contentHash } : {}),
 		},
 	});
+}
+
+export async function uploadPhoto(file: File, albumId: string, position: number): Promise<ContentEnvelope> {
+	const media = await uploadPhotoMedia(file);
+	return createPhotoFromMedia(media, albumId, position);
 }
 
 export async function recordOperation(input: {

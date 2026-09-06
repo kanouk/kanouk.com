@@ -3,7 +3,7 @@ import { getEmDashCollection, getTermsForEntries, getSiteSettings } from "emdash
 import BlogSidebar from "../components/BlogSidebar.astro";
 import PostCard from "../components/PostCard.astro";
 import Base from "../layouts/Base.astro";
-import { getReadingTime } from "../utils/reading-time";
+import { getPostExcerpt, getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
 const POSTS_PER_PAGE = 10;
@@ -59,6 +59,7 @@ const [categoriesByEntry, tagsByEntry] = await Promise.all([
 									featuredImage={post.data.featured_image}
 									href={`/posts/${post.data.id}`}
 									date={post.data.publishedAt ?? undefined}
+									excerpt={getPostExcerpt(post.data.excerpt, post.data.content, 180)}
 									readingTime={getReadingTime(post.data.content)}
 									categories={(categoriesByEntry.get(post.data.id) ?? []).map((category) => ({ slug: category.slug, label: category.label }))}
 									tags={(tagsByEntry.get(post.data.id) ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
