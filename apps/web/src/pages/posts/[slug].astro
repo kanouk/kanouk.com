@@ -21,10 +21,9 @@ import ProfileCard from "../../components/ProfileCard.astro";
 import SidebarTaxonomies from "../../components/SidebarTaxonomies.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
 import {
-	absoluteMediaUrl,
-	resolveFirstPortableImageUrl,
-	resolvePublicMediaUrl,
-} from "../../utils/media-url";
+	resolveArticleSocial,
+	type ArticleSocialDatabase,
+} from "../../utils/article-social";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { calculateAge } from "../../utils/author-age.mjs";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
@@ -86,6 +85,8 @@ const legacyAlbumContent = await normalizeLegacyAlbumCards(
 	},
 );
 const articleContent = legacyAlbumContent.content as NonNullable<typeof post.data.content>;
+if (!env?.DB) throw new Error("Cloudflare D1 binding DB is unavailable");
+const socialDatabase = env.DB as ArticleSocialDatabase;
 
 // WordPress-era portable image snapshots can omit dimensions even though the
 // canonical media row has them. Start the single lookup before the remaining
@@ -114,13 +115,12 @@ const firstImageDimensionsPromise =
 			})().catch(() => undefined)
 		: Promise.resolve(undefined);
 
-// Prefer the cover for social previews, then fall back to the first article image.
-// The public page remains list-first and does not invent a visible hero image.
-const featuredImageUrl = absoluteMediaUrl(
-	resolvePublicMediaUrl(post.data.featured_image)
-		?? resolveFirstPortableImageUrl(articleContent),
-	Astro.url.origin,
-);
+// Social images must resolve to a currently public media source. In particular,
+// a stale WordPress SEO URL never bypasses the published-media boundary.
+const articleSocial = await resolveArticleSocial(socialDatabase, {
+	id: post.id,
+	data: { ...post.data, content: articleContent },
+}, { origin: Astro.url.origin, isPreview });
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 
 // Generate SEO meta from content
@@ -128,13 +128,17 @@ const generatedSeo = getSeoMeta(post, {
 	siteTitle,
 	siteUrl: Astro.url.origin,
 	path: canonicalPostPath,
-	defaultOgImage: featuredImageUrl,
+	defaultDescription: articleSocial.description || undefined,
+	defaultOgImage: articleSocial.imageUrl,
 });
 // The stored WordPress canonical can contain a percent-encoded Japanese slug.
 // The public contract is the stable EmDash content ID; legacy slugs redirect.
 const seo = {
 	...generatedSeo,
 	canonical: new URL(canonicalPostPath, "https://blog.kanouk.com").toString(),
+	description: articleSocial.description || generatedSeo.description,
+	ogDescription: articleSocial.description || generatedSeo.ogDescription,
+	ogImage: articleSocial.imageUrl,
 };
 
 // Bylines are already hydrated by getEmDashEntry
@@ -147,7 +151,6 @@ const authorAgeAtPublication = calculateAge(
 // Get reading time
 const readingTime = getReadingTime(articleContent);
 const firstImageDimensions = await firstImageDimensionsPromise;
-if (!env?.DB) throw new Error("Cloudflare D1 binding DB is unavailable");
 const imagePhotoLinks = await articlePhotoLinks(env.DB, articleContent);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["photos", "albums"] });
 const photoOrigin = ["localhost", "127.0.0.1"].includes(Astro.url.hostname) || Astro.url.hostname.endsWith("workers.dev") ? "" : "https://photos.kanouk.com";

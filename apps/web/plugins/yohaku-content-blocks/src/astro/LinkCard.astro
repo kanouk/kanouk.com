@@ -1,5 +1,10 @@
 ---
-const { id, url, title, description, caption, imageUrl } = Astro.props.node;
+import { env } from "virtual:emdash/env";
+import { resolveInternalLinkPreview } from "../../../../src/utils/article-social";
+import { createD1LinkPreviewCacheReader, getCachedLinkPreview } from "../link-preview";
+
+const { id, url, title, caption } = Astro.props.node;
+let { description, imageUrl } = Astro.props.node;
 const candidate = typeof (id || url) === "string" ? String(id || url).trim() : "";
 let href = "";
 let host = "";
@@ -12,9 +17,28 @@ try {
 		isExternal = parsed.origin !== Astro.url.origin;
 	}
 } catch {}
+let metadata: { title: string; description: string; imageUrl: string } | null = null;
+if (href && env?.DB) {
+	try {
+		metadata = await resolveInternalLinkPreview(env.DB, new URL(href, Astro.url).href, { origin: Astro.url.origin });
+		if (!metadata) metadata = await getCachedLinkPreview(new URL(href, Astro.url).href, createD1LinkPreviewCacheReader(env.DB));
+		if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts", "pages", "photos", "albums", "settings"] });
+	} catch {
+		// A cache miss or unavailable metadata never removes the original link.
+	}
+}
+const savedText = (value: unknown): string => typeof value === "string" ? value.trim() : "";
+description = savedText(description) || metadata?.description || "";
+imageUrl = savedText(imageUrl) || metadata?.imageUrl || "";
+try {
+	if (imageUrl) {
+		const image = new URL(imageUrl, Astro.url);
+		if (!['http:', 'https:'].includes(image.protocol) || image.username || image.password) imageUrl = "";
+	}
+} catch { imageUrl = ""; }
 const meaningfulTitle = typeof title === "string" && title.trim() && title.trim() !== "関連記事"
 	? title.trim()
-	: href;
+	: metadata?.title || href;
 const eyebrow = typeof caption === "string" && caption.trim()
 	? caption.trim()
 	: isExternal
@@ -31,7 +55,7 @@ const eyebrow = typeof caption === "string" && caption.trim()
 	>
 		{imageUrl && (
 			<span class="yohaku-link-card__thumb" aria-hidden="true">
-				<img src={imageUrl} alt="" loading="lazy" decoding="async" />
+				<img src={imageUrl} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
 			</span>
 		)}
 		<span class="yohaku-link-card__body">
