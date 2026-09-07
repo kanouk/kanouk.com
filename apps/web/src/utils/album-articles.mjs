@@ -3,9 +3,10 @@ import {
 	normalizeLegacyAlbumCards,
 } from "./legacy-album-cards.mjs";
 
-// SQL narrows the scan to published posts containing either the exact native
-// album block or a link target for this published album. The shared JS
-// normalizer then applies the stricter adjacency, copy, and inline-mark rules.
+// SQL narrows the scan to published posts containing the article-level
+// reference, the exact native album block, or a link target for this published
+// album. The shared JS normalizer then applies the stricter adjacency, copy,
+// and inline-mark rules to legacy links.
 export const ALBUM_ARTICLES_QUERY = `
 	WITH target_base AS (
 		SELECT album.id, album.slug, json_extract(album_live.data, '$.source_url') AS source_url
@@ -26,6 +27,7 @@ export const ALBUM_ARTICLES_QUERY = `
 		post.id,
 		json_extract(live.data, '$.title') AS title,
 		json_extract(live.data, '$.content') AS content,
+		json_extract(live.data, '$.related_album') AS related_album_id,
 		target_album.slug AS album_slug,
 		target_album.source_url AS album_source_url,
 		target_album.source_url_matches
@@ -35,6 +37,8 @@ export const ALBUM_ARTICLES_QUERY = `
 	WHERE post.status = 'published' AND post.deleted_at IS NULL
 		AND post.locale = ?2
 		AND (
+			json_extract(live.data, '$.related_album') = ?1
+			OR
 			EXISTS (
 				SELECT 1 FROM json_each(live.data, '$.content') AS block
 				WHERE json_extract(block.value, '$._type') = 'yohaku.album'
@@ -75,9 +79,10 @@ export async function relatedAlbumArticles(database, albumId, locale = "ja") {
 	for (const row of results) {
 		if (typeof row.id !== "string" || typeof row.title !== "string" || !row.title.trim()) continue;
 		const content = parsedContent(row.content);
+		const configured = row.related_album_id === albumId;
 		const explicit = content.some((block) => block?._type === "yohaku.album" && block.id === albumId);
 		let legacy = false;
-		if (!explicit) {
+		if (!configured && !explicit) {
 			const sourceKey = comparableAlbumHref(row.album_source_url);
 			const normalized = await normalizeLegacyAlbumCards(content, async (reference, href) => {
 				if (reference.kind === "current") {
@@ -87,7 +92,7 @@ export async function relatedAlbumArticles(database, albumId, locale = "ja") {
 			});
 			legacy = normalized.converted > 0;
 		}
-		if (explicit || legacy) related.push({ id: row.id, title: row.title });
+		if (configured || explicit || legacy) related.push({ id: row.id, title: row.title });
 		if (related.length === 20) break;
 	}
 	return related;

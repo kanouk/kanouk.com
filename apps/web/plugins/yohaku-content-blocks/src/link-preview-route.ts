@@ -44,7 +44,9 @@ export function createLinkPreviewRoutes(resolveInternal: InternalResolver = runt
 				try {
 					const result = await getLinkPreview(ctx.input.url, ctx.kv, { resolveInternal });
 					if (!result) throw new PluginRouteError("NOT_FOUND", "公開中のリンク先が見つかりません。", 404);
-					return result;
+					const requestedUrl = new URL(ctx.input.url);
+					requestedUrl.hash = "";
+					return { ...result, url: requestedUrl.href, fetchedAt: new Date().toISOString() };
 				} catch (error) {
 					if (!(error instanceof LinkPreviewError)) throw error;
 					const status = error.code === "INVALID_URL" || error.code === "SSRF_BLOCKED" ? 400 : error.code === "TIMEOUT" ? 504 : 502;

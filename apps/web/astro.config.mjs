@@ -9,6 +9,19 @@ import emdash from "emdash/astro";
 import { yohakuContentBlocks } from "yohaku-content-blocks";
 import { yohakuPhotoTools } from "./src/studio/plugin";
 
+const yohakuPublicRoutes = {
+	name: "yohaku-public-routes",
+	hooks: {
+		"astro:config:setup": ({ injectRoute }) => {
+			injectRoute({
+				pattern: "/_yohaku/link-preview",
+				entrypoint: new URL("./src/routes/link-preview.ts", import.meta.url),
+				prerender: false,
+			});
+		},
+	},
+};
+
 export default defineConfig({
 	output: "server",
 	server: { host: "127.0.0.1" },
@@ -46,6 +59,7 @@ export default defineConfig({
 	},
 	integrations: [
 		react(),
+		yohakuPublicRoutes,
 			emdash({
 				siteUrl: "https://blog.kanouk.com",
 				database: d1({ binding: "DB", session: "auto" }),

@@ -1,44 +1,66 @@
 ---
 import { env } from "virtual:emdash/env";
 import { resolveInternalLinkPreview } from "../../../../src/utils/article-social";
-import { createD1LinkPreviewCacheReader, getCachedLinkPreview } from "../link-preview";
+import {
+	createD1LinkPreviewCacheReader,
+	getCachedLinkPreviewIncludingStale,
+	isOwnLinkPreviewHost,
+	safeLinkPreviewImageUrl,
+	type LinkPreviewAutoSnapshot,
+} from "../link-preview";
 
-const { id, url, title, caption } = Astro.props.node;
-let { description, imageUrl } = Astro.props.node;
+const node = Astro.props.node;
+const { id, url, title, caption } = node;
+let { description, imageUrl } = node;
 const candidate = typeof (id || url) === "string" ? String(id || url).trim() : "";
 let href = "";
 let host = "";
 let isExternal = false;
+let absoluteTarget = "";
+let ownTarget = false;
 try {
 	const parsed = new URL(candidate, Astro.url);
 	if (["http:", "https:"].includes(parsed.protocol)) {
 		href = candidate.startsWith("/") ? `${parsed.pathname}${parsed.search}${parsed.hash}` : parsed.href;
+		parsed.hash = "";
+		absoluteTarget = parsed.href;
 		host = parsed.hostname.replace(/^www\./, "");
 		isExternal = parsed.origin !== Astro.url.origin;
+		ownTarget = isOwnLinkPreviewHost(parsed.hostname);
 	}
 } catch {}
+const savedText = (value: unknown): string => typeof value === "string" ? value.trim() : "";
+const savedAuto = node.linkPreviewAuto as Partial<LinkPreviewAutoSnapshot> | undefined;
+const autoSnapshot = savedAuto?.version === 1 &&
+	["url", "title", "description", "imageUrl", "fetchedAt"].every((key) => typeof savedAuto[key as keyof LinkPreviewAutoSnapshot] === "string") &&
+	savedAuto.url === absoluteTarget
+		? savedAuto as LinkPreviewAutoSnapshot
+		: null;
 let metadata: { title: string; description: string; imageUrl: string } | null = null;
 if (href && env?.DB) {
 	try {
-		metadata = await resolveInternalLinkPreview(env.DB, new URL(href, Astro.url).href, { origin: Astro.url.origin });
-		if (!metadata) metadata = await getCachedLinkPreview(new URL(href, Astro.url).href, createD1LinkPreviewCacheReader(env.DB));
+		metadata = await resolveInternalLinkPreview(env.DB, absoluteTarget, { origin: Astro.url.origin });
+		if (!metadata && !ownTarget) {
+			metadata = await getCachedLinkPreviewIncludingStale(absoluteTarget, createD1LinkPreviewCacheReader(env.DB));
+		}
 		if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts", "pages", "photos", "albums", "settings"] });
 	} catch {
 		// A cache miss or unavailable metadata never removes the original link.
 	}
 }
-const savedText = (value: unknown): string => typeof value === "string" ? value.trim() : "";
-description = savedText(description) || metadata?.description || "";
-imageUrl = savedText(imageUrl) || metadata?.imageUrl || "";
+const currentAuto = metadata ?? (!ownTarget ? autoSnapshot : null);
+const manualTitle = savedText(title);
+const manualDescription = savedText(description);
+const manualImage = savedText(imageUrl);
+description = manualDescription || currentAuto?.description || "";
+imageUrl = manualImage || safeLinkPreviewImageUrl(currentAuto?.imageUrl || "", ownTarget) || "";
 try {
 	if (imageUrl) {
 		const image = new URL(imageUrl, Astro.url);
 		if (!['http:', 'https:'].includes(image.protocol) || image.username || image.password) imageUrl = "";
 	}
 } catch { imageUrl = ""; }
-const meaningfulTitle = typeof title === "string" && title.trim() && title.trim() !== "関連記事"
-	? title.trim()
-	: metadata?.title || href;
+const meaningfulTitle = manualTitle || currentAuto?.title || href;
 const eyebrow = typeof caption === "string" && caption.trim()
 	? caption.trim()
 	: isExternal
@@ -52,20 +74,34 @@ const eyebrow = typeof caption === "string" && caption.trim()
 		href={href}
 		target={isExternal ? "_blank" : undefined}
 		rel={isExternal ? "noopener noreferrer" : undefined}
+		data-yohaku-link-preview={node._key ? "true" : undefined}
+		data-collection={Astro.url.pathname.match(/^\/(posts|pages)\/[^/]+\/?$/)?.[1]}
+		data-entry-id={(() => {
+			const value = Astro.url.pathname.match(/^\/(?:posts|pages)\/([^/]+)\/?$/)?.[1];
+			if (!value) return undefined;
+			try { return decodeURIComponent(value); } catch { return undefined; }
+		})()}
+		data-block-key={typeof node._key === "string" ? node._key : undefined}
+		data-manual-title={manualTitle ? "true" : "false"}
+		data-manual-description={manualDescription ? "true" : "false"}
+		data-manual-image={manualImage ? "true" : "false"}
+		data-fallback-title={href}
 	>
-		{imageUrl && (
-			<span class="yohaku-link-card__thumb" aria-hidden="true">
-				<img src={imageUrl} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-			</span>
-		)}
+		<span class="yohaku-link-card__thumb" aria-hidden="true" hidden={!imageUrl}>
+			<img src={imageUrl || undefined} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+		</span>
 		<span class="yohaku-link-card__body">
 			<span class="yohaku-link-card__eyebrow">{eyebrow}</span>
-			<strong>{meaningfulTitle}</strong>
-			{description && <small>{description}</small>}
+			<strong data-link-preview-title>{meaningfulTitle}</strong>
+			<small data-link-preview-description hidden={!description}>{description}</small>
 		</span>
 		<em aria-hidden="true">{host} ↗</em>
 	</a>
 )}
+
+<script>
+	import "../link-preview-client";
+</script>
 
 <style>
 	.yohaku-link-card {
@@ -88,6 +124,7 @@ const eyebrow = typeof caption === "string" && caption.trim()
 	}
 
 	.yohaku-link-card.has-no-image { grid-template-columns: minmax(0, 1fr) auto; }
+	.yohaku-link-card__thumb[hidden], small[hidden] { display: none; }
 	.yohaku-link-card__thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-bg-subtle); }
 	.yohaku-link-card__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
 	.yohaku-link-card__body { min-width: 0; }

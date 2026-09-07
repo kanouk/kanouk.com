@@ -192,6 +192,49 @@ test("omits an image whose hostname does not resolve only to public addresses", 
 	assert.equal(result.imageUrl, "");
 });
 
+test("external previews cannot redirect to or embed media from an own-site host", async () => {
+	let fetches = 0;
+	await assert.rejects(
+		preview.getLinkPreview("https://short.example.org/item", new MemoryCache(), {
+			fetch: async () => {
+				fetches += 1;
+				return new Response(null, {
+					status: 302,
+					headers: { Location: "https://blog.kanouk.com/_emdash/api/media/file/private.jpg" },
+				});
+			},
+			resolveDns: publicDns,
+		}),
+		(error) => error instanceof preview.LinkPreviewError && error.code === "SSRF_BLOCKED",
+	);
+	assert.equal(fetches, 1, "the own-site redirect target is rejected before a second fetch");
+
+	const result = await preview.getLinkPreview("https://page.example.org/item", new MemoryCache(), {
+		fetch: async () => new Response(
+			'<html><head><title>External</title><meta property="og:image" content="https://blog.kanouk.com/_emdash/api/media/file/private.jpg"></head></html>',
+			{ headers: { "Content-Type": "text/html" } },
+		),
+		resolveDns: publicDns,
+	});
+	assert.equal(result.imageUrl, "");
+});
+
+test("legacy external cache records that point at own-site content fail closed", async () => {
+	const cache = new MemoryCache();
+	const url = "https://external.example.org/item";
+	cache.values.set(await preview.linkPreviewCacheKey(url), {
+		version: 1,
+		expiresAt: Date.now() + 60_000,
+		metadata: {
+			url: "https://blog.kanouk.com/posts/private",
+			title: "Old redirect",
+			description: "",
+			imageUrl: "https://blog.kanouk.com/_emdash/api/media/file/private.jpg",
+		},
+	});
+	assert.equal(await preview.getCachedLinkPreview(url, cache), null);
+});
+
 test("own canonical links resolve only from current published CMS content and never stale network OGP", async () => {
 	let published = true;
 	let fetches = 0;
@@ -261,6 +304,10 @@ test("route applies a bounded per-user request rate", async () => {
 		input: { url: "https://blog.kanouk.com/posts/current" },
 		kv,
 	};
-	for (let index = 0; index < 30; index += 1) assert.equal((await route.handler(ctx)).title, "Title");
+	const first = await route.handler(ctx);
+	assert.equal(first.title, "Title");
+	assert.equal(first.url, "https://blog.kanouk.com/posts/current");
+	assert.match(first.fetchedAt, /^\d{4}-\d{2}-\d{2}T/);
+	for (let index = 1; index < 30; index += 1) assert.equal((await route.handler(ctx)).title, "Title");
 	await assert.rejects(route.handler(ctx), (error) => error?.status === 429);
 });
