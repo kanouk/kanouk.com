@@ -17,12 +17,13 @@ test("posts define one optional indexed albums reference hidden behind the nativ
 	});
 });
 
-test("the related album panel writes only through the host article form", async () => {
+test("the related album panel writes article data only through the host form", async () => {
 	const source = await readFile(new URL("../src/studio/admin.tsx", import.meta.url), "utf8");
 	assert.match(source, /supportsNew: true, component: RelatedAlbumPanel/);
 	assert.match(source, /onFieldChange\?\.\("related_album", albumId\)/);
 	assert.match(source, /draftData \?\? entry\?\.data \?\? \{\}/);
 	assert.match(source, /"related-album-hidden": HiddenRelatedAlbumField/);
 	assert.match(source, /解除しても、本文のアルバムカードや挿入済み写真・キャプションは残ります/);
-	assert.doesNotMatch(source, /RelatedAlbumPanel[\s\S]{0,4000}apiFetch\(/);
+	assert.doesNotMatch(source, /\/_emdash\/api\/content\/posts/);
+	assert.doesNotMatch(source, /updateDraft\("posts"/);
 });

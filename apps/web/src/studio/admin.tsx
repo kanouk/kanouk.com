@@ -5,6 +5,7 @@ import type {
 	ContentListColumnCellContext,
 	ContentListColumnExtension,
 } from "@emdash-cms/admin";
+import { apiFetch, parseApiResponse } from "@emdash-cms/admin";
 import {
 	allContent,
 	createPhotoFromMedia,
@@ -978,11 +979,65 @@ type RelatedAlbumPanelContext = Omit<ContentEditorPanelContext, "entry"> & {
 	onFieldChange?: (name: string, value: unknown) => void;
 };
 
+type RelatedAlbumSchemaField = {
+	slug?: unknown;
+	type?: unknown;
+	required?: unknown;
+	unique?: unknown;
+	options?: { collection?: unknown };
+	widget?: unknown;
+	indexed?: unknown;
+	translatable?: unknown;
+};
+
+type RelatedAlbumSchemaState =
+	| { status: "loading" | "activating" }
+	| { status: "missing" | "ready" | "reload-required" }
+	| { status: "incompatible"; problems: string[] }
+	| { status: "error"; error: unknown };
+
+const RELATED_ALBUM_SCHEMA_PATH = "/_emdash/api/schema/collections/posts/fields";
+const RELATED_ALBUM_FIELD = {
+	slug: "related_album",
+	label: "関連アルバム",
+	type: "reference",
+	required: false,
+	unique: false,
+	options: { collection: "albums" },
+	widget: "yohaku-photo-tools:related-album-hidden",
+	indexed: true,
+	translatable: true,
+} as const;
+
+function inspectRelatedAlbumSchema(fields: RelatedAlbumSchemaField[]): RelatedAlbumSchemaState {
+	const field = fields.find((candidate) => candidate.slug === RELATED_ALBUM_FIELD.slug);
+	if (!field) return { status: "missing" };
+	const problems: string[] = [];
+	if (field.type !== RELATED_ALBUM_FIELD.type) problems.push("型がreferenceではありません。");
+	if (field.required !== false) problems.push("任意フィールドとして確認できません。");
+	if (field.unique !== false) problems.push("複数の記事から同じアルバムを参照できない設定です。");
+	if (field.options?.collection !== RELATED_ALBUM_FIELD.options.collection) problems.push("参照先がalbumsではありません。");
+	if (field.widget !== RELATED_ALBUM_FIELD.widget) problems.push("専用widgetが設定されていません。");
+	if (field.indexed !== true) problems.push("indexが設定されていません。");
+	if (field.translatable !== true) problems.push("言語別の値を保持できない設定です。");
+	return problems.length ? { status: "incompatible", problems } : { status: "ready" };
+}
+
+async function readRelatedAlbumSchema(): Promise<RelatedAlbumSchemaState> {
+	const data = await parseApiResponse<{ items?: RelatedAlbumSchemaField[] }>(
+		await apiFetch(RELATED_ALBUM_SCHEMA_PATH),
+		"関連アルバム設定を確認できませんでした。",
+	);
+	if (!Array.isArray(data.items)) throw new Error("関連アルバム設定の応答形式が正しくありません。");
+	return inspectRelatedAlbumSchema(data.items);
+}
+
 function RelatedAlbumPanel({ entry, draftData, onFieldChange }: RelatedAlbumPanelContext) {
 	const [albums, setAlbums] = useState<ContentItem[]>([]);
 	const [search, setSearch] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<unknown>(null);
+	const [schemaState, setSchemaState] = useState<RelatedAlbumSchemaState>({ status: "loading" });
 	const data = draftData ?? entry?.data ?? {};
 	const selectedId = textValue(data.related_album);
 	useEffect(() => {
@@ -995,6 +1050,13 @@ function RelatedAlbumPanel({ entry, draftData, onFieldChange }: RelatedAlbumPane
 			.finally(() => { if (active) setLoading(false); });
 		return () => { active = false; };
 	}, []);
+	useEffect(() => {
+		let active = true;
+		readRelatedAlbumSchema()
+			.then((state) => { if (active) setSchemaState(state); })
+			.catch((cause) => { if (active) setSchemaState({ status: "error", error: cause }); });
+		return () => { active = false; };
+	}, []);
 	const selected = albums.find((album) => album.id === selectedId);
 	const visibleAlbums = useMemo(() => {
 		const term = search.trim().toLocaleLowerCase("ja");
@@ -1003,19 +1065,73 @@ function RelatedAlbumPanel({ entry, draftData, onFieldChange }: RelatedAlbumPane
 			.sort((left, right) => labelOf(left).localeCompare(labelOf(right), "ja"));
 	}, [albums, search, selectedId]);
 	const change = (albumId: string) => onFieldChange?.("related_album", albumId);
+	const enableRelatedAlbum = async () => {
+		setSchemaState({ status: "activating" });
+		try {
+			const before = await readRelatedAlbumSchema();
+			if (before.status === "incompatible") {
+				setSchemaState(before);
+				return;
+			}
+			if (before.status === "missing") {
+				await parseApiResponse(
+					await apiFetch(RELATED_ALBUM_SCHEMA_PATH, {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(RELATED_ALBUM_FIELD),
+					}),
+					"関連アルバム設定を有効にできませんでした。管理者権限を確認してください。",
+				);
+			}
+			const after = await readRelatedAlbumSchema();
+			if (after.status !== "ready") {
+				setSchemaState(after.status === "missing"
+					? { status: "error", error: new Error("設定追加後の確認でrelated_albumが見つかりませんでした。") }
+					: after);
+				return;
+			}
+			setSchemaState({ status: "reload-required" });
+		} catch (cause) {
+			setSchemaState({ status: "error", error: cause });
+		}
+	};
+	const schemaReady = schemaState.status === "ready";
 
 	return <div className="photo-tools-panel photo-tools-related-album-panel">
+		{schemaState.status === "loading" && <p className="photo-tools-muted" role="status">関連アルバム設定を確認しています…</p>}
+		{schemaState.status === "missing" && <div className="photo-tools-alert" role="status">
+			<p>関連アルバムを保存するフィールドがまだありません。</p>
+			<button type="button" className="photo-tools-button photo-tools-button--primary" onClick={enableRelatedAlbum}>関連アルバム設定を有効にする</button>
+		</div>}
+		{schemaState.status === "activating" && <p className="photo-tools-muted" role="status">関連アルバム設定を有効にしています…</p>}
+		{schemaState.status === "reload-required" && <div className="photo-tools-alert" role="status">
+			<p>関連アルバム設定を追加し、定義を再確認しました。このページを再読込してからアルバムを選んでください。</p>
+			<button type="button" className="photo-tools-button photo-tools-button--primary" onClick={() => window.location.reload()}>ページを再読込</button>
+		</div>}
+		{schemaState.status === "incompatible" && <div className="photo-tools-alert photo-tools-alert--error" role="alert">
+			<p>既存のrelated_album定義が予定した設定と一致しないため、自動変更を停止しました。</p>
+			<ul>{schemaState.problems.map((problem) => <li key={problem}>{problem}</li>)}</ul>
+		</div>}
+		{schemaState.status === "error" && <div className="photo-tools-alert photo-tools-alert--error" role="alert">
+			<p>{schemaState.error instanceof Error ? schemaState.error.message : "関連アルバム設定の操作に失敗しました。"}</p>
+			<button type="button" className="photo-tools-button" onClick={() => {
+				setSchemaState({ status: "loading" });
+				readRelatedAlbumSchema()
+					.then(setSchemaState)
+					.catch((cause) => setSchemaState({ status: "error", error: cause }));
+			}}>設定状態を再確認</button>
+		</div>}
 		{selectedId
 			? <p>現在: <strong>{selected ? labelOf(selected) : "削除済み、または参照できないアルバム"}</strong>{selected && <> <Badge tone={hasPendingChanges(selected) ? "warn" : "ok"}>{statusLabel(selected)}</Badge></>}</p>
 			: <p className="photo-tools-muted">関連アルバムは未設定です。</p>}
-		<label>アルバムを検索<input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="アルバム名" /></label>
-		<label>関連アルバム<select value={selectedId} disabled={loading || !onFieldChange} onChange={(event) => change(event.target.value)}>
+		<label>アルバムを検索<input type="search" value={search} disabled={!schemaReady} onChange={(event) => setSearch(event.target.value)} placeholder="アルバム名" /></label>
+		<label>関連アルバム<select value={selectedId} disabled={!schemaReady || loading || !onFieldChange} onChange={(event) => change(event.target.value)}>
 			<option value="">関連なし</option>
 			{selectedId && !selected && <option value={selectedId}>参照できないアルバム（現在の設定を維持）</option>}
 			{visibleAlbums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}（{statusLabel(album)}）</option>)}
 		</select></label>
 		<div className="photo-tools-panel-actions">
-			<button type="button" className="photo-tools-button" disabled={!selectedId || !onFieldChange} onClick={() => change("")}>関連を解除</button>
+			<button type="button" className="photo-tools-button" disabled={!schemaReady || !selectedId || !onFieldChange} onClick={() => change("")}>関連を解除</button>
 		</div>
 		<p className="photo-tools-muted">記事の下書きに保存されます。解除しても、本文のアルバムカードや挿入済み写真・キャプションは残ります。</p>
 		{loading && <p className="photo-tools-muted" role="status">アルバムを読み込んでいます…</p>}
