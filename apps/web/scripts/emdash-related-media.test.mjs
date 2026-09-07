@@ -82,7 +82,7 @@ test("public photo renderer resolves live published rows and verifies the album 
   assert.match(album, /album-feature-card/);
 });
 
-test("installed editor patch reuses the nearest related album and hydrates dependent fields", async () => {
+test("installed editor patch prefers the article related album and hydrates dependent fields", async () => {
   const [installedBundle, installedStyles] = await Promise.all([
     readFile(
       new URL("../node_modules/@emdash-cms/admin/dist/index.js", import.meta.url),
@@ -102,7 +102,16 @@ test("installed editor patch reuses the nearest related album and hydrates depen
   assert.match(installedBundle, /block\.type === "yohaku\.photo"/);
   assert.match(
     installedBundle,
-    /setPluginBlockDefaultValues\(relatedAlbumId \? \{ albumId: relatedAlbumId \}/,
+    /setPluginBlockDefaultValues\(defaultAlbumId \? \{ albumId: defaultAlbumId \}/,
+  );
+  assert.match(installedBundle, /emdash-kanouk-related-album-setting-v7/);
+  assert.match(installedBundle, /extension\.supportsNew === true/);
+  assert.match(installedBundle, /draftData: formData/);
+  assert.match(installedBundle, /onDraftFieldChange: handleFieldChange/);
+  assert.match(installedBundle, /relatedAlbumId: typeof formData\.related_album === "string"/);
+  assert.match(
+    installedBundle,
+    /relatedAlbumId\.trim\(\) \? relatedAlbumId\.trim\(\) : findRelatedAlbumId/,
   );
   assert.match(
     installedBundle,

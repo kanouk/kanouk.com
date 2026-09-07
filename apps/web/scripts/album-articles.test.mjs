@@ -19,11 +19,17 @@ test("reverse links use explicit published revision album relations only", async
 		CREATE TABLE ec_albums (id TEXT, slug TEXT, live_revision_id TEXT, status TEXT, deleted_at TEXT);`);
 		db.prepare("INSERT INTO revisions VALUES (?, ?)").run("album-live", JSON.stringify({ source_url: "https://kanolog.smugmug.com/Kyoto" }));
 		db.prepare("INSERT INTO ec_albums VALUES (?, ?, ?, ?, ?)").run("album1", "kyoto", "album-live", "published", null);
-		const add = (id, content, status = "published", deleted = null, locale = "ja") => {
-			db.prepare("INSERT INTO revisions VALUES (?, ?)").run(id, JSON.stringify({ title: id, content }));
+		const add = (id, content, status = "published", deleted = null, locale = "ja", data = {}) => {
+			db.prepare("INSERT INTO revisions VALUES (?, ?)").run(id, JSON.stringify({ title: id, content, ...data }));
 			db.prepare("INSERT INTO ec_posts VALUES (?, ?, ?, ?, ?, ?)").run(id, id, status, deleted, locale, "2026-09-06");
 		};
 		const album = { _type: "yohaku.album", id: "album1" };
+		add("configured", [], "published", null, "ja", { related_album: "album1" });
+		add("configured-and-block", [album], "published", null, "ja", { related_album: "album1" });
+		add("configured-draft", [], "draft", null, "ja", { related_album: "album1" });
+		add("configured-deleted", [], "published", "2026-09-06", "ja", { related_album: "album1" });
+		add("configured-other-locale", [], "published", null, "en", { related_album: "album1" });
+		add("configured-other-album", [], "published", null, "ja", { related_album: "album2" });
 		add("published", [album, album]);
 		add("draft", [album], "draft");
 		add("deleted", [album], "published", "2026-09-06");
@@ -58,8 +64,11 @@ test("reverse links use explicit published revision album relations only", async
 		add("unresolved-pair", [closing, { _type: "yohaku.linkCard", id: "https://photos.kanouk.com/albums/other" }]);
 		// A separate draft revision adding the album must not leak into live output.
 		db.prepare("INSERT INTO revisions VALUES (?, ?)").run("draft-change", JSON.stringify({ title: "draft title", content: [album] }));
+		db.prepare("INSERT INTO revisions VALUES (?, ?)").run("draft-setting-change", JSON.stringify({ title: "draft title", content: [], related_album: "album1" }));
 		const rows = await relatedAlbumArticles(d1Database(db), "album1", "ja");
 		assert.deepEqual(rows, [
+			{ id: "configured", title: "configured" },
+			{ id: "configured-and-block", title: "configured-and-block" },
 			{ id: "legacy-inline", title: "legacy-inline" },
 			{ id: "legacy-pair", title: "legacy-pair" },
 			{ id: "published", title: "published" },

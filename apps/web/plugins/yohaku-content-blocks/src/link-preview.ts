@@ -5,6 +5,11 @@ export interface LinkPreviewMetadata {
 	imageUrl: string;
 }
 
+export interface LinkPreviewAutoSnapshot extends LinkPreviewMetadata {
+	version: 1;
+	fetchedAt: string;
+}
+
 export interface LinkPreviewCacheReader {
 	get<T>(key: string): Promise<T | null>;
 }
@@ -23,17 +28,29 @@ export interface LinkPreviewOptions {
 	resolveInternal?: (url: string) => Promise<LinkPreviewMetadata | null>;
 	/** Test seam; production callers are always capped at eight seconds. */
 	timeoutMs?: number;
+	/** Skip fresh/negative cache reads. Used only after the public-card lease is held. */
+	forceRefresh?: boolean;
 }
 
-interface CachedLinkPreview {
+export interface CachedLinkPreview {
 	version: 1;
 	expiresAt: number;
-	metadata: LinkPreviewMetadata;
+	staleUntil: number;
+	fetchedAt: string;
+	metadata?: LinkPreviewMetadata;
+	negativeUntil?: number;
 }
+
+export type LinkPreviewCacheState =
+	| { state: "fresh" | "stale"; metadata: LinkPreviewMetadata; fetchedAt: string; retryAfterMs?: number }
+	| { state: "negative"; retryAfterMs: number }
+	| { state: "miss" };
 
 const CACHE_PREFIX = "cache:link-preview:v1:";
 const OPTION_PREFIX = "plugin:yohaku-content-blocks:";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const CACHE_STALE_MS = 7 * 24 * 60 * 60 * 1000;
+export const LINK_PREVIEW_NEGATIVE_TTL_MS = 5 * 60 * 1000;
 const FETCH_TIMEOUT_MS = 8_000;
 const MAX_HTML_BYTES = 512 * 1024;
 const MAX_REDIRECTS = 3;
@@ -52,6 +69,20 @@ const OWN_HOSTS = new Set([
 	"art-quiz.com",
 	"www.art-quiz.com",
 ]);
+
+export function isOwnLinkPreviewHost(hostname: string): boolean {
+	return OWN_HOSTS.has(hostname.toLowerCase().replace(/\.+$/, ""));
+}
+
+export function safeLinkPreviewImageUrl(value: string, allowOwnHost = false): string {
+	if (!value) return "";
+	try {
+		const image = normalizeUrl(value);
+		return !allowOwnHost && isOwnLinkPreviewHost(image.hostname) ? "" : image.href;
+	} catch {
+		return "";
+	}
+}
 const BLOCKED_HOST_SUFFIXES = [
 	".internal",
 	".lan",
@@ -315,7 +346,12 @@ async function readHtml(response: Response): Promise<string> {
 }
 
 function validCachedMetadata(value: unknown): value is LinkPreviewMetadata {
-	if (!isRecord(value) || ![value.url, value.title, value.description, value.imageUrl].every((field) => typeof field === "string")) return false;
+	if (!isRecord(value) ||
+		typeof value.url !== "string" ||
+		typeof value.title !== "string" ||
+		typeof value.description !== "string" ||
+		typeof value.imageUrl !== "string"
+	) return false;
 	try {
 		normalizeUrl(value.url);
 		if (value.imageUrl) normalizeUrl(value.imageUrl);
@@ -340,13 +376,88 @@ export async function getCachedLinkPreview(
 	cache: LinkPreviewCacheReader,
 	now: () => number = Date.now,
 ): Promise<LinkPreviewMetadata | null> {
+	const state = await getLinkPreviewCacheState(url, cache, now);
+	return state.state === "fresh" ? state.metadata : null;
+}
+
+export async function getCachedLinkPreviewIncludingStale(
+	url: string,
+	cache: LinkPreviewCacheReader,
+	now: () => number = Date.now,
+): Promise<LinkPreviewMetadata | null> {
+	const state = await getLinkPreviewCacheState(url, cache, now);
+	return state.state === "fresh" || state.state === "stale" ? state.metadata : null;
+}
+
+export async function getLinkPreviewCacheState(
+	url: string,
+	cache: LinkPreviewCacheReader,
+	now: () => number = Date.now,
+): Promise<LinkPreviewCacheState> {
+	const requested = normalizeUrl(url);
 	const record = await cache.get<unknown>(await linkPreviewCacheKey(url));
-	if (!isRecord(record) || record.version !== 1 || typeof record.expiresAt !== "number" || record.expiresAt <= now()) return null;
-	return validCachedMetadata(record.metadata) ? record.metadata : null;
+	if (!isRecord(record) || record.version !== 1 || typeof record.expiresAt !== "number") return { state: "miss" };
+	const timestamp = now();
+	const fetchedAt = typeof record.fetchedAt === "string"
+		? record.fetchedAt
+		: new Date(Math.min(record.expiresAt, timestamp)).toISOString();
+	const cachedMetadata = validCachedMetadata(record.metadata) &&
+		!(isOwnLinkPreviewHost(record.metadata.url ? new URL(record.metadata.url).hostname : "") && !isOwnLinkPreviewHost(requested.hostname))
+		? { ...record.metadata, imageUrl: safeLinkPreviewImageUrl(record.metadata.imageUrl, isOwnLinkPreviewHost(requested.hostname)) }
+		: null;
+	if (cachedMetadata) {
+		if (record.expiresAt > timestamp) return { state: "fresh", metadata: cachedMetadata, fetchedAt };
+		const staleUntil = typeof record.staleUntil === "number"
+			? record.staleUntil
+			: record.expiresAt + CACHE_STALE_MS;
+		if (staleUntil > timestamp) return {
+			state: "stale",
+			metadata: cachedMetadata,
+			fetchedAt,
+			retryAfterMs: typeof record.negativeUntil === "number" && record.negativeUntil > timestamp
+				? record.negativeUntil - timestamp
+				: undefined,
+		};
+	}
+	if (typeof record.negativeUntil === "number" && record.negativeUntil > timestamp) {
+		return { state: "negative", retryAfterMs: record.negativeUntil - timestamp };
+	}
+	return { state: "miss" };
+}
+
+export async function cacheLinkPreviewFailure(
+	url: string,
+	cache: LinkPreviewCache,
+	now: () => number = Date.now,
+): Promise<void> {
+	const key = await linkPreviewCacheKey(url);
+	const timestamp = now();
+	const current = await cache.get<unknown>(key);
+	const retained = isRecord(current) && current.version === 1 && validCachedMetadata(current.metadata)
+		? current.metadata
+		: undefined;
+	const fetchedAt = isRecord(current) && typeof current.fetchedAt === "string"
+		? current.fetchedAt
+		: new Date(timestamp).toISOString();
+	const expiresAt = isRecord(current) && typeof current.expiresAt === "number" ? current.expiresAt : 0;
+	const staleUntil = isRecord(current) && typeof current.staleUntil === "number"
+		? current.staleUntil
+		: expiresAt + CACHE_STALE_MS;
+	await cache.set(key, {
+		version: 1,
+		expiresAt,
+		staleUntil,
+		fetchedAt,
+		metadata: retained,
+		negativeUntil: timestamp + LINK_PREVIEW_NEGATIVE_TTL_MS,
+	} satisfies CachedLinkPreview);
 }
 
 export interface D1LinkPreviewDatabase {
-	prepare(query: string): { bind(...values: unknown[]): { first<T>(): Promise<T | null> } };
+	prepare(query: string): { bind(...values: unknown[]): {
+		first<T>(): Promise<T | null>;
+		run?(): Promise<unknown>;
+	} };
 }
 
 export function createD1LinkPreviewCacheReader(database: D1LinkPreviewDatabase): LinkPreviewCacheReader {
@@ -356,6 +467,45 @@ export function createD1LinkPreviewCacheReader(database: D1LinkPreviewDatabase):
 				.bind(`${OPTION_PREFIX}${key}`).first<{ value?: unknown }>();
 			if (!row || typeof row.value !== "string") return null;
 			try { return JSON.parse(row.value) as T; } catch { return null; }
+		},
+	};
+}
+
+export interface LinkPreviewLease {
+	acquire(key: string, token: string, expiresAt: number, now: number): Promise<boolean>;
+	release(key: string, token: string): Promise<void>;
+}
+
+export function createD1LinkPreviewCache(database: D1LinkPreviewDatabase): LinkPreviewCache & LinkPreviewLease {
+	const optionName = (key: string) => `${OPTION_PREFIX}${key}`;
+	return {
+		...createD1LinkPreviewCacheReader(database),
+		async set(key, value) {
+			const statement = database.prepare(`
+				INSERT INTO options (name, value) VALUES (?1, ?2)
+				ON CONFLICT(name) DO UPDATE SET value = excluded.value
+			`).bind(optionName(key), JSON.stringify(value));
+			if (!statement.run) throw new Error("D1 write support is unavailable");
+			await statement.run();
+		},
+		async acquire(key, token, expiresAt, now) {
+			const statement = database.prepare(`
+				INSERT INTO options (name, value) VALUES (?1, ?2)
+				ON CONFLICT(name) DO UPDATE SET value = excluded.value
+				WHERE COALESCE(json_extract(options.value, '$.expiresAt'), 0) <= ?3
+				RETURNING value
+			`).bind(optionName(key), JSON.stringify({ token, expiresAt }), now);
+			const row = await statement.first<{ value?: string }>();
+			if (!row || typeof row.value !== "string") return false;
+			try { return (JSON.parse(row.value) as { token?: unknown }).token === token; } catch { return false; }
+		},
+		async release(key, token) {
+			const statement = database.prepare(`
+				DELETE FROM options
+				WHERE name = ?1 AND json_extract(value, '$.token') = ?2
+			`).bind(optionName(key), token);
+			if (!statement.run) throw new Error("D1 write support is unavailable");
+			await statement.run();
 		},
 	};
 }
@@ -381,6 +531,9 @@ async function fetchExternalPreview(
 			await response.body?.cancel();
 			if (!location || redirects >= MAX_REDIRECTS) throw new LinkPreviewError("UPSTREAM_ERROR", "リダイレクトが多すぎます。");
 			current = normalizeUrl(new URL(location, current).href);
+			if (isOwnLinkPreviewHost(current.hostname)) {
+				throw new LinkPreviewError("SSRF_BLOCKED", "サイト内 URL への外部リダイレクトは取得できません。");
+			}
 			continue;
 		}
 		if (!response.ok) {
@@ -389,7 +542,11 @@ async function fetchExternalPreview(
 		}
 		const metadata = parseLinkPreviewHtml(await readHtml(response), current.href);
 		if (metadata.imageUrl) {
-			try { await validatePublicUrl(normalizeUrl(metadata.imageUrl), options.resolveDns, signal); }
+			try {
+				const image = normalizeUrl(metadata.imageUrl);
+				if (isOwnLinkPreviewHost(image.hostname)) throw new LinkPreviewError("SSRF_BLOCKED", "サイト内画像は外部カードから取得できません。");
+				await validatePublicUrl(image, options.resolveDns, signal);
+			}
 			catch { metadata.imageUrl = ""; }
 		}
 		return metadata;
@@ -408,8 +565,13 @@ export async function getLinkPreview(
 	// URL that the current published CMS view did not recognize.
 	if (OWN_HOSTS.has(normalized.hostname)) return null;
 	const now = options.now ?? Date.now;
-	const cached = await getCachedLinkPreview(normalized.href, cache, now);
-	if (cached || options.mode === "cache-only") return cached;
+	const cacheState = await getLinkPreviewCacheState(normalized.href, cache, now);
+	if (!options.forceRefresh) {
+		if (cacheState.state === "fresh") return cacheState.metadata;
+		if (cacheState.state === "negative") return null;
+		if (options.mode === "cache-only") return cacheState.state === "stale" ? cacheState.metadata : null;
+	}
+	if (options.mode === "cache-only") return cacheState.state === "stale" ? cacheState.metadata : null;
 	if (!("set" in cache)) return null;
 	const controller = new AbortController();
 	const timeoutMs = Math.min(FETCH_TIMEOUT_MS, Math.max(1, options.timeoutMs ?? FETCH_TIMEOUT_MS));
@@ -422,7 +584,14 @@ export async function getLinkPreview(
 			fetch: options.fetch ?? ((input, init) => globalThis.fetch(input, init)),
 			resolveDns: options.resolveDns ?? resolvePublicDns,
 		}, controller.signal);
-		const record: CachedLinkPreview = { version: 1, expiresAt: now() + CACHE_TTL_MS, metadata };
+		const storedAt = now();
+		const record: CachedLinkPreview = {
+			version: 1,
+			expiresAt: storedAt + CACHE_TTL_MS,
+			staleUntil: storedAt + CACHE_TTL_MS + CACHE_STALE_MS,
+			fetchedAt: new Date(storedAt).toISOString(),
+			metadata,
+		};
 		await cache.set(await linkPreviewCacheKey(normalized.href), record);
 		return metadata;
 	} catch (error) {

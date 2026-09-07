@@ -2,6 +2,7 @@ import Accordion from "./Accordion.astro";
 import Album from "./Album.astro";
 import Callout from "./Callout.astro";
 import Dialogue from "./Dialogue.astro";
+import Embed from "./Embed.astro";
 import Gallery from "./Gallery.astro";
 import LinkCard from "./LinkCard.astro";
 import ProductCard from "./ProductCard.astro";
@@ -18,6 +19,7 @@ export const blockComponents = {
 	"yohaku.album": Album,
 	"yohaku.callout": Callout,
 	"yohaku.dialogue": Dialogue,
+	"yohaku.embed": Embed,
 	gallery: Gallery,
 	"yohaku.linkCard": LinkCard,
 	"yohaku.productCard": ProductCard,

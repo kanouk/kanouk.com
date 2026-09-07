@@ -1,6 +1,8 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { upgradeAuthoringPreview } from "./patch-emdash-authoring-preview.mjs";
+import { upgradeEmbedPreview } from "./patch-emdash-embed-preview.mjs";
 
 const PATCH_MARKER = "emdash-kanouk-related-media-picker-v1";
 const VISUAL_PICKER_MARKER = "emdash-kanouk-related-media-visual-picker-v2";
@@ -8,6 +10,7 @@ const DISTRIBUTED_CSS_MARKER = "emdash-kanouk-related-media-distributed-css-v3";
 const LINK_PREVIEW_MARKER = "emdash-kanouk-link-preview-v4";
 const LINK_PREVIEW_SAFE_MARKER = "emdash-kanouk-link-preview-safe-v5";
 const LINK_PREVIEW_HTTPS_MARKER = "emdash-kanouk-link-preview-https-v6";
+const RELATED_ALBUM_SETTING_MARKER = "emdash-kanouk-related-album-setting-v7";
 
 function replaceExactly(source, before, after, expectedCount = 1) {
   const count = source.split(before).length - 1;
@@ -560,20 +563,129 @@ function upgradeLinkCardPreviewHttps(source) {
   return patched;
 }
 
-export function patchEmDashRelatedMediaSource(source) {
-  if (source.includes(LINK_PREVIEW_HTTPS_MARKER)) return source;
-  if (source.includes(LINK_PREVIEW_SAFE_MARKER)) return upgradeLinkCardPreviewHttps(source);
+function upgradeRelatedAlbumSetting(source) {
+  if (source.includes(RELATED_ALBUM_SETTING_MARKER)) return source;
+
+  let patched = replaceExactly(
+    source,
+    "const ContentSettingsPanel = React$1.memo(function ContentSettingsPanel({ collection, item, isNew, manifest, entryLocale, slug,",
+    `/* ${RELATED_ALBUM_SETTING_MARKER} */\nconst ContentSettingsPanel = React$1.memo(function ContentSettingsPanel({ collection, item, isNew, manifest, entryLocale, draftData, onDraftFieldChange, slug,`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\tconst extensionPanels = React$1.useMemo(() => !isNew && item ? resolveContentEditorPanels(pluginAdmins, collection, currentUser?.role ?? 0, manifest?.plugins) : [], [
+\t\tcollection,
+\t\tcurrentUser?.role,
+\t\tisNew,
+\t\titem,
+\t\tmanifest?.plugins,
+\t\tpluginAdmins
+\t]);`,
+    `\tconst extensionPanels = React$1.useMemo(() => {
+\t\tconst resolved = resolveContentEditorPanels(pluginAdmins, collection, currentUser?.role ?? 0, manifest?.plugins);
+\t\treturn isNew || !item ? resolved.filter(({ extension }) => extension.supportsNew === true) : resolved;
+\t}, [
+\t\tcollection,
+\t\tcurrentUser?.role,
+\t\tisNew,
+\t\titem,
+\t\tmanifest?.plugins,
+\t\tpluginAdmins
+\t]);`,
+  );
+  patched = replaceExactly(
+    patched,
+    "\t\t\t\titem && extensionPanels.map(({ pluginId, extension }) => {",
+    "\t\t\t\textensionPanels.map(({ pluginId, extension }) => {",
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\t\t\t\t\tchildren: /* @__PURE__ */ jsx(Panel, {
+\t\t\t\t\t\t\t\t\t\tcollection,
+\t\t\t\t\t\t\t\t\t\tentry: item,
+\t\t\t\t\t\t\t\t\t\tlocale: item.locale ?? entryLocale ?? void 0
+\t\t\t\t\t\t\t\t\t})
+\t\t\t\t\t\t\t\t})
+\t\t\t\t\t\t\t}, \`\${collection}:\${item.id}\`)]`,
+    `\t\t\t\t\t\t\t\t\tchildren: /* @__PURE__ */ jsx(Panel, {
+\t\t\t\t\t\t\t\t\t\tcollection,
+\t\t\t\t\t\t\t\t\t\tentry: item ?? void 0,
+\t\t\t\t\t\t\t\t\t\tlocale: item?.locale ?? entryLocale ?? void 0,
+\t\t\t\t\t\t\t\t\t\tdraftData,
+\t\t\t\t\t\t\t\t\t\tonFieldChange: onDraftFieldChange
+\t\t\t\t\t\t\t\t\t})
+\t\t\t\t\t\t\t\t})
+\t\t\t\t\t\t\t}, \`\${collection}:\${item?.id ?? "new"}\`)]`,
+  );
+  patched = replaceExactly(
+    patched,
+    "function PortableTextEditor({ value, onChange, placeholder, className, editable = true, \"aria-labelledby\": ariaLabelledby, pluginBlocks = [], focusMode: controlledFocusMode, onFocusModeChange, onEditorReady, minimal = false, onBlockSidebarOpen, onBlockSidebarClose }) {",
+    "function PortableTextEditor({ value, onChange, placeholder, className, editable = true, \"aria-labelledby\": ariaLabelledby, pluginBlocks = [], relatedAlbumId = \"\", focusMode: controlledFocusMode, onFocusModeChange, onEditorReady, minimal = false, onBlockSidebarOpen, onBlockSidebarClose }) {",
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\tconst insertPos = pendingBlockInsertPosRef.current ?? range.from;
+\t\t\t\tconst relatedAlbumId = block.type === "yohaku.photo" ? findRelatedAlbumId(editor, insertPos) : "";
+\t\t\t\tsetPluginBlockDefaultValues(relatedAlbumId ? { albumId: relatedAlbumId } : void 0);`,
+    `\t\t\t\tconst insertPos = pendingBlockInsertPosRef.current ?? range.from;
+\t\t\t\tconst defaultAlbumId = block.type === "yohaku.photo" ? (typeof relatedAlbumId === "string" && relatedAlbumId.trim() ? relatedAlbumId.trim() : findRelatedAlbumId(editor, insertPos)) : "";
+\t\t\t\tsetPluginBlockDefaultValues(defaultAlbumId ? { albumId: defaultAlbumId } : void 0);`,
+  );
+  patched = replaceExactly(
+    patched,
+    "\t}, [pluginBlocks, _t6]);",
+    "\t}, [pluginBlocks, relatedAlbumId, _t6]);",
+  );
+  patched = replaceExactly(
+    patched,
+    "function FieldRenderer({ name, field, value, onChange, onEditorReady, minimal, pluginBlocks, onBlockSidebarOpen, onBlockSidebarClose, manifest }) {",
+    "function FieldRenderer({ name, field, value, onChange, onEditorReady, minimal, pluginBlocks, relatedAlbumId, onBlockSidebarOpen, onBlockSidebarClose, manifest }) {",
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\tpluginBlocks,
+\t\t\t\t\tonEditorReady,`,
+    `\t\t\t\t\tpluginBlocks,
+\t\t\t\t\trelatedAlbumId,
+\t\t\t\t\tonEditorReady,`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\t\t\t\t\tpluginBlocks,
+\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === "portableText" ? handleBlockSidebarOpen : void 0,`,
+    `\t\t\t\t\t\t\t\t\tpluginBlocks,
+\t\t\t\t\t\t\t\t\trelatedAlbumId: typeof formData.related_album === "string" ? formData.related_album : "",
+\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === "portableText" ? handleBlockSidebarOpen : void 0,`,
+  );
+  patched = replaceExactly(
+    patched,
+    `\t\t\t\t\t\t\titem,
+\t\t\t\t\t\t\tisNew,
+\t\t\t\t\t\t\tmanifest,`,
+    `\t\t\t\t\t\t\titem,
+\t\t\t\t\t\t\tisNew,
+\t\t\t\t\t\t\tmanifest,
+\t\t\t\t\t\t\tdraftData: formData,
+\t\t\t\t\t\t\tonDraftFieldChange: handleFieldChange,`,
+  );
+  return patched;
+}
+
+function patchEmDashRelatedMediaV7(source) {
+  if (source.includes(RELATED_ALBUM_SETTING_MARKER)) return source;
+  if (source.includes(LINK_PREVIEW_HTTPS_MARKER)) return upgradeRelatedAlbumSetting(source);
+  if (source.includes(LINK_PREVIEW_SAFE_MARKER)) return upgradeRelatedAlbumSetting(upgradeLinkCardPreviewHttps(source));
   if (source.includes(LINK_PREVIEW_MARKER)) {
-    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(source));
+    return upgradeRelatedAlbumSetting(upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(source)));
   }
   if (source.includes(DISTRIBUTED_CSS_MARKER)) {
-    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(source)));
+    return upgradeRelatedAlbumSetting(upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(source))));
   }
   if (source.includes(VISUAL_PICKER_MARKER)) {
-    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(source))));
+    return upgradeRelatedAlbumSetting(upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(source)))));
   }
   if (source.includes(PATCH_MARKER)) {
-    return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(source)))));
+    return upgradeRelatedAlbumSetting(upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(source))))));
   }
 
   let patched = replaceExactly(
@@ -698,7 +810,11 @@ export function patchEmDashRelatedMediaSource(source) {
     "setPluginBlockInitialValues(void 0);\n\t\t\t\t\t\t\teditingBlockPosRef.current = null;",
     "setPluginBlockInitialValues(void 0);\n\t\t\t\t\t\t\tsetPluginBlockDefaultValues(void 0);\n\t\t\t\t\t\t\teditingBlockPosRef.current = null;",
   );
-  return upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(patched)))));
+  return upgradeRelatedAlbumSetting(upgradeLinkCardPreviewHttps(upgradeLinkCardPreviewSafety(upgradeLinkCardPreview(upgradeForDistributedAdminCss(upgradeRelatedMediaVisualPicker(patched))))));
+}
+
+export function patchEmDashRelatedMediaSource(source) {
+  return upgradeEmbedPreview(upgradeAuthoringPreview(patchEmDashRelatedMediaV7(source)));
 }
 
 async function patchInstalledAdmin() {

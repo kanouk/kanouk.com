@@ -613,15 +613,72 @@ def export_d1(destination: Path) -> dict[str, Any]:
     }
 
 
+def d1_only_manifest(
+    d1_path: Path, d1_export: dict[str, Any], *, generated_at: str | None = None
+) -> dict[str, Any]:
+    d1_bytes = d1_path.read_bytes()
+    return {
+        "backup_version": 3,
+        "scope": "d1-only",
+        "generated_at": generated_at or now_iso(),
+        "source": EXPECTED_URL,
+        "database": DATABASE_NAME,
+        "d1": {
+            "relative_path": d1_path.name,
+            "bytes": len(d1_bytes),
+            "sha256": hashlib.sha256(d1_bytes).hexdigest(),
+            **d1_export,
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", type=Path, default=DEFAULT_BACKUP_ROOT)
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--d1-only", action="store_true")
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
     if args.concurrency < 1 or args.concurrency > 8:
         raise SystemExit("--concurrency must be between 1 and 8")
+    if args.d1_only:
+        if args.resume:
+            raise SystemExit("--resume is not supported with --d1-only")
+        cloudflare_credential = load_cloudflare_credential()
+        cloudflare_env = cloudflare_environment(cloudflare_credential)
+        cloudflare_preflight(cloudflare_credential, cloudflare_env)
+        if not args.apply:
+            D1Client(
+                cloudflare_credential["account_id"],
+                cloudflare_credential["api_token"],
+            ).query("SELECT 1 AS backup_preflight")
+            print(json.dumps({
+                "apply": False,
+                "scope": "d1-only",
+                "source": EXPECTED_URL,
+                "database": DATABASE_NAME,
+                "ready": True,
+            }))
+            return
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        output_root = args.output_root.resolve() / timestamp
+        output_root.mkdir(parents=True, exist_ok=False)
+        output_root.chmod(0o700)
+        d1_path = output_root / "d1.sql"
+        d1_export = export_d1(d1_path)
+        manifest = d1_only_manifest(d1_path, d1_export)
+        write_json_atomic(output_root / "manifest.json", manifest)
+        print(json.dumps({
+            "apply": True,
+            "scope": "d1-only",
+            "output": str(output_root),
+            "d1_bytes": manifest["d1"]["bytes"],
+            "d1_sha256": manifest["d1"]["sha256"],
+            "ordinary_tables": manifest["d1"]["ordinary_tables"],
+            "logical_fts_tables": manifest["d1"]["logical_fts_tables"],
+        }))
+        return
     credential = load_emdash_credential()
     env = emdash_environment(credential)
     emdash_preflight(env)

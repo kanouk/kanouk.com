@@ -11,6 +11,11 @@
 }
 
 .photo-tools-shell *, .photo-tools-panel *, .photo-tools-shell *::before, .photo-tools-shell *::after { box-sizing: border-box; }
+.photo-tools-panel { --pt-border: color-mix(in srgb, currentColor 16%, transparent); --pt-muted: color-mix(in srgb, currentColor 62%, transparent); --pt-surface: color-mix(in srgb, Canvas 94%, currentColor 6%); --pt-brand: #1767d1; }
+.photo-tools-panel input, .photo-tools-panel select { width: 100%; border: 1px solid var(--pt-border); border-radius: .5rem; background: Canvas; color: CanvasText; padding: .55rem .65rem; font: inherit; }
+.photo-tools-panel label { display: grid; gap: .28rem; font-size: .8rem; font-weight: 680; }
+.photo-tools-related-album-panel { display: grid; gap: .65rem; }
+.photo-tools-related-album-panel > p { margin: 0; }
 .photo-tools-shell h1, .photo-tools-shell h2, .photo-tools-shell p { margin-block-start: 0; }
 .photo-tools-shell h1 { margin-block-end: .35rem; font-size: clamp(1.65rem, 3vw, 2.4rem); letter-spacing: -.03em; }
 .photo-tools-shell h2 { margin-block-end: .55rem; font-size: 1rem; }

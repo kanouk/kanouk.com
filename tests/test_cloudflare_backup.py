@@ -73,6 +73,29 @@ class CloudflareBackupTests(unittest.TestCase):
                 with self.assertRaises(RuntimeError):
                     module.storage_destination(Path("/backup"), key)
 
+    def test_d1_only_manifest_is_helper_compatible_without_r2_inventory(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            d1_path = Path(directory) / "d1.sql"
+            d1_path.write_bytes(b"BEGIN; COMMIT;\n")
+            manifest = module.d1_only_manifest(
+                d1_path,
+                {
+                    "ordinary_tables": 85,
+                    "logical_fts_tables": 2,
+                    "row_counts": {"ec_posts": 100},
+                },
+                generated_at="2026-09-07T00:00:00+00:00",
+            )
+        self.assertEqual(manifest["backup_version"], 3)
+        self.assertEqual(manifest["scope"], "d1-only")
+        self.assertEqual(manifest["source"], module.EXPECTED_URL)
+        self.assertEqual(manifest["database"], module.DATABASE_NAME)
+        self.assertEqual(manifest["d1"]["relative_path"], "d1.sql")
+        self.assertEqual(manifest["d1"]["bytes"], 15)
+        self.assertRegex(manifest["d1"]["sha256"], r"^[a-f0-9]{64}$")
+        self.assertNotIn("media", manifest)
+        self.assertNotIn("r2_objects", manifest)
+
 
 if __name__ == "__main__":
     unittest.main()

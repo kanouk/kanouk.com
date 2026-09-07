@@ -1,6 +1,7 @@
 import { definePlugin } from "emdash";
 import type { PluginDescriptor } from "emdash";
 import { linkPreviewRoutes } from "./link-preview-route";
+import { embedBlocks } from "./embed-blocks";
 import { relatedMediaBlocks, relatedMediaRoutes } from "./related-media";
 
 export function yohakuContentBlocks(): PluginDescriptor {
@@ -53,6 +54,7 @@ export function createPlugin() {
 		admin: {
 			portableTextBlocks: [
 				...relatedMediaBlocks,
+				...embedBlocks,
 				{
 					type: "yohaku.callout",
 					label: "補足・要点",

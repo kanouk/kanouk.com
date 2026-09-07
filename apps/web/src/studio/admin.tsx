@@ -972,6 +972,61 @@ function PhotoOrganizerPanel({ entry }: ContentEditorPanelContext) {
 	</div>;
 }
 
+type RelatedAlbumPanelContext = Omit<ContentEditorPanelContext, "entry"> & {
+	entry?: ContentItem;
+	draftData?: Record<string, unknown>;
+	onFieldChange?: (name: string, value: unknown) => void;
+};
+
+function RelatedAlbumPanel({ entry, draftData, onFieldChange }: RelatedAlbumPanelContext) {
+	const [albums, setAlbums] = useState<ContentItem[]>([]);
+	const [search, setSearch] = useState("");
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<unknown>(null);
+	const data = draftData ?? entry?.data ?? {};
+	const selectedId = textValue(data.related_album);
+	useEffect(() => {
+		let active = true;
+		setLoading(true);
+		setError(null);
+		allContent("albums")
+			.then((items) => { if (active) setAlbums(items); })
+			.catch((cause) => { if (active) setError(cause); })
+			.finally(() => { if (active) setLoading(false); });
+		return () => { active = false; };
+	}, []);
+	const selected = albums.find((album) => album.id === selectedId);
+	const visibleAlbums = useMemo(() => {
+		const term = search.trim().toLocaleLowerCase("ja");
+		return albums
+			.filter((album) => album.id === selectedId || !term || labelOf(album).toLocaleLowerCase("ja").includes(term))
+			.sort((left, right) => labelOf(left).localeCompare(labelOf(right), "ja"));
+	}, [albums, search, selectedId]);
+	const change = (albumId: string) => onFieldChange?.("related_album", albumId);
+
+	return <div className="photo-tools-panel photo-tools-related-album-panel">
+		{selectedId
+			? <p>現在: <strong>{selected ? labelOf(selected) : "削除済み、または参照できないアルバム"}</strong>{selected && <> <Badge tone={hasPendingChanges(selected) ? "warn" : "ok"}>{statusLabel(selected)}</Badge></>}</p>
+			: <p className="photo-tools-muted">関連アルバムは未設定です。</p>}
+		<label>アルバムを検索<input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="アルバム名" /></label>
+		<label>関連アルバム<select value={selectedId} disabled={loading || !onFieldChange} onChange={(event) => change(event.target.value)}>
+			<option value="">関連なし</option>
+			{selectedId && !selected && <option value={selectedId}>参照できないアルバム（現在の設定を維持）</option>}
+			{visibleAlbums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}（{statusLabel(album)}）</option>)}
+		</select></label>
+		<div className="photo-tools-panel-actions">
+			<button type="button" className="photo-tools-button" disabled={!selectedId || !onFieldChange} onClick={() => change("")}>関連を解除</button>
+		</div>
+		<p className="photo-tools-muted">記事の下書きに保存されます。解除しても、本文のアルバムカードや挿入済み写真・キャプションは残ります。</p>
+		{loading && <p className="photo-tools-muted" role="status">アルバムを読み込んでいます…</p>}
+		<ErrorBox error={error} />
+	</div>;
+}
+
+function HiddenRelatedAlbumField() {
+	return null;
+}
+
 export const contentListColumns: readonly ContentListColumnExtension[] = [
 	{ id: "photo-thumbnail", label: "写真", collections: ["photos"], order: -30, cell: ThumbnailColumn },
 	{ id: "photo-label", label: "タイトル／キャプション", collections: ["photos"], order: -25, cell: PhotoLabelColumn },
@@ -980,9 +1035,13 @@ export const contentListColumns: readonly ContentListColumnExtension[] = [
 	{ id: "photo-state", label: "状態／更新", collections: ["photos"], order: -5, cell: PhotoStateColumn },
 ];
 
-export const contentEditorPanels: readonly ContentEditorPanelExtension[] = [
+type ContentEditorPanelWithNewEntry = ContentEditorPanelExtension & { supportsNew?: boolean };
+
+export const contentEditorPanels: readonly ContentEditorPanelWithNewEntry[] = [
+	{ id: "post-related-album", title: "関連アルバム", collections: ["posts"], order: -30, supportsNew: true, component: RelatedAlbumPanel },
 	{ id: "album-photos", title: "アルバムの写真", collections: ["albums"], order: -20, component: AlbumPhotoPanel },
 	{ id: "photo-organizer", title: "アルバムで整理", collections: ["photos"], order: -20, component: PhotoOrganizerPanel },
 ];
 
+export const fields = { "related-album-hidden": HiddenRelatedAlbumField };
 export const pages = { "/organize": PhotoOrganizerPage };

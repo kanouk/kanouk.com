@@ -1,0 +1,208 @@
+---
+import LinkCard from "./LinkCard.astro";
+import { parseEmbedUrl } from "../embed-url";
+
+const node = Astro.props.node as Record<string, unknown>;
+const parsed = parseEmbedUrl(node.id);
+const caption = typeof node.caption === "string" ? node.caption.trim() : "";
+const display = node.display === "link-card" ? "link-card" : "player";
+// Preserve the stored target, including share queries, so the editor snapshot,
+// public lookup cache and SSR all bind to the same URL. Player URLs alone are
+// canonicalized by the strict provider parser.
+const linkCardNode = { ...node, caption: "" };
+---
+
+{parsed.ok && display === "link-card" ? (
+	<figure class="yohaku-embed-card">
+		<LinkCard node={linkCardNode} />
+		{caption && <figcaption>{caption}</figcaption>}
+	</figure>
+) : parsed.ok ? (
+	<figure
+		class:list={["yohaku-embed", `yohaku-embed--${parsed.provider}`]}
+		style={`--yohaku-embed-height: ${parsed.height}px`}
+	>
+		<div class="yohaku-embed__stage" data-yohaku-embed-stage>
+			<button
+				type="button"
+				class="yohaku-embed__load"
+				data-yohaku-embed-load
+				data-embed-src={parsed.embedUrl}
+				data-embed-title={parsed.title}
+				data-embed-provider={parsed.provider}
+			>
+				<span class="yohaku-embed__play" aria-hidden="true">▶</span>
+				<strong>{parsed.providerLabel}プレーヤーを読み込む</strong>
+				<small>クリックするまで外部コンテンツは読み込まれません</small>
+			</button>
+			<noscript>
+				<p>プレーヤーの表示にはJavaScriptが必要です。</p>
+			</noscript>
+		</div>
+		{caption && <figcaption>{caption}</figcaption>}
+		<a class="yohaku-embed__source" href={parsed.canonicalUrl} target="_blank" rel="noopener noreferrer">
+			{parsed.providerLabel}で開く <span aria-hidden="true">↗</span>
+		</a>
+	</figure>
+) : (
+	<figure class="yohaku-embed yohaku-embed--unavailable">
+		<div class="yohaku-embed__notice" role="note">
+			<strong>プレーヤーを表示できません</strong>
+			<p>{parsed.message}</p>
+			{parsed.safeUrl && (
+				<a href={parsed.safeUrl} target="_blank" rel="noopener noreferrer">
+					{parsed.providerLabel ?? "元のサービス"}で開く <span aria-hidden="true">↗</span>
+				</a>
+			)}
+		</div>
+		{caption && <figcaption>{caption}</figcaption>}
+	</figure>
+)}
+
+<script>
+	document.addEventListener("click", (event) => {
+		const target = event.target;
+		const button = target instanceof Element
+			? target.closest("[data-yohaku-embed-load]")
+			: null;
+		if (!(button instanceof HTMLButtonElement)) return;
+		const stage = button.closest("[data-yohaku-embed-stage]");
+		const src = button.dataset.embedSrc;
+		const title = button.dataset.embedTitle;
+		const provider = button.dataset.embedProvider;
+		if (!(stage instanceof HTMLElement) || !src || !title) return;
+
+		const frame = document.createElement("iframe");
+		frame.src = src;
+		frame.title = title;
+		frame.loading = "lazy";
+		frame.referrerPolicy = "strict-origin-when-cross-origin";
+		frame.allow = provider === "spotify"
+			? "encrypted-media; fullscreen; picture-in-picture"
+			: "fullscreen";
+		frame.allowFullscreen = true;
+		stage.replaceChildren(frame);
+		frame.focus();
+	}, { passive: true });
+</script>
+
+<style>
+	.yohaku-embed-card { margin: 2rem 0; }
+	.yohaku-embed-card :global(.yohaku-link-card) { margin: 0; }
+	.yohaku-embed-card figcaption { margin-top: .65rem; color: var(--color-text-secondary); font-size: .8rem; line-height: 1.6; text-align: center; white-space: pre-wrap; }
+	.yohaku-embed {
+		margin: clamp(2rem, 5vw, 3rem) 0;
+	}
+
+	.yohaku-embed__stage {
+		position: relative;
+		width: 100%;
+		height: var(--yohaku-embed-height);
+		min-height: 9.5rem;
+		overflow: hidden;
+		border: 1px solid var(--color-border);
+		border-radius: 0.65rem;
+		background: var(--color-bg-subtle);
+	}
+
+	.yohaku-embed--tiktok .yohaku-embed__stage {
+		width: min(100%, 25rem);
+		height: auto;
+		aspect-ratio: 9 / 16;
+		margin-inline: auto;
+		background: #0d0d0f;
+	}
+
+	.yohaku-embed__stage :global(iframe) {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	.yohaku-embed__load {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		width: 100%;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 0.45rem;
+		padding: 1.25rem;
+		border: 0;
+		background: transparent;
+		color: var(--color-text);
+		font: inherit;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.yohaku-embed--tiktok .yohaku-embed__load { color: #fff; }
+	.yohaku-embed__load:hover { background: color-mix(in srgb, var(--color-text) 5%, transparent); }
+	.yohaku-embed__load:focus-visible {
+		outline: 3px solid var(--color-brand-ring);
+		outline-offset: -4px;
+	}
+
+	.yohaku-embed__play {
+		display: grid;
+		width: 2.75rem;
+		height: 2.75rem;
+		place-items: center;
+		padding-left: 0.15rem;
+		border-radius: 999px;
+		background: var(--color-text);
+		color: var(--color-bg);
+		font-size: 0.9rem;
+	}
+
+	.yohaku-embed--tiktok .yohaku-embed__play {
+		background: #fff;
+		color: #111;
+	}
+
+	.yohaku-embed__load strong { font-size: 0.9rem; }
+	.yohaku-embed__load small { color: var(--color-muted); font-size: 0.72rem; line-height: 1.5; }
+	.yohaku-embed--tiktok .yohaku-embed__load small { color: #c8c8cc; }
+
+	.yohaku-embed figcaption {
+		min-width: 0;
+		margin-top: 0.55rem;
+		color: var(--color-muted);
+		font-size: 0.76rem;
+		line-height: 1.65;
+	}
+
+	.yohaku-embed__source,
+	.yohaku-embed__notice a {
+		color: var(--color-text-secondary);
+		font-size: 0.72rem;
+		white-space: nowrap;
+	}
+
+	.yohaku-embed__source {
+		display: block;
+		width: fit-content;
+		margin: 0.35rem 0 0 auto;
+	}
+
+	.yohaku-embed__notice {
+		padding: 1rem 1.1rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-bg-subtle);
+	}
+
+	.yohaku-embed__notice strong { font-size: 0.9rem; }
+	.yohaku-embed__notice p {
+		margin: 0.35rem 0 0.65rem;
+		color: var(--color-text-secondary);
+		font-size: 0.82rem;
+		line-height: 1.65;
+	}
+
+	.yohaku-embed--unavailable > figcaption { margin-top: 0.55rem; }
+</style>
