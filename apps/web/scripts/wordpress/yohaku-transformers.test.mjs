@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildProductMap, convertPostContent } from "./yohaku-transformers.mjs";
+import {
+	buildProductMap,
+	convertPostContent,
+	productFromPochippAttributes,
+	repairEmptyPochippProductCards,
+} from "./yohaku-transformers.mjs";
 
 const context = {
 	siteId: "test",
@@ -248,6 +253,164 @@ test("recovers Pochipp image, price, and affiliate link from pochipp_data", () =
 		primaryUrl: "https://example.test/amazon",
 		links: [{ label: "Amazon", url: "https://example.test/amazon" }],
 	});
+});
+
+test("recovers self-contained Pochipp blocks without a product post id", () => {
+	const post = {
+		id: 8732,
+		content: '<!-- wp:pochipp/linkbox {"title":"阿・吽 全巻セット(1-14巻)/おかざき真里/阿吽社","keywords":"阿吽","searched_at":"yahoo","yahoo_detail_url":"https://store.shopping.yahoo.co.jp/bookfan/yf-zk000868.html","image_url":"https://item-shopping.c.yimg.jp/i/l/bookfan_yf-zk000868","price":"10221"} /-->',
+	};
+	const [product] = convertPostContent(post, context);
+	assert.equal(product._type, "yohaku.productCard");
+	assert.equal(product.title, "阿・吽 全巻セット(1-14巻)/おかざき真里/阿吽社");
+	assert.equal(product.imageUrl, "https://item-shopping.c.yimg.jp/i/l/bookfan_yf-zk000868");
+	assert.equal(product.price, "10221");
+	assert.equal(product.id, "https://www.amazon.co.jp/s?k=%E9%98%BF%E5%90%BD");
+	assert.deepEqual(product.links, [
+		{ label: "Amazon", url: "https://www.amazon.co.jp/s?k=%E9%98%BF%E5%90%BD" },
+		{ label: "楽天市場", url: "https://search.rakuten.co.jp/search/mall/%E9%98%BF%E5%90%BD/" },
+	]);
+	assert.equal(product.sourceProductId, "");
+});
+
+test("keeps an exact Pochipp affiliate URL and rejects unsafe product URLs", () => {
+	const product = productFromPochippAttributes({
+		title: "Sample",
+		keywords: "sample book",
+		amazon_affi_url: "https://www.amazon.co.jp/dp/example?tag=example-22",
+		rakuten_url: "javascript:alert(1)",
+		image_url: "https://user:password@example.test/private.jpg",
+	});
+	assert.equal(product.primaryUrl, "https://www.amazon.co.jp/dp/example?tag=example-22");
+	assert.deepEqual(product.links, [
+		{ label: "Amazon", url: "https://www.amazon.co.jp/dp/example?tag=example-22" },
+		{ label: "楽天市場", url: "https://search.rakuten.co.jp/search/mall/sample%20book/" },
+	]);
+	assert.equal(product.imageUrl, undefined);
+});
+
+test("repairs only an empty imported product card at the matching WXR position", () => {
+	const paragraph = { _type: "block", _key: "paragraph", children: [] };
+	const placeholder = {
+		_type: "yohaku.productCard",
+		_key: "stored-key",
+		title: "商品情報",
+		label: "商品を見る",
+		links: [],
+		sourceProductId: "",
+	};
+	const desired = {
+		_type: "yohaku.productCard",
+		_key: "source-key",
+		title: "阿・吽 全巻セット",
+		imageUrl: "https://example.test/product.jpg",
+		id: "https://www.amazon.co.jp/s?k=%E9%98%BF%E5%90%BD",
+		label: "商品を見る",
+		links: [{ label: "Amazon", url: "https://www.amazon.co.jp/s?k=%E9%98%BF%E5%90%BD" }],
+		price: "10221",
+		sourceProductId: "",
+	};
+	const result = repairEmptyPochippProductCards([paragraph, placeholder], [paragraph, desired]);
+	assert.equal(result.ok, true);
+	assert.equal(result.repaired, 1);
+	assert.equal(result.value[1]._key, "stored-key");
+	assert.equal(result.value[1].title, "阿・吽 全巻セット");
+	assert.equal(result.value[1].imageUrl, "https://example.test/product.jpg");
+
+	const repeated = repairEmptyPochippProductCards(result.value, [paragraph, desired]);
+	assert.equal(repeated.ok, true);
+	assert.equal(repeated.repaired, 0);
+	assert.strictEqual(repeated.value, result.value);
+});
+
+test("product card repair fails closed on shifted content or an existing edit", () => {
+	const placeholder = {
+		_type: "yohaku.productCard",
+		_key: "stored-key",
+		title: "商品情報",
+		label: "商品を見る",
+		links: [],
+		sourceProductId: "",
+	};
+	const desired = {
+		...placeholder,
+		_key: "source-key",
+		title: "Recovered",
+		id: "https://example.test/product",
+		links: [{ label: "Amazon", url: "https://example.test/product" }],
+	};
+	const shifted = repairEmptyPochippProductCards(
+		[placeholder, { _type: "block", children: [] }],
+		[{ _type: "block", children: [] }, desired],
+	);
+	assert.deepEqual(shifted, {
+		ok: false,
+		value: shifted.value,
+		repaired: 0,
+		reason: "placeholder-position-mismatch",
+	});
+
+	const edited = repairEmptyPochippProductCards(
+		[{ ...desired, title: "手作業で編集した商品名" }],
+		[desired],
+	);
+	assert.equal(edited.ok, false);
+	assert.equal(edited.repaired, 0);
+	assert.equal(edited.reason, "product-card-mismatch:0");
+
+	const countMismatch = repairEmptyPochippProductCards([placeholder], [desired, desired]);
+	assert.equal(countMismatch.ok, false);
+	assert.equal(countMismatch.reason, "content-length-mismatch");
+});
+
+test("product card repair preserves manual URLs and unknown fields", () => {
+	const source = convertPostContent({
+		id: 8732,
+		content: '<!-- wp:pochipp/linkbox {"title":"阿・吽 全巻セット","keywords":"阿吽"} /-->',
+	}, context);
+	const placeholder = {
+		_type: "yohaku.productCard",
+		_key: "stored-key",
+		title: "商品情報",
+		label: "商品を見る",
+		links: [],
+		sourceProductId: "",
+	};
+	assert.equal(
+		repairEmptyPochippProductCards([{ ...placeholder, url: "https://example.test/manual" }], source).ok,
+		false,
+	);
+	assert.equal(
+		repairEmptyPochippProductCards([{ ...placeholder, editorialNote: "keep" }], source).ok,
+		false,
+	);
+});
+
+test("product card repair leaves a same-position unresolved source product untouched", () => {
+	const empty = {
+		_type: "yohaku.productCard",
+		_key: "empty",
+		title: "商品情報",
+		label: "商品を見る",
+		links: [],
+		sourceProductId: "",
+	};
+	const recovered = {
+		...empty,
+		_key: "source-recovered",
+		title: "Recovered",
+		id: "https://example.test/product",
+		links: [{ label: "Amazon", url: "https://example.test/product" }],
+	};
+	const result = repairEmptyPochippProductCards(
+		[{ ...empty, _key: "stored-unresolved" }, { ...empty, _key: "stored-recovered" }],
+		[{ ...empty, _key: "source-unresolved" }, recovered],
+	);
+	assert.equal(result.ok, true);
+	assert.equal(result.repaired, 1);
+	assert.equal(result.value[0]._key, "stored-unresolved");
+	assert.equal(result.value[1].title, "Recovered");
+	assert.equal(result.value[1]._key, "stored-recovered");
 });
 
 test("converts inline Pochipp shortcodes without dropping surrounding prose", () => {

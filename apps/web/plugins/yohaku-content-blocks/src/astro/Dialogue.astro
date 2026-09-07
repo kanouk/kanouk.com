@@ -34,7 +34,7 @@ const initial = Array.from(String(speaker).trim())[0] || "・";
 		)}
 		{speaker && <figcaption>{speaker}</figcaption>}
 	</div>
-	<div class="yohaku-dialogue__bubble" aria-label={speaker ? `${speaker}の発言` : "発言"}>
+	<div class="yohaku-dialogue__bubble" aria-label={speaker ? `${speaker}の${bubbleStyle === "thinking" ? "考え" : "発言"}` : bubbleStyle === "thinking" ? "考え" : "発言"}>
 		<p>{value}</p>
 	</div>
 </figure>
@@ -62,11 +62,11 @@ const initial = Array.from(String(speaker).trim())[0] || "・";
 		height: 4rem;
 		box-sizing: border-box;
 		place-items: center;
-		border: 1px solid var(--color-border);
+		border: 0;
 		border-radius: 50%;
-		background: var(--color-bg);
+		background: transparent;
 		object-fit: cover;
-		box-shadow: 0 0.25rem 1rem color-mix(in srgb, var(--color-text) 8%, transparent);
+		box-shadow: none;
 	}
 
 	.yohaku-dialogue__avatar.is-square { border-radius: 20%; }
@@ -119,13 +119,45 @@ const initial = Array.from(String(speaker).trim())[0] || "・";
 		border-right: 1px solid var(--color-border);
 	}
 
-	.is-thinking .yohaku-dialogue__bubble::before {
-		width: 0.55rem;
-		height: 0.55rem;
-		border: 1px solid var(--color-border);
+	figure.yohaku-dialogue.is-thinking { gap: 1.5rem; }
+
+	.is-thinking .yohaku-dialogue__bubble {
+		--thought-border: color-mix(in srgb, var(--color-brand) 38%, var(--color-bg));
+		--thought-fill: color-mix(in srgb, var(--color-brand) 7%, var(--color-bg));
+		margin-top: 0.75rem;
+		border-color: var(--thought-border);
+		border-radius: 0.45rem;
+		background: var(--thought-fill);
+		box-shadow: none;
+	}
+
+	.is-thinking .yohaku-dialogue__bubble::before,
+	.is-thinking .yohaku-dialogue__bubble::after {
+		position: absolute;
+		box-sizing: border-box;
+		border: 1px solid var(--thought-border);
 		border-radius: 50%;
+		background: var(--thought-fill);
+		content: "";
 		transform: none;
 	}
+
+	.is-thinking .yohaku-dialogue__bubble::before {
+		top: 1.45rem;
+		left: -0.9rem;
+		width: 0.65rem;
+		height: 0.65rem;
+	}
+
+	.is-thinking .yohaku-dialogue__bubble::after {
+		top: 0.9rem;
+		left: -1.45rem;
+		width: 0.4rem;
+		height: 0.4rem;
+	}
+
+	.is-thinking.is-right .yohaku-dialogue__bubble::before { right: -0.9rem; left: auto; }
+	.is-thinking.is-right .yohaku-dialogue__bubble::after { right: -1.45rem; left: auto; }
 
 	.yohaku-dialogue__bubble p {
 		margin: 0;
@@ -143,7 +175,8 @@ const initial = Array.from(String(speaker).trim())[0] || "・";
 		.yohaku-dialogue__profile { flex-basis: 3.3rem; width: 3.3rem; }
 		.yohaku-dialogue__avatar { width: 3rem; height: 3rem; }
 		.yohaku-dialogue__bubble { padding: 0.8rem 0.9rem; }
-		.yohaku-dialogue__bubble::before { top: 1rem; }
+		.yohaku-dialogue:not(.is-thinking) .yohaku-dialogue__bubble::before { top: 1rem; }
+		.is-thinking .yohaku-dialogue__bubble { margin-top: 0.35rem; }
 		figcaption { font-size: 0.68rem; }
 	}
 </style>
