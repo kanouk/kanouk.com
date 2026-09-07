@@ -138,6 +138,115 @@ function productNode(product, sourceId, key) {
 	};
 }
 
+function safeProductUrl(value) {
+	const candidate = String(value || "").trim();
+	if (!candidate) return undefined;
+	try {
+		const parsed = new URL(candidate);
+		return (parsed.protocol === "http:" || parsed.protocol === "https:")
+			&& !parsed.username
+			&& !parsed.password
+			? candidate
+			: undefined;
+	} catch {
+		return undefined;
+	}
+}
+
+export function productFromPochippAttributes(attrs = {}) {
+	const keywords = String(attrs.keywords || "").trim();
+	const amazonUrl = safeProductUrl(attrs.amazon_affi_url || attrs.amazon_url)
+		|| (keywords ? `https://www.amazon.co.jp/s?k=${encodeURIComponent(keywords)}` : undefined);
+	const rakutenUrl = safeProductUrl(attrs.rakuten_affi_url || attrs.rakuten_url)
+		|| (keywords ? `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(keywords)}/` : undefined);
+	const links = [
+		["Amazon", amazonUrl],
+		["楽天市場", rakutenUrl],
+	]
+		.filter((entry) => entry[1])
+		.map(([label, url]) => ({ label, url }));
+	return {
+		title: String(attrs.title || "").trim() || "商品情報",
+		imageUrl: safeProductUrl(attrs.image_url),
+		price: String(attrs.price || "").trim() || undefined,
+		primaryUrl: links[0]?.url,
+		links,
+	};
+}
+
+const PRODUCT_CARD_FIELDS = ["title", "imageUrl", "id", "url", "label", "links", "price", "sourceProductId"];
+const EMPTY_IMPORTED_PRODUCT_CARD_FIELDS = new Set(["_type", "_key", ...PRODUCT_CARD_FIELDS]);
+
+function productCardSnapshot(node) {
+	return Object.fromEntries(PRODUCT_CARD_FIELDS.map((field) => [field, node?.[field]]));
+}
+
+function sameProductCard(left, right) {
+	return JSON.stringify(productCardSnapshot(left)) === JSON.stringify(productCardSnapshot(right));
+}
+
+function isEmptyImportedProductCard(node) {
+	return node?._type === "yohaku.productCard"
+		&& node.sourceProductId === ""
+		&& node.title === "商品情報"
+		&& !node.imageUrl
+		&& !node.id
+		&& !node.url
+		&& !node.price
+		&& (node.links === undefined || (Array.isArray(node.links) && node.links.length === 0))
+		&& (!node.label || node.label === "商品を見る")
+		&& Object.keys(node).every((field) => EMPTY_IMPORTED_PRODUCT_CARD_FIELDS.has(field));
+}
+
+function isRecoveredInlineProductCard(node) {
+	return node?._type === "yohaku.productCard"
+		&& node.sourceProductId === ""
+		&& !isEmptyImportedProductCard(node)
+		&& Boolean(node.imageUrl || node.id || node.url || node.price || (Array.isArray(node.links) && node.links.length));
+}
+
+export function repairEmptyPochippProductCards(storedContent, sourceContent) {
+	if (!Array.isArray(storedContent) || !Array.isArray(sourceContent)) {
+		return { ok: false, value: storedContent, repaired: 0, reason: "content-not-array" };
+	}
+	const sourcePositions = sourceContent
+		.map((node, index) => isRecoveredInlineProductCard(node) ? index : -1)
+		.filter((index) => index >= 0);
+	const sourceEmptyPositions = sourceContent
+		.map((node, index) => isEmptyImportedProductCard(node) ? index : -1)
+		.filter((index) => index >= 0);
+	const storedEmptyPositions = storedContent
+		.map((node, index) => isEmptyImportedProductCard(node) ? index : -1)
+		.filter((index) => index >= 0);
+	if (sourcePositions.length === 0 && storedEmptyPositions.length === 0) {
+		return { ok: true, value: storedContent, repaired: 0 };
+	}
+	if (storedContent.length !== sourceContent.length) {
+		return { ok: false, value: storedContent, repaired: 0, reason: "content-length-mismatch" };
+	}
+	if (storedEmptyPositions.some((index) => !sourcePositions.includes(index) && !sourceEmptyPositions.includes(index))) {
+		return { ok: false, value: storedContent, repaired: 0, reason: "placeholder-position-mismatch" };
+	}
+	const replacements = new Map();
+	for (const index of sourcePositions) {
+		const stored = storedContent[index];
+		const source = sourceContent[index];
+		if (isEmptyImportedProductCard(stored)) {
+			replacements.set(index, { ...source, _key: stored._key || source._key });
+			continue;
+		}
+		if (!sameProductCard(stored, source)) {
+			return { ok: false, value: storedContent, repaired: 0, reason: `product-card-mismatch:${index}` };
+		}
+	}
+	if (replacements.size === 0) return { ok: true, value: storedContent, repaired: 0 };
+	return {
+		ok: true,
+		value: storedContent.map((node, index) => replacements.get(index) || node),
+		repaired: replacements.size,
+	};
+}
+
 function comparableAvatarUrl(value) {
 	try {
 		const parsed = new URL(value);
@@ -421,9 +530,11 @@ export function convertPostContent(post, context) {
 					}))
 				: [],
 		}],
-		"pochipp/linkbox": (block, _options, tools) => [
-			productNode(context.products.get(String(block.attrs.pid || "")), block.attrs.pid, tools.generateKey()),
-		],
+		"pochipp/linkbox": (block, _options, tools) => {
+			const sourceId = String(block.attrs.pid || "");
+			const product = context.products.get(sourceId) || productFromPochippAttributes(block.attrs);
+			return [productNode(product, sourceId, tools.generateKey())];
+		},
 		"rinkerg/gutenberg-rinker": (block, _options, tools) => {
 			const sourceId = String(block.attrs.post_id || block.attrs.content_text?.match(/post_id=["']?(\d+)/)?.[1] || "");
 			return [productNode(context.products.get(sourceId), sourceId, tools.generateKey())];
