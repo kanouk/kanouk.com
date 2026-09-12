@@ -79,3 +79,13 @@ kanouk-emdash-stagingは名前に反して両公開ホストの本番Worker。�
 ## 観測待ちを完了扱いにしない
 
 直後のHTTP値と画面検証はこの作業で記録する。24時間後・7日後のエラー／DB負荷／画像変換回数、RUM p75は時間と十分な件数が必要なため #26 に残す。全体の性能目標を満たしたと主張するには、その結果が必要。ブラウザー操作時間20回、固定CPU・回線での5回合成計測も、取得できた条件と未計測を区別する。
+
+## D1との通信距離
+
+初回リリースの後、341枚のアルバムMISS p75は2,486.74→684.11msへ改善した。一方でトップは1,401.78ms、管理Postsは892.02msで残課題となった。Server-TimingではSQL往復が約60msずつ積み上がっている。
+
+D1のREST結果でprimary=HKG、read replication=disabledを確認。DBの複製や整合性を変えず、Workerに香港のplacement region hint（aws:ap-east-1）を指定する。これはAWSへデータを移す設定ではなく、その地域に近いCloudflare拠点でWorkerを実行する指定。配置を変えた結果は、HITを含めて再測定する。静的アセットは原則として最寄りのedgeから配信される。
+
+公式仕様: https://developers.cloudflare.com/workers/configuration/placement/
+
+D1のprimary配置が将来変わる場合はこのhintを再評価する。戻すにはplacement設定を除いて再デプロイするか直前のWorker versionへrollbackする。

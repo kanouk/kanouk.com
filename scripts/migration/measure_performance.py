@@ -33,7 +33,7 @@ def measure(url, samples, fresh=False):
             selected = {}
             for line in headers.read_text().splitlines():
                 name, _, value = line.partition(':')
-                if name.lower() in {'cf-cache-status', 'server-timing', 'age', 'cache-control', 'x-yohaku-release'}:
+                if name.lower() in {'cf-cache-status', 'server-timing', 'age', 'cache-control', 'x-yohaku-release', 'cf-placement'}:
                     selected[name.lower()] = value.strip()
             rows.append({'status': metrics['http_code'], 'ttfb_ms': round(metrics['time_starttransfer'] * 1000, 2),
                 'total_ms': round(metrics['time_total'] * 1000, 2), 'bytes': metrics['size_download'], **selected})

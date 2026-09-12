@@ -2,6 +2,9 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "kanouk-emdash-staging",
 	"workers_dev": true,
+	// D1 primary was verified in HKG on 2026-09-12. Avoid a cross-region
+	// round trip for every CMS query; static assets remain at the nearest edge.
+	"placement": { "region": "aws:ap-east-1" },
 	"preview_urls": true,
 	"main": "./src/worker.ts",
 	"assets": {
