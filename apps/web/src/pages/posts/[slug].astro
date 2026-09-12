@@ -168,16 +168,11 @@ const prioritizedContent = articleContent.map((block) => {
 	return linkedBlock;
 });
 
-const [categories, tags] = await Promise.all([
-	getEntryTerms("posts", post.data.id, "category"),
-	getEntryTerms("posts", post.data.id, "tag"),
+const [categories, tags, recentPostsResult] = await Promise.all([
+ getEntryTerms("posts", post.data.id, "category"),
+ getEntryTerms("posts", post.data.id, "tag"),
+ getEmDashCollection("posts", {orderBy:{published_at:"desc"},limit:4}),
 ]);
-
-// Fetch a few extra recent posts in case the current post is among them.
-const recentPostsResult = await getEmDashCollection("posts", {
-	orderBy: { published_at: "desc" },
-	limit: 4,
-});
 if (Astro.cache?.enabled) Astro.cache.set(recentPostsResult.cacheHint);
 const recentPosts = recentPostsResult.entries;
 const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);

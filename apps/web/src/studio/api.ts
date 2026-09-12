@@ -199,3 +199,19 @@ export async function recordOperation(input: {
 		body: JSON.stringify({ action: "record", ...input }),
 	}));
 }
+
+export interface AlbumCount { album: string; total: number; pending: number; maxPosition: number }
+export interface PhotoPage { items: ContentItem[]; total: number; offset: number; nextOffset: number | null }
+export async function albumCounts(): Promise<AlbumCount[]> {
+ return (await unwrap<{ items: AlbumCount[] }>(await apiFetch("/_emdash/api/plugins/yohaku-photo-tools/album-counts"))).items;
+}
+export async function photoPage(album: string, options: {q?: string; filter?: string; offset?: number; photo?: string} = {}, signal?: AbortSignal): Promise<PhotoPage> {
+ const params = new URLSearchParams({album, q:options.q??"", filter:options.filter??"", offset:String(options.offset??0), photo:options.photo??""});
+ return unwrap<PhotoPage>(await apiFetch(`/_emdash/api/plugins/yohaku-photo-tools/photo-page?${params}`, {signal}));
+}
+export async function albumPhotosForOperation(album: string): Promise<ContentItem[]> {
+ const items: ContentItem[] = [];
+ let offset: number | null = 0;
+ do { const page = await photoPage(album, {offset}); items.push(...page.items); offset = page.nextOffset; } while (offset !== null);
+ return items;
+}

@@ -1,4 +1,5 @@
 ---
+import PagePerformance from "./PagePerformance.astro";
 const GA4_MEASUREMENT_ID = "G-94EQ0WN7B9";
 const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 	Astro.url.hostname,
@@ -85,3 +86,5 @@ const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 		if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
 	})();
 </script>
+
+<PagePerformance />

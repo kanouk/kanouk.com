@@ -1196,3 +1196,6 @@ main:focus { outline: none; }
 	.article-main { max-width: none; }
 	a { color: inherit; text-decoration: underline; }
 }
+
+.album-pagination { display:flex; align-items:center; justify-content:center; gap:1.5rem; margin-block:1rem; }
+.album-pagination a { padding:.6rem; }

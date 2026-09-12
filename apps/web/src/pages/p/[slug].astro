@@ -174,7 +174,7 @@ const exifDetails = [
 		data-slideshow-next-url={slideshowNextUrl}
 		data-album-id={album?.data.id}
 	>
-		<a class="back" data-photo-return href={album ? `/albums/${album.id}#${albumPhotoAnchor(photo.data.id)}` : "/albums"} data-astro-prefetch="hover" aria-label="写真を閉じてアルバムへ戻る">
+		<a class="back" data-photo-return href={album ? `/albums/${album.id}?photo=${encodeURIComponent(photo.data.id)}#${albumPhotoAnchor(photo.data.id)}` : "/albums"} data-astro-prefetch="hover" aria-label="写真を閉じてアルバムへ戻る">
 			<X size={15} strokeWidth={1.75} aria-hidden="true" />
 			<span>{album?.data.title || "すべてのアルバム"}</span>
 		</a>
@@ -326,6 +326,7 @@ const exifDetails = [
 			if (returnId) {
 				const destination = new URL(returnLink.href);
 				destination.hash = albumPhotoAnchor(returnId);
+				destination.searchParams.set("photo", returnId);
 				returnLink.href = destination.toString();
 			}
 		} catch { /* Fall back to the current photo's anchor. */ }

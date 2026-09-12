@@ -43,14 +43,13 @@ const canonical = canonicalProp === false
 	? null
 	: canonicalProp ?? new URL(Astro.url.pathname, "https://blog.kanouk.com").toString();
 
-const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
-const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
 const FOOTER_EXCLUDED_PAGE_SLUGS = new Set(["sample_search", "sample-page-nocalog"]);
-const pageResult = await getEmDashCollection("pages", {
-	status: "published",
-	orderBy: { published_at: "desc" },
-	limit: 8,
-});
+const [settings, pageResult] = await Promise.all([
+ getSiteSettings(),
+ getEmDashCollection("pages", { status:"published", orderBy:{published_at:"desc"}, limit:8 }),
+]);
+const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings);
+const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
 if (Astro.cache?.enabled) Astro.cache.set(pageResult.cacheHint);
 const pageCandidates = pageResult.entries;
 // Preserve imported sample routes, but do not promote theme/demo artifacts in

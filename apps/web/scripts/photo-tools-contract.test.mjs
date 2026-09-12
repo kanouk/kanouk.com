@@ -62,7 +62,7 @@ test("album organizer owns upload, reorder, batch edit and aggregate publish", a
 	assert.match(admin.slice(workspaceStart, albumPublish), /albumSaveFailed/);
 	assert.match(admin, /photo-tools-mobile-tabs/);
 	assert.match(admin, /photo-tools-mobile-subtabs/);
-	assert.match(admin, /fieldFilters: \{ album: selectedId \}/);
+	assert.match(admin, /photoPage\(selectedId,/);
 	assert.match(admin, /albumReady/);
 	assert.match(admin, /setReadyAlbumId\(""\)/);
 	assert.match(admin, /photoDraftDirty/);

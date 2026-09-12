@@ -1,3 +1,4 @@
+import { startPerformanceAudit } from "../client/performance-audit";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import type {
 	ContentEditorPanelContext,
@@ -8,6 +9,7 @@ import type {
 import { apiFetch, parseApiResponse } from "@emdash-cms/admin";
 import {
 	allContent,
+	albumCounts, photoPage, albumPhotosForOperation, type AlbumCount,
 	createPhotoFromMedia,
 	createAlbumDraft,
 	getContent,
@@ -343,6 +345,7 @@ function AlbumOrganizer({
 	onPhotoAdded,
 	onBusyChange,
 	albumReady,
+	onQuery, onRefresh, onFirstPage, firstOffset, onLoadMore, nextOffset, resultTotal, albumCount,
 }: {
 	album: ContentItem;
 	albums: ContentItem[];
@@ -352,6 +355,14 @@ function AlbumOrganizer({
 	onPhotoAdded: (item: ContentItem) => void;
 	onBusyChange: (busy: boolean) => void;
 	albumReady: boolean;
+	onQuery: (q: string, filter: string) => void;
+	onRefresh: () => void;
+	onFirstPage: () => void;
+	firstOffset: number;
+	onLoadMore: () => void;
+	nextOffset: number | null;
+	resultTotal: number;
+	albumCount?: AlbumCount;
 }) {
 	const reorderInFlight = useRef(false);
 	const albumPhotos = useMemo(() => allPhotos
@@ -402,13 +413,12 @@ function AlbumOrganizer({
 		setSelectedId(requested && albumPhotos.some((photo) => photo.id === requested) ? requested : albumPhotos[0]?.id ?? null);
 	}, [album.id, albumPhotos, selectedId]);
 
-	const visible = useMemo(() => albumPhotos.filter((photo) => {
-		const data = dataOf(photo);
-		const needle = search.trim().toLocaleLowerCase("ja");
-		if (needle && ![data.title, data.caption, (data.image as Record<string, unknown> | undefined)?.filename]
-			.some((value) => textValue(value).toLocaleLowerCase("ja").includes(needle))) return false;
-		return !filter || photoReviewFlags(data, { status: photo.status }).includes(filter);
-	}), [albumPhotos, search, filter]);
+	useEffect(() => {
+		const timer = setTimeout(() => onQuery(search, filter), 250);
+		return () => clearTimeout(timer);
+	}, [search, filter, onQuery]);
+	const visible = albumPhotos;
+
 	const selectedPhoto = allPhotos.find((photo) => photo.id === selectedId) ?? null;
 	const checkedPhotos = allPhotos.filter((photo) => checked.has(photo.id));
 	const inspectorPhoto = checkedPhotos.length === 1 ? checkedPhotos[0] : selectedPhoto;
@@ -439,7 +449,7 @@ function AlbumOrganizer({
 	const inspectorReady = Boolean(inspectorPhoto?._rev);
 	const albumDraftDirty = albumDraft.title.trim() !== textValue(dataOf(album).title) || albumDraft.description.trim() !== textValue(dataOf(album).description);
 	const pendingIds = new Set([...albumPhotos.filter(hasPendingChanges).map((photo) => photo.id), ...touchedIds]);
-	const workspacePending = albumDraftDirty || hasPendingChanges(album) || pendingIds.size > 0;
+	const workspacePending = albumDraftDirty || hasPendingChanges(album) || pendingIds.size > 0 || Boolean(albumCount?.pending);
 	const live = publicHref(album, "album");
 	const operationLocked = busy || !albumReady || photoDraftDirty;
 	useEffect(() => {
@@ -527,7 +537,16 @@ function AlbumOrganizer({
 		if (photoDraftDirty || !albumReady || reorderInFlight.current) return;
 		reorderInFlight.current = true;
 		setBusy(true); setError(null); setFailures([]); setMessage("並び順を保存中…");
-		const positions = sparsePositions(next.length);
+		let positions = next.map(photo => Number(dataOf(photo).position) || 0).sort((a,b) => a-b);
+		if (new Set(positions).size !== positions.length) {
+			try {
+				const full = await albumPhotosForOperation(album.id);
+				const selected = new Set(next.map(photo => photo.id));
+				let cursor = 0;
+				next = full.map(photo => selected.has(photo.id) ? next[cursor++] : photo);
+				positions = sparsePositions(next.length);
+			} catch (cause) { setError(cause); setBusy(false); reorderInFlight.current = false; return; }
+		}
 		const changed = next.flatMap((photo, index) => Number(dataOf(photo).position) === positions[index] ? [] : [{ photo, position: positions[index] }]);
 		setUndoOrder(changed.map(({ photo }) => ({ id: photo.id, position: Number(dataOf(photo).position) || 0 })));
 		const failed: Failure[] = [];
@@ -548,6 +567,7 @@ function AlbumOrganizer({
 		setMessage(failed.length ? `並び順を完了できなかったため、保存済みの変更を元へ戻しました（${failed.length}件を確認してください）` : "並び順を下書き保存しました");
 		setBusy(false);
 		reorderInFlight.current = false;
+		onRefresh();
 	};
 
 	const moveAt = (index: number, delta: number) => {
@@ -607,6 +627,10 @@ function AlbumOrganizer({
 		if (!workspacePending || operationLocked) return;
 		setBusy(true); setError(null); setFailures([]); setMessage("アルバムの変更を公開中…");
 		const failed: Failure[] = []; let publishedPhotos = 0; let albumSaveFailed = false;
+		let operationPhotos: ContentItem[];
+		try { operationPhotos = await albumPhotosForOperation(album.id); }
+		catch (cause) { setError(cause); setBusy(false); return; }
+		const operationPendingIds = new Set([...operationPhotos.filter(hasPendingChanges).map(photo=>photo.id), ...pendingIds]);
 		if (albumDraftDirty) {
 			try {
 				if (!album._rev) throw new Error("アルバムの編集情報を再読込してください。");
@@ -615,8 +639,8 @@ function AlbumOrganizer({
 			catch (cause) { failed.push({ id: album.id, reason: reasonOf(cause) }); albumSaveFailed = true; }
 		}
 			if (!albumSaveFailed) {
-				for (const id of pendingIds) {
-					const photo = allPhotos.find((item) => item.id === id);
+				for (const id of operationPendingIds) {
+					const photo = operationPhotos.find((item) => item.id === id);
 					if (photo && needsLocationReview(dataOf(photo))) {
 						failed.push({ id, reason: "原本の位置情報が未確認です" });
 						continue;
@@ -631,7 +655,7 @@ function AlbumOrganizer({
 		}
 		setTouchedIds(new Set(failed.filter((failure) => failure.id !== album.id).map((failure) => failure.id)));
 		retainFailures(failed);
-		await recordOperation({ kind: "album-publish", status: failed.length ? "partial" : "complete", targetIds: [album.id, ...pendingIds], failures: failed, metadata: { albumId: album.id, publishedPhotos } }).catch(() => undefined);
+		await recordOperation({ kind: "album-publish", status: failed.length ? "partial" : "complete", targetIds: [album.id, ...operationPendingIds], failures: failed, metadata: { albumId: album.id, publishedPhotos } }).catch(() => undefined);
 		setMessage(failed.length ? `${publishedPhotos}点を公開しましたが、${failed.length}件が失敗しました` : `アルバムと写真${publishedPhotos}点を公開しました`); setBusy(false);
 	};
 
@@ -702,9 +726,9 @@ function AlbumOrganizer({
 	const uploadSettled = uploadQueue.filter((item) => isUploadQueueSettled(item.stage)).length;
 	const hasRetryableUpload = uploadQueue.some((item) => isUploadQueueRetryable(item.stage));
 
-	return <section className="photo-tools-workspace" data-photo-tools-busy={busy ? "true" : undefined}>
+	return <section data-organizer-ready={albumReady ? "true" : "false"} className="photo-tools-workspace" data-photo-tools-busy={busy ? "true" : undefined}>
 		<header className="photo-tools-workspace__header">
-			<div><span className="photo-tools-eyebrow">選択中のアルバム</span><h1>{labelOf(album)}</h1><p>{albumReady ? `${albumPhotos.length}点` : "写真を読込中"}・未公開の変更 {pendingIds.size + (albumDraftDirty || hasPendingChanges(album) ? 1 : 0)}件</p></div>
+			<div><span className="photo-tools-eyebrow">選択中のアルバム</span><h1>{labelOf(album)}</h1><p>{albumReady ? `${albumCount?.total ?? albumPhotos.length}点` : "写真を読込中"}・未公開の変更 {Math.max(albumCount?.pending ?? 0, pendingIds.size) + (albumDraftDirty || hasPendingChanges(album) ? 1 : 0)}件</p></div>
 			<div className="photo-tools-actions">
 				<button className="photo-tools-button photo-tools-button--primary" disabled={operationLocked || !workspacePending || !albumDraft.title.trim()} onClick={publishWorkspace}>{busy ? "処理中…" : album.status === "published" ? workspacePending ? "変更を公開" : "公開済み" : "アルバムを公開"}</button>
 				<a className="photo-tools-button" href={albumEditHref(album.id)} onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>詳細編集</a>
@@ -730,7 +754,7 @@ function AlbumOrganizer({
 				if (!requestedFiles.length) return;
 				const queue = createUploadQueue<File, PhotoMediaItem>(requestedFiles, {
 					batchId: String(Date.now()),
-					startPosition: Math.max(0, ...albumPhotos.map((photo) => Number(dataOf(photo).position) || 0)),
+					startPosition: Math.max(albumCount?.maxPosition ?? 0, ...albumPhotos.map((photo) => Number(dataOf(photo).position) || 0)),
 					acceptedTypes: ACCEPTED_IMAGE_TYPES,
 					maxBytes: MAX_UPLOAD_BYTES,
 					maxFiles: 20,
@@ -740,14 +764,14 @@ function AlbumOrganizer({
 				void executeUploadQueue(queue);
 			}} /></label>
 			<button className="photo-tools-button" disabled={operationLocked || visible.length === 0} onClick={() => { if (canChangeOrganizerContext()) setChecked(new Set(visible.map((photo) => photo.id))); }}>表示中を全選択</button>
-			<button className="photo-tools-button" disabled={operationLocked || albumPhotos.length < 2} onClick={() => persistOrder([...albumPhotos].sort((left, right) => compareCapturedAt(
+			<button className="photo-tools-button" disabled={operationLocked || (albumCount?.total ?? albumPhotos.length) < 2} onClick={async () => { setBusy(true); try { await persistOrder((await albumPhotosForOperation(album.id)).sort((left, right) => compareCapturedAt(
 				dataOf(left).captured_at,
 				dataOf(right).captured_at,
 				Number(dataOf(left).position) || 0,
 				Number(dataOf(right).position) || 0,
 				left.id,
 				right.id,
-			)))}>撮影日順</button>
+			))); } catch (cause) { setError(cause); } finally { setBusy(false); } }}>撮影日順</button>
 			{undoOrder && <button className="photo-tools-button" disabled={operationLocked} onClick={() => restore(undoOrder, "order")}>並び順を戻す</button>}
 			{undoMove && <button className="photo-tools-button" disabled={operationLocked} onClick={() => restore(undoMove, "move")}>移動を戻す</button>}
 		</div>
@@ -764,7 +788,7 @@ function AlbumOrganizer({
 			</li>)}</ul>
 			<p className="photo-tools-muted">失敗分のファイルは、この画面を開いている間だけ再試行用に保持します。画面を再読み込みした場合は選び直してください。追加した写真は下書きのままです。</p>
 		</section>}
-		{!albumReady && <p className="photo-tools-status" role="status">このアルバムの写真をすべて読み込んでいます。完了すると編集できます。</p>}
+		{!albumReady && <p className="photo-tools-status" role="status">写真を読み込んでいます…</p>}
 		{photoDraftDirty && <p className="photo-tools-status" role="status">写真情報に未保存の変更があります。下書き保存すると他の操作を再開できます。</p>}
 
 		{message && <p className="photo-tools-status" role="status">{message}</p>}
@@ -773,7 +797,9 @@ function AlbumOrganizer({
 
 		<div className={`photo-tools-content is-mobile-${mobilePane}`}>
 			<section className="photo-tools-grid-area" aria-label="アルバムの写真">
-				<p className="photo-tools-muted">表示中 {visible.length}点{checked.size ? `・${checked.size}点を選択中` : ""}</p>
+				{firstOffset > 0 && <button className="photo-tools-button" disabled={operationLocked} onClick={onFirstPage}>先頭から表示</button>}
+				{nextOffset !== null && <button className="photo-tools-button" disabled={operationLocked} onClick={onLoadMore}>さらに50件表示</button>}
+				<p className="photo-tools-muted">表示中 {visible.length} / {resultTotal}点{checked.size ? `・${checked.size}点を選択中` : ""}</p>
 				{visible.length ? <div className="photo-tools-grid">{visible.map((photo) => {
 					const index = albumPhotos.findIndex((item) => item.id === photo.id);
 					const flags = photoReviewFlags(dataOf(photo), { status: photo.status });
@@ -809,8 +835,14 @@ function AlbumOrganizer({
 }
 
 export function PhotoOrganizerPage() {
+	useEffect(() => { startPerformanceAudit(); }, []);
 	const [albums, setAlbums] = useState<ContentItem[]>([]);
 	const [photos, setPhotos] = useState<ContentItem[]>([]);
+	const [counts, setCounts] = useState<AlbumCount[]>([]);
+	const [query, setQuery] = useState({q:"", filter:"", offset:0, photo: typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("photo") ?? ""});
+	const [resultTotal, setResultTotal] = useState(0);
+	const [firstOffset, setFirstOffset] = useState(0);
+	const [nextOffset, setNextOffset] = useState<number | null>(null);
 	const [selectedId, setSelectedId] = useState("");
 	const [albumSearch, setAlbumSearch] = useState("");
 	const [newTitle, setNewTitle] = useState("");
@@ -832,40 +864,35 @@ export function PhotoOrganizerPage() {
 			const requested = new URLSearchParams(window.location.search).get("album");
 			setSelectedId(requested && albumItems.some((album) => album.id === requested) ? requested : albumItems[0]?.id ?? "");
 		}).catch(setError).finally(() => setLoading(false));
-		allContent("photos", { orderBy: "captured_at", order: "desc" }, (items) => {
-			setPhotos((current) => mergeEditableItems(current, items));
-		}).then((items) => setPhotos((current) => mergeEditableItems(current, items)))
-			.catch(setError)
-			.finally(() => setPhotoIndexLoading(false));
+		albumCounts().then(setCounts).catch(setError).finally(() => setPhotoIndexLoading(false));
 	}, []);
 
 	useEffect(() => {
 		if (!selectedId) return;
 		let cancelled = false;
 		setReadyAlbumId("");
-		allContent("photos", { fieldFilters: { album: selectedId }, orderBy: "position", order: "asc" })
-			.then((items) => {
+		const controller = new AbortController();
+		photoPage(selectedId, query, controller.signal)
+			.then((page) => {
 				if (cancelled) return;
-				setPhotos((current) => mergeEditableItems(current, items));
-				setReadyAlbumId(selectedId);
-			})
-			.catch((cause) => { if (!cancelled) setError(cause); });
-		return () => { cancelled = true; };
-	}, [selectedId]);
-
+				setPhotos(current => query.offset ? mergeEditableItems(current, page.items) : page.items);
+				if (!query.offset) setFirstOffset(page.offset);
+				setResultTotal(page.total); setNextOffset(page.nextOffset); setReadyAlbumId(selectedId);
+			}).catch(cause => { if (!cancelled) setError(cause); });
+		return () => { cancelled = true; controller.abort(); };
+	}, [selectedId, query]);
+	const changeQuery = React.useCallback((q: string, filter: string) => {
+		setQuery(current => current.q === q && current.filter === filter ? current : {q, filter, offset:0, photo:""});
+	}, []);
+	useEffect(() => {
+		const timer = setTimeout(() => { albumCounts().then(setCounts).catch(setError); }, 500);
+		return () => clearTimeout(timer);
+	}, [photos]);
 	const visibleAlbums = useMemo(() => {
 		const needle = albumSearch.trim().toLocaleLowerCase("ja");
-		return needle ? albums.filter((album) => labelOf(album).toLocaleLowerCase("ja").includes(needle)) : albums;
+		return needle ? albums.filter(album => labelOf(album).toLocaleLowerCase("ja").includes(needle)) : albums;
 	}, [albums, albumSearch]);
-	const counts = useMemo(() => {
-		const result = new Map<string, { total: number; pending: number }>();
-		for (const photo of photos) {
-			const albumId = textValue(dataOf(photo).album); if (!albumId) continue;
-			const current = result.get(albumId) ?? { total: 0, pending: 0 };
-			current.total += 1; if (hasPendingChanges(photo)) current.pending += 1; result.set(albumId, current);
-		}
-		return result;
-	}, [photos]);
+
 	const selected = albums.find((album) => album.id === selectedId) ?? null;
 	const selectedIdentity = selected ? `${selected.id}:${selected.draftRevisionId ?? ""}` : "";
 	useEffect(() => {
@@ -907,12 +934,12 @@ export function PhotoOrganizerPage() {
 				<label>アルバムを検索<input type="search" value={albumSearch} onChange={(event) => setAlbumSearch(event.target.value)} /></label>
 				{photoIndexLoading && <p className="photo-tools-index-status" role="status">写真件数を読み込み中…</p>}
 				<div className="photo-tools-album-list">{visibleAlbums.map((album) => {
-					const count = counts.get(album.id) ?? { total: 0, pending: 0 };
-					return <button key={album.id} disabled={workspaceBusy} className={selectedId === album.id ? "is-active" : ""} onClick={() => { if (!canChangeOrganizerContext()) return; if (album.id !== selectedId) { setReadyAlbumId(""); setSelectedId(album.id); } setMobilePane("workspace"); }}><Preview value={dataOf(album).cover_image} size={72} /><span><strong>{labelOf(album)}</strong><small>{photoIndexLoading ? "件数を読込中" : `${count.total}点${count.pending ? `・変更 ${count.pending}` : ""}`}</small><Badge tone={hasPendingChanges(album) ? "warn" : "ok"}>{statusLabel(album)}</Badge></span></button>;
+					const count = counts.find(count => count.album === album.id) ?? { total: 0, pending: 0 };
+					return <button key={album.id} disabled={workspaceBusy} className={selectedId === album.id ? "is-active" : ""} onClick={() => { if (!canChangeOrganizerContext()) return; if (album.id !== selectedId) { setReadyAlbumId(""); setQuery({q:"",filter:"",offset:0,photo:""}); setPhotos([]); setSelectedId(album.id); } setMobilePane("workspace"); }}><Preview value={dataOf(album).cover_image} size={72} /><span><strong>{labelOf(album)}</strong><small>{photoIndexLoading ? "件数を読込中" : `${count.total}点${count.pending ? `・変更 ${count.pending}` : ""}`}</small><Badge tone={hasPendingChanges(album) ? "warn" : "ok"}>{statusLabel(album)}</Badge></span></button>;
 				})}</div>
 			</aside>
 			{selected && selectedReady
-				? <AlbumOrganizer key={selected.id} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => mergeEditableItems(current, [updated]))} onPhotoUpdated={(updated) => setPhotos((current) => mergeEditableItems(current, [updated]))} onPhotoAdded={(created) => setPhotos((current) => mergeEditableItems(current, [created]))} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} />
+				? <AlbumOrganizer key={selected.id} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => mergeEditableItems(current, [updated]))} onPhotoUpdated={(updated) => setPhotos((current) => current.some(photo => photo.id === updated.id) ? mergeEditableItems(current, [updated]) : current)} onPhotoAdded={(created) => setPhotos((current) => mergeEditableItems(current, [created]))} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} firstOffset={firstOffset} onFirstPage={() => setQuery(current => ({...current,offset:0,photo:""}))} onQuery={changeQuery} onRefresh={() => setQuery(current => ({...current,offset:0}))} nextOffset={nextOffset} resultTotal={resultTotal} albumCount={counts.find(count=>count.album===selected.id)} onLoadMore={() => { if (canChangeOrganizerContext() && nextOffset !== null) setQuery(current=>({...current,offset:nextOffset})); }} />
 				: selected && albumHydration?.identity === selectedIdentity && albumHydration.status === "error"
 					? <section className="photo-tools-workspace"><ErrorBox error={albumHydration.error} /><button type="button" className="photo-tools-button" onClick={() => setAlbumHydrationRetry((value) => value + 1)}>再試行</button></section>
 					: selected

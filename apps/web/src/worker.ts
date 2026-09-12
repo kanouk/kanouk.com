@@ -1,3 +1,4 @@
+import { deliverGuardedMedia, type GuardedMediaBucket } from "./studio/media-delivery";
 import handler, { createScheduledHandler, PluginBridge } from "@emdash-cms/cloudflare/worker";
 import { needsLocationReview } from "./studio/domain";
 import {
@@ -93,6 +94,7 @@ async function servePreview(
 	format: "avif" | "webp",
 	quality: number,
 ) {
+	const started = performance.now();
 	let mediaKey: string;
 	try {
 		mediaKey = decodeURIComponent(encodedKey);
@@ -114,12 +116,13 @@ async function servePreview(
 	const classification = await classifyMediaRead(sourceRequest, database, {
 		authenticate: (candidate) => authenticateMediaRequest(candidate, env, context),
 	});
+	const guardMs = performance.now() - started;
 	const delivery = mediaPreviewDelivery(classification.access);
 	if (delivery === "deny") {
 		return deniedMediaResponse();
 	}
 	if (delivery === "direct-private") {
-		const response = await handler.fetch(sourceRequest as HandlerRequest, env, context);
+		const response = await deliverGuardedMedia(sourceRequest, (env as HandlerEnv & { MEDIA: GuardedMediaBucket }).MEDIA, mediaKey);
 		return applyMediaAccessHeaders(response, "authenticated");
 	}
 	const transformed = await transformImage(
@@ -135,6 +138,7 @@ async function servePreview(
 		}));
 	}
 
+	transformed.headers.append("Server-Timing", `media.guard;dur=${guardMs.toFixed(1)}, media.transform;dur=${(performance.now()-started-guardMs).toFixed(1)}`);
 	return transformed;
 }
 
@@ -182,7 +186,7 @@ export default {
 		);
 		if (originalAccess.access === "denied") return deniedMediaResponse();
 		if (originalAccess.access === "public" || originalAccess.access === "authenticated") {
-			const response = await handler.fetch(request, env, context);
+			const response = await deliverGuardedMedia(request, (env as HandlerEnv & { MEDIA: GuardedMediaBucket }).MEDIA, originalAccess.storageKey!);
 			return applyMediaAccessHeaders(response, originalAccess.access);
 		}
 		const blockedPublish = await blockUnreviewedPhotoPublish(request, env, context, url);

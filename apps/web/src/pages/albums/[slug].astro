@@ -1,5 +1,5 @@
 ---
-import { getEmDashCollection, getEmDashEntry } from "emdash";
+import { getEmDashEntry } from "emdash";
 import { ArrowLeft, ArrowUpRight, BookOpen, CirclePlay, Grid2x2, Grid3x3, Images } from "lucide-astro";
 import { env } from "virtual:emdash/env";
 import AlbumMap from "../../components/AlbumMap.astro";
@@ -8,7 +8,7 @@ import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { PHOTO_GRID_SIZE } from "../../utils/photo-grid-size.mjs";
-import { sortPhotosChronologically } from "../../utils/photo-order.mjs";
+import { getAlbumPage } from "../../utils/album-page";
 import { photoPath } from "../../utils/photo-url.mjs";
 import { albumPhotoAnchor } from "../../utils/photo-return.mjs";
 import { relatedAlbumArticles } from "../../utils/album-articles.mjs";
@@ -20,47 +20,12 @@ const { entry: album, cacheHint: albumCache } = await getEmDashEntry("albums", s
 if (!album) return Astro.redirect("/404");
 if (Astro.cache?.enabled) Astro.cache.set(albumCache);
 
-const photos = [];
-let photoCursor: string | undefined;
-do {
-	const page = await getEmDashCollection("photos", {
-		status: "published",
-		where: { album: album.data.id },
-		orderBy: { position: "asc" },
-		limit: 100,
-		cursor: photoCursor,
-	});
-	if (Astro.cache?.enabled) Astro.cache.set(page.cacheHint);
-	photos.push(...page.entries);
-	photoCursor = page.nextCursor;
-} while (photoCursor);
-const chronologicalPhotos = sortPhotosChronologically(photos);
-
-const locationPhotos = chronologicalPhotos.flatMap((photo) => {
-	const latitude = photo.data.latitude;
-	const longitude = photo.data.longitude;
-	if (
-		typeof latitude !== "number" ||
-		!Number.isFinite(latitude) ||
-		latitude < -90 ||
-		latitude > 90 ||
-		typeof longitude !== "number" ||
-		!Number.isFinite(longitude) ||
-		longitude < -180 ||
-		longitude > 180
-	) return [];
-	const displayTitle = publicPhotoTitle({
-		title: photo.data.title,
-		sourceSystem: photo.data.source_system,
-		sourceMetadata: photo.data.source_metadata,
-	});
-	return [{
-		latitude,
-		longitude,
-		title: displayTitle || "写真を見る",
-		href: photoPath(photo.id),
-	}];
-});
+const requestedPage = Number(Astro.url.searchParams.get("page") ?? 1);
+const photoTarget = Astro.url.searchParams.get("photo") ?? "";
+const result = await getAlbumPage(album.data.id, Number.isSafeInteger(requestedPage) ? requestedPage : 1, photoTarget);
+const chronologicalPhotos = result.photos;
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums", "photos"] });
+const pageHref = (page: number) => `/albums/${encodeURIComponent(album.id)}${page > 1 ? `?page=${page}` : ""}`;
 const coverImageUrl = resolvePublicMediaUrl(album.data.cover_image);
 if (!env?.DB) throw new Error("Cloudflare D1 binding DB is unavailable");
 const relatedPosts = await relatedAlbumArticles(env.DB, album.data.id);
@@ -70,6 +35,7 @@ const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : 
 ---
 
 <Photos
+	canonicalPath={pageHref(result.page)}
 	title={album.data.title}
 	description={album.data.description}
 	image={coverImageUrl}
@@ -86,7 +52,7 @@ const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : 
 			{album.data.description && <p {...album.edit.description}>{album.data.description}</p>}
 			<p class="count">
 				<Images size={15} strokeWidth={1.75} aria-hidden="true" />
-				<span>{chronologicalPhotos.length}点</span>
+				<span>{result.total}点</span>
 			</p>
 		</header>
 		{relatedPosts.length > 0 && (
@@ -102,9 +68,14 @@ const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : 
 				</ul>
 			</nav>
 		)}
-		<AlbumMap markers={locationPhotos} />
+		<AlbumMap markers={[]} count={result.mapCount} source={`/albums/${encodeURIComponent(album.id)}/map.json`} />
 
-		<div class="photo-grid" data-photo-grid data-album-id={album.data.id}>
+		<nav class="album-pagination" aria-label="アルバムのページ">
+            {result.page > 1 && <a href={pageHref(result.page - 1)} rel="prev">前の50件</a>}
+            <span>{result.page} / {result.pageCount}ページ</span>
+            {result.page < result.pageCount && <a href={pageHref(result.page + 1)} rel="next">次の50件</a>}
+        </nav>
+        <div class="photo-grid" data-photo-grid data-album-id={album.data.id}>
 			{chronologicalPhotos.map((photo, index) => {
 				const displayTitle = publicPhotoTitle({
 					title: photo.data.title,
@@ -139,7 +110,12 @@ const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : 
 			})}
 		</div>
 
-		<div class="photo-grid-size" data-photo-grid-size hidden>
+		<nav class="album-pagination" aria-label="アルバムのページ（下部）">
+            {result.page > 1 && <a href={pageHref(result.page - 1)} rel="prev">前の50件</a>}
+            <span>{result.page} / {result.pageCount}ページ</span>
+            {result.page < result.pageCount && <a href={pageHref(result.page + 1)} rel="next">次の50件</a>}
+        </nav>
+        <div class="photo-grid-size" data-photo-grid-size hidden>
 			<Grid3x3 size={16} strokeWidth={1.65} aria-hidden="true" />
 			<label class="sr-only" for="photo-grid-size">サムネイルの大きさ</label>
 			<input
