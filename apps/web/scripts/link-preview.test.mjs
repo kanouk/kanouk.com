@@ -12,6 +12,23 @@ class MemoryCache {
 
 const publicDns = async () => ["93.184.216.34", "2606:2800:220:1:248:1893:25c8:1946"];
 
+test("external OGP snapshots survive upstream refusal without extending freshness or reviving own-host data", async () => {
+	const cache = new MemoryCache();
+	const url = "https://tabelog.com/kyoto/example/";
+	const metadata = { url, title: "Restaurant", description: "Description", imageUrl: "https://images.example.com/photo.jpg" };
+	await cache.set(await preview.linkPreviewCacheKey(url), { version: 1, expiresAt: 1, staleUntil: 2, fetchedAt: "2026-09-01T00:00:00Z", metadata });
+	assert.equal((await preview.getLinkPreviewCacheState(url, cache, () => 100)).state, "miss");
+	assert.deepEqual(await preview.getCachedLinkPreviewIncludingStale(url, cache, () => 100), metadata);
+	await preview.cacheLinkPreviewFailure(url, cache, () => 100);
+	assert.equal((await preview.getLinkPreviewCacheState(url, cache, () => 101)).state, "negative");
+	assert.deepEqual(await preview.getCachedLinkPreviewIncludingStale(url, cache, () => 101), metadata);
+	const own = "https://blog.kanouk.com/posts/unpublished";
+	await cache.set(await preview.linkPreviewCacheKey(own), { version: 1, expiresAt: 1, staleUntil: 2, metadata: { ...metadata, url: own } });
+	assert.equal(await preview.getCachedLinkPreviewIncludingStale(own, cache, () => 100), null);
+	await cache.set(await preview.linkPreviewCacheKey(url), { version: 1, expiresAt: 1, staleUntil: 2, metadata: { ...metadata, url: own } });
+	assert.equal(await preview.getCachedLinkPreviewIncludingStale(url, cache, () => 100), null);
+});
+
 test("DoH uses Worker-compatible manual redirects and rejects redirect responses", async () => {
 	const redirectModes = [];
 	const resolver = preview.createPublicDnsResolver(async (input, init) => {

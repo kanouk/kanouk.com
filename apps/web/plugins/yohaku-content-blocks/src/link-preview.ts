@@ -386,7 +386,16 @@ export async function getCachedLinkPreviewIncludingStale(
 	now: () => number = Date.now,
 ): Promise<LinkPreviewMetadata | null> {
 	const state = await getLinkPreviewCacheState(url, cache, now);
-	return state.state === "fresh" || state.state === "stale" ? state.metadata : null;
+	if (state.state === "fresh" || state.state === "stale") return state.metadata;
+	// Like an editor's saved OGP snapshot, keep the last successful external
+	// preview visible during outages/bot rejection. This does not extend the
+	// refresh/negative TTLs, and never revives an internal unpublished target.
+	const requested = normalizeUrl(url);
+	if (isOwnLinkPreviewHost(requested.hostname)) return null;
+	const retained = await cache.get<unknown>(await linkPreviewCacheKey(url));
+	if (!isRecord(retained) || retained.version !== 1 || !validCachedMetadata(retained.metadata)) return null;
+	if (isOwnLinkPreviewHost(new URL(retained.metadata.url).hostname)) return null;
+	return { ...retained.metadata, imageUrl: safeLinkPreviewImageUrl(retained.metadata.imageUrl, false) };
 }
 
 export async function getLinkPreviewCacheState(
