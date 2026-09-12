@@ -300,3 +300,13 @@ test("internal previews expose only published routes and exact legacy content ma
 	assert.equal(await resolveInternalLinkPreview(database, `${BLOG}/posts/%E0%A4%A`), null);
 	sqlite.close();
 });
+
+ test("external featured previewUrl supplies OG and unsafe schemes are rejected", async () => {
+ const { sqlite, database } = fixtureDatabase();
+ const data = {featured_image:{id:"",provider:"external-url",previewUrl:"https://i.gyazo.com/cover.png"},content:[]};
+ addContent(sqlite, "posts", {id:"external-featured",data});
+ assert.equal((await resolveArticleSocial(database,{id:"external-featured",data})).imageUrl, "https://i.gyazo.com/cover.png");
+ data.featured_image.previewUrl="javascript:alert(1)";
+ assert.equal((await resolveArticleSocial(database,{id:"external-featured",data})).imageUrl, FALLBACK);
+ sqlite.close();
+});
