@@ -1,5 +1,6 @@
 ---
 import type { MediaValue } from "emdash";
+import { resolveImageSource } from "../utils/image-source";
 
 interface Props {
 	image: MediaValue | string | null | undefined;
@@ -24,16 +25,7 @@ const value = typeof image === "string" ? { id: "", src: image } : image;
 const width = value?.width;
 const height = value?.height;
 const aspectRatio = width && height ? width / height : undefined;
-const storageKey = value?.meta?.storageKey;
-const legacyUrl = (value as (MediaValue & { url?: string }) | null | undefined)?.url;
-const originalSrc =
-	value?.src ||
-	legacyUrl ||
-	(typeof storageKey === "string"
-		? `/_emdash/api/media/file/${encodeURIComponent(storageKey)}`
-		: value?.id
-			? `/_emdash/api/media/file/${encodeURIComponent(value.id)}`
-			: undefined);
+const originalSrc = resolveImageSource(image);
 const lowResolution = Boolean(width && height && (width < 640 || height < 480));
 const cropSafely = crop && !lowResolution;
 const mediaFileStorageKey = originalSrc?.match(/^\/_emdash\/api\/media\/file\/([^/?#]+)$/)?.[1];
@@ -53,14 +45,10 @@ const externalUrl = (() => {
 		return undefined;
 	}
 })();
-const previewKey =
-	typeof storageKey === "string"
-		? storageKey
-		: mediaFileStorageKey
-			? decodeURIComponent(mediaFileStorageKey)
-			: !externalUrl
-				? value?.id
-				: undefined;
+const previewKey = (() => {
+	try { return mediaFileStorageKey ? decodeURIComponent(mediaFileStorageKey) : undefined; }
+	catch { return undefined; }
+})();
 const responsive = Boolean(
 	(preview || cropSafely) && !lowResolution && (previewKey || externalUrl),
 );

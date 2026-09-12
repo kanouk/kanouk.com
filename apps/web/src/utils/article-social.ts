@@ -185,7 +185,7 @@ async function publicImageUrl(
 		const storageKey = await mediaStorageKey(database, reference);
 		if (storageKey) candidate = `/_emdash/api/media/file/${encodeURIComponent(storageKey)}`;
 		if (!candidate && text(metadata.storageKey)) candidate = `/_emdash/api/media/file/${encodeURIComponent(text(metadata.storageKey))}`;
-		if (!candidate) candidate = text(media.src) || text(media.url);
+		if (!candidate) candidate = text(media.src) || text(media.url) || (media.provider === "external-url" ? text(media.previewUrl) : "");
 	}
 	if (!candidate) return "";
 	if (!candidate.startsWith("/") && !/^[a-z][a-z0-9+.-]*:/i.test(candidate)) {

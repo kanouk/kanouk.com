@@ -1,6 +1,7 @@
 ---
 import type { MediaValue } from "emdash";
 import YohakuImage from "./YohakuImage.astro";
+import { resolveImageSource } from "../utils/image-source";
 
 interface Props {
 	title: string;
@@ -46,7 +47,7 @@ const formattedDate = date
 	<a href={href} class="card-link" data-astro-prefetch="hover">
 		<div class="card-media">
 			{
-				featuredImage ? (
+				resolveImageSource(featuredImage) ? (
 					<div class="card-image">
 						<YohakuImage image={featuredImage} crop priority={priority} sizes={imageSizes} />
 					</div>
