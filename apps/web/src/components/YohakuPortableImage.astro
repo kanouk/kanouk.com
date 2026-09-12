@@ -22,6 +22,7 @@ interface Props {
 }
 
 const { node } = Astro.props;
+const visualStyle = node.visualStyle ?? "photo-frame";
 const assetUrl = node?.asset?.url;
 const bareStorageKey = assetUrl && /^[A-Za-z0-9._-]+$/.test(assetUrl) ? assetUrl : undefined;
 const mediaFileStorageKey = assetUrl?.match(/^\/_emdash\/api\/media\/file\/([^/?#]+)$/)?.[1];
@@ -51,7 +52,7 @@ const imageValue = {
 			class:list={[
 				"yohaku-portable-image",
 				node.alignment && `align-${node.alignment}`,
-				node.visualStyle && `style-${node.visualStyle}`,
+				`style-${visualStyle}`,
 			]}
 			style={node.displayWidth ? `--image-display-width:${node.displayWidth}px` : undefined}
 		>

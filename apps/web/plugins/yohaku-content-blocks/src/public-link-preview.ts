@@ -1,6 +1,7 @@
 import {
 	cacheLinkPreviewFailure,
 	getLinkPreview,
+	LinkPreviewError,
 	getLinkPreviewCacheState,
 	isOwnLinkPreviewHost,
 	linkPreviewCacheKey,
@@ -223,7 +224,10 @@ export async function resolvePublicLinkPreview(
 			const current = await getLinkPreviewCacheState(target.href, cache, now);
 			const fetchedAt = current.state === "fresh" ? current.fetchedAt : new Date(now()).toISOString();
 			return { state: "refreshed", metadata: snapshot(metadata, fetchedAt, target.href), authoritative: false };
-		} catch {
+		} catch (error) {
+			// No article IDs, paths or query strings in upstream diagnostics.
+			console.warn("Link preview failed", target.hostname,
+				error instanceof LinkPreviewError ? `${error.code}: ${error.message}` : "unexpected upstream failure");
 			await cacheLinkPreviewFailure(target.href, cache, now);
 			return prior.state === "stale"
 				? { state: "stale", metadata: snapshot(prior.metadata, prior.fetchedAt, target.href), authoritative: false, retryAfterMs: PENDING_RETRY_MS }

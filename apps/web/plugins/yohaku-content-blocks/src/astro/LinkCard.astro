@@ -1,5 +1,6 @@
 ---
 import { env } from "virtual:emdash/env";
+import { linkCardText } from "../link-card-text.mjs";
 import { resolveInternalLinkPreview } from "../../../../src/utils/article-social";
 import {
 	createD1LinkPreviewCacheReader,
@@ -49,7 +50,7 @@ if (href && env?.DB) {
 	}
 }
 const currentAuto = metadata ?? (!ownTarget ? autoSnapshot : null);
-const manualTitle = savedText(title);
+const manualTitle = linkCardText(title);
 const manualDescription = savedText(description);
 const manualImage = savedText(imageUrl);
 description = manualDescription || currentAuto?.description || "";
@@ -61,11 +62,7 @@ try {
 	}
 } catch { imageUrl = ""; }
 const meaningfulTitle = manualTitle || currentAuto?.title || href;
-const eyebrow = typeof caption === "string" && caption.trim()
-	? caption.trim()
-	: isExternal
-		? host
-		: "あわせて読みたい";
+const eyebrow = linkCardText(caption);
 ---
 
 {href && (
@@ -91,7 +88,7 @@ const eyebrow = typeof caption === "string" && caption.trim()
 			<img src={imageUrl || undefined} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
 		</span>
 		<span class="yohaku-link-card__body">
-			<span class="yohaku-link-card__eyebrow">{eyebrow}</span>
+			{eyebrow && <span class="yohaku-link-card__eyebrow">{eyebrow}</span>}
 			<strong data-link-preview-title>{meaningfulTitle}</strong>
 			<small data-link-preview-description hidden={!description}>{description}</small>
 		</span>

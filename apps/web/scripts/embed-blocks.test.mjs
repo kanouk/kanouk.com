@@ -35,7 +35,7 @@ test("Spotify supported content kinds canonicalize locale and embed URL variants
 		assert.equal(parsed.kind, kind);
 		assert.equal(parsed.canonicalUrl, `https://open.spotify.com/${kind}/${SPOTIFY_ID}`);
 		assert.equal(parsed.embedUrl, `https://open.spotify.com/embed/${kind}/${SPOTIFY_ID}`);
-		assert.equal(parsed.height, ["track", "episode"].includes(kind) ? 152 : 352);
+		assert.equal(parsed.height, kind === "track" ? 80 : kind === "episode" ? 152 : 352);
 	}
 });
 

@@ -69,7 +69,7 @@ export function parseEmbedUrl(input) {
 			canonicalUrl: `https://open.spotify.com/${kind}/${id}`,
 			embedUrl: `https://open.spotify.com/embed/${kind}/${id}`,
 			title: `Spotify ${spotifyKindLabels[kind]}プレーヤー`,
-			height: kind === "track" || kind === "episode" ? 152 : 352,
+			height: kind === "track" ? 80 : kind === "episode" ? 152 : 352,
 		};
 	}
 	return failure("unsupported", "対応しているのはTikTokとSpotifyの公式URLだけです。");

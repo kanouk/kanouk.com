@@ -1,0 +1,62 @@
+---
+interface Props { post: { id: string; url: string }; caption?: string }
+const { post, caption } = Astro.props;
+---
+<figure class="yohaku-x-post" data-x-post={post.id}>
+	<div data-x-post-stage>
+		<button type="button" data-x-post-load>Xの投稿を読み込む</button>
+		<p class="yohaku-x-post__hint">クリックするとXに接続して投稿を表示します。</p>
+	</div>
+	{caption && <figcaption>{caption}</figcaption>}
+	<a href={post.url} target="_blank" rel="noopener noreferrer">Xで開く ↗</a>
+</figure>
+<script>
+	type Widgets = { widgets: { createTweet(id: string, element: HTMLElement, options: Record<string, unknown>): Promise<HTMLElement | undefined> } };
+	let widgetPromise: Promise<Widgets> | undefined;
+	function widgets(): Promise<Widgets> {
+		const host = window as unknown as { twttr?: Widgets };
+		if (host.twttr?.widgets) return Promise.resolve(host.twttr);
+		if (!widgetPromise) widgetPromise = new Promise<Widgets>((resolve, reject) => {
+			const script = document.createElement("script");
+			script.src = "https://platform.twitter.com/widgets.js";
+			script.async = true;
+			const timer = setTimeout(() => reject(new Error("X timeout")), 15000);
+			script.onload = () => { clearTimeout(timer); host.twttr?.widgets ? resolve(host.twttr) : reject(new Error("X unavailable")); };
+			script.onerror = () => { clearTimeout(timer); script.remove(); reject(new Error("X unavailable")); };
+			document.head.append(script);
+		}).catch(error => { widgetPromise = undefined; throw error; });
+		return widgetPromise;
+	}
+	document.addEventListener("click", async event => {
+		const button = event.target instanceof Element ? event.target.closest<HTMLButtonElement>("[data-x-post-load]") : null;
+		const figure = button?.closest<HTMLElement>("[data-x-post]");
+		const stage = figure?.querySelector<HTMLElement>("[data-x-post-stage]");
+		const id = figure?.dataset.xPost;
+		if (!button || !stage || !id || button.disabled) return;
+		button.disabled = true;
+		button.textContent = "読み込み中…";
+		const target = document.createElement("div");
+		stage.append(target);
+		try {
+			const api = await widgets();
+			const rendered = await api.widgets.createTweet(id, target, { dnt: true, lang: "ja", align: "center", theme: document.documentElement.dataset.theme === "dark" ? "dark" : "light" });
+			if (!rendered) throw new Error("Post unavailable");
+			button.remove();
+			stage.querySelector(".yohaku-x-post__hint")?.remove();
+		} catch {
+			target.remove();
+			button.disabled = false;
+			button.textContent = "もう一度読み込む";
+			const hint = stage.querySelector(".yohaku-x-post__hint");
+			if (hint) hint.textContent = "投稿を表示できませんでした。元の投稿をXで確認できます。";
+		}
+	});
+</script>
+<style>
+	.yohaku-x-post { margin: 2rem auto; max-width: 550px; }
+	[data-x-post-stage] { min-height: 120px; padding: .75rem; border: 1px solid var(--color-border); border-radius: .65rem; }
+	button { display: block; margin: .5rem auto; padding: .6rem 1rem; font: inherit; color: var(--color-text); background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: .35rem; cursor: pointer; }
+	button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+	.yohaku-x-post__hint, figcaption { color: var(--color-text-secondary); font-size: .8rem; text-align: center; }
+	a { display: block; margin-top: .5rem; text-align: right; font-size: .75rem; }
+</style>

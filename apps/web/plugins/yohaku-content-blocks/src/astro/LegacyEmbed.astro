@@ -1,0 +1,15 @@
+---
+import { Embed as DefaultEmbed } from "emdash/ui";
+import Embed from "./Embed.astro";
+import XPost from "./XPost.astro";
+import { parseEmbedUrl } from "../embed-url";
+import { parseXPostUrl } from "../x-post-url.mjs";
+
+const { node } = Astro.props;
+const provider = parseEmbedUrl(node.url);
+const post = parseXPostUrl(node.url);
+---
+
+{provider.ok ? <Embed node={{ ...node, id: node.url }} />
+	: post ? <XPost post={post} caption={node.caption} />
+	: <DefaultEmbed node={node} />}
