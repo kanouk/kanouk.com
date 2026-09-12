@@ -1,0 +1,528 @@
+{
+  "measured_at": "2026-09-12T06:58:53.552525+00:00",
+  "kind": "HTTP only; not browser LCP or interaction timing",
+  "routes": [
+    {
+      "url": "https://blog.kanouk.com/",
+      "query_probe": true,
+      "groups": {
+        "MISS": {
+          "samples": 20,
+          "median_ms": 615.71,
+          "p75_ms": 1366.8,
+          "p95_ms": null
+        }
+      },
+      "samples": [
+        {
+          "status": 200,
+          "ttfb_ms": 1664.38,
+          "total_ms": 2345.99,
+          "bytes": 12454,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=70;desc=\"Setup probe\", rt;dur=172;desc=\"Runtime init\", rt.db;dur=57;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=58;desc=\"Plugin states\", rt.site;dur=58;desc=\"Site info options\", rt.seedcheck;dur=58;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=57;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=570;desc=\"Page render\", mw;dur=812;desc=\"Total middleware\", db.total;dur=1044;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=812;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1705.14,
+          "total_ms": 2434.92,
+          "bytes": 12513,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=73;desc=\"Setup probe\", rt;dur=188;desc=\"Runtime init\", rt.db;dur=63;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=64;desc=\"Plugin states\", rt.site;dur=64;desc=\"Site info options\", rt.seedcheck;dur=64;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=61;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=850;desc=\"Page render\", mw;dur=1111;desc=\"Total middleware\", db.total;dur=1368;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=1111;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1216.01,
+          "total_ms": 1821.15,
+          "bytes": 12578,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=54;desc=\"Setup probe\", rt;dur=131;desc=\"Runtime init\", rt.db;dur=43;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=44;desc=\"Plugin states\", rt.site;dur=44;desc=\"Site info options\", rt.seedcheck;dur=44;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=44;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=440;desc=\"Page render\", mw;dur=625;desc=\"Total middleware\", db.total;dur=802;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=625;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1243.54,
+          "total_ms": 1747.6,
+          "bytes": 12568,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=54;desc=\"Setup probe\", rt;dur=133;desc=\"Runtime init\", rt.db;dur=45;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=44;desc=\"Plugin states\", rt.site;dur=44;desc=\"Site info options\", rt.seedcheck;dur=44;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=44;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=436;desc=\"Page render\", mw;dur=623;desc=\"Total middleware\", db.total;dur=802;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=623;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 463.36,
+          "total_ms": 871.6,
+          "bytes": 12561,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=253;desc=\"Page render\", mw;dur=253;desc=\"Total middleware\", db.total;dur=253;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=253;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 614.74,
+          "total_ms": 966.23,
+          "bytes": 12544,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=286;desc=\"Page render\", mw;dur=286;desc=\"Total middleware\", db.total;dur=286;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=286;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 917.2,
+          "total_ms": 1514.48,
+          "bytes": 12505,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=645;desc=\"Page render\", mw;dur=645;desc=\"Total middleware\", db.total;dur=645;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=645;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 462.84,
+          "total_ms": 1014.72,
+          "bytes": 12499,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=291;desc=\"Page render\", mw;dur=291;desc=\"Total middleware\", db.total;dur=291;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=291;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 417.18,
+          "total_ms": 887.26,
+          "bytes": 12489,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=244;desc=\"Page render\", mw;dur=244;desc=\"Total middleware\", db.total;dur=244;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=244;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1457.15,
+          "total_ms": 2133.93,
+          "bytes": 12521,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=72;desc=\"Setup probe\", rt;dur=183;desc=\"Runtime init\", rt.db;dur=61;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=61;desc=\"Plugin states\", rt.site;dur=61;desc=\"Site info options\", rt.seedcheck;dur=61;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=61;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=615;desc=\"Page render\", mw;dur=870;desc=\"Total middleware\", db.total;dur=1161;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=870;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 640.25,
+          "total_ms": 1274.43,
+          "bytes": 12567,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=447;desc=\"Page render\", mw;dur=447;desc=\"Total middleware\", db.total;dur=447;desc=\"DB total\", db.count;dur=6;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=447;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 575.18,
+          "total_ms": 1165.0,
+          "bytes": 12514,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=374;desc=\"Page render\", mw;dur=374;desc=\"Total middleware\", db.total;dur=374;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=374;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1993.01,
+          "total_ms": 2728.04,
+          "bytes": 12520,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=72;desc=\"Setup probe\", rt;dur=181;desc=\"Runtime init\", rt.db;dur=58;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=65;desc=\"Plugin states\", rt.site;dur=65;desc=\"Site info options\", rt.seedcheck;dur=65;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=58;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=847;desc=\"Page render\", mw;dur=1100;desc=\"Total middleware\", db.total;dur=1357;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=1100;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 398.95,
+          "total_ms": 851.25,
+          "bytes": 12507,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=235;desc=\"Page render\", mw;dur=235;desc=\"Total middleware\", db.total;dur=235;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=235;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 568.92,
+          "total_ms": 1166.09,
+          "bytes": 12498,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=400;desc=\"Page render\", mw;dur=400;desc=\"Total middleware\", db.total;dur=400;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=400;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1375.78,
+          "total_ms": 1999.3,
+          "bytes": 12434,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=66;desc=\"Setup probe\", rt;dur=172;desc=\"Runtime init\", rt.db;dur=56;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=57;desc=\"Plugin states\", rt.site;dur=57;desc=\"Site info options\", rt.seedcheck;dur=57;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=59;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=560;desc=\"Page render\", mw;dur=798;desc=\"Total middleware\", db.total;dur=1027;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=798;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 567.46,
+          "total_ms": 1271.85,
+          "bytes": 12480,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=398;desc=\"Page render\", mw;dur=398;desc=\"Total middleware\", db.total;dur=398;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=398;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 615.71,
+          "total_ms": 1270.26,
+          "bytes": 12523,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=458;desc=\"Page render\", mw;dur=458;desc=\"Total middleware\", db.total;dur=458;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=458;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1366.8,
+          "total_ms": 1985.0,
+          "bytes": 12515,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=66;desc=\"Setup probe\", rt;dur=172;desc=\"Runtime init\", rt.db;dur=57;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=58;desc=\"Plugin states\", rt.site;dur=58;desc=\"Site info options\", rt.seedcheck;dur=58;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=57;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=497;desc=\"Page render\", mw;dur=735;desc=\"Total middleware\", db.total;dur=969;desc=\"DB total\", db.count;dur=16;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=735;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 545.87,
+          "total_ms": 1113.09,
+          "bytes": 12514,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=370;desc=\"Page render\", mw;dur=370;desc=\"Total middleware\", db.total;dur=370;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=370;desc=\"Last query at\", cache.hit;dur=1;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        }
+      ]
+    },
+    {
+      "url": "https://blog.kanouk.com/posts",
+      "query_probe": true,
+      "groups": {
+        "MISS": {
+          "samples": 20,
+          "median_ms": 646.44,
+          "p75_ms": 869.56,
+          "p95_ms": null
+        }
+      },
+      "samples": [
+        {
+          "status": 200,
+          "ttfb_ms": 869.56,
+          "total_ms": 886.89,
+          "bytes": 13196,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=601;desc=\"Page render\", mw;dur=601;desc=\"Total middleware\", db.total;dur=601;desc=\"DB total\", db.count;dur=7;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=601;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1840.7,
+          "total_ms": 1842.96,
+          "bytes": 13255,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=65;desc=\"Setup probe\", rt;dur=172;desc=\"Runtime init\", rt.db;dur=56;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=58;desc=\"Plugin states\", rt.site;dur=58;desc=\"Site info options\", rt.seedcheck;dur=58;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=58;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=845;desc=\"Page render\", mw;dur=1082;desc=\"Total middleware\", db.total;dur=1315;desc=\"DB total\", db.count;dur=15;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=1082;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=4;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 632.56,
+          "total_ms": 634.2,
+          "bytes": 13194,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=437;desc=\"Page render\", mw;dur=437;desc=\"Total middleware\", db.total;dur=437;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=437;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 590.23,
+          "total_ms": 600.09,
+          "bytes": 13129,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=422;desc=\"Page render\", mw;dur=422;desc=\"Total middleware\", db.total;dur=422;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=422;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 659.57,
+          "total_ms": 661.17,
+          "bytes": 13123,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=468;desc=\"Page render\", mw;dur=468;desc=\"Total middleware\", db.total;dur=468;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=468;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 636.68,
+          "total_ms": 640.9,
+          "bytes": 13163,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=373;desc=\"Page render\", mw;dur=373;desc=\"Total middleware\", db.total;dur=373;desc=\"DB total\", db.count;dur=6;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=373;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 509.38,
+          "total_ms": 511.36,
+          "bytes": 13156,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=326;desc=\"Page render\", mw;dur=326;desc=\"Total middleware\", db.total;dur=326;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=326;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 495.01,
+          "total_ms": 496.66,
+          "bytes": 13108,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=324;desc=\"Page render\", mw;dur=324;desc=\"Total middleware\", db.total;dur=324;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=324;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 636.46,
+          "total_ms": 637.16,
+          "bytes": 13123,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=478;desc=\"Page render\", mw;dur=478;desc=\"Total middleware\", db.total;dur=478;desc=\"DB total\", db.count;dur=6;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=478;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1461.86,
+          "total_ms": 1463.9,
+          "bytes": 13163,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=67;desc=\"Setup probe\", rt;dur=173;desc=\"Runtime init\", rt.db;dur=57;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=59;desc=\"Plugin states\", rt.site;dur=59;desc=\"Site info options\", rt.seedcheck;dur=59;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=57;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=560;desc=\"Page render\", mw;dur=800;desc=\"Total middleware\", db.total;dur=1037;desc=\"DB total\", db.count;dur=15;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=800;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=4;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 611.68,
+          "total_ms": 614.73,
+          "bytes": 13123,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=390;desc=\"Page render\", mw;dur=390;desc=\"Total middleware\", db.total;dur=390;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=390;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 430.41,
+          "total_ms": 431.83,
+          "bytes": 13107,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=264;desc=\"Page render\", mw;dur=264;desc=\"Total middleware\", db.total;dur=264;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=264;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 622.82,
+          "total_ms": 625.09,
+          "bytes": 13201,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=430;desc=\"Page render\", mw;dur=430;desc=\"Total middleware\", db.total;dur=430;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=430;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 646.44,
+          "total_ms": 655.48,
+          "bytes": 13123,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=469;desc=\"Page render\", mw;dur=469;desc=\"Total middleware\", db.total;dur=469;desc=\"DB total\", db.count;dur=6;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=469;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 931.88,
+          "total_ms": 933.5,
+          "bytes": 13123,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=719;desc=\"Page render\", mw;dur=719;desc=\"Total middleware\", db.total;dur=719;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=719;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 715.64,
+          "total_ms": 718.99,
+          "bytes": 13156,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=451;desc=\"Page render\", mw;dur=451;desc=\"Total middleware\", db.total;dur=451;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=451;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 760.65,
+          "total_ms": 763.64,
+          "bytes": 13076,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=580;desc=\"Page render\", mw;dur=580;desc=\"Total middleware\", db.total;dur=580;desc=\"DB total\", db.count;dur=6;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=580;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 697.33,
+          "total_ms": 702.49,
+          "bytes": 13156,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=522;desc=\"Page render\", mw;dur=522;desc=\"Total middleware\", db.total;dur=519;desc=\"DB total\", db.count;dur=6;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=522;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1880.27,
+          "total_ms": 1882.34,
+          "bytes": 13084,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=84;desc=\"Setup probe\", rt;dur=207;desc=\"Runtime init\", rt.db;dur=65;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=75;desc=\"Plugin states\", rt.site;dur=75;desc=\"Site info options\", rt.seedcheck;dur=75;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=67;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=636;desc=\"Page render\", mw;dur=927;desc=\"Total middleware\", db.total;dur=1220;desc=\"DB total\", db.count;dur=15;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=927;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=4;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 963.83,
+          "total_ms": 965.28,
+          "bytes": 13267,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=691;desc=\"Page render\", mw;dur=691;desc=\"Total middleware\", db.total;dur=691;desc=\"DB total\", db.count;dur=5;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=691;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=5;desc=\"Cache misses\""
+        }
+      ]
+    },
+    {
+      "url": "https://photos.kanouk.com/albums",
+      "query_probe": true,
+      "groups": {
+        "MISS": {
+          "samples": 20,
+          "median_ms": 293.1,
+          "p75_ms": 353.39,
+          "p95_ms": null
+        }
+      },
+      "samples": [
+        {
+          "status": 200,
+          "ttfb_ms": 446.78,
+          "total_ms": 447.89,
+          "bytes": 9208,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=179;desc=\"Page render\", mw;dur=179;desc=\"Total middleware\", db.total;dur=179;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=179;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 254.05,
+          "total_ms": 254.83,
+          "bytes": 9221,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=179;desc=\"Page render\", mw;dur=179;desc=\"Total middleware\", db.total;dur=179;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=179;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 257.45,
+          "total_ms": 257.94,
+          "bytes": 9185,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=187;desc=\"Page render\", mw;dur=187;desc=\"Total middleware\", db.total;dur=187;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=187;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 250.56,
+          "total_ms": 251.7,
+          "bytes": 9245,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=143;desc=\"Page render\", mw;dur=143;desc=\"Total middleware\", db.total;dur=143;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=143;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 1020.15,
+          "total_ms": 1076.84,
+          "bytes": 9159,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=62;desc=\"Setup probe\", rt;dur=163;desc=\"Runtime init\", rt.db;dur=51;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=50;desc=\"Plugin states\", rt.site;dur=50;desc=\"Site info options\", rt.seedcheck;dur=50;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=62;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=221;desc=\"Page render\", mw;dur=446;desc=\"Total middleware\", db.total;dur=649;desc=\"DB total\", db.count;dur=12;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=446;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 257.02,
+          "total_ms": 259.35,
+          "bytes": 9147,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=142;desc=\"Page render\", mw;dur=142;desc=\"Total middleware\", db.total;dur=142;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=142;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 449.14,
+          "total_ms": 451.48,
+          "bytes": 9281,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=242;desc=\"Page render\", mw;dur=242;desc=\"Total middleware\", db.total;dur=242;desc=\"DB total\", db.count;dur=4;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=242;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 259.97,
+          "total_ms": 263.81,
+          "bytes": 9185,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=187;desc=\"Page render\", mw;dur=187;desc=\"Total middleware\", db.total;dur=187;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=187;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 257.81,
+          "total_ms": 260.08,
+          "bytes": 9141,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=179;desc=\"Page render\", mw;dur=179;desc=\"Total middleware\", db.total;dur=179;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=179;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 970.68,
+          "total_ms": 1023.09,
+          "bytes": 9175,
+          "cf-cache-status": "MISS",
+          "server-timing": "setup;dur=63;desc=\"Setup probe\", rt;dur=182;desc=\"Runtime init\", rt.db;dur=56;desc=\"DB init + migration policy\", rt.secrets;dur=0;desc=\"Validate encryption key\", rt.plugins;dur=68;desc=\"Plugin states\", rt.site;dur=68;desc=\"Site info options\", rt.seedcheck;dur=68;desc=\"Auto-seed gate\", rt.sandbox;dur=0;desc=\"Sandboxed plugins\", rt.hooks;dur=58;desc=\"Exclusive hook resolution\", rt.cron;dur=0;desc=\"Cron init (recovery deferred post-response)\", render;dur=253;desc=\"Page render\", mw;dur=498;desc=\"Total middleware\", db.total;dur=760;desc=\"DB total\", db.count;dur=12;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=498;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 342.1,
+          "total_ms": 346.38,
+          "bytes": 9185,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=249;desc=\"Page render\", mw;dur=249;desc=\"Total middleware\", db.total;dur=249;desc=\"DB total\", db.count;dur=4;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=249;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 322.3,
+          "total_ms": 322.74,
+          "bytes": 9171,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=193;desc=\"Page render\", mw;dur=193;desc=\"Total middleware\", db.total;dur=193;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=193;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 300.77,
+          "total_ms": 304.87,
+          "bytes": 9148,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=203;desc=\"Page render\", mw;dur=203;desc=\"Total middleware\", db.total;dur=203;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=203;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 326.7,
+          "total_ms": 327.09,
+          "bytes": 9073,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=239;desc=\"Page render\", mw;dur=239;desc=\"Total middleware\", db.total;dur=239;desc=\"DB total\", db.count;dur=4;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=239;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 251.01,
+          "total_ms": 251.45,
+          "bytes": 9171,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=135;desc=\"Page render\", mw;dur=135;desc=\"Total middleware\", db.total;dur=135;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=135;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 406.63,
+          "total_ms": 407.78,
+          "bytes": 9214,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=196;desc=\"Page render\", mw;dur=196;desc=\"Total middleware\", db.total;dur=196;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=196;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 264.76,
+          "total_ms": 266.56,
+          "bytes": 9141,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=140;desc=\"Page render\", mw;dur=140;desc=\"Total middleware\", db.total;dur=140;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=140;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 279.97,
+          "total_ms": 280.64,
+          "bytes": 9183,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=157;desc=\"Page render\", mw;dur=157;desc=\"Total middleware\", db.total;dur=157;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=157;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 353.39,
+          "total_ms": 356.26,
+          "bytes": 9230,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=189;desc=\"Page render\", mw;dur=189;desc=\"Total middleware\", db.total;dur=189;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=189;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        },
+        {
+          "status": 200,
+          "ttfb_ms": 293.1,
+          "total_ms": 293.48,
+          "bytes": 9192,
+          "cf-cache-status": "MISS",
+          "server-timing": "rt;dur=0;desc=\"Runtime init\", render;dur=202;desc=\"Page render\", mw;dur=202;desc=\"Total middleware\", db.total;dur=202;desc=\"DB total\", db.count;dur=3;desc=\"Query count\", db.first;dur=0;desc=\"First query at\", db.last;dur=202;desc=\"Last query at\", cache.hit;dur=0;desc=\"Cache hits\", cache.miss;dur=2;desc=\"Cache misses\""
+        }
+      ]
+    }
+  ]
+}
