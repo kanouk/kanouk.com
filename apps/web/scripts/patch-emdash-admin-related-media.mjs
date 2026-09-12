@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { upgradeAuthoringPreview } from "./patch-emdash-authoring-preview.mjs";
 import { upgradeEmbedPreview } from "./patch-emdash-embed-preview.mjs";
+import { upgradeImagePresentation } from "./patch-emdash-image-presentation.mjs";
 
 const PATCH_MARKER = "emdash-kanouk-related-media-picker-v1";
 const VISUAL_PICKER_MARKER = "emdash-kanouk-related-media-visual-picker-v2";
@@ -814,7 +815,10 @@ function patchEmDashRelatedMediaV7(source) {
 }
 
 export function patchEmDashRelatedMediaSource(source) {
-  return upgradeEmbedPreview(upgradeAuthoringPreview(patchEmDashRelatedMediaV7(source)));
+  const patched = upgradeImagePresentation(upgradeEmbedPreview(upgradeAuthoringPreview(patchEmDashRelatedMediaV7(source))));
+  // Upgrade already-patched installs as well as fresh npm ci bundles.
+  return patched.replace('height: kind === "track" || kind === "episode" ? 152 : 352,',
+    'height: kind === "track" ? 80 : kind === "episode" ? 152 : 352,');
 }
 
 async function patchInstalledAdmin() {

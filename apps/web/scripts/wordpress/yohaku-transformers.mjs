@@ -476,7 +476,7 @@ export function convertPostContent(post, context) {
 					? `wordpress://${context.siteId}/post/${sourcePostId}`
 					: String(linkData.url || block.attrs.url || "") || undefined,
 				title: String(
-					block.attrs.postTitle || block.attrs.cardTitle || linkData.title || "関連記事",
+					block.attrs.postTitle || block.attrs.cardTitle || linkData.title || "",
 				),
 			}];
 		},

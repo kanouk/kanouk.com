@@ -523,7 +523,11 @@ async function fetchExternalPreview(
 			redirect: "manual",
 			credentials: "omit",
 			referrerPolicy: "no-referrer",
-			headers: { Accept: "text/html, application/xhtml+xml;q=0.9" },
+			headers: {
+				Accept: "text/html, application/xhtml+xml;q=0.9",
+				"User-Agent": "Mozilla/5.0 (compatible; KanologLinkPreview/1.0; +https://blog.kanouk.com/)",
+				"Accept-Language": "ja,en;q=0.7",
+			},
 			signal,
 		});
 		if (REDIRECT_STATUSES.has(response.status)) {
