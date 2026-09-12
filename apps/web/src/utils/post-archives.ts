@@ -1,3 +1,5 @@
+import { sql } from "kysely";
+import { getDb } from "emdash/runtime";
 import { env } from "virtual:emdash/env";
 
 export interface PostArchiveMonth {
@@ -75,4 +77,13 @@ export function japanDateParts(date: Date) {
 	const value = (type: Intl.DateTimeFormatPartTypes) =>
 		Number(parts.find((part) => part.type === type)?.value);
 	return { year: value("year"), month: value("month"), day: value("day") };
+}
+
+/** Calendar needs day counts, never post bodies or media hydration. */
+export async function getPostCalendarDays(start: Date, end: Date): Promise<Map<number,number>> {
+ const db = await getDb();
+ const result = await sql<{day:number;count:number}>`SELECT cast(strftime('%d',published_at,'+9 hours') AS INTEGER) AS day, count(*) AS count
+ FROM ec_posts WHERE status='published' AND deleted_at IS NULL AND published_at>=${start.toISOString()} AND published_at<${end.toISOString()}
+ GROUP BY day`.execute(db);
+ return new Map(result.rows.map(row=>[Number(row.day),Number(row.count)]));
 }

@@ -1,3 +1,4 @@
+import { readAlbumCounts, readPhotoPage } from "./photo-read";
 import { definePlugin, PluginRouteError } from "emdash";
 
 type AuditInput = {
@@ -21,6 +22,8 @@ export function createPlugin() {
 			operations: { indexes: ["kind", "status", "createdAt"] },
 		},
 		routes: {
+			"album-counts": { permission: "content:edit_any", handler: () => readAlbumCounts() },
+			"photo-page": { permission: "content:edit_any", handler: (ctx) => readPhotoPage(ctx.input) },
 			operations: {
 				permission: "content:edit_any",
 				handler: async (ctx) => {

@@ -1,0 +1,37 @@
+<script>
+ import { onCLS, onINP, onLCP, type Metric } from 'web-vitals';
+ import { startPerformanceAudit } from '../client/performance-audit';
+ startPerformanceAudit();
+ const publicHost = ['blog.kanouk.com','photos.kanouk.com'].includes(location.hostname);
+ const template = location.pathname.split('/').filter(Boolean)[0] || 'home';
+ const report = (metric: Metric) => {
+  if (new URLSearchParams(location.search).has('perf-audit')) console.info('yohaku-vital',JSON.stringify({name:metric.name,value:metric.value,rating:metric.rating}));
+  if (!publicHost) return;
+  const analytics = window as typeof window & {dataLayer?: unknown[]};
+  analytics.dataLayer ??= [];
+  // Reuse the existing analytics destination. Do not attach content, full URLs,
+  // search terms, element attribution, or a new visitor identifier.
+  function event(..._args: unknown[]) { analytics.dataLayer!.push(arguments); }
+  event('event',metric.name,{value:Math.round(metric.name==='CLS'?metric.value*1000:metric.value),
+   metric_value:metric.value,metric_rating:metric.rating,page_template:template,
+   page_location:`${location.origin}/${template}`,non_interaction:true});
+ };
+ onCLS(report);onINP(report);onLCP(report);
+ // Native navigation feedback; do not intercept links or replace browser history.
+ let pending: ReturnType<typeof setTimeout>;
+ document.addEventListener('click',event=>{
+  const link=(event.target as Element | null)?.closest<HTMLAnchorElement>('a[href]');
+  if(!link || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.download || (link.target && link.target!=='_self'))return;
+  const url=new URL(link.href);
+  if(url.origin!==location.origin || (url.pathname===location.pathname && url.search===location.search))return;
+  queueMicrotask(()=>{
+   if(event.defaultPrevented)return;
+   clearTimeout(pending);
+   pending=setTimeout(()=>document.documentElement.dataset.navigating='true',120);
+  });
+ });
+ window.addEventListener('pageshow',()=>{clearTimeout(pending);delete document.documentElement.dataset.navigating;});
+</script>
+<style is:global>
+ html[data-navigating="true"]::before {content:"";position:fixed;inset:0 0 auto;height:3px;background:var(--color-brand,#0066cc);z-index:10000;pointer-events:none;}
+</style>

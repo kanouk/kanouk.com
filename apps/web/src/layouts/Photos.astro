@@ -9,18 +9,19 @@ import "../styles/theme.css";
 
 interface Props {
 	title: string;
+	canonicalPath?: string;
 	description?: string | null;
 	image?: string | null;
 	pageType?: "website" | "collection" | "image" | "video";
 	content?: { collection: string; id: string; slug?: string | null };
 }
 
-const { title, description, image, pageType = "website", content } = Astro.props;
+const { title, description, image, pageType = "website", content, canonicalPath: canonicalOverride } = Astro.props;
 const fullTitle = `${title} — Photos — kanouk.com`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
 const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
-const canonicalPath = Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname;
+const canonicalPath = canonicalOverride ?? (Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname);
 const isSearchPage = Astro.url.pathname === "/photo-search" || Astro.url.pathname === "/search";
 const canonical = new URL(canonicalPath, "https://photos.kanouk.com").toString();
 const absoluteImage = image ? new URL(image, "https://photos.kanouk.com").toString() : null;

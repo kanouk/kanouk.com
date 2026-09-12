@@ -16,8 +16,9 @@
     "deploy": "astro build && python3 ../../scripts/cloudflare/run_wrangler_kanouk.py deploy",
     "migrate:status": "python3 ../../scripts/cloudflare/run_emdash_migration_kanouk.py --status --json --wrangler-config wrangler.jsonc",
     "test:migration": "node --test scripts/album-order.test.mjs scripts/author-age.test.mjs scripts/emdash-admin-content-url.test.mjs scripts/emdash-related-media.test.mjs scripts/ensure-related-album-field.test.mjs scripts/photo-display.test.mjs scripts/photo-grid-size.test.mjs scripts/photo-order.test.mjs scripts/photo-tools-contract.test.mjs scripts/photo-url.test.mjs scripts/performance-contract.test.mjs scripts/public-media-guard.test.mjs scripts/media-access.test.mjs scripts/related-album-setting.test.mjs scripts/related-album-schema-setup.test.mjs scripts/studio-domain.test.mjs scripts/wordpress/*.test.mjs",
-    "test:ux": "node --test scripts/photo-search-routing.test.mjs scripts/photo-return.test.mjs scripts/album-articles.test.mjs scripts/article-photo-links.test.mjs scripts/legacy-album-cards.test.mjs scripts/public-design.test.mjs scripts/dialogue-style.test.mjs scripts/organizer-workflow.test.mjs scripts/article-social.test.mjs scripts/link-preview.test.mjs scripts/link-card-render.test.mjs scripts/public-link-preview.test.mjs scripts/link-preview-client.test.mjs scripts/authoring-preview.test.mjs scripts/embed-blocks.test.mjs scripts/embed-editor.test.mjs",
-    "typecheck": "astro check"
+    "test:ux": "node --test scripts/photo-search-routing.test.mjs scripts/photo-return.test.mjs scripts/album-articles.test.mjs scripts/article-photo-links.test.mjs scripts/legacy-album-cards.test.mjs scripts/public-design.test.mjs scripts/dialogue-style.test.mjs scripts/organizer-workflow.test.mjs scripts/performance-data.test.mjs scripts/media-delivery.test.mjs scripts/article-social.test.mjs scripts/link-preview.test.mjs scripts/link-card-render.test.mjs scripts/public-link-preview.test.mjs scripts/link-preview-client.test.mjs scripts/authoring-preview.test.mjs scripts/embed-blocks.test.mjs scripts/embed-editor.test.mjs scripts/admin-bundle.test.mjs",
+    "typecheck": "astro check",
+    "test:performance-build": "node scripts/performance-build-budget.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.0.0",
@@ -26,16 +27,19 @@
     "@emdash-cms/plugin-forms": "^0.2.5",
     "astro": "^7.0.0",
     "emdash": "^0.35.0",
+    "kysely": "^0.29.5",
     "leaflet": "^1.9.4",
     "lucide-astro": "^0.556.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "web-vitals": "^6.2.1",
     "yohaku-content-blocks": "file:plugins/yohaku-content-blocks"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.7",
-		"@cloudflare/workers-types": "^5.20260828.1",
+    "@cloudflare/workers-types": "^5.20260828.1",
     "@types/leaflet": "^1.9.22",
+    "es-module-lexer": "^3.0.2",
     "typescript": "^6.0.0",
     "wrangler": "^4.124.0"
   }

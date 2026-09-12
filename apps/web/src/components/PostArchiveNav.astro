@@ -1,7 +1,6 @@
 ---
-import { getEmDashCollection } from "emdash";
 import { CalendarDays } from "lucide-astro";
-import { getPostArchiveMonths, japanDateParts, japanMonthRange } from "../utils/post-archives";
+import { getPostArchiveMonths, getPostCalendarDays, japanDateParts, japanMonthRange } from "../utils/post-archives";
 
 interface Props {
 	date?: Date | null;
@@ -11,26 +10,10 @@ const { date: suppliedDate } = Astro.props;
 const date = suppliedDate ?? new Date();
 const selected = japanDateParts(date);
 const { start, end } = japanMonthRange(selected.year, selected.month);
-const [recentArchives, monthResult] = await Promise.all([
-	getPostArchiveMonths(24),
-	getEmDashCollection("posts", {
-		status: "published",
-		where: {
-			published_at: { gte: start.toISOString(), lt: end.toISOString() },
-		},
-		orderBy: { published_at: "asc" },
-		limit: 100,
-	}),
+const [recentArchives, postsByDay] = await Promise.all([
+ getPostArchiveMonths(24), getPostCalendarDays(start,end),
 ]);
-if (Astro.cache?.enabled) Astro.cache.set(monthResult.cacheHint);
-
-const postsByDay = new Map<number, number>();
-for (const post of monthResult.entries) {
-	const publishedAt = post.data.publishedAt;
-	if (!(publishedAt instanceof Date)) continue;
-	const day = japanDateParts(publishedAt).day;
-	postsByDay.set(day, (postsByDay.get(day) ?? 0) + 1);
-}
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
 const firstWeekday = new Date(Date.UTC(selected.year, selected.month - 1, 1)).getUTCDay();
 const daysInMonth = new Date(Date.UTC(selected.year, selected.month, 0)).getUTCDate();
 const calendarCells = [
@@ -42,7 +25,7 @@ const archiveHref = `/archives/${selected.year}/${String(selected.month).padStar
 const selectedArchive = {
 	year: selected.year,
 	month: selected.month,
-	count: monthResult.entries.length,
+	count: [...postsByDay.values()].reduce((sum,count)=>sum+count,0),
 	label: `${selected.year}年${selected.month}月`,
 	href: archiveHref,
 };

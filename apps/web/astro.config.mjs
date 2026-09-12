@@ -1,3 +1,5 @@
+import { directPhosphor } from "./scripts/direct-phosphor-imports.mjs";
+import { lazyAdminBlocks } from "./scripts/lazy-admin-blocks.mjs";
 import cloudflare from "@astrojs/cloudflare";
 import { cacheCloudflare } from "@astrojs/cloudflare/cache";
 import react from "@astrojs/react";
@@ -62,7 +64,7 @@ export default defineConfig({
 		yohakuPublicRoutes,
 			emdash({
 				siteUrl: "https://blog.kanouk.com",
-				database: d1({ binding: "DB", session: "auto" }),
+				database: d1({ binding: "DB", session: "auto", coalesce: true }),
 				storage: r2({ binding: "MEDIA" }),
 				plugins: [
 					formsPlugin(),
@@ -75,6 +77,7 @@ export default defineConfig({
 			}),
 	],
 	vite: {
+		plugins: [lazyAdminBlocks(), directPhosphor()],
 		// Prebundle these SSR imports together. Discovering them after workerd has
 		// loaded the server can invalidate its dependency chunk during local QA.
 		optimizeDeps: { include: ["astro/app/manifest", "@emdash-cms/plugin-forms"] },

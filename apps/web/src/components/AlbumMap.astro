@@ -11,19 +11,21 @@ interface Marker {
 
 interface Props {
 	markers: Marker[];
+	count?: number;
+	source?: string;
 }
 
-const { markers } = Astro.props;
+const { markers, count = markers.length, source } = Astro.props;
 ---
 
 {
-	markers.length > 0 && (
-		<section class="album-map" data-album-map data-markers={JSON.stringify(markers)}>
+	count > 0 && (
+		<section class="album-map" data-album-map data-markers={JSON.stringify(markers)} data-source={source}>
 			<button type="button" class="album-map-toggle" aria-expanded="false">
 				<MapPinned size={17} strokeWidth={1.75} aria-hidden="true" />
 				<span>地図で見る</span>
 				<small>
-					{markers.length.toLocaleString("ja-JP")}点<span class="album-map-count-copy">に撮影場所あり</span>
+					{count.toLocaleString("ja-JP")}点<span class="album-map-count-copy">に撮影場所あり</span>
 				</small>
 			</button>
 			<div class="album-map-panel" hidden>
@@ -51,12 +53,21 @@ const { markers } = Astro.props;
 
 		let map: import("leaflet").Map | undefined;
 		let mapPromise: Promise<void> | undefined;
-		const markers = JSON.parse(shell.dataset.markers || "[]") as Marker[];
+		let markers = JSON.parse(shell.dataset.markers || "[]") as Marker[];
 		const initializeMap = async () => {
-			if (map || markers.length === 0) return;
+			if (map) return;
 			if (mapPromise) return mapPromise;
 			mapPromise = (async () => {
-			const { default: L } = await import("leaflet");
+			const [{ default: L }, loaded] = await Promise.all([
+                import("leaflet"),
+                shell.dataset.source ? fetch(shell.dataset.source).then(async response => {
+                    if (!response.ok) throw new Error("地図データを取得できませんでした");
+                    return response.json() as Promise<{markers: Marker[]}>;
+                }) : Promise.resolve({markers}),
+            ]);
+            markers = loaded.markers;
+            if (!markers.length) { canvas.textContent = "撮影場所の情報はありません。"; return; }
+			canvas.textContent = "";
 			map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
 			L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -89,7 +100,8 @@ const { markers } = Astro.props;
 			panel.hidden = !open;
 			toggle.querySelector("span")!.textContent = open ? "地図を閉じる" : "地図で見る";
 			if (open) {
-				await initializeMap();
+				try { await initializeMap(); }
+                catch { mapPromise = undefined; canvas.textContent = "地図を取得できませんでした。閉じて開くと再試行できます。"; }
 				window.setTimeout(() => map?.invalidateSize(), 0);
 			}
 		});

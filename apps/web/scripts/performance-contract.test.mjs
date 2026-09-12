@@ -75,7 +75,7 @@ test("photo detail navigation is computed in one bounded database query", async 
 	]);
 	assert.doesNotMatch(page, /albumPhotosCursor|albumPhotos\.push/);
 	assert.match(page, /where: \{ id: photo\.data\.album \}/);
-	assert.match(album, /sortPhotosChronologically\(photos\)/);
+	assert.match(album, /getAlbumPage\(album.data.id/);
 	assert.match(album, /chronologicalPhotos\.map/);
 	assert.match(navigation, /ROW_NUMBER\(\) OVER/);
 	assert.match(navigation, /LAG\(id\) OVER/);
@@ -103,5 +103,5 @@ test("photo detail controls and metadata stay inside the viewer", async () => {
 test("the album map defers Leaflet until the map is opened", async () => {
 	const albumMap = await read("src/components/AlbumMap.astro");
 	assert.doesNotMatch(albumMap, /^\s*import L from "leaflet";/m);
-	assert.match(albumMap, /await import\("leaflet"\)/);
+	assert.match(albumMap, /import\("leaflet"\)/);
 });
