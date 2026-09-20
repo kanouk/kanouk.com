@@ -1,8 +1,11 @@
-import { deliverGuardedMedia, type GuardedMediaBucket } from "./studio/media-delivery";
+import {
+	deliverGuardedMedia,
+	deliverOriginalImageFallback,
+	type GuardedMediaBucket,
+} from "./studio/media-delivery";
 import handler, { createScheduledHandler, PluginBridge } from "@emdash-cms/cloudflare/worker";
 import { needsLocationReview } from "./studio/domain";
 import {
-	addPrivateMediaHeaders,
 	applyMediaAccessHeaders,
 	authenticationHeaders,
 	classifyMediaRead,
@@ -133,9 +136,11 @@ async function servePreview(
 		quality,
 	);
 	if (!transformed) {
-		return addPrivateMediaHeaders(new Response("Image preview is temporarily unavailable", {
-			status: 502,
-		}));
+		return deliverOriginalImageFallback(
+			sourceRequest,
+			(env as HandlerEnv & { MEDIA: GuardedMediaBucket }).MEDIA,
+			mediaKey,
+		);
 	}
 
 	transformed.headers.append("Server-Timing", `media.guard;dur=${guardMs.toFixed(1)}, media.transform;dur=${(performance.now()-started-guardMs).toFixed(1)}`);
