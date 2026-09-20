@@ -65,3 +65,25 @@ export async function deliverGuardedMedia(request: Request, bucket: GuardedMedia
  } else headers.set('Content-Length',String(object.size));
  return new Response(object.body,{status,headers});
 }
+
+/**
+ * Keep a published image visible when Cloudflare's derived-image request fails.
+ * The original is intentionally not cached at the immutable derivative URL so
+ * a later request can retry the smaller AVIF/WebP variant.
+ *
+ * Callers must complete the public/authenticated media guard before using this.
+ */
+export async function deliverOriginalImageFallback(
+ request:Request,
+ bucket:GuardedMediaBucket,
+ key:string,
+):Promise<Response> {
+ const response=await deliverGuardedMedia(request,bucket,key);
+ const headers=new Headers(response.headers);
+ headers.set('X-Yohaku-Image-Fallback','original');
+ return new Response(response.body,{
+  status:response.status,
+  statusText:response.statusText,
+  headers,
+ });
+}

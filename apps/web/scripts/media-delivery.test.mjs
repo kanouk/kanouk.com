@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { deliverGuardedMedia } from '../src/studio/media-delivery.ts';
+import { deliverGuardedMedia, deliverOriginalImageFallback } from '../src/studio/media-delivery.ts';
 
 const object = () => ({size:10,httpEtag:'"hash"',uploaded:new Date('2026-01-01'),
  writeHttpMetadata(headers){headers.set('Content-Type','image/png');headers.set('Cache-Control','public, max-age=999');}});
@@ -30,4 +30,29 @@ test('guarded media rejects impossible ranges and retains unsafe file isolation'
  assert.match(svg.headers.get('Content-Security-Policy'),/sandbox/);
  const stale=await deliverGuardedMedia(new Request('https://example.com/a',{headers:{Range:'bytes=2-4','If-Range':'"old"'}}),bucket,'a');
  assert.equal(stale.status,200);
+});
+
+test('published image fallback serves the guarded original without pinning it to the derivative URL',async()=>{
+ const bucket={get:async()=>({...object(),body:new Blob(['0123456789']).stream(),writeHttpMetadata(headers){headers.set('Content-Type','image/jpeg');}})};
+ const fallback=await deliverOriginalImageFallback(
+  new Request('https://photos.kanouk.com/_emdash/api/media/file/a'),
+  bucket,
+  'a',
+ );
+ assert.equal(fallback.status,200);
+ assert.equal(fallback.headers.get('Content-Type'),'image/jpeg');
+ assert.equal(fallback.headers.get('Cache-Control'),'private, no-store');
+ assert.equal(fallback.headers.get('X-Yohaku-Image-Fallback'),'original');
+ assert.equal(await fallback.text(),'0123456789');
+});
+
+test('published image fallback preserves a missing-original response',async()=>{
+ const fallback=await deliverOriginalImageFallback(
+  new Request('https://photos.kanouk.com/_emdash/api/media/file/missing'),
+  {get:async()=>null},
+  'missing',
+ );
+ assert.equal(fallback.status,404);
+ assert.equal(fallback.headers.get('Cache-Control'),'private, no-store');
+ assert.equal(fallback.headers.get('X-Yohaku-Image-Fallback'),'original');
 });
