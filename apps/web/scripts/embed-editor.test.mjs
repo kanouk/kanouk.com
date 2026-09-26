@@ -1,15 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import vm from "node:vm";
 import { readFile } from "node:fs/promises";
-import { embedParserBrowserSource } from "../plugins/yohaku-content-blocks/src/embed-url.mjs";
-import { YohakuEmbedPreview, upgradeEmbedPreview } from "./patch-emdash-embed-preview.mjs";
-import { yohakuPreviewUrl, yohakuPreviewValue } from "./patch-emdash-authoring-preview.mjs";
+import { renderEmbedPreview, YohakuEmbedPreview } from "../plugins/yohaku-content-blocks/src/admin/embed-preview.mjs";
+import { embedExtension } from "../plugins/yohaku-content-blocks/src/admin/block-editors.mjs";
+import { yohakuPreviewValue } from "../plugins/yohaku-content-blocks/src/admin/link-preview-auto.mjs";
 
 function previewTree(values, loaded = "") {
-  const context = vm.createContext({ URL, jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }), React$1: { useState: () => [loaded, () => {}] }, values });
-  vm.runInContext(`${embedParserBrowserSource()}\n${yohakuPreviewUrl.toString()}\n${yohakuPreviewValue.toString()}\n${YohakuEmbedPreview.toString()}`, context);
-  return vm.runInContext("YohakuEmbedPreview({ values })", context);
+  return renderEmbedPreview({ values, loadedUrl: loaded, onLoad: () => {} });
 }
 const spotify = "https://open.spotify.com/episode/7makk4oTQel546B0PZlDM5";
 test("editor preview keeps URL/caption and makes no iframe before explicit click", () => {
@@ -40,16 +37,18 @@ test("short and nonofficial URLs provide guidance instead of an unsafe preview",
   for (const id of ["https://vm.tiktok.com/ABC/", "https://spotify.link/ABC"]) assert.match(JSON.stringify(previewTree({ id })), /短縮URL/);
   assert.match(JSON.stringify(previewTree({ id: "https://evil.example/player" })), /公式URLだけ/);
 });
-test("native insert and edit use the same validation and preview component", async () => {
-  const source = await readFile(new URL("../node_modules/@emdash-cms/admin/dist/index.js", import.meta.url), "utf8");
-  assert.match(source, /emdash-kanouk-embed-preview-v9/);
-  assert.match(source, /emdash-kanouk-embed-preview-status-v10/);
-  assert.match(source, /parseEmbedUrl\(formValues.id\).ok\)\) && linkPreviewState.message/);
-  assert.match(source, /const canSubmit = block\?\.type === "yohaku.embed" \? parseEmbedUrl\(formValues.id\).ok/);
-  assert.match(source, /if \(block\?\.type === "yohaku.embed" && !parseEmbedUrl\(formValues.id\).ok\) return/);
-  assert.match(source, /jsx\(YohakuEmbedPreview, \{ values: formValues \}\)/);
-  assert.match(source, /values: \{ \.\.\.data, id \}/);
-  assert.equal(upgradeEmbedPreview(source), source);
+test("insert and edit dialogs and the inserted block share validation and the preview component", () => {
+  const invalid = embedExtension.useModal({ block: { type: "yohaku.embed" }, formValues: { id: "https://evil.example/player" } });
+  assert.equal(invalid.canSubmit, false);
+  assert.equal(invalid.before.type, YohakuEmbedPreview);
+  const valid = embedExtension.useModal({ block: { type: "yohaku.embed" }, formValues: { id: spotify, display: "player" } });
+  assert.equal(valid.canSubmit, true);
+  assert.deepEqual(valid.before.props.values, { id: spotify, display: "player" });
+  assert.equal(embedExtension.useModal({ block: { type: "yohaku.linkCard" }, formValues: {} }), null);
+  const node = embedExtension.nodeView({ blockType: "yohaku.embed", id: spotify, data: { display: "player", caption: "c" } });
+  assert.equal(node.below.type, YohakuEmbedPreview);
+  assert.deepEqual(node.below.props.values, { display: "player", caption: "c", id: spotify });
+  assert.equal(embedExtension.nodeView({ blockType: "yohaku.photo", id: "x", data: {} }), null);
 });
 
 test("public link-card rendering retains the saved share URL and independent caption", async () => {

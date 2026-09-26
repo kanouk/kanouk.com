@@ -2,7 +2,13 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-import { patchEmDashRelatedMediaSource } from "./patch-emdash-admin-related-media.mjs";
+import { renderToStaticMarkup } from "react-dom/server";
+import {
+  blockEditorExtensions,
+  findRelatedAlbumId,
+  mediaSummary,
+  photoPickerExtension,
+} from "../plugins/yohaku-content-blocks/src/admin/block-editors.mjs";
 
 const pluginSourceUrl = new URL(
   "../plugins/yohaku-content-blocks/src/index.ts",
@@ -82,105 +88,70 @@ test("public photo renderer resolves live published rows and verifies the album 
   assert.match(album, /album-feature-card/);
 });
 
-test("installed editor patch prefers the article related album and hydrates dependent fields", async () => {
-  const [installedBundle, installedStyles] = await Promise.all([
-    readFile(
-      new URL("../node_modules/@emdash-cms/admin/dist/index.js", import.meta.url),
-      "utf8",
-    ),
-    readFile(
-      new URL("../node_modules/@emdash-cms/admin/dist/styles.css", import.meta.url),
-      "utf8",
-    ),
-  ]);
+function editorWithAlbums(albums) {
+  return {
+    state: {
+      doc: {
+        descendants(visit) {
+          for (const [pos, id] of albums) visit({ type: { name: "pluginBlock" }, attrs: { blockType: "yohaku.album", id } }, pos);
+          visit({ type: { name: "paragraph" }, attrs: {} }, 99);
+        },
+      },
+    },
+  };
+}
 
-  assert.match(installedBundle, /emdash-kanouk-related-media-picker-v1/);
-  assert.match(
-    installedBundle,
-    /function findRelatedAlbumId\(editor, beforePos\)/,
-  );
-  assert.match(installedBundle, /block\.type === "yohaku\.photo"/);
-  assert.match(
-    installedBundle,
-    /setPluginBlockDefaultValues\(defaultAlbumId \? \{ albumId: defaultAlbumId \}/,
-  );
-  assert.match(installedBundle, /emdash-kanouk-related-album-setting-v7/);
-  assert.match(installedBundle, /extension\.supportsNew === true/);
-  assert.match(installedBundle, /draftData: formData/);
-  assert.match(installedBundle, /onDraftFieldChange: handleFieldChange/);
-  assert.match(installedBundle, /relatedAlbumId: typeof formData\.related_album === "string"/);
-  assert.match(
-    installedBundle,
-    /relatedAlbumId\.trim\(\) \? relatedAlbumId\.trim\(\) : findRelatedAlbumId/,
-  );
-  assert.match(
-    installedBundle,
-    /body: JSON\.stringify\(\{ values: formValues \?\? \{\} \}\)/,
-  );
-  assert.match(installedBundle, /selectedOption\?\.values/);
-  assert.match(installedBundle, /emdash-kanouk-related-media-distributed-css-v3/);
-  assert.match(installedBundle, /"aria-label": "写真をサムネイルから選択"/);
-  assert.match(installedBundle, /role: "listbox"/);
-  assert.match(installedBundle, /role: "alert"/);
-  assert.match(installedBundle, /mediaImageUrl/);
-  assert.match(installedBundle, /albumTitleSnapshot/);
-  assert.match(installedBundle, /data\.photoSlug/);
-  assert.match(installedBundle, /data\.albumSlug/);
-  assert.match(installedBundle, /navigator\.clipboard\.writeText\(publicMediaUrl\)/);
-  assert.match(installedBundle, /emdash-kanouk-link-preview-https-v6/);
-  assert.match(
-    installedBundle,
-    /\/_emdash\/api\/plugins\/\$\{block\.pluginId\}\/link-preview/,
-  );
-  assert.match(installedBundle, /setTimeout\(async \(\) => \{[\s\S]*?\}, 500\)/);
-  assert.match(installedBundle, /const controller = new AbortController\(\)/);
-  assert.match(
-    installedBundle,
-    /requestVersion !== linkPreviewRequestRef\.current/,
-  );
-  assert.match(
-    installedBundle,
-    /linkPreviewManualFieldsRef\.current\.has\(key\)/,
-  );
-  assert.match(
-    installedBundle,
-    /new URL\(url, "https:\/\/blog\.kanouk\.com"\)\.href/,
-  );
-  assert.match(installedBundle, /parsed\.protocol !== "https:"/);
-  assert.match(
-    installedBundle,
-    /body: JSON\.stringify\(\{ url: previewUrl \}\)/,
-  );
-  assert.match(installedBundle, /linkPreviewRefreshNonce/);
-  assert.match(installedBundle, /リンク情報を再取得/);
-  assert.match(installedBundle, /isYohakuLinkCard/);
-  assert.match(installedBundle, /referrerPolicy: "no-referrer"/);
-  assert.match(installedBundle, /role: linkPreviewState\.status === "error" \? "alert" : "status"/);
-  for (const utility of [
-    "max-h-64",
-    "max-h-48",
-    "aspect-square",
-    "grid-cols-2",
-    "overflow-y-auto",
-    "ring-kumo-brand\\/20",
-    "border-kumo-brand\\/50",
-  ]) {
-    assert.ok(installedStyles.includes(`.${utility}`), `${utility} must exist in distributed CSS`);
-  }
-  assert.doesNotMatch(
-    installedBundle,
-    /mt-3 grid max-h-80 grid-cols-2 gap-2 overflow-y-auto sm:grid-cols-3/,
-  );
-  assert.doesNotMatch(
-    installedBundle,
-    /border-kumo-brand ring-2 ring-kumo-brand\/30.*hover:border-kumo-brand\/60/,
-  );
-  assert.equal(patchEmDashRelatedMediaSource(installedBundle), installedBundle);
+test("new photo blocks prefer the article related album, then the nearest preceding album block", () => {
+  const editor = editorWithAlbums([[10, "album-a"], [30, "album-b"]]);
+  const photo = { type: "yohaku.photo" };
+  assert.deepEqual(photoPickerExtension.insertDefaults({ block: photo, editor, insertPos: 40, documentData: { related_album: " related " } }), { albumId: "related" });
+  assert.deepEqual(photoPickerExtension.insertDefaults({ block: photo, editor, insertPos: 20, documentData: { related_album: "" } }), { albumId: "album-a" });
+  assert.deepEqual(photoPickerExtension.insertDefaults({ block: photo, editor, insertPos: 5, documentData: undefined }), { albumId: "album-a" });
+  assert.equal(findRelatedAlbumId(editor, 40), "album-b");
+  assert.equal(photoPickerExtension.insertDefaults({ block: photo, editor: editorWithAlbums([]), insertPos: 0 }), undefined);
+  assert.equal(photoPickerExtension.insertDefaults({ block: { type: "yohaku.album" }, editor, insertPos: 40, documentData: { related_album: "x" } }), undefined);
 });
 
-test("editor patch fails closed against an unknown upstream bundle", () => {
-  assert.throws(
-    () => patchEmDashRelatedMediaSource("function PluginBlockModal() {}"),
-    /Review the EmDash admin bundle/,
-  );
+test("photo options render a thumbnail picker that selects through the dialog", () => {
+  const { fieldAddon } = photoPickerExtension.useModal();
+  const options = [
+    { value: "p1", label: "1", values: { imageUrl: "https://photos.kanouk.com/1.jpg" } },
+    { value: "p2", label: "2", values: {} },
+  ];
+  assert.equal(fieldAddon({ field: { optionsRoute: "albums/options" }, options, value: "", select() {} }), null);
+  const selected = [];
+  const addon = fieldAddon({ field: { optionsRoute: "photos/options" }, options, value: "p1", select: (value) => selected.push(value) });
+  const html = renderToStaticMarkup(addon);
+  assert.match(html, /role="listbox" aria-label="写真をサムネイルから選択"/);
+  assert.match(html, /aria-selected="true"/);
+  assert.match(html, /写真 1 を選択/);
+  assert.doesNotMatch(html, /写真 2 を選択/);
+  const picker = addon.type(addon.props);
+  picker.props.children[0].props.onClick();
+  assert.deepEqual(selected, ["p1"]);
+});
+
+test("inserted photo, album and link card blocks show their media, title and public URL", () => {
+  const local = { hostname: "127.0.0.1", origin: "http://127.0.0.1:4321" };
+  const production = { hostname: "blog.kanouk.com", origin: "https://blog.kanouk.com" };
+  assert.deepEqual(mediaSummary({ blockType: "yohaku.photo", id: "01P", data: { imageUrl: "/i.jpg", caption: "", alt: "alt", photoSlug: "slug a" } }, production), {
+    imageUrl: "/i.jpg", imageReferrerPolicy: undefined, title: "alt", externalUrl: "https://photos.kanouk.com/p/slug%20a",
+  });
+  assert.equal(mediaSummary({ blockType: "yohaku.album", id: "01A", data: { albumTitleSnapshot: "旅" } }, local).externalUrl, "http://127.0.0.1:4321/albums/01A");
+  const card = mediaSummary({ blockType: "yohaku.linkCard", id: "https://example.com/", data: { title: "", linkPreviewAuto: { version: 1, url: "https://example.com/", title: "自動", imageUrl: "https://example.com/og.jpg" } } }, production);
+  assert.deepEqual(card, { imageUrl: "https://example.com/og.jpg", imageReferrerPolicy: "no-referrer", title: "自動", externalUrl: undefined });
+  assert.equal(mediaSummary({ blockType: "yohaku.embed", id: "x", data: {} }, production), null);
+});
+
+test("block editor UI only uses utilities present in the distributed admin CSS", async () => {
+  const [styles, sources] = await Promise.all([
+    readFile(new URL("../node_modules/@emdash-cms/admin/dist/styles.css", import.meta.url), "utf8"),
+    Promise.all(["block-editors.mjs", "embed-preview.mjs"].map((file) => readFile(new URL(`../plugins/yohaku-content-blocks/src/admin/${file}`, import.meta.url), "utf8"))),
+  ]);
+  const classValues = [...sources.join("\n").matchAll(/className: (?:[^,{}]*?\? )?"([^"]*)"(?: : "([^"]*)")?/g)].flatMap(([, first, second]) => [first, second ?? ""]);
+  const classNames = new Set(classValues.flatMap((value) => value.split(/\s+/)).filter(Boolean));
+  assert.ok(classNames.has("ring-2") && classNames.has("text-kumo-danger"));
+  const escape = (name) => name.replace(/[/:.[\]]/g, (char) => `\\${char}`);
+  for (const name of classNames) assert.ok(styles.includes(`.${escape(name)}`), `${name} must exist in distributed CSS`);
+  assert.equal(blockEditorExtensions.length, 4);
 });

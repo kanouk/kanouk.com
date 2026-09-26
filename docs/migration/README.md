@@ -1,6 +1,6 @@
 # EmDash / 公開写真基盤への移行
 
-このディレクトリは [Issue #1](https://github.com/kanouk/kanouk.com/issues/1) の設計・監査・運用記録です。移行先は EmDash 0.35.0 + Astro + Cloudflare Workers / D1 / R2、公開名はブログが「カノログ」、デザインシステム名と独自ブロック名前空間は `Yohaku` です。
+このディレクトリは [Issue #1](https://github.com/kanouk/kanouk.com/issues/1) の設計・監査・運用記録です。移行先は EmDash 0.35.0（2026-09-26 に 0.40.1 へ更新。[../emdash-upgrade.md](../emdash-upgrade.md)）+ Astro + Cloudflare Workers / D1 / R2、公開名はブログが「カノログ」、デザインシステム名と独自ブロック名前空間は `Yohaku` です。
 
 ## 現在地（2026-09-02）
 
