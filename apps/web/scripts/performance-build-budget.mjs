@@ -25,8 +25,9 @@ const css=(await Promise.all(files.filter(f=>f.endsWith('.css')).map(async f=>gz
 const performanceEntry=files.find(name=>name.startsWith('PagePerformance.') && name.endsWith('.js'));
 assert.ok(performanceEntry,'Web vitals entry must exist');
 const vitals=await eagerBytes(performanceEntry);
-const result={adminEagerGzip:admin,allCssGzip:css,publicVitalsGzip:vitals,budgets:{admin:850000,css:70000,vitals:15000}};
+const result={adminEagerGzip:admin,allCssGzip:css,publicVitalsGzip:vitals,budgets:{admin:1150000,css:70000,vitals:15000}};
 console.log(JSON.stringify(result));
-assert.ok(admin<=850000,'Admin eager JavaScript exceeds 850 KB gzip; check optional chart imports');
+// EmDash 0.40.1 admin itself is ~165 KB gzip larger than 0.35 (docs/performance/README.md).
+assert.ok(admin<=1150000,'Admin eager JavaScript exceeds 1,150 KB gzip; check optional chart and icon imports');
 assert.ok(css<=70000,'CSS exceeds 70 KB gzip');
 assert.ok(vitals<=15000,'Public measurement script exceeds 15 KB gzip');

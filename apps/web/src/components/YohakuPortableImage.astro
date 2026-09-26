@@ -13,7 +13,8 @@ interface ImageNode {
 	displayWidth?: number;
 	alignment?: "left" | "center" | "right" | "wide" | "full";
 	visualStyle?: "photo-frame" | "border" | "shadow" | "none";
-	link?: string;
+	// Legacy imports store a URL string; the EmDash editor (0.40+) stores { href, blank? }.
+	link?: string | { href?: string; blank?: boolean };
 	_yohakuPriority?: boolean;
 }
 
@@ -22,6 +23,11 @@ interface Props {
 }
 
 const { node } = Astro.props;
+const link = typeof node.link === "string"
+	? (node.link ? { href: node.link, blank: false } : undefined)
+	: typeof node.link?.href === "string" && node.link.href.trim()
+		? { href: node.link.href.trim(), blank: node.link.blank === true }
+		: undefined;
 const visualStyle = node.visualStyle ?? "photo-frame";
 const assetUrl = node?.asset?.url;
 const bareStorageKey = assetUrl && /^[A-Za-z0-9._-]+$/.test(assetUrl) ? assetUrl : undefined;
@@ -56,8 +62,8 @@ const imageValue = {
 			]}
 			style={node.displayWidth ? `--image-display-width:${node.displayWidth}px` : undefined}
 		>
-			{node.link ? (
-				<a href={node.link} class="yohaku-portable-image__link">
+			{link ? (
+				<a href={link.href} class="yohaku-portable-image__link" target={link.blank ? "_blank" : undefined} rel={link.blank ? "noopener noreferrer" : undefined}>
 					<YohakuImage image={imageValue} preview priority={node._yohakuPriority} sizes="(max-width: 900px) calc(100vw - 2rem), 48rem" />
 				</a>
 			) : (

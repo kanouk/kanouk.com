@@ -10,6 +10,9 @@ export function yohakuContentBlocks(): PluginDescriptor {
 		version: "0.2.0",
 		entrypoint: "yohaku-content-blocks",
 		componentsEntry: "yohaku-content-blocks/astro",
+		// Editor behavior for these blocks, via the admin extension points in
+		// scripts/emdash-admin (block dialog, node view, insert defaults).
+		adminEntry: "yohaku-content-blocks/admin",
 		options: {},
 	};
 }

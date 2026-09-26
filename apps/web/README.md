@@ -31,6 +31,14 @@ bun run build
 python3 -m unittest discover -s ../../tests -v
 ```
 
+## EmDash の更新とカスタマイズ
+
+EmDash は完全固定です。管理画面のカスタマイズは、汎用の拡張ポイント（`scripts/emdash-admin/`）と、それを使うプラグイン（`plugins/yohaku-content-blocks/src/admin/`、`src/studio/admin.tsx`）に分けています。構成と更新手順は [docs/emdash-upgrade.md](../../docs/emdash-upgrade.md) を参照してください。
+
+```bash
+npm run emdash-admin:check
+```
+
 ## Cloudflare deployment guard
 
 デプロイ前に同じ sensitive ノートへ `kanouk@gmail.com` 専用の Account ID と scoped API token を設定します。値を shell 引数や Issue に貼りません。

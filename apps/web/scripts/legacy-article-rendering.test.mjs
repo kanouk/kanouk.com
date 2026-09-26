@@ -5,7 +5,8 @@ import { readFileSync } from 'node:fs';
 import { parseXPostUrl } from '../plugins/yohaku-content-blocks/src/x-post-url.mjs';
 import { parseEmbedUrl } from '../plugins/yohaku-content-blocks/src/embed-url.mjs';
 import { linkCardText } from '../plugins/yohaku-content-blocks/src/link-card-text.mjs';
-import { upgradeImagePresentation } from './patch-emdash-image-presentation.mjs';
+import { createEditor } from './emdash-admin/patch-kit.mjs';
+import imagePresentationAttrs from './emdash-admin/patches/image-presentation-attrs.mjs';
 
 test('legacy placeholder yields to OGP while actual manual titles remain', () => {
   assert.equal(linkCardText(' 関連記事 '), '');
@@ -31,19 +32,26 @@ test('legacy blocks reach provider renderers, and compact tracks reserve only 80
   assert.match(stage, /min-height: 0;/);
   const image = readFileSync(new URL('../src/components/YohakuPortableImage.astro', import.meta.url), 'utf8');
   assert.match(image, /node.visualStyle \?\? "photo-frame"/);
+  // Links: legacy strings and EmDash 0.40 { href, blank } objects.
+  assert.match(image, /typeof node\.link === "string"/);
+  assert.match(image, /href=\{link\.href\}/);
+  assert.match(image, /link\.blank \? "_blank"/);
 });
 test('actual installed editor converters preserve frames and links through the image schema', () => {
   const source = readFileSync(new URL('../node_modules/@emdash-cms/admin/dist/index.js', import.meta.url), 'utf8');
-  assert.equal(upgradeImagePresentation(source), source);
-  assert.throws(() => upgradeImagePresentation('upstream changed'));
+  assert.match(source, /visualStyle: \{ default: null \}/);
+  assert.throws(() => imagePresentationAttrs.apply(createEditor(imagePresentationAttrs.id, 'upstream changed')));
   const marks = source.slice(source.indexOf('const SUPPORTED_PORTABLE_TEXT_DECORATORS'), source.indexOf('//#endregion', source.indexOf('const SUPPORTED_PORTABLE_TEXT_DECORATORS')));
   const converters = source.slice(source.indexOf('function generateKey()'), source.indexOf('function insertHtmlBlock('));
   const schemaStart = source.indexOf('addAttributes()', source.indexOf('draggable: true,', source.indexOf('//#region src/components/editor/Image')));
   const attrsStart = source.indexOf('src: { default: null },', schemaStart);
   const attrsEnd = source.indexOf('\n\t\t};', attrsStart);
   const attrs = vm.runInNewContext(`({${source.slice(attrsStart, attrsEnd)}})`);
-  const ctx = vm.createContext({});
-  vm.runInContext(marks + '\n' + converters, ctx);
+  // Since EmDash 0.40 the converters sit next to TipTap extension/mark definitions.
+  const ctx = vm.createContext({ Extension: { create: (config) => config }, Mark: { create: (config) => config } });
+  const mediaUtilsStart = source.indexOf('//#region src/lib/media-utils.ts');
+  const mediaUtils = mediaUtilsStart < 0 ? '' : source.slice(mediaUtilsStart, source.indexOf('//#endregion', mediaUtilsStart));
+  vm.runInContext(mediaUtils + '\n' + marks + '\n' + converters, ctx);
   for (const visualStyle of ['photo-frame', 'border', 'shadow', 'none', undefined]) {
     ctx.blocks = [{ _type:'image', _key:'original', asset:{_ref:'media',url:'/photo.jpg'}, caption:'caption', displayWidth:600, alignment:'center', visualStyle, link:'https://photos.kanouk.com/p/example' }];
     const doc = vm.runInContext('portableTextToProsemirror(blocks)', ctx);
@@ -52,7 +60,8 @@ test('actual installed editor converters preserve frames and links through the i
     ctx.doc = doc;
     const [saved] = vm.runInContext('prosemirrorToPortableText(doc)', ctx);
     assert.equal(saved.visualStyle, visualStyle);
-    assert.equal(saved.link, ctx.blocks[0].link);
+    // EmDash 0.40 owns image links and normalizes the legacy string form.
+    assert.deepEqual(JSON.parse(JSON.stringify(saved.link)), { href: ctx.blocks[0].link });
     assert.equal(saved.displayWidth, 600);
     assert.equal(saved.caption, 'caption');
   }
