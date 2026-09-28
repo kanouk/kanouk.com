@@ -1,6 +1,6 @@
 # EmDash の更新とカスタマイズの構成
 
-`apps/web` は EmDash（現在 0.40.1、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
+`apps/web` は EmDash（現在 1.0.1、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
 
 1. **拡張ポイント層**（`apps/web/scripts/emdash-admin/`）: EmDash 管理画面に汎用の差し込み口だけを足す小さなパッチ。サイト固有の UI は置かない。
 2. **プラグイン層**: 実際の振る舞い。信頼済みプラグインの管理画面モジュール（descriptor の `adminEntry`）が拡張ポイントを使う。
@@ -58,6 +58,19 @@ EmDash の既定設定（`migrations.runtime: "auto"`）では、新しい Worke
 - デプロイ前に D1 のバックアップ（Time Travel の復元点の確認、または export）を取る。
 - `bun run migrate:status` で未適用のマイグレーションを確認し、必要なら運用手順どおり fingerprint を指定して先に適用する。
 - ローカルでは、0.35.0 で作ったデータ入りの D1 に 0.40.1 を起動し、15 本が自動適用されること、記事・写真・関連アルバム・ブロックがそのまま開けることを確認した（2026-09-26）。
+
+### 1.0.1 への更新（2026-09-28）
+
+0.40.1 から 1.0.1 への更新では、7 本の拡張ポイントとビルド時の変換がすべて変更なしで適用できた。1.0 にも同等の公式 API はまだないため、拡張ポイントは引き続き必要。
+
+マイグレーションは 4 本（`086_relations_structural`〜`089_auto_seed_completion`）追加された。`087_reference_field_relations` は、古い参照項目をリレーション（`_emdash_content_references`）に移し、移した項目の元の列は以後読まれなくなる。ただし `indexed` または `searchable` の項目は移行しない。`posts.related_album` と `photos.album` はどちらも `indexed: true` のため対象外で、列を直接読む SQL（`src/utils/*`、`src/studio/photo-read.ts`）はそのまま使える。デプロイ前に、本番 D1 でも両項目の `indexed` が 1 であることを確認すること。
+
+```bash
+python3 scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote \
+  --command "SELECT c.slug, f.slug, f.indexed, f.searchable FROM _emdash_fields f JOIN _emdash_collections c ON c.id = f.collection_id WHERE f.type = 'reference'"
+```
+
+ローカルでは、0.40.1 のデータ入り D1 に 1.0.1 を起動し、4 本が自動適用されること、移行されたリンクが 0 件であること、編集シナリオが 0.40.1 と同じ結果になることを確認した。
 
 ## 0.40.1 で確認した挙動差
 
