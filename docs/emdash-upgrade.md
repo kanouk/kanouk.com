@@ -66,9 +66,10 @@ EmDash の既定設定（`migrations.runtime: "auto"`）では、新しい Worke
 マイグレーションは 4 本（`086_relations_structural`〜`089_auto_seed_completion`）追加された。`087_reference_field_relations` は、古い参照項目をリレーション（`_emdash_content_references`）に移し、移した項目の元の列は以後読まれなくなる。ただし `indexed` または `searchable` の項目は移行しない。`posts.related_album` と `photos.album` はどちらも `indexed: true` のため対象外で、列を直接読む SQL（`src/utils/*`、`src/studio/photo-read.ts`）はそのまま使える。デプロイ前に、本番 D1 でも両項目の `indexed` が 1 であることを確認すること。
 
 ```bash
-python3 scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote \
-  --command "SELECT c.slug, f.slug, f.indexed, f.searchable FROM _emdash_fields f JOIN _emdash_collections c ON c.id = f.collection_id WHERE f.type = 'reference'"
+python3 scripts/cloudflare/check_emdash_reference_fields.py --remote
 ```
+
+このチェックは、087 がリレーションへ移す参照項目が 1 つでもある場合と、`photos.album` / `posts.related_album` がインデックス付きの列として残らない場合に、終了コード 1 で止まる。ローカルでインデックスを外した D1 に対して実行し、止まることを確認した。
 
 ローカルでは、0.40.1 のデータ入り D1 に 1.0.1 を起動し、4 本が自動適用されること、移行されたリンクが 0 件であること、編集シナリオが 0.40.1 と同じ結果になることを確認した。
 
