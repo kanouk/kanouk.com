@@ -14,7 +14,7 @@ import editorPanelsDraftAccess from "./patches/editor-panels-draft-access.mjs";
 import imagePresentationAttrs from "./patches/image-presentation-attrs.mjs";
 
 /** The admin version these anchors were verified against. */
-export const VERIFIED_ADMIN_VERSION = "0.40.1";
+export const VERIFIED_ADMIN_VERSION = "1.0.1";
 
 export const adminPatches = [
   blockEditorRuntime,
