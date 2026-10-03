@@ -64,6 +64,8 @@ class ReferenceFieldCheckTests(unittest.TestCase):
     def test_parses_wrangler_json_output_after_guard_banner(self) -> None:
         output = "Cloudflare guard passed: kanouk@gmail.com / account …abcdef\n" + json.dumps([{"results": SAFE, "success": True}])
         self.assertEqual(module.rows_from_wrangler_json(output), SAFE)
+        trailing = json.dumps([{"results": SAFE, "success": True}], indent=2) + "\nCloudflare guard passed: kanouk@gmail.com / account …abcdef\n"
+        self.assertEqual(module.rows_from_wrangler_json(trailing), SAFE)
         with self.assertRaises(ValueError):
             module.rows_from_wrangler_json(json.dumps([{"results": [], "success": False}]))
 

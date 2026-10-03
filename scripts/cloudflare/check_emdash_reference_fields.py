@@ -90,7 +90,8 @@ def rows_from_sqlite(path: Path) -> list[dict[str, Any]]:
 
 
 def rows_from_wrangler_json(output: str) -> list[dict[str, Any]]:
-    payload = json.loads(output[output.index("[") :])
+    # The guard banner is buffered, so it can land before or after Wrangler's JSON.
+    payload, _ = json.JSONDecoder().raw_decode(output, output.index("["))
     if not isinstance(payload, list) or not payload or not payload[0].get("success", True):
         raise ValueError("Unexpected wrangler d1 execute response")
     return list(payload[0].get("results") or [])
