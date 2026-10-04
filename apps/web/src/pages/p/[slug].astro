@@ -302,7 +302,7 @@ const exifDetails = [
 						<div class="photo-overlay">
 							<div class="photo-overlay__copy">
 								{displayTitle && <h1 id="photo-title" {...photo.edit.title}>{displayTitle}</h1>}
-								{displayCaption && <p {...photo.edit.caption}>{displayCaption}</p>}
+								{displayCaption && displayCaption !== displayTitle && <p {...photo.edit.caption}>{displayCaption}</p>}
 							</div>
 						</div>
 					)}
