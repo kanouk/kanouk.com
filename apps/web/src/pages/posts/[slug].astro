@@ -375,8 +375,10 @@ const titleSegments = Array.from(
 			const details = toc?.querySelector("details");
 			const count = toc?.querySelector("[data-toc-count]");
 			if (count) count.textContent = `${headings.length}項目`;
-			// On narrow screens a long contents list would fill the first screen; start it closed.
-			if (details && !window.matchMedia("(min-width: 48rem)").matches) details.open = false;
+			// A long contents list pushes the body below the first screen: start it closed on
+			// narrow screens, and on wide screens once it has more than eight entries.
+			const wide = window.matchMedia("(min-width: 48rem)").matches;
+			if (details && (!wide || headings.length > 8)) details.open = false;
 			if (toc) toc.hidden = false;
 
 			const list = document.createElement("ul");

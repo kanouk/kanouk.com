@@ -210,7 +210,6 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 .skip-link:focus { transform: translateY(0); }
 
 .micro-label,
-.eyebrow,
 .archive-label,
 .meta-label {
 	color: var(--ink-muted);
@@ -473,6 +472,7 @@ main:focus { outline: none; }
 .featured-image-link:hover img { transform: scale(1.018); }
 .image-placeholder { position: relative; display: grid; width: 100%; height: 100%; overflow: hidden; background: var(--paper-muted); color: var(--ink-muted); place-items: center; }
 .image-placeholder::before { position: absolute; inset: 12%; border: 1px solid color-mix(in srgb, var(--rule) 62%, transparent); content: ""; }
+.album-card .image-placeholder::before { content: none; }
 .image-placeholder::after { position: absolute; width: 1px; height: 32%; background: color-mix(in srgb, var(--accent) 45%, transparent); content: ""; transform: rotate(35deg); }
 .image-placeholder__mark { position: relative; z-index: 1; display: grid; width: 3rem; height: 3rem; background: var(--paper-muted); place-items: center; }
 .image-placeholder__label { position: absolute; right: 1rem; bottom: 0.75rem; z-index: 1; font-family: var(--font-code); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.14em; }
@@ -482,6 +482,7 @@ main:focus { outline: none; }
 .post-meta,
 .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem; color: var(--ink-muted); font-size: var(--step--1); line-height: 1.5; }
 .meta-dot { width: 0.2rem; height: 0.2rem; border-radius: 50%; background: currentColor; opacity: 0.55; }
+.meta-item { display: inline-flex; align-items: center; gap: 0.55rem; white-space: nowrap; }
 .featured-title-link { color: inherit; text-decoration: none; }
 .featured-title { max-width: 18em; margin-top: var(--space-4); font-size: var(--heading-section); font-weight: 600; letter-spacing: 0.005em; line-height: 1.55; }
 .featured-title-link:hover .featured-title { color: var(--accent-strong); }
@@ -665,7 +666,7 @@ main:focus { outline: none; }
 .article-toc .toc-link { width: fit-content; font-size: var(--step--1); line-height: 1.65; }
 .article-toc .toc-item:not(.toc-item--nested) > .toc-link { color: var(--ink-soft); font-weight: 600; }
 .sidebar-widgets { margin-top: var(--space-6); color: var(--ink-muted); font-size: var(--step--1); }
-.sidebar-widgets .widget + .widget { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--rule-soft); }
+.sidebar-widgets .widget ~ .widget { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--rule-soft); }
 .sidebar-widgets .widget__title { color: var(--ink-soft); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; }
 .sidebar-widgets .widget__title { display: flex; align-items: center; gap: 0.4rem; }
 .sidebar-widgets .widget__content { margin-top: var(--space-4); }
@@ -724,6 +725,7 @@ main:focus { outline: none; }
 .article-content,
 .page-content {
 	font-size: var(--step-0);
+	line-break: strict;
 	font-feature-settings: "palt" 0, "kern" 1;
 	letter-spacing: 0.025em;
 	line-height: var(--line-body);
@@ -996,7 +998,7 @@ main:focus { outline: none; }
 .photo-grid-size input[type="range"] { width: clamp(6.5rem, 12vw, 9rem); margin: 0; accent-color: var(--accent-strong); cursor: ew-resize; }
 .photo-grid-size input[type="range"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 
-.photo-page { position: relative; padding: 0; }
+.photo-page { --focus: #bfc7ff; position: relative; padding: 0; } /* focus ring stays visible on the dark stage */
 .photo-page > .back { position: absolute; z-index: 3; top: clamp(0.75rem, 2vw, 1.25rem); left: var(--gutter); min-height: var(--control-height); padding-inline: 0.8rem; background: rgb(5 6 5 / 64%); color: #fff; text-decoration: none; text-shadow: 0 1px 2px rgb(0 0 0 / 75%); backdrop-filter: blur(8px); }
 .photo-position { position: absolute; z-index: 3; right: 50%; bottom: var(--space-3); padding: 0.25rem 0.55rem; border-radius: 999px; background: rgb(5 6 5 / 58%); color: rgb(255 255 255 / 78%); font-family: var(--font-code); font-size: 0.64rem; font-variant-numeric: tabular-nums; line-height: 1.4; pointer-events: none; transform: translateX(50%); backdrop-filter: blur(6px); }
 .photo-page figure { width: 100vw; margin-left: calc(50% - 50vw); }

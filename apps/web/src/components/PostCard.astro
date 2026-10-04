@@ -70,12 +70,19 @@ const formattedDate = date
 		<div class="card-body">
 			<div class="card-meta">
 				{formattedDate && <time>{formattedDate}</time>}
-				{formattedDate && (categories?.length ?? 0) > 0 && <span class="meta-dot" />}
+				{/* Each separator travels with the item after it, so a dot never ends a line. */}
 				{categories?.slice(0, 1).map((category) => (
-					<span class="card-category">{category.label}</span>
+					<span class="meta-item">
+						{formattedDate && <span class="meta-dot" />}
+						<span class="card-category">{category.label}</span>
+					</span>
 				))}
-				{(formattedDate || (categories?.length ?? 0) > 0) && readingTime && <span class="meta-dot" />}
-				{readingTime && <span>{readingTime}分で読む</span>}
+				{readingTime && (
+					<span class="meta-item">
+						{(formattedDate || (categories?.length ?? 0) > 0) && <span class="meta-dot" />}
+						<span>{readingTime}分で読む</span>
+					</span>
+				)}
 			</div>
 			<h2 class="card-title">{title}</h2>
 			{excerpt && <p class="card-excerpt">{excerpt}</p>}

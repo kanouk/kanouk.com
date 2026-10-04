@@ -66,7 +66,7 @@ const mapPanelId = "album-map-panel";
 			{(relatedPosts.length > 0 || result.mapCount > 0) && (
 				<div class="album-head__actions">
 					{relatedPosts.map((post, index) => (
-						<a class="album-head__action" href={`${blogOrigin}/posts/${encodeURIComponent(post.id)}`} title={post.title} aria-label={`ブログ記事を読む：${post.title}`}>
+						<a class="album-head__action" href={`${blogOrigin}/posts/${encodeURIComponent(post.id)}`} title={post.title} aria-label={`ブログ記事を読む${relatedPosts.length > 1 ? `（${index + 1}）` : ""}：${post.title}`}>
 							<BookOpen size={16} strokeWidth={1.65} aria-hidden="true" />
 							<span>ブログ記事を読む{relatedPosts.length > 1 && `（${index + 1}）`}</span>
 							<ArrowUpRight size={14} strokeWidth={1.65} aria-hidden="true" />
