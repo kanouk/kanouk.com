@@ -13,7 +13,7 @@ import {
 	PortableText,
 } from "emdash/ui";
 import { Comments, CommentForm } from "emdash/ui/comments";
-import { Search } from "lucide-astro";
+import { ChevronDown, Search } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
@@ -223,7 +223,10 @@ const titleSegments = Array.from(
 				)
 			}
 			<h1 class="article-title" {...post.edit.title}>
-				{titleSegments.map((segment) => <span class="article-title__segment">{segment}</span>)}
+				{titleSegments.map((segment) =>
+					// Keep phrases together, but let a long unbroken word (URL, identifier) wrap.
+					segment.length > 16 ? segment : <span class="article-title__segment">{segment}</span>
+				)}
 			</h1>
 			<div class="article-meta" aria-label="記事情報">
 				{
@@ -265,10 +268,16 @@ const titleSegments = Array.from(
 			{/* Main content */}
 			<div class="article-main">
 				<nav class="toc article-toc" aria-label="目次" hidden>
-					<h2 class="toc-title">目次</h2>
-					<div class="toc-content" id="toc-content">
-						<!-- Populated by JS -->
-					</div>
+					<details class="toc-details" open>
+						<summary class="toc-summary">
+							<span class="toc-title">目次</span>
+							<span class="toc-count" data-toc-count></span>
+							<ChevronDown class="toc-chevron" size={16} strokeWidth={1.75} aria-hidden="true" />
+						</summary>
+						<div class="toc-content" id="toc-content">
+							<!-- Populated by JS -->
+						</div>
+					</details>
 				</nav>
 				<div class="article-content">
 					<PortableText
@@ -363,6 +372,11 @@ const titleSegments = Array.from(
 			}
 
 			const toc = tocContainer.closest(".toc") as HTMLElement | null;
+			const details = toc?.querySelector("details");
+			const count = toc?.querySelector("[data-toc-count]");
+			if (count) count.textContent = `${headings.length}項目`;
+			// On narrow screens a long contents list would fill the first screen; start it closed.
+			if (details && !window.matchMedia("(min-width: 48rem)").matches) details.open = false;
 			if (toc) toc.hidden = false;
 
 			const list = document.createElement("ul");
