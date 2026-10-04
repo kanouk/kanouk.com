@@ -38,6 +38,9 @@
 	--step-5: clamp(2.3rem, 1.95rem + 1.65vw, 3.25rem);
 	--heading-page: clamp(1.55rem, 1.45rem + 0.45vw, 1.9rem);
 	--heading-section: clamp(1.22rem, 1.15rem + 0.3vw, 1.45rem);
+	/* Headings inside article/page bodies, relative to body text (owner chose option 2, 2026-10-05). */
+	--heading-body-2: calc(var(--step-0) * 1.33);
+	--heading-body-3: calc(var(--step-0) * 1.17);
 	--heading-subsection: clamp(1.05rem, 1.01rem + 0.15vw, 1.16rem);
 
 	--space-1: 0.25rem;
@@ -787,7 +790,7 @@ main:focus { outline: none; }
 	padding: 0.08em 0 0.08em 0.85em;
 	border: 0;
 	box-shadow: inset 3px 0 0 var(--accent);
-	font-size: var(--heading-section);
+	font-size: var(--heading-body-2);
 	font-weight: 600;
 	letter-spacing: 0.005em;
 	line-height: 1.62;
@@ -798,7 +801,7 @@ main:focus { outline: none; }
 	margin: 2.3em 0 0.85em;
 	padding-bottom: 0.55em;
 	border-bottom: 1px solid var(--rule);
-	font-size: var(--heading-subsection);
+	font-size: var(--heading-body-3);
 	font-weight: 600;
 	letter-spacing: 0.005em;
 	line-height: 1.62;
