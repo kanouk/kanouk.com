@@ -29,7 +29,7 @@ const { items: results } = query
 				value={query}
 				placeholder="検索語を入力"
 				class="search-input"
-				autofocus
+				autofocus={!query}
 			/>
 			<button type="submit" class="search-button">検索</button>
 		</form>

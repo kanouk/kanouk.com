@@ -39,7 +39,7 @@ const resultUrl = (collection: string, slug: string | null, id: string) =>
 				value={query}
 				placeholder="場所、年月、写真の名前など"
 				autocomplete="off"
-				autofocus
+				autofocus={!query}
 			/>
 			<button type="submit">検索</button>
 		</form>
