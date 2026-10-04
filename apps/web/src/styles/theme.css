@@ -350,12 +350,6 @@ main:focus { outline: none; }
 .site-footer__cross:hover { color: var(--accent-strong); }
 .site-footer__cross { gap: 0.3rem; color: var(--accent-strong); font-weight: 600; }
 .site-footer__meta { display: grid; justify-items: end; gap: var(--space-3); }
-/* Variant "center": a short centred colophon without group labels. */
-.site-footer[data-variant="center"] .site-footer__inner { grid-template-columns: 1fr; justify-items: center; gap: var(--space-4); text-align: center; }
-.site-footer[data-variant="center"] .site-footer__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.site-footer[data-variant="center"] .site-footer__nav { flex-wrap: wrap; justify-content: center; gap: 0 var(--space-5); }
-.site-footer[data-variant="center"] .site-footer__group ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 var(--space-5); margin-top: 0; }
-.site-footer[data-variant="center"] .site-footer__meta { display: flex; align-items: center; justify-content: center; justify-items: initial; gap: var(--space-5); }
 /* Display setting: a quiet segmented control; the current choice is tinted, not filled black. */
 .theme-switcher { display: inline-flex; gap: 0.15rem; padding: 0.15rem; border-radius: 999px; background: var(--paper-muted); }
 .theme-btn { display: inline-grid; width: 2.25rem; height: 2.25rem; place-items: center; padding: 0; border: 0; border-radius: 999px; background: transparent; color: var(--ink-muted); cursor: pointer; }

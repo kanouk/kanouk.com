@@ -17,13 +17,10 @@ interface Props {
 }
 
 const { name, nameHref, tagline, groups, crossSite } = Astro.props;
-const isLocal = ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
-// Design review only: compare footer layouts on a local server.
-const variant = isLocal && Astro.url.searchParams.get("footer") === "center" ? "center" : "columns";
 const groupId = (index: number) => `footer-group-${index}`;
 ---
 
-<footer class="site-footer" data-variant={variant}>
+<footer class="site-footer">
 	<div class="site-footer__inner">
 		<div class="site-footer__identity">
 			<a href={nameHref} class="site-footer__brand">{name}</a>
