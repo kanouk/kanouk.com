@@ -36,12 +36,13 @@ const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
 			<h1 class="archive-title">{year}年{month}月</h1>
 			<p class="archive-count">{posts.length}件の記事</p>
 		</header>
-		<div class="posts-grid">
+		<div class="post-list">
 			{posts.map((post, index) => {
 				const day = post.data.publishedAt instanceof Date ? japanDateParts(post.data.publishedAt).day : undefined;
 				return (
 					<div id={day ? `day-${String(day).padStart(2, "0")}` : undefined}>
 						<PostCard
+							variant="list"
 							title={post.data.title ?? "無題"}
 							excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
 							featuredImage={post.data.featured_image}

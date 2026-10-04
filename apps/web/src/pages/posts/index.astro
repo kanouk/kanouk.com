@@ -2,6 +2,7 @@
 import { getEmDashCollection, getTermsForEntries } from "emdash";
 import Base from "../../layouts/Base.astro";
 import ArchivePagination from "../../components/ArchivePagination.astro";
+import PostCard from "../../components/PostCard.astro";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 
 const PAGE_SIZE = 24;
@@ -32,12 +33,6 @@ const postsWithTags = posts.map((post) => ({
 	excerpt: getPostExcerpt(post.data.excerpt, post.data.content, 180),
 }));
 
-const formatDate = (date: Date) =>
-	date.toLocaleDateString("ja-JP", {
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-	});
 ---
 
 <Base title="すべての記事" description="公開している記事の一覧">
@@ -53,37 +48,20 @@ const formatDate = (date: Date) =>
 			posts.length === 0 ? (
 				<p class="empty">公開中の記事はまだありません。</p>
 			) : (
-				<div class="posts-list">
-					{postsWithTags.map(({ post, categories, tags, excerpt }) => (
-						<article class="post-item">
-							<a href={`/posts/${post.data.id}`} class="post-link">
-								<h2 class="post-title">{post.data.title}</h2>
-								<div class="post-meta">
-									{post.data.publishedAt && (
-										<time>{formatDate(post.data.publishedAt)}</time>
-									)}
-									{post.data.publishedAt && <span class="meta-dot" />}
-									<span>{getReadingTime(post.data.content)}分</span>
-								</div>
-								{excerpt && (
-									<p class="post-excerpt">{excerpt}</p>
-								)}
-							</a>
-							{(categories.length > 0 || tags.length > 0) && (
-								<div class="post-tags">
-									{categories.slice(0, 1).map((category) => (
-										<a href={`/category/${category.slug}`} class="post-category">
-											{category.label}
-										</a>
-									))}
-									{tags.slice(0, 3).map((t) => (
-										<a href={`/tag/${t.slug}`} class="post-tag">
-											{t.label}
-										</a>
-									))}
-								</div>
-							)}
-						</article>
+				<div class="post-list">
+					{postsWithTags.map(({ post, categories, tags, excerpt }, index) => (
+						<PostCard
+							variant="list"
+							title={post.data.title}
+							excerpt={excerpt}
+							featuredImage={post.data.featured_image}
+							href={`/posts/${post.data.id}`}
+							date={post.data.publishedAt ?? undefined}
+							readingTime={getReadingTime(post.data.content)}
+							categories={categories.slice(0, 1).map((category) => ({ slug: category.slug, label: category.label }))}
+							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
+							priority={page === 1 && index < 2}
+						/>
 					))}
 				</div>
 			)
