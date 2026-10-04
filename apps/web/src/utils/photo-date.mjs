@@ -24,3 +24,15 @@ export function capturedDateParts(value) {
 	const [year, month, day] = tokyoDate.format(time).split("-").map(Number);
 	return { year, month, day };
 }
+
+/** "2026年6月7日〜11日" style label for an album's capture range, in Japan time. */
+export function capturedRangeLabel(from, to) {
+	const start = capturedDateParts(from);
+	if (!start) return undefined;
+	const head = `${start.year}年${start.month}月${start.day}日`;
+	const end = capturedDateParts(to);
+	if (!end || (end.year === start.year && end.month === start.month && end.day === start.day)) return head;
+	if (end.year !== start.year) return `${head}〜${end.year}年${end.month}月${end.day}日`;
+	if (end.month !== start.month) return `${head}〜${end.month}月${end.day}日`;
+	return `${head}〜${end.day}日`;
+}
