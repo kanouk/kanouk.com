@@ -133,7 +133,12 @@ const pageCtx = createPublicPageContext({
 						resultsClass="site-search-results"
 						resultClass="site-search-result"
 						collections={["posts", "pages"]}
-					/>
+						minChars={1}
+						searchPage="/search"
+					>
+						<div slot="loading" class="emdash-live-search-loading">検索中…</div>
+						<div slot="no-results" class="emdash-live-search-no-results">一致する記事はありません。Enterで検索ページを開きます。</div>
+					</LiveSearch>
 					{isLoggedIn && <a href="/_emdash/admin" class="site-admin">編集</a>}
 				</div>
 			</div>

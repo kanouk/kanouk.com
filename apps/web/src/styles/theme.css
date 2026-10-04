@@ -301,7 +301,9 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 	background: transparent;
 	font-size: var(--step--1);
 }
-.site-search-input::placeholder { color: var(--ink-muted); }
+.site-search-input::placeholder,
+.search-input::placeholder,
+.photo-search-form input::placeholder { color: var(--ink-soft); }
 .site-search-input:focus-visible { border-bottom-color: var(--accent); box-shadow: none; }
 /* EmDash's scoped live-search style removes the outline on :focus; restore the shared focus ring. */
 .site-tools .site-search-input.emdash-live-search-input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
@@ -309,7 +311,7 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 	position: absolute;
 	top: calc(100% + 0.5rem);
 	right: 0;
-	left: 0;
+	width: max(100%, 20rem);
 	z-index: 1000;
 	max-height: min(28rem, 70vh);
 	overflow-y: auto;
@@ -318,12 +320,16 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 	box-shadow: var(--shadow-lg);
 }
 .site-search-result { display: block; padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule-soft); text-decoration: none; }
+/* EmDash's scoped style pins the list to the left edge; anchor it to the input's right edge instead. */
+.site-tools .site-search-results { left: auto; }
 .site-search-result:last-child { border-bottom: 0; }
 .site-search-result:hover,
 .site-search-result:focus,
 .site-search-result.focused { background: var(--paper-muted); }
 .site-search-result :where(.emdash-live-search-result-title) { display: block; color: var(--ink); font-size: var(--step--1); font-weight: 600; }
-.site-search-result :where(.emdash-live-search-result-collection, .emdash-live-search-result-snippet) { display: block; margin-top: 0.2rem; color: var(--ink-muted); font-size: var(--text-micro); line-height: 1.55; }
+.site-search-result .emdash-live-search-result-collection { display: none; }
+.site-search-results :where(.emdash-live-search-loading, .emdash-live-search-no-results) { padding: 0.8rem 1rem; color: var(--ink-soft); font-size: var(--step--1); }
+.site-search-result :where(.emdash-live-search-result-snippet) { display: block; margin-top: 0.2rem; color: var(--ink-muted); font-size: var(--text-micro); line-height: 1.55; }
 .emdash-live-search-loading,
 .emdash-live-search-no-results { padding: var(--space-4); color: var(--ink-muted); font-size: var(--step--1); }
 
@@ -1032,7 +1038,7 @@ main:focus { outline: none; }
 .photo-action-rail :where(button, a) { display: grid; width: 3.25rem; height: 3.25rem; padding: 0; border: 0; border-radius: 0; background: transparent; color: rgb(255 255 255 / 62%); text-decoration: none; place-items: center; transition: background-color var(--transition), color var(--transition); }
 .photo-action-rail :where(button, a) + :where(button, a) { border-top: 1px solid rgb(255 255 255 / 8%); }
 .photo-action-rail :where(button, a):hover,
-.photo-action-rail :where(button, a):focus-visible { background: rgb(255 255 255 / 9%); color: #fff; }
+.photo-action-rail :where(button, a):focus-visible { background: rgb(255 255 255 / 9%); color: #fff; outline-offset: -3px; } /* the rail clips overflow */
 .photo-action-rail button[aria-pressed="true"],
 .photo-action-rail button[aria-expanded="true"] { background: rgb(255 255 255 / 13%); color: #fff; }
 .photo-tool-pause { display: none; }
@@ -1140,7 +1146,7 @@ main:focus { outline: none; }
 	/* Icon-only header links: keep the label for screen readers. */
 	.site-utility-link { min-width: 2rem; justify-content: center; }
 	/* .site-nav and .site-tools clip overflow at this size; keep their focus rings inside the box. */
-	:where(.site-nav, .site-tools) a:focus-visible { outline-offset: -3px; }
+	:where(.site-nav, .site-tools, .site-switcher) a:focus-visible { outline-offset: -3px; }
 	.site-utility-link span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 	.article-hero { width: 100%; margin-bottom: var(--space-7); }
 	.yohaku-portable-image.align-left,
