@@ -222,7 +222,7 @@ const exifDetails = [
 					<header class="photo-info-panel__header">
 						<div>
 							{displayTitle && <p class="photo-info-panel__title">{displayTitle}</p>}
-							{displayCaption && <p class="photo-info-panel__caption">{displayCaption}</p>}
+							{displayCaption && displayCaption !== displayTitle && <p class="photo-info-panel__caption">{displayCaption}</p>}
 						</div>
 						<button type="button" data-photo-info-close aria-label="写真情報を閉じる">
 							<X size={20} strokeWidth={1.6} aria-hidden="true" />
