@@ -954,10 +954,10 @@ main:focus { outline: none; }
 .album-card .cover img[data-low-resolution="true"] { position: relative; inset: auto; width: auto; max-width: 100%; height: auto; max-height: 100%; object-fit: contain; }
 .album-card:hover .cover img:not([data-low-resolution="true"]) { transform: scale(1.015); }
 .album-overlay { position: absolute; inset: auto 0 0; z-index: 1; display: flex; min-height: 34%; align-items: flex-end; justify-content: flex-end; padding: 1.8rem 0.65rem 0.55rem; background: linear-gradient(180deg, transparent, rgb(5 8 8 / 78%)); pointer-events: none; }
-.album-overlay h2 { color: #fff; font-size: clamp(0.64rem, 0.55rem + 0.35vw, 0.78rem); font-weight: 600; letter-spacing: 0; line-height: 1.35; text-align: right; text-shadow: 0 1px 2px rgb(0 0 0 / 65%); white-space: nowrap; }
+.album-overlay h2 { max-width: 100%; overflow: hidden; color: #fff; font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.84rem); font-weight: 600; letter-spacing: 0; line-height: 1.35; text-align: right; text-overflow: ellipsis; text-shadow: 0 1px 2px rgb(0 0 0 / 65%); white-space: nowrap; }
 .album-card:hover .album-overlay h2 { color: #fff; }
 
-.album-page { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.album-page { padding-block: clamp(2.5rem, 5vw, 4rem) max(5.5rem, clamp(2.5rem, 5vw, 4rem)); } /* room for the floating size control */
 /* Album header: title, facts and the two ways out (article, map) stay in one block so photos start right after it. */
 .album-head { display: grid; gap: var(--space-2); margin-block: var(--space-4) var(--space-6); }
 .album-head h1 { font-size: var(--heading-page); overflow-wrap: anywhere; }
@@ -1093,7 +1093,7 @@ main:focus { outline: none; }
 	.site-brand { min-width: 0; }
 	.site-brand__image { width: 8.5rem; max-width: none; height: auto; }
 	.site-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; overflow: hidden; }
-	.site-nav a { min-width: 0; min-height: 3.25rem; justify-content: center; padding-inline: 0.2rem; font-size: 0.7rem; line-height: 1.35; text-align: center; white-space: normal; }
+	.site-nav a { min-width: 0; min-height: 3.25rem; justify-content: center; padding-inline: 0.2rem; font-size: 0.7rem; line-height: 1.35; text-align: center; white-space: normal; word-break: auto-phrase; }
 	.site-tools { width: 4.5rem; min-width: 0; max-width: 4.5rem; gap: var(--space-2); overflow: hidden; }
 	.site-tools > :where(emdash-live-search, .site-search, .site-admin) { display: none !important; }
 	.home-section-header,
