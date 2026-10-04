@@ -117,7 +117,8 @@ const mapPanelId = "album-map-panel";
 							</span>
 						)}
 					</span>
-					{displayTitle && <span class="photo-card__title">{displayTitle}</span>}
+					{/* A bare file name (any source) is not a caption; keep the grid clean. */}
+					{displayTitle && !looksLikeSourceFilename(displayTitle) && <span class="photo-card__title">{displayTitle}</span>}
 				</a>
 				);
 			})}
