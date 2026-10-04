@@ -287,7 +287,7 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 
 .site-tools { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-4); min-width: 0; }
 .site-utility-link { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2.75rem; color: var(--ink-soft); font-size: var(--text-micro); text-decoration: none; white-space: nowrap; }
-.site-utility-link svg { color: var(--accent-strong); }
+.site-utility-link svg { flex: none; color: var(--accent-strong); }
 .site-utility-link:hover,
 .site-utility-link[aria-current="page"] { color: var(--ink); }
 .site-search { position: relative; width: clamp(8.5rem, 12vw, 10rem); }
@@ -1136,6 +1136,10 @@ main:focus { outline: none; }
 	.article-grid { display: contents; }
 	.article-meta-col { display: none; }
 	.article-main { max-width: var(--reading-measure); margin-inline: auto; }
+	.article-lead { max-width: var(--reading-measure); margin-inline: auto; }
+	/* Icon-only header links: keep the label for screen readers. */
+	.site-utility-link { min-width: 2rem; justify-content: center; }
+	.site-utility-link span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 	.article-hero { width: 100%; margin-bottom: var(--space-7); }
 	.yohaku-portable-image.align-left,
 	.yohaku-portable-image.align-right { float: none; width: 100%; max-width: 100%; margin-inline: 0; }
@@ -1159,8 +1163,6 @@ main:focus { outline: none; }
 
 @media (max-width: 34rem) {
 	.album-map-count-copy { display: none; }
-	.site-utility-link span { display: none; }
-	.site-utility-link { min-width: 2rem; justify-content: center; }
 	.site-nav a { font-size: var(--text-micro); letter-spacing: 0; }
 	.site-footer__nav { grid-template-columns: 1fr; }
 	.site-footer__bottom { align-items: flex-start; flex-direction: column; }

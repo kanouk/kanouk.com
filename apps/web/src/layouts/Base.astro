@@ -183,6 +183,8 @@ const pageCtx = createPublicPageContext({
 		</footer>
 
 		<script>
+			// EmDash's LiveSearch input has no label prop; give it an accessible name.
+			document.querySelector(".site-search-input")?.setAttribute("aria-label", "記事を検索");
 			document.addEventListener("keydown", (event) => {
 				if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
 					event.preventDefault();
