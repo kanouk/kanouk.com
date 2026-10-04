@@ -5,7 +5,7 @@ import { createPublicPageContext } from "emdash/page";
 import LiveSearch from "emdash/ui/search";
 import { Images, Search } from "lucide-astro";
 import ProfileCard from "../components/ProfileCard.astro";
-import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import "../styles/tokens.css";
@@ -157,35 +157,16 @@ const pageCtx = createPublicPageContext({
 			)}
 		</main>
 
-		<footer class="site-footer">
-			<div class="site-footer__inner">
-				<div class="site-footer__lead">
-					<a href="/" class="site-footer__brand">{siteTitle}</a>
-					<p>{siteTagline}</p>
-				</div>
-				<nav class="site-footer__nav" aria-label="フッターナビゲーション">
-					<div>
-						<p class="micro-label">読む</p>
-						<a href="/posts">すべての記事</a>
-						<a href="/archives">月別アーカイブ</a>
-						<a href="/rss.xml">RSS</a>
-						<a href={photosUrl}>写真</a>
-					</div>
-					{pages.length > 0 && (
-						<div>
-							<p class="micro-label">ページ</p>
-							{pages.map((page) => (
-								<a href={`/pages/${page.data.slug || page.id}`}>{page.data.title}</a>
-							))}
-						</div>
-					)}
-				</nav>
-				<div class="site-footer__bottom">
-					<p>kanouk.com</p>
-					<ThemeSwitcher />
-				</div>
-			</div>
-		</footer>
+		<SiteFooter
+			name={siteTitle}
+			nameHref="/"
+			tagline={siteTagline}
+			groups={[
+				{ label: "記事", links: [{ label: "すべての記事", href: "/posts" }, { label: "月別アーカイブ", href: "/archives" }, { label: "RSS", href: "/rss.xml" }] },
+				...(pages.length > 0 ? [{ label: "ページ", links: pages.map((page) => ({ label: page.data.title, href: `/pages/${page.data.slug || page.id}` })) }] : []),
+			]}
+			crossSite={{ label: "写真", href: photosUrl }}
+		/>
 
 		<script>
 			// EmDash's LiveSearch input has no label prop; give it an accessible name.
