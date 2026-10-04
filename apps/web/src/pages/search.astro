@@ -23,7 +23,9 @@ const { items: results } = query
 		<h1 class="search-title">検索</h1>
 
 		<form method="get" action="/search" class="search-form">
+			<label class="sr-only" for="search-query">検索語</label>
 			<input
+				id="search-query"
 				type="search"
 				name="q"
 				value={query}
