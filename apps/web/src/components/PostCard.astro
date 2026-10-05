@@ -2,6 +2,7 @@
 import type { MediaValue } from "emdash";
 import YohakuImage from "./YohakuImage.astro";
 import { resolveImageSource } from "../utils/image-source";
+import { siteDateLabel } from "../utils/photo-date.mjs";
 
 interface Props {
 	title: string;
@@ -34,13 +35,7 @@ const imageSizes =
 		? "(max-width: 719px) calc(100vw - 2rem), 15rem"
 		: "(max-width: 719px) calc(100vw - 2rem), (max-width: 1100px) 50vw, 22rem";
 
-const formattedDate = date
-	? date.toLocaleDateString("ja-JP", {
-			year: "numeric",
-			month: "2-digit",
-			day: "2-digit",
-		})
-	: null;
+const formattedDate = date ? siteDateLabel(date) : null;
 ---
 
 <article class:list={["post-card", { "post-card--list": variant === "list" }]}>
@@ -69,7 +64,7 @@ const formattedDate = date
 		</div>
 		<div class="card-body">
 			<div class="card-meta">
-				{formattedDate && <time>{formattedDate}</time>}
+				{formattedDate && <time datetime={date?.toISOString()}>{formattedDate}</time>}
 				{categories?.slice(0, 1).map((category) => (
 					<span class="card-category">{category.label}</span>
 				))}

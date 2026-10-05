@@ -37,7 +37,7 @@ const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 		.site-header__inner { grid-template-columns: 1fr auto; padding-block: 0.45rem; }
 		.site-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; width: 100%; padding-top: 0.2rem; }
 		.site-tools { grid-column: 2; gap: 0.75rem; }
-		.site-search, .site-admin { display: none; }
+		.site-admin { display: none; }
 	}
 	@media (max-width: 48rem) {
 		:root { --critical-header-height: 4rem; --critical-gutter: clamp(1rem, 5vw, 1.5rem); }
@@ -47,7 +47,7 @@ const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 		.site-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; overflow: hidden; }
 		.site-nav a { min-width: 0; min-height: 3.25rem; justify-content: center; padding-inline: 0.2rem; }
 		.site-tools { width: 4.5rem; min-width: 0; max-width: 4.5rem; gap: 0.5rem; overflow: hidden; }
-		.site-tools > :where(emdash-live-search, .site-search, .site-admin) { display: none !important; }
+		.site-tools > .site-admin { display: none !important; }
 	}
 </style>
 {analyticsEnabled && (

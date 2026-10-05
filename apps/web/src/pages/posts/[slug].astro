@@ -26,6 +26,7 @@ import {
 } from "../../utils/article-social";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { calculateAge } from "../../utils/author-age.mjs";
+import { siteDateLabel } from "../../utils/photo-date.mjs";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { routeSlugCandidates } from "../../utils/route-slug";
 import { env } from "virtual:emdash/env";
@@ -189,12 +190,7 @@ const otherPostsWithTags = otherPosts.map((p) => ({
 	tags: otherTagsByEntry.get(p.data.id) ?? [],
 }));
 
-const publishDate =
-	post.data.publishedAt?.toLocaleDateString("ja-JP", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-		}) ?? null;
+const publishDate = post.data.publishedAt ? siteDateLabel(post.data.publishedAt) : null;
 const titleSegments = Array.from(
 	new Intl.Segmenter("ja", { granularity: "word" }).segment(post.data.title),
 	({ segment }) => segment,
@@ -254,7 +250,7 @@ const titleSegments = Array.from(
 					)
 				}
 				{(categories.length > 0 || bylines.length > 0) && <span class="meta-dot" />}
-				<span>{readingTime}分で読めます</span>
+				<span>{readingTime}分で読む</span>
 			</div>
 			{
 				post.data.excerpt && (

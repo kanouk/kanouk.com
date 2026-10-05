@@ -18,7 +18,7 @@ import {
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
-import { capturedDateParts } from "../../utils/photo-date.mjs";
+import { capturedDateParts, slashDate } from "../../utils/photo-date.mjs";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { getPhotoNavigation } from "../../utils/photo-navigation";
 import { photoPath } from "../../utils/photo-url.mjs";
@@ -64,9 +64,7 @@ const videoSource =
 		: undefined;
 
 const capturedDate = capturedDateParts(photo.data.captured_at);
-const formattedDate = capturedDate
-	? `${capturedDate.year}年${capturedDate.month}月${capturedDate.day}日`
-	: undefined;
+const formattedDate = capturedDate ? slashDate(capturedDate) : undefined;
 
 const latitude = photo.data.latitude;
 const longitude = photo.data.longitude;
