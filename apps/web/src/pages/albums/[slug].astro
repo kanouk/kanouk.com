@@ -1,6 +1,6 @@
 ---
 import { getEmDashEntry } from "emdash";
-import { ArrowLeft, ArrowUpRight, BookOpen, CirclePlay, Grid2x2, Grid3x3, Images } from "lucide-astro";
+import { ArrowLeft, ArrowUpRight, BookOpen, CirclePlay, Grid2x2, Grid3x3, MapPinned } from "lucide-astro";
 import { env } from "virtual:emdash/env";
 import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
@@ -12,6 +12,8 @@ import { getAlbumPage } from "../../utils/album-page";
 import { photoPath } from "../../utils/photo-url.mjs";
 import { albumPhotoAnchor } from "../../utils/photo-return.mjs";
 import { relatedAlbumArticles } from "../../utils/album-articles.mjs";
+import { capturedRangeLabel } from "../../utils/photo-date.mjs";
+import { ALBUM_PAGE_SIZE } from "../../utils/album-page";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
@@ -32,6 +34,10 @@ const relatedPosts = await relatedAlbumArticles(env.DB, album.data.id);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
 const isLocal = ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
 const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : "https://blog.kanouk.com";
+const capturedRange = capturedRangeLabel(album.data.captured_from, album.data.captured_to);
+const firstShown = (result.page - 1) * ALBUM_PAGE_SIZE + 1;
+const lastShown = Math.min(result.page * ALBUM_PAGE_SIZE, result.total);
+const mapPanelId = "album-map-panel";
 ---
 
 <Photos
@@ -47,34 +53,41 @@ const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : 
 			<ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
 			<span>すべてのアルバム</span>
 		</a>
-		<header>
-			<h1 {...album.edit.title}>{album.data.title}</h1>
-			{album.data.description && <p {...album.edit.description}>{album.data.description}</p>}
-			<p class="count">
-				<Images size={15} strokeWidth={1.75} aria-hidden="true" />
-				<span>{result.total}点</span>
-			</p>
-		</header>
-		{relatedPosts.length > 0 && (
-			<nav class="album-related-posts" aria-label="関連するブログ記事">
-				<ul class="album-related-posts__list">
-					{relatedPosts.map((post) => (
-						<li class="album-related-posts__item"><a class="album-related-posts__link" href={`${blogOrigin}/posts/${encodeURIComponent(post.id)}`}>
+		<header class="album-head">
+			<div class="album-head__main">
+				<h1 {...album.edit.title}>
+					{/* Allow names like "Shimane/Tottori/..." to wrap after a slash rather than mid-word. */}
+					{album.data.title.split("/").map((part, index, parts) => index < parts.length - 1 ? <>{part}/<wbr /></> : part)}
+				</h1>
+				<p class="album-head__meta">
+					<span>{result.total.toLocaleString("ja-JP")}点</span>
+					{capturedRange && <span>{capturedRange}</span>}
+					{result.pageCount > 1 && <span>{firstShown}〜{lastShown}点目を表示</span>}
+				</p>
+			</div>
+			{album.data.description && <p class="album-head__description" {...album.edit.description}>{album.data.description}</p>}
+			{(relatedPosts.length > 0 || result.mapCount > 0) && (
+				<div class="album-head__actions">
+					{relatedPosts.map((post, index) => (
+						<a class="album-head__action" href={`${blogOrigin}/posts/${encodeURIComponent(post.id)}`} title={post.title} aria-label={`ブログ記事を読む${relatedPosts.length > 1 ? `（${index + 1}）` : ""}：${post.title}`}>
 							<BookOpen size={16} strokeWidth={1.65} aria-hidden="true" />
-							<span>ブログ記事を読む<span class="album-related-posts__post-title">{post.title}</span></span>
-							<ArrowUpRight size={15} strokeWidth={1.65} aria-hidden="true" />
-						</a></li>
+							<span>ブログ記事を読む{relatedPosts.length > 1 && `（${index + 1}）`}</span>
+							<ArrowUpRight size={14} strokeWidth={1.65} aria-hidden="true" />
+						</a>
 					))}
-				</ul>
-			</nav>
-		)}
-		<AlbumMap markers={[]} count={result.mapCount} source={`/albums/${encodeURIComponent(album.id)}/map.json`} />
+					{result.mapCount > 0 && (
+						<button type="button" class="album-head__action" aria-controls={mapPanelId} aria-expanded="false">
+							<MapPinned size={16} strokeWidth={1.65} aria-hidden="true" />
+							<span>地図で見る</span>
+						</button>
+					)}
+				</div>
+			)}
+		</header>
+		<AlbumMap markers={[]} count={result.mapCount} source={`/albums/${encodeURIComponent(album.id)}/map.json`} panelId={mapPanelId} />
 
-		<nav class="album-pagination" aria-label="アルバムのページ">
-            {result.page > 1 && <a href={pageHref(result.page - 1)} rel="prev">前の50件</a>}
-            <span>{result.page} / {result.pageCount}ページ</span>
-            {result.page < result.pageCount && <a href={pageHref(result.page + 1)} rel="next">次の50件</a>}
-        </nav>
+        {result.total === 0 && <p class="album-empty">写真はまだありません。</p>}
+        {result.total > 0 && (
         <div class="photo-grid" data-photo-grid data-album-id={album.data.id}>
 			{chronologicalPhotos.map((photo, index) => {
 				const displayTitle = publicPhotoTitle({
@@ -104,17 +117,21 @@ const blogOrigin = isLocal || Astro.url.hostname.endsWith("workers.dev") ? "" : 
 							</span>
 						)}
 					</span>
-					{displayTitle && <span class="photo-card__title">{displayTitle}</span>}
+					{/* A bare file name (any source) is not a caption; keep the grid clean. */}
+					{displayTitle && !looksLikeSourceFilename(displayTitle) && <span class="photo-card__title">{displayTitle}</span>}
 				</a>
 				);
 			})}
 		</div>
+		)}
 
-		<nav class="album-pagination" aria-label="アルバムのページ（下部）">
+		{result.pageCount > 1 && (
+		<nav class="album-pagination" aria-label="アルバムのページ">
             {result.page > 1 && <a href={pageHref(result.page - 1)} rel="prev">前の50件</a>}
             <span>{result.page} / {result.pageCount}ページ</span>
             {result.page < result.pageCount && <a href={pageHref(result.page + 1)} rel="next">次の50件</a>}
         </nav>
+		)}
         <div class="photo-grid-size" data-photo-grid-size hidden>
 			<Grid3x3 size={16} strokeWidth={1.65} aria-hidden="true" />
 			<label class="sr-only" for="photo-grid-size">サムネイルの大きさ</label>

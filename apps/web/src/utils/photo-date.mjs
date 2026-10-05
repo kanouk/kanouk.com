@@ -24,3 +24,28 @@ export function capturedDateParts(value) {
 	const [year, month, day] = tokyoDate.format(time).split("-").map(Number);
 	return { year, month, day };
 }
+
+const pad = (value) => String(value).padStart(2, "0");
+
+/** The site's one date format: "2026/06/07". */
+export function slashDate({ year, month, day }) {
+	return `${year}/${pad(month)}/${pad(day)}`;
+}
+
+/** A Date as "2026/06/07" on the Japanese calendar (Workers run in UTC). */
+export function siteDateLabel(date) {
+	if (!(date instanceof Date) || !Number.isFinite(date.getTime())) return undefined;
+	const [year, month, day] = tokyoDate.format(date).split("-").map(Number);
+	return slashDate({ year, month, day });
+}
+
+/** "2026/06/07〜06/11" style label for an album's capture range, in Japan time. */
+export function capturedRangeLabel(from, to) {
+	const start = capturedDateParts(from);
+	if (!start) return undefined;
+	const head = slashDate(start);
+	const end = capturedDateParts(to);
+	if (!end || (end.year === start.year && end.month === start.month && end.day === start.day)) return head;
+	if (end.year !== start.year) return `${head}〜${slashDate(end)}`;
+	return `${head}〜${pad(end.month)}/${pad(end.day)}`;
+}

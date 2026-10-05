@@ -38,10 +38,19 @@ test("profile identity, article hierarchy, and media styles retain distinct cont
 	}
 });
 
+test("album header keeps the article link short and the photos close", async () => {
+	const album = await read("src/pages/albums/[slug].astro");
+	assert.match(album, /<span>ブログ記事を読む\{/);
+	assert.doesNotMatch(album, /album-head__action-title|album-related-posts/);
+	assert.match(album, /aria-controls=\{mapPanelId\}/);
+	assert.match(album, /displayTitle && !looksLikeSourceFilename\(displayTitle\)/, "file-name captions stay out of the grid");
+	assert.equal(album.match(/<nav class="album-pagination"/g)?.length, 1, "pagination only below the photos");
+});
+
 test("album and photo patterns have stable responsive defaults", async () => {
 	const theme = await read("src/styles/theme.css");
 	assert.match(theme, /\.album-feature-card \{/);
-	assert.match(theme, /\.album-related-posts \{/);
+	assert.match(theme, /\.album-head \{/);
 	assert.match(theme, /\.photo-grid \{[^}]*repeat\(5, minmax\(0, 1fr\)\)/);
 	assert.match(theme, /\.photo-grid\[data-custom-size\] \{[^}]*auto-fill/);
 	assert.match(theme, /@media \(max-width: 64rem\)[\s\S]*repeat\(4, minmax\(0, 1fr\)\)/);

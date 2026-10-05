@@ -2,10 +2,9 @@
 import { getEmDashCollection, getSiteSettings } from "emdash";
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
-import LiveSearch from "emdash/ui/search";
 import { Images, Search } from "lucide-astro";
 import ProfileCard from "../components/ProfileCard.astro";
-import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import "../styles/tokens.css";
@@ -126,14 +125,6 @@ const pageCtx = createPublicPageContext({
 				<div class="site-tools">
 					<a href={photosUrl} class="site-utility-link"><Images size={15} strokeWidth={1.7} aria-hidden="true" /><span>写真</span></a>
 					<a href="/search" class="site-utility-link" data-astro-prefetch="hover" aria-current={isSearchPage ? "page" : undefined}><Search size={15} strokeWidth={1.7} aria-hidden="true" /><span>検索</span></a>
-					<LiveSearch
-						placeholder="記事を検索"
-						class="site-search"
-						inputClass="site-search-input"
-						resultsClass="site-search-results"
-						resultClass="site-search-result"
-						collections={["posts", "pages"]}
-					/>
 					{isLoggedIn && <a href="/_emdash/admin" class="site-admin">編集</a>}
 				</div>
 			</div>
@@ -152,42 +143,24 @@ const pageCtx = createPublicPageContext({
 			)}
 		</main>
 
-		<footer class="site-footer">
-			<div class="site-footer__inner">
-				<div class="site-footer__lead">
-					<a href="/" class="site-footer__brand">{siteTitle}</a>
-					<p>{siteTagline}</p>
-				</div>
-				<nav class="site-footer__nav" aria-label="フッターナビゲーション">
-					<div>
-						<p class="micro-label">読む</p>
-						<a href="/posts">すべての記事</a>
-						<a href="/archives">月別アーカイブ</a>
-						<a href="/rss.xml">RSS</a>
-						<a href={photosUrl}>写真</a>
-					</div>
-					{pages.length > 0 && (
-						<div>
-							<p class="micro-label">ページ</p>
-							{pages.map((page) => (
-								<a href={`/pages/${page.data.slug || page.id}`}>{page.data.title}</a>
-							))}
-						</div>
-					)}
-				</nav>
-				<div class="site-footer__bottom">
-					<p><span>Yohaku</span> / kanouk.com</p>
-					<ThemeSwitcher />
-				</div>
-			</div>
-		</footer>
+		<SiteFooter
+			name={siteTitle}
+			nameHref="/"
+			tagline={siteTagline}
+			groups={[
+				{ label: "記事", links: [{ label: "すべての記事", href: "/posts" }, { label: "月別アーカイブ", href: "/archives" }, { label: "RSS", href: "/rss.xml" }] },
+				...(pages.length > 0 ? [{ label: "ページ", links: pages.map((page) => ({ label: page.data.title, href: `/pages/${page.data.slug || page.id}` })) }] : []),
+			]}
+			crossSite={{ label: "写真", href: photosUrl }}
+		/>
 
 		<script>
+			// Cmd/Ctrl+K: focus the search page's field, or open the search page.
 			document.addEventListener("keydown", (event) => {
 				if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
 					event.preventDefault();
-					const input = document.querySelector(".site-search-input") as HTMLInputElement | null;
-					if (input && getComputedStyle(input).display !== "none") input.focus();
+					const input = document.querySelector<HTMLInputElement>(".search-input");
+					if (input) input.focus();
 					else window.location.assign("/search");
 				}
 			});

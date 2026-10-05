@@ -13,22 +13,26 @@ interface Props {
 	markers: Marker[];
 	count?: number;
 	source?: string;
+	/** Render only the panel; the page places a button with aria-controls={panelId}. */
+	panelId?: string;
 }
 
-const { markers, count = markers.length, source } = Astro.props;
+const { markers, count = markers.length, source, panelId } = Astro.props;
 ---
 
 {
 	count > 0 && (
-		<section class="album-map" data-album-map data-markers={JSON.stringify(markers)} data-source={source}>
-			<button type="button" class="album-map-toggle" aria-expanded="false">
-				<MapPinned size={17} strokeWidth={1.75} aria-hidden="true" />
-				<span>地図で見る</span>
-				<small>
-					{count.toLocaleString("ja-JP")}点<span class="album-map-count-copy">に撮影場所あり</span>
-				</small>
-			</button>
-			<div class="album-map-panel" hidden>
+		<section class:list={["album-map", panelId && "album-map--detached"]} data-album-map data-markers={JSON.stringify(markers)} data-source={source}>
+			{!panelId && (
+				<button type="button" class="album-map-toggle" aria-expanded="false">
+					<MapPinned size={17} strokeWidth={1.75} aria-hidden="true" />
+					<span>地図で見る</span>
+					<small>
+						{count.toLocaleString("ja-JP")}点<span class="album-map-count-copy">に撮影場所あり</span>
+					</small>
+				</button>
+			)}
+			<div class="album-map-panel" id={panelId} hidden>
 				<div class="album-map-canvas" aria-label="アルバム内の撮影場所" />
 			</div>
 		</section>
@@ -46,8 +50,9 @@ const { markers, count = markers.length, source } = Astro.props;
 	document.querySelectorAll<HTMLElement>("[data-album-map]").forEach((shell) => {
 		if (shell.dataset.initialized === "true") return;
 		shell.dataset.initialized = "true";
-		const toggle = shell.querySelector<HTMLButtonElement>(".album-map-toggle");
 		const panel = shell.querySelector<HTMLElement>(".album-map-panel");
+		const toggle = shell.querySelector<HTMLButtonElement>(".album-map-toggle")
+			?? (panel?.id ? document.querySelector<HTMLButtonElement>(`button[aria-controls="${panel.id}"]`) : null);
 		const canvas = shell.querySelector<HTMLElement>(".album-map-canvas");
 		if (!toggle || !panel || !canvas) return;
 

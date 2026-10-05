@@ -63,9 +63,10 @@ const filteredPosts = posts.map((post) => ({
 			filteredPosts.length === 0 ? (
 				<p class="no-posts">このカテゴリーの記事はまだありません。</p>
 			) : (
-				<div class="posts-grid">
+				<div class="post-list">
 					{filteredPosts.map(({ post, tags }, index) => (
 						<PostCard
+							variant="list"
 							title={post.data.title}
 							excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
 							featuredImage={post.data.featured_image}

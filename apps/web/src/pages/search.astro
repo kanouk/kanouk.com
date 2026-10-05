@@ -20,17 +20,18 @@ const { items: results } = query
 	description="ブログ内の記事を検索"
 >
 	<section class="search-page">
-		<p class="eyebrow">SEARCH</p>
 		<h1 class="search-title">検索</h1>
 
 		<form method="get" action="/search" class="search-form">
+			<label class="sr-only" for="search-query">検索語</label>
 			<input
+				id="search-query"
 				type="search"
 				name="q"
 				value={query}
 				placeholder="検索語を入力"
 				class="search-input"
-				autofocus
+				autofocus={!query}
 			/>
 			<button type="submit" class="search-button">検索</button>
 		</form>

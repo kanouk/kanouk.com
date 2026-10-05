@@ -2,7 +2,7 @@
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import { Aperture, Search } from "lucide-astro";
-import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import "../styles/tokens.css";
 import "../styles/theme.css";
@@ -17,7 +17,8 @@ interface Props {
 }
 
 const { title, description, image, pageType = "website", content, canonicalPath: canonicalOverride } = Astro.props;
-const fullTitle = `${title} — Photos — kanouk.com`;
+const SITE_NAME = "カノログ フォト";
+const fullTitle = `${title} — ${SITE_NAME}`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
 const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
@@ -36,7 +37,7 @@ const pageCtx = createPublicPageContext({
 	image: absoluteImage,
 	content,
 	seo: { ogImage: absoluteImage },
-	siteName: "Photos — kanouk.com",
+	siteName: SITE_NAME,
 });
 ---
 
@@ -57,7 +58,7 @@ const pageCtx = createPublicPageContext({
 				<span class="photo-brand__mark" aria-hidden="true">
 					<Aperture size={17} strokeWidth={1.6} />
 				</span>
-				<span class="photo-brand__copy"><span>kanouk.com</span><small>Photos</small></span>
+				<span class="photo-brand__copy">{SITE_NAME}</span>
 			</a>
 			<nav class="site-switcher" aria-label="サイト切り替え">
 				<a aria-current={!isSearchPage ? "page" : undefined} href="/albums" data-astro-prefetch="hover">写真</a>
@@ -69,13 +70,12 @@ const pageCtx = createPublicPageContext({
 			</nav>
 		</header>
 		<main id="photo-main"><slot /></main>
-		<footer class="photo-footer">
-			<p><span>kanouk.com / Photos</span></p>
-			<div class="photo-footer__actions">
-				<a href={blogUrl}>ブログを読む</a>
-				<ThemeSwitcher />
-			</div>
-		</footer>
+		<SiteFooter
+			name={SITE_NAME}
+			nameHref="/albums"
+			groups={[{ label: "写真", links: [{ label: "アルバム一覧", href: "/albums" }, { label: "写真を検索", href: searchUrl }] }]}
+			crossSite={{ label: "ブログ", href: blogUrl }}
+		/>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
 </html>

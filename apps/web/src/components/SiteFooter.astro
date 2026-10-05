@@ -1,0 +1,47 @@
+---
+import { ArrowUpRight } from "lucide-astro";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+
+interface FooterLink {
+	label: string;
+	href: string;
+}
+
+interface Props {
+	name: string;
+	nameHref: string;
+	tagline?: string;
+	groups: Array<{ label: string; links: FooterLink[] }>;
+	/** The sister site (blog <-> photos). */
+	crossSite: FooterLink;
+}
+
+const { name, nameHref, tagline, groups, crossSite } = Astro.props;
+const groupId = (index: number) => `footer-group-${index}`;
+---
+
+<footer class="site-footer">
+	<div class="site-footer__inner">
+		<div class="site-footer__identity">
+			<a href={nameHref} class="site-footer__brand">{name}</a>
+			{tagline && <p class="site-footer__tagline">{tagline}</p>}
+		</div>
+		<nav class="site-footer__nav" aria-label="フッター">
+			{groups.map((group, index) => (
+				<div class="site-footer__group">
+					<p class="site-footer__label" id={groupId(index)}>{group.label}</p>
+					<ul aria-labelledby={groupId(index)}>
+						{group.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+					</ul>
+				</div>
+			))}
+		</nav>
+		<div class="site-footer__meta">
+			<a href={crossSite.href} class="site-footer__cross">
+				<span>{crossSite.label}</span>
+				<ArrowUpRight size={14} strokeWidth={1.65} aria-hidden="true" />
+			</a>
+			<ThemeSwitcher />
+		</div>
+	</div>
+</footer>

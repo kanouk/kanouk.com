@@ -13,7 +13,7 @@ import {
 	PortableText,
 } from "emdash/ui";
 import { Comments, CommentForm } from "emdash/ui/comments";
-import { Search } from "lucide-astro";
+import { ChevronDown, Search } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
@@ -26,6 +26,7 @@ import {
 } from "../../utils/article-social";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { calculateAge } from "../../utils/author-age.mjs";
+import { siteDateLabel } from "../../utils/photo-date.mjs";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { routeSlugCandidates } from "../../utils/route-slug";
 import { env } from "virtual:emdash/env";
@@ -189,12 +190,7 @@ const otherPostsWithTags = otherPosts.map((p) => ({
 	tags: otherTagsByEntry.get(p.data.id) ?? [],
 }));
 
-const publishDate =
-	post.data.publishedAt?.toLocaleDateString("ja-JP", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-		}) ?? null;
+const publishDate = post.data.publishedAt ? siteDateLabel(post.data.publishedAt) : null;
 const titleSegments = Array.from(
 	new Intl.Segmenter("ja", { granularity: "word" }).segment(post.data.title),
 	({ segment }) => segment,
@@ -223,7 +219,10 @@ const titleSegments = Array.from(
 				)
 			}
 			<h1 class="article-title" {...post.edit.title}>
-				{titleSegments.map((segment) => <span class="article-title__segment">{segment}</span>)}
+				{titleSegments.map((segment) =>
+					// Keep phrases together, but let a long unbroken word (URL, identifier) wrap.
+					segment.length > 16 ? segment : <span class="article-title__segment">{segment}</span>
+				)}
 			</h1>
 			<div class="article-meta" aria-label="記事情報">
 				{
@@ -251,7 +250,7 @@ const titleSegments = Array.from(
 					)
 				}
 				{(categories.length > 0 || bylines.length > 0) && <span class="meta-dot" />}
-				<span>{readingTime}分で読めます</span>
+				<span>{readingTime}分で読む</span>
 			</div>
 			{
 				post.data.excerpt && (
@@ -265,10 +264,16 @@ const titleSegments = Array.from(
 			{/* Main content */}
 			<div class="article-main">
 				<nav class="toc article-toc" aria-label="目次" hidden>
-					<h2 class="toc-title">目次</h2>
-					<div class="toc-content" id="toc-content">
-						<!-- Populated by JS -->
-					</div>
+					<details class="toc-details" open>
+						<summary class="toc-summary">
+							<span class="toc-title">目次</span>
+							<span class="toc-count" data-toc-count></span>
+							<ChevronDown class="toc-chevron" size={16} strokeWidth={1.75} aria-hidden="true" />
+						</summary>
+						<div class="toc-content" id="toc-content">
+							<!-- Populated by JS -->
+						</div>
+					</details>
 				</nav>
 				<div class="article-content">
 					<PortableText
@@ -363,6 +368,13 @@ const titleSegments = Array.from(
 			}
 
 			const toc = tocContainer.closest(".toc") as HTMLElement | null;
+			const details = toc?.querySelector("details");
+			const count = toc?.querySelector("[data-toc-count]");
+			if (count) count.textContent = `${headings.length}項目`;
+			// A long contents list pushes the body below the first screen: start it closed on
+			// narrow screens, and on wide screens once it has more than eight entries.
+			const wide = window.matchMedia("(min-width: 48rem)").matches;
+			if (details && (!wide || headings.length > 8)) details.open = false;
 			if (toc) toc.hidden = false;
 
 			const list = document.createElement("ul");

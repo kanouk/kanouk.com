@@ -18,7 +18,7 @@ import {
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
-import { capturedDateParts } from "../../utils/photo-date.mjs";
+import { capturedDateParts, slashDate } from "../../utils/photo-date.mjs";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { getPhotoNavigation } from "../../utils/photo-navigation";
 import { photoPath } from "../../utils/photo-url.mjs";
@@ -64,9 +64,7 @@ const videoSource =
 		: undefined;
 
 const capturedDate = capturedDateParts(photo.data.captured_at);
-const formattedDate = capturedDate
-	? `${capturedDate.year}年${capturedDate.month}月${capturedDate.day}日`
-	: undefined;
+const formattedDate = capturedDate ? slashDate(capturedDate) : undefined;
 
 const latitude = photo.data.latitude;
 const longitude = photo.data.longitude;
@@ -222,7 +220,7 @@ const exifDetails = [
 					<header class="photo-info-panel__header">
 						<div>
 							{displayTitle && <p class="photo-info-panel__title">{displayTitle}</p>}
-							{displayCaption && <p class="photo-info-panel__caption">{displayCaption}</p>}
+							{displayCaption && displayCaption !== displayTitle && <p class="photo-info-panel__caption">{displayCaption}</p>}
 						</div>
 						<button type="button" data-photo-info-close aria-label="写真情報を閉じる">
 							<X size={20} strokeWidth={1.6} aria-hidden="true" />
@@ -302,7 +300,7 @@ const exifDetails = [
 						<div class="photo-overlay">
 							<div class="photo-overlay__copy">
 								{displayTitle && <h1 id="photo-title" {...photo.edit.title}>{displayTitle}</h1>}
-								{displayCaption && <p {...photo.edit.caption}>{displayCaption}</p>}
+								{displayCaption && displayCaption !== displayTitle && <p {...photo.edit.caption}>{displayCaption}</p>}
 							</div>
 						</div>
 					)}
