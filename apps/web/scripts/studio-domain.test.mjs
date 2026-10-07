@@ -20,11 +20,23 @@ test("organizer uploads remain blocked until location review is marked clean", (
 	assert.equal(domain.needsLocationReview({
 		source_metadata: { photo_organizer_upload: true, location_review: "clean" },
 	}), false);
+	// The owner keeps uploaded EXIF locations; such uploads are publishable.
+	assert.equal(domain.needsLocationReview({
+		source_metadata: { photo_organizer_upload: true, location_review: "kept" },
+	}), false);
 	assert.ok(domain.photoReviewFlags({
 		caption: "caption",
 		alt: "alt",
 		source_metadata: { photo_organizer_upload: true, location_review: "unreviewed" },
 	}).includes("location-unreviewed"));
+});
+
+test("hidden photos are flagged as hidden instead of unpublished", () => {
+	const data = { caption: "c", alt: "a", source_metadata: { hidden: true } };
+	assert.equal(domain.isHiddenPhoto(data), true);
+	assert.deepEqual(domain.photoReviewFlags(data, { status: "draft" }), ["hidden"]);
+	assert.equal(domain.isHiddenPhoto({ source_metadata: { hidden: "yes" } }), false);
+	assert.deepEqual(domain.photoReviewFlags({ caption: "c", alt: "a" }, { status: "draft" }), ["unpublished"]);
 });
 
 test("bulk text modes preserve unspecified fields", () => {

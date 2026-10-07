@@ -5,6 +5,7 @@ export type ReviewFlag =
 	| "missing-alt"
 	| "has-location"
 	| "location-unreviewed"
+	| "hidden"
 	| "unpublished";
 
 export type BulkTextMode = "overwrite" | "prepend" | "append";
@@ -89,7 +90,8 @@ export function photoReviewFlags(
 		flags.push("has-location");
 	}
 	if (needsLocationReview(data)) flags.push("location-unreviewed");
-	if (options.status && options.status !== "published") flags.push("unpublished");
+	if (isHiddenPhoto(data)) flags.push("hidden");
+	else if (options.status && options.status !== "published") flags.push("unpublished");
 	return flags;
 }
 
@@ -98,7 +100,17 @@ export function needsLocationReview(value: unknown): boolean {
 	const data = value as Record<string, unknown>;
 	if (!data.source_metadata || typeof data.source_metadata !== "object" || Array.isArray(data.source_metadata)) return false;
 	const metadata = data.source_metadata as Record<string, unknown>;
-	return metadata.photo_organizer_upload === true && metadata.location_review !== "clean";
+	return metadata.photo_organizer_upload === true && !LOCATION_REVIEW_DONE.has(String(metadata.location_review ?? ""));
+}
+
+/** "clean": location removed; "kept": the owner keeps the uploaded EXIF location. */
+export const LOCATION_REVIEW_DONE = new Set(["clean", "kept"]);
+
+/** A photo the owner hid from the public site; publish actions skip it until it is shown again. */
+export function isHiddenPhoto(value: unknown): boolean {
+	if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+	const metadata = (value as Record<string, unknown>).source_metadata;
+	return Boolean(metadata && typeof metadata === "object" && !Array.isArray(metadata) && (metadata as Record<string, unknown>).hidden === true);
 }
 
 export function applyBulkText(

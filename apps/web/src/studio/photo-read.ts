@@ -13,11 +13,14 @@ const effective = sql`SELECT p.id, p.slug, p.status, p.created_at, p.updated_at,
  FROM ec_photos p LEFT JOIN revisions d ON d.id=p.draft_revision_id
  WHERE p.deleted_at IS NULL`;
 
+const notHidden = sql`coalesce(json_extract(data,'$.source_metadata.hidden'),0) != 1`;
+
 const flags = {
  "missing-caption": sql`trim(coalesce(json_extract(data,'$.caption'),''))=''`,
  "missing-alt": sql`trim(coalesce(json_extract(data,'$.alt'),''))='' AND trim(coalesce(json_extract(data,'$.image.alt'),''))=''`,
- "unpublished": sql`status != 'published'`,
- "location-unreviewed": sql`json_extract(data,'$.source_metadata.photo_organizer_upload')=1 AND coalesce(json_extract(data,'$.source_metadata.location_review'),'') != 'clean'`,
+ "unpublished": sql`status != 'published' AND ${notHidden}`,
+ "hidden": sql`NOT ${notHidden}`,
+ "location-unreviewed": sql`json_extract(data,'$.source_metadata.photo_organizer_upload')=1 AND coalesce(json_extract(data,'$.source_metadata.location_review'),'') NOT IN ('clean','kept')`,
  "has-location": sql`json_extract(data,'$.latitude') IS NOT NULL OR json_extract(data,'$.longitude') IS NOT NULL OR json_extract(data,'$.altitude') IS NOT NULL OR EXISTS (SELECT 1 FROM json_tree(data,'$.source_metadata') WHERE lower(replace(replace(key,'_',''),'-','')) IN ('gps','gpslatitude','gpslongitude','gpsaltitude','latitude','longitude','altitude','location') AND value IS NOT NULL AND value!='')`,
 };
 
@@ -25,7 +28,7 @@ export async function readAlbumCounts(database?: Kysely<any>) {
  const db = database ?? await (await import("emdash/runtime")).getDb();
  const result = await sql<{album: string; total: number; pending: number; maxPosition: number}>`
  WITH effective AS (${effective}) SELECT json_extract(data,'$.album') AS album,
- count(*) AS total, sum(CASE WHEN status!='published' OR (draft_revision_id IS NOT NULL AND draft_revision_id IS NOT live_revision_id) THEN 1 ELSE 0 END) AS pending,
+ count(*) AS total, sum(CASE WHEN ${notHidden} AND (status!='published' OR (draft_revision_id IS NOT NULL AND draft_revision_id IS NOT live_revision_id)) THEN 1 ELSE 0 END) AS pending,
  coalesce(max(cast(json_extract(data,'$.position') AS REAL)),0) AS maxPosition
  FROM effective GROUP BY json_extract(data,'$.album')`.execute(db);
  return { items: result.rows };

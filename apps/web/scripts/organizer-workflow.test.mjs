@@ -190,3 +190,21 @@ test("published derivative helpers expose only the five preview-v2 sizes", () =>
 	}), true);
 	assert.equal(workflow.canCopyPublishedImageVariants({ status: "draft" }), false);
 });
+
+test("re-selecting after an interruption skips files already in the album and repeats within the selection", () => {
+	const file = (name, size) => ({ name, type: "image/jpeg", size });
+	const queue = workflow.createUploadQueue([file("a.jpg", 10), file("b.jpg", 20), file("a.jpg", 10), file("c.jpg", 30)], {
+		batchId: "b", startPosition: 0, acceptedTypes, maxBytes: 100, maxFiles: 10,
+	});
+	const identities = workflow.existingUploadIdentities([
+		{ data: { source_metadata: { upload_key: "b.jpg|20", content_hash: "sha1:x" } } },
+		{ data: { source_metadata: "not an object" } },
+		{ data: null },
+	]);
+	assert.deepEqual([...identities.keys], ["b.jpg|20"]);
+	assert.deepEqual([...identities.hashes], ["sha1:x"]);
+	const stages = workflow.skipDuplicateUploads(queue, identities.keys).map((item) => item.stage);
+	assert.deepEqual(stages, ["queued", "skipped-duplicate", "skipped-duplicate", "queued"]);
+	assert.equal(workflow.isUploadQueueSettled("skipped-duplicate"), true);
+	assert.equal(workflow.isUploadQueueRetryable("skipped-duplicate"), false);
+});

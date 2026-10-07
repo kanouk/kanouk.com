@@ -118,7 +118,7 @@ async function isCurrentPublicMedia(
 			JOIN revisions AS candidate
 				ON candidate.id IN (photo.live_revision_id, photo.draft_revision_id)
 			WHERE json_extract(candidate.data, '$.source_metadata.photo_organizer_upload') = 1
-				AND COALESCE(json_extract(candidate.data, '$.source_metadata.location_review'), '') != 'clean'
+				AND COALESCE(json_extract(candidate.data, '$.source_metadata.location_review'), '') NOT IN ('clean', 'kept')
 				AND (
 					json_extract(candidate.data, '$.image.meta.storageKey') = ?1
 					OR json_extract(candidate.data, '$.video.meta.storageKey') = ?1
@@ -140,7 +140,7 @@ async function isCurrentPublicMedia(
 				)
 				AND (
 					COALESCE(json_extract(live.data, '$.source_metadata.photo_organizer_upload'), 0) != 1
-					OR json_extract(live.data, '$.source_metadata.location_review') = 'clean'
+					OR json_extract(live.data, '$.source_metadata.location_review') IN ('clean', 'kept')
 				)
 		) OR EXISTS (
 			SELECT 1
