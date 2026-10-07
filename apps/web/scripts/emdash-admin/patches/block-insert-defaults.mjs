@@ -52,8 +52,8 @@ export default {
 
     editor.within("function ContentEditor({ collection,", "\nfunction ", (scope) => {
       scope.replace(
-        "\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
-        "\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\tdocumentData: formData,\n\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
+        "\t\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
+        "\t\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdocumentData: formData,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
       );
     });
   },
