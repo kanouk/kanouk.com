@@ -68,10 +68,11 @@ function mediaRequest(storageKey, init, host = "blog.kanouk.com") {
 	);
 }
 
-test("published clean Photo is public while draft, deleted, and unreviewed Photos fail closed", async () => {
+test("published clean or location-kept Photo is public while draft, deleted, and unreviewed Photos fail closed", async () => {
 	const { sqlite, database } = fixtureDatabase();
 	for (const [id, storageKey] of [
 		["media-clean", "photos/clean.jpg"],
+		["media-kept", "photos/kept.jpg"],
 		["media-review", "photos/review.jpg"],
 		["media-draft", "photos/draft.jpg"],
 		["media-deleted", "photos/deleted.jpg"],
@@ -81,6 +82,13 @@ test("published clean Photo is public while draft, deleted, and unreviewed Photo
 		data: {
 			image: { id: "media-clean", meta: { storageKey: "photos/clean.jpg" } },
 			source_metadata: { photo_organizer_upload: 1, location_review: "clean" },
+		},
+	});
+	addContent(sqlite, "photos", {
+		id: "photo-kept",
+		data: {
+			image: { id: "media-kept", meta: { storageKey: "photos/kept.jpg" } },
+			source_metadata: { photo_organizer_upload: 1, location_review: "kept" },
 		},
 	});
 	addContent(sqlite, "photos", {
@@ -101,9 +109,11 @@ test("published clean Photo is public while draft, deleted, and unreviewed Photo
 		data: { image: { id: "media-deleted", meta: { storageKey: "photos/deleted.jpg" } } },
 	});
 
-	assert.equal((await classifyMediaRead(
-		mediaRequest("photos/clean.jpg", undefined, "photos.kanouk.com"), database,
-	)).access, "public");
+	for (const key of ["photos/clean.jpg", "photos/kept.jpg"]) {
+		assert.equal((await classifyMediaRead(
+			mediaRequest(key, undefined, "photos.kanouk.com"), database,
+		)).access, "public", key);
+	}
 	for (const key of ["photos/review.jpg", "photos/draft.jpg", "photos/deleted.jpg"]) {
 		assert.equal((await classifyMediaRead(
 			mediaRequest(key, undefined, "photos.kanouk.com"), database,

@@ -5,6 +5,7 @@ import {
 	type MediaItem as AdminMediaItem,
 } from "@emdash-cms/admin";
 import { filenameTitle } from "./domain";
+import type { PhotoMetadata } from "./photo-metadata";
 import { attachEditingRevision } from "./organizer-workflow";
 
 export type ContentItem = AdminContentItem & { _rev?: string };
@@ -149,6 +150,7 @@ export async function createPhotoFromMedia(
 	media: PhotoMediaItem,
 	albumId: string,
 	position: number,
+	metadata?: PhotoMetadata,
 ): Promise<ContentEnvelope> {
 	const title = filenameTitle(media.filename);
 	return createDraft("photos", {
@@ -170,20 +172,30 @@ export async function createPhotoFromMedia(
 		caption: "",
 		album: albumId,
 		position,
+		...(metadata?.capturedAt ? { captured_at: metadata.capturedAt } : {}),
+		...(metadata?.latitude !== undefined && metadata.longitude !== undefined
+			? { latitude: metadata.latitude, longitude: metadata.longitude, ...(metadata.altitude !== undefined ? { altitude: metadata.altitude } : {}) }
+			: {}),
 		source_system: "photo-organizer",
 		source_id: media.id,
 		source_metadata: {
 			photo_organizer_upload: true,
 			uploaded_at: new Date().toISOString(),
-			location_review: "unreviewed",
+			// The owner keeps EXIF (capture time and location) as uploaded; photos
+			// that should not be public are hidden or deleted instead.
+			location_review: "kept",
 			...(media.contentHash ? { content_hash: media.contentHash } : {}),
 		},
 	});
 }
 
-export async function uploadPhoto(file: File, albumId: string, position: number): Promise<ContentEnvelope> {
-	const media = await uploadPhotoMedia(file);
-	return createPhotoFromMedia(media, albumId, position);
+export async function unpublishContent(collection: "photos" | "albums", id: string): Promise<ContentEnvelope> {
+	return unwrapContent(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}/unpublish?locale=ja`, { method: "POST" }));
+}
+
+/** Move to EmDash's trash (restorable from the collection's trash view). */
+export async function trashContent(collection: "photos" | "albums", id: string): Promise<void> {
+	await unwrap<unknown>(await apiFetch(`/_emdash/api/content/${collection}/${encodeURIComponent(id)}?locale=ja`, { method: "DELETE" }));
 }
 
 export async function recordOperation(input: {
