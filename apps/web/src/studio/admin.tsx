@@ -42,6 +42,7 @@ import {
 	canCopyPublishedImageVariants,
 	captionSelectionAfterSave,
 	createUploadQueue,
+	existingUploadIdentities,
 	isUploadQueueRetryable,
 	isUploadQueueSettled,
 	dateTimeLocalInputValue,
@@ -49,7 +50,9 @@ import {
 	preparePhotoDraftPatch,
 	publicImageVariantPath,
 	retryFailedUploadQueue,
+	skipDuplicateUploads,
 	updateUploadQueueItem,
+	uploadFileKey,
 	type UploadQueueItem,
 } from "./organizer-workflow";
 import { readPhotoMetadata, type PhotoMetadata } from "./photo-metadata";
@@ -69,6 +72,7 @@ const UPLOAD_STAGE_LABELS: Record<UploadQueueItem<File, PhotoMediaItem>["stage"]
 	"media-ready": "アップロード済み",
 	"creating-photo": "アルバムに登録中",
 	"photo-created": "追加済み",
+	"skipped-duplicate": "アルバムにあるため省略",
 	"failed-validation": "追加対象外",
 	"failed-media": "アップロード失敗",
 	"failed-photo": "登録失敗",
@@ -424,6 +428,8 @@ function AlbumOrganizer({
 	const onPhotoUpdatedRef = useRef(onPhotoUpdated);
 	const [uploadQueue, setUploadQueue] = useState<UploadQueueItem<File, PhotoMediaItem>[]>([]);
 	const uploadMetadata = useRef(new WeakMap<File, PhotoMetadata>());
+	const knownHashes = useRef(new Set<string>());
+	const [uploading, setUploading] = useState(false);
 	const [dragDepth, setDragDepth] = useState(0);
 	const [albumDraft, setAlbumDraft] = useState({
 		title: textValue(dataOf(album).title),
@@ -500,6 +506,21 @@ function AlbumOrganizer({
 		window.addEventListener("beforeunload", warn);
 		return () => window.removeEventListener("beforeunload", warn);
 	}, [albumDraftDirty, busy]);
+
+	useEffect(() => {
+		if (!uploading) return;
+		// The admin moves between pages without reloading, which beforeunload cannot see.
+		const confirmLeave = (event: MouseEvent) => {
+			const link = (event.target as Element | null)?.closest?.("a[href]");
+			if (!link || link.getAttribute("target") === "_blank") return;
+			if (!window.confirm("写真をアップロード中です。移動すると進み具合が見えなくなり、途中で止まることがあります。移動しますか？")) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		};
+		document.addEventListener("click", confirmLeave, true);
+		return () => document.removeEventListener("click", confirmLeave, true);
+	}, [uploading]);
 
 	const touch = (id: string) => setTouchedIds((current) => new Set(current).add(id));
 	const retainFailures = (items: Failure[]) => {
@@ -779,13 +800,18 @@ function AlbumOrganizer({
 			.map((file, index) => ({ file, index }))
 			.toSorted((left, right) => time(left.file) - time(right.file) || left.index - right.index)
 			.map(({ file }) => file);
-		const queue = createUploadQueue<File, PhotoMediaItem>(ordered, {
+		let existing: ContentItem[];
+		try { existing = await albumPhotosForOperation(album.id); }
+		catch (cause) { setError(new Error(reasonOf(cause))); setMessage(""); setBusy(false); return; }
+		const identities = existingUploadIdentities(existing);
+		knownHashes.current = identities.hashes;
+		const queue = skipDuplicateUploads(createUploadQueue<File, PhotoMediaItem>(ordered, {
 			batchId: String(Date.now()),
-			startPosition: Math.max(albumCount?.maxPosition ?? 0, ...albumPhotos.map((photo) => Number(dataOf(photo).position) || 0)),
+			startPosition: Math.max(albumCount?.maxPosition ?? 0, ...existing.map((photo) => Number(dataOf(photo).position) || 0)),
 			acceptedTypes: ACCEPTED_IMAGE_TYPES,
 			maxBytes: MAX_UPLOAD_BYTES,
 			maxFiles: MAX_UPLOAD_FILES,
-		});
+		}), identities.keys);
 		setUploadQueue(queue);
 		setBusy(false);
 		await executeUploadQueue(queue);
@@ -807,7 +833,11 @@ function AlbumOrganizer({
 	};
 
 	const executeUploadQueue = async (initial: UploadQueueItem<File, PhotoMediaItem>[]) => {
-		setBusy(true); setError(null); setFailures([]);
+		setBusy(true); setUploading(true); setError(null); setFailures([]);
+		// Keep a phone's screen on: a locked screen suspends the page and stops the uploads.
+		let wakeLock: { release: () => Promise<void> } | null = null;
+		try { wakeLock = await (navigator as Navigator & { wakeLock?: { request: (type: "screen") => Promise<{ release: () => Promise<void> }> } }).wakeLock?.request("screen") ?? null; }
+		catch { /* not supported or not allowed */ }
 		let working = initial;
 		const updateItem = (id: string, patch: Partial<Omit<UploadQueueItem<File, PhotoMediaItem>, "id" | "file" | "position">>) => {
 			working = updateUploadQueueItem(working, id, patch);
@@ -830,11 +860,17 @@ function AlbumOrganizer({
 				}
 			}
 			if (item.stage !== "media-ready" || !item.media) continue;
+			// EmDash reuses the stored file for identical content; such a photo is already in the album.
+			if (item.media.contentHash && knownHashes.current.has(item.media.contentHash)) {
+				updateItem(item.id, { stage: "skipped-duplicate", error: undefined });
+				continue;
+			}
 			updateItem(item.id, { stage: "creating-photo", error: undefined });
 			setMessage(`${item.file.name} をアルバムに登録中…`);
 			try {
 				const metadata = uploadMetadata.current.get(item.file);
-				const result = await createPhotoFromMedia(item.media, album.id, item.position, metadata);
+				const result = await createPhotoFromMedia(item.media, album.id, item.position, metadata, uploadFileKey(item.file));
+				if (item.media.contentHash) knownHashes.current.add(item.media.contentHash);
 				if (metadata?.capturedAt) capturedTimes.push(metadata.capturedAt);
 				onPhotoAdded(result.item);
 				touch(result.item.id);
@@ -844,6 +880,9 @@ function AlbumOrganizer({
 				updateItem(item.id, { stage: "failed-photo", media: item.media, error: reasonOf(cause) });
 			}
 		}
+		await wakeLock?.release().catch(() => undefined);
+		setUploading(false);
+		const skipped = working.filter((item) => item.stage === "skipped-duplicate").length;
 		const failed = working
 			.filter((item) => item.stage.startsWith("failed-"))
 			.map((item) => ({ id: item.file.name, reason: item.error ?? "不明なエラー" }));
@@ -859,7 +898,7 @@ function AlbumOrganizer({
 		}).catch(() => undefined);
 		setMessage(failed.length
 			? `${created.length}点を追加・${failed.length}点が失敗（この画面で失敗分だけ再試行できます）`
-			: `${created.length}点を追加しました。「${album.status === "published" ? "変更を公開" : "アルバムを公開"}」で公開されます。`);
+			: `${created.length}点を追加しました${skipped ? `（アルバムにある${skipped}点は省略）` : ""}。「${album.status === "published" ? "変更を公開" : "アルバムを公開"}」で公開されます。`);
 		setBusy(false);
 		if (created.length) onRefresh();
 	};
@@ -919,7 +958,7 @@ function AlbumOrganizer({
 					{item.error && <small>{item.error}</small>}
 				</li>)}</ul>
 			</details>
-			<p className="photo-tools-muted">撮影日の順に追加します。追加した写真は、公開ボタンを押すまでサイトに出ません。画面を閉じると、失敗分の再試行用ファイルは消えます。</p>
+			<p className="photo-tools-muted">{uploading ? "終わるまで、この画面を開いたままにしてください。" : ""}撮影日の順に追加します。追加した写真は、公開ボタンを押すまでサイトに出ません。途中で止まった場合は、同じ写真をまとめて選び直すと、まだの分だけが追加されます。</p>
 		</section>}
 		{!albumReady && <p className="photo-tools-status" role="status">写真を読み込んでいます…</p>}
 		{photoDraftDirty && <p className="photo-tools-status" role="status">写真情報に未保存の変更があります。下書き保存すると他の操作を再開できます。</p>}

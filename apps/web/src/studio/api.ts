@@ -151,6 +151,7 @@ export async function createPhotoFromMedia(
 	albumId: string,
 	position: number,
 	metadata?: PhotoMetadata,
+	uploadKey?: string,
 ): Promise<ContentEnvelope> {
 	const title = filenameTitle(media.filename);
 	return createDraft("photos", {
@@ -184,6 +185,7 @@ export async function createPhotoFromMedia(
 			// The owner keeps EXIF (capture time and location) as uploaded; photos
 			// that should not be public are hidden or deleted instead.
 			location_review: "kept",
+			...(uploadKey ? { upload_key: uploadKey } : {}),
 			...(media.contentHash ? { content_hash: media.contentHash } : {}),
 		},
 	});

@@ -45,6 +45,7 @@ export type UploadStage =
 	| "media-ready"
 	| "creating-photo"
 	| "photo-created"
+	| "skipped-duplicate"
 	| "failed-validation"
 	| "failed-media"
 	| "failed-photo";
@@ -124,7 +125,41 @@ export function retryFailedUploadQueue<TFile extends UploadFileLike, TMedia>(
 }
 
 export function isUploadQueueSettled(stage: UploadStage): boolean {
-	return stage === "photo-created" || stage.startsWith("failed-");
+	return stage === "photo-created" || stage === "skipped-duplicate" || stage.startsWith("failed-");
+}
+
+/** Identifies a selected file across selections, so re-selecting after an interruption adds only the rest. */
+export function uploadFileKey(file: UploadFileLike): string {
+	return `${file.name}|${file.size}`;
+}
+
+/** Upload keys and content hashes already present in an album's photos. */
+export function existingUploadIdentities(photos: ReadonlyArray<{ data?: Record<string, unknown> | null }>): { keys: Set<string>; hashes: Set<string> } {
+	const keys = new Set<string>();
+	const hashes = new Set<string>();
+	for (const photo of photos) {
+		const metadata = photo.data?.source_metadata;
+		if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) continue;
+		const { upload_key: key, content_hash: hash } = metadata as Record<string, unknown>;
+		if (typeof key === "string" && key) keys.add(key);
+		if (typeof hash === "string" && hash) hashes.add(hash);
+	}
+	return { keys, hashes };
+}
+
+/** Mark files already in the album (or repeated within the selection) as skipped. */
+export function skipDuplicateUploads<TFile extends UploadFileLike, TMedia>(
+	queue: readonly UploadQueueItem<TFile, TMedia>[],
+	existingKeys: ReadonlySet<string>,
+): UploadQueueItem<TFile, TMedia>[] {
+	const seen = new Set(existingKeys);
+	return queue.map((item) => {
+		if (item.stage !== "queued") return item;
+		const key = uploadFileKey(item.file);
+		if (seen.has(key)) return { ...item, stage: "skipped-duplicate" };
+		seen.add(key);
+		return item;
+	});
 }
 
 export function isUploadQueueRetryable(stage: UploadStage): boolean {
