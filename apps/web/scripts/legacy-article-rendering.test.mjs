@@ -48,7 +48,8 @@ test('actual installed editor converters preserve frames and links through the i
   const attrsEnd = source.indexOf('\n\t\t};', attrsStart);
   const attrs = vm.runInNewContext(`({${source.slice(attrsStart, attrsEnd)}})`);
   // Since EmDash 0.40 the converters sit next to TipTap extension/mark definitions.
-  const ctx = vm.createContext({ Extension: { create: (config) => config }, Mark: { create: (config) => config } });
+  // EmDash 1.2 also defines its TipTap StarterKit extension in that range.
+  const ctx = vm.createContext({ Extension: { create: (config) => config }, Mark: { create: (config) => config }, StarterKit: { extend: (config) => config } });
   const mediaUtilsStart = source.indexOf('//#region src/lib/media-utils.ts');
   const mediaUtils = mediaUtilsStart < 0 ? '' : source.slice(mediaUtilsStart, source.indexOf('//#endregion', mediaUtilsStart));
   vm.runInContext(mediaUtils + '\n' + marks + '\n' + converters, ctx);

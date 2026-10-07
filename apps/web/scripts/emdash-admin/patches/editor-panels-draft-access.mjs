@@ -42,7 +42,7 @@ export default {
 
     editor.within("function ContentEditor({ collection,", "\nfunction ", (scope) => {
       scope.within("jsx(ContentSettingsPanel, {", "})", (call) => {
-        call.replace("\tisNew,\n\t\t\t\t\t\t\t\t\tmanifest,\n", "\tisNew,\n\t\t\t\t\t\t\t\t\tmanifest,\n\t\t\t\t\t\t\t\t\tdraftData: formData,\n\t\t\t\t\t\t\t\t\tonDraftFieldChange: handleFieldChange,\n");
+        call.replace("\tisNew,\n\t\t\t\t\t\t\t\t\t\tmanifest,\n", "\tisNew,\n\t\t\t\t\t\t\t\t\t\tmanifest,\n\t\t\t\t\t\t\t\t\t\tdraftData: formData,\n\t\t\t\t\t\t\t\t\t\tonDraftFieldChange: handleFieldChange,\n");
       });
     });
   },

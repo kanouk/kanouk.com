@@ -15,8 +15,8 @@ export default {
       scope.replace("\t\tnavigator.clipboard.writeText(id);", "\t\tnavigator.clipboard.writeText(blockExternalUrl);");
       scope.replace("\t\twindow.open(id, \"_blank\", \"noopener,noreferrer\");", "\t\twindow.open(blockExternalUrl, \"_blank\", \"noopener,noreferrer\");");
       scope.replace(
-        "\tconst displayId = id ? getDisplayId(id, blockType) : Object.values(data).filter((v) => typeof v === \"string\" && v.length > 0).join(\", \") || blockType;",
-        "\tconst displayId = blockNodeView.title || (id ? getDisplayId(id, blockType) : Object.values(data).filter((v) => typeof v === \"string\" && v.length > 0).join(\", \") || blockType);",
+        "\tconst displayId = id ? getDisplayId(id, blockType) : Object.values(data).filter((v) => typeof v === \"string\" && v.length > 0 || typeof v === \"number\" && Number.isFinite(v)).map(String).join(\", \") || blockType;",
+        "\tconst displayId = blockNodeView.title || (id ? getDisplayId(id, blockType) : Object.values(data).filter((v) => typeof v === \"string\" && v.length > 0 || typeof v === \"number\" && Number.isFinite(v)).map(String).join(\", \") || blockType);",
       );
       scope.replace(
         `\t\t\t\t\t\t\tclassName: cn("flex-shrink-0 w-10 h-10 rounded-lg bg-kumo-tint flex items-center justify-center", color),
