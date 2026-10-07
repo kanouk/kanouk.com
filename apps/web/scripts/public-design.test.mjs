@@ -56,3 +56,18 @@ test("album and photo patterns have stable responsive defaults", async () => {
 	assert.match(theme, /@media \(max-width: 64rem\)[\s\S]*repeat\(4, minmax\(0, 1fr\)\)/);
 	assert.match(theme, /@media \(max-width: 40rem\)[\s\S]*repeat\(3, minmax\(0, 1fr\)\)/);
 });
+
+test("the admin bar is rendered only for a signed-in user and keeps the sticky chrome aligned", async () => {
+	const base = await read("src/layouts/Base.astro");
+	const bar = await read("src/components/AdminBar.astro");
+	const theme = await read("src/styles/theme.css");
+	assert.match(base, /\{isLoggedIn && <AdminBar /);
+	assert.match(base, /"has-admin-bar": isLoggedIn/);
+	assert.doesNotMatch(base, /site-admin/);
+	// Every link goes into the admin; logging out needs the CSRF header.
+	assert.doesNotMatch(bar, /href="https?:/);
+	assert.match(bar, /"X-EmDash-Request": "1"/);
+	assert.match(theme, /:root\.has-admin-bar \{ --admin-bar: /);
+	assert.match(theme, /\.site-header \{[^}]*top: var\(--admin-bar\)/);
+	assert.match(theme, /--header-offset: calc\(var\(--header-height\) \+ var\(--admin-bar\)\)/);
+});
