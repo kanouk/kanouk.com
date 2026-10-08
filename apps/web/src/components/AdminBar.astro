@@ -4,26 +4,46 @@ import { ChevronDown, LayoutDashboard, Plus, SquarePen } from "lucide-astro";
 interface Props {
 	/** The entry this page shows, so its edit screen is one click away. */
 	content?: { collection: string; id: string };
+	/** The album a shown photo belongs to, so "写真を整理" opens that album. */
+	albumId?: string | null;
 	userName?: string | null;
+	/**
+	 * "photos": the photo site cannot see the blog's session, so it shows the bar
+	 * from a marker cookie and sends every link to the blog's admin.
+	 */
+	mode?: "blog" | "photos";
+	/** Where the admin lives, without a trailing slash; empty for the current host. */
+	adminOrigin?: string;
 }
 
-const ADMIN = "/_emdash/admin";
-const EDITABLE: Record<string, string> = { posts: "記事", pages: "固定ページ" };
+const EDITABLE: Record<string, string> = { posts: "記事", pages: "固定ページ", albums: "アルバム", photos: "写真" };
 
-const { content, userName } = Astro.props;
+const { content, albumId, userName, mode = "blog", adminOrigin = "" } = Astro.props;
+const ADMIN = `${adminOrigin}/_emdash/admin`;
 const editLabel = content ? EDITABLE[content.collection] : undefined;
 const editHref = content && editLabel ? `${ADMIN}/content/${content.collection}/${encodeURIComponent(content.id)}?locale=ja` : null;
+const organizeParams = new URLSearchParams();
+if (content?.collection === "albums") organizeParams.set("album", content.id);
+if (content?.collection === "photos" && albumId) {
+	organizeParams.set("album", albumId);
+	organizeParams.set("photo", content.id);
+}
+const organizeHref = `${ADMIN}/plugins/yohaku-photo-tools/organize${organizeParams.size ? `?${organizeParams}` : ""}`;
+// The blog tells the photo site that an admin is around, so its bar can appear there too.
+const photoOrigin = mode === "blog"
+	? ({ "blog.kanouk.com": "https://photos.kanouk.com", "blog-staging.kanouk.com": "https://photos-staging.kanouk.com" } as Record<string, string>)[Astro.url.hostname] ?? ""
+	: "";
 
 const createLinks = [
 	{ label: "記事", href: `${ADMIN}/content/posts/new` },
 	{ label: "固定ページ", href: `${ADMIN}/content/pages/new` },
 	{ label: "アルバム", href: `${ADMIN}/content/albums/new` },
-	{ label: "写真を追加", href: `${ADMIN}/plugins/yohaku-photo-tools/organize` },
+	{ label: "写真を追加", href: organizeHref },
 ];
 const manageLinks = [
 	{ label: "記事", href: `${ADMIN}/content/posts` },
 	{ label: "固定ページ", href: `${ADMIN}/content/pages` },
-	{ label: "写真を整理", href: `${ADMIN}/plugins/yohaku-photo-tools/organize` },
+	{ label: "写真を整理", href: organizeHref },
 	{ label: "メディア", href: `${ADMIN}/media` },
 	{ label: "コメント", href: `${ADMIN}/comments` },
 ];
@@ -37,7 +57,7 @@ const moreLinks = [
 ];
 ---
 
-<nav class="adminbar" aria-label="管理メニュー">
+<nav class="adminbar" aria-label="管理メニュー" data-photo-origin={photoOrigin || undefined}>
 	<div class="adminbar__inner">
 		<a class="adminbar__link adminbar__link--strong" href={`${ADMIN}/`}>
 			<LayoutDashboard size={15} strokeWidth={1.8} aria-hidden="true" />
@@ -80,12 +100,14 @@ const moreLinks = [
 
 		<details class="adminbar__menu adminbar__menu--user">
 			<summary class="adminbar__link">
-				<span class="adminbar__user">{userName || "ログイン中"}</span>
+				<span class="adminbar__user">{mode === "photos" ? "管理者" : userName || "ログイン中"}</span>
 				<ChevronDown size={13} strokeWidth={1.8} aria-hidden="true" class="adminbar__caret" />
 			</summary>
 			<div class="adminbar__panel adminbar__panel--end">
 				<a href={`${ADMIN}/settings`}>設定</a>
-				<button type="button" data-adminbar-logout>ログアウト</button>
+				{mode === "photos"
+					? <button type="button" data-adminbar-hide>このバーを隠す</button>
+					: <button type="button" data-adminbar-logout>ログアウト</button>}
 			</div>
 		</details>
 	</div>
@@ -110,9 +132,25 @@ const moreLinks = [
 			open.open = false;
 			open.querySelector<HTMLElement>("summary")?.focus();
 		});
+		const photoOrigin = bar.dataset.photoOrigin;
+		const markPhotoSite = (state: "on" | "off") => photoOrigin
+			? fetch(`${photoOrigin}/admin-bar?state=${state}`, { mode: "no-cors", credentials: "include" }).catch(() => undefined)
+			: Promise.resolve();
+		try {
+			if (photoOrigin && !sessionStorage.getItem("kanouk-admin-bar-synced")) {
+				void markPhotoSite("on").then(() => sessionStorage.setItem("kanouk-admin-bar-synced", "1"));
+			}
+		} catch { /* storage unavailable: the marker is simply refreshed on the next page */ }
+		bar.querySelector<HTMLButtonElement>("[data-adminbar-hide]")?.addEventListener("click", async (event) => {
+			(event.currentTarget as HTMLButtonElement).disabled = true;
+			await fetch("/admin-bar?state=off", { credentials: "same-origin" }).catch(() => undefined);
+			window.location.reload();
+		});
 		bar.querySelector<HTMLButtonElement>("[data-adminbar-logout]")?.addEventListener("click", async (event) => {
 			const button = event.currentTarget as HTMLButtonElement;
 			button.disabled = true;
+			try { sessionStorage.removeItem("kanouk-admin-bar-synced"); } catch { /* ignore */ }
+			await markPhotoSite("off");
 			try {
 				// The API requires this header on state-changing requests.
 				await fetch("/_emdash/api/auth/logout", {

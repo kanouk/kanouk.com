@@ -1083,7 +1083,7 @@ main:focus { outline: none; }
 .photo-page > .back { position: absolute; z-index: 3; top: clamp(0.75rem, 2vw, 1.25rem); left: var(--gutter); min-height: var(--control-height); padding-inline: 0.8rem; background: rgb(5 6 5 / 64%); color: #fff; text-decoration: none; text-shadow: 0 1px 2px rgb(0 0 0 / 75%); backdrop-filter: blur(8px); }
 .photo-position { position: absolute; z-index: 3; right: 50%; bottom: var(--space-3); padding: 0.25rem 0.55rem; border-radius: 999px; background: rgb(5 6 5 / 58%); color: rgb(255 255 255 / 78%); font-family: var(--font-code); font-size: 0.64rem; font-variant-numeric: tabular-nums; line-height: 1.4; pointer-events: none; transform: translateX(50%); backdrop-filter: blur(6px); }
 .photo-page figure { width: 100vw; margin-left: calc(50% - 50vw); }
-.photo-page .media { --photo-stage-height: clamp(28rem, calc(100svh - var(--header-height)), 62rem); position: relative; display: flex; align-items: center; justify-content: center; height: var(--photo-stage-height); min-height: min(52vh, 34rem); padding: 0 clamp(0.5rem, 2vw, 1.5rem); overflow: hidden; background: var(--photo-stage); }
+.photo-page .media { --photo-stage-height: clamp(28rem, calc(100svh - var(--header-height) - var(--admin-bar)), 62rem); position: relative; display: flex; align-items: center; justify-content: center; height: var(--photo-stage-height); min-height: min(52vh, 34rem); padding: 0 clamp(0.5rem, 2vw, 1.5rem); overflow: hidden; background: var(--photo-stage); }
 .photo-media-frame { position: relative; display: inline-flex; align-items: center; justify-content: center; width: fit-content; max-width: 100%; max-height: var(--photo-stage-height); overflow: hidden; border: 0; outline: 0; box-shadow: none; }
 .photo-page .media .yohaku-picture { display: contents !important; }
 .photo-page .media :where(img, video),
@@ -1242,7 +1242,7 @@ main:focus { outline: none; }
 	.photo-search-link span { display: none; }
 	.photo-search-form { grid-template-columns: auto minmax(0, 1fr); }
 	.photo-search-form button { grid-column: 1 / -1; margin-bottom: var(--space-3); }
-	.photo-page .media { --photo-stage-height: max(20rem, calc(100svh - var(--header-height))); min-height: 20rem; padding-inline: 0; }
+	.photo-page .media { --photo-stage-height: max(20rem, calc(100svh - var(--header-height) - var(--admin-bar))); min-height: 20rem; padding-inline: 0; }
 	.photo-action-rail :where(button, a) { width: 2.75rem; height: 2.75rem; }
 	.photo-info-panel { left: 2.75rem; width: calc(100% - 2.75rem); }
 	.photo-info-panel__header { padding: var(--space-5) var(--space-4) var(--space-4); }

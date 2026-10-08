@@ -165,6 +165,7 @@ const exifDetails = [
 	image={posterSource}
 	pageType={photo.data.kind === "video" ? "video" : "image"}
 	content={{ collection: "photos", id: photo.data.id, slug: photo.id }}
+	adminAlbumId={album?.data.id}
 >
 	<article
 		class="photo-page"

@@ -71,3 +71,23 @@ test("the admin bar is rendered only for a signed-in user and keeps the sticky c
 	assert.match(theme, /\.site-header \{[^}]*top: var\(--admin-bar\)/);
 	assert.match(theme, /--header-offset: calc\(var\(--header-height\) \+ var\(--admin-bar\)\)/);
 });
+
+test("the photo site shows the admin bar from a marker cookie that never reaches the shared cache", async () => {
+	const photos = await read("src/layouts/Photos.astro");
+	const endpoint = await read("src/pages/admin-bar.ts");
+	const middleware = await read("src/middleware.ts");
+	const bar = await read("src/components/AdminBar.astro");
+	const theme = await read("src/styles/theme.css");
+	assert.match(photos, /\{showAdminBar && <AdminBar mode="photos"/);
+	assert.match(photos, /"has-admin-bar": showAdminBar/);
+	// A marker request must bypass the edge cache, in both directions.
+	assert.match(middleware, /cookies\.get\("kanouk-admin-bar"\)\?\.value === "1"/);
+	assert.match(endpoint, /Not Found/);
+	assert.match(endpoint, /private, no-store/);
+	assert.match(endpoint, /httpOnly: true/);
+	// The blog sets the marker while an admin is signed in and clears it on logout.
+	assert.match(bar, /state=\$\{state\}/);
+	assert.match(bar, /markPhotoSite\("off"\)/);
+	// The full-height photo stage leaves room for the bar.
+	assert.doesNotMatch(theme, /calc\(100svh - var\(--header-height\)\)/);
+});
