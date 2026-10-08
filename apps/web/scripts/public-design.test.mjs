@@ -91,3 +91,9 @@ test("the photo site shows the admin bar from a marker cookie that never reaches
 	// The full-height photo stage leaves room for the bar.
 	assert.doesNotMatch(theme, /calc\(100svh - var\(--header-height\)\)/);
 });
+
+test("/admin on either site leads to the blog's admin without being cached", async () => {
+	const middleware = await read("src/middleware.ts");
+	assert.match(middleware, /pathname === "\/admin" \|\| context\.url\.pathname === "\/admin\/"/);
+	assert.match(middleware, /isPhotoHost \? `\$\{blogOrigin\}\/_emdash\/admin` : "\/_emdash\/admin"/);
+});
