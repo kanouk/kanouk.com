@@ -56,3 +56,44 @@ test("album and photo patterns have stable responsive defaults", async () => {
 	assert.match(theme, /@media \(max-width: 64rem\)[\s\S]*repeat\(4, minmax\(0, 1fr\)\)/);
 	assert.match(theme, /@media \(max-width: 40rem\)[\s\S]*repeat\(3, minmax\(0, 1fr\)\)/);
 });
+
+test("the admin bar is rendered only for a signed-in user and keeps the sticky chrome aligned", async () => {
+	const base = await read("src/layouts/Base.astro");
+	const bar = await read("src/components/AdminBar.astro");
+	const theme = await read("src/styles/theme.css");
+	assert.match(base, /\{isLoggedIn && <AdminBar /);
+	assert.match(base, /"has-admin-bar": isLoggedIn/);
+	assert.doesNotMatch(base, /site-admin/);
+	// Every link goes into the admin; logging out needs the CSRF header.
+	assert.doesNotMatch(bar, /href="https?:/);
+	assert.match(bar, /"X-EmDash-Request": "1"/);
+	assert.match(theme, /:root\.has-admin-bar \{ --admin-bar: /);
+	assert.match(theme, /\.site-header \{[^}]*top: var\(--admin-bar\)/);
+	assert.match(theme, /--header-offset: calc\(var\(--header-height\) \+ var\(--admin-bar\)\)/);
+});
+
+test("the photo site shows the admin bar from a marker cookie that never reaches the shared cache", async () => {
+	const photos = await read("src/layouts/Photos.astro");
+	const endpoint = await read("src/pages/admin-bar.ts");
+	const middleware = await read("src/middleware.ts");
+	const bar = await read("src/components/AdminBar.astro");
+	const theme = await read("src/styles/theme.css");
+	assert.match(photos, /\{showAdminBar && <AdminBar mode="photos"/);
+	assert.match(photos, /"has-admin-bar": showAdminBar/);
+	// A marker request must bypass the edge cache, in both directions.
+	assert.match(middleware, /cookies\.get\("kanouk-admin-bar"\)\?\.value === "1"/);
+	assert.match(endpoint, /Not Found/);
+	assert.match(endpoint, /private, no-store/);
+	assert.match(endpoint, /httpOnly: true/);
+	// The blog sets the marker while an admin is signed in and clears it on logout.
+	assert.match(bar, /state=\$\{state\}/);
+	assert.match(bar, /markPhotoSite\("off"\)/);
+	// The full-height photo stage leaves room for the bar.
+	assert.doesNotMatch(theme, /calc\(100svh - var\(--header-height\)\)/);
+});
+
+test("/admin on either site leads to the blog's admin without being cached", async () => {
+	const middleware = await read("src/middleware.ts");
+	assert.match(middleware, /pathname === "\/admin" \|\| context\.url\.pathname === "\/admin\/"/);
+	assert.match(middleware, /isPhotoHost \? `\$\{blogOrigin\}\/_emdash\/admin` : "\/_emdash\/admin"/);
+});

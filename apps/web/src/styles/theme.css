@@ -60,7 +60,8 @@
 	--header-height: 4.5rem;
 	--page-top: clamp(2.25rem, 4.5vw, 3.75rem); /* header → first line of every page */
 	--head-gap: clamp(1.5rem, 3vw, 2.5rem); /* page title block → first content */
-	--header-offset: var(--header-height); /* space a sticky header actually covers */
+	--admin-bar: 0rem; /* height of the signed-in admin bar */
+	--header-offset: calc(var(--header-height) + var(--admin-bar)); /* space the sticky chrome actually covers */
 	--text-micro: 0.75rem;
 	--line-body: 1.92;
 	--line-heading: 1.42;
@@ -228,11 +229,91 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 	text-transform: uppercase;
 }
 
+/* Signed-in admin bar: a thin dark strip above the header with shortcuts into the admin. */
+
+:root.has-admin-bar { --admin-bar: 2.25rem; }
+.adminbar {
+	position: sticky;
+	top: 0;
+	z-index: 120;
+	height: var(--admin-bar);
+	background: #1d2327;
+	color: #f0f0f1;
+	font-size: 0.8125rem;
+	line-height: 1;
+}
+.adminbar__inner { display: flex; align-items: center; height: 100%; padding-inline: 0.5rem; }
+.adminbar a,
+.adminbar summary,
+.adminbar button { color: inherit; font: inherit; text-decoration: none; }
+.adminbar__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	height: var(--admin-bar);
+	padding-inline: 0.7rem;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.adminbar__link svg { flex: none; opacity: 0.8; }
+.adminbar__link--strong { font-weight: 600; }
+.adminbar__link:hover,
+.adminbar__menu[open] > summary { background: #2c3338; color: #72aee6; }
+.adminbar a:focus-visible,
+.adminbar summary:focus-visible,
+.adminbar button:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+.adminbar__links { display: flex; align-items: center; }
+.adminbar__sep { width: 1px; height: 1rem; margin-inline: 0.35rem; background: #50575e; }
+.adminbar__menu { position: relative; }
+.adminbar__menu > summary { list-style: none; }
+.adminbar__menu > summary::-webkit-details-marker { display: none; }
+.adminbar__caret { transition: transform 150ms ease; }
+.adminbar__menu[open] .adminbar__caret { transform: rotate(180deg); }
+.adminbar__menu--more { margin-left: 0; }
+.adminbar__menu--user { margin-left: auto; }
+.adminbar__user { max-width: 12rem; overflow: hidden; text-overflow: ellipsis; }
+.adminbar__panel {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1;
+	display: grid;
+	min-width: 11rem;
+	padding-block: 0.3rem;
+	background: #2c3338;
+	box-shadow: 0 6px 16px rgb(0 0 0 / 0.35);
+}
+.adminbar__panel--end { right: 0; left: auto; }
+.adminbar__panel a,
+.adminbar__panel button {
+	display: flex;
+	align-items: center;
+	min-height: 2.5rem;
+	padding: 0 1rem;
+	border: 0;
+	background: transparent;
+	text-align: left;
+	cursor: pointer;
+}
+.adminbar__panel a:hover,
+.adminbar__panel button:hover { background: #1d2327; color: #72aee6; }
+.adminbar__panel button:disabled { opacity: 0.55; cursor: wait; }
+@media (max-width: 48rem) {
+	.adminbar__links,
+	.adminbar__sep,
+	.adminbar__menu--more,
+	.adminbar__link--strong span { display: none; }
+	.adminbar__user { max-width: 5rem; }
+	:root.has-admin-bar { --admin-bar: 2.75rem; }
+	.adminbar__link { padding-inline: 0.85rem; }
+}
+@media print { .adminbar { display: none; } }
+
 /* Site chrome */
 
 .site-header {
 	position: sticky;
-	top: 0;
+	top: var(--admin-bar);
 	z-index: 100;
 	border-bottom: 1px solid color-mix(in srgb, var(--rule) 72%, transparent);
 	background: color-mix(in srgb, var(--paper) 90%, transparent);
@@ -264,8 +345,7 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 .site-brand__image { width: auto; height: 2.4rem; max-height: none; border: 0; background: transparent; object-fit: contain; }
 
 .site-nav { display: flex; align-items: center; justify-content: center; gap: clamp(0.9rem, 1.8vw, 1.6rem); min-width: 0; }
-.site-nav a,
-.site-admin {
+.site-nav a {
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -1003,7 +1083,7 @@ main:focus { outline: none; }
 .photo-page > .back { position: absolute; z-index: 3; top: clamp(0.75rem, 2vw, 1.25rem); left: var(--gutter); min-height: var(--control-height); padding-inline: 0.8rem; background: rgb(5 6 5 / 64%); color: #fff; text-decoration: none; text-shadow: 0 1px 2px rgb(0 0 0 / 75%); backdrop-filter: blur(8px); }
 .photo-position { position: absolute; z-index: 3; right: 50%; bottom: var(--space-3); padding: 0.25rem 0.55rem; border-radius: 999px; background: rgb(5 6 5 / 58%); color: rgb(255 255 255 / 78%); font-family: var(--font-code); font-size: 0.64rem; font-variant-numeric: tabular-nums; line-height: 1.4; pointer-events: none; transform: translateX(50%); backdrop-filter: blur(6px); }
 .photo-page figure { width: 100vw; margin-left: calc(50% - 50vw); }
-.photo-page .media { --photo-stage-height: clamp(28rem, calc(100svh - var(--header-height)), 62rem); position: relative; display: flex; align-items: center; justify-content: center; height: var(--photo-stage-height); min-height: min(52vh, 34rem); padding: 0 clamp(0.5rem, 2vw, 1.5rem); overflow: hidden; background: var(--photo-stage); }
+.photo-page .media { --photo-stage-height: clamp(28rem, calc(100svh - var(--header-height) - var(--admin-bar)), 62rem); position: relative; display: flex; align-items: center; justify-content: center; height: var(--photo-stage-height); min-height: min(52vh, 34rem); padding: 0 clamp(0.5rem, 2vw, 1.5rem); overflow: hidden; background: var(--photo-stage); }
 .photo-media-frame { position: relative; display: inline-flex; align-items: center; justify-content: center; width: fit-content; max-width: 100%; max-height: var(--photo-stage-height); overflow: hidden; border: 0; outline: 0; box-shadow: none; }
 .photo-page .media .yohaku-picture { display: contents !important; }
 .photo-page .media :where(img, video),
@@ -1064,11 +1144,10 @@ main:focus { outline: none; }
 
 @media (max-width: 68rem) {
 	/* Between 48rem and 68rem the sticky header wraps onto two rows. */
-	:root { --header-offset: 9rem; }
+	:root { --header-offset: calc(9rem + var(--admin-bar)); }
 	.site-header__inner { grid-template-columns: 1fr auto; padding-block: 0.45rem; }
 	.site-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; width: 100%; padding-top: 0.2rem; border-top: 1px solid var(--rule-soft); }
 	.site-tools { grid-column: 2; gap: var(--space-3); }
-	.site-admin { display: none; }
 	.article { grid-template-columns: minmax(0, var(--reading-measure)); }
 	.article-sidebar { display: none; }
 	.posts-grid,
@@ -1095,7 +1174,7 @@ main:focus { outline: none; }
 	.site-footer__inner { grid-template-columns: 1fr; gap: var(--space-5); }
 	.site-footer__nav { gap: var(--space-7); }
 	.site-footer__meta { display: flex; align-items: center; justify-content: space-between; }
-	:root { --header-height: 4rem; --header-offset: 0rem; --gutter: clamp(1rem, 5vw, 1.5rem); }
+	:root { --header-height: 4rem; --header-offset: var(--admin-bar); --gutter: clamp(1rem, 5vw, 1.5rem); }
 	.site-header { position: relative; }
 	.site-header__inner { grid-template-columns: minmax(0, 1fr) auto; width: 100%; gap: var(--space-2) var(--space-4); }
 	.site-brand { min-width: 0; }
@@ -1103,7 +1182,6 @@ main:focus { outline: none; }
 	.site-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; overflow: hidden; }
 	.site-nav a { min-width: 0; min-height: 3.25rem; justify-content: center; padding-inline: 0.2rem; font-size: var(--text-micro); line-height: 1.35; text-align: center; white-space: normal; word-break: auto-phrase; }
 	.site-tools { width: 4.5rem; min-width: 0; max-width: 4.5rem; gap: var(--space-2); overflow: hidden; }
-	.site-tools > .site-admin { display: none !important; }
 	.home-section-header,
 	.post-card--list,
 	.post-card--list .card-link,
@@ -1164,7 +1242,7 @@ main:focus { outline: none; }
 	.photo-search-link span { display: none; }
 	.photo-search-form { grid-template-columns: auto minmax(0, 1fr); }
 	.photo-search-form button { grid-column: 1 / -1; margin-bottom: var(--space-3); }
-	.photo-page .media { --photo-stage-height: max(20rem, calc(100svh - var(--header-height))); min-height: 20rem; padding-inline: 0; }
+	.photo-page .media { --photo-stage-height: max(20rem, calc(100svh - var(--header-height) - var(--admin-bar))); min-height: 20rem; padding-inline: 0; }
 	.photo-action-rail :where(button, a) { width: 2.75rem; height: 2.75rem; }
 	.photo-info-panel { left: 2.75rem; width: calc(100% - 2.75rem); }
 	.photo-info-panel__header { padding: var(--space-5) var(--space-4) var(--space-4); }
