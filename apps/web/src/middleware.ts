@@ -78,10 +78,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		Boolean(context.request.headers.get("authorization")) ||
 		Boolean(context.cookies.get("astro-session")) ||
 		context.cookies.get("emdash-edit-mode")?.value === "true" ||
-		context.cookies.get("kanouk-admin-bar")?.value === "1" ||
 		context.url.searchParams.has("_preview") ||
 		new Set(["/search", "/photo-search"]).has(context.url.pathname) ||
-		context.url.pathname.startsWith("/_emdash/");
+		context.url.pathname.startsWith("/_emdash/") ||
+		context.url.pathname.startsWith("/admin-bar");
 	// A short, memorable way into the admin: /admin on either site.
 	if (context.url.pathname === "/admin" || context.url.pathname === "/admin/") {
 		const adminUrl = isPhotoHost ? `${blogOrigin}/_emdash/admin` : "/_emdash/admin";

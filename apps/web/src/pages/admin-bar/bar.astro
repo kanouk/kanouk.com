@@ -1,0 +1,37 @@
+---
+import AdminBar from "../../components/AdminBar.astro";
+
+// An HTML fragment for client/admin-bar.ts; never cached, never a full page.
+export const partial = true;
+export const prerender = false;
+
+const PHOTO_HOSTS = new Set(["photos.kanouk.com", "photos-staging.kanouk.com"]);
+const BLOG_HOSTS = new Set(["blog.kanouk.com", "blog-staging.kanouk.com"]);
+const COLLECTIONS = new Set(["posts", "pages", "albums", "photos"]);
+const ID = /^[A-Za-z0-9_-]{1,100}$/;
+
+const host = Astro.url.hostname;
+const params = Astro.url.searchParams;
+// Production hosts decide the site; preview hosts serve both, so the page says which.
+const site = PHOTO_HOSTS.has(host) ? "photos" : BLOG_HOSTS.has(host) ? "blog" : params.get("site") === "photos" ? "photos" : "blog";
+const noStore = { "Cache-Control": "private, no-store" };
+const user = Astro.locals.user;
+if (site === "blog" && !user) {
+	return new Response(null, {
+		status: 204,
+		headers: { ...noStore, "Set-Cookie": "kanouk-admin-bar=; Path=/; Max-Age=0; SameSite=Lax" },
+	});
+}
+Astro.response.headers.set("Cache-Control", noStore["Cache-Control"]);
+
+const collection = params.get("collection") ?? "";
+const id = params.get("id") ?? "";
+const album = params.get("album") ?? "";
+const content = COLLECTIONS.has(collection) && ID.test(id) ? { collection, id } : undefined;
+const albumId = ID.test(album) ? album : undefined;
+const adminOrigin = PHOTO_HOSTS.has(host)
+	? host.includes("staging") ? "https://blog-staging.kanouk.com" : "https://blog.kanouk.com"
+	: "";
+---
+
+<AdminBar mode={site} content={content} albumId={albumId} userName={user?.name} adminOrigin={adminOrigin} />

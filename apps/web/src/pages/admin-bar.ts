@@ -17,7 +17,8 @@ export const GET: APIRoute = ({ url, cookies }) => {
 	if (!PHOTO_HOSTS.has(host) && !host.endsWith(".workers.dev")) {
 		return new Response("Not Found", { status: 404, headers: noStore });
 	}
-	const options = { path: "/", sameSite: "lax", secure: url.protocol === "https:", httpOnly: true } as const;
+	// Readable by the page script, which decides whether to fetch the bar.
+	const options = { path: "/", sameSite: "lax", secure: url.protocol === "https:", httpOnly: false } as const;
 	if (url.searchParams.get("state") === "off") cookies.delete(COOKIE, options);
 	else cookies.set(COOKIE, "1", { ...options, maxAge: 60 * 60 * 24 * 30 });
 	return new Response(null, { status: 204, headers: noStore });

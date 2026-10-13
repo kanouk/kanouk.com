@@ -2,7 +2,6 @@
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import { Aperture, Search } from "lucide-astro";
-import AdminBar from "../components/AdminBar.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import "../styles/tokens.css";
@@ -24,9 +23,6 @@ const SITE_NAME = "カノログ フォト";
 const fullTitle = `${title} — ${SITE_NAME}`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
 const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
-// The blog hosts the admin and its login; the marker cookie only reveals the bar here.
-const showAdminBar = Astro.cookies.get("kanouk-admin-bar")?.value === "1";
-const adminOrigin = isPreviewHost ? "" : Astro.url.hostname.includes("staging") ? "https://blog-staging.kanouk.com" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 const canonicalPath = canonicalOverride ?? (Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname);
 const isSearchPage = Astro.url.pathname === "/photo-search" || Astro.url.pathname === "/search";
@@ -48,10 +44,12 @@ const pageCtx = createPublicPageContext({
 ---
 
 <!doctype html>
-<html lang="ja" class:list={{ "has-admin-bar": showAdminBar }}>
+<html lang="ja" data-admin-site="photos" data-admin-collection={content?.collection} data-admin-id={content?.id} data-admin-album={adminAlbumId ?? undefined}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- An admin uses this browser: reserve the admin bar's height before paint (client/admin-bar.ts fills it). -->
+		<script is:inline>/(?:^|;\s*)kanouk-admin-bar=1(?:;|$)/.test(document.cookie) && document.documentElement.classList.add("has-admin-bar");</script>
 		<YohakuHead />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
@@ -59,7 +57,6 @@ const pageCtx = createPublicPageContext({
 	<body class="site site--photos">
 		<EmDashBodyStart page={pageCtx} />
 		<a class="skip-link" href="#photo-main">本文へ移動</a>
-		{showAdminBar && <AdminBar mode="photos" content={content} albumId={adminAlbumId} adminOrigin={adminOrigin} />}
 		<header class="photo-header">
 			<a class="photo-brand" href="/albums" data-astro-prefetch="hover">
 				<span class="photo-brand__mark" aria-hidden="true">
@@ -83,6 +80,10 @@ const pageCtx = createPublicPageContext({
 			groups={[{ label: "写真", links: [{ label: "アルバム一覧", href: "/albums" }, { label: "写真を検索", href: searchUrl }] }]}
 			crossSite={{ label: "ブログ", href: blogUrl }}
 		/>
+		<script>
+			import { mountAdminBar } from "../client/admin-bar";
+			void mountAdminBar();
+		</script>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
 </html>
