@@ -19,16 +19,11 @@ const { entries: posts, hasMore = false, cacheHint } = await getEmDashCollection
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
-// Resolve list taxonomies in two batched queries instead of one round-trip per
-// post. The historical card order is category, then tag.
-const [categoriesByEntry, tagsByEntry] = await Promise.all([
-	getTermsForEntries("posts", posts.map((p) => p.data.id), "category"),
-	getTermsForEntries("posts", posts.map((p) => p.data.id), "tag"),
-]);
+// Resolve list tags in one batched query instead of one round-trip per post.
+const tagsByEntry = await getTermsForEntries("posts", posts.map((p) => p.data.id), "tag");
 
 const postsWithTags = posts.map((post) => ({
 	post,
-	categories: categoriesByEntry.get(post.data.id) ?? [],
 	tags: tagsByEntry.get(post.data.id) ?? [],
 	excerpt: getPostExcerpt(post.data.excerpt, post.data.content, 180),
 }));
@@ -49,7 +44,7 @@ const postsWithTags = posts.map((post) => ({
 				<p class="empty">公開中の記事はまだありません。</p>
 			) : (
 				<div class="post-list">
-					{postsWithTags.map(({ post, categories, tags, excerpt }, index) => (
+					{postsWithTags.map(({ post, tags, excerpt }, index) => (
 						<PostCard
 							variant="list"
 							title={post.data.title}
@@ -58,7 +53,6 @@ const postsWithTags = posts.map((post) => ({
 							href={`/posts/${post.data.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
-							categories={categories.slice(0, 1).map((category) => ({ slug: category.slug, label: category.label }))}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
 							priority={page === 1 && index < 2}
 						/>

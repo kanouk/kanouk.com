@@ -21,18 +21,11 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 const visiblePosts = posts.slice(0, POSTS_PER_PAGE);
 const hasMorePosts = posts.length > POSTS_PER_PAGE;
-const [categoriesByEntry, tagsByEntry] = await Promise.all([
-	getTermsForEntries(
-		"posts",
-		visiblePosts.map((post) => post.data.id),
-		"category",
-	),
-	getTermsForEntries(
-		"posts",
-		visiblePosts.map((post) => post.data.id),
-		"tag",
-	),
-]);
+const tagsByEntry = await getTermsForEntries(
+	"posts",
+	visiblePosts.map((post) => post.data.id),
+	"tag",
+);
 ---
 
 <Base title={siteTitle} description={siteTagline}>
@@ -61,7 +54,6 @@ const [categoriesByEntry, tagsByEntry] = await Promise.all([
 									date={post.data.publishedAt ?? undefined}
 									excerpt={getPostExcerpt(post.data.excerpt, post.data.content, 180)}
 									readingTime={getReadingTime(post.data.content)}
-									categories={(categoriesByEntry.get(post.data.id) ?? []).map((category) => ({ slug: category.slug, label: category.label }))}
 									tags={(tagsByEntry.get(post.data.id) ?? []).map((tag) => ({ slug: tag.slug, label: tag.label }))}
 									priority={index < 2}
 								/>

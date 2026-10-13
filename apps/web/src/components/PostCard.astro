@@ -11,7 +11,6 @@ interface Props {
 	href: string;
 	date?: Date;
 	readingTime?: number;
-	categories?: Array<{ slug: string; label: string }>;
 	tags?: Array<{ slug: string; label: string }>;
 	variant?: "card" | "list";
 	priority?: boolean;
@@ -24,7 +23,6 @@ const {
 	href,
 	date,
 	readingTime,
-	categories,
 	tags,
 	variant = "card",
 	priority = false,
@@ -65,9 +63,6 @@ const formattedDate = date ? siteDateLabel(date) : null;
 		<div class="card-body">
 			<div class="card-meta">
 				{formattedDate && <time datetime={date?.toISOString()}>{formattedDate}</time>}
-				{categories?.slice(0, 1).map((category) => (
-					<span class="card-category">{category.label}</span>
-				))}
 				{readingTime && <span>{readingTime}分で読む</span>}
 			</div>
 			<h2 class="card-title">{title}</h2>

@@ -207,15 +207,15 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn("excerpt={getPostExcerpt", home)
         self.assertIn('variant="list"', home)
         self.assertLess(card.index('class="card-media"'), card.index('class="card-body"'))
-        self.assertIn('class="card-category"', card)
-        self.assertNotIn('class="card-categories"', card)
-        self.assertLess(card.index('class="card-meta"'), card.index('class="card-category"'))
-        category_style = re.search(
-            r"\.card-category,\s*\.post-category\s*\{([^}]*)\}", theme
-        )
-        self.assertIsNotNone(category_style)
-        self.assertIn("background: #45545c", category_style.group(1))
-        self.assertNotIn("background: var(--ink)", category_style.group(1))
+        # Cards show date and reading time, not categories (the sidebar lists them).
+        self.assertNotIn("card-category", card)
+        self.assertNotIn("categories", card)
+        # The thumbnail fills its box whatever the image size or ratio.
+        thumbnail = re.search(r"\.card-image img\s*\{([^}]*)\}", theme)
+        self.assertIsNotNone(thumbnail)
+        self.assertIn("position: absolute; inset: 0;", thumbnail.group(1))
+        self.assertIn("object-fit: cover", thumbnail.group(1))
+        self.assertNotIn('.card-image img[data-low-resolution="true"]', theme)
         self.assertIn('class="widget__title"', sidebar)
         self.assertIn("<Folder", sidebar)
         self.assertIn("<Tags", sidebar)
@@ -225,9 +225,12 @@ class YohakuDesignContractTests(unittest.TestCase):
     def test_article_taxonomies_and_age_use_publication_context(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()
-        self.assertIn('getEntryTerms("posts", post.data.id, "category")', article)
+        self.assertNotIn('"category"', article)
         self.assertIn('getEntryTerms("posts", post.data.id, "tag")', article)
-        self.assertIn('class="card-category"', article)
+        # The author and age are shown only to signed-in admins, whose requests
+        # bypass the shared cache.
+        self.assertIn("const showByline = Boolean(Astro.locals.user)", article)
+        self.assertIn("showByline && (", article)
         self.assertIn('class="article-footer-tags"', article)
         self.assertIn("post.data.publishedAt ?? post.data.createdAt", article)
         footer_tag = re.search(r"\.article-footer-tag\s*\{([^}]*)\}", theme)
