@@ -37,13 +37,9 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 // Single batched query for tags on every post tagged with this term,
 // rather than calling getEntryTerms() per post.
-const [categoriesByEntry, tagsByEntry] = await Promise.all([
-	getTermsForEntries("posts", posts.map((p) => p.data.id), "category"),
-	getTermsForEntries("posts", posts.map((p) => p.data.id), "tag"),
-]);
+const tagsByEntry = await getTermsForEntries("posts", posts.map((p) => p.data.id), "tag");
 const filteredPosts = posts.map((post) => ({
 	post,
-	categories: categoriesByEntry.get(post.data.id) ?? [],
 	tags: tagsByEntry.get(post.data.id) ?? [],
 }));
 ---
@@ -66,7 +62,7 @@ const filteredPosts = posts.map((post) => ({
 				<p class="no-posts">このタグの記事はまだありません。</p>
 			) : (
 				<div class="post-list">
-					{filteredPosts.map(({ post, categories, tags }, index) => (
+					{filteredPosts.map(({ post, tags }, index) => (
 						<PostCard
 							variant="list"
 							title={post.data.title}
@@ -75,7 +71,6 @@ const filteredPosts = posts.map((post) => ({
 							href={`/posts/${post.data.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
-							categories={categories.map((category) => ({ slug: category.slug, label: category.label }))}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
 							priority={page === 1 && index < 2}
 						/>

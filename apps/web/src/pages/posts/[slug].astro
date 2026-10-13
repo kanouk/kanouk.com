@@ -142,8 +142,10 @@ const seo = {
 	ogImage: articleSocial.imageUrl,
 };
 
-// Bylines are already hydrated by getEmDashEntry
+// Bylines are already hydrated by getEmDashEntry. Only signed-in admins see
+// them; their requests bypass the shared cache (src/middleware.ts).
 const bylines = post.data.bylines ?? [];
+const showByline = Boolean(Astro.locals.user) && bylines.length > 0;
 const authorAgeAtPublication = calculateAge(
 	"1977-06-18",
 	post.data.publishedAt ?? post.data.createdAt,
@@ -169,8 +171,7 @@ const prioritizedContent = articleContent.map((block) => {
 	return linkedBlock;
 });
 
-const [categories, tags, recentPostsResult] = await Promise.all([
- getEntryTerms("posts", post.data.id, "category"),
+const [tags, recentPostsResult] = await Promise.all([
  getEntryTerms("posts", post.data.id, "tag"),
  getEmDashCollection("posts", {orderBy:{published_at:"desc"},limit:4}),
 ]);
@@ -180,13 +181,9 @@ const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);
 
 // Single batched query for related-posts tags, rather than one
 // getEntryTerms() call per related post.
-const [otherCategoriesByEntry, otherTagsByEntry] = await Promise.all([
-	getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "category"),
-	getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "tag"),
-]);
+const otherTagsByEntry = await getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "tag");
 const otherPostsWithTags = otherPosts.map((p) => ({
 	post: p,
-	categories: otherCategoriesByEntry.get(p.data.id) ?? [],
 	tags: otherTagsByEntry.get(p.data.id) ?? [],
 }));
 
@@ -226,18 +223,8 @@ const titleSegments = Array.from(
 			</h1>
 			<div class="article-meta" aria-label="記事情報">
 				{
-					categories.length > 0 && (
-						<span class="article-meta-categories">
-							{categories.map((category) => (
-								<a href={`/category/${category.slug}`} class="card-category">{category.label}</a>
-							))}
-						</span>
-					)
-				}
-				{
-					bylines.length > 0 && (
+					showByline && (
 						<>
-							{categories.length > 0 && <span class="meta-dot" />}
 							<span class="article-meta-byline">
 								{bylines.map((credit, i) => (
 									<>
@@ -246,10 +233,10 @@ const titleSegments = Array.from(
 									</>
 								))}
 							</span>
+							<span class="meta-dot" />
 						</>
 					)
 				}
-				{(categories.length > 0 || bylines.length > 0) && <span class="meta-dot" />}
 				<span>{readingTime}分で読む</span>
 			</div>
 			{
@@ -336,7 +323,7 @@ const titleSegments = Array.from(
 					<h2 class="more-title">続けて読む</h2>
 					<div class="more-grid">
 						{otherPostsWithTags.map(
-							({ post: p, categories: postCategories, tags: postTags }) => (
+							({ post: p, tags: postTags }) => (
 								<PostCard
 									title={p.data.title}
 									excerpt={getPostExcerpt(p.data.excerpt, p.data.content)}
@@ -344,7 +331,6 @@ const titleSegments = Array.from(
 									href={`/posts/${p.data.id}`}
 									date={p.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(p.data.content)}
-									categories={postCategories.map((category) => ({ slug: category.slug, label: category.label }))}
 									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}
 								/>
 							)
