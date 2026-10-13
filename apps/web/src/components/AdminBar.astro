@@ -8,8 +8,8 @@ interface Props {
 	albumId?: string | null;
 	userName?: string | null;
 	/**
-	 * "photos": the photo site cannot see the blog's session, so it shows the bar
-	 * from a marker cookie and sends every link to the blog's admin.
+	 * "photos": the photo site cannot see the blog's session; every link goes to
+	 * the blog's admin. Rendered by /admin-bar/bar and inserted by client/admin-bar.ts.
 	 */
 	mode?: "blog" | "photos";
 	/** Where the admin lives, without a trailing slash; empty for the current host. */
@@ -29,10 +29,6 @@ if (content?.collection === "photos" && albumId) {
 	organizeParams.set("photo", content.id);
 }
 const organizeHref = `${ADMIN}/plugins/yohaku-photo-tools/organize${organizeParams.size ? `?${organizeParams}` : ""}`;
-// The blog tells the photo site that an admin is around, so its bar can appear there too.
-const photoOrigin = mode === "blog"
-	? ({ "blog.kanouk.com": "https://photos.kanouk.com", "blog-staging.kanouk.com": "https://photos-staging.kanouk.com" } as Record<string, string>)[Astro.url.hostname] ?? ""
-	: "";
 
 const createLinks = [
 	{ label: "記事", href: `${ADMIN}/content/posts/new` },
@@ -57,7 +53,7 @@ const moreLinks = [
 ];
 ---
 
-<nav class="adminbar" aria-label="管理メニュー" data-photo-origin={photoOrigin || undefined}>
+<nav class="adminbar" aria-label="管理メニュー">
 	<div class="adminbar__inner">
 		<a class="adminbar__link adminbar__link--strong" href={`${ADMIN}/`}>
 			<LayoutDashboard size={15} strokeWidth={1.8} aria-hidden="true" />
@@ -113,54 +109,3 @@ const moreLinks = [
 	</div>
 </nav>
 
-<script>
-	const bar = document.querySelector<HTMLElement>(".adminbar");
-	if (bar) {
-		const menus = () => [...bar.querySelectorAll<HTMLDetailsElement>("details.adminbar__menu")];
-		// One menu open at a time; a click elsewhere or Escape closes it.
-		bar.addEventListener("toggle", (event) => {
-			const opened = event.target as HTMLDetailsElement;
-			if (opened.open) for (const menu of menus()) if (menu !== opened) menu.open = false;
-		}, true);
-		document.addEventListener("click", (event) => {
-			if (!bar.contains(event.target as Node)) for (const menu of menus()) menu.open = false;
-		});
-		document.addEventListener("keydown", (event) => {
-			if (event.key !== "Escape") return;
-			const open = menus().find((menu) => menu.open);
-			if (!open) return;
-			open.open = false;
-			open.querySelector<HTMLElement>("summary")?.focus();
-		});
-		const photoOrigin = bar.dataset.photoOrigin;
-		const markPhotoSite = (state: "on" | "off") => photoOrigin
-			? fetch(`${photoOrigin}/admin-bar?state=${state}`, { mode: "no-cors", credentials: "include" }).catch(() => undefined)
-			: Promise.resolve();
-		try {
-			if (photoOrigin && !sessionStorage.getItem("kanouk-admin-bar-synced")) {
-				void markPhotoSite("on").then(() => sessionStorage.setItem("kanouk-admin-bar-synced", "1"));
-			}
-		} catch { /* storage unavailable: the marker is simply refreshed on the next page */ }
-		bar.querySelector<HTMLButtonElement>("[data-adminbar-hide]")?.addEventListener("click", async (event) => {
-			(event.currentTarget as HTMLButtonElement).disabled = true;
-			await fetch("/admin-bar?state=off", { credentials: "same-origin" }).catch(() => undefined);
-			window.location.reload();
-		});
-		bar.querySelector<HTMLButtonElement>("[data-adminbar-logout]")?.addEventListener("click", async (event) => {
-			const button = event.currentTarget as HTMLButtonElement;
-			button.disabled = true;
-			try { sessionStorage.removeItem("kanouk-admin-bar-synced"); } catch { /* ignore */ }
-			await markPhotoSite("off");
-			try {
-				// The API requires this header on state-changing requests.
-				await fetch("/_emdash/api/auth/logout", {
-					method: "POST",
-					credentials: "same-origin",
-					headers: { "X-EmDash-Request": "1" },
-				});
-			} finally {
-				window.location.assign(window.location.pathname);
-			}
-		});
-	}
-</script>

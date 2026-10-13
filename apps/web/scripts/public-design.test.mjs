@@ -57,38 +57,37 @@ test("album and photo patterns have stable responsive defaults", async () => {
 	assert.match(theme, /@media \(max-width: 40rem\)[\s\S]*repeat\(3, minmax\(0, 1fr\)\)/);
 });
 
-test("the admin bar is rendered only for a signed-in user and keeps the sticky chrome aligned", async () => {
+test("the admin bar is inserted after load, so cached public pages never depend on the session", async () => {
 	const base = await read("src/layouts/Base.astro");
-	const bar = await read("src/components/AdminBar.astro");
+	const photos = await read("src/layouts/Photos.astro");
+	const client = await read("src/client/admin-bar.ts");
+	const endpoint = await read("src/pages/admin-bar/bar.astro");
+	const marker = await read("src/pages/admin-bar.ts");
+	const middleware = await read("src/middleware.ts");
+	const admin = await read("src/studio/admin.tsx");
 	const theme = await read("src/styles/theme.css");
-	assert.match(base, /\{isLoggedIn && <AdminBar /);
-	assert.match(base, /"has-admin-bar": isLoggedIn/);
-	assert.doesNotMatch(base, /site-admin/);
-	// Every link goes into the admin; logging out needs the CSRF header.
-	assert.doesNotMatch(bar, /href="https?:/);
-	assert.match(bar, /"X-EmDash-Request": "1"/);
+	for (const layout of [base, photos]) {
+		// The server HTML is the same for everyone; no session-dependent bar.
+		assert.doesNotMatch(layout, /<AdminBar|locals\.user/);
+		assert.match(layout, /kanouk-admin-bar=1\(\?:;\|\$\)\/\.test\(document\.cookie\) && document\.documentElement\.classList\.add\("has-admin-bar"\)/);
+		assert.match(layout, /mountAdminBar\(\)/);
+	}
+	assert.match(base, /data-admin-site="blog"/);
+	assert.match(photos, /data-admin-site="photos"/);
+	// The blog endpoint checks the real session and clears a stale marker.
+	assert.match(endpoint, /site === "blog" && !user/);
+	assert.match(endpoint, /kanouk-admin-bar=; Path=\/; Max-Age=0/);
+	assert.match(endpoint, /export const partial = true/);
+	assert.match(middleware, /pathname\.startsWith\("\/admin-bar"\)/);
+	assert.doesNotMatch(middleware, /kanouk-admin-bar/);
+	assert.match(marker, /httpOnly: false/);
+	assert.match(marker, /Not Found/);
+	// The admin marks the browser; logout clears both sites.
+	assert.match(admin, /markAdminPresent\(\)/);
+	assert.match(client, /"X-EmDash-Request": "1"/);
+	assert.match(client, /markPhotoSite\("off"\)/);
 	assert.match(theme, /:root\.has-admin-bar \{ --admin-bar: /);
 	assert.match(theme, /\.site-header \{[^}]*top: var\(--admin-bar\)/);
-	assert.match(theme, /--header-offset: calc\(var\(--header-height\) \+ var\(--admin-bar\)\)/);
-});
-
-test("the photo site shows the admin bar from a marker cookie that never reaches the shared cache", async () => {
-	const photos = await read("src/layouts/Photos.astro");
-	const endpoint = await read("src/pages/admin-bar.ts");
-	const middleware = await read("src/middleware.ts");
-	const bar = await read("src/components/AdminBar.astro");
-	const theme = await read("src/styles/theme.css");
-	assert.match(photos, /\{showAdminBar && <AdminBar mode="photos"/);
-	assert.match(photos, /"has-admin-bar": showAdminBar/);
-	// A marker request must bypass the edge cache, in both directions.
-	assert.match(middleware, /cookies\.get\("kanouk-admin-bar"\)\?\.value === "1"/);
-	assert.match(endpoint, /Not Found/);
-	assert.match(endpoint, /private, no-store/);
-	assert.match(endpoint, /httpOnly: true/);
-	// The blog sets the marker while an admin is signed in and clears it on logout.
-	assert.match(bar, /state=\$\{state\}/);
-	assert.match(bar, /markPhotoSite\("off"\)/);
-	// The full-height photo stage leaves room for the bar.
 	assert.doesNotMatch(theme, /calc\(100svh - var\(--header-height\)\)/);
 });
 

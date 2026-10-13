@@ -57,6 +57,10 @@ import {
 } from "./organizer-workflow";
 import { readPhotoMetadata, type PhotoMetadata } from "./photo-metadata";
 import "./studio.css";
+import { markAdminPresent } from "../client/admin-bar";
+
+// The admin is never cached and always signed in: tell the public sites to show the admin bar.
+if (typeof document !== "undefined") markAdminPresent();
 
 const CORE_ROOT = "/_emdash/admin";
 const ORGANIZER_ROOT = "/_emdash/admin/plugins/yohaku-photo-tools/organize";

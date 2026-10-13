@@ -3,7 +3,6 @@ import { getEmDashCollection, getSiteSettings } from "emdash";
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import { Images, Search } from "lucide-astro";
-import AdminBar from "../components/AdminBar.astro";
 import ProfileCard from "../components/ProfileCard.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import YohakuHead from "../components/YohakuHead.astro";
@@ -59,7 +58,6 @@ const pages = pageCandidates
 	.slice(0, 4);
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
 const photosUrl = isPreviewHost ? "/albums" : "https://photos.kanouk.com/albums";
-const isLoggedIn = !!Astro.locals.user;
 const currentPath = Astro.url.pathname;
 const isSearchPage = currentPath === "/search";
 const isArticleSurface = !isSearchPage && (
@@ -92,10 +90,12 @@ const pageCtx = createPublicPageContext({
 ---
 
 <!doctype html>
-<html lang="ja" class:list={{ "has-admin-bar": isLoggedIn }}>
+<html lang="ja" data-admin-site="blog" data-admin-collection={content?.collection} data-admin-id={content?.id}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- An admin uses this browser: reserve the admin bar's height before paint (client/admin-bar.ts fills it). -->
+		<script is:inline>/(?:^|;\s*)kanouk-admin-bar=1(?:;|$)/.test(document.cookie) && document.documentElement.classList.add("has-admin-bar");</script>
 		<YohakuHead />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
@@ -103,7 +103,6 @@ const pageCtx = createPublicPageContext({
 	<body class="site site--blog">
 		<EmDashBodyStart page={pageCtx} />
 		<a class="skip-link" href="#main-content">本文へ移動</a>
-		{isLoggedIn && <AdminBar content={content} userName={Astro.locals.user?.name} />}
 
 		<header class="site-header">
 			<div class="site-header__inner">
@@ -165,6 +164,10 @@ const pageCtx = createPublicPageContext({
 					else window.location.assign("/search");
 				}
 			});
+		</script>
+		<script>
+			import { mountAdminBar } from "../client/admin-bar";
+			void mountAdminBar();
 		</script>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
