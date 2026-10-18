@@ -108,7 +108,7 @@ const mapPanelId = "album-map-panel";
 							crop
 							preview
 							priority={index < 3}
-							sizes="(max-width: 40rem) 33vw, (max-width: 64rem) 25vw, 20vw"
+							sizes="(max-width: 40rem) calc((100vw - 2rem) / 3), (max-width: 64rem) calc((100vw - 4rem) / 4), calc((min(100vw, 80rem) - 4rem) / 5)"
 						/>
 						{photo.data.kind === "video" && (
 							<span class="video-badge">
@@ -179,6 +179,12 @@ const mapPanelId = "album-map-panel";
 			const size = normalizePhotoGridSize(value);
 			grid.dataset.customSize = "true";
 			grid.style.setProperty("--photo-grid-min", `${size}px`);
+			// Pick image candidates for the tile width the slider produced, not the default grid.
+			requestAnimationFrame(() => {
+				const tile = grid.querySelector("img")?.getBoundingClientRect().width;
+				if (!tile) return;
+				for (const element of grid.querySelectorAll("picture source, img")) element.setAttribute("sizes", `${Math.ceil(tile)}px`);
+			});
 			input.value = String(size);
 			input.setAttribute("aria-valuetext", `サムネイル幅 ${size}px`);
 			return size;
