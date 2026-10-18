@@ -56,7 +56,16 @@ import {
 	type UploadQueueItem,
 } from "./organizer-workflow";
 import { readPhotoMetadata, type PhotoMetadata } from "./photo-metadata";
-import "./studio.css";
+// Inlined and injected by the admin itself: a plain CSS import would be linked
+// on every public page too, since the plugin registry is part of the site bundle.
+import studioCss from "./studio.css?inline";
+
+if (typeof document !== "undefined" && !document.getElementById("yohaku-photo-tools-css")) {
+	const style = document.createElement("style");
+	style.id = "yohaku-photo-tools-css";
+	style.textContent = studioCss;
+	document.head.append(style);
+}
 import { markAdminPresent } from "../client/admin-bar";
 
 // The admin is never cached and always signed in: tell the public sites to show the admin bar.
@@ -153,6 +162,43 @@ function Preview({ value, size = 160 }: { value: unknown; size?: number }) {
 		: <span className="photo-tools-thumb photo-tools-thumb--empty">画像なし</span>;
 }
 
+type IconName = "back" | "plus" | "more" | "close" | "search" | "upload" | "left" | "right" | "star" | "image";
+const ICON_PATHS: Record<IconName, string> = {
+	back: "M15 18l-6-6 6-6",
+	plus: "M12 5v14M5 12h14",
+	more: "M5 12h.01M12 12h.01M19 12h.01",
+	close: "M18 6L6 18M6 6l12 12",
+	search: "M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-3.5-3.5",
+	upload: "M12 16V4M7 9l5-5 5 5M5 20h14",
+	left: "M19 12H5M11 18l-6-6 6-6",
+	right: "M5 12h14M13 6l6 6-6 6",
+	star: "M12 4l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 16.4 7.2 18.9l.9-5.4-3.9-3.8 5.4-.8z",
+	image: "M4 5h16v14H4zM4 15l4.5-4.5 4 4 2.5-2.5L20 17M15.5 9.5h.01",
+};
+
+function Icon({ name, size = 16 }: { name: IconName; size?: number }) {
+	return <svg className="photo-tools-icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={name === "more" ? 3 : 1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ICON_PATHS[name]} /></svg>;
+}
+
+/** A small disclosure menu; closes on outside click, Escape, or choosing an item. */
+function Menu({ label, children, align = "end" }: { label: string; children: React.ReactNode; align?: "start" | "end" }) {
+	const ref = useRef<HTMLDetailsElement>(null);
+	useEffect(() => {
+		const close = (event: Event) => {
+			const menu = ref.current;
+			if (!menu?.open) return;
+			if (event instanceof KeyboardEvent ? event.key === "Escape" : !menu.contains(event.target as Node)) menu.open = false;
+		};
+		document.addEventListener("click", close);
+		document.addEventListener("keydown", close);
+		return () => { document.removeEventListener("click", close); document.removeEventListener("keydown", close); };
+	}, []);
+	return <details ref={ref} className={`photo-tools-menu photo-tools-menu--${align}`}>
+		<summary className="photo-tools-button photo-tools-button--icon" aria-label={label} title={label}><Icon name="more" /></summary>
+		<div className="photo-tools-menu__panel" role="menu" onClick={() => { if (ref.current) ref.current.open = false; }}>{children}</div>
+	</details>;
+}
+
 function Badge({ children, tone = "default" }: { children: React.ReactNode; tone?: "default" | "warn" | "ok" | "danger" }) {
 	return <span className={`photo-tools-badge photo-tools-badge--${tone}`}>{children}</span>;
 }
@@ -226,6 +272,12 @@ function PhotoInspector({
 	previousId,
 	nextId,
 	onNavigate,
+	onClose,
+	onMove,
+	canMoveBack,
+	canMoveForward,
+	isCover,
+	onMakeCover,
 }: {
 	photo: ContentItem;
 	albums: ContentItem[];
@@ -238,6 +290,12 @@ function PhotoInspector({
 	previousId: string | null;
 	nextId: string | null;
 	onNavigate: (photoId: string) => void;
+	onClose: () => void;
+	onMove: (delta: -1 | 1) => void;
+	canMoveBack: boolean;
+	canMoveForward: boolean;
+	isCover: boolean;
+	onMakeCover: () => void;
 }) {
 	const saveInFlight = useRef(false);
 	const [saving, setSaving] = useState(false);
@@ -298,35 +356,59 @@ function PhotoInspector({
 		}
 		onNavigate(targetId);
 	};
+	const capturedDate = dateTimeLocalInputValue(dataOf(photo).captured_at).slice(0, 10).replaceAll("-", "/");
 	return <aside className="photo-tools-inspector" aria-label="写真情報" data-photo-tools-dirty={dirty ? "true" : undefined}>
-		<header><div><span className="photo-tools-eyebrow">写真情報</span><h2>{labelOf(photo)}</h2></div><Badge tone={dirty || hasPendingChanges(photo) ? "warn" : hidden ? "default" : "ok"}>{dirty ? "未保存" : statusLabel(photo)}</Badge></header>
-		<Preview value={dataOf(photo).image} size={480} />
-		<label>タイトル<input value={draft.title} disabled={busy} onChange={(event) => setDraft({ ...draft, title: event.target.value })} /></label>
-		<label>キャプション<textarea value={draft.caption} disabled={busy} placeholder="キャプションを追加" onChange={(event) => setDraft({ ...draft, caption: event.target.value })} /></label>
-		<label>代替テキスト<input value={draft.alt} disabled={busy} onChange={(event) => setDraft({ ...draft, alt: event.target.value })} /></label>
-		<label>撮影日<input type="datetime-local" value={draft.captured_at} disabled={busy} onChange={(event) => setDraft({ ...draft, captured_at: event.target.value })} /></label>
-		<label>アルバム<select value={draft.album} disabled={busy} onChange={(event) => setDraft({ ...draft, album: event.target.value })}>{albums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}</option>)}</select></label>
-		<nav className="photo-tools-caption-nav" aria-label="連続キャプション編集">
-			<button type="button" className="photo-tools-button" disabled={busy || saving || !previousId || Boolean(preparedDraft.dateError) || (dirty && (!draft.title.trim() || !draft.alt.trim()))} onClick={() => saveAndNavigate(previousId)}>{dirty ? "保存して前へ" : "前へ"}</button>
-			<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={busy || saving || !dirty || Boolean(preparedDraft.dateError) || !draft.title.trim() || !draft.alt.trim()} onClick={() => saveDraft()}>{saving ? "保存中…" : "下書き保存"}</button>
-			<button type="button" className="photo-tools-button" disabled={busy || saving || !nextId || Boolean(preparedDraft.dateError) || (dirty && (!draft.title.trim() || !draft.alt.trim()))} onClick={() => saveAndNavigate(nextId)}>{dirty ? "保存して次へ" : "次へ"}</button>
-		</nav>
-		{preparedDraft.dateError && <p className="photo-tools-alert photo-tools-alert--error" role="alert">{preparedDraft.dateError}</p>}
-		<p className="photo-tools-location">
-			{position
-				? <>位置情報 <a href={`https://www.openstreetmap.org/?mlat=${position.latitude}&mlon=${position.longitude}#map=16/${position.latitude}/${position.longitude}`} target="_blank" rel="noreferrer">{position.latitude.toFixed(5)}, {position.longitude.toFixed(5)}</a><small>公開すると、アルバムの地図に表示されます。</small></>
-				: <>位置情報なし</>}
-		</p>
-		<div className="photo-tools-actions">
-			{!hidden && <button className="photo-tools-button" disabled={busy || dirty || locationUnreviewed || !hasPendingChanges(photo)} onClick={() => onPublish([photo.id])}>この写真だけ公開</button>}
-			<button className="photo-tools-button" disabled={busy || dirty} onClick={() => onHide([photo.id], !hidden)}>{hidden ? "再び公開する" : "非公開にする"}</button>
-			<a className="photo-tools-button" href={photoEditHref(photo.id)} onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>詳細編集</a>
-			<button className="photo-tools-button photo-tools-button--danger" disabled={busy || dirty} onClick={() => onTrash([photo.id])}>削除</button>
+		<header className="photo-tools-inspector__header">
+			<div>
+				<h2>{labelOf(photo)}</h2>
+				<p>{capturedDate || "撮影日なし"}<span aria-hidden="true"> · </span><span className={`photo-tools-state photo-tools-state--${dirty ? "warn" : hasPendingChanges(photo) ? "warn" : hidden ? "muted" : "ok"}`}>{dirty ? "未保存" : statusLabel(photo)}</span>{isCover && <><span aria-hidden="true"> · </span>表紙</>}</p>
+			</div>
+			<button type="button" className="photo-tools-button photo-tools-button--icon photo-tools-button--ghost" onClick={onClose} aria-label="写真情報を閉じる" title="閉じる"><Icon name="close" /></button>
+		</header>
+		<div className="photo-tools-inspector__body">
+			<div className="photo-tools-inspector__preview"><Preview value={dataOf(photo).image} size={480} /></div>
+			<label>タイトル<input value={draft.title} disabled={busy} onChange={(event) => setDraft({ ...draft, title: event.target.value })} /></label>
+			<label>キャプション<textarea value={draft.caption} disabled={busy} placeholder="キャプションを追加" onChange={(event) => setDraft({ ...draft, caption: event.target.value })} /></label>
+			<label>代替テキスト<input value={draft.alt} disabled={busy} onChange={(event) => setDraft({ ...draft, alt: event.target.value })} /></label>
+			<div className="photo-tools-field-row">
+				<label>撮影日時<input type="datetime-local" value={draft.captured_at} disabled={busy} onChange={(event) => setDraft({ ...draft, captured_at: event.target.value })} /></label>
+				<label>アルバム<select value={draft.album} disabled={busy} onChange={(event) => setDraft({ ...draft, album: event.target.value })}>{albums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}</option>)}</select></label>
+			</div>
+			{preparedDraft.dateError && <p className="photo-tools-alert photo-tools-alert--error" role="alert">{preparedDraft.dateError}</p>}
+			<p className="photo-tools-location">
+				{position
+					? <>位置 <a href={`https://www.openstreetmap.org/?mlat=${position.latitude}&mlon=${position.longitude}#map=16/${position.latitude}/${position.longitude}`} target="_blank" rel="noreferrer">{position.latitude.toFixed(5)}, {position.longitude.toFixed(5)}</a><small>公開するとアルバムの地図に出ます</small></>
+					: <>位置情報なし</>}
+			</p>
+			<section className="photo-tools-inspector__section" aria-label="並びと表紙">
+				<div className="photo-tools-button-group">
+					<button type="button" className="photo-tools-button" disabled={busy || dirty || !canMoveBack} onClick={() => onMove(-1)}><Icon name="left" />前へ移動</button>
+					<button type="button" className="photo-tools-button" disabled={busy || dirty || !canMoveForward} onClick={() => onMove(1)}>後ろへ移動<Icon name="right" /></button>
+					<button type="button" className="photo-tools-button" disabled={busy || dirty || isCover} onClick={onMakeCover}><Icon name="star" />{isCover ? "表紙です" : "表紙にする"}</button>
+				</div>
+			</section>
+			<section className="photo-tools-inspector__section" aria-label="公開">
+				<div className="photo-tools-button-group">
+					{!hidden && <button type="button" className="photo-tools-button" disabled={busy || dirty || locationUnreviewed || !hasPendingChanges(photo)} onClick={() => onPublish([photo.id])}>この写真を公開</button>}
+					<button type="button" className="photo-tools-button" disabled={busy || dirty} onClick={() => onHide([photo.id], !hidden)}>{hidden ? "再び公開する" : "非公開にする"}</button>
+					<a className="photo-tools-button" href={photoEditHref(photo.id)} onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>詳細編集</a>
+				</div>
+				{hidden && <p className="photo-tools-note">この写真は公開サイトに出ません。アルバムを公開しても非公開のままです。</p>}
+				{locationUnreviewed && <p className="photo-tools-alert photo-tools-alert--error">原本の位置情報を確認するまで公開できません。</p>}
+			</section>
+			<PublicPhotoLinks photo={photo} />
+			<section className="photo-tools-inspector__section photo-tools-inspector__danger">
+				<button type="button" className="photo-tools-button photo-tools-button--danger" disabled={busy || dirty} onClick={() => onTrash([photo.id])}>この写真を削除</button>
+			</section>
 		</div>
-		{hidden && <p className="photo-tools-muted">この写真は公開サイトに出ません。アルバムを公開しても非公開のままです。</p>}
-		<PublicPhotoLinks photo={photo} />
-		{dirty && <p className="photo-tools-muted">この写真の変更を下書き保存すると、公開や並べ替えを再開できます。</p>}
-		{locationUnreviewed && <p className="photo-tools-alert photo-tools-alert--error">原本の位置情報を確認・除去するまで公開できません。</p>}
+		<footer className="photo-tools-inspector__footer">
+			{dirty && <p className="photo-tools-note">変更を保存すると、公開や並べ替えができます。</p>}
+			<nav className="photo-tools-caption-nav" aria-label="写真を順に編集">
+				<button type="button" className="photo-tools-button" disabled={busy || saving || !previousId || Boolean(preparedDraft.dateError) || (dirty && (!draft.title.trim() || !draft.alt.trim()))} onClick={() => saveAndNavigate(previousId)}><Icon name="left" />{dirty ? "保存して前へ" : "前の写真"}</button>
+				<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={busy || saving || !dirty || Boolean(preparedDraft.dateError) || !draft.title.trim() || !draft.alt.trim()} onClick={() => saveDraft()}>{saving ? "保存中…" : "保存"}</button>
+				<button type="button" className="photo-tools-button" disabled={busy || saving || !nextId || Boolean(preparedDraft.dateError) || (dirty && (!draft.title.trim() || !draft.alt.trim()))} onClick={() => saveAndNavigate(nextId)}>{dirty ? "保存して次へ" : "次の写真"}<Icon name="right" /></button>
+			</nav>
+		</footer>
 	</aside>;
 }
 
@@ -356,24 +438,42 @@ function BulkInspector({
 	const [value, setValue] = useState("");
 	const [target, setTarget] = useState("");
 	return <aside className="photo-tools-inspector" aria-label="一括操作">
-		<header><div><span className="photo-tools-eyebrow">一括操作</span><h2>{selected.length}点を選択中</h2></div></header>
-		<p className="photo-tools-muted">処理中は対象を固定し、失敗した写真だけを選択状態に残します。</p>
-		<label>変更項目<select value={field} disabled={busy} onChange={(event) => setField(event.target.value as "caption" | "alt")}><option value="caption">キャプション</option><option value="alt">代替テキスト</option></select></label>
-		<label>変更方法<select value={mode} disabled={busy} onChange={(event) => setMode(event.target.value as BulkTextMode)}><option value="overwrite">上書き</option><option value="prepend">先頭へ追加</option><option value="append">末尾へ追加</option></select></label>
-		<label>内容<textarea value={value} disabled={busy} onChange={(event) => setValue(event.target.value)} /></label>
-		<button className="photo-tools-button photo-tools-button--primary" disabled={busy || !value.trim()} onClick={async () => {
-			if (mode === "overwrite" && !window.confirm(`${selected.length}点の${field === "caption" ? "キャプション" : "代替テキスト"}を同じ内容で上書きしますか？`)) return;
-			await onApply(field, value, mode); setValue("");
-		}}>下書きへ適用</button>
-		<hr />
-		<label>移動先<select value={target} disabled={busy} onChange={(event) => setTarget(event.target.value)}><option value="">選択してください</option>{albums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}</option>)}</select></label>
-		<button className="photo-tools-button" disabled={busy || !target} onClick={() => onMove(target)}>選択した写真を移動</button>
-		<hr />
-		<div className="photo-tools-actions"><button className="photo-tools-button" disabled={busy || !selected.some(hasPendingChanges)} onClick={() => onPublish(selected.map((photo) => photo.id))}>選択した写真を公開</button><button className="photo-tools-button" disabled={busy} onClick={onClear}>選択解除</button></div>
-		<div className="photo-tools-actions">
-			<button className="photo-tools-button" disabled={busy || selected.every((photo) => isHiddenPhoto(dataOf(photo)))} onClick={() => onHide(selected.map((photo) => photo.id), true)}>選択した写真を非公開</button>
-			<button className="photo-tools-button" disabled={busy || !selected.some((photo) => isHiddenPhoto(dataOf(photo)))} onClick={() => onHide(selected.filter((photo) => isHiddenPhoto(dataOf(photo))).map((photo) => photo.id), false)}>再び公開する</button>
-			<button className="photo-tools-button photo-tools-button--danger" disabled={busy} onClick={() => onTrash(selected.map((photo) => photo.id))}>選択した写真を削除</button>
+		<header className="photo-tools-inspector__header">
+			<div><h2>{selected.length}点を選択中</h2><p>まとめて公開・非公開・移動・削除できます</p></div>
+			<button type="button" className="photo-tools-button photo-tools-button--icon photo-tools-button--ghost" onClick={onClear} aria-label="選択を解除" title="選択を解除"><Icon name="close" /></button>
+		</header>
+		<div className="photo-tools-inspector__body">
+			<section className="photo-tools-inspector__section" aria-label="公開">
+				<h3>公開</h3>
+				<div className="photo-tools-button-group">
+					<button type="button" className="photo-tools-button" disabled={busy || !selected.some(hasPendingChanges)} onClick={() => onPublish(selected.map((photo) => photo.id))}>公開する</button>
+					<button type="button" className="photo-tools-button" disabled={busy || selected.every((photo) => isHiddenPhoto(dataOf(photo)))} onClick={() => onHide(selected.map((photo) => photo.id), true)}>非公開にする</button>
+					<button type="button" className="photo-tools-button" disabled={busy || !selected.some((photo) => isHiddenPhoto(dataOf(photo)))} onClick={() => onHide(selected.filter((photo) => isHiddenPhoto(dataOf(photo))).map((photo) => photo.id), false)}>再び公開する</button>
+				</div>
+			</section>
+			<section className="photo-tools-inspector__section" aria-label="別のアルバムへ移動">
+				<h3>別のアルバムへ移動</h3>
+				<div className="photo-tools-inline-form">
+					<select aria-label="移動先のアルバム" value={target} disabled={busy} onChange={(event) => setTarget(event.target.value)}><option value="">移動先を選ぶ</option>{albums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}</option>)}</select>
+					<button type="button" className="photo-tools-button" disabled={busy || !target} onClick={() => onMove(target)}>移動</button>
+				</div>
+			</section>
+			<section className="photo-tools-inspector__section" aria-label="文章をまとめて変更">
+				<h3>文章をまとめて変更</h3>
+				<div className="photo-tools-field-row">
+					<label>項目<select value={field} disabled={busy} onChange={(event) => setField(event.target.value as "caption" | "alt")}><option value="caption">キャプション</option><option value="alt">代替テキスト</option></select></label>
+					<label>方法<select value={mode} disabled={busy} onChange={(event) => setMode(event.target.value as BulkTextMode)}><option value="overwrite">上書き</option><option value="prepend">先頭に追加</option><option value="append">末尾に追加</option></select></label>
+				</div>
+				<label>内容<textarea value={value} disabled={busy} onChange={(event) => setValue(event.target.value)} /></label>
+				<button type="button" className="photo-tools-button" disabled={busy || !value.trim()} onClick={async () => {
+					if (mode === "overwrite" && !window.confirm(`${selected.length}点の${field === "caption" ? "キャプション" : "代替テキスト"}を同じ内容で上書きしますか？`)) return;
+					await onApply(field, value, mode); setValue("");
+				}}>下書きに反映</button>
+			</section>
+			<section className="photo-tools-inspector__section photo-tools-inspector__danger">
+				<button type="button" className="photo-tools-button photo-tools-button--danger" disabled={busy} onClick={() => onTrash(selected.map((photo) => photo.id))}>{selected.length}点を削除</button>
+				<p className="photo-tools-note">失敗した写真だけが選択されたまま残ります。</p>
+			</section>
 		</div>
 	</aside>;
 }
@@ -388,7 +488,7 @@ function AlbumOrganizer({
 	onPhotoRemoved,
 	onBusyChange,
 	albumReady,
-	onQuery, onRefresh, onFirstPage, firstOffset, onLoadMore, nextOffset, resultTotal, albumCount,
+	onQuery, onRefresh, onFirstPage, firstOffset, onLoadMore, nextOffset, resultTotal, albumCount, onBack,
 }: {
 	album: ContentItem;
 	albums: ContentItem[];
@@ -407,8 +507,10 @@ function AlbumOrganizer({
 	nextOffset: number | null;
 	resultTotal: number;
 	albumCount?: AlbumCount;
+	onBack: () => void;
 }) {
 	const reorderInFlight = useRef(false);
+	const requestedPhoto = useRef(typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("photo"));
 	const albumPhotos = useMemo(() => allPhotos
 		.filter((photo) => dataOf(photo).album === album.id)
 		.toSorted((left, right) => Number(dataOf(left).position) - Number(dataOf(right).position)), [allPhotos, album.id]);
@@ -435,6 +537,8 @@ function AlbumOrganizer({
 	const knownHashes = useRef(new Set<string>());
 	const [uploading, setUploading] = useState(false);
 	const [dragDepth, setDragDepth] = useState(0);
+	const [settingsOpen, setSettingsOpen] = useState(false);
+	const [locationErased, setLocationErased] = useState(0);
 	const [albumDraft, setAlbumDraft] = useState({
 		title: textValue(dataOf(album).title),
 		description: textValue(dataOf(album).description),
@@ -458,7 +562,12 @@ function AlbumOrganizer({
 	useEffect(() => {
 		if (selectedId && albumPhotos.some((photo) => photo.id === selectedId)) return;
 		const requested = new URLSearchParams(window.location.search).get("photo");
-		setSelectedId(requested && albumPhotos.some((photo) => photo.id === requested) ? requested : albumPhotos[0]?.id ?? null);
+		// Open a photo only when the URL asks for one; otherwise the grid gets the full width.
+		if (requested && requested === requestedPhoto.current && albumPhotos.some((photo) => photo.id === requested)) {
+			requestedPhoto.current = null;
+			setSelectedId(requested);
+			setMobilePane("info");
+		}
 	}, [album.id, albumPhotos, selectedId]);
 
 	useEffect(() => {
@@ -493,7 +602,7 @@ function AlbumOrganizer({
 			setPhotoHydration({ identity: inspectorIdentity, status: "error", error: cause });
 		});
 		return () => { photoHydrationSequence.current += 1; };
-	}, [inspectorPhoto?.id, inspectorPhoto?.draftRevisionId, checkedPhotos.length, inspectorIdentity, photoHydrationRetry]);
+	}, [inspectorPhoto?.id, inspectorPhoto?.draftRevisionId, Boolean(inspectorPhoto?._rev), checkedPhotos.length, inspectorIdentity, photoHydrationRetry]);
 	const inspectorReady = Boolean(inspectorPhoto?._rev);
 	const albumDraftDirty = albumDraft.title.trim() !== textValue(dataOf(album).title) || albumDraft.description.trim() !== textValue(dataOf(album).description);
 	const pendingIds = new Set([...albumPhotos.filter(hasPendingChanges).map((photo) => photo.id), ...touchedIds]);
@@ -734,7 +843,11 @@ function AlbumOrganizer({
 				const { hidden: _previous, ...metadata } = (dataOf(current.item).source_metadata ?? {}) as Record<string, unknown>;
 				let result = await updateDraft("photos", id, current._rev, { source_metadata: hidden ? { ...metadata, hidden: true } : metadata });
 				// Hiding takes the photo off the public site now; showing it again publishes it.
-				if (hidden && current.item.status === "published") result = await unpublishContent("photos", id);
+				if (hidden && current.item.status === "published") {
+					await unpublishContent("photos", id);
+					// The unpublish reply carries the old live data; re-read the draft that holds the hidden mark.
+					result = await getContent("photos", id);
+				}
 				if (!hidden && !needsLocationReview(dataOf(result.item))) result = await publishDraft("photos", id);
 				onPhotoUpdated(result.item);
 			} catch (cause) { failed.push({ id, reason: reasonOf(cause) }); }
@@ -775,10 +888,10 @@ function AlbumOrganizer({
 		const next = new Set(checked);
 		next.has(photoId) ? next.delete(photoId) : next.add(photoId);
 		setChecked(next);
+		// Checking photos selects them; the edit panel follows a single selection.
 		if (next.size === 1) setSelectedId([...next][0]);
-		else if (next.size === 0) setSelectedId(photoId);
+		else if (next.size === 0) { setSelectedId(null); setMobilePane("photos"); }
 		else if (!selectedId || !next.has(selectedId)) setSelectedId([...next][0]);
-		setMobilePane("info");
 	};
 
 	/** Read EXIF, order the selection by capture time and start uploading. */
@@ -849,6 +962,7 @@ function AlbumOrganizer({
 		};
 		const created: string[] = [];
 		const capturedTimes: string[] = [];
+		let locationErased = 0;
 		for (const queued of initial) {
 			let item = working.find((candidate) => candidate.id === queued.id) ?? queued;
 			if (item.stage === "queued") {
@@ -876,6 +990,8 @@ function AlbumOrganizer({
 				const result = await createPhotoFromMedia(item.media, album.id, item.position, metadata, uploadFileKey(item.file));
 				if (item.media.contentHash) knownHashes.current.add(item.media.contentHash);
 				if (metadata?.capturedAt) capturedTimes.push(metadata.capturedAt);
+				// Android hands browsers photos whose GPS fields are kept but zeroed.
+				if (metadata?.hasLocation && metadata.latitude === undefined) locationErased += 1;
 				onPhotoAdded(result.item);
 				touch(result.item.id);
 				created.push(result.item.id);
@@ -903,6 +1019,7 @@ function AlbumOrganizer({
 		setMessage(failed.length
 			? `${created.length}点を追加・${failed.length}点が失敗（この画面で失敗分だけ再試行できます）`
 			: `${created.length}点を追加しました${skipped ? `（アルバムにある${skipped}点は省略）` : ""}。「${album.status === "published" ? "変更を公開" : "アルバムを公開"}」で公開されます。`);
+		setLocationErased(locationErased);
 		setBusy(false);
 		if (created.length) onRefresh();
 	};
@@ -921,7 +1038,36 @@ function AlbumOrganizer({
 	}} />;
 	const carriesFiles = (event: React.DragEvent) => event.dataTransfer.types.includes("Files");
 
-	return <section data-organizer-ready={albumReady ? "true" : "false"} className="photo-tools-workspace" data-photo-tools-busy={busy ? "true" : undefined}
+	const coverUrl = mediaUrl(dataOf(album).cover_image);
+	const periodFrom = dateTimeLocalInputValue(dataOf(album).captured_from).slice(0, 10).replaceAll("-", "/");
+	const periodTo = dateTimeLocalInputValue(dataOf(album).captured_to).slice(0, 10).replaceAll("-", "/");
+	const period = periodFrom ? (periodTo && periodTo !== periodFrom ? `${periodFrom}〜${periodTo.slice(0, 4) === periodFrom.slice(0, 4) ? periodTo.slice(5) : periodTo}` : periodFrom) : "";
+	const albumState = album.status !== "published" ? "下書き" : workspacePending ? "未公開の変更あり" : "公開中";
+	const panelOpen = checkedPhotos.length > 1 || Boolean(inspectorPhoto && dataOf(inspectorPhoto).album === album.id);
+	const closePanel = () => { if (!canChangeOrganizerContext()) return; setChecked(new Set()); setSelectedId(null); setMobilePane("photos"); };
+	const sortByCaptureTime = async () => {
+		setBusy(true);
+		try {
+			await persistOrder((await albumPhotosForOperation(album.id)).sort((left, right) => compareCapturedAt(
+				dataOf(left).captured_at,
+				dataOf(right).captured_at,
+				Number(dataOf(left).position) || 0,
+				Number(dataOf(right).position) || 0,
+				left.id,
+				right.id,
+			)));
+		} catch (cause) { setError(cause); } finally { setBusy(false); }
+	};
+	const makeCover = async (photo: ContentItem) => {
+		setBusy(true); setError(null);
+		try {
+			if (!album._rev) throw new Error("アルバムの編集情報を再読込してください。");
+			const result = await updateDraft("albums", album.id, album._rev, { cover_image: dataOf(photo).image });
+			onAlbumUpdated(result.item); setMessage("表紙を変更しました（下書き）");
+		} catch (cause) { setError(new Error(reasonOf(cause))); } finally { setBusy(false); }
+	};
+
+	return <section data-organizer-ready={albumReady ? "true" : "false"} className={`photo-tools-workspace ${panelOpen ? "has-panel" : ""} ${mobilePane === "info" && panelOpen ? "is-sheet-open" : ""}`} data-photo-tools-busy={busy ? "true" : undefined}
 		onDragEnter={(event) => { if (carriesFiles(event)) { event.preventDefault(); setDragDepth((depth) => depth + 1); } }}
 		onDragOver={(event) => { if (carriesFiles(event)) event.preventDefault(); }}
 		onDragLeave={(event) => { if (carriesFiles(event)) setDragDepth((depth) => Math.max(0, depth - 1)); }}
@@ -930,31 +1076,52 @@ function AlbumOrganizer({
 			event.preventDefault(); setDragDepth(0);
 			void enqueueFiles([...event.dataTransfer.files]);
 		}}>
-		{dragDepth > 0 && !operationLocked && <div className="photo-tools-drop-overlay" aria-hidden="true"><strong>ここで離すと「{labelOf(album)}」に追加します</strong></div>}
+		{dragDepth > 0 && !operationLocked && <div className="photo-tools-drop-overlay" aria-hidden="true"><Icon name="upload" size={28} /><strong>ここで離すと「{labelOf(album)}」に追加します</strong></div>}
+
+		<button type="button" className="photo-tools-back" onClick={() => { if (canChangeOrganizerContext()) onBack(); }}><Icon name="back" />アルバム一覧</button>
 		<header className="photo-tools-workspace__header">
-			<div><h1>{labelOf(album)}</h1><p>{!albumReady ? "写真を読み込んでいます…" : photoTotal === 0 ? "まだ写真がありません" : `${photoTotal}点${pendingCount ? `・未公開の変更 ${pendingCount}件` : ""}`}</p></div>
+			<div className="photo-tools-workspace__title">
+				<h1>{labelOf(album)}</h1>
+				<p>
+					<span className={`photo-tools-state photo-tools-state--${album.status !== "published" ? "muted" : workspacePending ? "warn" : "ok"}`}>{albumState}</span>
+					<span>{!albumReady ? "読み込み中" : `${photoTotal}点`}</span>
+					{period && <span>{period}</span>}
+					{pendingCount > 0 && album.status === "published" && <span>変更 {pendingCount}件</span>}
+				</p>
+			</div>
 			<div className="photo-tools-actions">
-				<label className={`photo-tools-button photo-tools-upload photo-tools-upload--header ${photoTotal === 0 ? "photo-tools-button--primary" : ""}`} aria-disabled={operationLocked}>＋ 写真を追加{addPhotosInput}</label>
-				<button className={`photo-tools-button ${photoTotal > 0 ? "photo-tools-button--primary" : ""}`} disabled={operationLocked || photoTotal === 0 || !workspacePending || !albumDraft.title.trim()} onClick={publishWorkspace}>{busy ? "処理中…" : album.status === "published" ? workspacePending ? "変更を公開" : "公開済み" : "アルバムを公開"}</button>
-				<a className="photo-tools-button" href={albumEditHref(album.id)} onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>詳細編集</a>
-				{live && album.status === "published" && <a className="photo-tools-button" href={live} target="_blank" rel="noreferrer" onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>公開ページを見る</a>}
+				<label className={`photo-tools-button photo-tools-upload ${photoTotal === 0 || !workspacePending ? "photo-tools-button--primary" : ""}`} aria-disabled={operationLocked}><Icon name="plus" />写真を追加{addPhotosInput}</label>
+				{photoTotal > 0 && (workspacePending || album.status !== "published") && <button type="button" className="photo-tools-button photo-tools-button--primary" disabled={operationLocked || !albumDraft.title.trim()} onClick={publishWorkspace}>{busy ? "処理中…" : album.status === "published" ? "変更を公開" : "アルバムを公開"}</button>}
+				<Menu label="そのほかの操作">
+					<button type="button" role="menuitem" onClick={() => setSettingsOpen(true)}>アルバム名と説明を編集</button>
+					<button type="button" role="menuitem" disabled={operationLocked || photoTotal < 2} onClick={() => void sortByCaptureTime()}>撮影日時の順に並べ直す</button>
+					{undoOrder && <button type="button" role="menuitem" disabled={operationLocked} onClick={() => restore(undoOrder, "order")}>並び順を元に戻す</button>}
+					{undoMove && <button type="button" role="menuitem" disabled={operationLocked} onClick={() => restore(undoMove, "move")}>移動を元に戻す</button>}
+					<hr />
+					{live && album.status === "published" && <a role="menuitem" href={live} target="_blank" rel="noreferrer">公開ページを開く</a>}
+					<a role="menuitem" href={albumEditHref(album.id)} onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>詳細編集（SEOなど）</a>
+				</Menu>
 			</div>
 		</header>
-		{albumReady && photoTotal === 0 && <p className="photo-tools-muted">写真を追加すると、アルバムを公開できます。</p>}
 
-		<details className="photo-tools-album-settings" data-photo-tools-dirty={albumDraftDirty ? "true" : undefined}>
-			<summary>アルバム名と説明</summary>
-			<div><label>アルバム名<input value={albumDraft.title} disabled={busy} onChange={(event) => setAlbumDraft({ ...albumDraft, title: event.target.value })} /></label><label>説明<textarea value={albumDraft.description} disabled={busy} onChange={(event) => setAlbumDraft({ ...albumDraft, description: event.target.value })} /></label></div>
-			<button className="photo-tools-button" disabled={busy || !albumDraftDirty || !albumDraft.title.trim()} onClick={saveAlbumDraft}>アルバム情報を下書き保存</button>
-		</details>
+		{(settingsOpen || albumDraftDirty) && <section className="photo-tools-album-settings" data-photo-tools-dirty={albumDraftDirty ? "true" : undefined} aria-label="アルバム名と説明">
+			<label>アルバム名<input value={albumDraft.title} disabled={busy} onChange={(event) => setAlbumDraft({ ...albumDraft, title: event.target.value })} /></label>
+			<label>説明<textarea value={albumDraft.description} disabled={busy} rows={2} onChange={(event) => setAlbumDraft({ ...albumDraft, description: event.target.value })} /></label>
+			<div className="photo-tools-actions">
+				<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={busy || !albumDraftDirty || !albumDraft.title.trim()} onClick={async () => { await saveAlbumDraft(); setSettingsOpen(false); }}>下書きに保存</button>
+				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={busy} onClick={() => { setAlbumDraft({ title: textValue(dataOf(album).title), description: textValue(dataOf(album).description) }); setSettingsOpen(false); }}>閉じる</button>
+			</div>
+		</section>}
 
 		{uploadQueue.length > 0 && <section className="photo-tools-upload-queue" aria-label="写真追加の進捗" aria-live="polite">
 			<header>
-				<div><strong>写真を追加中</strong><span>{uploadSettled}/{uploadQueue.length}点 完了</span></div>
-				<button type="button" className="photo-tools-button" disabled={busy || !hasRetryableUpload} onClick={() => void executeUploadQueue(retryFailedUploadQueue(uploadQueue))}>失敗分だけ再試行</button>
+				<strong>{uploading ? "写真を追加しています" : "写真の追加"}</strong>
+				<span>{uploadSettled} / {uploadQueue.length}点</span>
+				{hasRetryableUpload && <button type="button" className="photo-tools-button photo-tools-button--small" disabled={busy} onClick={() => void executeUploadQueue(retryFailedUploadQueue(uploadQueue))}>失敗分を再試行</button>}
+				{!uploading && !hasRetryableUpload && <button type="button" className="photo-tools-button photo-tools-button--small photo-tools-button--ghost" onClick={() => setUploadQueue([])}>閉じる</button>}
 			</header>
 			<progress aria-label="写真追加の完了件数" max={uploadQueue.length} value={uploadSettled}>{uploadSettled}/{uploadQueue.length}</progress>
-			<details open={uploadQueue.length <= 8 || hasRetryableUpload}>
+			<details open={hasRetryableUpload}>
 				<summary>ファイルごとの状況</summary>
 				<ul>{uploadQueue.map((item) => <li key={item.id} data-stage={item.stage}>
 					<span title={item.file.name}>{item.file.name}</span>
@@ -962,83 +1129,92 @@ function AlbumOrganizer({
 					{item.error && <small>{item.error}</small>}
 				</li>)}</ul>
 			</details>
-			<p className="photo-tools-muted">{uploading ? "終わるまで、この画面を開いたままにしてください。" : ""}撮影日の順に追加します。追加した写真は、公開ボタンを押すまでサイトに出ません。途中で止まった場合は、同じ写真をまとめて選び直すと、まだの分だけが追加されます。</p>
+			<p className="photo-tools-note">{uploading ? "終わるまでこの画面を開いたままにしてください。" : ""}撮影日時の順に追加します。公開するまでサイトには出ません。途中で止まったら、同じ写真をまとめて選び直すと残りだけ追加されます。</p>
 		</section>}
-		{!albumReady && <p className="photo-tools-status" role="status">写真を読み込んでいます…</p>}
-		{photoDraftDirty && <p className="photo-tools-status" role="status">写真情報に未保存の変更があります。下書き保存すると他の操作を再開できます。</p>}
 
-		{message && <p className="photo-tools-status" role="status">{message}</p>}
+		{(message || photoDraftDirty) && <p className="photo-tools-status" role="status">{photoDraftDirty ? "写真情報に未保存の変更があります。保存すると、ほかの操作に戻れます。" : message}</p>}
 		<ErrorBox error={error} />
+		{locationErased > 0 && <div className="photo-tools-alert" role="status">
+			<strong>{locationErased}点は、位置情報がスマートフォン側で消されていました。</strong>
+			<p>Android は、ブラウザに渡す写真から位置情報を消します（位置の欄は残りますが中身が空です）。位置を残すには、パソコンから元の写真を追加してください。撮影日時は読み取れています。</p>
+			<button type="button" className="photo-tools-button photo-tools-button--small photo-tools-button--ghost" onClick={() => setLocationErased(0)}>閉じる</button>
+		</div>}
 		{failures.length > 0 && <div className="photo-tools-alert photo-tools-alert--error"><strong>{failures.length}件を処理できませんでした。</strong><ul>{failures.map((failure) => <li key={`${failure.id}:${failure.reason}`}><code>{failure.id}</code>: {failure.reason}</li>)}</ul></div>}
 
 		{albumEmpty
 			? <label className="photo-tools-dropzone" aria-disabled={operationLocked}>
+				<Icon name="upload" size={28} />
 				<strong>写真を追加</strong>
-				<span className="photo-tools-dropzone__mouse">ここに写真をドラッグするか、クリックして選んでください。</span>
-				<span className="photo-tools-dropzone__touch">タップして、写真ライブラリやカメラから選べます。</span>
-				<small>まとめて選べます（1回{MAX_UPLOAD_FILES}点まで）。撮影日と位置情報は写真のEXIFから読み取り、そのまま残します。</small>
+				<span className="photo-tools-dropzone__mouse">ここに写真をドラッグするか、クリックして選んでください</span>
+				<span className="photo-tools-dropzone__touch">タップして、写真ライブラリやカメラから選べます</span>
+				<small>まとめて選べます（1回{MAX_UPLOAD_FILES}点まで）。撮影日時と位置情報は写真のEXIFから読み取ります。写真を追加すると、アルバムを公開できます。</small>
 				{addPhotosInput}
 			</label>
-			: <>
-		<div className="photo-tools-mobile-subtabs" role="tablist" aria-label="写真整理の表示">
-			<button type="button" role="tab" aria-selected={mobilePane === "photos"} onClick={() => setMobilePane("photos")}>写真</button>
-			<button type="button" role="tab" aria-selected={mobilePane === "info"} disabled={!inspectorPhoto && checkedPhotos.length < 2} onClick={() => setMobilePane("info")}>{checkedPhotos.length > 1 ? "一括操作" : "写真情報"}</button>
-		</div>
-		<div className="photo-tools-toolbar">
-			<label>写真を検索<input type="search" placeholder="タイトル・キャプション・ファイル名" value={search} disabled={busy || !albumReady} onChange={(event) => setSearch(event.target.value)} /></label>
-			<label>絞り込み<select value={filter} disabled={busy || !albumReady} onChange={(event) => setFilter(event.target.value as "" | ReviewFlag)}><option value="">すべて</option>{Object.entries(FLAG_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-			<button className="photo-tools-button" disabled={operationLocked || visible.length === 0} onClick={() => { if (canChangeOrganizerContext()) setChecked(new Set(visible.map((photo) => photo.id))); }}>表示中を全選択</button>
-			<button className="photo-tools-button" disabled={operationLocked || photoTotal < 2} onClick={async () => { setBusy(true); try { await persistOrder((await albumPhotosForOperation(album.id)).sort((left, right) => compareCapturedAt(
-				dataOf(left).captured_at,
-				dataOf(right).captured_at,
-				Number(dataOf(left).position) || 0,
-				Number(dataOf(right).position) || 0,
-				left.id,
-				right.id,
-			))); } catch (cause) { setError(cause); } finally { setBusy(false); } }}>撮影日順に並べる</button>
-			{undoOrder && <button className="photo-tools-button" disabled={operationLocked} onClick={() => restore(undoOrder, "order")}>並び順を戻す</button>}
-			{undoMove && <button className="photo-tools-button" disabled={operationLocked} onClick={() => restore(undoMove, "move")}>移動を戻す</button>}
-		</div>
-		<div className={`photo-tools-content is-mobile-${mobilePane}`}>
-			<section className="photo-tools-grid-area" aria-label="アルバムの写真">
-				{firstOffset > 0 && <button className="photo-tools-button" disabled={operationLocked} onClick={onFirstPage}>先頭から表示</button>}
-				{nextOffset !== null && <button className="photo-tools-button" disabled={operationLocked} onClick={onLoadMore}>さらに50件表示</button>}
-				<p className="photo-tools-muted">表示中 {visible.length} / {resultTotal}点{checked.size ? `・${checked.size}点を選択中` : ""}</p>
-				{visible.length ? <div className="photo-tools-grid">{visible.map((photo) => {
-					const index = albumPhotos.findIndex((item) => item.id === photo.id);
-					const flags = photoReviewFlags(dataOf(photo), { status: photo.status });
-					const isCover = mediaUrl(dataOf(album).cover_image) === mediaUrl(dataOf(photo).image);
-					return <article key={photo.id} className={`photo-tools-card ${inspectorPhoto?.id === photo.id ? "is-active" : ""} ${checked.has(photo.id) ? "is-checked" : ""} ${isHiddenPhoto(dataOf(photo)) ? "is-hidden" : ""}`} draggable={!operationLocked && !search && !filter} onDragStart={() => setDragId(photo.id)} onDragOver={(event) => event.preventDefault()} onDrop={() => {
-						if (!dragId || dragId === photo.id || search || filter) return;
-						const next = [...albumPhotos]; const from = next.findIndex((item) => item.id === dragId); const [moved] = next.splice(from, 1); next.splice(index, 0, moved); setDragId(null); void persistOrder(next);
-					}} onKeyDown={(event) => {
-						if (!event.altKey || !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
-						event.preventDefault(); moveAt(index, event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1);
-					}} tabIndex={0}>
-						<label className="photo-tools-check"><input type="checkbox" checked={checked.has(photo.id)} disabled={busy || !albumReady} onChange={() => toggleChecked(photo.id)} /><span>選択</span></label>
-						<button className="photo-tools-card__select" type="button" disabled={busy} onClick={() => { if (!canChangeOrganizerContext()) return; setChecked(new Set()); setSelectedId(photo.id); setMobilePane("info"); }}><Preview value={dataOf(photo).image} /><strong>{labelOf(photo)}</strong><small>{dateTimeLocalInputValue(dataOf(photo).captured_at).slice(0, 10) || "撮影日なし"}</small></button>
-						<div className="photo-tools-badges">{isCover && <Badge tone="ok">カバー</Badge>}<Badge tone={isHiddenPhoto(dataOf(photo)) ? "default" : hasPendingChanges(photo) ? "warn" : "ok"}>{statusLabel(photo)}</Badge>{flags.filter((flag) => flag !== "unpublished" && flag !== "hidden").map((flag) => <Badge key={flag} tone={flag === "location-unreviewed" ? "danger" : flag === "has-location" ? "default" : "warn"}>{FLAG_LABELS[flag]}</Badge>)}</div>
-						<div className="photo-tools-card__actions"><button disabled={operationLocked || index === 0} onClick={() => moveAt(index, -1)} aria-label="前へ移動">←</button><button disabled={operationLocked || index === albumPhotos.length - 1} onClick={() => moveAt(index, 1)} aria-label="後ろへ移動">→</button><button disabled={operationLocked || isCover} onClick={async () => {
-							setBusy(true); setError(null); try {
-								if (!album._rev) throw new Error("アルバムの編集情報を再読込してください。");
-								const result = await updateDraft("albums", album.id, album._rev, { cover_image: dataOf(photo).image }); onAlbumUpdated(result.item); setMessage("カバー写真を下書き保存しました");
-							} catch (cause) { setError(new Error(reasonOf(cause))); } finally { setBusy(false); }
-						}}>カバー</button></div>
-					</article>;
-				})}</div> : <p className="photo-tools-empty">{!albumReady ? "このアルバムの写真を読み込んでいます…" : "この条件に合う写真はありません。"}</p>}
-			</section>
-			{checkedPhotos.length > 1
-				? <BulkInspector selected={checkedPhotos} albums={albums} busy={busy} onApply={applyBulk} onMove={moveSelected} onPublish={publishMany} onHide={setHidden} onTrash={trashPhotos} onClear={() => setChecked(new Set())} />
-				: inspectorPhoto && dataOf(inspectorPhoto).album === album.id && inspectorReady
-						? <PhotoInspector photo={inspectorPhoto} albums={albums} busy={busy} onSave={savePhoto} onPublish={publishMany} onHide={setHidden} onTrash={trashPhotos} onDirtyChange={setPhotoDraftDirty} previousId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, -1)} nextId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, 1)} onNavigate={(photoId) => { setChecked(new Set()); setSelectedId(photoId); setMobilePane("info"); }} />
-					: <aside className="photo-tools-inspector">{photoHydration?.identity === inspectorIdentity && photoHydration.status === "error"
-						? <><ErrorBox error={photoHydration.error} /><button type="button" className="photo-tools-button" onClick={() => setPhotoHydrationRetry((value) => value + 1)}>再試行</button></>
-						: <p className="photo-tools-muted" role={inspectorPhoto ? "status" : undefined}>{inspectorPhoto ? "写真の下書きを読み込んでいます…" : "写真を選ぶと、ここで情報を編集できます。"}</p>}</aside>}
-		</div>
-		<div className="photo-tools-mobile-add">
-			<label className="photo-tools-button photo-tools-button--primary photo-tools-upload" aria-disabled={operationLocked}>＋ 写真を追加{addPhotosInput}</label>
-		</div>
-		</>}
+			: <div className="photo-tools-content">
+				<section className="photo-tools-grid-area" aria-label="アルバムの写真">
+					<div className="photo-tools-toolbar">
+						<label className="photo-tools-search"><Icon name="search" /><input type="search" aria-label="写真を検索" placeholder="タイトル・キャプション・ファイル名で検索" value={search} disabled={busy || !albumReady} onChange={(event) => setSearch(event.target.value)} /></label>
+						<select aria-label="絞り込み" value={filter} disabled={busy || !albumReady} onChange={(event) => setFilter(event.target.value as "" | ReviewFlag)}><option value="">すべての写真</option>{Object.entries(FLAG_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select>
+						<span className="photo-tools-toolbar__count">{!albumReady ? "読み込み中…" : checked.size ? `${checked.size}点を選択中` : visible.length < resultTotal ? `${resultTotal}点中 ${visible.length}点を表示` : `${resultTotal}点`}</span>
+						{checked.size
+							? <button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={busy} onClick={() => setChecked(new Set())}>選択を解除</button>
+							: <button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={operationLocked || visible.length === 0} onClick={() => { if (canChangeOrganizerContext()) { setSelectedId(null); setChecked(new Set(visible.map((photo) => photo.id))); } }}>すべて選択</button>}
+					</div>
+					{firstOffset > 0 && <button type="button" className="photo-tools-button photo-tools-more" disabled={operationLocked} onClick={onFirstPage}>先頭から表示</button>}
+					{visible.length ? <div className="photo-tools-grid">{visible.map((photo) => {
+						const index = albumPhotos.findIndex((item) => item.id === photo.id);
+						const flags = photoReviewFlags(dataOf(photo), { status: photo.status });
+						const isCover = Boolean(coverUrl) && coverUrl === mediaUrl(dataOf(photo).image);
+						const hidden = isHiddenPhoto(dataOf(photo));
+						const state = hidden ? "非公開" : photo.status !== "published" ? "下書き" : hasPendingChanges(photo) ? "変更あり" : "";
+						const needsAttention = flags.includes("location-unreviewed");
+						return <article key={photo.id} className={`photo-tools-tile ${inspectorPhoto?.id === photo.id && checkedPhotos.length < 2 ? "is-active" : ""} ${checked.has(photo.id) ? "is-checked" : ""} ${hidden ? "is-hidden" : ""} ${dragId === photo.id ? "is-dragging" : ""}`} draggable={!operationLocked && !search && !filter} onDragStart={(event) => { event.dataTransfer.effectAllowed = "move"; setDragId(photo.id); }} onDragEnd={() => setDragId(null)} onDragOver={(event) => { if (dragId) event.preventDefault(); }} onDrop={(event) => {
+							if (!dragId) return;
+							event.preventDefault(); event.stopPropagation();
+							if (dragId === photo.id || search || filter) { setDragId(null); return; }
+							const next = [...albumPhotos]; const from = next.findIndex((item) => item.id === dragId); const [moved] = next.splice(from, 1); next.splice(index, 0, moved); setDragId(null); void persistOrder(next);
+						}} onKeyDown={(event) => {
+							if (!event.altKey || !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
+							event.preventDefault(); moveAt(index, event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1);
+						}}>
+							<button className="photo-tools-tile__open" type="button" disabled={busy} aria-label={`${labelOf(photo)}を編集`} onClick={() => { if (!canChangeOrganizerContext()) return; setChecked(new Set()); setSelectedId(photo.id); setMobilePane("info"); }}>
+								<span className="photo-tools-tile__media"><Preview value={dataOf(photo).image} /></span>
+								<span className="photo-tools-tile__caption">{labelOf(photo)}</span>
+							</button>
+							<label className="photo-tools-tile__check" title="選択"><input type="checkbox" aria-label={`${labelOf(photo)}を選択`} checked={checked.has(photo.id)} disabled={busy || !albumReady} onChange={() => toggleChecked(photo.id)} /></label>
+							<span className="photo-tools-tile__flags">
+								{isCover && <span className="photo-tools-flag photo-tools-flag--cover">表紙</span>}
+								{state && <span className={`photo-tools-flag ${hidden ? "photo-tools-flag--muted" : "photo-tools-flag--warn"}`}>{state}</span>}
+								{needsAttention && <span className="photo-tools-flag photo-tools-flag--danger">要確認</span>}
+							</span>
+						</article>;
+					})}</div> : <p className="photo-tools-empty">{!albumReady ? "写真を読み込んでいます…" : "この条件に合う写真はありません。"}</p>}
+					{nextOffset !== null && <button type="button" className="photo-tools-button photo-tools-more" disabled={operationLocked} onClick={onLoadMore}>さらに50点を表示</button>}
+					<p className="photo-tools-hint">ドラッグで並べ替えられます（キーボードは Alt＋矢印）。写真を押すと情報を編集できます。</p>
+				</section>
+				{panelOpen && (checkedPhotos.length > 1
+					? <BulkInspector selected={checkedPhotos} albums={albums} busy={busy} onApply={applyBulk} onMove={moveSelected} onPublish={publishMany} onHide={setHidden} onTrash={trashPhotos} onClear={() => { setChecked(new Set()); setMobilePane("photos"); }} />
+					: inspectorPhoto && inspectorReady
+						? <PhotoInspector photo={inspectorPhoto} albums={albums} busy={busy} onSave={savePhoto} onPublish={publishMany} onHide={setHidden} onTrash={trashPhotos} onDirtyChange={setPhotoDraftDirty} previousId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, -1)} nextId={adjacentPhotoId(orderedVisibleIds, inspectorPhoto.id, 1)} onNavigate={(photoId) => { setChecked(new Set()); setSelectedId(photoId); setMobilePane("info"); }}
+							onClose={closePanel}
+							onMove={(delta) => moveAt(albumPhotos.findIndex((item) => item.id === inspectorPhoto.id), delta)}
+							canMoveBack={albumPhotos.findIndex((item) => item.id === inspectorPhoto.id) > 0}
+							canMoveForward={albumPhotos.findIndex((item) => item.id === inspectorPhoto.id) < albumPhotos.length - 1}
+							isCover={Boolean(coverUrl) && coverUrl === mediaUrl(dataOf(inspectorPhoto).image)}
+							onMakeCover={() => void makeCover(inspectorPhoto)} />
+						: <aside className="photo-tools-inspector photo-tools-inspector--loading">{photoHydration?.identity === inspectorIdentity && photoHydration.status === "error"
+							? <><ErrorBox error={photoHydration.error} /><button type="button" className="photo-tools-button" onClick={() => setPhotoHydrationRetry((value) => value + 1)}>再試行</button></>
+							: <p className="photo-tools-note" role="status">写真の情報を読み込んでいます…</p>}</aside>)}
+			</div>}
+
+		{!albumEmpty && checked.size > 0 && mobilePane !== "info" && <div className="photo-tools-selection-bar" role="region" aria-label="選択中の写真">
+			<strong>{checked.size}点を選択中</strong>
+			<button type="button" className="photo-tools-button photo-tools-button--primary" onClick={() => setMobilePane("info")}>操作</button>
+			<button type="button" className="photo-tools-button photo-tools-button--ghost" onClick={() => setChecked(new Set())}>解除</button>
+		</div>}
+		{!albumEmpty && checked.size === 0 && mobilePane !== "info" && <div className="photo-tools-mobile-add">
+			<label className="photo-tools-button photo-tools-button--primary photo-tools-upload" aria-disabled={operationLocked}><Icon name="plus" />写真を追加{addPhotosInput}</label>
+		</div>}
 	</section>;
 }
 
@@ -1058,7 +1234,6 @@ export function PhotoOrganizerPage() {
 	const [loading, setLoading] = useState(true);
 	const [creating, setCreating] = useState(false);
 	const [error, setError] = useState<unknown>(null);
-	const [mobilePane, setMobilePane] = useState<"albums" | "workspace">("workspace");
 	const [workspaceBusy, setWorkspaceBusy] = useState(false);
 	const [photoIndexLoading, setPhotoIndexLoading] = useState(true);
 	const [readyAlbumId, setReadyAlbumId] = useState("");
@@ -1072,7 +1247,7 @@ export function PhotoOrganizerPage() {
 			const albumItems = [...items.filter((album) => album.status !== "published"), ...items.filter((album) => album.status === "published")];
 			setAlbums(albumItems);
 			const requested = new URLSearchParams(window.location.search).get("album");
-			setSelectedId(requested && albumItems.some((album) => album.id === requested) ? requested : albumItems[0]?.id ?? "");
+			setSelectedId(requested && albumItems.some((album) => album.id === requested) ? requested : "");
 		}).catch(setError).finally(() => setLoading(false));
 		albumCounts().then(setCounts).catch(setError).finally(() => setPhotoIndexLoading(false));
 	}, []);
@@ -1085,7 +1260,13 @@ export function PhotoOrganizerPage() {
 		photoPage(selectedId, query, controller.signal)
 			.then((page) => {
 				if (cancelled) return;
-				setPhotos(current => query.offset ? mergeEditableItems(current, page.items) : page.items);
+				// A fresh first page drops photos it no longer lists but keeps the edit
+				// revisions already loaded for the ones it does (the open photo stays editable).
+				setPhotos(current => {
+					if (query.offset) return mergeEditableItems(current, page.items);
+					const listed = new Set(page.items.map((item) => item.id));
+					return mergeEditableItems(current.filter((item) => listed.has(item.id)), page.items);
+				});
 				if (!query.offset) setFirstOffset(page.offset);
 				setResultTotal(page.total); setNextOffset(page.nextOffset); setReadyAlbumId(selectedId);
 			}).catch(cause => { if (!cancelled) setError(cause); });
@@ -1128,34 +1309,90 @@ export function PhotoOrganizerPage() {
 	}, [selected?.id, selected?.draftRevisionId, selectedIdentity, albumHydrationRetry]);
 	const selectedReady = Boolean(selected?._rev);
 
-	return <main className="photo-tools-shell">
-		<header className="photo-tools-page-header"><div><h1>写真を整理</h1><p>アルバムを選んで、写真の追加・編集・並べ替え・公開をします。</p></div></header>
-		<ErrorBox error={error} />
-		{!loading && <div className="photo-tools-mobile-tabs" role="tablist" aria-label="写真管理の表示">
-			<button type="button" role="tab" aria-selected={mobilePane === "albums"} onClick={() => setMobilePane("albums")}>アルバム</button>
-			<button type="button" role="tab" aria-selected={mobilePane === "workspace"} disabled={!selected} onClick={() => setMobilePane("workspace")}>写真</button>
-		</div>}
-		{loading ? <p className="photo-tools-muted" role="status">アルバムと写真を読み込んでいます…</p> : <div className={`photo-tools-organizer is-mobile-${mobilePane}`}>
-			<aside className="photo-tools-album-rail" aria-label="アルバム">
-				<div className="photo-tools-album-rail__header"><h2>アルバム</h2><button className="photo-tools-button" disabled={workspaceBusy} onClick={() => setShowNew((value) => !value)}>新規</button></div>
-				{showNew && <div className="photo-tools-create"><label>新しいアルバムの名前<input autoFocus value={newTitle} disabled={creating || workspaceBusy} onChange={(event) => setNewTitle(event.target.value)} /></label><button className="photo-tools-button photo-tools-button--primary" disabled={creating || workspaceBusy || !newTitle.trim()} onClick={async () => {
-					if (!canChangeOrganizerContext()) return; setCreating(true); setError(null); try { const result = await createAlbumDraft(newTitle.trim()); setAlbums((current) => [result.item, ...current]); setReadyAlbumId(""); setSelectedId(result.item.id); setMobilePane("workspace"); setNewTitle(""); setShowNew(false); } catch (cause) { setError(cause); } finally { setCreating(false); }
-				}}>作って写真を追加</button></div>}
-				<label>アルバムを検索<input type="search" value={albumSearch} onChange={(event) => setAlbumSearch(event.target.value)} /></label>
-				{photoIndexLoading && <p className="photo-tools-index-status" role="status">写真件数を読み込み中…</p>}
-				<div className="photo-tools-album-list">{visibleAlbums.map((album) => {
-					const count = counts.find(count => count.album === album.id) ?? { total: 0, pending: 0 };
-					return <button key={album.id} disabled={workspaceBusy} className={selectedId === album.id ? "is-active" : ""} onClick={() => { if (!canChangeOrganizerContext()) return; if (album.id !== selectedId) { setReadyAlbumId(""); setQuery({q:"",filter:"",offset:0,photo:""}); setPhotos([]); setSelectedId(album.id); } setMobilePane("workspace"); }}><Preview value={dataOf(album).cover_image} size={72} /><span><strong>{labelOf(album)}</strong><small>{photoIndexLoading ? "件数を読込中" : `${count.total}点${count.pending ? `・変更 ${count.pending}` : ""}`}</small><Badge tone={hasPendingChanges(album) ? "warn" : "ok"}>{statusLabel(album)}</Badge></span></button>;
-				})}</div>
-			</aside>
+	// The two screens (album list, one album) live in the URL so Back works.
+	useEffect(() => {
+		const sync = () => {
+			const params = new URLSearchParams(window.location.search);
+			setQuery({ q: "", filter: "", offset: 0, photo: params.get("photo") ?? "" });
+			setReadyAlbumId("");
+			setPhotos([]);
+			setSelectedId(params.get("album") ?? "");
+		};
+		window.addEventListener("popstate", sync);
+		return () => window.removeEventListener("popstate", sync);
+	}, []);
+	const openAlbum = (albumId: string) => {
+		if (workspaceBusy || !canChangeOrganizerContext()) return;
+		window.history.pushState(null, "", organizerHref(albumId));
+		setReadyAlbumId(""); setQuery({ q: "", filter: "", offset: 0, photo: "" }); setPhotos([]); setSelectedId(albumId);
+		window.scrollTo({ top: 0 });
+	};
+	const closeAlbum = () => {
+		window.history.pushState(null, "", ORGANIZER_ROOT);
+		setSelectedId(""); setPhotos([]);
+		window.scrollTo({ top: 0 });
+	};
+	const createAlbum = async () => {
+		if (!newTitle.trim()) return;
+		setCreating(true); setError(null);
+		try {
+			const result = await createAlbumDraft(newTitle.trim());
+			setAlbums((current) => [result.item, ...current]);
+			setNewTitle(""); setShowNew(false);
+			openAlbum(result.item.id);
+		} catch (cause) { setError(cause); } finally { setCreating(false); }
+	};
+
+	if (selectedId) {
+		return <main className="photo-tools-shell">
+			<ErrorBox error={error} />
 			{selected && selectedReady
-				? <AlbumOrganizer key={selected.id} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => mergeEditableItems(current, [updated]))} onPhotoUpdated={(updated) => setPhotos((current) => current.some(photo => photo.id === updated.id) ? mergeEditableItems(current, [updated]) : current)} onPhotoAdded={(created) => setPhotos((current) => mergeEditableItems(current, [created]))} onPhotoRemoved={(id) => setPhotos((current) => current.filter((photo) => photo.id !== id))} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} firstOffset={firstOffset} onFirstPage={() => setQuery(current => ({...current,offset:0,photo:""}))} onQuery={changeQuery} onRefresh={() => setQuery(current => ({...current,offset:0}))} nextOffset={nextOffset} resultTotal={resultTotal} albumCount={counts.find(count=>count.album===selected.id)} onLoadMore={() => { if (canChangeOrganizerContext() && nextOffset !== null) setQuery(current=>({...current,offset:nextOffset})); }} />
+				? <AlbumOrganizer key={selected.id} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => mergeEditableItems(current, [updated]))} onPhotoUpdated={(updated) => setPhotos((current) => current.some(photo => photo.id === updated.id) ? mergeEditableItems(current, [updated]) : current)} onPhotoAdded={(created) => setPhotos((current) => mergeEditableItems(current, [created]))} onPhotoRemoved={(id) => setPhotos((current) => current.filter((photo) => photo.id !== id))} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} firstOffset={firstOffset} onFirstPage={() => setQuery(current => ({...current,offset:0,photo:""}))} onQuery={changeQuery} onRefresh={() => setQuery(current => ({...current,offset:0}))} nextOffset={nextOffset} resultTotal={resultTotal} albumCount={counts.find(count=>count.album===selected.id)} onLoadMore={() => { if (canChangeOrganizerContext() && nextOffset !== null) setQuery(current=>({...current,offset:nextOffset})); }} onBack={closeAlbum} />
 				: selected && albumHydration?.identity === selectedIdentity && albumHydration.status === "error"
 					? <section className="photo-tools-workspace"><ErrorBox error={albumHydration.error} /><button type="button" className="photo-tools-button" onClick={() => setAlbumHydrationRetry((value) => value + 1)}>再試行</button></section>
-					: selected
-						? <p className="photo-tools-empty" role="status">アルバムの下書きを読み込んでいます…</p>
-						: <p className="photo-tools-empty">アルバムがありません。「新規」から作成してください。</p>}
-		</div>}
+					: loading || selected
+						? <p className="photo-tools-note" role="status">アルバムを読み込んでいます…</p>
+						: <section className="photo-tools-workspace"><p className="photo-tools-empty">このアルバムは見つかりませんでした。</p><button type="button" className="photo-tools-button" onClick={closeAlbum}>アルバム一覧へ</button></section>}
+		</main>;
+	}
+
+	return <main className="photo-tools-shell">
+		<header className="photo-tools-page-header">
+			<div>
+				<h1>写真を整理</h1>
+				<p>アルバムを開いて、写真の追加・編集・並べ替え・公開をします。</p>
+			</div>
+			<button type="button" className="photo-tools-button photo-tools-button--primary" onClick={() => setShowNew((value) => !value)} aria-expanded={showNew}><Icon name="plus" />新しいアルバム</button>
+		</header>
+		{showNew && <form className="photo-tools-create" onSubmit={(event) => { event.preventDefault(); void createAlbum(); }}>
+			<label>新しいアルバムの名前<input autoFocus value={newTitle} placeholder="例：Kyoto, 2026/10" disabled={creating} onChange={(event) => setNewTitle(event.target.value)} /></label>
+			<button type="submit" className="photo-tools-button photo-tools-button--primary" disabled={creating || !newTitle.trim()}>{creating ? "作成中…" : "作成して写真を追加"}</button>
+			<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={creating} onClick={() => { setShowNew(false); setNewTitle(""); }}>キャンセル</button>
+		</form>}
+		<ErrorBox error={error} />
+		<div className="photo-tools-toolbar photo-tools-toolbar--albums">
+			<label className="photo-tools-search"><Icon name="search" /><input type="search" aria-label="アルバムを検索" placeholder="アルバムを検索" value={albumSearch} onChange={(event) => setAlbumSearch(event.target.value)} /></label>
+			<span className="photo-tools-toolbar__count">{loading ? "読み込み中…" : `${visibleAlbums.length}件`}</span>
+		</div>
+		{loading
+			? <p className="photo-tools-note" role="status">アルバムを読み込んでいます…</p>
+			: visibleAlbums.length
+				? <ul className="photo-tools-albums">{visibleAlbums.map((album) => {
+					const count = counts.find((entry) => entry.album === album.id);
+					const from = dateTimeLocalInputValue(dataOf(album).captured_from).slice(0, 7).replace("-", "/");
+					const state = album.status !== "published" ? "下書き" : hasPendingChanges(album) || (count?.pending ?? 0) > 0 ? "未公開の変更" : "";
+					return <li key={album.id}>
+						<a className="photo-tools-album-card" href={organizerHref(album.id)} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey) return; event.preventDefault(); openAlbum(album.id); }}>
+							<span className="photo-tools-album-card__cover">{dataOf(album).cover_image ? <Preview value={dataOf(album).cover_image} size={480} /> : <span className="photo-tools-album-card__empty"><Icon name="image" size={20} />{(count?.total ?? 0) > 0 ? "表紙が未設定" : "写真なし"}</span>}</span>
+							<span className="photo-tools-album-card__body">
+								<strong>{labelOf(album)}</strong>
+								<small>{photoIndexLoading ? "…" : `${count?.total ?? 0}点`}{from && <> · {from}</>}</small>
+							</span>
+							{state && <span className={`photo-tools-flag ${album.status !== "published" ? "photo-tools-flag--muted" : "photo-tools-flag--warn"}`}>{state}</span>}
+						</a>
+					</li>;
+				})}</ul>
+				: <p className="photo-tools-empty">{albumSearch ? "一致するアルバムはありません。" : "アルバムがありません。「新しいアルバム」から作成してください。"}</p>}
 	</main>;
 }
 

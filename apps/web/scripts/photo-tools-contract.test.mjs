@@ -54,22 +54,29 @@ test("album organizer owns upload, reorder, batch edit and aggregate publish", a
 	assert.match(admin, /publishWorkspace/);
 	assert.match(admin, /アルバムを公開/);
 	assert.match(admin, /変更を公開/);
-	assert.match(admin, /失敗した写真だけを選択状態に残します/);
+	assert.match(admin, /失敗した写真だけが選択されたまま残ります/);
 	const workspaceStart = admin.indexOf("const publishWorkspace");
 	const photoPublish = admin.indexOf('publishDraft("photos", id)', workspaceStart);
 	const albumPublish = admin.indexOf('publishDraft("albums", album.id)', workspaceStart);
 	assert.ok(workspaceStart >= 0 && photoPublish > workspaceStart && albumPublish > photoPublish);
 	assert.match(admin.slice(workspaceStart, albumPublish), /albumSaveFailed/);
-	assert.match(admin, /photo-tools-mobile-tabs/);
-	assert.match(admin, /photo-tools-mobile-subtabs/);
+	// Two screens, album list and one album, kept in the URL so Back works.
+	assert.match(admin, /window\.history\.pushState\(null, "", organizerHref\(albumId\)\)/);
+	assert.match(admin, /addEventListener\("popstate", sync\)/);
+	assert.match(admin, /photo-tools-albums/);
+	// Phones: the editor is a sheet; a bar acts on a multi-selection.
+	assert.match(admin, /is-sheet-open/);
+	assert.match(admin, /photo-tools-selection-bar/);
 	assert.match(admin, /photoPage\(selectedId,/);
 	assert.match(admin, /albumReady/);
 	assert.match(admin, /setReadyAlbumId\(""\)/);
 	assert.match(admin, /photoDraftDirty/);
 	assert.match(admin, /ACCEPTED_IMAGE_TYPES/);
 	assert.match(admin, /原本の位置情報が未確認です/);
-	assert.match(css, /\.photo-tools-organizer\.is-mobile-workspace > \.photo-tools-album-rail/);
-	assert.match(css, /\.photo-tools-content\.is-mobile-info > \.photo-tools-grid-area/);
+	assert.match(css, /\.photo-tools-workspace:not\(\.is-sheet-open\) \.photo-tools-inspector \{ display: none; \}/);
+	// The page uses EmDash's own admin tokens.
+	assert.match(css, /--pt-text: var\(--text-color-kumo-default/);
+	assert.match(css, /--pt-base-size: var\(--text-base, 14px\)/);
 });
 
 test("selected photo and album editors save against their hydrated revision", async () => {

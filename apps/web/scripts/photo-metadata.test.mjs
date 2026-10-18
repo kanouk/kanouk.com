@@ -4,7 +4,7 @@ import test from "node:test";
 const { readPhotoMetadata } = await import("../src/studio/photo-metadata.ts");
 
 /** A little-endian TIFF block with DateTimeOriginal, OffsetTimeOriginal and a GPS IFD. */
-function tiff({ date = "2024:06:07 06:27:33", offset = "+09:00", gps = true } = {}) {
+function tiff({ date = "2024:06:07 06:27:33", offset = "+09:00", gps = true, erased = false } = {}) {
 	const bytes = [];
 	const u16 = (value) => bytes.push(value & 0xff, value >> 8);
 	const u32 = (value) => bytes.push(value & 0xff, (value >> 8) & 0xff, (value >> 16) & 0xff, (value >>> 24) & 0xff);
@@ -36,7 +36,8 @@ function tiff({ date = "2024:06:07 06:27:33", offset = "+09:00", gps = true } = 
 		u16(5); u16(1); u32(1); bytes.push(0, 0, 0, 0);
 		u16(6); u16(5); u32(1); u32(gpsData + 48);
 		u32(0);
-		for (const [n, d] of [[35, 1], [39, 1], [2952, 100], [139, 1], [44, 1], [2808, 100], [405, 10]]) { u32(n); u32(d); }
+		// Android erases a shared photo's position: the GPS fields stay, as 0/0 rationals.
+		for (const [n, d] of erased ? Array(7).fill([0, 0]) : [[35, 1], [39, 1], [2952, 100], [139, 1], [44, 1], [2808, 100], [405, 10]]) { u32(n); u32(d); }
 	}
 	return bytes;
 }
@@ -73,3 +74,12 @@ test("a JPEG without EXIF is readable and empty", () => {
 	const metadata = readPhotoMetadata(new Uint8Array([0xff, 0xd8, 0xff, 0xda, 0, 2, 0xff, 0xd9]));
 	assert.deepEqual(metadata, { hasLocation: false, readable: true });
 });
+
+test("a photo whose position the phone erased has GPS fields but no coordinates", () => {
+	const metadata = readPhotoMetadata(jpeg(tiff({ erased: true })));
+	assert.equal(metadata.hasLocation, true);
+	assert.equal(metadata.latitude, undefined);
+	assert.equal(metadata.longitude, undefined);
+	assert.equal(metadata.capturedAt, "2024-06-06T21:27:33.000Z");
+});
+
