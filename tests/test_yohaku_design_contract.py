@@ -278,7 +278,7 @@ class YohakuDesignContractTests(unittest.TestCase):
         head = (WEB_ROOT / "src/components/YohakuHead.astro").read_text()
         self.assertIn("hasPageProfileSidebar", base)
         self.assertIn("<ProfileCard />", article)
-        self.assertIn('src="/kano-profile.png"', profile)
+        self.assertIn('src="/kano-profile.webp"', profile)
         self.assertIn('href="/favicon.svg"', head)
         self.assertIn('href="/kano-profile.png"', head)
 
