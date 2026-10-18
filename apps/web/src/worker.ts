@@ -77,6 +77,58 @@ async function transformImage(
 	});
 }
 
+// The parts of the Images and R2 bindings used below (workers-types is not global here).
+interface StoredImageBindings {
+	IMAGES?: {
+		input(stream: ReadableStream<Uint8Array>): {
+			transform(options: { width: number; fit: "scale-down" }): {
+				output(options: { format: `image/${"avif" | "webp"}`; quality: number }): Promise<{
+					contentType(): string;
+					image(): ReadableStream<Uint8Array>;
+				}>;
+			};
+		};
+	};
+	MEDIA: { get(key: string): Promise<{ body: ReadableStream<Uint8Array> } | null> };
+}
+
+/**
+ * Resize a stored original with the Images binding, reading it straight from R2.
+ * The URL-based transform (cf.image) has to fetch the original back through this
+ * Worker, and for some large photos it times out and fell back to the multi-MB
+ * original. Returns null when the binding is unavailable or the transform fails.
+ */
+async function transformStoredImage(
+	request: HandlerRequest,
+	env: HandlerEnv,
+	key: string,
+	width: number,
+	format: "avif" | "webp",
+	quality: number,
+) {
+	const { IMAGES: images, MEDIA: bucket } = env as HandlerEnv & StoredImageBindings;
+	if (!images) return null;
+	try {
+		const object = await bucket.get(key);
+		if (!object) return null;
+		const result = await images
+			.input(object.body)
+			.transform({ width, fit: "scale-down" })
+			.output({ format: `image/${format}`, quality });
+		const headers = new Headers({
+			"Content-Type": result.contentType(),
+			"Cache-Control": "public, max-age=31536000, immutable",
+			// Variants are immutable per URL; let the edge keep them so each is resized once.
+			"Cloudflare-CDN-Cache-Control": "public, max-age=31536000, immutable",
+			"X-Content-Type-Options": "nosniff",
+		});
+		return new Response(request.method === "HEAD" ? null : result.image(), { status: 200, headers });
+	} catch (error) {
+		console.warn("Images binding transform failed", key, width, format, error instanceof Error ? error.message : error);
+		return null;
+	}
+}
+
 function authenticateMediaRequest(
 	request: Request,
 	env: HandlerEnv,
@@ -128,13 +180,9 @@ async function servePreview(
 		const response = await deliverGuardedMedia(sourceRequest, (env as HandlerEnv & { MEDIA: GuardedMediaBucket }).MEDIA, mediaKey);
 		return applyMediaAccessHeaders(response, "authenticated");
 	}
-	const transformed = await transformImage(
-		request,
-		sourceUrl,
-		width,
-		format,
-		quality,
-	);
+	const transformed =
+		(await transformStoredImage(request, env, mediaKey, width, format, quality)) ??
+		(await transformImage(request, sourceUrl, width, format, quality));
 	if (!transformed) {
 		return deliverOriginalImageFallback(
 			sourceRequest,

@@ -21,14 +21,22 @@ async function eagerBytes(entry, seen=new Set()) {
 const registry=files.find(name=>/^PluginRegistry\..*\.js$/.test(name));
 assert.ok(registry,'Admin entry must exist');
 const admin=await eagerBytes(registry);
-const css=(await Promise.all(files.filter(f=>f.endsWith('.css')).map(async f=>gzipSync(await readFile(resolve(root,f))).length))).reduce((a,b)=>a+b,0);
+const cssGzip=async f=>gzipSync(await readFile(resolve(root,f))).length;
+// The admin's own stylesheet (styles.*.css) is loaded only inside /_emdash/admin.
+const isAdminCss=f=>/^styles\..*\.css$/.test(f);
+const adminCss=(await Promise.all(files.filter(f=>f.endsWith('.css')&&isAdminCss(f)).map(cssGzip))).reduce((a,b)=>a+b,0);
+const publicCss=(await Promise.all(files.filter(f=>f.endsWith('.css')&&!isAdminCss(f)).map(cssGzip))).reduce((a,b)=>a+b,0);
 const performanceEntry=files.find(name=>name.startsWith('PagePerformance.') && name.endsWith('.js'));
 assert.ok(performanceEntry,'Web vitals entry must exist');
 const vitals=await eagerBytes(performanceEntry);
-const result={adminEagerGzip:admin,allCssGzip:css,publicVitalsGzip:vitals,budgets:{admin:1250000,css:70000,vitals:15000}};
+// Owner decision (2026-10-17): the admin is used only by the owner, so its
+// budgets are loose guards against runaway growth; visitor-facing budgets are tight.
+const budgets={admin:2000000,adminCss:80000,publicCss:32000,vitals:15000};
+const result={adminEagerGzip:admin,adminCssGzip:adminCss,publicCssGzip:publicCss,publicVitalsGzip:vitals,budgets};
 console.log(JSON.stringify(result));
 // EmDash 0.40.1 admin itself is ~165 KB gzip larger than 0.35, and 1.1.0 pulls
 // react-dom/client into the measured graph (docs/performance/README.md).
-assert.ok(admin<=1250000,'Admin eager JavaScript exceeds 1,250 KB gzip; check optional chart and icon imports');
-assert.ok(css<=70000,'CSS exceeds 70 KB gzip');
+assert.ok(admin<=budgets.admin,'Admin eager JavaScript exceeds 2,000 KB gzip; check optional chart and icon imports');
+assert.ok(adminCss<=budgets.adminCss,'Admin CSS exceeds 80 KB gzip');
+assert.ok(publicCss<=budgets.publicCss,'Public-site CSS exceeds 32 KB gzip');
 assert.ok(vitals<=15000,'Public measurement script exceeds 15 KB gzip');

@@ -8,6 +8,8 @@ const PUBLIC_HOSTS = new Set([
 	"127.0.0.1",
 	"kanouk-emdash-staging.kanouk.workers.dev",
 ]);
+// Version preview URLs of this Worker (wrangler versions upload) serve the same published media.
+const VERSION_PREVIEW_HOST = /^[0-9a-f]{8}-kanouk-emdash-staging\.kanouk\.workers\.dev$/;
 const PRIVATE_CACHE_CONTROL = "private, no-store";
 
 export interface PublicMediaDatabase {
@@ -54,7 +56,7 @@ export async function classifyMediaRead(
 		return { access: "denied", storageKey };
 	}
 
-	if (PUBLIC_HOSTS.has(url.hostname)) {
+	if (PUBLIC_HOSTS.has(url.hostname) || VERSION_PREVIEW_HOST.test(url.hostname)) {
 		try {
 			if (await isCurrentPublicMedia(database, storageKey)) {
 				return { access: "public", storageKey };

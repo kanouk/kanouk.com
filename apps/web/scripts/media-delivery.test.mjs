@@ -56,3 +56,13 @@ test('published image fallback preserves a missing-original response',async()=>{
  assert.equal(fallback.headers.get('Cache-Control'),'private, no-store');
  assert.equal(fallback.headers.get('X-Yohaku-Image-Fallback'),'original');
 });
+
+test("stored photos are resized from R2 with the Images binding before the URL transform", async () => {
+	const { readFile } = await import("node:fs/promises");
+	const worker = await readFile(new URL("../src/worker.ts", import.meta.url), "utf8");
+	const wrangler = await readFile(new URL("../wrangler.jsonc", import.meta.url), "utf8");
+	assert.match(wrangler, /"images": \{ "binding": "IMAGES" \}/);
+	assert.match(worker, /\(await transformStoredImage\(request, env, mediaKey, width, format, quality\)\) \?\?\s*\(await transformImage\(/);
+	assert.match(worker, /\.transform\(\{ width, fit: "scale-down" \}\)/);
+	assert.match(worker, /"Cloudflare-CDN-Cache-Control": "public, max-age=31536000, immutable"/);
+});
