@@ -44,3 +44,17 @@ export function sortAlbumsLikeSmugMug(albums) {
 		);
 	});
 }
+
+/**
+ * The owner's manual order (saved from the organizer or the app), by album
+ * content id. Albums added since it was saved come first, in the default order,
+ * as SmugMug shows new galleries at the top.
+ */
+export function applySavedAlbumOrder(albums, savedIds) {
+	if (!Array.isArray(savedIds) || savedIds.length === 0) return sortAlbumsLikeSmugMug(albums);
+	const rank = new Map(savedIds.map((id, index) => [id, index]));
+	const contentId = (album) => album?.data?.id ?? album?.id;
+	const fresh = sortAlbumsLikeSmugMug(albums.filter((album) => !rank.has(contentId(album))));
+	const placed = albums.filter((album) => rank.has(contentId(album))).sort((left, right) => rank.get(contentId(left)) - rank.get(contentId(right)));
+	return [...fresh, ...placed];
+}

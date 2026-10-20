@@ -9,7 +9,7 @@ import type {
 import { apiFetch, parseApiResponse } from "@emdash-cms/admin";
 import {
 	allContent,
-	albumCounts, photoPage, albumPhotosForOperation, type AlbumCount,
+	albumCounts, photoPage, albumPhotosForOperation, type AlbumCount, albumOrder, saveAlbumOrder,
 	createPhotoFromMedia,
 	createAlbumDraft,
 	getContent,
@@ -57,6 +57,7 @@ import {
 } from "./organizer-workflow";
 import { readPhotoMetadata, type PhotoMetadata } from "./photo-metadata";
 import { looksLikeSourceFilename } from "../utils/photo-display.mjs";
+import { normalizePhotoSort, photoComparator } from "../utils/photo-sort.mjs";
 // Inlined and injected by the admin itself: a plain CSS import would be linked
 // on every public page too, since the plugin registry is part of the site bundle.
 import studioCss from "./studio.css?inline";
@@ -207,6 +208,91 @@ const ICON_PATHS: Record<IconName, string> = {
 
 function Icon({ name, size = 16 }: { name: IconName; size?: number }) {
 	return <svg className="photo-tools-icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={name === "more" ? 3 : 1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ICON_PATHS[name]} /></svg>;
+}
+
+const PHOTO_SORT_LABELS: Record<string, string> = {
+	"date taken": "撮影日時",
+	position: "手動",
+	filename: "ファイル名",
+	caption: "キャプション",
+	"date uploaded": "追加日",
+	"date modified": "更新日",
+};
+
+/**
+ * Drag to reorder with a finger as well as a mouse (HTML drag and drop does not
+ * work on phones). Touch starts after a long press so the page still scrolls;
+ * with `immediate` (a reorder mode) the drag starts at once. Items carry
+ * `data-reorder-index`; the page scrolls by itself near the top and bottom edge.
+ */
+function usePointerReorder({ enabled, immediate = false, touchOnly = false, onMove }: { enabled: boolean; immediate?: boolean; touchOnly?: boolean; onMove: (from: number, to: number) => void }) {
+	const [dragging, setDragging] = useState<number | null>(null);
+	const [over, setOver] = useState<number | null>(null);
+	const onMoveRef = useRef(onMove);
+	onMoveRef.current = onMove;
+	const start = (event: React.PointerEvent, index: number) => {
+		if (!enabled || event.button !== 0 || (touchOnly && event.pointerType === "mouse")) return;
+		const origin = { x: event.clientX, y: event.clientY };
+		let active = false;
+		let target = index;
+		let speed = 0;
+		let frame = 0;
+		let timer = 0;
+		const indexAt = (x: number, y: number) => {
+			const element = document.elementFromPoint(x, y)?.closest<HTMLElement>("[data-reorder-index]");
+			return element ? Number(element.dataset.reorderIndex) : null;
+		};
+		const scroll = () => {
+			if (speed) window.scrollBy(0, speed);
+			frame = requestAnimationFrame(scroll);
+		};
+		const activate = () => {
+			active = true;
+			setDragging(index); setOver(index);
+			navigator.vibrate?.(15);
+			frame = requestAnimationFrame(scroll);
+		};
+		const move = (moveEvent: PointerEvent) => {
+			if (!active) {
+				if (Math.hypot(moveEvent.clientX - origin.x, moveEvent.clientY - origin.y) > 8) cleanup();
+				return;
+			}
+			const found = indexAt(moveEvent.clientX, moveEvent.clientY);
+			if (found !== null) { target = found; setOver(found); }
+			const edge = 80;
+			speed = moveEvent.clientY < edge ? -(edge - moveEvent.clientY) / 4 : moveEvent.clientY > window.innerHeight - edge ? (moveEvent.clientY - (window.innerHeight - edge)) / 4 : 0;
+		};
+		// While dragging, keep the browser from scrolling or selecting text under the finger.
+		const blockTouch = (touchEvent: TouchEvent) => { if (active) touchEvent.preventDefault(); };
+		const end = () => {
+			const moved = active && target !== index;
+			cleanup();
+			if (moved) onMoveRef.current(index, target);
+		};
+		const cleanup = () => {
+			window.clearTimeout(timer);
+			cancelAnimationFrame(frame);
+			document.removeEventListener("pointermove", move);
+			document.removeEventListener("pointerup", end);
+			document.removeEventListener("pointercancel", cleanup);
+			document.removeEventListener("touchmove", blockTouch);
+			if (active) {
+				// Swallow the click that follows the drop.
+				const swallow = (clickEvent: Event) => { clickEvent.stopPropagation(); clickEvent.preventDefault(); };
+				document.addEventListener("click", swallow, { capture: true, once: true });
+				window.setTimeout(() => document.removeEventListener("click", swallow, { capture: true }), 400);
+			}
+			active = false;
+			setDragging(null); setOver(null);
+		};
+		document.addEventListener("pointermove", move);
+		document.addEventListener("pointerup", end);
+		document.addEventListener("pointercancel", cleanup);
+		document.addEventListener("touchmove", blockTouch, { passive: false });
+		if (immediate) activate();
+		else timer = window.setTimeout(activate, 450);
+	};
+	return { dragging, over, start };
 }
 
 /** A small disclosure menu; closes on outside click, Escape, or choosing an item. */
@@ -575,9 +661,11 @@ function AlbumOrganizer({
 }) {
 	const reorderInFlight = useRef(false);
 	const requestedPhoto = useRef(typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("photo"));
+	// The album's own order (its "並び順" setting), the same as the server's.
+	const albumSort = normalizePhotoSort(dataOf(album).sort_method, dataOf(album).sort_direction);
 	const albumPhotos = useMemo(() => allPhotos
 		.filter((photo) => dataOf(photo).album === album.id)
-		.toSorted((left, right) => Number(dataOf(left).position) - Number(dataOf(right).position)), [allPhotos, album.id]);
+		.toSorted(photoComparator(albumSort.method, albumSort.direction)), [allPhotos, album.id, albumSort.method, albumSort.direction]);
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [checked, setChecked] = useState<Set<string>>(new Set());
 	const [search, setSearch] = useState("");
@@ -604,6 +692,8 @@ function AlbumOrganizer({
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const [locationErased, setLocationErased] = useState(0);
 	const [selecting, setSelecting] = useState(false);
+	const [sortOpen, setSortOpen] = useState(false);
+	const [sortDraft, setSortDraft] = useState(albumSort);
 	const [viewOrder, setViewOrder] = useState<ViewOrder>("album");
 	const [tileShape, setTileShape] = useState<"square" | "original">(() => {
 		try { return localStorage.getItem(TILE_SHAPE_KEY) === "original" ? "original" : "square"; } catch { return "square"; }
@@ -658,7 +748,8 @@ function AlbumOrganizer({
 			return (a - b) * direction;
 		});
 	}, [albumPhotos, viewOrder]);
-	const canReorder = !search && !filter && viewOrder === "album";
+	// Hand ordering is SmugMug's "Sort By: Manually": only when the album is set to 手動.
+	const canReorder = !search && !filter && viewOrder === "album" && albumSort.method === "position";
 
 	const selectedPhoto = allPhotos.find((photo) => photo.id === selectedId) ?? null;
 	const checkedPhotos = allPhotos.filter((photo) => checked.has(photo.id));
@@ -807,14 +898,16 @@ function AlbumOrganizer({
 		if (photoDraftDirty || !albumReady || reorderInFlight.current) return;
 		reorderInFlight.current = true;
 		setBusy(true); setError(null); setFailures([]); setMessage("並び順を保存中…");
-		let positions = next.map(photo => Number(dataOf(photo).position) || 0).sort((a,b) => a-b);
+		// Positions run the way the album shows them: highest first when its manual order is descending.
+		const descending = albumSort.direction === "desc";
+		let positions = next.map(photo => Number(dataOf(photo).position) || 0).sort((a,b) => descending ? b-a : a-b);
 		if (new Set(positions).size !== positions.length) {
 			try {
 				const full = await albumPhotosForOperation(album.id);
 				const selected = new Set(next.map(photo => photo.id));
 				let cursor = 0;
 				next = full.map(photo => selected.has(photo.id) ? next[cursor++] : photo);
-				positions = sparsePositions(next.length);
+				positions = descending ? sparsePositions(next.length).toReversed() : sparsePositions(next.length);
 			} catch (cause) { setError(cause); setBusy(false); reorderInFlight.current = false; return; }
 		}
 		const changed = next.flatMap((photo, index) => Number(dataOf(photo).position) === positions[index] ? [] : [{ photo, position: positions[index] }]);
@@ -822,7 +915,16 @@ function AlbumOrganizer({
 		const failed: Failure[] = [];
 		const succeeded: Array<{ id: string; position: number }> = [];
 		for (const { photo, position } of changed) {
-			try { const current = await getContent("photos", photo.id); const result = await updateDraft("photos", photo.id, current._rev, { position }); onPhotoUpdated(result.item); touch(photo.id); succeeded.push({ id: photo.id, position: Number(dataOf(photo).position) || 0 }); }
+			try {
+				const current = await getContent("photos", photo.id);
+				// An order change alone goes live at once (as in SmugMug); a photo with other unpublished edits stays a draft.
+				const liveOnly = current.item.status === "published" && !hasPendingChanges(current.item) && !isHiddenPhoto(dataOf(current.item));
+				let result = await updateDraft("photos", photo.id, current._rev, { position });
+				if (liveOnly) result = await publishDraft("photos", photo.id);
+				else touch(photo.id);
+				onPhotoUpdated(result.item);
+				succeeded.push({ id: photo.id, position: Number(dataOf(photo).position) || 0 });
+			}
 			catch (cause) { failed.push({ id: photo.id, reason: reasonOf(cause) }); }
 		}
 		if (failed.length) {
@@ -834,7 +936,7 @@ function AlbumOrganizer({
 		}
 		retainFailures(failed);
 		await recordOperation({ kind: "album-reorder", status: failed.length ? "partial" : "complete", targetIds: changed.map(({ photo }) => photo.id), failures: failed, metadata: { albumId: album.id } }).catch(() => undefined);
-		setMessage(failed.length ? `並び順を完了できなかったため、保存済みの変更を元へ戻しました（${failed.length}件を確認してください）` : "並び順を下書き保存しました");
+		setMessage(failed.length ? `並び順を完了できなかったため、保存済みの変更を元へ戻しました（${failed.length}件を確認してください）` : "並び順を保存しました");
 		setBusy(false);
 		reorderInFlight.current = false;
 		onRefresh();
@@ -1130,6 +1232,12 @@ function AlbumOrganizer({
 	};
 
 	const orderedVisibleIds = visible.map((photo) => photo.id);
+	// Phones: long-press a photo, then drag it to its new place (desktop keeps drag and drop).
+	const tileReorder = usePointerReorder({
+		enabled: canReorder && !operationLocked && !selecting,
+		touchOnly: true,
+		onMove: (from, to) => { const next = [...albumPhotos]; const [moved] = next.splice(from, 1); next.splice(to, 0, moved); void persistOrder(next); },
+	});
 	const uploadSettled = uploadQueue.filter((item) => isUploadQueueSettled(item.stage)).length;
 	const hasRetryableUpload = uploadQueue.some((item) => isUploadQueueRetryable(item.stage));
 
@@ -1162,6 +1270,20 @@ function AlbumOrganizer({
 				right.id,
 			)));
 		} catch (cause) { setError(cause); } finally { setBusy(false); }
+	};
+	const saveSort = async () => {
+		setBusy(true); setError(null);
+		try {
+			const current = await getContent("albums", album.id);
+			// A sort change alone goes live at once; an album with other unpublished edits keeps it as a draft.
+			const liveOnly = current.item.status === "published" && !hasPendingChanges(current.item);
+			let result = await updateDraft("albums", album.id, current._rev, { sort_method: sortDraft.method, sort_direction: sortDraft.direction });
+			if (liveOnly) result = await publishDraft("albums", album.id);
+			onAlbumUpdated(result.item);
+			setSortOpen(false);
+			setMessage(liveOnly ? "並び順を変更しました" : "並び順を下書きに保存しました。「公開」でサイトに反映されます");
+			onRefresh();
+		} catch (cause) { setError(new Error(reasonOf(cause))); } finally { setBusy(false); }
 	};
 	const makeCover = async (photo: ContentItem) => {
 		setBusy(true); setError(null);
@@ -1199,6 +1321,7 @@ function AlbumOrganizer({
 				{photoTotal > 0 && (workspacePending || album.status !== "published") && <button type="button" className="photo-tools-button photo-tools-button--primary" disabled={operationLocked || !albumDraft.title.trim()} onClick={publishWorkspace}>{busy ? "処理中…" : album.status === "published" ? "変更を公開" : "アルバムを公開"}</button>}
 				<Menu label="そのほかの操作">
 					<button type="button" role="menuitem" onClick={() => setSettingsOpen(true)}>アルバム名と説明を編集</button>
+					<button type="button" role="menuitem" onClick={() => { setSortDraft(albumSort); setSortOpen(true); }}>並び順（{PHOTO_SORT_LABELS[albumSort.method]}{albumSort.direction === "desc" ? "・降順" : ""}）</button>
 					<button type="button" role="menuitem" disabled={operationLocked || photoTotal < 2} onClick={() => void sortByCaptureTime()}>撮影日時の順に並べ直す</button>
 					{undoOrder && <button type="button" role="menuitem" disabled={operationLocked} onClick={() => restore(undoOrder, "order")}>並び順を元に戻す</button>}
 					{undoMove && <button type="button" role="menuitem" disabled={operationLocked} onClick={() => restore(undoMove, "move")}>移動を元に戻す</button>}
@@ -1216,6 +1339,16 @@ function AlbumOrganizer({
 				<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={busy || !albumDraftDirty || !albumDraft.title.trim()} onClick={async () => { await saveAlbumDraft(); setSettingsOpen(false); }}>下書きに保存</button>
 				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={busy} onClick={() => { setAlbumDraft({ title: textValue(dataOf(album).title), description: textValue(dataOf(album).description) }); setSettingsOpen(false); }}>閉じる</button>
 			</div>
+		</section>}
+
+		{sortOpen && <section className="photo-tools-album-settings photo-tools-sort" aria-label="並び順">
+			<label>並べ方<select value={sortDraft.method} disabled={busy} onChange={(event) => setSortDraft({ ...sortDraft, method: event.target.value })}>{Object.entries(PHOTO_SORT_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+			<label>向き<select value={sortDraft.direction} disabled={busy} onChange={(event) => setSortDraft({ ...sortDraft, direction: event.target.value })}><option value="asc">昇順（古い順・A→Z）</option><option value="desc">降順（新しい順・Z→A）</option></select></label>
+			<div className="photo-tools-actions">
+				<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={busy || (sortDraft.method === albumSort.method && sortDraft.direction === albumSort.direction)} onClick={() => void saveSort()}>保存</button>
+				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={busy} onClick={() => setSortOpen(false)}>閉じる</button>
+			</div>
+			<p className="photo-tools-note">公開サイトのアルバムもこの順に並びます。「手動」にすると、写真をドラッグして並べ替えられます（スマホは長押ししてから動かします）。</p>
 		</section>}
 
 		{uploadQueue.length > 0 && <section className="photo-tools-upload-queue" aria-label="写真追加の進捗" aria-live="polite">
@@ -1276,7 +1409,7 @@ function AlbumOrganizer({
 						const hidden = isHiddenPhoto(dataOf(photo));
 						const state = hidden ? "非公開" : photo.status !== "published" ? "下書き" : hasPendingChanges(photo) ? "変更あり" : "";
 						const needsAttention = flags.includes("location-unreviewed");
-						return <article key={photo.id} className={`photo-tools-tile ${inspectorPhoto?.id === photo.id && checkedPhotos.length < 2 ? "is-active" : ""} ${checked.has(photo.id) ? "is-checked" : ""} ${hidden ? "is-hidden" : ""} ${dragId === photo.id ? "is-dragging" : ""}`} draggable={!operationLocked && canReorder} onDragStart={(event) => { event.dataTransfer.effectAllowed = "move"; setDragId(photo.id); }} onDragEnd={() => setDragId(null)} onDragOver={(event) => { if (dragId) event.preventDefault(); }} onDrop={(event) => {
+						return <article key={photo.id} className={`photo-tools-tile ${inspectorPhoto?.id === photo.id && checkedPhotos.length < 2 ? "is-active" : ""} ${checked.has(photo.id) ? "is-checked" : ""} ${hidden ? "is-hidden" : ""} ${dragId === photo.id || tileReorder.dragging === index ? "is-dragging" : ""} ${tileReorder.dragging !== null && tileReorder.over === index && tileReorder.dragging !== index ? "is-drop-target" : ""}`} data-reorder-index={index} onPointerDown={(event) => tileReorder.start(event, index)} draggable={!operationLocked && canReorder} onDragStart={(event) => { event.dataTransfer.effectAllowed = "move"; setDragId(photo.id); }} onDragEnd={() => setDragId(null)} onDragOver={(event) => { if (dragId) event.preventDefault(); }} onDrop={(event) => {
 							if (!dragId) return;
 							event.preventDefault(); event.stopPropagation();
 							if (dragId === photo.id || !canReorder) { setDragId(null); return; }
@@ -1304,7 +1437,7 @@ function AlbumOrganizer({
 						</article>;
 					})}</div> : <p className="photo-tools-empty">{!albumReady ? "写真を読み込んでいます…" : "この条件に合う写真はありません。"}</p>}
 					{nextOffset !== null && <button ref={moreButton} type="button" className="photo-tools-button photo-tools-more" disabled={operationLocked} onClick={onLoadMore}>続きを読み込む</button>}
-					<p className="photo-tools-hint">{canReorder ? "ドラッグで並べ替えられます（キーボードは Alt＋矢印）。" : "並べ替えは「アルバムの順」で、検索や絞り込みをしていないときにできます。"}写真を押すと情報を編集できます。「選択」でまとめて操作できます。</p>
+					<p className="photo-tools-hint">{canReorder ? "ドラッグで並べ替えられます（スマホは長押ししてから動かします。キーボードは Alt＋矢印）。" : albumSort.method !== "position" ? "手で並べ替えるには、「…」→「並び順」で「手動」を選びます。" : "並べ替えは「アルバムの順」で、検索や絞り込みをしていないときにできます。"}写真を押すと情報を編集できます。「選択」でまとめて操作できます。</p>
 				</section>
 				{panelOpen && (checkedPhotos.length > 1
 					? <BulkInspector selected={checkedPhotos} albums={albums} busy={busy} onApply={applyBulk} onMove={moveSelected} onPublish={publishMany} onHide={setHidden} onTrash={trashPhotos} onClear={() => { setChecked(new Set()); setMobilePane("photos"); }} />
@@ -1489,10 +1622,40 @@ export function PhotoOrganizerPage() {
 		const timer = setTimeout(() => { albumCounts().then(setCounts).catch(setError); }, 500);
 		return () => clearTimeout(timer);
 	}, [photos]);
+	// The owner's manual album order (SmugMug "Sort galleries: Manually"); albums added since come first.
+	const [savedOrder, setSavedOrder] = useState<string[]>([]);
+	const [reordering, setReordering] = useState<string[] | null>(null);
+	const [savingOrder, setSavingOrder] = useState(false);
+	const [orderMessage, setOrderMessage] = useState("");
+	useEffect(() => { albumOrder().then(setSavedOrder).catch(() => setSavedOrder([])); }, []);
+	const orderedAlbums = useMemo(() => {
+		const rank = new Map(savedOrder.map((id, index) => [id, index]));
+		const fresh = albums.filter((album) => !rank.has(album.id));
+		const placed = albums.filter((album) => rank.has(album.id)).sort((left, right) => rank.get(left.id)! - rank.get(right.id)!);
+		return [...fresh, ...placed];
+	}, [albums, savedOrder]);
 	const visibleAlbums = useMemo(() => {
+		if (reordering) return reordering.map((id) => albums.find((album) => album.id === id)).filter((album): album is ContentItem => Boolean(album));
 		const needle = albumSearch.trim().toLocaleLowerCase("ja");
-		return needle ? albums.filter(album => labelOf(album).toLocaleLowerCase("ja").includes(needle)) : albums;
-	}, [albums, albumSearch]);
+		return needle ? orderedAlbums.filter(album => labelOf(album).toLocaleLowerCase("ja").includes(needle)) : orderedAlbums;
+	}, [orderedAlbums, albums, albumSearch, reordering]);
+	const albumReorder = usePointerReorder({
+		enabled: Boolean(reordering) && !savingOrder,
+		immediate: true,
+		onMove: (from, to) => setReordering((current) => {
+			if (!current) return current;
+			const next = [...current]; const [moved] = next.splice(from, 1); next.splice(to, 0, moved); return next;
+		}),
+	});
+	const saveOrder = async () => {
+		if (!reordering) return;
+		setSavingOrder(true); setError(null);
+		try {
+			setSavedOrder(await saveAlbumOrder(reordering));
+			setReordering(null);
+			setOrderMessage("アルバムの並び順を保存しました。公開サイトには数分で反映されます。");
+		} catch (cause) { setError(cause); } finally { setSavingOrder(false); }
+	};
 
 	const selected = albums.find((album) => album.id === selectedId) ?? null;
 	const selectedIdentity = selected ? `${selected.id}:${selected.draftRevisionId ?? ""}` : "";
@@ -1578,6 +1741,7 @@ export function PhotoOrganizerPage() {
 				<p>アルバムを開いて、写真の追加・編集・並べ替え・公開をします。</p>
 			</div>
 			<div className="photo-tools-actions">
+				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={loading || Boolean(reordering)} onClick={() => { setOrderMessage(""); setAlbumSearch(""); setReordering(orderedAlbums.map((album) => album.id)); }}>並べ替え</button>
 				<button type="button" className="photo-tools-button" onClick={() => setShowNew((value) => !value)} aria-expanded={showNew}><Icon name="plus" />新しいアルバム</button>
 				<label className="photo-tools-button photo-tools-button--primary photo-tools-upload"><Icon name="upload" />写真を追加<input type="file" accept={ACCEPTED_IMAGE_INPUT} multiple hidden onChange={(event) => {
 					const files = [...(event.target.files ?? [])];
@@ -1605,25 +1769,32 @@ export function PhotoOrganizerPage() {
 		</form>}
 		<ErrorBox error={error} />
 		<AdminSetupCard />
-		<div className="photo-tools-toolbar photo-tools-toolbar--albums">
+		{orderMessage && <p className="photo-tools-status" role="status">{orderMessage}</p>}
+		{reordering && <div className="photo-tools-reorder-bar" role="region" aria-label="アルバムの並べ替え">
+			<span>アルバムをドラッグして並べ替えます（公開サイトの並び順になります）</span>
+			<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={savingOrder} onClick={() => void saveOrder()}>{savingOrder ? "保存中…" : "完了"}</button>
+			<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={savingOrder} onClick={() => setReordering(null)}>やめる</button>
+		</div>}
+		{!reordering && <div className="photo-tools-toolbar photo-tools-toolbar--albums">
 			<label className="photo-tools-search"><Icon name="search" /><input type="search" aria-label="アルバムを検索" placeholder="アルバムを検索" value={albumSearch} onChange={(event) => setAlbumSearch(event.target.value)} /></label>
 			<span className="photo-tools-toolbar__count">{loading ? "読み込み中…" : `${visibleAlbums.length}件`}</span>
-		</div>
+		</div>}
 		{loading
 			? <p className="photo-tools-note" role="status">アルバムを読み込んでいます…</p>
 			: visibleAlbums.length
-				? <ul className="photo-tools-albums">{visibleAlbums.map((album) => {
+				? <ul className={`photo-tools-albums ${reordering ? "is-reordering" : ""}`}>{visibleAlbums.map((album, index) => {
 					const count = counts.find((entry) => entry.album === album.id);
 					const from = dateTimeLocalInputValue(dataOf(album).captured_from).slice(0, 7).replace("-", "/");
 					const state = album.status !== "published" ? "下書き" : hasPendingChanges(album) || (count?.pending ?? 0) > 0 ? "未公開の変更" : "";
-					return <li key={album.id}>
-						<a className="photo-tools-album-card" href={organizerHref(album.id)} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey) return; event.preventDefault(); openAlbum(album.id); }}>
+					return <li key={album.id} data-reorder-index={index} onPointerDown={(event) => albumReorder.start(event, index)} className={`${albumReorder.dragging === index ? "is-dragging" : ""} ${albumReorder.dragging !== null && albumReorder.over === index && albumReorder.dragging !== index ? "is-drop-target" : ""}`}>
+						<a className="photo-tools-album-card" href={organizerHref(album.id)} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey) return; event.preventDefault(); if (!reordering) openAlbum(album.id); }}>
 							<span className="photo-tools-album-card__cover">{dataOf(album).cover_image ? <Preview value={dataOf(album).cover_image} size={480} /> : <span className="photo-tools-album-card__empty"><Icon name="image" size={20} />{(count?.total ?? 0) > 0 ? "表紙が未設定" : "写真なし"}</span>}</span>
 							<span className="photo-tools-album-card__body">
 								<strong>{labelOf(album)}</strong>
 								<small>{photoIndexLoading ? "…" : `${count?.total ?? 0}点`}{from && <> · {from}</>}</small>
 							</span>
 							{state && <span className={`photo-tools-flag ${album.status !== "published" ? "photo-tools-flag--muted" : "photo-tools-flag--warn"}`}>{state}</span>}
+							{reordering && <span className="photo-tools-album-card__handle" aria-hidden="true">≡</span>}
 						</a>
 					</li>;
 				})}</ul>

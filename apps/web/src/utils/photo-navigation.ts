@@ -1,4 +1,11 @@
 import { env } from "virtual:emdash/env";
+import { photoOrderSql, sqlSortDirection, sqlSortMethod } from "./photo-sort.mjs";
+
+// Previous/next follow the album's own sort (SmugMug's per-gallery "Sort By").
+const ORDER = photoOrderSql("s.m", "s.d", {
+	captured: "captured_epoch", position: "position", filename: "filename",
+	caption: "caption", created: "created_at", updated: "updated_at", id: "id",
+});
 
 interface NavigationRow {
 	previous_id: string | null;
@@ -34,10 +41,19 @@ export async function getPhotoNavigation(
 
 	const result = await database
 		.prepare(`
-			WITH sortable AS (
+			WITH s AS (
+				SELECT ${sqlSortMethod("sort_method")} AS m, ${sqlSortDirection("sort_direction")} AS d
+				FROM ec_albums WHERE id = ?1
+				UNION ALL SELECT 'date taken', 'asc' WHERE NOT EXISTS (SELECT 1 FROM ec_albums WHERE id = ?1)
+			),
+			sortable AS (
 				SELECT id,
 				       position,
-				       unixepoch(captured_at) AS captured_epoch
+				       unixepoch(captured_at) AS captured_epoch,
+				       json_extract(image, '$.filename') AS filename,
+				       caption,
+				       created_at,
+				       updated_at
 				FROM ec_photos
 				WHERE status = 'published'
 				  AND deleted_at IS NULL
@@ -46,19 +62,19 @@ export async function getPhotoNavigation(
 			ordered AS (
 				SELECT id,
 				       ROW_NUMBER() OVER (
-					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+					       ORDER BY ${ORDER}
 				       ) AS position_index,
 				       COUNT(*) OVER () AS total_count,
 				       LAG(id) OVER (
-					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+					       ORDER BY ${ORDER}
 				       ) AS previous_id,
 				       LEAD(id) OVER (
-					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+					       ORDER BY ${ORDER}
 				       ) AS next_id,
 				       FIRST_VALUE(id) OVER (
-					       ORDER BY captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC
+					       ORDER BY ${ORDER}
 				       ) AS first_id
-				FROM sortable
+				FROM sortable, s
 			)
 			SELECT previous_id, next_id, first_id, position_index, total_count
 			FROM ordered

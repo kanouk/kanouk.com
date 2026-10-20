@@ -3,7 +3,8 @@ import { getEmDashCollection } from "emdash";
 import { Images } from "lucide-astro";
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
-import { sortAlbumsLikeSmugMug } from "../../utils/album-order.mjs";
+import { applySavedAlbumOrder } from "../../utils/album-order.mjs";
+import { readSavedAlbumOrder } from "../../utils/album-order-store";
 
 const { entries: albums, cacheHint } = await getEmDashCollection("albums", {
 	status: "published",
@@ -11,7 +12,7 @@ const { entries: albums, cacheHint } = await getEmDashCollection("albums", {
 	limit: 100,
 });
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
-const orderedAlbums = sortAlbumsLikeSmugMug(albums);
+const orderedAlbums = applySavedAlbumOrder(albums, await readSavedAlbumOrder());
 ---
 
 <Photos title="アルバム" description="カノログ フォトの公開アルバム一覧">
