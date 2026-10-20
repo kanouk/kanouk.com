@@ -5,6 +5,7 @@ import {
 } from "./studio/media-delivery";
 import handler, { createScheduledHandler, PluginBridge } from "@emdash-cms/cloudflare/worker";
 import { needsLocationReview } from "./studio/domain";
+import { adminThumbnailRequest } from "./utils/admin-thumbnail.mjs";
 import {
 	applyMediaAccessHeaders,
 	authenticationHeaders,
@@ -306,6 +307,11 @@ export default {
 					format,
 					format === "avif" ? 62 : 78,
 				);
+			}
+			// EmDash's media library thumbnails (Astro's /_image) use the same resized previews.
+			const thumbnail = adminThumbnailRequest(url);
+			if (thumbnail) {
+				return servePreview(request, env, context, database, url, thumbnail.encodedKey, thumbnail.width, thumbnail.format, thumbnail.format === "avif" ? 62 : 78);
 			}
 			if (url.pathname.startsWith(LEGACY_PREVIEW_PREFIX)) {
 					return servePreview(
