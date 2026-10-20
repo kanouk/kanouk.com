@@ -60,6 +60,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 	var login by mutableStateOf<LoginState>(LoginState.Idle); private set
 	val uploads: StateFlow<List<UploadBatch>> = UploadCenter.batches
 	private var loginJob: Job? = null
+	private var deviceLogin: DeviceLogin? = null
+	/** Back from the browser: check the approval right away instead of waiting for the next poll. */
+	fun checkLoginNow() { deviceLogin?.nudges?.trySend(Unit) }
 	/**
 	 * Lists carry the published version of a photo; a single read carries its draft.
 	 * Keep the draft read until the list reports another draft revision.
@@ -109,7 +112,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 		login = LoginState.Starting
 		loginJob = viewModelScope.launch {
 			try {
-				val flow = DeviceLogin(api.http, session.baseUrl)
+				val flow = DeviceLogin(api.http, session.baseUrl).also { deviceLogin = it }
 				val code = flow.start()
 				login = LoginState.Waiting(code)
 				val tokens = flow.awaitApproval(code)
@@ -120,7 +123,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 			} catch (error: kotlinx.coroutines.CancellationException) {
 				throw error
 			} catch (error: Exception) {
-				login = LoginState.Failed(error.message ?: "ログインできませんでした")
+				login = LoginState.Failed(error.message ?: "ログインできませんでした（${error::class.simpleName}）")
 			}
 		}
 	}

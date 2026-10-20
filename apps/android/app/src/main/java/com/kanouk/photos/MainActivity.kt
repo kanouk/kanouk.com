@@ -25,6 +25,11 @@ import com.kanouk.photos.ui.ViewerScreen
 class MainActivity : ComponentActivity() {
 	private val vm: AppViewModel by viewModels()
 
+	override fun onResume() {
+		super.onResume()
+		vm.checkLoginNow()
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		enableEdgeToEdge()

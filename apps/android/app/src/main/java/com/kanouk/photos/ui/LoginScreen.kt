@@ -59,11 +59,25 @@ fun LoginScreen(vm: AppViewModel) {
 			Text("カノログ写真", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
 			when (val state = vm.login) {
 				is LoginState.Waiting -> {
-					Text("ブラウザで、次のコードを承認してください。管理画面にログインしているブラウザで開きます。", textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurfaceVariant)
 					Surface(color = MaterialTheme.colorScheme.surfaceContainer, shape = RoundedCornerShape(16.dp)) {
 						Text(state.code.userCode, fontFamily = FontFamily.Monospace, fontSize = 32.sp, letterSpacing = 4.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 28.dp, vertical = 18.dp))
 					}
-					Button(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(state.code.verificationUri))) }, modifier = Modifier.fillMaxWidth().height(52.dp)) {
+					Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+						listOf(
+							"「ブラウザで承認する」を押す（コードはコピーされます）",
+							"管理画面にログインしていなければログインし、「デバイスを承認」の画面でコードを貼り付ける",
+							"許可する内容が表示されたら「承認」を押し、このアプリに戻る",
+						).forEachIndexed { index, step ->
+							Row {
+								Text("${index + 1}.", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold, modifier = Modifier.width(22.dp))
+								Text(step, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
+							}
+						}
+					}
+					Button(onClick = {
+						scope.launch { clipboard.setClipEntry(ClipData.newPlainText("code", state.code.userCode).toClipEntry()) }
+						context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(state.code.verificationUri)))
+					}, modifier = Modifier.fillMaxWidth().height(52.dp)) {
 						Text("ブラウザで承認する")
 					}
 					OutlinedButton(onClick = { scope.launch { clipboard.setClipEntry(ClipData.newPlainText("code", state.code.userCode).toClipEntry()) } }, modifier = Modifier.fillMaxWidth()) {
@@ -72,7 +86,7 @@ fun LoginScreen(vm: AppViewModel) {
 					Row(verticalAlignment = Alignment.CenterVertically) {
 						CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
 						Spacer(Modifier.width(10.dp))
-						Text("承認を待っています…", color = MaterialTheme.colorScheme.onSurfaceVariant)
+						Text("承認を待っています（15分有効）…", color = MaterialTheme.colorScheme.onSurfaceVariant)
 					}
 					TextButton(onClick = vm::cancelLogin) { Text("やめる") }
 				}

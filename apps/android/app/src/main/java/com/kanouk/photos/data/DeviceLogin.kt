@@ -47,34 +47,41 @@ class DeviceLogin(private val http: OkHttpClient, private val baseUrl: String) {
 		)
 	}
 
-	/** Polls until the owner approves (or denies, or the code expires). */
+	/** Ask once now (used when the app comes back from the browser). */
+	val nudges = kotlinx.coroutines.channels.Channel<Unit>(kotlinx.coroutines.channels.Channel.CONFLATED)
+
+	/**
+	 * Polls until the owner approves (or denies, or the code expires). Network
+	 * trouble while the app sits in the background (Android pauses it while the
+	 * browser is open) does not end the wait; only a denial or expiry does.
+	 */
 	suspend fun awaitApproval(code: Code): Tokens {
 		var interval = code.intervalSeconds
 		val deadline = System.currentTimeMillis() + code.expiresInSeconds * 1000
 		while (System.currentTimeMillis() < deadline) {
-			delay(interval * 1000)
+			kotlinx.coroutines.withTimeoutOrNull(interval * 1000) { nudges.receive() }
 			val body = buildJsonObject {
 				put("device_code", code.deviceCode)
 				put("grant_type", "urn:ietf:params:oauth:grant-type:device_code")
 			}
-			val (status, text) = post("/_emdash/api/oauth/device/token", body.toString())
+			val (status, text) = try { post("/_emdash/api/oauth/device/token", body.toString()) } catch (error: ApiException) { continue }
 			val payload = runCatching { json.parseToJsonElement(text).asObject() }.getOrNull()
 			if (status in 200..299) {
-				val data = payload?.child("data") ?: throw ApiException("応答が読めませんでした。")
+				val data = payload?.child("data") ?: continue
 				return Tokens(
-					access = data.string("access_token") ?: throw ApiException("応答が読めませんでした。"),
-					refresh = data.string("refresh_token") ?: throw ApiException("応答が読めませんでした。"),
+					access = data.string("access_token") ?: continue,
+					refresh = data.string("refresh_token") ?: continue,
 					expiresIn = data.number("expires_in")?.toLong() ?: 3600,
 				)
 			}
 			when (payload?.string("error")) {
-				"authorization_pending" -> Unit
 				"slow_down" -> interval = payload.number("interval")?.toLong() ?: (interval + 5)
 				"access_denied" -> throw ApiException("ブラウザで拒否されました。")
-				"expired_token" -> throw ApiException("コードの有効期限が切れました。もう一度お試しください。")
-				else -> if (status == 429) interval += 5 else throw ApiException(payload?.child("error")?.string("message") ?: "ログインできませんでした（$status）。")
+				"expired_token" -> throw ApiException("コードの有効期限（15分）が切れました。もう一度ログインしてください。")
+				// authorization_pending, rate limits and server hiccups: keep waiting.
+				else -> if (status == 429) interval += 5
 			}
 		}
-		throw ApiException("コードの有効期限が切れました。もう一度お試しください。")
+		throw ApiException("コードの有効期限（15分）が切れました。もう一度ログインしてください。")
 	}
 }
