@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
-import { sortAlbumsLikeSmugMug } from "../src/utils/album-order.mjs";
+import { applySavedAlbumOrder, sortAlbumsLikeSmugMug } from "../src/utils/album-order.mjs";
 
 const album = (id, title) => ({ id, data: { title } });
 
@@ -34,5 +34,21 @@ describe("sortAlbumsLikeSmugMug", () => {
 				"2020-11-kyoto",
 			],
 		);
+	});
+});
+
+describe("applySavedAlbumOrder", () => {
+	const withId = (slug, id, title) => ({ id: slug, data: { id, title } });
+	const albums = [
+		withId("stream", "A1", "Stream"),
+		withId("2026-03-fukuoka", "A2", "Fukuoka, 2026/03"),
+		withId("2024-07-kyoto", "A3", "Kyoto, 2024/07"),
+		withId("2026-10-new", "A4", "Sendai, 2026/10"),
+	];
+	test("without a saved order, keeps the SmugMug-like default", () => {
+		assert.deepEqual(applySavedAlbumOrder(albums, []).map(({ id }) => id), ["stream", "2026-10-new", "2026-03-fukuoka", "2024-07-kyoto"]);
+	});
+	test("follows the saved order and puts albums added since then first", () => {
+		assert.deepEqual(applySavedAlbumOrder(albums, ["A3", "A1", "A2", "gone"]).map(({ id }) => id), ["2026-10-new", "2024-07-kyoto", "stream", "2026-03-fukuoka"]);
 	});
 });

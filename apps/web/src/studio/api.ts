@@ -229,3 +229,15 @@ export async function albumPhotosForOperation(album: string): Promise<ContentIte
  do { const page = await photoPage(album, {offset}); items.push(...page.items); offset = page.nextOffset; } while (offset !== null);
  return items;
 }
+
+/** The owner's manual album order (album content ids). */
+export async function albumOrder(): Promise<string[]> {
+ return (await unwrap<{ ids?: string[] }>(await apiFetch("/_emdash/api/plugins/yohaku-photo-tools/album-order"))).ids ?? [];
+}
+export async function saveAlbumOrder(ids: string[]): Promise<string[]> {
+ return (await unwrap<{ ids: string[] }>(await apiFetch("/_emdash/api/plugins/yohaku-photo-tools/album-order", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ ids }),
+ }))).ids;
+}

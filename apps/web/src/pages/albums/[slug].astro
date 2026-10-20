@@ -24,7 +24,7 @@ if (Astro.cache?.enabled) Astro.cache.set(albumCache);
 
 const requestedPage = Number(Astro.url.searchParams.get("page") ?? 1);
 const photoTarget = Astro.url.searchParams.get("photo") ?? "";
-const result = await getAlbumPage(album.data.id, Number.isSafeInteger(requestedPage) ? requestedPage : 1, photoTarget);
+const result = await getAlbumPage(album.data.id, Number.isSafeInteger(requestedPage) ? requestedPage : 1, photoTarget, { method: album.data.sort_method, direction: album.data.sort_direction });
 const chronologicalPhotos = result.photos;
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums", "photos"] });
 const pageHref = (page: number) => `/albums/${encodeURIComponent(album.id)}${page > 1 ? `?page=${page}` : ""}`;

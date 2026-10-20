@@ -81,7 +81,9 @@ test("photo detail navigation is computed in one bounded database query", async 
 	assert.match(navigation, /LAG\(id\) OVER/);
 	assert.match(navigation, /LEAD\(id\) OVER/);
 	assert.match(navigation, /unixepoch\(captured_at\)/);
-	assert.match(navigation, /captured_epoch IS NULL ASC, captured_epoch ASC, position ASC, id ASC/);
+	// Previous/next follow the album's own sort (manual or capture time), read in the same query.
+	assert.match(navigation, /FROM ec_albums WHERE id = \?1/);
+	assert.match(navigation, /photoOrderSql\("s\.m", "s\.d"/);
 });
 
 test("photo detail controls and metadata stay inside the viewer", async () => {

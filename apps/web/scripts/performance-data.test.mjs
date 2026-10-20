@@ -8,7 +8,8 @@ import { getAlbumPage, getAlbumMarkers } from '../src/utils/album-page.ts';
 function fixture(count=120) {
  const raw = new DatabaseSync(':memory:');
  raw.exec(`CREATE TABLE revisions(id TEXT PRIMARY KEY,data TEXT);
- CREATE TABLE ec_photos(id TEXT PRIMARY KEY,slug TEXT,status TEXT,created_at TEXT,updated_at TEXT,published_at TEXT,version INTEGER,locale TEXT,author_id TEXT,draft_revision_id TEXT,live_revision_id TEXT,deleted_at TEXT,title TEXT,caption TEXT,alt TEXT,image TEXT,kind TEXT,album TEXT,position REAL,captured_at TEXT,latitude REAL,longitude REAL,altitude REAL,source_metadata TEXT);`);
+ CREATE TABLE ec_albums(id TEXT PRIMARY KEY,sort_method TEXT,sort_direction TEXT,draft_revision_id TEXT,deleted_at TEXT);
+CREATE TABLE ec_photos(id TEXT PRIMARY KEY,slug TEXT,status TEXT,created_at TEXT,updated_at TEXT,published_at TEXT,version INTEGER,locale TEXT,author_id TEXT,draft_revision_id TEXT,live_revision_id TEXT,deleted_at TEXT,title TEXT,caption TEXT,alt TEXT,image TEXT,kind TEXT,album TEXT,position REAL,captured_at TEXT,latitude REAL,longitude REAL,altitude REAL,source_metadata TEXT);`);
  const insert = raw.prepare('INSERT INTO ec_photos(id,slug,status,version,locale,live_revision_id,title,caption,alt,image,album,position,captured_at,source_metadata) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
  raw.exec('BEGIN');
  for(let i=0;i<count;i++) {
@@ -53,11 +54,17 @@ test('admin uses draft album membership while public pages and maps expose only 
   const draft=await readPhotoPage({album:'b',filter:'location-unreviewed'},db);
   assert.equal(draft.items[0].data.title,'draft title');
   assert.equal((await readPhotoPage({album:'b',filter:'missing-caption'},db)).total,1);
-  const first=await getAlbumPage('a',1,'',db);
+  const first=await getAlbumPage('a',1,'',{},db);
   assert.equal(first.total,118);assert.equal(first.photos.length,50);
   assert.equal(first.photos[0].data.title,'p00000');
-  const target=await getAlbumPage('a',1,'p00110',db);
+  const target=await getAlbumPage('a',1,'p00110',{},db);
   assert.equal(target.page,3);assert.ok(target.photos.some(p=>p.id==='p00110'));
+  // An album set to manual order (SmugMug "Manually") follows position, both in public and in the organizer.
+  const manual=await getAlbumPage('a',1,'',{method:'position',direction:'desc'},db);
+  assert.equal(manual.photos[0].data.title,'p00119');
+  raw.exec("INSERT INTO ec_albums(id,sort_method,sort_direction) VALUES ('a','position','desc')");
+  assert.equal((await readPhotoPage({album:'a'},db)).items[0].data.title,'p00119');
+  raw.exec("DELETE FROM ec_albums");
   const markers=await getAlbumMarkers('a',db);
   assert.equal(markers.length,118); assert.equal(markers[0].latitude,35);
   assert.equal((await getAlbumMarkers('b',db)).length,0);

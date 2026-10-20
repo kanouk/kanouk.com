@@ -1,6 +1,7 @@
 import { sql, type Kysely } from "kysely";
 
 import { PluginRouteError } from "emdash";
+import { photoOrderSql, sqlSortDirection, sqlSortMethod } from "../utils/photo-sort.mjs";
 
 // Read the editable revision, including a draft album move, without hydrating
 // every photograph through the content API. Writes still use EmDash's API.
@@ -12,6 +13,19 @@ const effective = sql`SELECT p.id, p.slug, p.status, p.created_at, p.updated_at,
  'altitude',p.altitude,'source_metadata',json(p.source_metadata))) AS data
  FROM ec_photos p LEFT JOIN revisions d ON d.id=p.draft_revision_id
  WHERE p.deleted_at IS NULL`;
+
+// The organizer lists photos in the album's chosen order, including an unpublished change of it.
+const albumSort = (album: string) => sql`SELECT ${sql.raw(sqlSortMethod("coalesce(json_extract(d.data,'$.sort_method'),a.sort_method)"))} AS m,
+ ${sql.raw(sqlSortDirection("coalesce(json_extract(d.data,'$.sort_direction'),a.sort_direction)"))} AS d
+ FROM ec_albums a LEFT JOIN revisions d ON d.id=a.draft_revision_id WHERE a.id=${album}
+ UNION ALL SELECT 'date taken','asc' WHERE NOT EXISTS (SELECT 1 FROM ec_albums WHERE id=${album})`;
+const ORGANIZER_ORDER = sql.raw(photoOrderSql("s.m", "s.d", {
+ captured: "unixepoch(json_extract(e.data,'$.captured_at'))",
+ position: "coalesce(cast(json_extract(e.data,'$.position') AS REAL),0)",
+ filename: "json_extract(e.data,'$.image.filename')",
+ caption: "json_extract(e.data,'$.caption')",
+ created: "e.created_at", updated: "e.updated_at", id: "e.id",
+}));
 
 const notHidden = sql`coalesce(json_extract(data,'$.source_metadata.hidden'),0) != 1`;
 
@@ -49,14 +63,14 @@ export async function readPhotoPage(input: unknown, database?: Kysely<any>) {
  AND (${filter ? flags[filter as keyof typeof flags] : sql`1=1`})`;
  const db = database ?? await (await import("emdash/runtime")).getDb();
  if (photo && !q && !filter && offset === 0) {
-  const target = await sql<{rn:number}>`WITH effective AS (${effective}), ordered AS
-   (SELECT id,row_number() OVER (ORDER BY coalesce(cast(json_extract(data,'$.position') AS REAL),0),id) AS rn FROM effective WHERE ${where})
+  const target = await sql<{rn:number}>`WITH effective AS (${effective}), s AS (${albumSort(album)}), ordered AS
+   (SELECT e.id AS id,row_number() OVER (ORDER BY ${ORGANIZER_ORDER}) AS rn FROM effective e, s WHERE ${where})
    SELECT rn FROM ordered WHERE id=${photo}`.execute(db);
   if (target.rows[0]) offset = Math.floor((target.rows[0].rn-1)/50)*50;
  }
  const [page, count] = await Promise.all([
-  sql<Record<string, any>>`WITH effective AS (${effective}) SELECT * FROM effective WHERE ${where}
-   ORDER BY coalesce(cast(json_extract(data,'$.position') AS REAL),0),id LIMIT 50 OFFSET ${offset}`.execute(db),
+  sql<Record<string, any>>`WITH effective AS (${effective}), s AS (${albumSort(album)}) SELECT e.* FROM effective e, s WHERE ${where}
+   ORDER BY ${ORGANIZER_ORDER} LIMIT 50 OFFSET ${offset}`.execute(db),
   sql<{total:number}>`WITH effective AS (${effective}) SELECT count(*) AS total FROM effective WHERE ${where}`.execute(db),
  ]);
  const total = Number(count.rows[0]?.total ?? 0);

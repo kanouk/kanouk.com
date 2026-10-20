@@ -181,6 +181,15 @@
 .photo-tools-album-card:hover .photo-tools-album-card__body strong { color: var(--pt-brand); }
 .photo-tools-album-card__body small { color: var(--pt-muted); font-size: var(--pt-sm); }
 .photo-tools-album-card > .photo-tools-flag { position: absolute; top: 0.5rem; left: 0.5rem; }
+/* Album reorder mode: drag the cards; touch drags at once, so the cards stop scrolling the page. */
+.photo-tools-reorder-bar { position: sticky; z-index: 20; top: 0.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; margin-bottom: 1rem; padding: 0.6rem 0.75rem 0.6rem 1rem; border: 1px solid color-mix(in srgb, var(--pt-brand) 35%, var(--pt-line)); border-radius: var(--pt-radius); background: color-mix(in srgb, var(--pt-base) 92%, var(--pt-brand)); font-size: var(--pt-sm); }
+.photo-tools-reorder-bar > span { flex: 1 1 14rem; color: var(--pt-text); }
+.photo-tools-albums.is-reordering li { touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+.photo-tools-albums.is-reordering .photo-tools-album-card { pointer-events: none; }
+.photo-tools-albums li.is-dragging { opacity: 0.4; }
+.photo-tools-albums li.is-drop-target .photo-tools-album-card__cover { box-shadow: 0 0 0 2px var(--pt-base), 0 0 0 4px var(--pt-brand); }
+.photo-tools-album-card__handle { position: absolute; top: 0.4rem; right: 0.5rem; display: grid; width: 2rem; height: 2rem; border-radius: 999px; background: rgb(0 0 0 / 0.55); color: #fff; font-size: 1.1rem; place-items: center; }
+.photo-tools-tile { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 
 /* Album workspace */
 .photo-tools-workspace { position: relative; }
@@ -233,6 +242,9 @@
 .photo-tools-tile { position: relative; min-width: 0; border-radius: var(--pt-radius); }
 .photo-tools-tile[draggable="true"] { cursor: grab; }
 .photo-tools-tile.is-dragging { opacity: 0.4; }
+.photo-tools-tile.is-drop-target .photo-tools-tile__media { box-shadow: 0 0 0 2px var(--pt-base), 0 0 0 4px var(--pt-brand); }
+.photo-tools-sort { grid-template-columns: minmax(10rem, 1fr) minmax(12rem, 1fr) auto; }
+.photo-tools-sort > .photo-tools-note { grid-column: 1 / -1; }
 .photo-tools-tile__open { display: grid; width: 100%; gap: 0.4rem; padding: 0; border: 0; border-radius: var(--pt-radius); background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .photo-tools-tile__media { display: block; overflow: hidden; aspect-ratio: 1; border-radius: var(--pt-radius-sm); background: var(--pt-recessed); }
 .photo-tools-tile__media img { transition: transform 200ms ease; }
