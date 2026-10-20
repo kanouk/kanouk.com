@@ -1,6 +1,5 @@
 ---
 import { MapPinned } from "lucide-astro";
-import "leaflet/dist/leaflet.css";
 
 interface Marker {
 	latitude: number;
@@ -63,8 +62,9 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 			if (map) return;
 			if (mapPromise) return mapPromise;
 			mapPromise = (async () => {
-			const [{ default: L }, loaded] = await Promise.all([
+			const [{ default: L }, , loaded] = await Promise.all([
                 import("leaflet"),
+                import("leaflet/dist/leaflet.css"),
                 shell.dataset.source ? fetch(shell.dataset.source).then(async response => {
                     if (!response.ok) throw new Error("地図データを取得できませんでした");
                     return response.json() as Promise<{markers: Marker[]}>;

@@ -7,6 +7,7 @@ import {
 	Download,
 	ExternalLink,
 	Expand,
+	LoaderCircle,
 	Info,
 	MapPin,
 	Pause,
@@ -18,7 +19,7 @@ import {
 import YohakuImage from "../../components/YohakuImage.astro";
 import Photos from "../../layouts/Photos.astro";
 import { resolvePublicMediaUrl } from "../../utils/media-url";
-import { capturedDateParts, slashDate } from "../../utils/photo-date.mjs";
+import { capturedDateTimeLabel } from "../../utils/photo-date.mjs";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { getPhotoNavigation } from "../../utils/photo-navigation";
 import { photoPath } from "../../utils/photo-url.mjs";
@@ -63,8 +64,7 @@ const videoSource =
 				: undefined)
 		: undefined;
 
-const capturedDate = capturedDateParts(photo.data.captured_at);
-const formattedDate = capturedDate ? slashDate(capturedDate) : undefined;
+const formattedDate = capturedDateTimeLabel(photo.data.captured_at);
 
 const latitude = photo.data.latitude;
 const longitude = photo.data.longitude;
@@ -77,23 +77,6 @@ const hasLocation =
 	Number.isFinite(longitude) &&
 	longitude >= -180 &&
 	longitude <= 180;
-const mapEmbedUrl = hasLocation
-	? (() => {
-			const latitudeSpan = 0.008;
-			const longitudeSpan = 0.012;
-			const params = new URLSearchParams({
-				bbox: [
-					longitude - longitudeSpan,
-					latitude - latitudeSpan,
-					longitude + longitudeSpan,
-					latitude + latitudeSpan,
-				].join(","),
-				layer: "mapnik",
-				marker: `${latitude},${longitude}`,
-			});
-			return `https://www.openstreetmap.org/export/embed.html?${params}`;
-		})()
-	: undefined;
 const mapLinkUrl = hasLocation
 	? `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=15/${latitude}/${longitude}`
 	: undefined;
@@ -166,298 +149,148 @@ const exifDetails = [
 	pageType={photo.data.kind === "video" ? "video" : "image"}
 	content={{ collection: "photos", id: photo.data.id, slug: photo.id }}
 	adminAlbumId={album?.data.id}
+	viewer
 >
+	<!-- The viewer swaps the parts marked data-viewer-part in place when it moves to another photo (client/photo-viewer.ts). -->
 	<article
-		class="photo-page"
+		class="photo-page photo-viewer"
+		data-photo-viewer
+		data-photo-id={photo.data.id}
 		data-previous-url={previousUrl}
 		data-next-url={nextUrl}
 		data-slideshow-next-url={slideshowNextUrl}
 		data-album-id={album?.data.id}
 	>
-		<a class="back" data-photo-return href={album ? `/albums/${album.id}?photo=${encodeURIComponent(photo.data.id)}#${albumPhotoAnchor(photo.data.id)}` : "/albums"} data-astro-prefetch="hover" aria-label="写真を閉じてアルバムへ戻る">
-			<X size={15} strokeWidth={1.75} aria-hidden="true" />
-			<span>{album?.data.title || "すべてのアルバム"}</span>
-		</a>
-		{navigation && <p class="photo-position" aria-label="アルバム内の位置">{navigation.position} / {navigation.total}</p>}
-		{!displayTitle && <h1 class="sr-only">{pageTitle}</h1>}
-		<figure>
-			<div class="media" {...photo.edit.image}>
-				<div class="photo-action-rail" role="group" aria-label="写真の操作">
-					<button type="button" data-photo-fullscreen aria-label="写真を全画面で表示" title="全画面">
-						<Expand size={18} strokeWidth={1.65} aria-hidden="true" />
-						<span class="sr-only">全画面</span>
+		<header class="viewer-bar" data-viewer-part="bar">
+			<a class="viewer-close back" data-photo-return href={album ? `/albums/${album.id}?photo=${encodeURIComponent(photo.data.id)}#${albumPhotoAnchor(photo.data.id)}` : "/albums"} aria-label="写真を閉じてアルバムへ戻る">
+				<X size={20} strokeWidth={1.75} aria-hidden="true" />
+				<span>{album?.data.title || "すべてのアルバム"}</span>
+			</a>
+			{navigation && <p class="photo-position" aria-label="アルバム内の位置">{navigation.position} / {navigation.total}</p>}
+			<div class="photo-action-rail" role="group" aria-label="写真の操作">
+				{slideshowNextUrl && (
+					<button type="button" data-photo-slideshow aria-pressed="false" aria-label="スライドショーを開始" title="自動再生">
+						<Play class="photo-tool-play" size={19} strokeWidth={1.65} aria-hidden="true" />
+						<Pause class="photo-tool-pause" size={19} strokeWidth={1.65} aria-hidden="true" />
 					</button>
-					{slideshowNextUrl && (
-						<button type="button" data-photo-slideshow aria-pressed="false" aria-label="スライドショーを開始" title="自動再生">
-							<Play class="photo-tool-play" size={18} strokeWidth={1.65} aria-hidden="true" />
-							<Pause class="photo-tool-pause" size={18} strokeWidth={1.65} aria-hidden="true" />
-							<span class="sr-only" data-photo-slideshow-label>自動再生</span>
-						</button>
-					)}
-					<button
-						type="button"
-						data-photo-info
-						aria-expanded="false"
-						aria-controls="photo-info-panel"
-						aria-label="写真情報を表示"
-						title="写真情報"
-					>
-						<Info size={18} strokeWidth={1.65} aria-hidden="true" />
-						<span class="sr-only">写真情報</span>
-					</button>
-					<button type="button" data-photo-share aria-label="写真を共有" title="共有">
-						<Share2 size={18} strokeWidth={1.65} aria-hidden="true" />
-						<span class="sr-only">共有</span>
-					</button>
-					{downloadUrl && (
-						<a href={downloadUrl} download aria-label="写真をダウンロード" title="保存">
-							<Download size={18} strokeWidth={1.65} aria-hidden="true" />
-							<span class="sr-only">保存</span>
-						</a>
-					)}
-					<span class="sr-only photo-tool-status" role="status" aria-live="polite" />
-				</div>
-				<aside id="photo-info-panel" class="photo-info-panel" data-photo-info-panel aria-label="写真情報" hidden>
-					<header class="photo-info-panel__header">
-						<div>
-							{displayTitle && <p class="photo-info-panel__title">{displayTitle}</p>}
-							{displayCaption && displayCaption !== displayTitle && <p class="photo-info-panel__caption">{displayCaption}</p>}
-						</div>
-						<button type="button" data-photo-info-close aria-label="写真情報を閉じる">
-							<X size={20} strokeWidth={1.6} aria-hidden="true" />
-						</button>
-					</header>
-					<div class="photo-info-panel__body">
-						<div class="photo-info-context">
-							<span>{navigation?.position ?? 1} / {navigation?.total ?? 1}</span>
-							{formattedDate && <time>{formattedDate}</time>}
-						</div>
-						{exifDetails.length > 0 && (
-							<section class="photo-info-section photo-info-exif" aria-labelledby="exif-title">
-								<h2 id="exif-title">
-									<Camera size={16} strokeWidth={1.65} aria-hidden="true" />
-									<span>撮影情報</span>
-								</h2>
-								<dl>
-									{exifDetails.map((item) => (
-										<div>
-											<dt>{item.label}</dt>
-											<dd>{item.value}</dd>
-										</div>
-									))}
-								</dl>
-							</section>
-						)}
-						{keywords.length > 0 && (
-							<section class="photo-info-section photo-info-keywords" aria-labelledby="keyword-title">
-								<h2 id="keyword-title">
-									<Tags size={16} strokeWidth={1.65} aria-hidden="true" />
-									<span>キーワード</span>
-								</h2>
-								<ul>
-									{keywords.map((keyword) => <li>{keyword}</li>)}
-								</ul>
-							</section>
-						)}
-						{mapEmbedUrl && mapLinkUrl && (
-							<section class="photo-info-section photo-info-location" aria-labelledby="location-title">
-								<div class="photo-info-location__heading">
-									<h2 id="location-title">
-										<MapPin size={16} strokeWidth={1.65} aria-hidden="true" />
-										<span>撮影場所</span>
-									</h2>
-									<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer" aria-label="OpenStreetMapで撮影場所を見る">
-										<ExternalLink size={15} strokeWidth={1.65} aria-hidden="true" />
-									</a>
-								</div>
-								<iframe
-									data-photo-map
-									data-src={mapEmbedUrl}
-									title={`${displayTitle || album?.data.title || "写真"}の撮影場所`}
-									loading="lazy"
-									referrerpolicy="no-referrer"
-								/>
-							</section>
-						)}
-					</div>
-				</aside>
-				{previousUrl && (
-					<a class="media-navigation media-navigation--previous" href={previousUrl} aria-label="前の写真" data-astro-prefetch="hover">
-						<ArrowLeft size={22} strokeWidth={1.6} aria-hidden="true" />
+				)}
+				<button type="button" data-photo-info aria-expanded="false" aria-controls="photo-info-panel" aria-label="写真情報を表示" title="写真情報">
+					<Info size={19} strokeWidth={1.65} aria-hidden="true" />
+				</button>
+				<button type="button" data-photo-share aria-label="写真を共有" title="共有">
+					<Share2 size={19} strokeWidth={1.65} aria-hidden="true" />
+				</button>
+				{downloadUrl && (
+					<a href={downloadUrl} download aria-label="写真をダウンロード" title="保存">
+						<Download size={19} strokeWidth={1.65} aria-hidden="true" />
 					</a>
 				)}
-				<div class="photo-media-frame">
-					{
-						videoSource ? (
-							<video controls playsinline preload="metadata" poster={posterSource}>
-								<source src={videoSource} type={photo.data.video?.mimeType || "video/mp4"} />
-								動画を再生できないブラウザです。
-							</video>
-						) : (
-							<YohakuImage image={photo.data.image} alt={publicAlt} preview priority sizes="100vw" />
-						)
-					}
-					{(displayTitle || displayCaption) && (
-						<div class="photo-overlay">
-							<div class="photo-overlay__copy">
-								{displayTitle && <h1 id="photo-title" {...photo.edit.title}>{displayTitle}</h1>}
-								{displayCaption && displayCaption !== displayTitle && <p {...photo.edit.caption}>{displayCaption}</p>}
-							</div>
-						</div>
-					)}
-				</div>
-				{nextUrl && (
-					<a class="media-navigation media-navigation--next" href={nextUrl} aria-label="次の写真" data-astro-prefetch="hover">
-						<ArrowRight size={22} strokeWidth={1.6} aria-hidden="true" />
-					</a>
-				)}
+				<button type="button" data-photo-fullscreen aria-label="全画面で表示" title="全画面">
+					<Expand size={19} strokeWidth={1.65} aria-hidden="true" />
+				</button>
 			</div>
-		</figure>
+		</header>
+		<h1 class="sr-only" data-viewer-part="heading" hidden={Boolean(displayTitle)}>{pageTitle}</h1>
+		<div class="viewer-body">
+			<figure class="viewer-stage" data-viewer-stage aria-roledescription="写真ビューア">
+				<LoaderCircle class="viewer-spinner" size={28} strokeWidth={1.6} aria-hidden="true" />
+				<div class="viewer-track" data-viewer-track>
+					<div class="viewer-slide viewer-slide--previous" data-viewer-slide="previous" aria-hidden="true" />
+					<div class="viewer-slide" data-viewer-slide="current">
+						<div class="photo-media-frame media" {...photo.edit.image}>
+							{
+								videoSource ? (
+									<video controls playsinline preload="metadata" poster={posterSource}>
+										<source src={videoSource} type={photo.data.video?.mimeType || "video/mp4"} />
+										動画を再生できないブラウザです。
+									</video>
+								) : (
+									<YohakuImage image={photo.data.image} alt={publicAlt} preview priority sizes="100vw" />
+								)
+							}
+						</div>
+					</div>
+					<div class="viewer-slide viewer-slide--next" data-viewer-slide="next" aria-hidden="true" />
+				</div>
+				<a class="media-navigation media-navigation--previous" href={previousUrl} hidden={!previousUrl} aria-label="前の写真">
+					<ArrowLeft size={24} strokeWidth={1.6} aria-hidden="true" />
+				</a>
+				<a class="media-navigation media-navigation--next" href={nextUrl} hidden={!nextUrl} aria-label="次の写真">
+					<ArrowRight size={24} strokeWidth={1.6} aria-hidden="true" />
+				</a>
+			</figure>
+			<aside id="photo-info-panel" class="photo-info-panel" data-photo-info-panel data-viewer-part="info" aria-label="写真情報" hidden>
+				<header class="photo-info-panel__header">
+					<div>
+						{displayTitle && <p class="photo-info-panel__title">{displayTitle}</p>}
+						{displayCaption && displayCaption !== displayTitle && <p class="photo-info-panel__caption">{displayCaption}</p>}
+					</div>
+					<button type="button" data-photo-info-close aria-label="写真情報を閉じる">
+						<X size={20} strokeWidth={1.6} aria-hidden="true" />
+					</button>
+				</header>
+				<div class="photo-info-panel__body">
+					<div class="photo-info-context">
+						<span>{navigation?.position ?? 1} / {navigation?.total ?? 1}</span>
+						{formattedDate && <time datetime={photo.data.captured_at}>{formattedDate}</time>}
+					</div>
+					{exifDetails.length > 0 && (
+						<section class="photo-info-section photo-info-exif" aria-labelledby="exif-title">
+							<h2 id="exif-title">
+								<Camera size={16} strokeWidth={1.65} aria-hidden="true" />
+								<span>撮影情報</span>
+							</h2>
+							<dl>
+								{exifDetails.map((item) => (
+									<div>
+										<dt>{item.label}</dt>
+										<dd>{item.value}</dd>
+									</div>
+								))}
+							</dl>
+						</section>
+					)}
+					{keywords.length > 0 && (
+						<section class="photo-info-section photo-info-keywords" aria-labelledby="keyword-title">
+							<h2 id="keyword-title">
+								<Tags size={16} strokeWidth={1.65} aria-hidden="true" />
+								<span>キーワード</span>
+							</h2>
+							<ul>
+								{keywords.map((keyword) => <li>{keyword}</li>)}
+							</ul>
+						</section>
+					)}
+					{hasLocation && mapLinkUrl && (
+						<section class="photo-info-section photo-info-location" aria-labelledby="location-title">
+							<div class="photo-info-location__heading">
+								<h2 id="location-title">
+									<MapPin size={16} strokeWidth={1.65} aria-hidden="true" />
+									<span>撮影場所</span>
+								</h2>
+								<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer" aria-label="OpenStreetMapで撮影場所を見る">
+									<ExternalLink size={15} strokeWidth={1.65} aria-hidden="true" />
+								</a>
+							</div>
+							<div class="photo-info-map" data-photo-map data-latitude={latitude} data-longitude={longitude} role="img" aria-label={`${displayTitle || album?.data.title || "写真"}の撮影場所の地図`} />
+						</section>
+					)}
+				</div>
+			</aside>
+		</div>
+		{(displayTitle || displayCaption) ? (
+			<footer class="photo-overlay viewer-caption" data-viewer-part="caption">
+				<div class="photo-overlay__copy">
+					{displayTitle && <h1 id="photo-title" {...photo.edit.title}>{displayTitle}</h1>}
+					{displayCaption && displayCaption !== displayTitle && <p {...photo.edit.caption}>{displayCaption}</p>}
+				</div>
+			</footer>
+		) : <footer class="viewer-caption" data-viewer-part="caption" hidden />}
+		<span class="sr-only photo-tool-status" role="status" aria-live="polite" />
 	</article>
 </Photos>
 
 <script>
-	import { albumPhotoAnchor, photoReturnKey, readPhotoReturn } from "../../utils/photo-return.mjs";
-	const page = document.querySelector<HTMLElement>(".photo-page");
-	const returnLink = page?.querySelector<HTMLAnchorElement>("[data-photo-return]");
-	if (page?.dataset.albumId && returnLink) {
-		try {
-			const returnId = readPhotoReturn(sessionStorage.getItem(photoReturnKey(page.dataset.albumId)), page.dataset.albumId);
-			if (returnId) {
-				const destination = new URL(returnLink.href);
-				destination.hash = albumPhotoAnchor(returnId);
-				destination.searchParams.set("photo", returnId);
-				returnLink.href = destination.toString();
-			}
-		} catch { /* Fall back to the current photo's anchor. */ }
-	}
-	const media = page?.querySelector<HTMLElement>(".media");
-	const previousUrl = page?.dataset.previousUrl;
-	const nextUrl = page?.dataset.nextUrl;
-	const slideshowNextUrl = page?.dataset.slideshowNextUrl;
-	const status = page?.querySelector<HTMLElement>(".photo-tool-status");
-	const slideshowButton = page?.querySelector<HTMLButtonElement>("[data-photo-slideshow]");
-	const slideshowLabel = slideshowButton?.querySelector<HTMLElement>("[data-photo-slideshow-label]");
-	const infoButton = page?.querySelector<HTMLButtonElement>("[data-photo-info]");
-	const infoPanel = page?.querySelector<HTMLElement>("[data-photo-info-panel]");
-	const infoCloseButton = page?.querySelector<HTMLButtonElement>("[data-photo-info-close]");
-	const infoMap = page?.querySelector<HTMLIFrameElement>("[data-photo-map]");
-	let slideshowTimer: number | undefined;
-
-	const announce = (message: string) => {
-		if (status) status.textContent = message;
-	};
-	const navigate = (url?: string) => {
-		if (url) window.location.assign(url);
-	};
-	const slideshowUrl = (url: string) => {
-		const destination = new URL(url, window.location.href);
-		destination.searchParams.set("slideshow", "1");
-		return destination.toString();
-	};
-	const stopSlideshow = () => {
-		if (slideshowTimer) window.clearTimeout(slideshowTimer);
-		slideshowTimer = undefined;
-		slideshowButton?.setAttribute("aria-pressed", "false");
-		slideshowButton?.setAttribute("aria-label", "スライドショーを開始");
-		if (slideshowLabel) slideshowLabel.textContent = "自動再生";
-		const current = new URL(window.location.href);
-		current.searchParams.delete("slideshow");
-		window.history.replaceState(null, "", current);
-		announce("スライドショーを停止しました");
-	};
-	const startSlideshow = () => {
-		if (!slideshowNextUrl) return;
-		slideshowButton?.setAttribute("aria-pressed", "true");
-		slideshowButton?.setAttribute("aria-label", "スライドショーを停止");
-		if (slideshowLabel) slideshowLabel.textContent = "停止";
-		announce("6秒ごとに次の写真へ進みます");
-		slideshowTimer = window.setTimeout(() => navigate(slideshowUrl(slideshowNextUrl)), 6000);
-	};
-	const openInfoPanel = () => {
-		if (!infoButton || !infoPanel) return;
-		infoPanel.hidden = false;
-		infoButton.setAttribute("aria-expanded", "true");
-		infoButton.setAttribute("aria-label", "写真情報を閉じる");
-		if (infoMap?.dataset.src && !infoMap.getAttribute("src")) {
-			infoMap.setAttribute("src", infoMap.dataset.src);
-		}
-	};
-	const closeInfoPanel = (restoreFocus = true) => {
-		if (!infoButton || !infoPanel) return;
-		infoPanel.hidden = true;
-		infoButton.setAttribute("aria-expanded", "false");
-		infoButton.setAttribute("aria-label", "写真情報を表示");
-		if (restoreFocus) infoButton.focus();
-	};
-
-	page?.querySelector<HTMLButtonElement>("[data-photo-fullscreen]")?.addEventListener("click", async () => {
-		if (!media) return;
-		try {
-			if (document.fullscreenElement) await document.exitFullscreen();
-			else await media.requestFullscreen();
-		} catch {
-			announce("このブラウザでは全画面表示を開始できませんでした");
-		}
-	});
-	page?.querySelector<HTMLButtonElement>("[data-photo-share]")?.addEventListener("click", async () => {
-		try {
-			const shareUrl = new URL(window.location.pathname, window.location.origin).toString();
-			if (navigator.share) await navigator.share({ title: document.title, url: shareUrl });
-			else {
-				await navigator.clipboard.writeText(shareUrl);
-				announce("URLをコピーしました");
-			}
-		} catch (error) {
-			if ((error as DOMException).name !== "AbortError") announce("共有を開始できませんでした");
-		}
-	});
-	slideshowButton?.addEventListener("click", () => {
-		if (slideshowTimer) stopSlideshow();
-		else startSlideshow();
-	});
-	infoButton?.addEventListener("click", () => {
-		if (infoPanel?.hidden) openInfoPanel();
-		else closeInfoPanel(false);
-	});
-	infoCloseButton?.addEventListener("click", () => closeInfoPanel());
-
-	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape" && infoPanel && !infoPanel.hidden) {
-			closeInfoPanel();
-			return;
-		}
-		if (event.key === "Escape" && slideshowTimer) {
-			stopSlideshow();
-			return;
-		}
-		const target = event.target as HTMLElement | null;
-		if (target?.closest("input, textarea, select, [contenteditable=true], video, [data-photo-info-panel]")) return;
-		if (event.key === "Escape" && !document.fullscreenElement) { event.preventDefault(); navigate(returnLink?.href); }
-		if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || target?.closest("button, a, [contenteditable]")) return;
-		if (event.key === "ArrowLeft" && previousUrl) { event.preventDefault(); navigate(previousUrl); }
-		if (event.key === "ArrowRight" && nextUrl) { event.preventDefault(); navigate(nextUrl); }
-	});
-
-	let touchStartX: number | undefined;
-	let touchStartY: number | undefined;
-	media?.addEventListener("pointerdown", (event) => {
-		touchStartX = undefined;
-		touchStartY = undefined;
-		if (!event.isPrimary || event.pointerType !== "touch" || (event.target as HTMLElement).closest("video, button, a, [data-photo-info-panel]")) return;
-		touchStartX = event.clientX;
-		touchStartY = event.clientY;
-	});
-	media?.addEventListener("pointerup", (event) => {
-		if (touchStartX === undefined || touchStartY === undefined) return;
-		const deltaX = event.clientX - touchStartX;
-		const deltaY = event.clientY - touchStartY;
-		touchStartX = undefined;
-		touchStartY = undefined;
-		if (Math.abs(deltaX) < 56 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.25) return;
-		navigate(deltaX > 0 ? previousUrl : nextUrl);
-	});
-	media?.addEventListener("pointercancel", () => { touchStartX = undefined; touchStartY = undefined; });
-
-	if (new URL(window.location.href).searchParams.get("slideshow") === "1") startSlideshow();
+	import { mountPhotoViewer } from "../../client/photo-viewer";
+	mountPhotoViewer();
 </script>

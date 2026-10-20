@@ -26,6 +26,24 @@ export function capturedDateParts(value) {
 }
 
 const pad = (value) => String(value).padStart(2, "0");
+const tokyoTime = new Intl.DateTimeFormat("en-GB", {
+	timeZone: SITE_TIME_ZONE,
+	hour: "2-digit",
+	minute: "2-digit",
+	hourCycle: "h23",
+});
+const TIME_PART = /^\d{4}-\d{2}-\d{2}[T ](\d{2}):(\d{2})/;
+
+/** "2026/06/07 12:44" in Japan time, or just the date when no time was recorded. */
+export function capturedDateTimeLabel(value) {
+	const date = capturedDateParts(value);
+	if (!date) return undefined;
+	const text = value.trim();
+	const wallClock = text.match(TIME_PART);
+	if (!wallClock) return slashDate(date);
+	const time = ZONED.test(text) ? tokyoTime.format(Date.parse(text)) : `${wallClock[1]}:${wallClock[2]}`;
+	return `${slashDate(date)} ${time}`;
+}
 
 /** The site's one date format: "2026/06/07". */
 export function slashDate({ year, month, day }) {

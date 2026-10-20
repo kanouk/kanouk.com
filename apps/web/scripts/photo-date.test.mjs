@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
-import { capturedDateParts, capturedRangeLabel, siteDateLabel } from "../src/utils/photo-date.mjs";
+import { capturedDateParts, capturedDateTimeLabel, capturedRangeLabel, siteDateLabel } from "../src/utils/photo-date.mjs";
 
 describe("capturedDateParts", () => {
 	test("keeps the Japanese date of a UTC-normalized early-morning capture", () => {
@@ -17,6 +17,14 @@ describe("capturedDateParts", () => {
 		assert.equal(capturedDateParts(undefined), undefined);
 		assert.equal(capturedDateParts(""), undefined);
 		assert.equal(capturedDateParts("unknown"), undefined);
+	});
+
+	test("labels the capture time in Japan time", () => {
+		assert.equal(capturedDateTimeLabel("2026-03-11T03:44:53.000Z"), "2026/03/11 12:44");
+		assert.equal(capturedDateTimeLabel("2024-06-06T21:27:33.000Z"), "2024/06/07 06:27");
+		assert.equal(capturedDateTimeLabel("2013-07-20T23:10:00"), "2013/07/20 23:10");
+		assert.equal(capturedDateTimeLabel("2005-03-26"), "2005/03/26");
+		assert.equal(capturedDateTimeLabel(undefined), undefined);
 	});
 
 	test("labels a capture range compactly", () => {
