@@ -1055,12 +1055,17 @@ main:focus { outline: none; }
 .photo-card__media { position: relative; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; background: var(--paper-muted); }
 .photo-card__media .yohaku-picture { display: contents; }
 .photo-card__media img { width: 100%; height: 100%; border: 0; aspect-ratio: 1; background: var(--paper-muted); object-fit: cover; object-position: center; transition: transform 420ms cubic-bezier(.2,.65,.25,1); }
+.photo-grid--fade .photo-card__media img:not(.is-loaded) { opacity: 0; }
+.photo-grid--fade .photo-card__media img { transition: opacity 320ms ease, transform 420ms cubic-bezier(.2,.65,.25,1); }
+@media (prefers-reduced-motion: reduce) { .photo-grid--fade .photo-card__media img { transition: none; } }
 .photo-card:hover .photo-card__media img { transform: scale(1.015); }
 .photo-card__title { display: block; margin-top: 0.45rem; color: var(--ink-soft); font-size: var(--text-micro); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* one line keeps grid rows even; full caption on the photo page */
 .photo-card:hover .photo-card__title { color: var(--accent-strong); }
 .video-badge { position: absolute; top: var(--space-3); right: var(--space-3); display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.55rem; background: rgb(10 12 9 / 82%); color: #fff; font-size: var(--text-micro); }
-.photo-grid-size { position: fixed; z-index: 8; right: max(var(--gutter), env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 0.65rem; min-height: 2.75rem; padding: 0.55rem 0.75rem; border: 1px solid var(--rule); background: var(--paper-raised); color: var(--ink-muted); box-shadow: 0 0.65rem 2rem rgb(0 0 0 / 18%); }
+.album-toolbar { display: flex; justify-content: flex-end; min-height: 2.75rem; margin-bottom: var(--space-2); }
+.photo-grid-size { display: flex; align-items: center; gap: 0.65rem; min-height: 2.75rem; padding: 0 0.25rem; color: var(--ink-muted); } /* sits above the grid, never over a photo (#98) */
 .photo-grid-size[hidden] { display: none; }
+@media (max-width: 47.99rem) { .album-toolbar { display: none; } }
 .photo-grid-size input[type="range"] { width: clamp(6.5rem, 12vw, 9rem); margin: 0; accent-color: var(--accent-strong); cursor: ew-resize; }
 .photo-grid-size input[type="range"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 
@@ -1270,7 +1275,6 @@ main:focus { outline: none; }
 	.search-button { width: 100%; }
 	.photo-header { align-items: flex-start; padding-block: var(--space-3); }
 	.site-switcher { gap: var(--space-3); }
-	.photo-grid-size { right: max(0.75rem, env(safe-area-inset-right)); bottom: max(0.75rem, env(safe-area-inset-bottom)); }
 	.photo-search-link span { display: none; }
 	.photo-search-form { grid-template-columns: auto minmax(0, 1fr); }
 	.photo-search-form button { grid-column: 1 / -1; margin-bottom: var(--space-3); }

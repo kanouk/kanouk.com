@@ -10,13 +10,18 @@ type AuditInput = {
 	metadata?: Record<string, unknown>;
 };
 
+export const ADMIN_GROUP = "写真";
+
 export function createPlugin() {
 	return definePlugin({
 		id: "yohaku-photo-tools",
 		version: "1.0.0",
 		capabilities: ["content:read", "content:write", "media:read", "media:write"],
 		admin: {
-			pages: [{ path: "/organize", label: "写真を整理", icon: "images" }],
+			// `group` puts the page in the sidebar's 写真 folder, beside the albums and photos
+			// collections, once they share that group (set from the organizer's setup card).
+			pages: [{ path: "/organize", label: "写真を整理", icon: "images", group: ADMIN_GROUP } as { path: string; label: string; icon: string }],
+			widgets: [{ id: "organize-shortcut", title: "写真を整理", size: "half" }],
 		},
 		storage: {
 			operations: { indexes: ["kind", "status", "createdAt"] },

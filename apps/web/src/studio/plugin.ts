@@ -9,5 +9,6 @@ export function yohakuPhotoTools(): PluginDescriptor {
 		adminPages: [
 			{ path: "/organize", label: "写真を整理", icon: "images" },
 		],
+		adminWidgets: [{ id: "organize-shortcut", title: "写真を整理", size: "half" }],
 	};
 }

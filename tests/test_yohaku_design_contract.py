@@ -92,9 +92,9 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertIn("localStorage.getItem(PHOTO_GRID_SIZE.storageKey)", page)
         self.assertIn("localStorage.setItem(PHOTO_GRID_SIZE.storageKey", page)
         self.assertIn('"yohaku:photo-grid-size"', size_utility)
-        self.assertRegex(css, r"\.photo-grid-size\s*\{[^}]*position:\s*fixed;")
-        self.assertRegex(css, r"\.photo-grid-size\s*\{[^}]*right:")
-        self.assertRegex(css, r"\.photo-grid-size\s*\{[^}]*bottom:")
+        # Issue #98: the slider sits in a toolbar above the grid, not floating over photos.
+        self.assertIn('<div class="album-toolbar">', page)
+        self.assertNotRegex(css, r"\.photo-grid-size\s*\{[^}]*position:\s*fixed;")
 
     def test_japanese_headings_disable_proportional_compression(self) -> None:
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
