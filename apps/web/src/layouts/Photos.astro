@@ -16,9 +16,11 @@ interface Props {
 	content?: { collection: string; id: string; slug?: string | null };
 	/** The album of the photo shown, for the admin bar's organizer link. */
 	adminAlbumId?: string | null;
+	/** The full-screen photo viewer: no site header or footer around it. */
+	viewer?: boolean;
 }
 
-const { title, description, image, pageType = "website", content, adminAlbumId, canonicalPath: canonicalOverride } = Astro.props;
+const { title, description, image, pageType = "website", content, adminAlbumId, viewer = false, canonicalPath: canonicalOverride } = Astro.props;
 const SITE_NAME = "カノログ フォト";
 const fullTitle = `${title} — ${SITE_NAME}`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
@@ -54,10 +56,10 @@ const pageCtx = createPublicPageContext({
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
 	</head>
-	<body class="site site--photos">
+	<body class:list={["site site--photos", viewer && "site--viewer"]}>
 		<EmDashBodyStart page={pageCtx} />
 		<a class="skip-link" href="#photo-main">本文へ移動</a>
-		<header class="photo-header">
+		{!viewer && <header class="photo-header">
 			<a class="photo-brand" href="/albums" data-astro-prefetch="hover">
 				<span class="photo-brand__mark" aria-hidden="true">
 					<Aperture size={17} strokeWidth={1.6} />
@@ -72,14 +74,14 @@ const pageCtx = createPublicPageContext({
 				</a>
 				<a href={blogUrl}>ブログ</a>
 			</nav>
-		</header>
+		</header>}
 		<main id="photo-main"><slot /></main>
-		<SiteFooter
+		{!viewer && <SiteFooter
 			name={SITE_NAME}
 			nameHref="/albums"
 			groups={[{ label: "写真", links: [{ label: "アルバム一覧", href: "/albums" }, { label: "写真を検索", href: searchUrl }] }]}
 			crossSite={{ label: "ブログ", href: blogUrl }}
-		/>
+		/>}
 		<script>
 			import { mountAdminBar } from "../client/admin-bar";
 			void mountAdminBar();

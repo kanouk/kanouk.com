@@ -104,8 +104,11 @@ export async function mountAdminBar(): Promise<void> {
 		template.innerHTML = (await response.text()).trim();
 		const bar = template.content.querySelector<HTMLElement>(".adminbar");
 		if (!bar) return release();
+		const current = document.querySelector(".adminbar");
 		const skip = document.querySelector(".skip-link");
-		if (skip) skip.after(bar);
+		// The photo viewer calls this again after moving to another photo.
+		if (current) current.replaceWith(bar);
+		else if (skip) skip.after(bar);
 		else document.body.prepend(bar);
 		bind(bar);
 	} catch {

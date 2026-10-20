@@ -177,17 +177,19 @@ class YohakuDesignContractTests(unittest.TestCase):
             r"@media \(max-width: 34rem\)[\s\S]*?\.album-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)",
         )
 
-    def test_photo_detail_uses_smugmug_style_overlay_without_filename_titles(self) -> None:
+    def test_photo_detail_shows_the_caption_below_the_photo_without_filename_titles(self) -> None:
         detail = (WEB_ROOT / "src/pages/p/[slug].astro").read_text()
         album = (WEB_ROOT / "src/pages/albums/[slug].astro").read_text()
         css = (WEB_ROOT / "src/styles/theme.css").read_text()
         self.assertIn("publicPhotoTitle", detail)
-        self.assertIn('class="photo-overlay"', detail)
+        # Issue #97: nothing covers the photo; the caption is a row under the stage.
+        self.assertIn('class="photo-overlay viewer-caption"', detail)
         self.assertIn('class="photo-overlay__copy"', detail)
         self.assertNotIn("<h1 {...photo.edit.title}>{photo.data.title}</h1>", detail)
         self.assertIn("publicPhotoTitle", album)
-        self.assertIn("linear-gradient(180deg, transparent", css)
-        self.assertIn("text-shadow:", css)
+        overlay = re.search(r"\.photo-overlay\s*\{([^}]*)\}", css)
+        self.assertIsNotNone(overlay)
+        self.assertNotIn("position: absolute", overlay.group(1))
         self.assertIn(".sr-only { position: absolute !important;", css)
 
     def test_article_uses_one_reading_axis_without_duplicate_left_metadata(self) -> None:

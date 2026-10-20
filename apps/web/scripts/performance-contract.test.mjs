@@ -85,14 +85,17 @@ test("photo detail navigation is computed in one bounded database query", async 
 });
 
 test("photo detail controls and metadata stay inside the viewer", async () => {
-	const [page, theme] = await Promise.all([
+	const [page, theme, viewer] = await Promise.all([
 		read("src/pages/p/[slug].astro"),
 		read("src/styles/theme.css"),
+		read("src/client/photo-viewer.ts"),
 	]);
 	assert.match(page, /class="photo-action-rail"/);
 	assert.match(page, /data-photo-info-panel/);
-	assert.match(page, /data-src=\{mapEmbedUrl\}/);
-	assert.match(page, /infoMap\.setAttribute\("src", infoMap\.dataset\.src\)/);
+	// The location map loads Leaflet only when the info panel opens.
+	assert.match(page, /data-photo-map data-latitude=\{latitude\}/);
+	assert.doesNotMatch(viewer, /^import .*leaflet/m);
+	assert.match(viewer, /import\("leaflet"\)/);
 	assert.doesNotMatch(page, /class="photo-tools"/);
 	assert.doesNotMatch(page, /class="photo-navigation"/);
 	assert.doesNotMatch(page, /<section class="(?:exif|location)"/);
