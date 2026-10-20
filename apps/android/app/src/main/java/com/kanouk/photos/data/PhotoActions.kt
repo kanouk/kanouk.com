@@ -56,6 +56,27 @@ class PhotoActions(private val api: EmDashApi) {
 		api.updateDraft("albums", album.id, rev, buildJsonObject { put("title", title); put("description", description) })
 	}
 
+	/**
+	 * A sort change on a published album without other pending edits goes live at once,
+	 * as in SmugMug; otherwise it waits for 公開 with the rest. Returns whether it was published.
+	 */
+	suspend fun setAlbumSort(album: Album, method: String, direction: String): Boolean {
+		val live = album.isPublished && !album.hasPendingChanges
+		val (_, rev) = api.content("albums", album.id)
+		api.updateDraft("albums", album.id, rev, buildJsonObject { put("sort_method", method); put("sort_direction", direction) })
+		if (live) api.publish("albums", album.id)
+		return live
+	}
+
+	/** A manual move: published photos with nothing else pending stay live; hidden ones never publish. */
+	suspend fun setPosition(photo: Photo, position: Double) {
+		val (_, rev) = api.content("photos", photo.id)
+		api.updateDraft("photos", photo.id, rev, buildJsonObject {
+			if (position % 1.0 == 0.0) put("position", position.toLong()) else put("position", position)
+		})
+		if (photo.isPublished && !photo.hidden && !photo.hasPendingChanges) api.publish("photos", photo.id)
+	}
+
 	suspend fun trash(album: Album, photo: Photo) {
 		if (album.coverKey != null && album.coverKey == photo.imageKey) throw ApiException("表紙の写真は、別の写真を表紙にしてから削除してください。")
 		api.trash("photos", photo.id)

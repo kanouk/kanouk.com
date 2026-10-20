@@ -49,6 +49,9 @@ fun siteDateTime(value: String?, withTime: Boolean = true): String? {
 		.getOrNull()
 }
 
+/** The capture day as the site counts it (Japan time), for grouping photos by date. */
+fun siteDay(value: String?): java.time.LocalDate? = siteDateTime(value, withTime = false)?.let { runCatching { java.time.LocalDate.parse(it, DAY) }.getOrNull() }
+
 fun looksLikeFileName(text: String?): Boolean = text != null && (SOURCE_FILENAME.containsMatchIn(text.trim()) || CAMERA_NUMBER.matches(text.trim()))
 
 data class Album(
@@ -60,10 +63,14 @@ data class Album(
 	val cover: JsonObject?,
 	val capturedFrom: String?,
 	val capturedTo: String?,
+	/** How the site orders the album's photos: "date taken", "position" (手動), "filename", …; lower case. */
+	val sortMethod: String,
+	val sortDirection: String,
 	val draftRevisionId: String?,
 	private val liveRevisionId: String?,
 ) {
 	val isPublished get() = status == "published"
+	val manualSort get() = sortMethod == "position"
 	val hasPendingChanges get() = status != "published" || (draftRevisionId != null && draftRevisionId != liveRevisionId)
 	val coverKey get() = mediaKey(cover)
 	val coverSource get() = mediaSource(cover)
@@ -91,6 +98,8 @@ data class Album(
 				cover = data.child("cover_image"),
 				capturedFrom = data.string("captured_from"),
 				capturedTo = data.string("captured_to"),
+				sortMethod = data.string("sort_method")?.lowercase() ?: "date taken",
+				sortDirection = data.string("sort_direction")?.lowercase() ?: "asc",
 				draftRevisionId = item.string("draftRevisionId"),
 				liveRevisionId = item.string("liveRevisionId"),
 			)

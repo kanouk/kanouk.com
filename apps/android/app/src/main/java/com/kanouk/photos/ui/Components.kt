@@ -5,7 +5,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.ui.input.pointer.AwaitPointerEventScope
 import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerInputChange
 import kotlinx.coroutines.coroutineScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -217,6 +219,8 @@ fun Modifier.dragToSelect(
 	keyAt: (Any?) -> Int?,
 	onStart: (Int) -> Unit,
 	onRange: (from: Int, to: Int) -> Unit,
+	/** Points where another long-press gesture (the reorder handle) takes over. */
+	skipAt: (Offset) -> Boolean = { false },
 ): Modifier = pointerInput(state) {
 	coroutineScope {
 		val scope = this
@@ -226,15 +230,7 @@ fun Modifier.dragToSelect(
 		}?.let { keyAt(it.key) }
 		awaitEachGesture {
 			val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
-			// Wait out the long-press time; moving or lifting first leaves the gesture to scrolling and taps.
-			val interrupted = withTimeoutOrNull(viewConfiguration.longPressTimeoutMillis) {
-				while (true) {
-					val change = awaitPointerEvent(PointerEventPass.Initial).changes.firstOrNull { it.id == down.id } ?: return@withTimeoutOrNull true
-					if (!change.pressed || (change.position - down.position).getDistance() > viewConfiguration.touchSlop) return@withTimeoutOrNull true
-				}
-				@Suppress("UNREACHABLE_CODE") true
-			}
-			if (interrupted != null) return@awaitEachGesture
+			if (skipAt(down.position) || !awaitLongPressStill(down)) return@awaitEachGesture
 			val start = indexAt(down.position) ?: return@awaitEachGesture
 			onStart(start)
 			var point = down.position
@@ -268,4 +264,19 @@ fun Modifier.dragToSelect(
 			}
 		}
 	}
+}
+
+/**
+ * Wait out the long-press time on the Initial pass; moving or lifting first leaves
+ * the gesture to scrolling and taps. True when the finger stayed down and still.
+ */
+suspend fun AwaitPointerEventScope.awaitLongPressStill(down: PointerInputChange): Boolean {
+	val interrupted = withTimeoutOrNull(viewConfiguration.longPressTimeoutMillis) {
+		while (true) {
+			val change = awaitPointerEvent(PointerEventPass.Initial).changes.firstOrNull { it.id == down.id } ?: return@withTimeoutOrNull true
+			if (!change.pressed || (change.position - down.position).getDistance() > viewConfiguration.touchSlop) return@withTimeoutOrNull true
+		}
+		@Suppress("UNREACHABLE_CODE") true
+	}
+	return interrupted == null
 }

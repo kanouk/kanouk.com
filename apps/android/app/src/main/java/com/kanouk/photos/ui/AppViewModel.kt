@@ -22,12 +22,18 @@ import kotlinx.coroutines.launch
 
 sealed interface Screen {
 	data object Login : Screen
-	data object Albums : Screen
+	/** The three top-level screens under the bottom tab bar; everything else is pushed above them. */
+	sealed interface Tab : Screen
+	data object Albums : Tab
+	data object Library : Tab
+	data object Search : Tab
 	data class AlbumDetail(val albumId: String) : Screen
 	/** Choosing photos on the phone; [albumId] null means "choose the album afterwards". */
 	data class Picker(val albumId: String?) : Screen
 	data class Viewer(val albumId: String, val photoId: String) : Screen
 }
+
+data class LibraryState(val photos: List<Photo> = emptyList(), val nextCursor: String? = null, val loading: Boolean = false, val loaded: Boolean = false)
 
 data class AlbumPhotos(val photos: List<Photo> = emptyList(), val total: Int = 0, val nextOffset: Int? = null, val loading: Boolean = false, val loaded: Boolean = false)
 
@@ -45,7 +51,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
 	val stack = mutableStateListOf<Screen>(if (session.signedIn) Screen.Albums else Screen.Login)
 	val screen get() = stack.last()
-	fun open(screen: Screen) { stack += screen }
+	fun open(screen: Screen) {
+		if (screen is Screen.AlbumDetail) rememberRecent(screen.albumId)
+		stack += screen
+	}
+	/** Tabs do not stack: switching starts over from that tab, as in SmugMug. */
+	fun selectTab(tab: Screen.Tab) { if (screen != tab) resetTo(tab) }
 	fun back(): Boolean = if (stack.size > 1) { stack.removeAt(stack.lastIndex); true } else false
 	private fun resetTo(screen: Screen) { stack.clear(); stack += screen }
 
@@ -60,6 +71,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 	var login by mutableStateOf<LoginState>(LoginState.Idle); private set
 	val uploads: StateFlow<List<UploadBatch>> = UploadCenter.batches
 	private var loginJob: Job? = null
+	/** Saved album order (ids); albums not in it are new and come first. */
+	private var albumOrder: List<String> = emptyList()
+	var library by mutableStateOf(LibraryState()); private set
+	var searchQuery by mutableStateOf("")
+	var searchResults by mutableStateOf<List<Photo>>(emptyList()); private set
+	var searching by mutableStateOf(false); private set
+	private val prefs = app.getSharedPreferences("ui", android.content.Context.MODE_PRIVATE)
+	/** Recently opened albums for the Search tab, newest first. */
+	var recentAlbumIds by mutableStateOf(prefs.getString("recent_albums", null)?.split(',')?.filter { it.isNotBlank() }.orEmpty()); private set
 	private var deviceLogin: DeviceLogin? = null
 	/** Back from the browser: check the approval right away instead of waiting for the next poll. */
 	fun checkLoginNow() { deviceLogin?.nudges?.trySend(Unit) }
@@ -133,6 +153,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 	fun signOut() {
 		session.clear()
 		albums = emptyList(); photos = emptyMap(); counts = emptyMap()
+		library = LibraryState(); searchResults = emptyList(); searchQuery = ""
 		resetTo(Screen.Login)
 	}
 
@@ -141,9 +162,27 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 	fun refreshAlbums() = guard {
 		albumsLoading = true
 		try {
-			albums = overlayAlbums(api.albums())
+			albumOrder = runCatching { api.albumOrder() }.getOrDefault(albumOrder)
+			albums = arrange(overlayAlbums(api.albums()))
 			counts = runCatching { api.albumCounts() }.getOrDefault(counts)
 		} finally { albumsLoading = false }
+	}
+
+	/** The saved order first applies to the albums it knows; new ones keep the list's order (drafts, then newest) ahead of them. */
+	private fun arrange(list: List<Album>): List<Album> {
+		if (albumOrder.isEmpty()) return list
+		val rank = albumOrder.withIndex().associate { (index, id) -> id to index }
+		val (known, fresh) = list.partition { it.id in rank }
+		return fresh + known.sortedBy { rank.getValue(it.id) }
+	}
+
+	fun saveAlbumOrder(ordered: List<Album>, done: () -> Unit) = guard("並び順を保存中…") {
+		try {
+			val ids = ordered.map { it.id }
+			albumOrder = api.saveAlbumOrder(ids).ifEmpty { ids }
+			albums = arrange(albums)
+			notice = "並び順を保存しました。公開サイトには5分ほどで反映されます"
+		} finally { done() }
 	}
 
 	/** The album as being edited (its draft): lists show the published version. */
@@ -187,7 +226,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 	private suspend fun reloadAfterChange(albumId: String) {
 		val all = api.allAlbumPhotos(albumId)
 		photos = photos + (albumId to AlbumPhotos(overlay(all), all.size, null, loading = false, loaded = true))
-		albums = overlayAlbums(api.albums())
+		albums = arrange(overlayAlbums(api.albums()))
 		runCatching { refreshAlbumDraft(albumId) }
 		counts = runCatching { api.albumCounts() }.getOrDefault(counts)
 	}
@@ -202,6 +241,34 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 		actions.renameAlbum(album, title.trim(), description.trim())
 		refreshAlbumDraft(album.id)
 		notice = "保存しました。「公開」でサイトに反映されます"
+	}
+
+	fun setAlbumSort(album: Album, method: String, direction: String) = guard("保存中…") {
+		val live = actions.setAlbumSort(album, method, direction)
+		reloadAfterChange(album.id)
+		notice = if (live) "並び順を変更しました" else "保存しました。「公開」でサイトに反映されます"
+	}
+
+	/**
+	 * Save a manual move. Only the run of photos between the old and new place changes:
+	 * their existing positions, sorted in the album's display direction (highest first
+	 * for "desc"), are handed out again in the new order.
+	 */
+	fun savePhotoOrder(album: Album, before: List<Photo>, after: List<Photo>, done: () -> Unit) = guard("並び順を保存中…") {
+		try {
+			val first = before.indices.firstOrNull { before[it].id != after.getOrNull(it)?.id } ?: return@guard
+			val last = before.indices.last { before[it].id != after.getOrNull(it)?.id }
+			val run = before.subList(first, last + 1).map { it.position }
+			val positions = if (album.sortDirection == "desc") run.sortedDescending() else run.sorted()
+			var failed = 0
+			for (index in first..last) {
+				val photo = after[index]
+				val position = positions[index - first]
+				if (photo.position != position) runCatching { actions.setPosition(photo, position) }.onFailure { failed++ }
+			}
+			reloadAfterChange(album.id)
+			notice = if (failed > 0) "${failed}点の並び順を保存できませんでした" else "並び順を保存しました"
+		} finally { done() }
 	}
 
 	fun publishAlbum(album: Album) = guard("公開しています…") {
@@ -243,6 +310,58 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 		refreshPhotoDraft(photo.id)
 		notice = "保存しました。「公開」でサイトに反映されます"
 		done()
+	}
+
+	// ---- Library and search ---------------------------------------------------------
+
+	fun loadLibrary(refresh: Boolean = false) {
+		val current = library
+		if (current.loading || (!refresh && current.loaded && current.nextCursor == null)) return
+		library = current.copy(loading = true)
+		guard {
+			try {
+				val page = api.library(if (refresh) null else current.nextCursor)
+				val earlier = if (refresh) emptyList() else current.photos
+				val known = earlier.map { it.id }.toSet()
+				library = LibraryState(earlier + page.items.filter { it.id !in known }, page.nextCursor, loading = false, loaded = true)
+			} finally {
+				if (library.loading) library = library.copy(loading = false)
+			}
+		}
+	}
+
+	fun search(text: String) = guard {
+		val query = text.trim()
+		if (query.isEmpty()) { searchResults = emptyList(); return@guard }
+		searching = true
+		try {
+			val found = api.searchPhotos(query)
+			if (searchQuery.trim() == query) searchResults = found
+		} finally { searching = false }
+	}
+
+	/** Open a photo from the Library or search in its album's viewer; the whole album is read first so the photo is in the pager. */
+	fun openPhoto(photo: Photo) {
+		val albumId = photo.albumId ?: return
+		if (vmHasPhoto(albumId, photo.id)) { open(Screen.Viewer(albumId, photo.id)); return }
+		guard("開いています…") {
+			val all = api.allAlbumPhotos(albumId)
+			photos = photos + (albumId to AlbumPhotos(overlay(all), all.size, null, loading = false, loaded = true))
+			if (album(albumId) == null) throw com.kanouk.photos.data.ApiException("アルバムが見つかりませんでした。")
+			open(Screen.Viewer(albumId, photo.id))
+		}
+	}
+
+	private fun vmHasPhoto(albumId: String, photoId: String) = photos[albumId]?.photos?.any { it.id == photoId } == true
+
+	private fun rememberRecent(albumId: String) {
+		recentAlbumIds = (listOf(albumId) + recentAlbumIds.filter { it != albumId }).take(8)
+		prefs.edit().putString("recent_albums", recentAlbumIds.joinToString(",")).apply()
+	}
+
+	fun clearRecent() {
+		recentAlbumIds = emptyList()
+		prefs.edit().remove("recent_albums").apply()
 	}
 
 	// ---- Uploads ----------------------------------------------------------------

@@ -217,7 +217,7 @@ fun PickerScreen(vm: AppViewModel, albumId: String?) {
 							Box(Modifier.aspectRatio(1f).clickable { toggle(photo) }) {
 								LocalImage(photo.uri, Modifier.fillMaxSize().then(if (order >= 0) Modifier.padding(8.dp).clip(RoundedCornerShape(8.dp)) else Modifier))
 								if (added) {
-									Box(Modifier.fillMaxSize().background(Color(0x99FFFFFF)))
+									Box(Modifier.fillMaxSize().background(Color(0xA6111213)))
 									Flag("追加済み", Color(0xE6646970), Modifier.align(Alignment.BottomStart).padding(5.dp))
 								} else SelectionMark(order >= 0, number = (order + 1).takeIf { it > 0 }, modifier = Modifier.align(Alignment.TopEnd).padding(6.dp))
 							}

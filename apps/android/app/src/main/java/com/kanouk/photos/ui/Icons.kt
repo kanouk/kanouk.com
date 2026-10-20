@@ -35,4 +35,11 @@ object Glyph {
 	val Globe = icon("globe", "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z")
 	val Image = icon("image", "M4 5h16v14H4zM4 15l4.5-4.5 4 4 2.5-2.5L20 17M15.5 9.5h.01")
 	val Album = icon("album", "M4 7h16v12H4zM7 4h10M9 13l2 2 4-4")
+	val Galleries = icon("galleries", "M4 8h13v12H4zM7 5h13v12M4 16l4-4 3 3 2-2 4 4")
+	val Library = icon("library", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z")
+	val Search = icon("search", "M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4")
+	val Handle = icon("handle", "M5 8h14M5 12h14M5 16h14")
+	val Sort = icon("sort", "M7 4v16M4 17l3 3 3-3M17 20V4M14 7l3-3 3 3")
+	val Select = icon("select", "M4 4h16v16H4zM8 12l3 3 5-6")
+	val Ellipsis = icon("ellipsis", "M6 12h.01M12 12h.01M18 12h.01")
 }

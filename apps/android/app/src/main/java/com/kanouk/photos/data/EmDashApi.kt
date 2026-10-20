@@ -131,6 +131,26 @@ class EmDashApi(private val session: Session) {
 		return photos
 	}
 
+	data class PhotoList(val items: List<Photo>, val nextCursor: String?)
+
+	/** Photos across all albums (the Library and search); list items carry each photo's listed data. */
+	suspend fun photos(query: String, cursor: String? = null): PhotoList {
+		val page = get("/_emdash/api/content/photos?$query" + (cursor?.let { "&cursor=${encode(it)}" } ?: "")).asObject()
+		val items = (page?.get("items") as? JsonArray)?.mapNotNull { it.asObject()?.let(Photo::from) }.orEmpty()
+		return PhotoList(items, page?.string("nextCursor"))
+	}
+
+	suspend fun library(cursor: String?) = photos("limit=100&orderBy=captured_at&order=desc", cursor)
+	suspend fun searchPhotos(text: String) = photos("q=${encode(text)}&limit=60").items
+
+	/** The owner's album order (shared with the public album list); empty until saved once. */
+	suspend fun albumOrder(): List<String> = ids(get("$PLUGIN/album-order"))
+
+	suspend fun saveAlbumOrder(ids: List<String>): List<String> =
+		ids(send("POST", "$PLUGIN/album-order", buildJsonObject { put("ids", JsonArray(ids.map(::JsonPrimitive))) }))
+
+	private fun ids(data: JsonElement) = (data.asObject()?.get("ids") as? JsonArray)?.mapNotNull { (it as? JsonPrimitive)?.takeIf { p -> p.isString }?.content }.orEmpty()
+
 	/** The item and its edit revision (needed to save a draft). */
 	suspend fun content(collection: String, id: String): Pair<JsonObject, String> {
 		val envelope = get("/_emdash/api/content/$collection/${encode(id)}?locale=ja").asObject() ?: throw ApiException("読み込めませんでした。")
