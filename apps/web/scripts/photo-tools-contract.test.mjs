@@ -60,8 +60,10 @@ test("album organizer owns upload, reorder, batch edit and aggregate publish", a
 	const albumPublish = admin.indexOf('publishDraft("albums", album.id)', workspaceStart);
 	assert.ok(workspaceStart >= 0 && photoPublish > workspaceStart && albumPublish > photoPublish);
 	assert.match(admin.slice(workspaceStart, albumPublish), /albumSaveFailed/);
-	// Two screens, album list and one album, kept in the URL so Back works.
-	assert.match(admin, /window\.history\.pushState\(null, "", organizerHref\(albumId\)\)/);
+	// Album list (with アルバム / ライブラリ / 検索 tabs) and one album, kept in the URL so Back works.
+	assert.match(admin, /window\.history\.pushState\(null, "", organizerHref\(albumId, photoId \|\| undefined\)\)/);
+	assert.match(admin, /window\.history\.pushState\(null, "", tabHref\(next\)\)/);
+	assert.match(admin, /photo-tools-tabs/);
 	assert.match(admin, /addEventListener\("popstate", sync\)/);
 	assert.match(admin, /photo-tools-albums/);
 	// Phones: the editor is a sheet; a bar acts on a multi-selection.

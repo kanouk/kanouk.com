@@ -307,6 +307,30 @@
 .photo-tools-size-links .photo-tools-button, .photo-tools-link-row .photo-tools-button { min-height: 1.85rem; padding: 0 0.6rem; font-size: var(--pt-sm); }
 .photo-tools-copy-status { color: var(--pt-ok); font-size: var(--pt-sm); }
 
+/* アルバム・ライブラリ・検索: tabs under the title on a computer, a bar at the bottom of a phone */
+.photo-tools-tabs { display: flex; gap: 0.25rem; margin: -0.25rem 0 1.25rem; padding: 0.25rem; border: 1px solid var(--pt-line); border-radius: var(--pt-radius); background: var(--pt-recessed); width: fit-content; }
+.photo-tools-tabs button { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.25rem; padding: 0 0.9rem; border: 0; border-radius: var(--pt-radius-sm); background: transparent; color: var(--pt-muted); font: inherit; font-size: var(--pt-sm); font-weight: 500; cursor: pointer; }
+.photo-tools-tabs button:hover { color: var(--pt-text); }
+.photo-tools-tabs button[aria-current="page"] { background: var(--pt-base); color: var(--pt-strong); box-shadow: 0 1px 2px rgb(0 0 0 / 0.08); }
+
+/* Library and search */
+.photo-tools-library { display: grid; gap: 1.25rem; }
+.photo-tools-library__day h2, .photo-tools-search-view h2 { margin: 0 0 0.5rem; color: var(--pt-strong); font-size: var(--pt-base-size); font-weight: 600; }
+.photo-tools-library__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 3px; }
+.photo-tools-library__tile { position: relative; display: block; overflow: hidden; aspect-ratio: 1; padding: 0; border: 0; background: var(--pt-recessed); cursor: pointer; }
+.photo-tools-library__tile img { transition: transform 200ms ease; }
+.photo-tools-library__tile:hover img { transform: scale(1.03); }
+.photo-tools-library__tile.is-hidden img { opacity: 0.45; filter: grayscale(0.6); }
+.photo-tools-library__tile .photo-tools-flag { position: absolute; top: 0.35rem; right: 0.35rem; }
+.photo-tools-search-view { display: grid; gap: 1rem; }
+.photo-tools-search--large { max-width: 36rem; }
+.photo-tools-search-view__heading { display: flex; align-items: center; justify-content: space-between; }
+.photo-tools-search-view__heading h2 { margin: 0; }
+.photo-tools-banners { display: grid; gap: 0.5rem; }
+.photo-tools-banner { position: relative; display: block; overflow: hidden; width: 100%; max-width: 48rem; aspect-ratio: 4.6; padding: 0; border: 0; border-radius: var(--pt-radius); background: var(--pt-recessed); text-align: left; cursor: pointer; }
+.photo-tools-banner img, .photo-tools-banner .photo-tools-thumb { position: absolute; inset: 0; filter: brightness(0.62); }
+.photo-tools-banner__title { position: absolute; inset: auto 1rem 50% 1rem; display: flex; align-items: center; gap: 0.6rem; color: #fff; font-size: var(--pt-lg); font-weight: 600; text-shadow: 0 1px 3px rgb(0 0 0 / 0.6); transform: translateY(50%); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
 /* Phone-only bars */
 .photo-tools-mobile-add, .photo-tools-selection-bar { display: none; }
 
@@ -378,6 +402,13 @@
 	.photo-tools-shape-toggle { display: none !important; }
 	.photo-tools-inspector__preview { height: 24vh; }
 	.photo-tools-dropzone { min-height: 16rem; }
+	/* The tabs become a bar at the bottom of the screen, within thumb reach (as in the app). */
+	.photo-tools-shell.has-tabs { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+	.photo-tools-tabs { position: fixed; z-index: 40; inset: auto 0 0 0; width: auto; margin: 0; padding: 0.25rem 0.5rem calc(0.25rem + env(safe-area-inset-bottom)); border-width: 1px 0 0; border-radius: 0; background: var(--pt-base); box-shadow: 0 -6px 18px rgb(0 0 0 / 0.08); }
+	.photo-tools-tabs button { flex: 1; flex-direction: column; gap: 0.15rem; min-height: 3.5rem; padding: 0.25rem 0; font-size: var(--pt-xs); }
+	.photo-tools-tabs button[aria-current="page"] { background: transparent; box-shadow: none; color: var(--pt-brand); }
+	.photo-tools-library__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; margin-inline: calc(-1 * var(--pt-page-gutter, 0px)); }
+	.photo-tools-banner { aspect-ratio: 3.6; }
 	.photo-tools-button, .photo-tools-menu__panel > :where(a, button) { min-height: 2.75rem; }
 }
 
