@@ -9,7 +9,7 @@ import type {
 import { apiFetch, parseApiResponse } from "@emdash-cms/admin";
 import {
 	allContent,
-	albumCounts, photoPage, albumPhotosForOperation, type AlbumCount, albumOrder, saveAlbumOrder,
+	albumCounts, photoPage, albumPhotosForOperation, type AlbumCount, albumOrder, saveAlbumOrder, contentPage,
 	createPhotoFromMedia,
 	createAlbumDraft,
 	getContent,
@@ -191,7 +191,7 @@ function Preview({ value, size = 160 }: { value: unknown; size?: number }) {
 		: <span className="photo-tools-thumb photo-tools-thumb--empty">画像なし</span>;
 }
 
-type IconName = "back" | "plus" | "more" | "close" | "search" | "upload" | "left" | "right" | "star" | "image" | "check";
+type IconName = "back" | "plus" | "more" | "close" | "search" | "upload" | "left" | "right" | "star" | "image" | "check" | "albums" | "library";
 const ICON_PATHS: Record<IconName, string> = {
 	back: "M15 18l-6-6 6-6",
 	plus: "M12 5v14M5 12h14",
@@ -204,6 +204,8 @@ const ICON_PATHS: Record<IconName, string> = {
 	star: "M12 4l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 16.4 7.2 18.9l.9-5.4-3.9-3.8 5.4-.8z",
 	image: "M4 5h16v14H4zM4 15l4.5-4.5 4 4 2.5-2.5L20 17M15.5 9.5h.01",
 	check: "M5 12.5l4.5 4.5L19 7.5",
+	albums: "M4 8h16v11H4zM7 5h10M8 13l2.5 2.5L16 10",
+	library: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
 };
 
 function Icon({ name, size = 16 }: { name: IconName; size?: number }) {
@@ -1558,6 +1560,147 @@ function AdminSetupCard() {
 	</section>;
 }
 
+type OrganizerTab = "albums" | "library" | "search";
+const ORGANIZER_TABS: Array<{ id: OrganizerTab; label: string; icon: IconName }> = [
+	{ id: "albums", label: "アルバム", icon: "albums" },
+	{ id: "library", label: "ライブラリ", icon: "library" },
+	{ id: "search", label: "検索", icon: "search" },
+];
+const RECENT_ALBUMS_KEY = "yohaku-photo-tools:recent-albums";
+const WEEKDAYS = "日月火水木金土";
+
+function readTab(): OrganizerTab {
+	const value = typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("tab");
+	return value === "library" || value === "search" ? value : "albums";
+}
+function readRecentAlbums(): string[] {
+	try { const ids = JSON.parse(localStorage.getItem(RECENT_ALBUMS_KEY) ?? "[]"); return Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : []; }
+	catch { return []; }
+}
+function rememberRecentAlbum(id: string) {
+	try { localStorage.setItem(RECENT_ALBUMS_KEY, JSON.stringify([id, ...readRecentAlbums().filter((other) => other !== id)].slice(0, 8))); }
+	catch { /* only a convenience */ }
+}
+/** "2026/03/13（金）" for a photo's capture day. */
+function captureDayLabel(item: ContentItem): string {
+	const value = dateTimeLocalInputValue(dataOf(item).captured_at);
+	if (!value) return "撮影日なし";
+	const day = new Date(`${value.slice(0, 10)}T00:00:00`);
+	return `${value.slice(0, 10).replaceAll("-", "/")}（${WEEKDAYS[day.getDay()]}）`;
+}
+
+/** アルバム・ライブラリ・検索 (as in the app): at the bottom of a phone screen, under the title on a computer. */
+function OrganizerTabs({ tab, onChange }: { tab: OrganizerTab; onChange: (tab: OrganizerTab) => void }) {
+	return <nav className="photo-tools-tabs" aria-label="写真を整理の表示">
+		{ORGANIZER_TABS.map((item) => <button key={item.id} type="button" aria-current={tab === item.id ? "page" : undefined} onClick={() => onChange(item.id)}>
+			<Icon name={item.icon} size={20} /><span>{item.label}</span>
+		</button>)}
+	</nav>;
+}
+
+function PhotoGridTile({ photo, onOpen }: { photo: ContentItem; onOpen: () => void }) {
+	const hidden = isHiddenPhoto(dataOf(photo));
+	return <button type="button" className={`photo-tools-library__tile ${hidden ? "is-hidden" : ""}`} onClick={onOpen} aria-label={`${photoTitleOf(photo) || capturedLabelOf(photo) || "写真"}を開く`}>
+		<Preview value={dataOf(photo).image} size={320} />
+		{hidden && <span className="photo-tools-flag photo-tools-flag--muted">非公開</span>}
+	</button>;
+}
+
+/** Every photo, newest capture first, by day (SmugMug's Library). */
+function LibraryView({ onOpen }: { onOpen: (albumId: string, photoId: string) => void }) {
+	const [items, setItems] = useState<ContentItem[]>([]);
+	const [cursor, setCursor] = useState<string | null | undefined>(undefined);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<unknown>(null);
+	const sentinel = useRef<HTMLDivElement>(null);
+	const loadingRef = useRef(false);
+	const load = async () => {
+		if (loadingRef.current || cursor === null) return;
+		loadingRef.current = true; setLoading(true);
+		try {
+			const page = await contentPage("photos", { limit: 100, orderBy: "captured_at", order: "desc", cursor: cursor ?? undefined });
+			setItems((current) => mergeEditableItems(current, page.items));
+			setCursor(page.nextCursor ?? null);
+		} catch (cause) { setError(cause); } finally { loadingRef.current = false; setLoading(false); }
+	};
+	useEffect(() => { void load(); }, []);
+	useEffect(() => {
+		const target = sentinel.current;
+		if (!target || cursor === null || cursor === undefined) return;
+		const observer = new IntersectionObserver((entries) => { if (entries.some((entry) => entry.isIntersecting)) void load(); }, { rootMargin: "800px 0px" });
+		observer.observe(target);
+		return () => observer.disconnect();
+	}, [cursor, items.length]);
+	const days = useMemo(() => {
+		const groups: Array<{ label: string; photos: ContentItem[] }> = [];
+		for (const photo of items) {
+			const label = captureDayLabel(photo);
+			if (groups.at(-1)?.label === label) groups.at(-1)!.photos.push(photo);
+			else groups.push({ label, photos: [photo] });
+		}
+		return groups;
+	}, [items]);
+	return <section className="photo-tools-library" aria-label="ライブラリ">
+		<ErrorBox error={error} />
+		{days.map((day) => <section key={day.label} className="photo-tools-library__day">
+			<h2>{day.label}</h2>
+			<div className="photo-tools-library__grid">{day.photos.map((photo) => <PhotoGridTile key={photo.id} photo={photo} onOpen={() => onOpen(textValue(dataOf(photo).album), photo.id)} />)}</div>
+		</section>)}
+		<div ref={sentinel} />
+		{loading && <p className="photo-tools-note" role="status">写真を読み込んでいます…</p>}
+		{!loading && cursor === null && items.length === 0 && <p className="photo-tools-empty">写真がありません。</p>}
+	</section>;
+}
+
+function AlbumBanner({ album, onOpen }: { album: ContentItem; onOpen: () => void }) {
+	return <button type="button" className="photo-tools-banner" onClick={onOpen}>
+		{dataOf(album).cover_image ? <Preview value={dataOf(album).cover_image} size={768} /> : <span className="photo-tools-thumb photo-tools-thumb--empty" />}
+		<span className="photo-tools-banner__title"><Icon name="albums" size={18} />{labelOf(album)}</span>
+	</button>;
+}
+
+/** Albums by name and photos by title or caption; recently opened albums when empty (as in the app). */
+function SearchView({ albums, onOpenAlbum, onOpenPhoto }: { albums: ContentItem[]; onOpenAlbum: (id: string) => void; onOpenPhoto: (albumId: string, photoId: string) => void }) {
+	const [query, setQuery] = useState("");
+	const [photos, setPhotos] = useState<ContentItem[]>([]);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<unknown>(null);
+	const [recent, setRecent] = useState(readRecentAlbums);
+	const term = query.trim();
+	useEffect(() => {
+		if (!term) { setPhotos([]); return; }
+		let active = true;
+		const timer = window.setTimeout(() => {
+			setLoading(true); setError(null);
+			contentPage("photos", { search: term, limit: 60 })
+				.then((page) => { if (active) setPhotos(page.items); })
+				.catch((cause) => { if (active) setError(cause); })
+				.finally(() => { if (active) setLoading(false); });
+		}, 300);
+		return () => { active = false; window.clearTimeout(timer); };
+	}, [term]);
+	const needle = term.toLocaleLowerCase("ja");
+	const albumMatches = term ? albums.filter((album) => labelOf(album).toLocaleLowerCase("ja").includes(needle)) : [];
+	const recentAlbums = recent.map((id) => albums.find((album) => album.id === id)).filter((album): album is ContentItem => Boolean(album));
+	return <section className="photo-tools-search-view" aria-label="検索">
+		<label className="photo-tools-search photo-tools-search--large"><Icon name="search" /><input type="search" autoFocus aria-label="アルバムと写真を検索" placeholder="アルバムと写真を検索" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
+		<ErrorBox error={error} />
+		{!term && (recentAlbums.length
+			? <>
+				<div className="photo-tools-search-view__heading"><h2>最近見たアルバム</h2><button type="button" className="photo-tools-button photo-tools-button--ghost photo-tools-button--small" onClick={() => { try { localStorage.removeItem(RECENT_ALBUMS_KEY); } catch { /* ignore */ } setRecent([]); }}>クリア</button></div>
+				<div className="photo-tools-banners">{recentAlbums.map((album) => <AlbumBanner key={album.id} album={album} onOpen={() => onOpenAlbum(album.id)} />)}</div>
+			</>
+			: <p className="photo-tools-note">アルバムの名前や、写真のタイトル・キャプションで探せます。</p>)}
+		{term && <>
+			{albumMatches.length > 0 && <><h2 className="photo-tools-search-view__label">アルバム</h2><div className="photo-tools-banners">{albumMatches.map((album) => <AlbumBanner key={album.id} album={album} onOpen={() => onOpenAlbum(album.id)} />)}</div></>}
+			<h2 className="photo-tools-search-view__label">写真</h2>
+			{photos.length
+				? <div className="photo-tools-library__grid">{photos.map((photo) => <PhotoGridTile key={photo.id} photo={photo} onOpen={() => onOpenPhoto(textValue(dataOf(photo).album), photo.id)} />)}</div>
+				: <p className="photo-tools-note" role="status">{loading ? "探しています…" : "一致する写真はありません。"}</p>}
+		</>}
+	</section>;
+}
+
 export function PhotoOrganizerPage() {
 	useEffect(() => { startPerformanceAudit(); }, []);
 	const [albums, setAlbums] = useState<ContentItem[]>([]);
@@ -1690,18 +1833,29 @@ export function PhotoOrganizerPage() {
 			setReadyAlbumId("");
 			setPhotos([]);
 			setSelectedId(params.get("album") ?? "");
+			setTab(readTab());
 		};
 		window.addEventListener("popstate", sync);
 		return () => window.removeEventListener("popstate", sync);
 	}, []);
-	const openAlbum = (albumId: string) => {
-		if (workspaceBusy || !canChangeOrganizerContext()) return;
-		window.history.pushState(null, "", organizerHref(albumId));
-		setReadyAlbumId(""); setQuery({ q: "", filter: "", offset: 0, photo: "" }); setPhotos([]); setSelectedId(albumId);
+	const [tab, setTab] = useState<OrganizerTab>(readTab);
+	const tabHref = (next: OrganizerTab) => next === "albums" ? ORGANIZER_ROOT : `${ORGANIZER_ROOT}?tab=${next}`;
+	const switchTab = (next: OrganizerTab) => {
+		if (next === tab) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+		window.history.pushState(null, "", tabHref(next));
+		setTab(next);
 		window.scrollTo({ top: 0 });
 	};
+	const openAlbum = (albumId: string, photoId = "") => {
+		if (!albumId || workspaceBusy || !canChangeOrganizerContext()) return;
+		window.history.pushState(null, "", organizerHref(albumId, photoId || undefined));
+		rememberRecentAlbum(albumId);
+		setReadyAlbumId(""); setQuery({ q: "", filter: "", offset: 0, photo: photoId }); setPhotos([]); setSelectedId(albumId);
+		window.scrollTo({ top: 0 });
+	};
+	// Back from an album returns to the tab it was opened from.
 	const closeAlbum = () => {
-		window.history.pushState(null, "", ORGANIZER_ROOT);
+		window.history.pushState(null, "", tabHref(tab));
 		setSelectedId(""); setPhotos([]);
 		window.scrollTo({ top: 0 });
 	};
@@ -1734,71 +1888,77 @@ export function PhotoOrganizerPage() {
 		</main>;
 	}
 
-	return <main className="photo-tools-shell">
+	return <main className="photo-tools-shell has-tabs">
 		<header className="photo-tools-page-header">
 			<div>
 				<h1>写真を整理</h1>
 				<p>アルバムを開いて、写真の追加・編集・並べ替え・公開をします。</p>
 			</div>
 			<div className="photo-tools-actions">
-				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={loading || Boolean(reordering)} onClick={() => { setOrderMessage(""); setAlbumSearch(""); setReordering(orderedAlbums.map((album) => album.id)); }}>並べ替え</button>
-				<button type="button" className="photo-tools-button" onClick={() => setShowNew((value) => !value)} aria-expanded={showNew}><Icon name="plus" />新しいアルバム</button>
+				{tab === "albums" && <button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={loading || Boolean(reordering)} onClick={() => { setOrderMessage(""); setAlbumSearch(""); setReordering(orderedAlbums.map((album) => album.id)); }}>並べ替え</button>}
+				<button type="button" className="photo-tools-button" onClick={() => { if (tab !== "albums") switchTab("albums"); setShowNew((value) => !value); }} aria-expanded={showNew}><Icon name="plus" />新しいアルバム</button>
 				<label className="photo-tools-button photo-tools-button--primary photo-tools-upload"><Icon name="upload" />写真を追加<input type="file" accept={ACCEPTED_IMAGE_INPUT} multiple hidden onChange={(event) => {
 					const files = [...(event.target.files ?? [])];
 					event.currentTarget.value = "";
 					if (!files.length) return;
+					if (tab !== "albums") switchTab("albums");
 					setPendingFiles(files); setShowNew(false);
 					setUploadTarget((current) => current || albums[0]?.id || "__new");
 				}} /></label>
 			</div>
 		</header>
-		{pendingFiles && <form className="photo-tools-create photo-tools-destination" onSubmit={(event) => { event.preventDefault(); void sendPendingFiles(); }}>
-			<p><strong>{pendingFiles.length}点の写真</strong>を追加します。追加先を選んでください。</p>
-			<label>追加先のアルバム<select value={uploadTarget} disabled={creating} onChange={(event) => setUploadTarget(event.target.value)}>
-				<option value="__new">新しいアルバムを作る</option>
-				{albums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}{album.status !== "published" ? "（下書き）" : ""}</option>)}
-			</select></label>
-			{uploadTarget === "__new" && <label>新しいアルバムの名前<input autoFocus value={newTitle} placeholder="例：Kyoto, 2026/10" disabled={creating} onChange={(event) => setNewTitle(event.target.value)} /></label>}
-			<button type="submit" className="photo-tools-button photo-tools-button--primary" disabled={creating || !uploadTarget || (uploadTarget === "__new" && !newTitle.trim())}>{creating ? "作成中…" : "このアルバムに追加"}</button>
-			<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={creating} onClick={() => setPendingFiles(null)}>やめる</button>
-		</form>}
-		{showNew && <form className="photo-tools-create" onSubmit={(event) => { event.preventDefault(); void createAlbum(); }}>
-			<label>新しいアルバムの名前<input autoFocus value={newTitle} placeholder="例：Kyoto, 2026/10" disabled={creating} onChange={(event) => setNewTitle(event.target.value)} /></label>
-			<button type="submit" className="photo-tools-button photo-tools-button--primary" disabled={creating || !newTitle.trim()}>{creating ? "作成中…" : "作成して写真を追加"}</button>
-			<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={creating} onClick={() => { setShowNew(false); setNewTitle(""); }}>キャンセル</button>
-		</form>}
-		<ErrorBox error={error} />
-		<AdminSetupCard />
-		{orderMessage && <p className="photo-tools-status" role="status">{orderMessage}</p>}
-		{reordering && <div className="photo-tools-reorder-bar" role="region" aria-label="アルバムの並べ替え">
-			<span>アルバムをドラッグして並べ替えます（公開サイトの並び順になります）</span>
-			<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={savingOrder} onClick={() => void saveOrder()}>{savingOrder ? "保存中…" : "完了"}</button>
-			<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={savingOrder} onClick={() => setReordering(null)}>やめる</button>
-		</div>}
-		{!reordering && <div className="photo-tools-toolbar photo-tools-toolbar--albums">
-			<label className="photo-tools-search"><Icon name="search" /><input type="search" aria-label="アルバムを検索" placeholder="アルバムを検索" value={albumSearch} onChange={(event) => setAlbumSearch(event.target.value)} /></label>
-			<span className="photo-tools-toolbar__count">{loading ? "読み込み中…" : `${visibleAlbums.length}件`}</span>
-		</div>}
-		{loading
-			? <p className="photo-tools-note" role="status">アルバムを読み込んでいます…</p>
-			: visibleAlbums.length
-				? <ul className={`photo-tools-albums ${reordering ? "is-reordering" : ""}`}>{visibleAlbums.map((album, index) => {
-					const count = counts.find((entry) => entry.album === album.id);
-					const from = dateTimeLocalInputValue(dataOf(album).captured_from).slice(0, 7).replace("-", "/");
-					const state = album.status !== "published" ? "下書き" : hasPendingChanges(album) || (count?.pending ?? 0) > 0 ? "未公開の変更" : "";
-					return <li key={album.id} data-reorder-index={index} onPointerDown={(event) => albumReorder.start(event, index)} className={`${albumReorder.dragging === index ? "is-dragging" : ""} ${albumReorder.dragging !== null && albumReorder.over === index && albumReorder.dragging !== index ? "is-drop-target" : ""}`}>
-						<a className="photo-tools-album-card" href={organizerHref(album.id)} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey) return; event.preventDefault(); if (!reordering) openAlbum(album.id); }}>
-							<span className="photo-tools-album-card__cover">{dataOf(album).cover_image ? <Preview value={dataOf(album).cover_image} size={480} /> : <span className="photo-tools-album-card__empty"><Icon name="image" size={20} />{(count?.total ?? 0) > 0 ? "表紙が未設定" : "写真なし"}</span>}</span>
-							<span className="photo-tools-album-card__body">
-								<strong>{labelOf(album)}</strong>
-								<small>{photoIndexLoading ? "…" : `${count?.total ?? 0}点`}{from && <> · {from}</>}</small>
-							</span>
-							{state && <span className={`photo-tools-flag ${album.status !== "published" ? "photo-tools-flag--muted" : "photo-tools-flag--warn"}`}>{state}</span>}
-							{reordering && <span className="photo-tools-album-card__handle" aria-hidden="true">≡</span>}
-						</a>
-					</li>;
-				})}</ul>
-				: <p className="photo-tools-empty">{albumSearch ? "一致するアルバムはありません。" : "アルバムがありません。「新しいアルバム」から作成してください。"}</p>}
+		<OrganizerTabs tab={tab} onChange={switchTab} />
+		{tab === "library" && <LibraryView onOpen={(albumId, photoId) => openAlbum(albumId, photoId)} />}
+		{tab === "search" && <SearchView albums={orderedAlbums} onOpenAlbum={(id) => openAlbum(id)} onOpenPhoto={(albumId, photoId) => openAlbum(albumId, photoId)} />}
+		{tab === "albums" && <>
+			{pendingFiles && <form className="photo-tools-create photo-tools-destination" onSubmit={(event) => { event.preventDefault(); void sendPendingFiles(); }}>
+				<p><strong>{pendingFiles.length}点の写真</strong>を追加します。追加先を選んでください。</p>
+				<label>追加先のアルバム<select value={uploadTarget} disabled={creating} onChange={(event) => setUploadTarget(event.target.value)}>
+					<option value="__new">新しいアルバムを作る</option>
+					{albums.map((album) => <option key={album.id} value={album.id}>{labelOf(album)}{album.status !== "published" ? "（下書き）" : ""}</option>)}
+				</select></label>
+				{uploadTarget === "__new" && <label>新しいアルバムの名前<input autoFocus value={newTitle} placeholder="例：Kyoto, 2026/10" disabled={creating} onChange={(event) => setNewTitle(event.target.value)} /></label>}
+				<button type="submit" className="photo-tools-button photo-tools-button--primary" disabled={creating || !uploadTarget || (uploadTarget === "__new" && !newTitle.trim())}>{creating ? "作成中…" : "このアルバムに追加"}</button>
+				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={creating} onClick={() => setPendingFiles(null)}>やめる</button>
+			</form>}
+			{showNew && <form className="photo-tools-create" onSubmit={(event) => { event.preventDefault(); void createAlbum(); }}>
+				<label>新しいアルバムの名前<input autoFocus value={newTitle} placeholder="例：Kyoto, 2026/10" disabled={creating} onChange={(event) => setNewTitle(event.target.value)} /></label>
+				<button type="submit" className="photo-tools-button photo-tools-button--primary" disabled={creating || !newTitle.trim()}>{creating ? "作成中…" : "作成して写真を追加"}</button>
+				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={creating} onClick={() => { setShowNew(false); setNewTitle(""); }}>キャンセル</button>
+			</form>}
+			<ErrorBox error={error} />
+			<AdminSetupCard />
+			{orderMessage && <p className="photo-tools-status" role="status">{orderMessage}</p>}
+			{reordering && <div className="photo-tools-reorder-bar" role="region" aria-label="アルバムの並べ替え">
+				<span>アルバムをドラッグして並べ替えます（公開サイトの並び順になります）</span>
+				<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={savingOrder} onClick={() => void saveOrder()}>{savingOrder ? "保存中…" : "完了"}</button>
+				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={savingOrder} onClick={() => setReordering(null)}>やめる</button>
+			</div>}
+			{!reordering && <div className="photo-tools-toolbar photo-tools-toolbar--albums">
+				<label className="photo-tools-search"><Icon name="search" /><input type="search" aria-label="アルバムを検索" placeholder="アルバムを検索" value={albumSearch} onChange={(event) => setAlbumSearch(event.target.value)} /></label>
+				<span className="photo-tools-toolbar__count">{loading ? "読み込み中…" : `${visibleAlbums.length}件`}</span>
+			</div>}
+			{loading
+				? <p className="photo-tools-note" role="status">アルバムを読み込んでいます…</p>
+				: visibleAlbums.length
+					? <ul className={`photo-tools-albums ${reordering ? "is-reordering" : ""}`}>{visibleAlbums.map((album, index) => {
+						const count = counts.find((entry) => entry.album === album.id);
+						const from = dateTimeLocalInputValue(dataOf(album).captured_from).slice(0, 7).replace("-", "/");
+						const state = album.status !== "published" ? "下書き" : hasPendingChanges(album) || (count?.pending ?? 0) > 0 ? "未公開の変更" : "";
+						return <li key={album.id} data-reorder-index={index} onPointerDown={(event) => albumReorder.start(event, index)} className={`${albumReorder.dragging === index ? "is-dragging" : ""} ${albumReorder.dragging !== null && albumReorder.over === index && albumReorder.dragging !== index ? "is-drop-target" : ""}`}>
+							<a className="photo-tools-album-card" href={organizerHref(album.id)} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey) return; event.preventDefault(); if (!reordering) openAlbum(album.id); }}>
+								<span className="photo-tools-album-card__cover">{dataOf(album).cover_image ? <Preview value={dataOf(album).cover_image} size={480} /> : <span className="photo-tools-album-card__empty"><Icon name="image" size={20} />{(count?.total ?? 0) > 0 ? "表紙が未設定" : "写真なし"}</span>}</span>
+								<span className="photo-tools-album-card__body">
+									<strong>{labelOf(album)}</strong>
+									<small>{photoIndexLoading ? "…" : `${count?.total ?? 0}点`}{from && <> · {from}</>}</small>
+								</span>
+								{state && <span className={`photo-tools-flag ${album.status !== "published" ? "photo-tools-flag--muted" : "photo-tools-flag--warn"}`}>{state}</span>}
+								{reordering && <span className="photo-tools-album-card__handle" aria-hidden="true">≡</span>}
+							</a>
+						</li>;
+					})}</ul>
+					: <p className="photo-tools-empty">{albumSearch ? "一致するアルバムはありません。" : "アルバムがありません。「新しいアルバム」から作成してください。"}</p>}
+		</>}
 	</main>;
 }
 
