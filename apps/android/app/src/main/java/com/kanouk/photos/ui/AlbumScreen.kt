@@ -1,5 +1,8 @@
 package com.kanouk.photos.ui
 
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.BackHandler
@@ -95,6 +98,7 @@ fun AlbumScreen(vm: AppViewModel, albumId: String, snackbar: SnackbarHostState) 
 	var renaming by remember { mutableStateOf(false) }
 	var sorting by remember { mutableStateOf(false) }
 	var confirmDelete by remember { mutableStateOf(false) }
+	var deletingAlbum by remember { mutableStateOf(false) }
 	/** The photos in their new order while a manual move is being made and saved. */
 	var arranged by remember(albumId) { mutableStateOf<List<Photo>?>(null) }
 	val shown = arranged ?: photos
@@ -269,6 +273,13 @@ fun AlbumScreen(vm: AppViewModel, albumId: String, snackbar: SnackbarHostState) 
 								text = { Text("公開ページを開く") }, leadingIcon = { Icon(Glyph.Globe, null) },
 								onClick = { menu = false; context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("${photoSite(vm.session.baseUrl)}/albums/${album.slug}"))) },
 							)
+							HorizontalDivider()
+							DropdownMenuItem(
+								text = { Text("アルバムを削除", color = MaterialTheme.colorScheme.error) },
+								leadingIcon = { Icon(Glyph.Trash, null, tint = MaterialTheme.colorScheme.error) },
+								enabled = vm.working == null,
+								onClick = { menu = false; deletingAlbum = true },
+							)
 						}
 					}
 				},
@@ -286,6 +297,12 @@ fun AlbumScreen(vm: AppViewModel, albumId: String, snackbar: SnackbarHostState) 
 		sorting = false
 		if (method != album.sortMethod || direction != album.sortDirection) vm.setAlbumSort(album, method, direction)
 	}
+	if (deletingAlbum) DeleteAlbumDialog(
+		album = album,
+		total = state?.total ?: photos.size,
+		others = vm.albums.filter { it.id != album.id },
+		onDismiss = { deletingAlbum = false },
+	) { moveTo -> deletingAlbum = false; vm.deleteAlbum(album, moveTo) }
 	if (confirmDelete) ConfirmDialog(
 		title = "${selected.size}点を削除しますか？", text = "管理画面のゴミ箱から戻せます。", confirm = "削除",
 		onDismiss = { confirmDelete = false },
@@ -355,6 +372,38 @@ private fun SortDialog(method: String, direction: String, onDismiss: () -> Unit,
 			}
 		},
 		confirmButton = { TextButton(onClick = { onSave(chosen, order) }) { Text("保存") } },
+		dismissButton = { TextButton(onClick = onDismiss) { Text("キャンセル") } },
+	)
+}
+
+/** First what happens to the photos (trash or another album), then a clear last step. */
+@Composable
+private fun DeleteAlbumDialog(album: Album, total: Int, others: List<Album>, onDismiss: () -> Unit, onDelete: (Album?) -> Unit) {
+	var move by remember { mutableStateOf(false) }
+	var target by remember { mutableStateOf<Album?>(null) }
+	AlertDialog(
+		onDismissRequest = onDismiss,
+		title = { Text("「${album.title}」を削除") },
+		text = {
+			Column {
+				Text("中の写真（${total}点）", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+				ChoiceRow("写真も一緒に削除する", !move) { move = false }
+				ChoiceRow("写真は別のアルバムへ移す", move) { move = true }
+				if (move) {
+					HorizontalDivider(Modifier.padding(vertical = 8.dp))
+					Text("移動先", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+					Column(Modifier.heightIn(max = 240.dp).verticalScroll(rememberScrollState())) {
+						for (other in others) ChoiceRow(other.title, target?.id == other.id) { target = other }
+					}
+				}
+				Text("管理画面のゴミ箱から戻せます。公開サイトからはすぐに消えます。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 12.dp))
+			}
+		},
+		confirmButton = {
+			TextButton(enabled = !move || target != null, onClick = { onDelete(if (move) target else null) }) {
+				Text("削除", color = if (!move || target != null) MaterialTheme.colorScheme.error else Color.Unspecified)
+			}
+		},
 		dismissButton = { TextButton(onClick = onDismiss) { Text("キャンセル") } },
 	)
 }

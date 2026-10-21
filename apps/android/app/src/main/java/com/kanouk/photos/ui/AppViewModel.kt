@@ -298,6 +298,21 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 		done()
 	}
 
+	/** Delete an album; its photos go to the trash too, or move to [moveTo]. Back to the list when done. */
+	fun deleteAlbum(album: Album, moveTo: Album?) = guard("アルバムを削除しています…") {
+		val count = try { actions.deleteAlbum(album, moveTo) }
+		catch (error: Exception) { runCatching { reloadAfterChange(album.id) }; throw error }
+		photos = photos - album.id
+		recentAlbumIds = recentAlbumIds.filter { it != album.id }
+		prefs.edit().putString("recent_albums", recentAlbumIds.joinToString(",")).apply()
+		if (moveTo != null) runCatching { reloadAfterChange(moveTo.id) }
+		else { albums = arrange(overlayAlbums(api.albums())); counts = runCatching { api.albumCounts() }.getOrDefault(counts) }
+		albums = albums.filter { it.id != album.id }
+		notice = if (moveTo != null) "写真${count}点を「${moveTo.title}」へ移して、アルバムを削除しました"
+			else "アルバムと写真${count}点を削除しました（管理画面のゴミ箱から戻せます）"
+		back()
+	}
+
 	fun makeCover(album: Album, photo: Photo) = guard("表紙を変更中…") {
 		actions.makeCover(album, photo)
 		refreshAlbumDraft(album.id)
