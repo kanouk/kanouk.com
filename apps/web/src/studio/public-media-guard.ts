@@ -162,6 +162,9 @@ async function isCurrentPublicMedia(
 							OR json_extract(block.value, '$.asset.url') IN (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
 						)
 					) OR (
+						json_extract(block.value, '$._type') = 'file'
+						AND json_extract(block.value, '$.url') IN (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+					) OR (
 						json_extract(block.value, '$._type') IN ('yohaku.linkCard', 'yohaku.productCard')
 						AND json_extract(block.value, '$.imageUrl') IN (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
 					) OR (
