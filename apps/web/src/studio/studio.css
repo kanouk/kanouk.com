@@ -121,6 +121,17 @@
 .photo-tools-menu__panel > :where(a, button) { display: flex; align-items: center; min-height: 2.25rem; padding: 0 0.7rem; border: 0; border-radius: var(--pt-radius-sm); background: transparent; color: var(--pt-text); font: inherit; font-size: var(--pt-base-size); text-align: left; text-decoration: none; cursor: pointer; }
 .photo-tools-menu__panel > :where(a, button):hover { background: var(--pt-tint); }
 .photo-tools-menu__panel > button:disabled { color: var(--pt-muted); cursor: not-allowed; }
+.photo-tools-menu__panel > .is-danger { color: var(--pt-danger); }
+.photo-tools-menu__panel > .is-danger:hover { background: var(--pt-danger-tint); }
+.photo-tools-button--danger-icon { color: var(--pt-danger); }
+.photo-tools-button--danger-icon:hover:not(:disabled) { background: var(--pt-danger-tint); }
+/* Deleting an album: say what happens to its photos first. */
+.photo-tools-album-settings.photo-tools-delete { grid-template-columns: minmax(0, 1fr); align-items: start; max-width: 36rem; border-color: var(--pt-danger); }
+.photo-tools-delete > strong { color: var(--pt-strong); font-weight: 600; }
+.photo-tools-delete fieldset { display: grid; gap: 0.5rem; min-width: 0; margin: 0; padding: 0; border: 0; }
+.photo-tools-delete legend { margin-bottom: 0.25rem; color: var(--pt-muted); font-size: var(--pt-sm); }
+.photo-tools-choice { display: flex !important; align-items: center; gap: 0.5rem; min-height: 2.5rem; flex-direction: row !important; }
+.photo-tools-choice input { width: 1.1rem; height: 1.1rem; margin: 0; accent-color: var(--pt-danger); }
 .photo-tools-menu__panel hr { width: 100%; margin: 0.3rem 0; border: 0; border-top: 1px solid var(--pt-hairline); }
 
 /* State words and small flags */
@@ -198,8 +209,10 @@
 .photo-tools-workspace__header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.75rem 1.5rem; margin-bottom: 1.25rem; }
 .photo-tools-workspace__title { min-width: 0; flex: 1 1 20rem; }
 .photo-tools-workspace__title h1 { overflow-wrap: anywhere; }
-.photo-tools-workspace__title p { display: flex; flex-wrap: wrap; gap: 0.15rem 0; margin-top: 0.3rem; color: var(--pt-muted); font-size: var(--pt-sm); }
-.photo-tools-workspace__title p > span + span::before { margin: 0 0.5rem; color: var(--pt-line); content: "|"; }
+/* Facts separated by bars; a bar that wraps to the start of a line is clipped away. */
+.photo-tools-workspace__title p { display: flex; flex-wrap: wrap; gap: 0.15rem 0; margin: 0.3rem 0 0 -1.1rem; overflow: hidden; color: var(--pt-muted); font-size: var(--pt-sm); }
+.photo-tools-workspace__title p > span { position: relative; margin-left: 1.1rem; }
+.photo-tools-workspace__title p > span + span::before { position: absolute; left: -0.7rem; color: var(--pt-line); content: "|"; }
 .photo-tools-album-settings { display: grid; grid-template-columns: minmax(12rem, 1fr) minmax(16rem, 2fr) auto; align-items: end; gap: 0.75rem; margin-bottom: 1.25rem; padding: 1rem; border: 1px solid var(--pt-line); border-radius: var(--pt-radius); background: var(--pt-base); }
 .photo-tools-album-settings textarea { min-height: var(--pt-control); }
 
@@ -272,6 +285,7 @@
 .photo-tools-inspector__header h2.is-untitled { color: var(--pt-muted); font-weight: 500; }
 .photo-tools-inspector__header p { margin-top: 0.1rem; color: var(--pt-muted); font-size: var(--pt-sm); }
 .photo-tools-inspector__header .photo-tools-button--icon { margin: -0.3rem 0; }
+.photo-tools-inspector__header-actions { display: flex; flex: none; gap: 0.15rem; }
 .photo-tools-inspector__body { display: grid; gap: 0.9rem; padding: 1rem; overflow-y: auto; overscroll-behavior: contain; }
 .photo-tools-inspector__stage { display: grid; flex: none; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.25rem; padding: 0.75rem 0.4rem; border-bottom: 1px solid var(--pt-hairline); background: var(--pt-recessed); }
 .photo-tools-inspector__preview { display: grid; place-items: center; height: clamp(10rem, 28vh, 16rem); overflow: hidden; border-radius: var(--pt-radius-sm); }

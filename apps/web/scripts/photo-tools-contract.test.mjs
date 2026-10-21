@@ -64,6 +64,13 @@ test("album organizer owns upload, reorder, batch edit and aggregate publish", a
 	assert.match(admin, /window\.history\.pushState\(null, "", organizerHref\(albumId, photoId \|\| undefined\)\)/);
 	assert.match(admin, /window\.history\.pushState\(null, "", tabHref\(next\)\)/);
 	assert.match(admin, /photo-tools-tabs/);
+	// Deleting an album asks what happens to its photos; they are never left without an album.
+	assert.match(admin, /写真も一緒に削除する/);
+	assert.match(admin, /写真は別のアルバムへ移す/);
+	assert.match(admin, /trashContent\("albums", album\.id\)/);
+	// A single photo can be deleted from the sheet header and the selection bar.
+	assert.match(admin, /aria-label="この写真を削除"/);
+	assert.match(admin, /void trashPhotos\(\[\.\.\.checked\]\)/);
 	assert.match(admin, /addEventListener\("popstate", sync\)/);
 	assert.match(admin, /photo-tools-albums/);
 	// Phones: the editor is a sheet; a bar acts on a multi-selection.

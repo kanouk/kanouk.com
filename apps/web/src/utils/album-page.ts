@@ -1,5 +1,6 @@
 import { sql, type Kysely } from "kysely";
 import { normalizePhotoSort, photoOrderSql, sqlLiteral } from "./photo-sort.mjs";
+import { looksLikeCameraNumber, looksLikeSourceFilename } from "./photo-display.mjs";
 
 
 export const ALBUM_PAGE_SIZE = 50;
@@ -45,5 +46,5 @@ export async function getAlbumMarkers(album: string, database?: Kysely<any>) {
  AND json_type(data,'$.longitude') IN ('integer','real')
  AND json_extract(data,'$.latitude') BETWEEN -90 AND 90
  AND json_extract(data,'$.longitude') BETWEEN -180 AND 180`.execute(db);
- return result.rows.map(row=>({latitude:row.latitude,longitude:row.longitude,title:row.title,href:`/p/${encodeURIComponent(row.slug||row.id)}`}));
+ return result.rows.map(row=>({latitude:row.latitude,longitude:row.longitude,title:looksLikeCameraNumber(row.title)||looksLikeSourceFilename(row.title)?'写真を見る':row.title,href:`/p/${encodeURIComponent(row.slug||row.id)}`}));
 }

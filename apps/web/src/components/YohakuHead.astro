@@ -8,6 +8,8 @@ const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#111211" media="(prefers-color-scheme: dark)" />
+<!-- An image that fails to load leaves its empty frame, not the browser's broken icon and file name. -->
+<script is:inline>addEventListener("error",function(e){var t=e.target;t instanceof HTMLImageElement&&t.classList.add("is-broken")},true)</script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/kano-profile.png" type="image/png" />
 <link rel="apple-touch-icon" href="/kano-profile.png" />

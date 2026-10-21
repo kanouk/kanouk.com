@@ -191,7 +191,7 @@ function Preview({ value, size = 160 }: { value: unknown; size?: number }) {
 		: <span className="photo-tools-thumb photo-tools-thumb--empty">画像なし</span>;
 }
 
-type IconName = "back" | "plus" | "more" | "close" | "search" | "upload" | "left" | "right" | "star" | "image" | "check" | "albums" | "library";
+type IconName = "back" | "plus" | "more" | "close" | "search" | "upload" | "left" | "right" | "star" | "image" | "check" | "albums" | "library" | "trash";
 const ICON_PATHS: Record<IconName, string> = {
 	back: "M15 18l-6-6 6-6",
 	plus: "M12 5v14M5 12h14",
@@ -206,6 +206,7 @@ const ICON_PATHS: Record<IconName, string> = {
 	check: "M5 12.5l4.5 4.5L19 7.5",
 	albums: "M4 8h16v11H4zM7 5h10M8 13l2.5 2.5L16 10",
 	library: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
+	trash: "M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3",
 };
 
 function Icon({ name, size = 16 }: { name: IconName; size?: number }) {
@@ -502,7 +503,10 @@ function PhotoInspector({
 				<h2 className={photoTitleOf(photo) ? undefined : "is-untitled"}>{photoTitleOf(photo) || "タイトル未設定"}</h2>
 				<p>{capturedDate || "撮影日なし"}<span aria-hidden="true"> · </span><span className={`photo-tools-state photo-tools-state--${dirty ? "warn" : hasPendingChanges(photo) ? "warn" : hidden ? "muted" : "ok"}`}>{dirty ? "未保存" : statusLabel(photo)}</span>{isCover && <><span aria-hidden="true"> · </span>表紙</>}</p>
 			</div>
-			<button type="button" className="photo-tools-button photo-tools-button--icon photo-tools-button--ghost" onClick={onClose} aria-label="写真情報を閉じる" title="閉じる"><Icon name="close" /></button>
+			<div className="photo-tools-inspector__header-actions">
+				<button type="button" className="photo-tools-button photo-tools-button--icon photo-tools-button--ghost photo-tools-button--danger-icon" disabled={busy || dirty} onClick={() => onTrash([photo.id])} aria-label="この写真を削除" title="削除"><Icon name="trash" /></button>
+				<button type="button" className="photo-tools-button photo-tools-button--icon photo-tools-button--ghost" onClick={onClose} aria-label="写真情報を閉じる" title="閉じる"><Icon name="close" /></button>
+			</div>
 		</header>
 		{/* The photo stays in view while the fields scroll; the arrows sit beside it, not on it. */}
 		<div className="photo-tools-inspector__stage">
@@ -634,6 +638,7 @@ function AlbumOrganizer({
 	onPhotoUpdated,
 	onPhotoAdded,
 	onPhotoRemoved,
+	onAlbumRemoved,
 	onBusyChange,
 	albumReady,
 	onQuery, onRefresh, onFirstPage, firstOffset, onLoadMore, nextOffset, resultTotal, albumCount, onBack,
@@ -646,6 +651,7 @@ function AlbumOrganizer({
 	onPhotoUpdated: (item: ContentItem) => void;
 	onPhotoAdded: (item: ContentItem) => void;
 	onPhotoRemoved: (id: string) => void;
+	onAlbumRemoved: (id: string) => void;
 	onBusyChange: (busy: boolean) => void;
 	albumReady: boolean;
 	onQuery: (q: string, filter: string) => void;
@@ -695,6 +701,9 @@ function AlbumOrganizer({
 	const [locationErased, setLocationErased] = useState(0);
 	const [selecting, setSelecting] = useState(false);
 	const [sortOpen, setSortOpen] = useState(false);
+	const [deleteOpen, setDeleteOpen] = useState(false);
+	const [deleteMode, setDeleteMode] = useState<"trash" | "move">("trash");
+	const [deleteTarget, setDeleteTarget] = useState("");
 	const [sortDraft, setSortDraft] = useState(albumSort);
 	const [viewOrder, setViewOrder] = useState<ViewOrder>("album");
 	const [tileShape, setTileShape] = useState<"square" | "original">(() => {
@@ -1084,6 +1093,48 @@ function AlbumOrganizer({
 		onRefresh();
 	};
 
+	/** Delete the album, after its photos go to the trash too or move to another album (never left without an album). */
+	const deleteAlbum = async () => {
+		if (operationLocked || (deleteMode === "move" && !deleteTarget)) return;
+		const target = albums.find((item) => item.id === deleteTarget);
+		const question = deleteMode === "trash"
+			? `「${albumDraft.title || "このアルバム"}」と中の写真${photoTotal}点を削除しますか？（EmDashのゴミ箱から戻せます）`
+			: `写真${photoTotal}点を「${target ? textValue(dataOf(target).title) : ""}」へ移してから、「${albumDraft.title || "このアルバム"}」を削除しますか？`;
+		if (!window.confirm(question)) return;
+		setBusy(true); setError(null); setFailures([]); setMessage(deleteMode === "trash" ? "写真とアルバムを削除しています…" : "写真を移してからアルバムを削除しています…");
+		let photos: ContentItem[];
+		let position = 0;
+		try {
+			photos = await albumPhotosForOperation(album.id);
+			if (deleteMode === "move") {
+				const targetPhotos = await allContent("photos", { fieldFilters: { album: deleteTarget }, orderBy: "position", order: "asc" });
+				position = Math.max(0, ...targetPhotos.map((photo) => Number(dataOf(photo).position) || 0));
+			}
+		} catch (cause) { setError(new Error(reasonOf(cause))); setMessage(""); setBusy(false); return; }
+		const failed: Failure[] = [];
+		for (const photo of photos) {
+			try {
+				if (deleteMode === "trash") { await trashContent("photos", photo.id); onPhotoRemoved(photo.id); continue; }
+				position += 1024;
+				const current = await getContent("photos", photo.id);
+				// A photo that was live stays live in its new album.
+				const wasLive = current.item.status === "published" && !hasPendingChanges(current.item);
+				const moved = await updateDraft("photos", photo.id, current._rev, { album: deleteTarget, position });
+				onPhotoUpdated(wasLive ? (await publishDraft("photos", photo.id)).item : moved.item);
+			} catch (cause) { failed.push({ id: photo.id, reason: reasonOf(cause) }); }
+		}
+		if (failed.length) {
+			setFailures(failed);
+			setMessage(`${failed.length}点の写真を処理できなかったため、アルバムは削除していません。`);
+			setBusy(false); onRefresh(); return;
+		}
+		try { await trashContent("albums", album.id); }
+		catch (cause) { setError(new Error(reasonOf(cause))); setMessage(""); setBusy(false); onRefresh(); return; }
+		await recordOperation({ kind: "album-trash", status: "complete", targetIds: [album.id, ...photos.map((photo) => photo.id)], metadata: { photos: deleteMode, toAlbumId: deleteMode === "move" ? deleteTarget : undefined } }).catch(() => undefined);
+		setBusy(false);
+		onAlbumRemoved(album.id);
+	};
+
 	const toggleChecked = (photoId: string) => {
 		if (!canChangeOrganizerContext()) return;
 		const next = new Set(checked);
@@ -1330,6 +1381,8 @@ function AlbumOrganizer({
 					<hr />
 					{live && album.status === "published" && <a role="menuitem" href={live} target="_blank" rel="noreferrer">公開ページを開く</a>}
 					<a role="menuitem" href={albumEditHref(album.id)} onClick={(event) => { if (!canChangeOrganizerContext()) event.preventDefault(); }}>詳細編集（SEOなど）</a>
+					<hr />
+					<button type="button" role="menuitem" className="is-danger" disabled={operationLocked} onClick={() => { setDeleteMode("trash"); setDeleteTarget(""); setDeleteOpen(true); }}>アルバムを削除…</button>
 				</Menu>
 			</div>
 		</header>
@@ -1341,6 +1394,24 @@ function AlbumOrganizer({
 				<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={busy || !albumDraftDirty || !albumDraft.title.trim()} onClick={async () => { await saveAlbumDraft(); setSettingsOpen(false); }}>下書きに保存</button>
 				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={busy} onClick={() => { setAlbumDraft({ title: textValue(dataOf(album).title), description: textValue(dataOf(album).description) }); setSettingsOpen(false); }}>閉じる</button>
 			</div>
+		</section>}
+
+		{deleteOpen && <section className="photo-tools-album-settings photo-tools-delete" aria-label="アルバムを削除">
+			<strong>アルバムを削除</strong>
+			<fieldset disabled={busy}>
+				<legend>中の写真（{photoTotal}点）</legend>
+				<label className="photo-tools-choice"><input type="radio" name="album-delete-mode" checked={deleteMode === "trash"} onChange={() => setDeleteMode("trash")} />写真も一緒に削除する</label>
+				<label className="photo-tools-choice"><input type="radio" name="album-delete-mode" checked={deleteMode === "move"} onChange={() => setDeleteMode("move")} />写真は別のアルバムへ移す</label>
+				{deleteMode === "move" && <label>移動先<select value={deleteTarget} onChange={(event) => setDeleteTarget(event.target.value)}>
+					<option value="">アルバムを選ぶ</option>
+					{albums.filter((item) => item.id !== album.id).map((item) => <option key={item.id} value={item.id}>{textValue(dataOf(item).title) || item.slug}</option>)}
+				</select></label>}
+			</fieldset>
+			<div className="photo-tools-actions">
+				<button type="button" className="photo-tools-button photo-tools-button--danger" disabled={operationLocked || (deleteMode === "move" && !deleteTarget)} onClick={() => void deleteAlbum()}>{busy ? "処理中…" : "削除する"}</button>
+				<button type="button" className="photo-tools-button photo-tools-button--ghost" disabled={busy} onClick={() => setDeleteOpen(false)}>やめる</button>
+			</div>
+			<p className="photo-tools-note">削除したアルバムと写真は、EmDashのゴミ箱から戻せます。公開サイトからはすぐに消えます。</p>
 		</section>}
 
 		{sortOpen && <section className="photo-tools-album-settings photo-tools-sort" aria-label="並び順">
@@ -1458,6 +1529,7 @@ function AlbumOrganizer({
 
 		{!albumEmpty && checked.size > 0 && mobilePane !== "info" && <div className="photo-tools-selection-bar" role="region" aria-label="選択中の写真">
 			<strong>{checked.size}点を選択中</strong>
+			<button type="button" className="photo-tools-button photo-tools-button--icon photo-tools-button--ghost photo-tools-button--danger-icon" disabled={operationLocked} onClick={() => void trashPhotos([...checked])} aria-label={`${checked.size}点を削除`} title="削除"><Icon name="trash" /></button>
 			<button type="button" className="photo-tools-button photo-tools-button--primary" onClick={() => setMobilePane("info")}>操作</button>
 			<button type="button" className="photo-tools-button photo-tools-button--ghost" onClick={() => setChecked(new Set())}>解除</button>
 		</div>}
@@ -1879,7 +1951,7 @@ export function PhotoOrganizerPage() {
 		return <main className="photo-tools-shell">
 			<ErrorBox error={error} />
 			{selected && selectedReady
-				? <AlbumOrganizer key={selected.id} pendingFiles={pendingFiles ?? undefined} onPendingFilesTaken={() => setPendingFiles(null)} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => mergeEditableItems(current, [updated]))} onPhotoUpdated={(updated) => setPhotos((current) => current.some(photo => photo.id === updated.id) ? mergeEditableItems(current, [updated]) : current)} onPhotoAdded={(created) => setPhotos((current) => mergeEditableItems(current, [created]))} onPhotoRemoved={(id) => setPhotos((current) => current.filter((photo) => photo.id !== id))} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} firstOffset={firstOffset} onFirstPage={() => setQuery(current => ({...current,offset:0,photo:""}))} onQuery={changeQuery} onRefresh={() => setQuery(current => ({...current,offset:0}))} nextOffset={nextOffset} resultTotal={resultTotal} albumCount={counts.find(count=>count.album===selected.id)} onLoadMore={() => { if (canChangeOrganizerContext() && nextOffset !== null) setQuery(current=>({...current,offset:nextOffset})); }} onBack={closeAlbum} />
+				? <AlbumOrganizer key={selected.id} pendingFiles={pendingFiles ?? undefined} onPendingFilesTaken={() => setPendingFiles(null)} album={selected} albums={albums} allPhotos={photos} onAlbumUpdated={(updated) => setAlbums((current) => mergeEditableItems(current, [updated]))} onPhotoUpdated={(updated) => setPhotos((current) => current.some(photo => photo.id === updated.id) ? mergeEditableItems(current, [updated]) : current)} onPhotoAdded={(created) => setPhotos((current) => mergeEditableItems(current, [created]))} onPhotoRemoved={(id) => setPhotos((current) => current.filter((photo) => photo.id !== id))} onAlbumRemoved={(id) => { setAlbums((current) => current.filter((item) => item.id !== id)); closeAlbum(); }} onBusyChange={setWorkspaceBusy} albumReady={readyAlbumId === selected.id} firstOffset={firstOffset} onFirstPage={() => setQuery(current => ({...current,offset:0,photo:""}))} onQuery={changeQuery} onRefresh={() => setQuery(current => ({...current,offset:0}))} nextOffset={nextOffset} resultTotal={resultTotal} albumCount={counts.find(count=>count.album===selected.id)} onLoadMore={() => { if (canChangeOrganizerContext() && nextOffset !== null) setQuery(current=>({...current,offset:nextOffset})); }} onBack={closeAlbum} />
 				: selected && albumHydration?.identity === selectedIdentity && albumHydration.status === "error"
 					? <section className="photo-tools-workspace"><ErrorBox error={albumHydration.error} /><button type="button" className="photo-tools-button" onClick={() => setAlbumHydrationRetry((value) => value + 1)}>再試行</button></section>
 					: loading || selected
