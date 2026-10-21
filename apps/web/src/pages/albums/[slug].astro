@@ -111,6 +111,7 @@ const mapPanelId = "album-map-panel";
 			{chronologicalPhotos.map((photo, index) => {
 				const displayTitle = publicPhotoTitle({
 					title: photo.data.title,
+					imageFilename: photo.data.image?.filename,
 					sourceSystem: photo.data.source_system,
 					sourceMetadata: photo.data.source_metadata,
 				});

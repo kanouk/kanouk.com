@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
-import { looksLikeSourceFilename, publicPhotoTitle } from "../src/utils/photo-display.mjs";
+import { looksLikeCameraNumber, looksLikeSourceFilename, publicPhotoTitle } from "../src/utils/photo-display.mjs";
 
 describe("publicPhotoTitle", () => {
 	test("hides the legacy SmugMug filename fallback", () => {
@@ -31,6 +31,16 @@ describe("publicPhotoTitle", () => {
 				source_filename: "source.jpg",
 			},
 		}), "編集後のタイトル");
+	});
+
+	test("hides camera numbers and titles made from the uploaded file name", () => {
+		assert.equal(publicPhotoTitle({ title: "PXL 20261019 022859167" }), undefined);
+		assert.equal(publicPhotoTitle({ title: "IMG_7133" }), undefined);
+		assert.equal(publicPhotoTitle({ title: "20240727 035027" }), undefined);
+		assert.equal(publicPhotoTitle({ title: "kyoto trip", imageFilename: "kyoto_trip.jpg" }), undefined);
+		assert.equal(publicPhotoTitle({ title: "京都駅", imageFilename: "PXL_1.jpg" }), "京都駅");
+		assert.equal(looksLikeCameraNumber("Pixel 9で撮影"), false);
+		assert.equal(looksLikeCameraNumber("2024 京都"), false);
 	});
 
 	test("does not reinterpret non-SmugMug titles", () => {

@@ -45,6 +45,8 @@ if (Astro.cache?.enabled) {
 	Astro.cache.set({ tags: ["albums", "photos"] });
 }
 const album = albumResult.entries[0];
+// A photo is public only with its album: not after the album is deleted or taken down.
+if (photo.data.album && !album) return Astro.redirect("/404");
 const previousUrl = navigation?.previousId ? photoPath(navigation.previousId) : undefined;
 const nextUrl = navigation?.nextId ? photoPath(navigation.nextId) : undefined;
 const slideshowNextUrl = nextUrl || (
@@ -112,6 +114,7 @@ const focalLength = numberValue(exifData.FocalLength);
 const exposureCompensation = numberValue(exifData.ExposureCompensation);
 const displayTitle = publicPhotoTitle({
 	title: photo.data.title,
+	imageFilename: photo.data.image?.filename,
 	sourceSystem: photo.data.source_system,
 	sourceMetadata,
 });

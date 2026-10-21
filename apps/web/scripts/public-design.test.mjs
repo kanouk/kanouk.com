@@ -96,3 +96,19 @@ test("/admin on either site leads to the blog's admin without being cached", asy
 	assert.match(middleware, /pathname === "\/admin" \|\| context\.url\.pathname === "\/admin\/"/);
 	assert.match(middleware, /isPhotoHost \? `\$\{blogOrigin\}\/_emdash\/admin` : "\/_emdash\/admin"/);
 });
+
+test("photos are public only with a published album, and search shows them as pictures", async () => {
+	const [photoPage, search, images, theme] = await Promise.all([
+		read("src/pages/p/[slug].astro"),
+		read("src/pages/photo-search.astro"),
+		read("src/utils/search-images.ts"),
+		read("src/styles/theme.css"),
+	]);
+	assert.match(photoPage, /if \(photo\.data\.album && !album\) return Astro\.redirect\("\/404"\)/);
+	assert.match(images, /a\.status = 'published' AND a\.deleted_at IS NULL/);
+	assert.match(search, /class="photo-search-photos"/);
+	assert.match(search, /images\.has\(result\.id\)/);
+	// Pages end with --page-space; the footer adds only a small margin (no 200px gap on phones).
+	assert.match(theme, /\.site-footer \{ margin-top: var\(--space-6\);/);
+	assert.doesNotMatch(theme, /room for the floating size control/);
+});
