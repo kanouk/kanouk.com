@@ -77,6 +77,29 @@ class PhotoActions(private val api: EmDashApi) {
 		if (photo.isPublished && !photo.hidden && !photo.hasPendingChanges) api.publish("photos", photo.id)
 	}
 
+	/**
+	 * Delete an album after its photos go to the trash too, or move to [moveTo] (published
+	 * photos stay live there). The album is kept if any photo fails. Returns the photo count.
+	 */
+	suspend fun deleteAlbum(album: Album, moveTo: Album?): Int {
+		val photos = api.allAlbumPhotos(album.id)
+		var position = moveTo?.let { target -> api.allAlbumPhotos(target.id).maxOfOrNull { it.position } } ?: 0.0
+		var failed = 0
+		for (photo in photos) runCatching {
+			if (moveTo == null) api.trash("photos", photo.id)
+			else {
+				position += 1024
+				val (_, rev) = api.content("photos", photo.id)
+				api.updateDraft("photos", photo.id, rev, buildJsonObject { put("album", moveTo.id); put("position", position.toLong()) })
+				if (photo.isPublished && !photo.hidden && !photo.hasPendingChanges) api.publish("photos", photo.id)
+			}
+		}.onFailure { failed++ }
+		if (failed > 0) throw ApiException("${failed}点の写真を処理できなかったため、アルバムは削除していません。")
+		api.trash("albums", album.id)
+		api.recordOperation("album-trash", "complete", listOf(album.id) + photos.map { it.id }, album.id)
+		return photos.size
+	}
+
 	suspend fun trash(album: Album, photo: Photo) {
 		if (album.coverKey != null && album.coverKey == photo.imageKey) throw ApiException("表紙の写真は、別の写真を表紙にしてから削除してください。")
 		api.trash("photos", photo.id)
