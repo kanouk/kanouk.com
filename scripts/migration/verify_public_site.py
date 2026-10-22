@@ -415,7 +415,7 @@ def main() -> None:
             name="photo-detail",
             url=photo_url,
             expected_status=200,
-            marker='class="photo-page"',
+            marker='class="photo-page photo-viewer"',
             expect_preview_noindex=args.expect_preview_noindex,
         )
         photo_seo = SeoParser()
