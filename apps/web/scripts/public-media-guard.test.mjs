@@ -166,6 +166,53 @@ test("only recognized media fields in current published post/page revisions are 
 	assert.equal((await classifyMediaRead(mediaRequest("wp/orphan.jpg"), database)).access, "denied");
 });
 
+test("published file downloads require an exact URL in a current live post or page", async () => {
+	const { sqlite, database } = fixtureDatabase();
+	for (const [id, key] of [
+		["sheet", "wp/cash-flow.xlsx"],
+		["pdf", "wp/document.pdf"],
+		["draft", "wp/draft.xlsx"],
+		["deleted", "wp/deleted.pdf"],
+		["incidental", "wp/incidental.pdf"],
+		["prefix", "wp/prefix.pdf"],
+	]) addMedia(sqlite, `media-${id}`, key);
+	addContent(sqlite, "posts", {
+		id: "download-post",
+		data: { content: [{ _type: "file", url: "/_emdash/api/media/file/wp%2Fcash-flow.xlsx" }] },
+	});
+	addContent(sqlite, "pages", {
+		id: "download-page",
+		data: { content: [{ _type: "file", url: "https://blog.kanouk.com/_emdash/api/media/file/wp%2Fdocument.pdf" }] },
+	});
+	addContent(sqlite, "posts", {
+		id: "download-draft", status: "draft",
+		data: { content: [{ _type: "file", url: "/_emdash/api/media/file/wp%2Fdraft.xlsx" }] },
+	});
+	addContent(sqlite, "pages", {
+		id: "download-deleted", deletedAt: "2026-10-22T00:00:00Z",
+		data: { content: [{ _type: "file", url: "/_emdash/api/media/file/wp%2Fdeleted.pdf" }] },
+	});
+	addContent(sqlite, "posts", {
+		id: "incidental-download",
+		data: { content: [
+			{ _type: "embed", url: "/_emdash/api/media/file/wp%2Fincidental.pdf" },
+			{ _type: "file", url: "/_emdash/api/media/file/wp%2Fprefix.pdf.backup" },
+		] },
+	});
+	for (const key of ["wp/cash-flow.xlsx", "wp/document.pdf"]) {
+		for (const method of ["GET", "HEAD"]) {
+			assert.equal((await classifyMediaRead(mediaRequest(key, { method }), database)).access, "public", `${method} ${key}`);
+		}
+	}
+	for (const key of ["wp/draft.xlsx", "wp/deleted.pdf", "wp/incidental.pdf", "wp/prefix.pdf"]) {
+		assert.equal((await classifyMediaRead(mediaRequest(key), database)).access, "denied", key);
+	}
+	// Removing the link from the live revision must revoke public access.
+	sqlite.prepare("UPDATE revisions SET data = ? WHERE id = ?")
+		.run(JSON.stringify({ content: [] }), "download-post-live");
+	assert.equal((await classifyMediaRead(mediaRequest("wp/cash-flow.xlsx"), database)).access, "denied");
+});
+
 test("unreviewed Organizer media is denied even when another public surface references it", async () => {
 	const { sqlite, database } = fixtureDatabase();
 	for (const surface of ["post", "album", "seo"]) {
