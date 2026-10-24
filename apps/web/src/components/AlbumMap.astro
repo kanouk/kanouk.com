@@ -39,6 +39,8 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 }
 
 <script>
+	import { loadMapStyle } from "../client/map-style";
+
 	type Marker = {
 		latitude: number;
 		longitude: number;
@@ -64,7 +66,7 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 			mapPromise = (async () => {
 			const [{ default: L }, , loaded] = await Promise.all([
                 import("leaflet"),
-                import("leaflet/dist/leaflet.css"),
+                loadMapStyle(),
                 shell.dataset.source ? fetch(shell.dataset.source).then(async response => {
                     if (!response.ok) throw new Error("地図データを取得できませんでした");
                     return response.json() as Promise<{markers: Marker[]}>;

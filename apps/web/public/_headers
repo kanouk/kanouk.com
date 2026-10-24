@@ -1,0 +1,15 @@
+# Static files outside /_astro/ are not fingerprinted, so the platform serves them
+# with max-age=0 and every page load revalidated the logo and profile picture.
+# Let browsers and the edge keep them for a day and refresh in the background.
+/kanolog-logo.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/kanolog-logo.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/kano-profile.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/kano-profile.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/kanolog-no-image.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/favicon.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

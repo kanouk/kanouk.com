@@ -62,7 +62,37 @@ test("stored photos are resized from R2 with the Images binding before the URL t
 	const worker = await readFile(new URL("../src/worker.ts", import.meta.url), "utf8");
 	const wrangler = await readFile(new URL("../wrangler.jsonc", import.meta.url), "utf8");
 	assert.match(wrangler, /"images": \{ "binding": "IMAGES" \}/);
-	assert.match(worker, /\(await transformStoredImage\(request, env, mediaKey, width, format, quality\)\) \?\?\s*\(await transformImage\(/);
+	assert.match(worker, /\(await transformStoredImage\(request, env, context, mediaKey, width, format, quality, lookup\)\) \?\?\s*\(await transformImage\(/);
 	assert.match(worker, /\.transform\(\{ width, fit: "scale-down" \}\)/);
 	assert.match(worker, /"Cloudflare-CDN-Cache-Control": "public, max-age=31536000, immutable"/);
+});
+
+test("resized variants are stored in R2 once and reused only for the same original", async () => {
+	const { readFile } = await import("node:fs/promises");
+	const worker = await readFile(new URL("../src/worker.ts", import.meta.url), "utf8");
+	// Derived keys are never valid preview sources themselves.
+	assert.match(worker, /mediaKey\.startsWith\(DERIVED_MEDIA_PREFIX\)/);
+	// The stored variant and the original's ETag are looked up while the public-reference check runs.
+	assert.match(worker, /const derivedPromise[\s\S]*const originalEtagPromise[\s\S]*await classifyMediaRead\(sourceRequest/);
+	// A stored variant is served only when it was made from the current original.
+	assert.match(worker, /derived\.customMetadata\?\.source === originalEtag/);
+	// The variant is written back after the response is sent, keyed by the original's ETag.
+	assert.match(worker, /context\.waitUntil\(\s*bucket\s*\.put\(derivedKey, bytes, \{[\s\S]*customMetadata: \{ source: object\.httpEtag \}/);
+});
+
+test("Leaflet's stylesheet is loaded on demand, not hoisted into every page", async () => {
+	const { readFile } = await import("node:fs/promises");
+	const [albumMap, viewer, style, admin] = await Promise.all([
+		readFile(new URL("../src/components/AlbumMap.astro", import.meta.url), "utf8"),
+		readFile(new URL("../src/client/photo-viewer.ts", import.meta.url), "utf8"),
+		readFile(new URL("../src/client/map-style.ts", import.meta.url), "utf8"),
+		readFile(new URL("../src/studio/admin.tsx", import.meta.url), "utf8"),
+	]);
+	assert.doesNotMatch(albumMap, /import\("leaflet\/dist\/leaflet\.css"\)/);
+	assert.doesNotMatch(viewer, /import\("leaflet\/dist\/leaflet\.css"\)/);
+	assert.doesNotMatch(admin, /import\("leaflet\/dist\/leaflet\.css"\)/);
+	assert.match(admin, /loadMapStyle\(\)/);
+	assert.match(albumMap, /loadMapStyle\(\)/);
+	assert.match(viewer, /loadMapStyle\(\)/);
+	assert.match(style, /from "leaflet\/dist\/leaflet\.css\?url"/);
 });

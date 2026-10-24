@@ -36,6 +36,7 @@ import {
 	legacySourceUrlVariants,
 	normalizeLegacyAlbumCards,
 } from "../../utils/legacy-album-cards.mjs";
+import { startSharedBlogQueries } from "../../utils/shared-queries";
 
 const slugCandidates = routeSlugCandidates(Astro.params.slug);
 const slug = slugCandidates[0];
@@ -44,6 +45,9 @@ if (!slug) {
 	return Astro.redirect("/404");
 }
 
+// Footer pages, sidebar taxonomies and archive months do not depend on the
+// article: start them with the article lookup instead of after the body renders.
+startSharedBlogQueries(Astro.locals);
 let postResult = await getEmDashEntry("posts", slug);
 for (const legacySlug of slugCandidates.slice(1)) {
 	if (postResult.entry) break;

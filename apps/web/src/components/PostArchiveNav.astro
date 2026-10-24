@@ -1,6 +1,7 @@
 ---
 import { CalendarDays } from "lucide-astro";
-import { getPostArchiveMonths, getPostCalendarDays, japanDateParts, japanMonthRange } from "../utils/post-archives";
+import { getPostCalendarDays, japanDateParts, japanMonthRange } from "../utils/post-archives";
+import { sharedBlogQuery } from "../utils/shared-queries";
 
 interface Props {
 	date?: Date | null;
@@ -10,8 +11,9 @@ const { date: suppliedDate } = Astro.props;
 const date = suppliedDate ?? new Date();
 const selected = japanDateParts(date);
 const { start, end } = japanMonthRange(selected.year, selected.month);
+// The month list is a shared query (getPostArchiveMonths(24)) the page started early.
 const [recentArchives, postsByDay] = await Promise.all([
- getPostArchiveMonths(24), getPostCalendarDays(start,end),
+ sharedBlogQuery(Astro.locals, "archiveMonths"), getPostCalendarDays(start,end),
 ]);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
 const firstWeekday = new Date(Date.UTC(selected.year, selected.month - 1, 1)).getUTCDay();

@@ -61,6 +61,8 @@ import { normalizePhotoSort, photoComparator } from "../utils/photo-sort.mjs";
 // Inlined and injected by the admin itself: a plain CSS import would be linked
 // on every public page too, since the plugin registry is part of the site bundle.
 import studioCss from "./studio.css?inline";
+// Same reason for Leaflet's stylesheet: loaded as an asset URL when a map opens.
+import { loadMapStyle } from "../client/map-style";
 
 if (typeof document !== "undefined" && !document.getElementById("yohaku-photo-tools-css")) {
 	const style = document.createElement("style");
@@ -385,7 +387,7 @@ function LocationMap({ latitude, longitude }: { latitude: number; longitude: num
 	useEffect(() => {
 		let map: { remove(): void } | undefined;
 		let cancelled = false;
-		void Promise.all([import("leaflet"), import("leaflet/dist/leaflet.css")]).then(([{ default: L }]) => {
+		void Promise.all([import("leaflet"), loadMapStyle()]).then(([{ default: L }]) => {
 			if (cancelled || !ref.current) return;
 			const instance = L.map(ref.current, { scrollWheelZoom: false, attributionControl: false }).setView([latitude, longitude], 15);
 			L.control.attribution({ prefix: false }).addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>').addTo(instance);

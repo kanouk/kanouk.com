@@ -5,9 +5,12 @@ import PostCard from "../components/PostCard.astro";
 import Base from "../layouts/Base.astro";
 import { getPostExcerpt, getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { startSharedBlogQueries } from "../utils/shared-queries";
 
 const POSTS_PER_PAGE = 10;
 
+// Footer pages, sidebar taxonomies and archive months run alongside the post list.
+startSharedBlogQueries(Astro.locals);
 const [{ entries: posts, cacheHint }, settings] = await Promise.all([
 	getEmDashCollection("posts", {
 		orderBy: { published_at: "desc" },

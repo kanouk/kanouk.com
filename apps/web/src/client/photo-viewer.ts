@@ -11,6 +11,7 @@
  * zoom, drag to pan while zoomed, tap to hide or show the controls.
  */
 import { mountAdminBar } from "./admin-bar";
+import { loadMapStyle } from "./map-style";
 import { albumPhotoAnchor, photoReturnKey, readPhotoReturn } from "../utils/photo-return.mjs";
 
 type Direction = "previous" | "next";
@@ -279,7 +280,7 @@ export function mountPhotoViewer(): void {
 		const latitude = Number(canvas.dataset.latitude);
 		const longitude = Number(canvas.dataset.longitude);
 		try {
-			const [{ default: L }] = await Promise.all([import("leaflet"), import("leaflet/dist/leaflet.css")]);
+			const [{ default: L }] = await Promise.all([import("leaflet"), loadMapStyle()]);
 			if (!canvas.isConnected) return;
 			const instance = L.map(canvas, { scrollWheelZoom: false, attributionControl: false, zoomControl: true }).setView([latitude, longitude], 15);
 			L.control.attribution({ prefix: false }).addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>').addTo(instance);
