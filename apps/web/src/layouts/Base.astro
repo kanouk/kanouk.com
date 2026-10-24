@@ -1,5 +1,5 @@
 ---
-import { getEmDashCollection, getSiteSettings } from "emdash";
+import { getSiteSettings } from "emdash";
 import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import { Images, Search } from "lucide-astro";
@@ -7,6 +7,7 @@ import ProfileCard from "../components/ProfileCard.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import YohakuHead from "../components/YohakuHead.astro";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { sharedBlogQuery } from "../utils/shared-queries";
 import "../styles/tokens.css";
 import "../styles/theme.css";
 
@@ -43,9 +44,11 @@ const canonical = canonicalProp === false
 	: canonicalProp ?? new URL(Astro.url.pathname, "https://blog.kanouk.com").toString();
 
 const FOOTER_EXCLUDED_PAGE_SLUGS = new Set(["sample_search", "sample-page-nocalog"]);
+// The footer's page list is a shared query: a page that started it earlier
+// (src/utils/shared-queries.ts) has already overlapped it with its own queries.
 const [settings, pageResult] = await Promise.all([
  getSiteSettings(),
- getEmDashCollection("pages", { status:"published", orderBy:{published_at:"desc"}, limit:8 }),
+ sharedBlogQuery(Astro.locals, "footerPages"),
 ]);
 const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings);
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;

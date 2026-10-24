@@ -79,6 +79,12 @@ async function transformImage(
 }
 
 // The parts of the Images and R2 bindings used below (workers-types is not global here).
+interface StoredObject {
+	body: ReadableStream<Uint8Array>;
+	httpEtag: string;
+	httpMetadata?: { contentType?: string };
+	customMetadata?: Record<string, string>;
+}
 interface StoredImageBindings {
 	IMAGES?: {
 		input(stream: ReadableStream<Uint8Array>): {
@@ -90,7 +96,37 @@ interface StoredImageBindings {
 			};
 		};
 	};
-	MEDIA: { get(key: string): Promise<{ body: ReadableStream<Uint8Array> } | null> };
+	MEDIA: {
+		get(key: string): Promise<StoredObject | null>;
+		head(key: string): Promise<{ httpEtag: string } | null>;
+		put(
+			key: string,
+			value: ArrayBuffer,
+			options: { httpMetadata: { contentType: string }; customMetadata: Record<string, string> },
+		): Promise<unknown>;
+	};
+}
+
+/**
+ * Resized variants are kept in R2 under this prefix, next to the originals.
+ * Nothing in the CMS references these keys, so the raw media route never serves
+ * them to the public (src/studio/public-media-guard.ts), and EmDash's own listings
+ * are scoped to their own prefixes (backups/, staging).
+ */
+export const DERIVED_MEDIA_PREFIX = "_derived/";
+
+export function derivedMediaKey(key: string, width: number, format: "avif" | "webp", quality: number) {
+	return `${DERIVED_MEDIA_PREFIX}preview-v2/${width}/${format}/q${quality}/${key}`;
+}
+
+function derivedHeaders(contentType: string) {
+	return new Headers({
+		"Content-Type": contentType,
+		"Cache-Control": "public, max-age=31536000, immutable",
+		// Variants are immutable per URL; let the edge keep them so each is resized once.
+		"Cloudflare-CDN-Cache-Control": "public, max-age=31536000, immutable",
+		"X-Content-Type-Options": "nosniff",
+	});
 }
 
 /**
@@ -98,32 +134,63 @@ interface StoredImageBindings {
  * The URL-based transform (cf.image) has to fetch the original back through this
  * Worker, and for some large photos it times out and fell back to the multi-MB
  * original. Returns null when the binding is unavailable or the transform fails.
+ *
+ * Each variant is resized once: the result is written back to R2 (keyed by the
+ * original's ETag) so the next data center, or the edge after eviction, reads a
+ * small object (tens of milliseconds) instead of resizing a multi-MB photo again
+ * (0.3–1.6 s measured). A caller that already looked up the stored variant and the
+ * original's ETag passes them in so nothing is read twice.
  */
 async function transformStoredImage(
 	request: HandlerRequest,
 	env: HandlerEnv,
+	context: HandlerContext,
 	key: string,
 	width: number,
 	format: "avif" | "webp",
 	quality: number,
+	lookup?: { derived: StoredObject | null; originalEtag: string | null },
 ) {
 	const { IMAGES: images, MEDIA: bucket } = env as HandlerEnv & StoredImageBindings;
 	if (!images) return null;
+	const derivedKey = derivedMediaKey(key, width, format, quality);
 	try {
+		const derived = lookup ? lookup.derived : await bucket.get(derivedKey).catch(() => null);
+		const originalEtag = lookup
+			? lookup.originalEtag
+			: await bucket.head(key).then((head: { httpEtag: string } | null) => head?.httpEtag ?? null, () => null);
+		const storedType = derived?.httpMetadata?.contentType;
+		if (derived && originalEtag && derived.customMetadata?.source === originalEtag && storedType) {
+			if (request.method === "HEAD") await derived.body.cancel().catch(() => undefined);
+			const headers = derivedHeaders(storedType);
+			headers.set("X-Yohaku-Image-Source", "stored");
+			return new Response(request.method === "HEAD" ? null : derived.body, { status: 200, headers });
+		}
+		if (derived) await derived.body.cancel().catch(() => undefined);
+
 		const object = await bucket.get(key);
 		if (!object) return null;
 		const result = await images
 			.input(object.body)
 			.transform({ width, fit: "scale-down" })
 			.output({ format: `image/${format}`, quality });
-		const headers = new Headers({
-			"Content-Type": result.contentType(),
-			"Cache-Control": "public, max-age=31536000, immutable",
-			// Variants are immutable per URL; let the edge keep them so each is resized once.
-			"Cloudflare-CDN-Cache-Control": "public, max-age=31536000, immutable",
-			"X-Content-Type-Options": "nosniff",
-		});
-		return new Response(request.method === "HEAD" ? null : result.image(), { status: 200, headers });
+		const contentType = result.contentType();
+		// R2 needs a known length, and the client gets the same bytes.
+		const bytes = await new Response(result.image()).arrayBuffer();
+		context.waitUntil(
+			bucket
+				.put(derivedKey, bytes, {
+					httpMetadata: { contentType },
+					customMetadata: { source: object.httpEtag },
+				})
+				.catch((error: unknown) => {
+					console.warn("Storing the resized image failed", derivedKey, error instanceof Error ? error.message : error);
+				}),
+		);
+		const headers = derivedHeaders(contentType);
+		headers.set("Content-Length", String(bytes.byteLength));
+		headers.set("X-Yohaku-Image-Source", "resized");
+		return new Response(request.method === "HEAD" ? null : bytes, { status: 200, headers });
 	} catch (error) {
 		console.warn("Images binding transform failed", key, width, format, error instanceof Error ? error.message : error);
 		return null;
@@ -157,7 +224,7 @@ async function servePreview(
 	} catch {
 		return deniedMediaResponse();
 	}
-	if (!mediaKey || mediaKey.includes("\0") || mediaKey.startsWith("backups/")) {
+	if (!mediaKey || mediaKey.includes("\0") || mediaKey.startsWith("backups/") || mediaKey.startsWith(DERIVED_MEDIA_PREFIX)) {
 		return deniedMediaResponse();
 	}
 
@@ -169,11 +236,21 @@ async function servePreview(
 		method: request.method,
 		headers: authenticationHeaders(request),
 	});
+	// The public-reference check is the slow part (a JSON scan of live content);
+	// look up the stored variant and the original's ETag while it runs. They are
+	// used only when the check allows a public read.
+	const { MEDIA: bucket } = env as HandlerEnv & StoredImageBindings;
+	const derivedKey = derivedMediaKey(mediaKey, width, format, quality);
+	const derivedPromise: Promise<StoredObject | null> = bucket.get(derivedKey).catch(() => null);
+	const originalEtagPromise: Promise<string | null> = bucket.head(mediaKey).then((head: { httpEtag: string } | null) => head?.httpEtag ?? null, () => null);
 	const classification = await classifyMediaRead(sourceRequest, database, {
 		authenticate: (candidate) => authenticateMediaRequest(candidate, env, context),
 	});
 	const guardMs = performance.now() - started;
 	const delivery = mediaPreviewDelivery(classification.access);
+	if (delivery !== "transform-public") {
+		context.waitUntil(derivedPromise.then((derived) => derived?.body.cancel()).catch(() => undefined));
+	}
 	if (delivery === "deny") {
 		return deniedMediaResponse();
 	}
@@ -181,8 +258,9 @@ async function servePreview(
 		const response = await deliverGuardedMedia(sourceRequest, (env as HandlerEnv & { MEDIA: GuardedMediaBucket }).MEDIA, mediaKey);
 		return applyMediaAccessHeaders(response, "authenticated");
 	}
+	const lookup = { derived: await derivedPromise, originalEtag: await originalEtagPromise };
 	const transformed =
-		(await transformStoredImage(request, env, mediaKey, width, format, quality)) ??
+		(await transformStoredImage(request, env, context, mediaKey, width, format, quality, lookup)) ??
 		(await transformImage(request, sourceUrl, width, format, quality));
 	if (!transformed) {
 		return deliverOriginalImageFallback(
