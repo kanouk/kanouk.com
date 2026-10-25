@@ -1,6 +1,7 @@
 ---
-import { getTaxonomyTerms } from "emdash";
+import type { getTaxonomyTerms } from "emdash";
 import { Folder, Tags } from "lucide-astro";
+import { sharedBlogQuery } from "../utils/shared-queries";
 
 type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
 
@@ -8,9 +9,10 @@ function flattenTerms(terms: SidebarTerm[]): SidebarTerm[] {
 	return terms.flatMap((term) => [term, ...flattenTerms(term.children)]);
 }
 
+// Shared queries: the page started them alongside its own (src/utils/shared-queries.ts).
 const [categoryTerms, tagTerms] = await Promise.all([
-	getTaxonomyTerms("category", { includeCounts: true }),
-	getTaxonomyTerms("tag", { includeCounts: true }),
+	sharedBlogQuery(Astro.locals, "categoryTerms"),
+	sharedBlogQuery(Astro.locals, "tagTerms"),
 ]);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
 const categoryOrder = new Map([
