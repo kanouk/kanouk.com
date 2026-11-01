@@ -890,21 +890,28 @@ main:focus { outline: none; }
 .yohaku-portable-image__link { display: block; width: 100%; max-width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: none; cursor: zoom-in; }
 .yohaku-portable-image__link img { transition: opacity var(--transition); }
 .yohaku-portable-image__link:hover img { opacity: 0.92; }
-.image-lightbox { --focus: #bfc7ff; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: #0d0d0e; color: #f4f4f5; color-scheme: dark; }
-.image-lightbox[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.image-lightbox { --focus: #bfc7ff; --lightbox-chrome: 5.5rem; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; overflow-y: auto; border: 0; background: #0d0d0e; color: #f4f4f5; color-scheme: dark; opacity: 0; transition: opacity 180ms ease, overlay 180ms allow-discrete, display 180ms allow-discrete; }
+/* Equal rows above and below keep the image at the true centre of the screen. */
+.image-lightbox[open] { display: grid; grid-template-rows: minmax(min-content, 1fr) auto minmax(min-content, 1fr); opacity: 1; transition-duration: 260ms; }
+@starting-style { .image-lightbox[open] { opacity: 0; } }
 html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .image-lightbox::backdrop { background: transparent; }
 .image-lightbox :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.image-lightbox__bar { display: flex; justify-content: flex-end; padding: var(--space-2); }
+.image-lightbox__bar { display: flex; align-items: flex-start; justify-content: flex-end; padding: var(--space-2); }
 .image-lightbox__close { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
-.image-lightbox__stage { display: grid; place-items: center; min-height: 0; padding-inline: var(--space-3); }
+.image-lightbox__stage { display: grid; place-items: center; padding-inline: var(--space-3); }
 .image-lightbox__stage picture { display: contents; }
-.image-lightbox__stage img { width: auto; max-width: 100%; height: auto; max-height: 100%; margin: 0; padding: 0; border: 0; background-size: 100% 100%; box-shadow: none; object-fit: contain; }
-.image-lightbox__meta { display: grid; justify-items: center; gap: var(--space-1); min-height: var(--space-5); padding: var(--space-3) var(--space-4) max(var(--space-4), env(safe-area-inset-bottom)); text-align: center; }
+.image-lightbox__stage img { width: auto; max-width: 100%; height: auto; max-height: calc(100dvh - 2 * var(--lightbox-chrome)); margin: 0; padding: 0; border: 0; background-size: 100% 100%; box-shadow: none; object-fit: contain; transform: scale(0.97); transition: transform 180ms ease; }
+.image-lightbox[open] .image-lightbox__stage img { transform: none; transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+@starting-style { .image-lightbox[open] .image-lightbox__stage img { transform: scale(0.97); } }
+.image-lightbox__meta { display: grid; align-content: start; justify-items: center; padding: var(--space-2) var(--space-4) max(var(--space-2), env(safe-area-inset-bottom)); text-align: center; }
 .image-lightbox__caption { max-width: 48rem; margin: 0; color: rgb(255 255 255 / 72%); font-size: var(--step--1); }
 .image-lightbox__link { display: inline-flex; align-items: center; min-height: 2.75rem; color: rgb(255 255 255 / 72%); font-size: var(--step--1); text-decoration: none; }
 .image-lightbox__link:hover { color: #fff; text-decoration: underline; }
 .image-lightbox [hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+	.image-lightbox, .image-lightbox__stage img, .image-lightbox[open] .image-lightbox__stage img { transition: none; }
+}
 .yohaku-portable-image.style-border img { border: 1px solid var(--rule); }
 .yohaku-portable-image.style-shadow img { box-shadow: 0 0.7rem 2rem color-mix(in srgb, var(--ink) 10%, transparent); }
 .yohaku-portable-image.style-none img { padding: 0; border: 0; background: transparent; box-shadow: none; }

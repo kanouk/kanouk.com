@@ -28,9 +28,6 @@ function lightbox(): HTMLDialogElement {
 		const target = event.target as Element;
 		if (!target.closest("img, a, p")) dialog?.close();
 	});
-	dialog.addEventListener("close", () => {
-		dialog?.querySelector(".image-lightbox__stage")?.replaceChildren();
-	});
 	document.body.append(dialog);
 	return dialog;
 }
