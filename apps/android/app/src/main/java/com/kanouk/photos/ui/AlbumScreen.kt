@@ -98,6 +98,7 @@ fun AlbumScreen(vm: AppViewModel, albumId: String, snackbar: SnackbarHostState) 
 	var renaming by remember { mutableStateOf(false) }
 	var sorting by remember { mutableStateOf(false) }
 	var confirmDelete by remember { mutableStateOf(false) }
+	var confirmClearLocation by remember { mutableStateOf(false) }
 	var deletingAlbum by remember { mutableStateOf(false) }
 	/** The photos in their new order while a manual move is being made and saved. */
 	var arranged by remember(albumId) { mutableStateOf<List<Photo>?>(null) }
@@ -171,6 +172,7 @@ fun AlbumScreen(vm: AppViewModel, albumId: String, snackbar: SnackbarHostState) 
 						ActionButton(Glyph.Star, "表紙にする", enabled = selected.size == 1 && vm.working == null) {
 							selectedPhotos.firstOrNull()?.let { vm.makeCover(album, it) }; endSelection()
 						}
+						ActionButton(Glyph.Pin, "位置を削除", enabled = ready && selectedPhotos.any { it.hasLocation }) { confirmClearLocation = true }
 						ActionButton(Glyph.Trash, "削除", enabled = ready, tint = MaterialTheme.colorScheme.error) { confirmDelete = true }
 					}
 				}
@@ -303,6 +305,15 @@ fun AlbumScreen(vm: AppViewModel, albumId: String, snackbar: SnackbarHostState) 
 		others = vm.albums.filter { it.id != album.id },
 		onDismiss = { deletingAlbum = false },
 	) { moveTo -> deletingAlbum = false; vm.deleteAlbum(album, moveTo) }
+	if (confirmClearLocation) selectedPhotos.filter { it.hasLocation }.let { targets ->
+		ConfirmDialog(
+			title = "${targets.size}点の位置情報を削除しますか？",
+			text = locationRemovalNote(album, targets),
+			confirm = "削除",
+			onDismiss = { confirmClearLocation = false },
+			onConfirm = { confirmClearLocation = false; vm.clearLocation(album, targets) { endSelection() } },
+		)
+	}
 	if (confirmDelete) ConfirmDialog(
 		title = "${selected.size}点を削除しますか？", text = "管理画面のゴミ箱から戻せます。", confirm = "削除",
 		onDismiss = { confirmDelete = false },

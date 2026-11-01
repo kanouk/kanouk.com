@@ -18,6 +18,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.net.URLEncoder
 import java.time.Instant
 import java.util.concurrent.TimeUnit
@@ -191,24 +192,48 @@ class EmDashApi(private val session: Session) {
 		return call("POST", "/_emdash/api/media", body).asObject()?.child("item") ?: throw ApiException("アップロードの応答が読めませんでした。")
 	}
 
+	/** Save a stored original to [target], using the owner's token. */
+	suspend fun downloadMedia(storageKey: String, target: File) = withContext(Dispatchers.IO) {
+		suspend fun attempt(token: String) = http.newCall(
+			Request.Builder().url("$baseUrl/_emdash/api/media/file/${encode(storageKey)}").header("Authorization", "Bearer $token").build(),
+		).execute()
+		try {
+			var response = attempt(accessToken())
+			if (response.code == 401) { response.close(); response = attempt(accessToken(forceRefresh = true)) }
+			response.use {
+				if (!it.isSuccessful) throw ApiException("元の写真を読み込めませんでした（${it.code}）", status = it.code)
+				target.outputStream().use { output -> it.body.byteStream().copyTo(output) }
+			}
+		} catch (error: java.io.IOException) {
+			throw ApiException(OFFLINE_MESSAGE)
+		}
+		Unit
+	}
+
+	/** The image field of a photo or album, from EmDash's media item. */
+	fun imageValue(media: JsonObject): JsonObject {
+		val mime = media.string("mimeType") ?: "image/jpeg"
+		return buildJsonObject {
+			media.string("id")?.let { put("id", it) }
+			media.string("url")?.let { put("src", it); put("url", it) }
+			put("filename", media.string("filename") ?: "photo.jpg")
+			put("mimeType", mime)
+			media.number("width")?.let { put("width", it.toInt()) }
+			media.number("height")?.let { put("height", it.toInt()) }
+			media.string("blurhash")?.let { put("blurhash", it) }
+			media.string("dominantColor")?.let { put("dominantColor", it) }
+			media.string("storageKey")?.let { key -> putJsonObject("meta") { put("storageKey", key) } }
+		}
+	}
+
 	/** Same fields as the web organizer's createPhotoFromMedia, so both stay interchangeable. */
-	suspend fun createPhoto(media: JsonObject, albumId: String, position: Double, exif: PhotoExif, uploadKey: String): Photo {
+	suspend fun createPhoto(media: JsonObject, albumId: String, position: Double, exif: PhotoExif, uploadKey: String, locationRemoved: Boolean = false): Photo {
 		val filename = media.string("filename") ?: "photo.jpg"
 		val title = filename.substringBeforeLast('.').replace(Regex("[_-]+"), " ").trim().ifEmpty { "写真" }
 		val mime = media.string("mimeType") ?: "image/jpeg"
 		val data = buildJsonObject {
 			put("title", title)
-			putJsonObject("image") {
-				media.string("id")?.let { put("id", it) }
-				media.string("url")?.let { put("src", it); put("url", it) }
-				put("filename", filename)
-				put("mimeType", mime)
-				media.number("width")?.let { put("width", it.toInt()) }
-				media.number("height")?.let { put("height", it.toInt()) }
-				media.string("blurhash")?.let { put("blurhash", it) }
-				media.string("dominantColor")?.let { put("dominantColor", it) }
-				media.string("storageKey")?.let { key -> putJsonObject("meta") { put("storageKey", key) } }
-			}
+			put("image", imageValue(media))
 			put("kind", if (mime.startsWith("video/")) "video" else "image")
 			put("alt", title)
 			put("caption", "")
@@ -226,8 +251,8 @@ class EmDashApi(private val session: Session) {
 				put("photo_organizer_upload", true)
 				put("android_app", true)
 				put("uploaded_at", Instant.now().toString())
-				// The owner keeps EXIF (capture time and location); unwanted photos are hidden or deleted.
-				put("location_review", "kept")
+				// The owner keeps EXIF (capture time and location) unless the upload asked to leave it out.
+				put("location_review", if (locationRemoved) "clean" else "kept")
 				put("upload_key", uploadKey)
 				media.string("contentHash")?.let { put("content_hash", it) }
 			}

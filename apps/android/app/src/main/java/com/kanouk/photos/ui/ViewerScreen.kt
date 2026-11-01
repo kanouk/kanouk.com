@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
@@ -50,6 +51,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.kanouk.photos.data.Album
 import com.kanouk.photos.data.Photo
 import com.kanouk.photos.data.siteDateTime
 
@@ -65,6 +67,7 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 	var chrome by remember { mutableStateOf(true) }
 	var editing by remember { mutableStateOf(false) }
 	var confirmDelete by remember { mutableStateOf(false) }
+	var confirmClearLocation by remember { mutableStateOf(false) }
 	val photo = photos.getOrNull(pager.currentPage) ?: return
 	LaunchedEffect(pager.currentPage) { if (pager.currentPage >= photos.size - 6) vm.loadMore(albumId) }
 
@@ -113,6 +116,11 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 				Text("写真の情報", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
 				OutlinedTextField(title, { title = it }, label = { Text("タイトル") }, singleLine = true, modifier = Modifier.fillMaxWidth())
 				OutlinedTextField(caption, { caption = it }, label = { Text("キャプション") }, minLines = 3, modifier = Modifier.fillMaxWidth())
+				Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+					Icon(Glyph.Pin, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(end = 10.dp).size(20.dp))
+					Text(if (photo.hasLocation) "位置情報あり" else "位置情報なし", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+					if (photo.hasLocation) TextButton(onClick = { confirmClearLocation = true }, enabled = vm.working == null) { Text("削除", color = MaterialTheme.colorScheme.error) }
+				}
 				Text("保存すると下書きになり、アルバムの「公開」でサイトに出ます。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 				Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
 					TextButton(onClick = { editing = false }) { Text("キャンセル") }
@@ -122,11 +130,27 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 			}
 		}
 	}
+	if (confirmClearLocation) ConfirmDialog(
+		title = "位置情報を削除しますか？",
+		text = locationRemovalNote(album, listOf(photo)),
+		confirm = "削除",
+		onDismiss = { confirmClearLocation = false },
+		onConfirm = { confirmClearLocation = false; vm.clearLocation(album, listOf(photo)) },
+	)
 	if (confirmDelete) ConfirmDialog(
 		title = "この写真を削除しますか？", text = "管理画面のゴミ箱から戻せます。", confirm = "削除",
 		onDismiss = { confirmDelete = false },
 		onConfirm = { confirmDelete = false; vm.trash(album, listOf(photo)) { if (photos.size <= 1) vm.back() } },
 	)
+}
+
+/** Shared by the viewer and album selection, so both warn about the same things. */
+fun locationRemovalNote(album: Album, photos: List<Photo>): String = buildString {
+	append("地図と写真ファイルから位置情報を消します。アプリから元に戻すことはできません。")
+	if (photos.any { it.isPublished }) append("公開中の写真にはすぐ反映します")
+	if (photos.any { it.isPublished && it.hasPendingChanges }) append("（未公開の変更も一緒に公開されます）")
+	if (photos.any { it.isPublished }) append("。")
+	if (album.isPublished && album.hasPendingChanges && photos.any { it.imageKey == album.coverKey }) append("表紙の写真のため、アルバムの未公開の変更も公開されます。")
 }
 
 /** Pinch (around the fingers) or double-tap (where tapped) to zoom; drag to look around while zoomed. */
