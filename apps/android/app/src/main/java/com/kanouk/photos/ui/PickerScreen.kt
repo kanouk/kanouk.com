@@ -261,7 +261,7 @@ private fun AlbumChooser(albums: List<Album>, onDismiss: () -> Unit, onChoose: (
 				LazyColumn(Modifier.height(280.dp)) {
 					items(albums, key = { it.id }) { album ->
 						Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).clickable { onChoose(album) }.padding(vertical = 8.dp, horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-							RemoteImage(album.coverKey, 320, Modifier.height(44.dp).aspectRatio(1.5f).clip(RoundedCornerShape(6.dp)), source = album.coverSource)
+							RemoteImage(album.coverKey, 320, Modifier.height(44.dp).aspectRatio(1.5f).clip(RoundedCornerShape(6.dp)), source = album.coverSource, crop = album.coverCrop)
 							Column(Modifier.padding(start = 12.dp)) {
 								Text(album.title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
 								if (!album.isPublished) Text("下書き", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
