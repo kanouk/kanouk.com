@@ -37,8 +37,8 @@ export default {
 
     editor.within("function DynamicSelect({ field, pluginId, value, onChange }) {", "\nconst WORDS_PER_MINUTE", (scope) => {
       scope.replace(
-        "function DynamicSelect({ field, pluginId, value, onChange }) {\n\tconst [dynamicOptions, setDynamicOptions] = React$1.useState(null);\n\tconst [loading, setLoading] = React$1.useState(false);",
-        "function DynamicSelect({ field, pluginId, value, onChange, formValues, onPatch = () => {}, renderFieldAddon }) {\n\tconst [dynamicOptions, setDynamicOptions] = React$1.useState(null);\n\tconst [loading, setLoading] = React$1.useState(false);\n\tconst [error, setError] = React$1.useState(\"\");",
+        "function DynamicSelect({ field, pluginId, value, onChange }) {\n\tconst labelId = React$1.useId();\n\tconst [dynamicOptions, setDynamicOptions] = React$1.useState(null);\n\tconst [loading, setLoading] = React$1.useState(false);",
+        "function DynamicSelect({ field, pluginId, value, onChange, formValues, onPatch = () => {}, renderFieldAddon }) {\n\tconst labelId = React$1.useId();\n\tconst [dynamicOptions, setDynamicOptions] = React$1.useState(null);\n\tconst [loading, setLoading] = React$1.useState(false);\n\tconst [error, setError] = React$1.useState(\"\");",
       );
       scope.replace(
         "\tReact$1.useEffect(() => {\n\t\tif (!field.optionsRoute || !pluginId) return;\n\t\tconst controller = new AbortController();\n\t\tsetLoading(true);",

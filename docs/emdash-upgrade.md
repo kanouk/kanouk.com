@@ -1,6 +1,6 @@
 # EmDash の更新とカスタマイズの構成
 
-`apps/web` は EmDash（現在 1.3.0、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
+`apps/web` は EmDash（現在 1.4.0、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
 
 1. **拡張ポイント層**（`apps/web/scripts/emdash-admin/`）: EmDash 管理画面に汎用の差し込み口だけを足す小さなパッチ。サイト固有の UI は置かない。
 2. **プラグイン層**: 実際の振る舞い。信頼済みプラグインの管理画面モジュール（descriptor の `adminEntry`）が拡張ポイントを使う。
@@ -87,6 +87,24 @@ python3 scripts/cloudflare/check_emdash_reference_fields.py --remote
 ローカルでは、0.40.1 のデータ入り D1 に 1.1.0 を起動し、6 本が自動適用されること、移行されたリンクが 0 件であること、編集シナリオが 0.40.1・1.0.1 と同じ結果になること、旧記事と画像リンクがそのまま開けることを確認した。
 
 管理画面の初期 JS は 1,212,120 bytes（gzip）になった。内訳と予算の変更は `docs/performance/README.md` を参照。1.1.0 で追加された HTML ブロック用のコードエディタ（CodeMirror）は遅延読み込み。
+
+### 1.4.0 への更新（2026-11-01）
+
+`emdash` と `@emdash-cms/cloudflare` を 1.4.0、Forms を 0.2.12 に更新した。npm と Bun のロックファイルを同期し、TipTap 本体と標準拡張は `extension-code-block-lowlight` の上流固定版 3.20.0 を除いて 3.32.2 に揃えた。旧ロックファイルの混在により subscript / superscript と core / pm の peer dependency が不整合になったため、TipTap の依存解決を更新している（別系統の `y-tiptap` は 3.0.12）。
+
+1.3.0 と 1.4.0 の配布パッケージを比較し、番号付きマイグレーション 90 ファイルがすべて同一であることを確認した。追加・削除・変更はなく、最新は `091_redirect_artifacts` のまま。
+
+管理画面の拡張ポイントは 7 本とも引き続き必要で、次の 3 本のアンカーを調整した。上流の修正は保持している。
+
+- `block-kit-dependent-select`: `useId()` と `aria-labelledby` によるラベルの関連付け。
+- `block-insert-defaults`: `EMPTY_PLUGIN_BLOCKS` による既定値の参照の安定化。
+- `block-node-view-extensions`: URL を持たない未登録ブロックの URL 編集を防ぐ `canEditUrl` 判定。
+
+1.4.0 は `cacheHint.lastModified` と自動の `Last-Modified` ヘッダーを廃止した。このサイトはどちらも参照しておらず、公開ページのキャッシュ期間は `astro.config.mjs` の route rules、認証・プレビューの除外は middleware が設定している。sandboxed plugin の呼び出し寿命の変更も、このサイトの trusted plugin 構成には該当しない。詳細は[公式リリースノート](https://www.emdashcms.com/blog/emdash-1-4)を参照。
+
+Node 24.21.0 でクリーンな `npm ci`、拡張ポイントの適用確認、移行・管理機能テスト 167 件、公開 UX テスト 114 件、Python テスト 187 件、型チェック、ビルド、サイズ予算チェックが合格した。型チェックはエラー・警告 0、既存の `admin-bar.ts` に hint 1 件。管理画面の初期 JS は 1,238,249 bytes（gzip）、管理画面 CSS は 41,658 bytes、公開 CSS は 25,499 bytes。
+
+新規のローカル D1/R2 では、トップページ 200・管理画面 302、記事の保存・再取得・公開、関連アルバムの解除、古いリビジョンの保存拒否、画像アップロードを確認した。下書き画像は匿名アクセス 404、認証済みアクセス 200 / private・no-store、未審査写真の公開は 409 だった。本番反映と管理画面の目視操作確認は、このローカル検証には含まない。
 
 ### 1.3.0 への更新（2026-10-17）
 

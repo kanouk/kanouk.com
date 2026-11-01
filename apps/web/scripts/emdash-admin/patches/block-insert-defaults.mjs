@@ -8,7 +8,7 @@ export default {
   upstream: "Propose insert defaults for plugin blocks (with access to the entry draft) upstream.",
   apply(editor) {
     editor.within("function PortableTextEditor({ value, onChange,", "\nfunction ", (scope) => {
-      scope.replace("pluginBlocks = [], focusMode: controlledFocusMode,", "pluginBlocks = [], documentData, focusMode: controlledFocusMode,");
+      scope.replace("pluginBlocks = EMPTY_PLUGIN_BLOCKS, focusMode: controlledFocusMode,", "pluginBlocks = EMPTY_PLUGIN_BLOCKS, documentData, focusMode: controlledFocusMode,");
       scope.replace(
         "\tconst [pluginBlockInitialValues, setPluginBlockInitialValues] = React$1.useState(void 0);\n",
         `\tconst [pluginBlockInitialValues, setPluginBlockInitialValues] = React$1.useState(void 0);

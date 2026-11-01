@@ -110,6 +110,12 @@ test("the installed bundle wires each extension point where upstream renders it"
   // Dependent selects.
   assert.match(source, /body: JSON\.stringify\(\{ values: formValues \?\? \{\} \}\)/);
   assert.match(source, /selectedOption\?\.values/);
+  // Keep upstream's accessibility wiring when extending the select.
+  const select = source.slice(source.indexOf("function DynamicSelect("), source.indexOf("\nconst WORDS_PER_MINUTE"));
+  assert.match(select, /const labelId = React\$1\.useId\(\)/);
+  assert.match(select, /"aria-labelledby": labelId/);
+  assert.match(source, /pluginBlocks = EMPTY_PLUGIN_BLOCKS, documentData,/);
+  assert.match(source, /canEditUrl && isEditing &&/);
   // Insert defaults with the entry draft.
   assert.match(source, /documentData: formData,/);
   assert.match(source, /resolveBlockInsertDefaults\(blockInsertExtensionsRef\.current/);
