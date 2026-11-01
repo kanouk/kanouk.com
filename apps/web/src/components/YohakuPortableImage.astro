@@ -63,13 +63,19 @@ const imageValue = {
 			style={node.displayWidth ? `--image-display-width:${node.displayWidth}px` : undefined}
 		>
 			{link ? (
-				<a href={link.href} class="yohaku-portable-image__link" target={link.blank ? "_blank" : undefined} rel={link.blank ? "noopener noreferrer" : undefined}>
+				<a href={link.href} class="yohaku-portable-image__link" data-image-lightbox target={link.blank ? "_blank" : undefined} rel={link.blank ? "noopener noreferrer" : undefined}>
 					<YohakuImage image={imageValue} preview priority={node._yohakuPriority} sizes="(max-width: 900px) calc(100vw - 2rem), 48rem" />
 				</a>
 			) : (
-				<YohakuImage image={imageValue} preview priority={node._yohakuPriority} sizes="(max-width: 900px) calc(100vw - 2rem), 48rem" />
+				<button type="button" class="yohaku-portable-image__link" data-image-lightbox aria-label={node.alt ? `${node.alt}を拡大` : "写真を拡大"}>
+					<YohakuImage image={imageValue} preview priority={node._yohakuPriority} sizes="(max-width: 900px) calc(100vw - 2rem), 48rem" />
+				</button>
 			)}
 			{node.caption && <figcaption>{node.caption}</figcaption>}
 		</figure>
 	)
 }
+
+<script>
+	import "../client/image-lightbox";
+</script>
