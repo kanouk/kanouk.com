@@ -16,13 +16,16 @@ import com.kanouk.photos.data.SignedOutException
 import com.kanouk.photos.data.string
 import com.kanouk.photos.media.openOriginal
 import com.kanouk.photos.media.readExif
+import com.kanouk.photos.media.removeLocation
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okio.BufferedSink
 import okio.source
+import java.io.File
 import java.time.Instant
 
 /** Uploads one batch: original file (EXIF kept) → media library → draft photo in the album. */
@@ -92,10 +95,18 @@ class UploadWorker(context: Context, params: WorkerParameters) : CoroutineWorker
 			if (item.uploadKey in keys) { update(index) { it.copy(state = UploadItem.DUPLICATE) }; continue }
 			update(index) { it.copy(state = UploadItem.UPLOADING, error = null) }
 			showProgress(batch)
+			var cleaned: File? = null
 			try {
 				val uri = Uri.parse(item.uri)
-				val exif = applicationContext.readExif(uri)
-				val body = object : RequestBody() {
+				val read = applicationContext.readExif(uri)
+				val exif = if (batch.removeLocation) read.copy(latitude = null, longitude = null, altitude = null, locationErased = false) else read
+				if (batch.removeLocation) {
+					cleaned = File.createTempFile("upload-", ".tmp", applicationContext.cacheDir).also { file ->
+						(applicationContext.openOriginal(uri) ?: error("写真を読めませんでした")).use { input -> file.outputStream().use(input::copyTo) }
+						removeLocation(file, item.mimeType)
+					}
+				}
+				val body = cleaned?.asRequestBody(item.mimeType.toMediaType()) ?: object : RequestBody() {
 					override fun contentType(): MediaType = item.mimeType.toMediaType()
 					override fun writeTo(sink: BufferedSink) {
 						val input = applicationContext.openOriginal(uri) ?: error("写真を読めませんでした")
@@ -106,7 +117,7 @@ class UploadWorker(context: Context, params: WorkerParameters) : CoroutineWorker
 				val hash = media.string("contentHash")
 				if (hash != null && hash in hashes) { update(index) { it.copy(state = UploadItem.DUPLICATE) }; continue }
 				position += 1
-				val photo = api.createPhoto(media, batch.albumId, position, exif, item.uploadKey)
+				val photo = api.createPhoto(media, batch.albumId, position, exif, item.uploadKey, locationRemoved = batch.removeLocation)
 				keys += item.uploadKey
 				hash?.let(hashes::add)
 				exif.capturedAt?.let(captured::add)
@@ -118,6 +129,8 @@ class UploadWorker(context: Context, params: WorkerParameters) : CoroutineWorker
 				break
 			} catch (error: Exception) {
 				update(index) { it.copy(state = UploadItem.FAILED, error = error.message ?: "失敗しました") }
+			} finally {
+				cleaned?.delete()
 			}
 		}
 

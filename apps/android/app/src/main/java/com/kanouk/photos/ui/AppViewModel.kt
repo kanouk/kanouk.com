@@ -313,6 +313,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 		back()
 	}
 
+	fun clearLocation(album: Album, targets: List<Photo>, done: () -> Unit = {}) = guard("位置情報を削除しています…") {
+		var failed: String? = null
+		var removed = 0
+		for (photo in targets) runCatching { actions.clearLocation(album, photo, getApplication<Application>().cacheDir); removed++ }.onFailure { failed = it.message }
+		reloadAfterChange(album.id)
+		targets.firstOrNull()?.let { runCatching { refreshPhotoDraft(it.id) } }
+		notice = failed?.let { "${removed}点の位置情報を削除しました。$it" } ?: "${removed}点の位置情報を削除しました"
+		done()
+	}
+
 	fun makeCover(album: Album, photo: Photo) = guard("表紙を変更中…") {
 		actions.makeCover(album, photo)
 		refreshAlbumDraft(album.id)
@@ -381,9 +391,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
 	// ---- Uploads ----------------------------------------------------------------
 
-	fun upload(album: Album, chosen: List<LocalPhoto>) {
+	fun upload(album: Album, chosen: List<LocalPhoto>, removeLocation: Boolean = false) {
 		if (chosen.isEmpty()) return
-		UploadCenter.enqueue(getApplication(), album.id, album.title, chosen)
+		UploadCenter.enqueue(getApplication(), album.id, album.title, chosen, removeLocation)
 		notice = "${chosen.size}点の追加を始めました。アプリを閉じても続きます"
 	}
 
