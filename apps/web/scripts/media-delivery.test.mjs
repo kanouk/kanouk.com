@@ -80,19 +80,15 @@ test("resized variants are stored in R2 once and reused only for the same origin
 	assert.match(worker, /context\.waitUntil\(\s*bucket\s*\.put\(derivedKey, bytes, \{[\s\S]*customMetadata: \{ source: object\.httpEtag \}/);
 });
 
-test("Leaflet's stylesheet is loaded on demand, not hoisted into every page", async () => {
+test("the maps load Google's script on demand, with no leftover Leaflet", async () => {
 	const { readFile } = await import("node:fs/promises");
-	const [albumMap, viewer, style, admin] = await Promise.all([
+	const [albumMap, viewer, admin] = await Promise.all([
 		readFile(new URL("../src/components/AlbumMap.astro", import.meta.url), "utf8"),
 		readFile(new URL("../src/client/photo-viewer.ts", import.meta.url), "utf8"),
-		readFile(new URL("../src/client/map-style.ts", import.meta.url), "utf8"),
 		readFile(new URL("../src/studio/admin.tsx", import.meta.url), "utf8"),
 	]);
-	assert.doesNotMatch(albumMap, /import\("leaflet\/dist\/leaflet\.css"\)/);
-	assert.doesNotMatch(viewer, /import\("leaflet\/dist\/leaflet\.css"\)/);
-	assert.doesNotMatch(admin, /import\("leaflet\/dist\/leaflet\.css"\)/);
-	assert.match(admin, /loadMapStyle\(\)/);
-	assert.match(albumMap, /loadMapStyle\(\)/);
-	assert.match(viewer, /loadMapStyle\(\)/);
-	assert.match(style, /from "leaflet\/dist\/leaflet\.css\?url"/);
+	for (const source of [albumMap, viewer, admin]) {
+		assert.match(source, /loadGoogleMaps\(\)/);
+		assert.doesNotMatch(source, /leaflet|openstreetmap/i);
+	}
 });

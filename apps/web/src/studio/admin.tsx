@@ -61,8 +61,7 @@ import { normalizePhotoSort, photoComparator } from "../utils/photo-sort.mjs";
 // Inlined and injected by the admin itself: a plain CSS import would be linked
 // on every public page too, since the plugin registry is part of the site bundle.
 import studioCss from "./studio.css?inline";
-// Same reason for Leaflet's stylesheet: loaded as an asset URL when a map opens.
-import { loadMapStyle } from "../client/map-style";
+import { loadGoogleMaps, showPlace } from "../client/google-maps";
 
 if (typeof document !== "undefined" && !document.getElementById("yohaku-photo-tools-css")) {
 	const style = document.createElement("style");
@@ -380,22 +379,17 @@ function reasonOf(cause: unknown): string {
 	return cause instanceof Error ? cause.message : "不明なエラー";
 }
 
-/** A small OpenStreetMap view of where the photo was taken; Leaflet loads on first use. */
+/** A small Google Maps view of where the photo was taken; the script loads on first use. */
 function LocationMap({ latitude, longitude }: { latitude: number; longitude: number }) {
 	const ref = useRef<HTMLDivElement>(null);
 	const [failed, setFailed] = useState(false);
 	useEffect(() => {
-		let map: { remove(): void } | undefined;
 		let cancelled = false;
-		void Promise.all([import("leaflet"), loadMapStyle()]).then(([{ default: L }]) => {
+		void loadGoogleMaps().then((maps) => {
 			if (cancelled || !ref.current) return;
-			const instance = L.map(ref.current, { scrollWheelZoom: false, attributionControl: false }).setView([latitude, longitude], 15);
-			L.control.attribution({ prefix: false }).addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>').addTo(instance);
-			L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19 }).addTo(instance);
-			L.circleMarker([latitude, longitude], { radius: 7, weight: 2, color: "#fff", fillColor: "#2271b1", fillOpacity: 0.95 }).addTo(instance);
-			map = instance;
+			showPlace(maps, ref.current, latitude, longitude, "#2271b1");
 		}).catch(() => setFailed(true));
-		return () => { cancelled = true; map?.remove(); };
+		return () => { cancelled = true; };
 	}, [latitude, longitude]);
 	return failed
 		? <p className="photo-tools-muted">地図を読み込めませんでした。</p>
@@ -528,7 +522,7 @@ function PhotoInspector({
 			<div className="photo-tools-location">
 				{position
 					? <>
-						<span>撮影場所<a href={`https://www.openstreetmap.org/?mlat=${position.latitude}&mlon=${position.longitude}#map=16/${position.latitude}/${position.longitude}`} target="_blank" rel="noreferrer">地図を開く</a></span>
+						<span>撮影場所<a href={`https://www.google.com/maps/search/?api=1&query=${position.latitude}%2C${position.longitude}`} target="_blank" rel="noreferrer">地図を開く</a></span>
 						<LocationMap latitude={position.latitude} longitude={position.longitude} />
 						<small>公開するとアルバムの地図にも出ます</small>
 					</>

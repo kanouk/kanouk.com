@@ -39,7 +39,7 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 }
 
 <script>
-	import { loadMapStyle } from "../client/map-style";
+	import { loadGoogleMaps, pinIcon } from "../client/google-maps";
 
 	type Marker = {
 		latitude: number;
@@ -57,16 +57,15 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 		const canvas = shell.querySelector<HTMLElement>(".album-map-canvas");
 		if (!toggle || !panel || !canvas) return;
 
-		let map: import("leaflet").Map | undefined;
+		let map: google.maps.Map | undefined;
 		let mapPromise: Promise<void> | undefined;
 		let markers = JSON.parse(shell.dataset.markers || "[]") as Marker[];
 		const initializeMap = async () => {
 			if (map) return;
 			if (mapPromise) return mapPromise;
 			mapPromise = (async () => {
-			const [{ default: L }, , loaded] = await Promise.all([
-                import("leaflet"),
-                loadMapStyle(),
+			const [maps, loaded] = await Promise.all([
+                loadGoogleMaps(),
                 shell.dataset.source ? fetch(shell.dataset.source).then(async response => {
                     if (!response.ok) throw new Error("地図データを取得できませんでした");
                     return response.json() as Promise<{markers: Marker[]}>;
@@ -75,28 +74,28 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
             markers = loaded.markers;
             if (!markers.length) { canvas.textContent = "撮影場所の情報はありません。"; return; }
 			canvas.textContent = "";
-			map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
-			L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-				maxZoom: 19,
-			}).addTo(map);
+			const drawn = new maps.Map(canvas, { scrollwheel: false, mapTypeControl: false, streetViewControl: false, fullscreenControl: false });
+			map = drawn;
 
-			const bounds = L.latLngBounds([]);
+			const popup = new maps.InfoWindow();
+			const bounds = new maps.LatLngBounds();
 			markers.forEach((marker) => {
-				const point = L.latLng(marker.latitude, marker.longitude);
-				bounds.extend(point);
+				const position = { lat: marker.latitude, lng: marker.longitude };
+				bounds.extend(position);
 				const link = document.createElement("a");
 				link.href = marker.href;
 				link.textContent = marker.title;
-				L.circleMarker(point, {
-					radius: 5,
-					weight: 1.5,
-					color: "#fff",
-					fillColor: "#17658c",
-					fillOpacity: 0.88,
-				}).bindPopup(link).addTo(map!);
+				const pin = new maps.Marker({ map: drawn, position, title: marker.title, icon: pinIcon(maps, "#17658c", 5) });
+				pin.addListener("click", () => {
+					popup.setContent(link);
+					popup.open({ map: drawn, anchor: pin });
+				});
 			});
-			map.fitBounds(bounds, { padding: [28, 28], maxZoom: 15 });
+			// fitBounds has no zoom limit, and a single place would fill the map.
+			maps.event.addListenerOnce(drawn, "idle", () => {
+				if ((drawn.getZoom() ?? 0) > 15) drawn.setZoom(15);
+			});
+			drawn.fitBounds(bounds, 28);
 			})();
 			return mapPromise;
 		};
@@ -109,7 +108,6 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 			if (open) {
 				try { await initializeMap(); }
                 catch { mapPromise = undefined; canvas.textContent = "地図を取得できませんでした。閉じて開くと再試行できます。"; }
-				window.setTimeout(() => map?.invalidateSize(), 0);
 			}
 		});
 	});
