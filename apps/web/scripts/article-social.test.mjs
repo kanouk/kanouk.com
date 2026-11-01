@@ -108,6 +108,27 @@ test("standard body media supplies the OG image and body excerpt", async () => {
 	sqlite.close();
 });
 
+test("a related album's cover is used after featured media and before body images", async () => {
+	const { sqlite, database } = fixtureDatabase();
+	addMedia(sqlite, "media-featured", "posts/featured.jpg");
+	addMedia(sqlite, "media-cover", "albums/cover.jpg");
+	addMedia(sqlite, "media-body", "posts/body.jpg");
+	addMedia(sqlite, "media-draft", "albums/draft.jpg");
+	addContent(sqlite, "albums", { id: "album-public", data: { cover_image: { id: "media-cover" } } });
+	addContent(sqlite, "albums", { id: "album-draft", status: "draft", data: { cover_image: { id: "media-draft" } } });
+	const data = {
+		related_album: "album-public",
+		content: [{ _type: "image", asset: { _ref: "media-body" } }],
+	};
+	addContent(sqlite, "posts", { id: "post-album", data });
+	const imageOf = async (overrides) => (await resolveArticleSocial(database, { id: "post-album", data: { ...data, ...overrides } })).imageUrl;
+	assert.equal(await imageOf({}), `${PHOTOS}/_emdash/api/media/file/albums%2Fcover.jpg`);
+	addContent(sqlite, "posts", { id: "post-featured", data: { featured_image: { id: "media-featured" } } });
+	assert.equal(await imageOf({ featured_image: { id: "media-featured" } }), `${BLOG}/_emdash/api/media/file/posts%2Ffeatured.jpg`);
+	assert.equal(await imageOf({ related_album: "album-draft" }), `${BLOG}/_emdash/api/media/file/posts%2Fbody.jpg`);
+	sqlite.close();
+});
+
 test("explicit SEO description and safe external image outrank featured media", async () => {
 	const { sqlite, database } = fixtureDatabase();
 	addMedia(sqlite, "media-featured", "posts/featured.jpg");

@@ -5,6 +5,7 @@ import PostCard from "../components/PostCard.astro";
 import Base from "../layouts/Base.astro";
 import { getPostExcerpt, getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { postCoverImages } from "../utils/post-covers";
 import { startSharedBlogQueries } from "../utils/shared-queries";
 
 const POSTS_PER_PAGE = 10;
@@ -21,14 +22,18 @@ const [{ entries: posts, cacheHint }, settings] = await Promise.all([
 const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings);
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums"] });
 
 const visiblePosts = posts.slice(0, POSTS_PER_PAGE);
 const hasMorePosts = posts.length > POSTS_PER_PAGE;
-const tagsByEntry = await getTermsForEntries(
-	"posts",
-	visiblePosts.map((post) => post.data.id),
-	"tag",
-);
+const [tagsByEntry, covers] = await Promise.all([
+	getTermsForEntries(
+		"posts",
+		visiblePosts.map((post) => post.data.id),
+		"tag",
+	),
+	postCoverImages(visiblePosts),
+]);
 ---
 
 <Base title={siteTitle} description={siteTagline}>
@@ -52,7 +57,7 @@ const tagsByEntry = await getTermsForEntries(
 								<PostCard
 									variant="list"
 									title={post.data.title ?? "無題"}
-									featuredImage={post.data.featured_image}
+									featuredImage={covers.get(post.data.id)}
 									href={`/posts/${post.data.id}`}
 									date={post.data.publishedAt ?? undefined}
 									excerpt={getPostExcerpt(post.data.excerpt, post.data.content, 180)}

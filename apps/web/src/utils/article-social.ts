@@ -333,6 +333,9 @@ export async function resolveArticleSocial(
 		const resolved = await publicImageUrl(database, candidate, origin);
 		if (resolved) return { description: articleDescription(article), imageUrl: resolved };
 	}
+	const albumCover = await publishedAlbumCover(database, text(article.data.related_album));
+	const albumImage = await publicImageUrl(database, albumCover, photoOriginFor(origin));
+	if (albumImage) return { description: articleDescription(article), imageUrl: albumImage };
 	const bodyImage = await firstBodyImage(database, article.data.content, origin);
 	return {
 		description: articleDescription(article),
