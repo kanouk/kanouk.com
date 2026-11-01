@@ -94,10 +94,9 @@ test("photo detail controls and metadata stay inside the viewer", async () => {
 	]);
 	assert.match(page, /class="photo-action-rail"/);
 	assert.match(page, /data-photo-info-panel/);
-	// The location map loads Leaflet only when the info panel opens.
+	// The location map loads Google Maps only when the info panel opens.
 	assert.match(page, /data-photo-map data-latitude=\{latitude\}/);
-	assert.doesNotMatch(viewer, /^import .*leaflet/m);
-	assert.match(viewer, /import\("leaflet"\)/);
+	assert.match(viewer, /await loadGoogleMaps\(\)/);
 	assert.doesNotMatch(page, /class="photo-tools"/);
 	assert.doesNotMatch(page, /class="photo-navigation"/);
 	assert.doesNotMatch(page, /<section class="(?:exif|location)"/);
@@ -105,8 +104,10 @@ test("photo detail controls and metadata stay inside the viewer", async () => {
 	assert.match(theme, /\.photo-info-panel\[hidden\] \{ display: none; \}/);
 });
 
-test("the album map defers Leaflet until the map is opened", async () => {
-	const albumMap = await read("src/components/AlbumMap.astro");
-	assert.doesNotMatch(albumMap, /^\s*import L from "leaflet";/m);
-	assert.match(albumMap, /import\("leaflet"\)/);
+test("the album map defers Google Maps until the map is opened", async () => {
+	const [albumMap, loader] = await Promise.all([read("src/components/AlbumMap.astro"), read("src/client/google-maps.ts")]);
+	assert.match(albumMap, /loadGoogleMaps\(\),/);
+	assert.match(albumMap, /const initializeMap = async/);
+	// Nothing reaches Google until a map asks for the script.
+	assert.doesNotMatch(loader, /^document\./m);
 });

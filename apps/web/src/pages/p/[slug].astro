@@ -81,7 +81,7 @@ const hasLocation =
 	longitude >= -180 &&
 	longitude <= 180;
 const mapLinkUrl = hasLocation
-	? `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=15/${latitude}/${longitude}`
+	? `https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`
 	: undefined;
 
 const sourceMetadata = photo.data.source_metadata;
@@ -272,7 +272,7 @@ const exifDetails = [
 									<MapPin size={16} strokeWidth={1.65} aria-hidden="true" />
 									<span>撮影場所</span>
 								</h2>
-								<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer" aria-label="OpenStreetMapで撮影場所を見る">
+								<a href={mapLinkUrl} target="_blank" rel="noopener noreferrer" aria-label="Googleマップで撮影場所を見る">
 									<ExternalLink size={15} strokeWidth={1.65} aria-hidden="true" />
 								</a>
 							</div>
