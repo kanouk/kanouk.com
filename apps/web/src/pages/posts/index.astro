@@ -3,6 +3,7 @@ import { getEmDashCollection, getTermsForEntries } from "emdash";
 import Base from "../../layouts/Base.astro";
 import ArchivePagination from "../../components/ArchivePagination.astro";
 import PostCard from "../../components/PostCard.astro";
+import { postCoverImages } from "../../utils/post-covers";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 
 const PAGE_SIZE = 24;
@@ -18,9 +19,13 @@ const { entries: posts, hasMore = false, cacheHint } = await getEmDashCollection
 });
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums"] });
 
 // Resolve list tags in one batched query instead of one round-trip per post.
-const tagsByEntry = await getTermsForEntries("posts", posts.map((p) => p.data.id), "tag");
+const [tagsByEntry, covers] = await Promise.all([
+	getTermsForEntries("posts", posts.map((p) => p.data.id), "tag"),
+	postCoverImages(posts),
+]);
 
 const postsWithTags = posts.map((post) => ({
 	post,
@@ -49,7 +54,7 @@ const postsWithTags = posts.map((post) => ({
 							variant="list"
 							title={post.data.title}
 							excerpt={excerpt}
-							featuredImage={post.data.featured_image}
+							featuredImage={covers.get(post.data.id)}
 							href={`/posts/${post.data.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}

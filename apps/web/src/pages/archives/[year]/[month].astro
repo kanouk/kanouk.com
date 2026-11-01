@@ -3,6 +3,7 @@ import { getEmDashCollection } from "emdash";
 import { ArrowLeft, CalendarDays } from "lucide-astro";
 import PostCard from "../../../components/PostCard.astro";
 import Base from "../../../layouts/Base.astro";
+import { postCoverImages } from "../../../utils/post-covers";
 import { getPostExcerpt, getReadingTime } from "../../../utils/reading-time";
 import { getPostArchiveMonths, japanDateParts, japanMonthRange } from "../../../utils/post-archives";
 
@@ -22,7 +23,9 @@ const [{ entries: posts, cacheHint }, archives] = await Promise.all([
 	getPostArchiveMonths(240),
 ]);
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums"] });
 if (posts.length === 0) return Astro.redirect("/404");
+const covers = await postCoverImages(posts);
 const title = `${year}年${month}月の記事`;
 const archiveIndex = archives.findIndex((archive) => archive.year === year && archive.month === month);
 const newer = archiveIndex > 0 ? archives[archiveIndex - 1] : undefined;
@@ -45,7 +48,7 @@ const older = archiveIndex >= 0 ? archives[archiveIndex + 1] : undefined;
 							variant="list"
 							title={post.data.title ?? "無題"}
 							excerpt={getPostExcerpt(post.data.excerpt, post.data.content)}
-							featuredImage={post.data.featured_image}
+							featuredImage={covers.get(post.data.id)}
 							href={`/posts/${post.data.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}

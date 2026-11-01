@@ -24,6 +24,7 @@ import {
 	resolveArticleSocial,
 	type ArticleSocialDatabase,
 } from "../../utils/article-social";
+import { postCoverImages } from "../../utils/post-covers";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { calculateAge } from "../../utils/author-age.mjs";
 import { siteDateLabel } from "../../utils/photo-date.mjs";
@@ -193,7 +194,10 @@ const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);
 
 // Single batched query for related-posts tags, rather than one
 // getEntryTerms() call per related post.
-const otherTagsByEntry = await getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "tag");
+const [otherTagsByEntry, otherCovers] = await Promise.all([
+	getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "tag"),
+	postCoverImages(otherPosts),
+]);
 const otherPostsWithTags = otherPosts.map((p) => ({
 	post: p,
 	tags: otherTagsByEntry.get(p.data.id) ?? [],
@@ -339,7 +343,7 @@ const titleSegments = Array.from(
 								<PostCard
 									title={p.data.title}
 									excerpt={getPostExcerpt(p.data.excerpt, p.data.content)}
-									featuredImage={p.data.featured_image}
+									featuredImage={otherCovers.get(p.data.id)}
 									href={`/posts/${p.data.id}`}
 									date={p.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(p.data.content)}
