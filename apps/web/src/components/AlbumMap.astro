@@ -39,7 +39,7 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 }
 
 <script>
-	import { loadMapStyle } from "../client/map-style";
+	import { showMarkers, type DrawnMap } from "../client/map";
 
 	type Marker = {
 		latitude: number;
@@ -57,46 +57,22 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 		const canvas = shell.querySelector<HTMLElement>(".album-map-canvas");
 		if (!toggle || !panel || !canvas) return;
 
-		let map: import("leaflet").Map | undefined;
+		let map: DrawnMap | undefined;
 		let mapPromise: Promise<void> | undefined;
 		let markers = JSON.parse(shell.dataset.markers || "[]") as Marker[];
 		const initializeMap = async () => {
 			if (map) return;
 			if (mapPromise) return mapPromise;
 			mapPromise = (async () => {
-			const [{ default: L }, , loaded] = await Promise.all([
-                import("leaflet"),
-                loadMapStyle(),
+			const loaded = await (
                 shell.dataset.source ? fetch(shell.dataset.source).then(async response => {
                     if (!response.ok) throw new Error("地図データを取得できませんでした");
                     return response.json() as Promise<{markers: Marker[]}>;
-                }) : Promise.resolve({markers}),
-            ]);
+                }) : Promise.resolve({markers})
+            );
             markers = loaded.markers;
             if (!markers.length) { canvas.textContent = "撮影場所の情報はありません。"; return; }
-			canvas.textContent = "";
-			map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
-			L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-				maxZoom: 19,
-			}).addTo(map);
-
-			const bounds = L.latLngBounds([]);
-			markers.forEach((marker) => {
-				const point = L.latLng(marker.latitude, marker.longitude);
-				bounds.extend(point);
-				const link = document.createElement("a");
-				link.href = marker.href;
-				link.textContent = marker.title;
-				L.circleMarker(point, {
-					radius: 5,
-					weight: 1.5,
-					color: "#fff",
-					fillColor: "#17658c",
-					fillOpacity: 0.88,
-				}).bindPopup(link).addTo(map!);
-			});
-			map.fitBounds(bounds, { padding: [28, 28], maxZoom: 15 });
+			map = await showMarkers(canvas, markers, "#17658c");
 			})();
 			return mapPromise;
 		};
@@ -109,7 +85,7 @@ const { markers, count = markers.length, source, panelId } = Astro.props;
 			if (open) {
 				try { await initializeMap(); }
                 catch { mapPromise = undefined; canvas.textContent = "地図を取得できませんでした。閉じて開くと再試行できます。"; }
-				window.setTimeout(() => map?.invalidateSize(), 0);
+				window.setTimeout(() => map?.resize(), 0);
 			}
 		});
 	});

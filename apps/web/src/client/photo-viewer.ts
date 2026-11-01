@@ -12,7 +12,7 @@
  */
 import { embedCode, embedSizes } from "../utils/photo-embed.mjs";
 import { mountAdminBar } from "./admin-bar";
-import { loadMapStyle } from "./map-style";
+import { showPlace, type DrawnMap } from "./map";
 import { albumPhotoAnchor, photoReturnKey, readPhotoReturn } from "../utils/photo-return.mjs";
 
 type Direction = "previous" | "next";
@@ -166,7 +166,7 @@ export function mountPhotoViewer(): void {
 		incoming.inert = false;
 	};
 
-	let map: { remove(): void } | undefined;
+	let map: DrawnMap | undefined;
 	/** Take over the new photo's title, links and panels from its server-rendered page. */
 	const applyPage = (page: Document, url: string) => {
 		const incoming = page.querySelector<HTMLElement>("[data-photo-viewer]");
@@ -281,13 +281,7 @@ export function mountPhotoViewer(): void {
 		const latitude = Number(canvas.dataset.latitude);
 		const longitude = Number(canvas.dataset.longitude);
 		try {
-			const [{ default: L }] = await Promise.all([import("leaflet"), loadMapStyle()]);
-			if (!canvas.isConnected) return;
-			const instance = L.map(canvas, { scrollWheelZoom: false, attributionControl: false, zoomControl: true }).setView([latitude, longitude], 15);
-			L.control.attribution({ prefix: false }).addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>').addTo(instance);
-			L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19 }).addTo(instance);
-			L.circleMarker([latitude, longitude], { radius: 7, weight: 2, color: "#fff", fillColor: "#17658c", fillOpacity: 0.95 }).addTo(instance);
-			map = instance;
+			map = await showPlace(canvas, latitude, longitude, "#17658c");
 		} catch {
 			canvas.textContent = "地図を読み込めませんでした。";
 		}
@@ -459,7 +453,7 @@ export function mountPhotoViewer(): void {
 			return;
 		}
 		if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
-		if (target?.closest("input, textarea, select, video, [contenteditable], .adminbar, .leaflet-container")) return;
+		if (target?.closest("input, textarea, select, video, [contenteditable], .adminbar, [data-photo-map]")) return;
 		if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
 			event.preventDefault();
 			stopSlideshow(false);

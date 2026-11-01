@@ -127,7 +127,7 @@ DB（D1）のprimaryは香港で、Workerも香港で実行する（上記）。
 対応:
 
 - 縮小版はR2の `_derived/preview-v2/{幅}/{形式}/q{品質}/{原本キー}` に保存し、2回目以降はどのデータセンターからでも変換せずに読む。保存時に原本のETagを `customMetadata.source` に記録し、一致するときだけ使う（原本が差し替わると作り直す）。保存は応答後（`waitUntil`）。公開判定（live参照のJSON走査）と並行して保存済み縮小版と原本ETagを取りに行き、公開と判定された場合だけ使う。`_derived/` はCMSが参照しないので生メディア経路から公開されることはなく、縮小版URLの原本キーとしても拒否する。EmDashの一覧はbackups/とstagingのprefixに限られるため、バックアップや取り込みには混ざらない。`X-Yohaku-Image-Source: resized|stored` で経路を確認できる。
-- Leafletのスタイルは `src/client/map-style.ts` がビルド済みアセットURL（`?url`）を地図を開くときに`<link>`で読み込む。アルバムの地図、写真ビューアの地図、管理画面の地図が共通で使う。
+- 地図は `src/client/map.ts` が開くときに読み込む。アルバムの地図、写真ビューアの地図、管理画面の地図が共通で使う。Google Mapsは `/map-provider` が月9,500回まで数え（`src/utils/map-quota.mjs`）、超えるとOpenStreetMap（Leaflet）で描く。Leafletのスタイルは `src/client/map-style.ts` がビルド済みアセットURL（`?url`）を`<link>`で読み込む。
 - `public/_headers` でロゴ・プロフィール・ファビコン・代替画像に `max-age=86400, stale-while-revalidate=604800` を付けた（adapterが `/_astro/*` のimmutableを同じファイルに追記する）。
 - ブログのフッター用ページ一覧、サイドバーの分類・トピック、月別アーカイブの問い合わせは `src/utils/shared-queries.ts` でリクエスト単位に共有し、トップと記事ページの先頭で開始する。以前はページ→レイアウト→各コンポーネントの順に直列で待っていた（1往復約60ms）。
 

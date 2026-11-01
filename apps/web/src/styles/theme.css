@@ -1079,6 +1079,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .album-map--detached .album-map-panel { padding-bottom: var(--space-6); }
 .album-map-panel[hidden] { display: none; }
 .album-map-canvas { width: 100%; height: min(58vh, 34rem); background: var(--paper-muted); }
+.album-map .gm-style-iw a { color: var(--accent-strong); font-weight: 600; }
 .album-map .leaflet-container { font-family: var(--font-body); }
 .album-map .leaflet-popup-content-wrapper,
 .album-map .leaflet-popup-tip { border-radius: 0; background: var(--paper); color: var(--ink); }
