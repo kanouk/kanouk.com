@@ -302,6 +302,7 @@
 .photo-tools-location { display: grid; gap: 0.35rem; color: var(--pt-muted); font-size: var(--pt-sm); }
 .photo-tools-location > span { display: flex; justify-content: space-between; gap: 0.5rem; }
 .photo-tools-map { height: 9rem; overflow: hidden; border-radius: var(--pt-radius-sm); background: var(--pt-recessed); }
+.photo-tools-map.leaflet-container .leaflet-control-attribution { font-size: 10px; }
 .photo-tools-location a { color: var(--pt-brand); text-decoration: none; font-variant-numeric: tabular-nums; }
 .photo-tools-location a:hover { text-decoration: underline; }
 .photo-tools-location small { color: var(--pt-muted); font-size: var(--pt-xs); }

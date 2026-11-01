@@ -28,7 +28,7 @@
 | slideshow | 6秒送り、再生／停止、reduced-motion対応 | 実装済み |
 | title / caption / 撮影日 | 写真詳細へ表示 | 実装済み |
 | EXIF | camera、lens、絞り、シャッター、ISO、焦点距離、露出補正 | 実装・backfill済み |
-| 位置情報 | GPS保持、写真地図、アルバム全体のGoogle Maps地図 | 実装済み |
+| 位置情報 | GPS保持、写真地図、アルバム全体のGoogle Maps地図（月9,500回を超えるとOpenStreetMap） | 実装済み |
 | 共有 | Web Share、clipboard fallback | 実装済み |
 | download | source albumの`allow_downloads`をUIで尊重 | 実装済み |
 | 検索 | album / photo / videoのtitle、caption、keywordをFTS検索 | 実装済み |

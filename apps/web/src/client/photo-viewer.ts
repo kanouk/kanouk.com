@@ -12,7 +12,7 @@
  */
 import { embedCode, embedSizes } from "../utils/photo-embed.mjs";
 import { mountAdminBar } from "./admin-bar";
-import { loadGoogleMaps, showPlace } from "./google-maps";
+import { showPlace, type DrawnMap } from "./map";
 import { albumPhotoAnchor, photoReturnKey, readPhotoReturn } from "../utils/photo-return.mjs";
 
 type Direction = "previous" | "next";
@@ -166,6 +166,7 @@ export function mountPhotoViewer(): void {
 		incoming.inert = false;
 	};
 
+	let map: DrawnMap | undefined;
 	/** Take over the new photo's title, links and panels from its server-rendered page. */
 	const applyPage = (page: Document, url: string) => {
 		const incoming = page.querySelector<HTMLElement>("[data-photo-viewer]");
@@ -175,6 +176,8 @@ export function mountPhotoViewer(): void {
 			if (value === undefined) delete root.dataset[key];
 			else root.dataset[key] = value;
 		}
+		map?.remove();
+		map = undefined;
 		root.querySelectorAll<HTMLElement>("[data-viewer-part]").forEach((part) => {
 			const fresh = incoming.querySelector(`[data-viewer-part="${part.dataset.viewerPart}"]`);
 			if (fresh) part.replaceWith(document.importNode(fresh, true));
@@ -278,9 +281,7 @@ export function mountPhotoViewer(): void {
 		const latitude = Number(canvas.dataset.latitude);
 		const longitude = Number(canvas.dataset.longitude);
 		try {
-			const maps = await loadGoogleMaps();
-			if (!canvas.isConnected) return;
-			showPlace(maps, canvas, latitude, longitude, "#17658c");
+			map = await showPlace(canvas, latitude, longitude, "#17658c");
 		} catch {
 			canvas.textContent = "地図を読み込めませんでした。";
 		}
