@@ -1,5 +1,7 @@
 package com.kanouk.photos.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
@@ -7,6 +9,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +30,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -49,10 +56,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kanouk.photos.data.Album
 import com.kanouk.photos.data.Photo
+import com.kanouk.photos.data.embedCode
+import com.kanouk.photos.data.embedSizes
+import com.kanouk.photos.data.number
 import com.kanouk.photos.data.siteDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,6 +79,8 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 	var editing by remember { mutableStateOf(false) }
 	var confirmDelete by remember { mutableStateOf(false) }
 	var confirmClearLocation by remember { mutableStateOf(false) }
+	var choosingCover by remember { mutableStateOf(false) }
+	var sharing by remember { mutableStateOf(false) }
 	val photo = photos.getOrNull(pager.currentPage) ?: return
 	LaunchedEffect(pager.currentPage) { if (pager.currentPage >= photos.size - 6) vm.loadMore(albumId) }
 
@@ -82,14 +95,15 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 			) {
 				IconButton(onClick = { vm.back() }) { Icon(Glyph.Close, "閉じる", tint = Color.White) }
 				Text("${pager.currentPage + 1} / ${vm.photos[albumId]?.total ?: photos.size}", color = Color(0xCCFFFFFF), style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f))
-				photo.stateLabel?.let { Flag(it, stateTone(photo), Modifier.padding(end = 12.dp)) }
+				photo.stateLabel?.let { Flag(it, stateTone(photo), Modifier.padding(end = 4.dp)) }
+				IconButton(onClick = { sharing = true }) { Icon(Glyph.Share, "共有・埋め込み", tint = Color.White) }
 			}
 		}
 		AnimatedVisibility(chrome, enter = fadeIn(), exit = fadeOut(), modifier = Modifier.align(Alignment.BottomCenter)) {
 			Column(Modifier.fillMaxWidth().background(Color(0xB3000000)).navigationBarsPadding().padding(top = 12.dp)) {
 				Column(Modifier.padding(horizontal = 18.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
 					Text(photo.displayTitle ?: "タイトル未設定", color = if (photo.displayTitle != null) Color.White else Color(0x99FFFFFF), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-					val meta = listOfNotNull(siteDateTime(photo.capturedAt), if (photo.hasLocation) "位置情報あり" else "位置情報なし").joinToString(" · ")
+					val meta = listOfNotNull(siteDateTime(photo.capturedAt), if (photo.id in vm.clearingLocation) "位置情報を削除中…" else if (photo.hasLocation) "位置情報あり" else "位置情報なし").joinToString(" · ")
 					Text(meta, color = Color(0x99FFFFFF), style = MaterialTheme.typography.bodySmall)
 				}
 				Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
@@ -97,7 +111,7 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 					ActionButton(if (photo.hidden) Glyph.Show else Glyph.Hide, if (photo.hidden) "再び公開" else "非公開", tint = Color.White, enabled = vm.working == null) {
 						vm.setHidden(album, listOf(photo), !photo.hidden)
 					}
-					ActionButton(Glyph.Star, "表紙にする", tint = Color.White, enabled = vm.working == null && album.coverKey != photo.imageKey) { vm.makeCover(album, photo) }
+					ActionButton(Glyph.Star, if (album.coverKey == photo.imageKey) "表紙を調整" else "表紙にする", tint = Color.White, enabled = vm.working == null) { choosingCover = true }
 					ActionButton(Glyph.Pin, "地図", tint = Color.White, enabled = photo.hasLocation) {
 						context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("geo:${photo.latitude},${photo.longitude}?q=${photo.latitude},${photo.longitude}")))
 					}
@@ -118,10 +132,16 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 				OutlinedTextField(caption, { caption = it }, label = { Text("キャプション") }, minLines = 3, modifier = Modifier.fillMaxWidth())
 				Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
 					Icon(Glyph.Pin, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(end = 10.dp).size(20.dp))
-					Text(if (photo.hasLocation) "位置情報あり" else "位置情報なし", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
-					if (photo.hasLocation) TextButton(onClick = { confirmClearLocation = true }, enabled = vm.working == null) { Text("削除", color = MaterialTheme.colorScheme.error) }
+					Text(if (photo.id in vm.clearingLocation) "位置情報を削除中…" else if (photo.hasLocation) "位置情報あり" else "位置情報なし", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+					if (photo.hasLocation && photo.id !in vm.clearingLocation) TextButton(onClick = { confirmClearLocation = true }, enabled = vm.working == null) { Text("削除", color = MaterialTheme.colorScheme.error) }
 				}
-				Text("保存すると下書きになり、アルバムの「公開」でサイトに出ます。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+				Text(
+					when {
+						!album.goesLiveWith(photo) -> "保存すると下書きになり、アルバムの「公開」でサイトに出ます。"
+						photo.hasPendingChanges -> "保存するとすぐサイトに反映します。この写真の未公開の変更も一緒に公開されます。"
+						else -> "保存するとすぐサイトに反映します。"
+					},
+					 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 				Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
 					TextButton(onClick = { editing = false }) { Text("キャンセル") }
 					Spacer(Modifier.width(8.dp))
@@ -130,18 +150,61 @@ fun ViewerScreen(vm: AppViewModel, albumId: String, photoId: String) {
 			}
 		}
 	}
+	if (sharing) ShareSheet(vm, album, photo, onDismiss = { sharing = false })
+	if (choosingCover) CoverCropDialog(
+		photo, initial = album.coverCrop.takeIf { album.coverKey == photo.imageKey },
+		onDismiss = { choosingCover = false },
+		onDone = { crop -> choosingCover = false; vm.makeCover(album, photo, crop) },
+	)
 	if (confirmClearLocation) ConfirmDialog(
 		title = "位置情報を削除しますか？",
 		text = locationRemovalNote(album, listOf(photo)),
 		confirm = "削除",
 		onDismiss = { confirmClearLocation = false },
-		onConfirm = { confirmClearLocation = false; vm.clearLocation(album, listOf(photo)) },
+		onConfirm = { confirmClearLocation = false; editing = false; vm.clearLocation(album, listOf(photo)) },
 	)
 	if (confirmDelete) ConfirmDialog(
 		title = "この写真を削除しますか？", text = "管理画面のゴミ箱から戻せます。", confirm = "削除",
 		onDismiss = { confirmDelete = false },
 		onConfirm = { confirmDelete = false; vm.trash(album, listOf(photo)) { if (photos.size <= 1) vm.back() } },
 	)
+}
+
+/** The photo's public link and the code to embed it elsewhere; a photo not on the site has neither yet. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ShareSheet(vm: AppViewModel, album: Album, photo: Photo, onDismiss: () -> Unit) {
+	val context = LocalContext.current
+	val site = photoSite(vm.session.baseUrl)
+	val sizes = remember(photo.id) { embedSizes(photo.image?.number("width")?.toInt()?.takeIf { it > 0 }) }
+	var size by remember(photo.id) { mutableStateOf(sizes.firstOrNull { it.second == 768 }?.second ?: sizes.first().second) }
+	fun copy(text: String, done: String) {
+		context.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText(done, text))
+		vm.notice = done
+	}
+	ModalBottomSheet(onDismissRequest = onDismiss) {
+		Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+			Text("共有", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+			val slug = photo.slug
+			if (!album.isPublished || !photo.isPublished || photo.hidden || slug == null) {
+				Text("公開中の写真だけ共有できます。アルバムと写真を公開すると使えます。", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+				return@Column
+			}
+			OutlinedButton(onClick = { copy("$site/p/${Uri.encode(slug)}", "リンクをコピーしました") }, modifier = Modifier.fillMaxWidth()) { Text("リンクをコピー") }
+			val code = if (photo.isVideo) null else embedCode(site, photo, size)
+			if (code != null) {
+				Text("埋め込み", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+				Text("ブログやWebページに貼ると、写真ページへのリンク付きで表示されます。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+				Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+					sizes.forEach { (label, width) -> FilterChip(selected = size == width, onClick = { size = width }, label = { Text("$label ${width}px") }) }
+				}
+				SelectionContainer {
+					Text(code, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace, modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant).padding(10.dp))
+				}
+				Button(onClick = { copy(code, "コードをコピーしました") }, modifier = Modifier.fillMaxWidth()) { Text("コードをコピー") }
+			}
+		}
+	}
 }
 
 /** Shared by the viewer and album selection, so both warn about the same things. */

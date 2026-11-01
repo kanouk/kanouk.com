@@ -18,6 +18,8 @@ import com.kanouk.photos.upload.UploadBatch
 import com.kanouk.photos.upload.UploadCenter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.launch
 
 sealed interface Screen {
@@ -95,6 +97,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 		val draft = Photo.from(item)
 		drafts[photoId] = draft
 		photos = photos.mapValues { (_, state) -> state.copy(photos = state.photos.map { if (it.id == photoId) draft else it }) }
+		library = library.copy(photos = library.photos.map { if (it.id == photoId) draft else it })
+		searchResults = searchResults.map { if (it.id == photoId) draft else it }
+		refreshCountsQuietly()
+	}
+
+	/** The pending counts behind 未公開の変更, without holding up the screen. */
+	private fun refreshCountsQuietly() {
+		viewModelScope.launch { runCatching { api.albumCounts() }.onSuccess { counts = it } }
 	}
 
 	init {
@@ -313,27 +323,53 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 		back()
 	}
 
-	fun clearLocation(album: Album, targets: List<Photo>, done: () -> Unit = {}) = guard("位置情報を削除しています…") {
-		var failed: String? = null
-		var removed = 0
-		for (photo in targets) runCatching { actions.clearLocation(album, photo, getApplication<Application>().cacheDir); removed++ }.onFailure { failed = it.message }
-		reloadAfterChange(album.id)
-		targets.firstOrNull()?.let { runCatching { refreshPhotoDraft(it.id) } }
-		notice = failed?.let { "${removed}点の位置情報を削除しました。$it" } ?: "${removed}点の位置情報を削除しました"
-		done()
+	/** Photos whose location is being removed. This moves files, so it runs behind the screen, one at a time. */
+	var clearingLocation by mutableStateOf<Set<String>>(emptySet()); private set
+	private val locationQueue = Mutex()
+
+	fun clearLocation(album: Album, targets: List<Photo>) {
+		val queued = targets.filter { it.id !in clearingLocation }
+		if (queued.isEmpty()) return
+		clearingLocation = clearingLocation + queued.map { it.id }
+		notice = "${queued.size}点の位置情報を削除しています。ほかの操作を続けられます"
+		guard {
+			var failed: String? = null
+			var removed = 0
+			locationQueue.withLock {
+				for (photo in queued) {
+					try {
+						actions.clearLocation(album, photo, getApplication<Application>().cacheDir)
+						refreshPhotoDraft(photo.id)
+						removed++
+					} catch (error: kotlinx.coroutines.CancellationException) {
+						throw error
+					} catch (error: Exception) {
+						failed = error.message
+					} finally {
+						clearingLocation = clearingLocation - photo.id
+					}
+				}
+			}
+			runCatching { refreshAlbumDraft(album.id) }
+			notice = failed?.let { "${removed}点の位置情報を削除しました。$it" } ?: "${removed}点の位置情報を削除しました"
+		}
 	}
 
-	fun makeCover(album: Album, photo: Photo) = guard("表紙を変更中…") {
-		actions.makeCover(album, photo)
+	fun makeCover(album: Album, photo: Photo, crop: com.kanouk.photos.data.CoverCrop? = null) = guard("表紙を変更中…") {
+		val hadOtherChanges = album.isPublished && album.hasPendingChanges
+		val live = actions.makeCover(album, photo, crop)
 		refreshAlbumDraft(album.id)
-		notice = "表紙にしました。「公開」でサイトに反映されます"
+		notice = when {
+			live && hadOtherChanges -> "表紙を変更しました。アルバムの未公開の変更も公開しました"
+			live -> "表紙を変更しました"
+			else -> "表紙にしました。「公開」でサイトに反映されます"
+		}
 	}
 
 	fun editPhoto(album: Album, photo: Photo, title: String, caption: String, done: () -> Unit = {}) = guard("保存中…") {
-		actions.editPhoto(photo, title.trim(), caption.trim())
-		reloadAfterChange(album.id)
+		val live = actions.editPhoto(album, photo, title.trim(), caption.trim())
 		refreshPhotoDraft(photo.id)
-		notice = "保存しました。「公開」でサイトに反映されます"
+		notice = if (live) "保存してサイトに反映しました" else "保存しました。「公開」でサイトに反映されます"
 		done()
 	}
 

@@ -114,7 +114,7 @@ private fun SectionLabel(text: String) {
 @Composable
 private fun AlbumBanner(album: Album, onClick: () -> Unit) {
 	Box(Modifier.padding(horizontal = 12.dp, vertical = 4.dp).fillMaxWidth().aspectRatio(4.6f).clip(RoundedCornerShape(8.dp)).clickable(onClick = onClick)) {
-		RemoteImage(album.coverKey, 960, Modifier.fillMaxSize(), source = album.coverSource)
+		RemoteImage(album.coverKey, 960, Modifier.fillMaxSize(), source = album.coverSource, crop = album.coverCrop)
 		Box(Modifier.fillMaxSize().background(Color(0x80000000)))
 		Row(Modifier.align(Alignment.CenterStart).padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
 			Icon(Glyph.Album, null, tint = Color.White, modifier = Modifier.size(22.dp))

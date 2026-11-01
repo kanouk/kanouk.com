@@ -1029,9 +1029,9 @@ main:focus { outline: none; }
 .album-card .cover.placeholder::before,
 .album-card .cover.placeholder::after { content: none; }
 .album-card .cover.placeholder svg { position: relative; z-index: 1; padding: 0.35rem; background: var(--paper-muted); box-sizing: content-box; }
-.album-card .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms cubic-bezier(.2,.65,.25,1); }
+.album-card .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(var(--cover-zoom, 1)); transition: transform 500ms cubic-bezier(.2,.65,.25,1); }
 .album-card .cover img[data-low-resolution="true"] { position: relative; inset: auto; width: auto; max-width: 100%; height: auto; max-height: 100%; object-fit: contain; }
-.album-card:hover .cover img:not([data-low-resolution="true"]) { transform: scale(1.015); }
+.album-card:hover .cover img:not([data-low-resolution="true"]) { transform: scale(calc(var(--cover-zoom, 1) * 1.015)); }
 .album-overlay { position: absolute; inset: auto 0 0; z-index: 1; display: flex; min-height: 34%; align-items: flex-end; justify-content: flex-end; padding: 1.8rem 0.5rem 0.55rem; background: linear-gradient(180deg, transparent, rgb(5 8 8 / 78%)); pointer-events: none; }
 .album-overlay h2 { max-width: 100%; overflow: hidden; color: #fff; font-size: clamp(0.72rem, 0.68rem + 0.2vw, 0.84rem); font-weight: 600; letter-spacing: 0; line-height: 1.35; text-align: right; text-overflow: ellipsis; text-shadow: 0 1px 2px rgb(0 0 0 / 65%); white-space: nowrap; }
 .album-card:hover .album-overlay h2 { color: #fff; }
@@ -1094,6 +1094,20 @@ main:focus { outline: none; }
 .viewer-close span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .viewer-close:hover { background: rgb(255 255 255 / 8%); color: #fff; }
 .photo-position { flex: none; margin: 0 auto; color: var(--viewer-muted); font-family: var(--font-code); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.photo-share-dialog { width: min(32rem, calc(100vw - 2rem)); padding: 1.25rem; border: 1px solid var(--line, rgb(127 127 127 / 30%)); border-radius: 0.75rem; background: var(--paper); color: var(--ink); }
+.photo-share-dialog::backdrop { background: rgb(0 0 0 / 60%); }
+.photo-share-dialog header { display: flex; align-items: center; justify-content: space-between; }
+.photo-share-dialog h2 { margin: 0; font-size: 1.05rem; }
+.photo-share-dialog h3 { margin: 1.25rem 0 0.25rem; font-size: 0.95rem; }
+.photo-share-dialog p { margin: 0 0 0.75rem; font-size: 0.85rem; }
+.photo-share-dialog button { min-height: 2.75rem; padding: 0 0.9rem; border: 1px solid currentcolor; border-radius: 0.5rem; background: transparent; color: inherit; cursor: pointer; }
+.photo-share-dialog [data-share-close] { display: grid; width: 2.75rem; padding: 0; border: 0; place-items: center; }
+.photo-share-dialog [hidden] { display: none; }
+.photo-share-actions, .photo-share-sizes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+.photo-share-sizes { margin: 0 0 0.75rem; }
+.photo-share-sizes button[aria-checked="true"] { background: var(--ink); color: var(--paper); }
+.photo-share-dialog textarea { display: block; box-sizing: border-box; width: 100%; margin-bottom: 0.5rem; padding: 0.6rem; border: 1px solid rgb(127 127 127 / 45%); border-radius: 0.5rem; background: transparent; color: inherit; font: 0.78rem/1.45 ui-monospace, monospace; resize: vertical; }
+.photo-share-dialog .photo-share-status { min-height: 1.2em; margin: 0.6rem 0 0; }
 .photo-action-rail { display: flex; flex: none; align-items: center; }
 .photo-action-rail :where(button, a) { display: grid; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--viewer-muted); text-decoration: none; place-items: center; transition: background-color var(--transition), color var(--transition); }
 .photo-action-rail :where(button, a)[hidden] { display: none; }

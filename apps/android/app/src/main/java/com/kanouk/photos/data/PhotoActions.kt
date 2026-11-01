@@ -2,11 +2,14 @@ package com.kanouk.photos.data
 
 import com.kanouk.photos.media.removeLocation
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import okhttp3.MediaType.Companion.toMediaType
@@ -20,6 +23,8 @@ import java.io.File
 private val LOCATION_KEYS = setOf("gps", "gpslatitude", "gpslongitude", "gpsaltitude", "latitude", "longitude", "altitude", "location", "geotag")
 
 class PhotoActions(private val api: EmDashApi) {
+	/** Saves that read a revision and then write it; location removal runs beside them in the background. */
+	private val writes = Mutex()
 
 	/** Publish the album and every photo with unpublished changes, except hidden ones. */
 	suspend fun publishAlbum(album: Album): Int {
@@ -36,17 +41,18 @@ class PhotoActions(private val api: EmDashApi) {
 	}
 
 	/** Hidden photos stay off the public site, even when the album is published. */
-	suspend fun setHidden(photo: Photo, hidden: Boolean) {
+	suspend fun setHidden(photo: Photo, hidden: Boolean) = writes.withLock {
 		val (item, rev) = api.content("photos", photo.id)
 		val metadata = item.child("data")?.child("source_metadata") ?: JsonObject(emptyMap())
-		val next = JsonObject(metadata.filterKeys { it != "hidden" } + if (hidden) mapOf("hidden" to kotlinx.serialization.json.JsonPrimitive(true)) else emptyMap())
+		val next = JsonObject(metadata.filterKeys { it != "hidden" } + if (hidden) mapOf("hidden" to JsonPrimitive(true)) else emptyMap())
 		api.updateDraft("photos", photo.id, rev, buildJsonObject { put("source_metadata", next) })
 		if (hidden && item.string("status") == "published") api.unpublish("photos", photo.id)
 		if (!hidden) api.publish("photos", photo.id)
 		api.recordOperation(if (hidden) "photo-hide" else "photo-show", "complete", listOf(photo.id), photo.albumId.orEmpty())
 	}
 
-	suspend fun editPhoto(photo: Photo, title: String, caption: String) {
+	/** Edits to a public photo in a public album go live on saving. Returns whether they did. */
+	suspend fun editPhoto(album: Album, photo: Photo, title: String, caption: String): Boolean = writes.withLock {
 		val (_, rev) = api.content("photos", photo.id)
 		api.updateDraft("photos", photo.id, rev, buildJsonObject {
 			put("title", title.ifBlank { photo.title })
@@ -54,6 +60,9 @@ class PhotoActions(private val api: EmDashApi) {
 			// The web organizer requires alt text; keep it in step with a real title.
 			if (photo.alt.isBlank() || looksLikeFileName(photo.alt)) put("alt", title.ifBlank { photo.title })
 		})
+		val live = album.goesLiveWith(photo)
+		if (live) api.publish("photos", photo.id)
+		live
 	}
 
 	/**
@@ -63,9 +72,8 @@ class PhotoActions(private val api: EmDashApi) {
 	 * for the owner only (as in scripts/migration/redact_photo_locations.py).
 	 */
 	suspend fun clearLocation(album: Album, photo: Photo, workDir: File) {
-		val (item, rev) = api.content("photos", photo.id)
-		val data = item.child("data") ?: JsonObject(emptyMap())
-		val image = data.child("image") ?: throw ApiException("この写真には画像がありません。")
+		val (item, _) = api.content("photos", photo.id)
+		val image = item.child("data")?.child("image") ?: throw ApiException("この写真には画像がありません。")
 		val storageKey = mediaKey(image) ?: throw ApiException("この写真の元ファイルを読み込めません。")
 		val filename = image.string("filename") ?: "photo.jpg"
 		val mimeType = image.string("mimeType") ?: "image/jpeg"
@@ -74,27 +82,38 @@ class PhotoActions(private val api: EmDashApi) {
 			api.downloadMedia(storageKey, file)
 			val changed = withContext(Dispatchers.IO) { removeLocation(file, mimeType) }
 			val newImage = if (changed) api.imageValue(api.uploadMedia(file.asRequestBody(mimeType.toMediaType()), filename, image.number("width")?.toInt() ?: 0, image.number("height")?.toInt() ?: 0)) else null
-			// The cover first: if the photo then fails, trying again still has work to do.
-			if (newImage != null) {
-				val (albumItem, albumRev) = api.content("albums", album.id)
-				val draftCover = mediaKey(albumItem.child("data")?.child("cover_image")) == storageKey
-				// The list shows the live album, whose cover can differ from the draft's.
-				val liveCover = api.albums().firstOrNull { it.id == album.id }?.coverKey == storageKey
-				if (draftCover) api.updateDraft("albums", album.id, albumRev, buildJsonObject { put("cover_image", newImage) })
-				if ((draftCover || liveCover) && albumItem.string("status") == "published") api.publish("albums", album.id)
+			// The transfer takes a while and the owner can keep editing, so read the revisions afterwards.
+			writes.withLock {
+				// The cover first: if the photo then fails, trying again still has work to do.
+				if (newImage != null) replaceCover(album.id, storageKey, newImage)
+				val (fresh, rev) = api.content("photos", photo.id)
+				val data = fresh.child("data") ?: JsonObject(emptyMap())
+				api.updateDraft("photos", photo.id, rev, buildJsonObject {
+					newImage?.let { put("image", it) }
+					put("latitude", JsonNull)
+					put("longitude", JsonNull)
+					put("altitude", JsonNull)
+					put("source_metadata", JsonObject(((withoutLocation(data.child("source_metadata")) as? JsonObject) ?: JsonObject(emptyMap())) + ("location_review" to JsonPrimitive("clean"))))
+				})
+				if (fresh.string("status") == "published") api.publish("photos", photo.id)
 			}
-			api.updateDraft("photos", photo.id, rev, buildJsonObject {
-				newImage?.let { put("image", it) }
-				put("latitude", JsonNull)
-				put("longitude", JsonNull)
-				put("altitude", JsonNull)
-				put("source_metadata", JsonObject(((withoutLocation(data.child("source_metadata")) as? JsonObject) ?: JsonObject(emptyMap())) + ("location_review" to kotlinx.serialization.json.JsonPrimitive("clean"))))
-			})
-			if (item.string("status") == "published") api.publish("photos", photo.id)
 			api.recordOperation("photo-location-remove", "complete", listOf(photo.id), album.id)
 		} finally {
 			file.delete()
 		}
+	}
+
+	private suspend fun replaceCover(albumId: String, storageKey: String, image: JsonObject) {
+		val (item, rev) = api.content("albums", albumId)
+		val draftCover = mediaKey(item.child("data")?.child("cover_image")) == storageKey
+		val published = item.string("status") == "published"
+		// With unpublished album changes, the live cover (in the list) can differ from the draft's.
+		val liveCover = published && !draftCover && item.string("draftRevisionId") != null && item.string("draftRevisionId") != item.string("liveRevisionId") &&
+			api.albums().firstOrNull { it.id == albumId }?.coverKey == storageKey
+		// The new file shows the same picture, so the chosen crop stays.
+		val cover = item.child("data")?.child("cover_image")
+		if (draftCover) api.updateDraft("albums", albumId, rev, buildJsonObject { put("cover_image", image.withCoverCrop(cover?.child("meta")?.get("crop"))) })
+		if (published && (draftCover || liveCover)) api.publish("albums", albumId)
 	}
 
 	private fun withoutLocation(value: JsonElement?): JsonElement? = when (value) {
@@ -103,10 +122,14 @@ class PhotoActions(private val api: EmDashApi) {
 		else -> value
 	}
 
-	suspend fun makeCover(album: Album, photo: Photo) {
-		val image = photo.image ?: throw ApiException("この写真には画像がありません。")
+	/** A public album takes a public photo as its cover at once. Returns whether it did. */
+	suspend fun makeCover(album: Album, photo: Photo, crop: CoverCrop? = null): Boolean = writes.withLock {
+		val image = photo.image?.withCoverCrop(crop.toJson()) ?: throw ApiException("この写真には画像がありません。")
 		val (_, rev) = api.content("albums", album.id)
 		api.updateDraft("albums", album.id, rev, buildJsonObject { put("cover_image", image) })
+		val live = album.goesLiveWith(photo)
+		if (live) api.publish("albums", album.id)
+		live
 	}
 
 	suspend fun renameAlbum(album: Album, title: String, description: String) {

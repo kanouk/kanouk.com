@@ -205,7 +205,7 @@ private fun SiteMark() {
 @Composable
 private fun SiteHero(album: Album?, modifier: Modifier = Modifier) {
 	Box(modifier.fillMaxWidth().aspectRatio(16f / 9f).padding(bottom = 6.dp)) {
-		RemoteImage(album?.coverKey, 1200, Modifier.fillMaxSize(), source = album?.coverSource)
+		RemoteImage(album?.coverKey, 1200, Modifier.fillMaxSize(), source = album?.coverSource, crop = album?.coverCrop)
 		Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0.45f to Color.Transparent, 1f to Color(0xCC000000))))
 		Text(
 			SITE_NAME, color = Color.White, fontWeight = FontWeight.Bold,
@@ -229,7 +229,7 @@ private fun AlbumCard(
 ) {
 	var menu by remember { mutableStateOf(false) }
 	Box(modifier.aspectRatio(1.45f).clip(RoundedCornerShape(6.dp)).clickable(enabled = !arranging, onClick = onClick)) {
-		RemoteImage(album.coverKey, 480, Modifier.fillMaxSize(), source = album.coverSource)
+		RemoteImage(album.coverKey, 480, Modifier.fillMaxSize(), source = album.coverSource, crop = album.coverCrop)
 		Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0.5f to Color.Transparent, 1f to Color(0xB3000000))))
 		Column(Modifier.align(Alignment.BottomStart).padding(start = 10.dp, end = 10.dp, bottom = 9.dp)) {
 			Text(

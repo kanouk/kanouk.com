@@ -10,6 +10,7 @@
  * Touch: swipe sideways to move, swipe down to close, pinch or double-tap to
  * zoom, drag to pan while zoomed, tap to hide or show the controls.
  */
+import { embedCode, embedSizes } from "../utils/photo-embed.mjs";
 import { mountAdminBar } from "./admin-bar";
 import { loadMapStyle } from "./map-style";
 import { albumPhotoAnchor, photoReturnKey, readPhotoReturn } from "../utils/photo-return.mjs";
@@ -355,24 +356,80 @@ export function mountPhotoViewer(): void {
 		if (say) announce("スライドショーを停止しました");
 	}
 
-	const share = async () => {
+	// ---- Sharing and embedding -----------------------------------------------
+
+	const shareDialog = root.querySelector<HTMLDialogElement>("[data-photo-share-dialog]");
+	const shareUrl = () => new URL(window.location.pathname, window.location.origin).toString();
+	const setShareStatus = (message: string) => {
+		const line = shareDialog?.querySelector("[data-share-status]");
+		if (line) line.textContent = message;
+	};
+	const copy = async (text: string, done: string) => {
 		try {
-			const url = new URL(window.location.pathname, window.location.origin).toString();
-			if (navigator.share) await navigator.share({ title: document.title, url });
-			else {
-				await navigator.clipboard.writeText(url);
-				announce("URLをコピーしました");
-			}
-		} catch (error) {
-			if ((error as DOMException).name !== "AbortError") announce("共有を開始できませんでした");
+			await navigator.clipboard.writeText(text);
+			setShareStatus(done);
+		} catch {
+			setShareStatus("コピーできませんでした");
 		}
 	};
+	const showEmbedCode = (size: number) => {
+		const data = root.querySelector<HTMLElement>('[data-viewer-part="embed"]')?.dataset;
+		const code = shareDialog?.querySelector<HTMLTextAreaElement>("[data-share-code]");
+		if (!data?.embedKey || !code) return;
+		code.value = embedCode({
+			origin: window.location.origin,
+			path: window.location.pathname,
+			storageKey: data.embedKey,
+			size,
+			photoWidth: Number(data.embedWidth) || undefined,
+			photoHeight: Number(data.embedHeight) || undefined,
+			alt: data.embedAlt,
+		});
+		shareDialog?.querySelectorAll<HTMLButtonElement>("[data-share-size]").forEach((button) => {
+			button.setAttribute("aria-checked", String(Number(button.dataset.shareSize) === size));
+		});
+	};
+	const openShare = () => {
+		if (!shareDialog) return;
+		const data = root.querySelector<HTMLElement>('[data-viewer-part="embed"]')?.dataset;
+		const sizes = embedSizes(Number(data?.embedWidth) || undefined);
+		const section = shareDialog.querySelector<HTMLElement>("[data-share-embed]");
+		const native = shareDialog.querySelector<HTMLElement>("[data-share-native]");
+		if (section) section.hidden = !data?.embedKey;
+		if (native) native.hidden = !navigator.share;
+		shareDialog.querySelector("[data-share-sizes]")?.replaceChildren(...sizes.map((size: { label: string; width: number }) => {
+			const button = document.createElement("button");
+			button.type = "button";
+			button.setAttribute("role", "radio");
+			button.dataset.shareSize = String(size.width);
+			button.textContent = `${size.label} ${size.width}px`;
+			return button;
+		}));
+		setShareStatus("");
+		showEmbedCode((sizes.find((size: { width: number }) => size.width === 768) ?? sizes[0]).width);
+		shareDialog.showModal();
+	};
+	shareDialog?.addEventListener("click", (event) => {
+		const target = event.target as Element;
+		const size = target.closest<HTMLElement>("[data-share-size]");
+		// A click on the backdrop lands on the dialog itself.
+		if (target === shareDialog || target.closest("[data-share-close]")) shareDialog.close();
+		else if (size) showEmbedCode(Number(size.dataset.shareSize));
+		else if (target.closest("[data-share-copy-link]")) void copy(shareUrl(), "リンクをコピーしました");
+		else if (target.closest("[data-share-copy-code]")) void copy(shareDialog.querySelector<HTMLTextAreaElement>("[data-share-code]")?.value ?? "", "コードをコピーしました");
+		else if (target.closest("[data-share-native]")) {
+			navigator.share({ title: document.title, url: shareUrl() }).catch((error: DOMException) => {
+				if (error.name !== "AbortError") setShareStatus("共有を開始できませんでした");
+			});
+		}
+	});
 
 	root.addEventListener("click", (event) => {
 		const target = event.target as Element;
 		if (target.closest("[data-photo-info]")) { if (infoOpen) closeInfo(false); else openInfo(false); return; }
 		if (target.closest("[data-photo-info-close]")) { closeInfo(true); return; }
-		if (target.closest("[data-photo-share]")) { void share(); return; }
+		if (shareDialog?.contains(target)) return;
+		if (target.closest("[data-photo-share]")) { stopSlideshow(false); openShare(); return; }
 		if (target.closest("[data-photo-slideshow]")) { if (slideshowTimer === undefined) startSlideshow(); else stopSlideshow(true); return; }
 		if (target.closest("[data-photo-fullscreen]")) {
 			(document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen())
@@ -389,6 +446,7 @@ export function mountPhotoViewer(): void {
 	});
 
 	document.addEventListener("keydown", (event) => {
+		if (shareDialog?.open) return;
 		const target = event.target as HTMLElement | null;
 		if (event.key === "Escape") {
 			if (zoom.scale > 1) { resetZoom(); return; }
