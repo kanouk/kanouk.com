@@ -23,6 +23,7 @@ import { capturedDateTimeLabel } from "../../utils/photo-date.mjs";
 import { looksLikeSourceFilename, publicPhotoTitle } from "../../utils/photo-display.mjs";
 import { getPhotoNavigation } from "../../utils/photo-navigation";
 import { photoPath } from "../../utils/photo-url.mjs";
+import { embedStorageKey } from "../../utils/photo-embed.mjs";
 import { albumPhotoAnchor } from "../../utils/photo-return.mjs";
 
 const { slug } = Astro.params;
@@ -289,6 +290,26 @@ const exifDetails = [
 				</div>
 			</footer>
 		) : <footer class="viewer-caption" data-viewer-part="caption" hidden />}
+		{/* What the share dialog needs for the photo on screen; swapped with the rest when moving on. */}
+		<div data-viewer-part="embed" hidden data-embed-key={videoSource ? undefined : embedStorageKey(photo.data.image)} data-embed-width={photo.data.image?.width} data-embed-height={photo.data.image?.height} data-embed-alt={publicAlt} />
+		<dialog class="photo-share-dialog" data-photo-share-dialog aria-labelledby="photo-share-title">
+			<header>
+				<h2 id="photo-share-title">共有</h2>
+				<button type="button" data-share-close aria-label="閉じる"><X size={20} strokeWidth={1.6} aria-hidden="true" /></button>
+			</header>
+			<div class="photo-share-actions">
+				<button type="button" data-share-copy-link>リンクをコピー</button>
+				<button type="button" data-share-native hidden>ほかのアプリで共有</button>
+			</div>
+			<section data-share-embed hidden>
+				<h3>埋め込み</h3>
+				<p>ブログやWebページに貼ると、写真ページへのリンク付きで表示されます。</p>
+				<div class="photo-share-sizes" role="radiogroup" aria-label="埋め込みの大きさ" data-share-sizes />
+				<textarea data-share-code readonly rows="5" aria-label="埋め込みコード" spellcheck="false" />
+				<button type="button" data-share-copy-code>コードをコピー</button>
+			</section>
+			<p class="photo-share-status" role="status" aria-live="polite" data-share-status />
+		</dialog>
 		<span class="sr-only photo-tool-status" role="status" aria-live="polite" />
 	</article>
 </Photos>

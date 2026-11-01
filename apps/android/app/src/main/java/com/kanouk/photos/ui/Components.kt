@@ -1,5 +1,11 @@
 package com.kanouk.photos.ui
 
+import androidx.compose.ui.BiasAlignment
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import com.kanouk.photos.data.CoverCrop
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -60,7 +66,10 @@ import kotlinx.coroutines.launch
 
 /** A stored photo, resized by the site (the same preview route as the public pages). */
 @Composable
-fun RemoteImage(key: String?, width: Int, modifier: Modifier = Modifier, contentScale: ContentScale = ContentScale.Crop, source: String? = null, placeholder: Color = MaterialTheme.colorScheme.surfaceVariant) {
+fun RemoteImage(
+	key: String?, width: Int, modifier: Modifier = Modifier, contentScale: ContentScale = ContentScale.Crop, source: String? = null,
+	placeholder: Color = MaterialTheme.colorScheme.surfaceVariant, crop: CoverCrop? = null, onLoaded: ((Size) -> Unit)? = null,
+) {
 	val base = AppGraph.session.baseUrl
 	val url = when {
 		key != null -> base + previewPath(key, width)
@@ -68,12 +77,19 @@ fun RemoteImage(key: String?, width: Int, modifier: Modifier = Modifier, content
 		source.startsWith("http") -> source
 		else -> base + source
 	}
-	Box(modifier.background(placeholder)) {
+	Box(modifier.background(placeholder).clipToBounds()) {
 		if (url != null) AsyncImage(
 			model = url,
 			contentDescription = null,
 			contentScale = contentScale,
-			modifier = Modifier.fillMaxSize(),
+			alignment = crop?.let { BiasAlignment(it.x * 2 - 1, it.y * 2 - 1) } ?: Alignment.Center,
+			onSuccess = { onLoaded?.invoke(it.painter.intrinsicSize) },
+			modifier = Modifier.fillMaxSize().then(
+				if (crop == null) Modifier else Modifier.graphicsLayer {
+					scaleX = crop.zoom; scaleY = crop.zoom
+					transformOrigin = TransformOrigin(crop.x, crop.y)
+				},
+			),
 		)
 	}
 }

@@ -2,6 +2,8 @@ package com.kanouk.photos.data
 
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.doubleOrNull
@@ -39,6 +41,25 @@ fun mediaSource(image: JsonObject?): String? = image?.string("src") ?: image?.st
 fun previewPath(key: String, width: Int): String =
 	"/_yohaku/media/preview-v2/$width/webp/${URLEncoder.encode(key, "UTF-8").replace("+", "%20")}"
 
+/** The sizes offered for embedding, up to what the photo can fill (same as src/utils/photo-embed.mjs on the site). */
+fun embedSizes(photoWidth: Int?): List<Pair<String, Int>> {
+	val all = listOf("小" to 480, "中" to 768, "大" to 1200, "特大" to 1600)
+	return all.filter { photoWidth == null || it.second <= photoWidth }.ifEmpty { all.take(1) }
+}
+
+/** HTML for another site: a resized image, which carries no location, linking to the photo page. */
+fun embedCode(site: String, photo: Photo, size: Int): String? {
+	val key = photo.imageKey ?: return null
+	val slug = photo.slug ?: return null
+	val photoWidth = photo.image?.number("width")?.toInt()?.takeIf { it > 0 }
+	val photoHeight = photo.image?.number("height")?.toInt()?.takeIf { it > 0 }
+	val width = minOf(size, photoWidth ?: size)
+	val height = if (photoWidth != null && photoHeight != null) " height=\"${Math.round(photoHeight.toDouble() * width / photoWidth)}\"" else ""
+	val alt = (photo.alt.takeUnless { it.isBlank() || looksLikeFileName(it) } ?: photo.displayTitle ?: "写真")
+		.replace("&", "&amp;").replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+	return "<a href=\"$site/p/${URLEncoder.encode(slug, "UTF-8").replace("+", "%20")}\"><img src=\"$site${previewPath(key, size)}\" width=\"$width\"$height alt=\"$alt\" loading=\"lazy\" style=\"max-width:100%;height:auto\"></a>"
+}
+
 /** A capture time as the site shows it: "2026/03/11 12:44" in Japan time. Values without a zone are wall-clock time. */
 fun siteDateTime(value: String?, withTime: Boolean = true): String? {
 	value ?: return null
@@ -73,6 +94,9 @@ data class Album(
 	val manualSort get() = sortMethod == "position"
 	val hasPendingChanges get() = status != "published" || (draftRevisionId != null && draftRevisionId != liveRevisionId)
 	val coverKey get() = mediaKey(cover)
+	val coverCrop get() = CoverCrop.from(cover)
+	/** Changes to this photo, or making it the cover, need no separate 公開. */
+	fun goesLiveWith(photo: Photo) = isPublished && photo.isPublished && !photo.hidden
 	val coverSource get() = mediaSource(cover)
 
 	val period: String?
@@ -114,6 +138,7 @@ data class Photo(
 	val title: String,
 	val caption: String,
 	val alt: String,
+	val kind: String?,
 	val albumId: String?,
 	val position: Double,
 	val capturedAt: String?,
@@ -132,6 +157,7 @@ data class Photo(
 	val uploadKey get() = sourceMetadata.string("upload_key")
 	val contentHash get() = sourceMetadata.string("content_hash")
 	val hasLocation get() = latitude != null && longitude != null
+	val isVideo get() = kind == "video"
 
 	/** The title EmDash was given from the file name at upload ("PXL_2026….jpg" → "PXL 2026…"). */
 	private val autoTitle: String?
@@ -159,6 +185,7 @@ data class Photo(
 				title = data.string("title").orEmpty(),
 				caption = data.string("caption").orEmpty(),
 				alt = data.string("alt").orEmpty(),
+				kind = data.string("kind"),
 				albumId = data.string("album"),
 				position = data.number("position") ?: 0.0,
 				capturedAt = data.string("captured_at"),
@@ -171,6 +198,37 @@ data class Photo(
 			)
 		}
 	}
+}
+
+/**
+ * How a cover fills its frame, kept in the cover image's meta (so choosing another cover resets it).
+ * [x] and [y] (0–1) work like CSS object-position, and [zoom] scales around that same point,
+ * so the app and the site show the same part of the photo in frames of any shape.
+ */
+data class CoverCrop(val x: Float = 0.5f, val y: Float = 0.5f, val zoom: Float = 1f) {
+	val isDefault get() = x == 0.5f && y == 0.5f && zoom == 1f
+
+	companion object {
+		const val MAX_ZOOM = 3f
+
+		fun from(image: JsonObject?): CoverCrop? {
+			val crop = image?.child("meta")?.child("crop") ?: return null
+			val x = crop.number("x") ?: return null
+			val y = crop.number("y") ?: return null
+			val zoom = crop.number("zoom") ?: return null
+			return CoverCrop(x.toFloat().coerceIn(0f, 1f), y.toFloat().coerceIn(0f, 1f), zoom.toFloat().coerceIn(1f, MAX_ZOOM))
+		}
+	}
+}
+
+/** The image value with this crop in its meta, or none. */
+fun JsonObject.withCoverCrop(crop: JsonElement?): JsonObject {
+	val meta = (child("meta") ?: JsonObject(emptyMap())).filterKeys { it != "crop" } + (crop?.let { mapOf("crop" to it) } ?: emptyMap())
+	return JsonObject(this + ("meta" to JsonObject(meta)))
+}
+
+fun CoverCrop?.toJson(): JsonElement? = this?.takeUnless { it.isDefault }?.let {
+	buildJsonObject { put("x", it.x); put("y", it.y); put("zoom", it.zoom) }
 }
 
 data class AlbumCount(val total: Int, val pending: Int, val maxPosition: Double)
