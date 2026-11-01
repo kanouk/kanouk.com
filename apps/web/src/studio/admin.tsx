@@ -61,7 +61,7 @@ import { normalizePhotoSort, photoComparator } from "../utils/photo-sort.mjs";
 // Inlined and injected by the admin itself: a plain CSS import would be linked
 // on every public page too, since the plugin registry is part of the site bundle.
 import studioCss from "./studio.css?inline";
-import { loadGoogleMaps, showPlace } from "../client/google-maps";
+import { showPlace, type DrawnMap } from "../client/map";
 
 if (typeof document !== "undefined" && !document.getElementById("yohaku-photo-tools-css")) {
 	const style = document.createElement("style");
@@ -379,17 +379,18 @@ function reasonOf(cause: unknown): string {
 	return cause instanceof Error ? cause.message : "不明なエラー";
 }
 
-/** A small Google Maps view of where the photo was taken; the script loads on first use. */
+/** A small map of where the photo was taken; the map library loads on first use. */
 function LocationMap({ latitude, longitude }: { latitude: number; longitude: number }) {
 	const ref = useRef<HTMLDivElement>(null);
 	const [failed, setFailed] = useState(false);
 	useEffect(() => {
+		let map: DrawnMap | undefined;
 		let cancelled = false;
-		void loadGoogleMaps().then((maps) => {
-			if (cancelled || !ref.current) return;
-			showPlace(maps, ref.current, latitude, longitude, "#2271b1");
+		if (ref.current) void showPlace(ref.current, latitude, longitude, "#2271b1").then((drawn) => {
+			if (cancelled) drawn?.remove();
+			else map = drawn;
 		}).catch(() => setFailed(true));
-		return () => { cancelled = true; };
+		return () => { cancelled = true; map?.remove(); };
 	}, [latitude, longitude]);
 	return failed
 		? <p className="photo-tools-muted">地図を読み込めませんでした。</p>

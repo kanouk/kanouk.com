@@ -29,9 +29,3 @@ export function loadGoogleMaps(): Promise<typeof google.maps> {
 export function pinIcon(maps: typeof google.maps, color: string, scale: number): google.maps.Symbol {
 	return { path: maps.SymbolPath.CIRCLE, scale, fillColor: color, fillOpacity: 0.95, strokeColor: "#fff", strokeWeight: 2 };
 }
-
-export function showPlace(maps: typeof google.maps, canvas: HTMLElement, latitude: number, longitude: number, color: string): void {
-	const center = { lat: latitude, lng: longitude };
-	const map = new maps.Map(canvas, { center, zoom: 15, scrollwheel: false, mapTypeControl: false, streetViewControl: false, fullscreenControl: false });
-	new maps.Marker({ map, position: center, icon: pinIcon(maps, color, 7) });
-}
