@@ -30,8 +30,8 @@ export default {
 \t\t\t\t\t\t\t}) : /* @__PURE__ */ jsx(Icon, { className: "h-5 w-5" })`,
       );
       scope.replace(
-        "\t\t\t\t}), isEditing && /* @__PURE__ */ jsx(\"div\", {\n\t\t\t\t\tclassName: \"px-4 pb-3 pt-0\",",
-        "\t\t\t\t}), blockNodeView.below ? /* @__PURE__ */ jsx(\"div\", { className: \"p-3\", children: blockNodeView.below }) : null, isEditing && /* @__PURE__ */ jsx(\"div\", {\n\t\t\t\t\tclassName: \"px-4 pb-3 pt-0\",",
+        "\t\t\t\t}), canEditUrl && isEditing && /* @__PURE__ */ jsx(\"div\", {\n\t\t\t\t\tclassName: \"px-4 pb-3 pt-0\",",
+        "\t\t\t\t}), blockNodeView.below ? /* @__PURE__ */ jsx(\"div\", { className: \"p-3\", children: blockNodeView.below }) : null, canEditUrl && isEditing && /* @__PURE__ */ jsx(\"div\", {\n\t\t\t\t\tclassName: \"px-4 pb-3 pt-0\",",
       );
     });
   },
