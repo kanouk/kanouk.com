@@ -1,13 +1,24 @@
 package com.kanouk.photos.data
 
+import com.kanouk.photos.media.removeLocation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 /**
  * Album and photo operations, following the web organizer (src/studio/admin.tsx)
  * so the app and the admin leave the same data behind.
  */
+private val LOCATION_KEYS = setOf("gps", "gpslatitude", "gpslongitude", "gpsaltitude", "latitude", "longitude", "altitude", "location", "geotag")
+
 class PhotoActions(private val api: EmDashApi) {
 
 	/** Publish the album and every photo with unpublished changes, except hidden ones. */
@@ -43,6 +54,53 @@ class PhotoActions(private val api: EmDashApi) {
 			// The web organizer requires alt text; keep it in step with a real title.
 			if (photo.alt.isBlank() || looksLikeFileName(photo.alt)) put("alt", title.ifBlank { photo.title })
 		})
+	}
+
+	/**
+	 * Remove a photo's location from its fields and from the stored file, which the public
+	 * can fetch while a live revision refers to it. A public photo or cover goes live at
+	 * once, because the old file stays reachable until it does. The replaced file is kept
+	 * for the owner only (as in scripts/migration/redact_photo_locations.py).
+	 */
+	suspend fun clearLocation(album: Album, photo: Photo, workDir: File) {
+		val (item, rev) = api.content("photos", photo.id)
+		val data = item.child("data") ?: JsonObject(emptyMap())
+		val image = data.child("image") ?: throw ApiException("この写真には画像がありません。")
+		val storageKey = mediaKey(image) ?: throw ApiException("この写真の元ファイルを読み込めません。")
+		val filename = image.string("filename") ?: "photo.jpg"
+		val mimeType = image.string("mimeType") ?: "image/jpeg"
+		val file = File.createTempFile("location-", ".tmp", workDir)
+		try {
+			api.downloadMedia(storageKey, file)
+			val changed = withContext(Dispatchers.IO) { removeLocation(file, mimeType) }
+			val newImage = if (changed) api.imageValue(api.uploadMedia(file.asRequestBody(mimeType.toMediaType()), filename, image.number("width")?.toInt() ?: 0, image.number("height")?.toInt() ?: 0)) else null
+			// The cover first: if the photo then fails, trying again still has work to do.
+			if (newImage != null) {
+				val (albumItem, albumRev) = api.content("albums", album.id)
+				val draftCover = mediaKey(albumItem.child("data")?.child("cover_image")) == storageKey
+				// The list shows the live album, whose cover can differ from the draft's.
+				val liveCover = api.albums().firstOrNull { it.id == album.id }?.coverKey == storageKey
+				if (draftCover) api.updateDraft("albums", album.id, albumRev, buildJsonObject { put("cover_image", newImage) })
+				if ((draftCover || liveCover) && albumItem.string("status") == "published") api.publish("albums", album.id)
+			}
+			api.updateDraft("photos", photo.id, rev, buildJsonObject {
+				newImage?.let { put("image", it) }
+				put("latitude", JsonNull)
+				put("longitude", JsonNull)
+				put("altitude", JsonNull)
+				put("source_metadata", JsonObject(((withoutLocation(data.child("source_metadata")) as? JsonObject) ?: JsonObject(emptyMap())) + ("location_review" to kotlinx.serialization.json.JsonPrimitive("clean"))))
+			})
+			if (item.string("status") == "published") api.publish("photos", photo.id)
+			api.recordOperation("photo-location-remove", "complete", listOf(photo.id), album.id)
+		} finally {
+			file.delete()
+		}
+	}
+
+	private fun withoutLocation(value: JsonElement?): JsonElement? = when (value) {
+		is JsonObject -> JsonObject(value.filterKeys { it.lowercase().replace(Regex("[^a-z]"), "") !in LOCATION_KEYS }.mapValues { (_, child) -> withoutLocation(child) ?: JsonNull })
+		is JsonArray -> JsonArray(value.map { withoutLocation(it) ?: JsonNull })
+		else -> value
 	}
 
 	suspend fun makeCover(album: Album, photo: Photo) {

@@ -159,6 +159,7 @@ fun UploadCard(batch: UploadBatch, onRetry: () -> Unit, onDismiss: () -> Unit, o
 			val notes = buildList {
 				if (batch.duplicates > 0) add("アルバムにある${batch.duplicates}点は省略")
 				if (batch.failed > 0) add("${batch.failed}点が失敗")
+				if (batch.removeLocation) add("位置情報なし")
 				if (batch.locationErased > 0) add("${batch.locationErased}点は位置情報が端末で消されていました")
 				batch.message?.let(::add)
 				if (!batch.running && batch.failed == 0) add("「公開」でサイトに出ます")

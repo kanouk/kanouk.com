@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -40,6 +41,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -109,6 +111,7 @@ fun PickerScreen(vm: AppViewModel, albumId: String?) {
 	var selected by remember { mutableStateOf(listOf<Long>()) }
 	var dragBase by remember { mutableStateOf(listOf<Long>()) }
 	var choosingAlbum by remember { mutableStateOf(false) }
+	var includeLocation by remember { mutableStateOf(true) }
 	val visible = remember(photos, bucket) { photos.orEmpty().filter { bucket == null || it.bucket == bucket } }
 	val rows = remember(visible) {
 		val zone = ZoneId.systemDefault()
@@ -125,7 +128,7 @@ fun PickerScreen(vm: AppViewModel, albumId: String?) {
 		selected = if (photo.id in selected) selected - photo.id else selected + photo.id
 	}
 	fun send(target: Album) {
-		vm.upload(target, selected.mapNotNull(byId::get))
+		vm.upload(target, selected.mapNotNull(byId::get), removeLocation = !includeLocation)
 		vm.back()
 		if (albumId == null) vm.open(Screen.AlbumDetail(target.id))
 	}
@@ -141,17 +144,25 @@ fun PickerScreen(vm: AppViewModel, albumId: String?) {
 		},
 		bottomBar = {
 			Surface(color = MaterialTheme.colorScheme.surfaceContainer, tonalElevation = 2.dp) {
-				Row(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 16.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-					Column(Modifier.weight(1f)) {
-						Text(album?.let { "追加先：${it.title}" } ?: "追加先は次に選びます", style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-						Text(
-							if (locationAccess) "撮影日時と位置情報を残して送ります" else "位置情報の権限がないため、位置は送られません",
-							style = MaterialTheme.typography.bodySmall,
-							color = if (locationAccess) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error,
-						)
+				Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 16.dp, vertical = 6.dp)) {
+					if (locationAccess) Row(Modifier.fillMaxWidth().clickable { includeLocation = !includeLocation }, verticalAlignment = Alignment.CenterVertically) {
+						Icon(Glyph.Pin, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(end = 10.dp).size(20.dp))
+						Column(Modifier.weight(1f)) {
+							Text("位置情報を含める", style = MaterialTheme.typography.bodyMedium)
+							Text(
+								if (includeLocation) "撮影場所もアルバムの地図に載せます" else "写真ファイルからも位置情報を消して送ります",
+								style = MaterialTheme.typography.bodySmall,
+								color = MaterialTheme.colorScheme.onSurfaceVariant,
+							)
+						}
+						Switch(includeLocation, { includeLocation = it })
 					}
-					Button(onClick = { if (album != null) send(album) else choosingAlbum = true }, enabled = selected.isNotEmpty()) {
+					else Text("位置情報の権限がないため、位置は送られません", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+					Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+						Text(album?.let { "追加先：${it.title}" } ?: "追加先は次に選びます", style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+						Button(onClick = { if (album != null) send(album) else choosingAlbum = true }, enabled = selected.isNotEmpty()) {
 						Text(if (selected.isEmpty()) "追加" else "${selected.size}点を追加")
+						}
 					}
 				}
 			}

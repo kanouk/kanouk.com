@@ -49,6 +49,7 @@ data class UploadBatch(
 	val items: List<UploadItem>,
 	val finished: Boolean = false,
 	val message: String? = null,
+	val removeLocation: Boolean = false,
 ) {
 	val done get() = items.count { it.state == UploadItem.DONE }
 	val settled get() = items.count { it.settled }
@@ -92,12 +93,12 @@ object UploadCenter {
 		state.value = state.value.filterNot { it.id == batch.id }
 	}
 
-	fun enqueue(context: Context, albumId: String, albumTitle: String, photos: List<LocalPhoto>) {
+	fun enqueue(context: Context, albumId: String, albumTitle: String, photos: List<LocalPhoto>, removeLocation: Boolean = false) {
 		// Oldest first, like the web organizer: positions then follow the capture order.
 		val items = photos.sortedBy { it.takenAt }.map {
 			UploadItem(it.uri.toString(), it.name, it.size, it.width, it.height, it.mimeType)
 		}
-		val batch = UploadBatch("${System.currentTimeMillis()}-${UUID.randomUUID().toString().take(6)}", albumId, albumTitle, items)
+		val batch = UploadBatch("${System.currentTimeMillis()}-${UUID.randomUUID().toString().take(6)}", albumId, albumTitle, items, removeLocation = removeLocation)
 		save(batch)
 		start(context, batch.id)
 	}
