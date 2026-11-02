@@ -35,14 +35,11 @@ const analyticsEnabled = new Set(["blog.kanouk.com", "photos.kanouk.com"]).has(
 	.site-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 	.site-tools { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; min-width: 0; }
 	.photo-header { display: flex; align-items: center; justify-content: space-between; min-height: var(--critical-header-height); }
-	@media (max-width: 68rem) {
-		.site-header__inner { grid-template-columns: 1fr auto; padding-block: 0.45rem; }
-		.site-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; width: 100%; padding-top: 0.2rem; }
-		.site-tools { grid-column: 2; gap: 0.75rem; }
-	}
 	@media (max-width: 48rem) {
 		:root { --critical-header-height: 4rem; --critical-gutter: clamp(1rem, 5vw, 1.5rem); }
-		.site-header__inner { grid-template-columns: minmax(0, 1fr) auto; width: 100%; gap: 0.5rem 1rem; }
+		.site-header__inner { grid-template-columns: minmax(0, 1fr) auto; width: 100%; gap: 0.5rem 1rem; padding-block: 0.45rem; }
+		.site-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; width: 100%; padding-top: 0.2rem; }
+		.site-tools { grid-column: 2; }
 		.site-brand { min-width: 0; }
 		.site-brand__image { width: 8.5rem; max-width: none; height: auto; }
 		.site-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; overflow: hidden; }

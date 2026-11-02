@@ -38,6 +38,15 @@ test("profile identity, article hierarchy, and media styles retain distinct cont
 	}
 });
 
+test("articles keep the old blog's way around: breadcrumb, older and newer posts, floating buttons", async () => {
+	const [page, nav] = await Promise.all([read("src/pages/posts/[slug].astro"), read("src/client/article-nav.ts")]);
+	assert.match(page, /class="article-breadcrumb"/);
+	assert.match(page, /rel="prev"[\s\S]*前の記事[\s\S]*rel="next"[\s\S]*次の記事/);
+	assert.match(page, /direction === "older" \? \{ lt: publishedAt \} : \{ gt: publishedAt \}/);
+	assert.match(page, /data-article-top/);
+	assert.match(nav, /:is\(h2, h3, h4\)/);
+});
+
 test("album header keeps the article link short and the photos close", async () => {
 	const album = await read("src/pages/albums/[slug].astro");
 	assert.match(album, /<span>ブログ記事を読む\{/);

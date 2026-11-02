@@ -13,11 +13,12 @@ import {
 	PortableText,
 } from "emdash/ui";
 import { Comments, CommentForm } from "emdash/ui/comments";
-import { ChevronDown, Search } from "lucide-astro";
+import { ArrowLeft, ArrowRight, ChevronDown, ChevronRight, ChevronUp, List, Search } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
 import ProfileCard from "../../components/ProfileCard.astro";
+import YohakuImage from "../../components/YohakuImage.astro";
 import SidebarTaxonomies from "../../components/SidebarTaxonomies.astro";
 import YohakuPortableImage from "../../components/YohakuPortableImage.astro";
 import {
@@ -70,9 +71,23 @@ if (!isPreview && slug !== post.data.id) {
 // Queries that do not depend on the article body start now and run alongside
 // the body-dependent ones below (each D1 round trip adds latency on a cold page).
 const siteSettingsPromise = getSiteSettings();
+const adjacentPost = async (direction: "older" | "newer") => {
+	if (!post.data.publishedAt) return undefined;
+	const publishedAt = post.data.publishedAt.toISOString();
+	const { entries } = await getEmDashCollection("posts", {
+		status: "published",
+		where: { published_at: direction === "older" ? { lt: publishedAt } : { gt: publishedAt } },
+		orderBy: { published_at: direction === "older" ? "desc" : "asc" },
+		limit: 1,
+	});
+	return entries[0];
+};
 const sidebarDataPromise = Promise.all([
 	getEntryTerms("posts", post.data.id, "tag"),
 	getEmDashCollection("posts", { orderBy: { published_at: "desc" }, limit: 4 }),
+	getEntryTerms("posts", post.data.id, "category"),
+	adjacentPost("older"),
+	adjacentPost("newer"),
 ]);
 
 const legacyAlbumContent = await normalizeLegacyAlbumCards(
@@ -131,7 +146,7 @@ const firstImageDimensionsPromise =
 
 // Social images must resolve to a currently public media source. In particular,
 // a stale WordPress SEO URL never bypasses the published-media boundary.
-const [articleSocial, siteSettings, firstImageDimensions, imagePhotoLinks, [tags, recentPostsResult]] = await Promise.all([
+const [articleSocial, siteSettings, firstImageDimensions, imagePhotoLinks, [tags, recentPostsResult, categories, olderPost, newerPost]] = await Promise.all([
 	resolveArticleSocial(socialDatabase, {
 		id: post.id,
 		data: { ...post.data, content: articleContent },
@@ -196,7 +211,7 @@ const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);
 // getEntryTerms() call per related post.
 const [otherTagsByEntry, otherCovers] = await Promise.all([
 	getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "tag"),
-	postCoverImages(otherPosts),
+	postCoverImages([...otherPosts, ...(olderPost ? [olderPost] : []), ...(newerPost ? [newerPost] : [])]),
 ]);
 const otherPostsWithTags = otherPosts.map((p) => ({
 	post: p,
@@ -224,13 +239,15 @@ const titleSegments = Array.from(
 >
 	<article class="article">
 		<header class="article-lead">
-			{
-				publishDate && (
-					<time class="article-published" datetime={post.data.publishedAt?.toISOString()}>
-						{publishDate}
-					</time>
-				)
-			}
+			<nav class="article-breadcrumb" aria-label="パンくずリスト">
+				<a href="/">ホーム</a>
+				{categories[0] && (
+					<>
+						<ChevronRight size={12} strokeWidth={1.8} aria-hidden="true" />
+						<a href={`/category/${categories[0].slug}`}>{categories[0].label}</a>
+					</>
+				)}
+			</nav>
 			<h1 class="article-title" {...post.edit.title}>
 				{titleSegments.map((segment) =>
 					// Keep phrases together, but let a long unbroken word (URL, identifier) wrap.
@@ -238,6 +255,14 @@ const titleSegments = Array.from(
 				)}
 			</h1>
 			<div class="article-meta" aria-label="記事情報">
+				{
+					publishDate && (
+						<>
+							<time datetime={post.data.publishedAt?.toISOString()}>{publishDate}</time>
+							<span class="meta-dot" />
+						</>
+					)
+				}
 				{
 					showByline && (
 						<>
@@ -285,14 +310,51 @@ const titleSegments = Array.from(
 					/>
 				</div>
 
-				{tags.length > 0 && (
-					<nav class="article-footer-tags" aria-label="記事のタグ">
-						<span class="article-footer-tags__label">タグ</span>
-						<span class="article-footer-tags__list">
-							{tags.map((tag) => (
-								<a href={`/tag/${tag.slug}`} class="article-footer-tag">#{tag.label}</a>
-							))}
-						</span>
+				{(categories.length > 0 || tags.length > 0) && (
+					<nav class="article-footer-tags" aria-label="記事の分類">
+						{categories.length > 0 && (
+							<>
+								<span class="article-footer-tags__label">カテゴリー</span>
+								<span class="article-footer-tags__list">
+									{categories.map((category) => (
+										<a href={`/category/${category.slug}`} class="article-footer-tag">{category.label}</a>
+									))}
+								</span>
+							</>
+						)}
+						{tags.length > 0 && (
+							<>
+								<span class="article-footer-tags__label">タグ</span>
+								<span class="article-footer-tags__list">
+									{tags.map((tag) => (
+										<a href={`/tag/${tag.slug}`} class="article-footer-tag">#{tag.label}</a>
+									))}
+								</span>
+							</>
+						)}
+					</nav>
+				)}
+
+				{(olderPost || newerPost) && (
+					<nav class="article-pager" aria-label="前後の記事">
+						{olderPost && (
+							<a href={`/posts/${olderPost.data.id}`} rel="prev" class="article-pager__link article-pager__link--older">
+								{otherCovers.get(olderPost.data.id) && <span class="article-pager__thumb"><YohakuImage image={otherCovers.get(olderPost.data.id)} alt="" crop sizes="6rem" /></span>}
+								<span class="article-pager__text">
+									<span class="article-pager__label"><ArrowLeft size={14} strokeWidth={1.7} aria-hidden="true" />前の記事</span>
+									<span class="article-pager__title">{olderPost.data.title}</span>
+								</span>
+							</a>
+						)}
+						{newerPost && (
+							<a href={`/posts/${newerPost.data.id}`} rel="next" class="article-pager__link article-pager__link--newer">
+								<span class="article-pager__text">
+									<span class="article-pager__label">次の記事<ArrowRight size={14} strokeWidth={1.7} aria-hidden="true" /></span>
+									<span class="article-pager__title">{newerPost.data.title}</span>
+								</span>
+								{otherCovers.get(newerPost.data.id) && <span class="article-pager__thumb"><YohakuImage image={otherCovers.get(newerPost.data.id)} alt="" crop sizes="6rem" /></span>}
+							</a>
+						)}
 					</nav>
 				)}
 
@@ -357,6 +419,22 @@ const titleSegments = Array.from(
 		)
 	}
 
+	<div class="article-float" data-article-float>
+		<button type="button" class="article-float__button" popovertarget="article-index" aria-label="目次を開く" hidden data-article-index-button>
+			<List size={18} strokeWidth={1.6} aria-hidden="true" />
+		</button>
+		<button type="button" class="article-float__button" aria-label="ページの先頭へ戻る" data-article-top>
+			<ChevronUp size={18} strokeWidth={1.6} aria-hidden="true" />
+		</button>
+	</div>
+	<div id="article-index" popover class="article-index">
+		<p class="article-index__title">目次</p>
+		<ul class="article-index__list" data-article-index></ul>
+	</div>
+
+	<script>
+		import "../../client/article-nav";
+	</script>
 	<script>
 		// Build table of contents from h2/h3 headings
 		function buildToc() {
