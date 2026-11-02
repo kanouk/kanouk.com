@@ -227,7 +227,9 @@ class YohakuDesignContractTests(unittest.TestCase):
     def test_article_taxonomies_and_age_use_publication_context(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()
-        self.assertNotIn('"category"', article)
+        # Categories appear only in the breadcrumb and the article footer.
+        self.assertNotIn("article-meta-categories", article)
+        self.assertIn('getEntryTerms("posts", post.data.id, "category")', article)
         self.assertIn('getEntryTerms("posts", post.data.id, "tag")', article)
         # The author and age are shown only to signed-in admins, whose requests
         # bypass the shared cache.
@@ -243,13 +245,13 @@ class YohakuDesignContractTests(unittest.TestCase):
     def test_article_detail_uses_requested_content_order(self) -> None:
         article = (WEB_ROOT / "src/pages/posts/[slug].astro").read_text()
         theme = (WEB_ROOT / "src/styles/theme.css").read_text()
-        published = article.index('class="article-published"')
+        breadcrumb = article.index('class="article-breadcrumb"')
         title = article.index('class="article-title"')
         metadata = article.index('class="article-meta"')
         toc = article.index('class="toc article-toc"')
         body = article.index('class="article-content"')
         tags = article.index('class="article-footer-tags"')
-        self.assertLess(published, title)
+        self.assertLess(breadcrumb, title)
         self.assertLess(title, metadata)
         self.assertLess(metadata, toc)
         self.assertLess(toc, body)
