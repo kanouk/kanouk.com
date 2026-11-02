@@ -7,8 +7,8 @@ const BLOG = "https://blog.kanouk.com";
 const read = (relativePath) => readFile(new URL(`../${relativePath}`, import.meta.url), "utf8");
 
 test("the link label says where a linked image leads", () => {
-	assert.equal(lightboxLinkLabel("https://photos.kanouk.com/p/abc", BLOG), "写真ページを見る");
-	assert.equal(lightboxLinkLabel("/p/abc", "http://localhost:4321"), "写真ページを見る");
+	assert.equal(lightboxLinkLabel("https://photos.kanouk.com/p/abc", BLOG), "カノログ フォト");
+	assert.equal(lightboxLinkLabel("/p/abc", "http://localhost:4321"), "カノログ フォト");
 	assert.equal(lightboxLinkLabel("https://photos.kanouk.com/albums/abc", BLOG), "リンク先を開く（photos.kanouk.com）");
 	assert.equal(lightboxLinkLabel("http://www.amazon.co.jp/exec/obidos/ASIN/1", BLOG), "リンク先を開く（amazon.co.jp）");
 	assert.equal(lightboxLinkLabel("/posts/abc", BLOG), "リンク先を開く");

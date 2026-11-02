@@ -890,27 +890,41 @@ main:focus { outline: none; }
 .yohaku-portable-image__link { display: block; width: 100%; max-width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: none; cursor: zoom-in; }
 .yohaku-portable-image__link img { transition: opacity var(--transition); }
 .yohaku-portable-image__link:hover img { opacity: 0.92; }
-.image-lightbox { --focus: #bfc7ff; --lightbox-chrome: 5.5rem; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; overflow-y: auto; border: 0; background: #0d0d0e; color: #f4f4f5; color-scheme: dark; opacity: 0; transition: opacity 180ms ease, overlay 180ms allow-discrete, display 180ms allow-discrete; }
+.image-lightbox { --focus: #bfc7ff; --lightbox-chrome: 5.5rem; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; overflow: hidden auto; border: 0; background: #0b0b0d; color: #f4f4f5; color-scheme: dark; cursor: zoom-out; opacity: 0; transition: opacity 180ms ease, overlay 180ms allow-discrete, display 180ms allow-discrete; }
 /* Equal rows above and below keep the image at the true centre of the screen. */
 .image-lightbox[open] { display: grid; grid-template-rows: minmax(min-content, 1fr) auto minmax(min-content, 1fr); opacity: 1; transition-duration: 260ms; }
 @starting-style { .image-lightbox[open] { opacity: 0; } }
 html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .image-lightbox::backdrop { background: transparent; }
-.image-lightbox :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.image-lightbox__bar { display: flex; align-items: flex-start; justify-content: flex-end; padding: var(--space-2); }
-.image-lightbox__close { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
-.image-lightbox__stage { display: grid; place-items: center; padding-inline: var(--space-3); }
-.image-lightbox__stage picture { display: contents; }
-.image-lightbox__stage img { width: auto; max-width: 100%; height: auto; max-height: calc(100dvh - 2 * var(--lightbox-chrome)); margin: 0; padding: 0; border: 0; background-size: 100% 100%; box-shadow: none; object-fit: contain; transform: scale(0.97); transition: transform 180ms ease; }
-.image-lightbox[open] .image-lightbox__stage img { transform: none; transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1); }
-@starting-style { .image-lightbox[open] .image-lightbox__stage img { transform: scale(0.97); } }
-.image-lightbox__meta { display: grid; align-content: start; justify-items: center; padding: var(--space-2) var(--space-4) max(var(--space-2), env(safe-area-inset-bottom)); text-align: center; }
-.image-lightbox__caption { max-width: 48rem; margin: 0; color: rgb(255 255 255 / 72%); font-size: var(--step--1); }
-.image-lightbox__link { display: inline-flex; align-items: center; min-height: 2.75rem; color: rgb(255 255 255 / 72%); font-size: var(--step--1); text-decoration: none; }
-.image-lightbox__link:hover { color: #fff; text-decoration: underline; }
+.image-lightbox :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.image-lightbox__bar { display: flex; align-items: flex-start; justify-content: flex-end; gap: 0.5rem; padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.75rem; }
+.image-lightbox__close { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 50%; background: rgb(255 255 255 / 8%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%); color: rgb(255 255 255 / 88%); cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms ease; }
+.image-lightbox__close:hover { background: rgb(255 255 255 / 16%); color: #fff; }
+.image-lightbox__close:active { transform: scale(0.95); }
+.image-lightbox__stage { display: grid; place-items: center; padding-inline: clamp(0rem, 3vw, 2.5rem); }
+/* Sized from the ratio, so the frame hugs the photo; caption and link hang off its edges. */
+.image-lightbox__frame { position: relative; width: min(100%, var(--lightbox-width), calc((100dvh - 2 * var(--lightbox-chrome)) * var(--lightbox-ratio))); max-width: 100%; transform: scale(0.97); transition: transform 180ms ease; }
+.image-lightbox[open] .image-lightbox__frame { transform: none; transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+@starting-style { .image-lightbox[open] .image-lightbox__frame { transform: scale(0.97); } }
+.image-lightbox__photo, .image-lightbox__photo picture { display: contents; }
+.image-lightbox__stage img { display: block; width: 100%; max-width: 100%; height: auto; max-height: calc(100dvh - 2 * var(--lightbox-chrome)); margin: 0; padding: 0; border: 0; border-radius: 3px; background-size: 100% 100%; box-shadow: 0 0 0 1px rgb(255 255 255 / 7%), 0 1.5rem 5rem rgb(0 0 0 / 55%); cursor: default; object-fit: contain; transform: none; }
+/* The article already shows the caption, so here it stays out of the photo until asked for. */
+.image-lightbox__caption { position: absolute; inset: auto 0 0; margin: 0; padding: 2.75rem 1rem 0.8rem; border-radius: 0 0 3px 3px; background: linear-gradient(to top, rgb(0 0 0 / 68%), rgb(0 0 0 / 38%) 55%, transparent); color: #fff; font-size: 0.8125rem; letter-spacing: 0.02em; line-height: 1.6; opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+.image-lightbox__frame.is-caption-shown .image-lightbox__caption,
+.image-lightbox__frame:focus-visible .image-lightbox__caption { opacity: 1; }
+@media (hover: hover) { .image-lightbox__frame:has(img:hover) .image-lightbox__caption { opacity: 1; } }
+.image-lightbox__link { position: absolute; top: 100%; right: 0; display: inline-flex; align-items: center; gap: 0.4rem; max-width: calc(100vw - 1.5rem); height: 2.75rem; color: rgb(255 255 255 / 72%); font-size: 0.8125rem; letter-spacing: 0.02em; text-decoration: none; cursor: pointer; transition: color 160ms ease; }
+.image-lightbox__link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.image-lightbox__link svg { flex: none; }
+.image-lightbox__link:hover { color: #fff; }
 .image-lightbox [hidden] { display: none; }
+@media (max-width: 48rem) {
+	.image-lightbox__stage img { border-radius: 0; box-shadow: 0 1rem 3rem rgb(0 0 0 / 50%); }
+	.image-lightbox__caption { border-radius: 0; }
+	.image-lightbox__link { right: 0.75rem; }
+}
 @media (prefers-reduced-motion: reduce) {
-	.image-lightbox, .image-lightbox__stage img, .image-lightbox[open] .image-lightbox__stage img { transition: none; }
+	.image-lightbox, .image-lightbox__frame, .image-lightbox[open] .image-lightbox__frame, .image-lightbox__caption { transition: none; }
 }
 .yohaku-portable-image.style-border img { border: 1px solid var(--rule); }
 .yohaku-portable-image.style-shadow img { box-shadow: 0 0.7rem 2rem color-mix(in srgb, var(--ink) 10%, transparent); }
