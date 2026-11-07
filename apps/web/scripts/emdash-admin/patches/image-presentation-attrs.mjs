@@ -18,15 +18,15 @@ export default {
         'if (!(event.target instanceof HTMLInputElement)) event.preventDefault();',
         'if (!(event.target instanceof HTMLInputElement || event.target.closest?.("select"))) event.preventDefault();',
       );
+      const endOfControls = "\n\t\t\t\t] })\n\t\t\t}, controlsKey)";
       scope.insertBefore(
-        "\t\t\t\t\tcanOpenSettings &&",
-        `\t\t\t\t\timageExtensions.map(({ pluginId, ImageToolbar }, index) => ImageToolbar ? jsx(ImageToolbar, {
+        endOfControls,
+        `,\n\t\t\t\t\timageExtensions.map(({ pluginId, ImageToolbar }, index) => ImageToolbar ? jsx(ImageToolbar, {
 \t\t\t\t\t\timage,
 \t\t\t\t\t\tupdateAttributes: (attrs) => {
 \t\t\t\t\t\t\tif (editor.isEditable && getSelectedImage(editor.state)) editor.commands.updateAttributes("image", attrs);
 \t\t\t\t\t\t}
-\t\t\t\t\t}, pluginId + ":" + index) : null),
-`,
+\t\t\t\t\t}, pluginId + ":" + index) : null)`,
       );
     });
     editor.within("function ImageNodeView({ node, updateAttributes,", "\nconst ", (scope) => {

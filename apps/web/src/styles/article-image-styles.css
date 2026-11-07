@@ -14,7 +14,19 @@ img.yohaku-image-preview.style-none { padding: 0; border: 0; background: transpa
 .yohaku-portable-image.style-rounded img,
 img.yohaku-image-preview.style-rounded { border-radius: 0.6rem; }
 
+/* Keep the extra control on its own row in the narrow article editor. */
+.yohaku-image-style-field {
+	flex: 0 0 100%;
+	width: 0;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+}
 .yohaku-image-style-picker {
+	min-width: 0;
 	min-height: 2rem;
 	max-width: 100%;
 	padding-inline: 0.35rem;
