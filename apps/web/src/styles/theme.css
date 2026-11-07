@@ -712,7 +712,6 @@ main:focus { outline: none; }
 .byline-info { line-height: 1.35; }
 .byline-role { display: block; color: var(--ink-muted); font-size: var(--text-micro); }
 .meta-tags { margin-top: 0.55rem; }
-.toc { border-top: 1px solid var(--rule); padding-top: var(--space-4); }
 .toc[hidden] { display: none; }
 .toc-title { color: var(--ink-muted); font-family: var(--font-body); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; }
 .toc-list { margin-top: var(--space-3); list-style: none; }
@@ -721,11 +720,10 @@ main:focus { outline: none; }
 .toc-link { display: block; padding-block: 0.2rem; color: var(--ink-muted); font-size: var(--text-micro); line-height: 1.5; text-decoration: none; }
 .toc-link:hover,
 .toc-link.active { color: var(--accent-strong); }
-.article-toc { margin-bottom: clamp(2rem, 4vw, 3rem); padding: var(--space-4) 0 var(--space-5); border-bottom: 1px solid var(--rule-soft); }
+.article-toc { margin-bottom: clamp(2rem, 4vw, 3rem); padding-bottom: var(--space-5); border-bottom: 1px solid var(--rule-soft); }
 .article-toc .toc-title { color: var(--ink-soft); font-size: var(--step-0); letter-spacing: 0.04em; }
 .toc-summary { display: flex; align-items: center; gap: var(--space-3); min-height: var(--control-height); cursor: pointer; list-style: none; }
 .toc-summary::-webkit-details-marker { display: none; }
-.toc-count { color: var(--ink-muted); font-size: var(--step--1); }
 .toc-chevron { margin-left: auto; color: var(--ink-muted); transition: transform var(--transition); }
 .toc-details[open] .toc-chevron { transform: rotate(180deg); }
 .toc-summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
