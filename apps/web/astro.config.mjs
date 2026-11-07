@@ -3,7 +3,7 @@ import { lazyAdminBlocks } from "./scripts/lazy-admin-blocks.mjs";
 import cloudflare from "@astrojs/cloudflare";
 import { cacheCloudflare } from "@astrojs/cloudflare/cache";
 import react from "@astrojs/react";
-import { d1, r2 } from "@emdash-cms/cloudflare";
+import { d1, r2, sandbox } from "@emdash-cms/cloudflare";
 import { cloudflareEmail } from "@emdash-cms/cloudflare/plugins";
 import { formsPlugin } from "@emdash-cms/plugin-forms";
 import { defineConfig } from "astro/config";
@@ -66,6 +66,7 @@ export default defineConfig({
 				siteUrl: "https://blog.kanouk.com",
 				database: d1({ binding: "DB", session: "auto", coalesce: true }),
 				storage: r2({ binding: "MEDIA" }),
+				sandboxRunner: sandbox(),
 				plugins: [
 					formsPlugin(),
 					yohakuContentBlocks(),
