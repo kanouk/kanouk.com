@@ -97,13 +97,13 @@ function imageNode(block, tools) {
 	const height = numericImageDimension(htmlAttribute(imageHtml, "height"));
 	const alignment = block.attrs.align ||
 		(classes.match(/\balign(left|center|right|wide|full)\b/)?.[1]);
-	const visualStyle = /\bis-style-photo_frame\b/.test(classes)
-		? "photo-frame"
-		: /\bis-style-shadow\b/.test(classes)
-			? "shadow"
-			: /\bis-style-border\b/.test(classes)
-				? "border"
-				: undefined;
+	const styleClasses = `${classes} ${block.attrs.className || ""}`.split(/\s+/);
+	const visualStyle = [
+		["is-style-photo_frame", "photo-frame"],
+		["is-style-shadow", "shadow"],
+		["is-style-border", "border"],
+		["is-style-rounded", "rounded"],
+	].find(([className]) => styleClasses.includes(className))?.[1];
 	return {
 		_type: "image",
 		_key: tools.generateKey(),

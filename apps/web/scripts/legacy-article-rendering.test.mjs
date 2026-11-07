@@ -31,7 +31,7 @@ test('legacy blocks reach provider renderers, and compact tracks reserve only 80
   const stage = readFileSync(new URL('../plugins/yohaku-content-blocks/src/astro/Embed.astro', import.meta.url), 'utf8');
   assert.match(stage, /min-height: 0;/);
   const image = readFileSync(new URL('../src/components/YohakuPortableImage.astro', import.meta.url), 'utf8');
-  assert.match(image, /node.visualStyle \?\? "photo-frame"/);
+  assert.match(image, /resolveArticleImageStyle\(node\.visualStyle\)/);
   // Links: legacy strings and EmDash 0.40 { href, blank } objects.
   assert.match(image, /typeof node\.link === "string"/);
   assert.match(image, /href=\{link\.href\}/);
@@ -53,7 +53,7 @@ test('actual installed editor converters preserve frames and links through the i
   const mediaUtilsStart = source.indexOf('//#region src/lib/media-utils.ts');
   const mediaUtils = mediaUtilsStart < 0 ? '' : source.slice(mediaUtilsStart, source.indexOf('//#endregion', mediaUtilsStart));
   vm.runInContext(mediaUtils + '\n' + marks + '\n' + converters, ctx);
-  for (const visualStyle of ['photo-frame', 'border', 'shadow', 'none', undefined]) {
+  for (const visualStyle of ['photo-frame', 'border', 'shadow', 'none', 'rounded', undefined]) {
     ctx.blocks = [{ _type:'image', _key:'original', asset:{_ref:'media',url:'/photo.jpg'}, caption:'caption', displayWidth:600, alignment:'center', visualStyle, link:'https://photos.kanouk.com/p/example' }];
     const doc = vm.runInContext('portableTextToProsemirror(blocks)', ctx);
     // TipTap drops unknown attributes. Apply the actual image schema as well.

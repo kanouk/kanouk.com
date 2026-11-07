@@ -1,4 +1,6 @@
 ---
+import "../styles/article-image-styles.css";
+import { resolveArticleImageStyle } from "../utils/article-image-style.mjs";
 import YohakuImage from "./YohakuImage.astro";
 
 interface ImageNode {
@@ -12,7 +14,7 @@ interface ImageNode {
 	height?: number;
 	displayWidth?: number;
 	alignment?: "left" | "center" | "right" | "wide" | "full";
-	visualStyle?: "photo-frame" | "border" | "shadow" | "none";
+	visualStyle?: string;
 	// Legacy imports store a URL string; the EmDash editor (0.40+) stores { href, blank? }.
 	link?: string | { href?: string; blank?: boolean };
 	_yohakuPriority?: boolean;
@@ -28,7 +30,7 @@ const link = typeof node.link === "string"
 	: typeof node.link?.href === "string" && node.link.href.trim()
 		? { href: node.link.href.trim(), blank: node.link.blank === true }
 		: undefined;
-const visualStyle = node.visualStyle ?? "photo-frame";
+const visualStyle = resolveArticleImageStyle(node.visualStyle);
 const assetUrl = node?.asset?.url;
 const bareStorageKey = assetUrl && /^[A-Za-z0-9._-]+$/.test(assetUrl) ? assetUrl : undefined;
 const mediaFileStorageKey = assetUrl?.match(/^\/_emdash\/api\/media\/file\/([^/?#]+)$/)?.[1];

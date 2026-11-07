@@ -5,6 +5,7 @@ import type {
 	PortableTextBlockConfig,
 	PortableTextBlockField,
 } from "emdash";
+import { articleImageStyles } from "../../../src/utils/article-image-style.mjs";
 
 type PickerInput = { values?: Record<string, unknown> };
 type PickerItem = { id: string; name: string; values?: Record<string, unknown> };
@@ -150,12 +151,7 @@ export const relatedMediaBlocks: PortableTextBlockConfig[] = [
 				action_id: "frame",
 				label: "写真の見せ方",
 				initial_value: "photo-frame",
-				options: [
-					{ label: "写真フレーム", value: "photo-frame" },
-					{ label: "境界線", value: "border" },
-					{ label: "影", value: "shadow" },
-					{ label: "なし", value: "none" },
-				],
+				options: articleImageStyles,
 			},
 		],
 	},

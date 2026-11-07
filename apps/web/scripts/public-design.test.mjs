@@ -19,10 +19,11 @@ test("the home page stays list-first and includes real post excerpts", async () 
 });
 
 test("profile identity, article hierarchy, and media styles retain distinct contracts", async () => {
-	const [profile, image, theme] = await Promise.all([
+	const [profile, image, theme, imageStyles] = await Promise.all([
 		read("src/components/ProfileCard.astro"),
 		read("src/components/YohakuPortableImage.astro"),
 		read("src/styles/theme.css"),
+		read("src/styles/article-image-styles.css"),
 	]);
 	assert.match(profile, /profile-card__identity[\s\S]*<h2>カノ<\/h2>[\s\S]*profile-card__type">INFP/);
 	assert.match(theme, /\.profile-card__copy \{[\s\S]*border-top: 1px solid var\(--rule\);[\s\S]*text-align: left;/);
@@ -32,9 +33,9 @@ test("profile identity, article hierarchy, and media styles retain distinct cont
 	assert.match(theme, /\.article-content > h4::before,[\s\S]*content: none;/);
 	assert.match(theme, /--image-display-width, 30rem/);
 	assert.match(image, /node\.displayWidth \? `--image-display-width:\$\{node\.displayWidth\}px`/);
-	assert.match(image, /"photo-frame" \| "border" \| "shadow" \| "none"/);
-	for (const style of ["photo-frame", "border", "shadow", "none"]) {
-		assert.match(theme, new RegExp(`\\.yohaku-portable-image\\.style-${style}`));
+	assert.match(image, /resolveArticleImageStyle\(node\.visualStyle\)/);
+	for (const style of ["photo-frame", "border", "shadow", "none", "rounded"]) {
+		assert.match(imageStyles, new RegExp(`\\.yohaku-portable-image\\.style-${style}`));
 	}
 });
 

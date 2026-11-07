@@ -56,9 +56,7 @@ test("photo metadata is copied into article-local fields with persistent present
   assert.match(source, /action_id: "caption"/);
   assert.match(source, /initial_value: 480/);
   assert.match(source, /action_id: "displayWidth"/);
-  for (const frame of ["photo-frame", "border", "shadow", "none"]) {
-    assert.match(source, new RegExp(`value: "${frame}"`));
-  }
+  assert.match(source, /action_id: "frame",[\s\S]*?options: articleImageStyles/);
   assert.match(source, /type: "yohaku\.youtube"/);
   assert.match(source, /YouTube URL または動画ID/);
 });
