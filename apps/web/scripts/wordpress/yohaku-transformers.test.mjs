@@ -129,6 +129,16 @@ test("preserves WordPress image size, alignment, caption, and photo-frame meanin
 	});
 });
 
+test("retains WordPress rounded style when it appears only in the block attributes", () => {
+	const post = {
+		id: 16,
+		content: `<!-- wp:image {"id":123,"className":"is-style-rounded"} -->
+			<figure class="wp-block-image"><img src="https://example.test/photo.jpg" /></figure>
+			<!-- /wp:image -->`,
+	};
+	assert.equal(convertPostContent(post, context)[0].visualStyle, "rounded");
+});
+
 test("preserves the destination of a linked WordPress image", () => {
 	const post = {
 		id: 15,

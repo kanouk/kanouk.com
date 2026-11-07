@@ -13,6 +13,9 @@
 //   nodeView(ctx)       Summary of an inserted block. ctx = { blockType, id, data }.
 //                       Returns { imageUrl, imageReferrerPolicy, title,
 //                       externalUrl, below } or null.
+//   ImageToolbar(props) React component for the selected native image. Props
+//                       include image.visualStyle and updateAttributes(attrs).
+//   imagePreviewClass(attrs) Optional class on the editor image itself.
 
 export const RUNTIME_MARKER = "emdash-admin-extension-points:block-editor-runtime";
 

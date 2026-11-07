@@ -19,7 +19,7 @@ EmDash 本体に同等の機能が入った拡張ポイントは削除し、プ�
 | `block-insert-defaults` | スラッシュメニューからの挿入時の既定値。記事の下書き（`documentData`）を参照可能 | `insertDefaults({ block, editor, insertPos, documentData })` | 挿入時フック |
 | `block-node-view-extensions` | 挿入済みブロックのサムネイル、タイトル、コピー／開く URL、下部プレビュー | `nodeView({ blockType, id, data })` → `{ imageUrl, imageReferrerPolicy, title, externalUrl, below }` | ノード表示フック |
 | `editor-panels-draft-access` | 信頼済み編集パネルを新規記事にも表示し、下書きの読み書きを許可 | `contentEditorPanels` の `supportsNew`、`draftData`、`onFieldChange` | 0.40 では sandboxed パネルのみ対応。trusted への拡張を提案 |
-| `image-presentation-attrs` | 画像ブロックの `visualStyle` を保持 | なし | 未知属性の保持 |
+| `image-presentation-attrs` | 画像ブロックの `visualStyle` を保持し、ツールバーと画像プレビューに拡張を表示 | `ImageToolbar`、`imagePreviewClass` | 属性の保持と画像編集フック |
 
 API の詳細は `apps/web/scripts/emdash-admin/patches/block-editor-runtime.mjs` の冒頭コメントを参照。
 

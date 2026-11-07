@@ -910,12 +910,6 @@ main:focus { outline: none; }
 	margin-inline: auto;
 	object-fit: contain;
 }
-.yohaku-portable-image.style-photo-frame img {
-	padding: clamp(0.22rem, 0.6vw, 0.38rem);
-	border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
-	background: var(--paper-raised);
-	box-shadow: 0 0.7rem 2rem color-mix(in srgb, var(--ink) 8%, transparent);
-}
 .yohaku-portable-image__link { display: block; width: 100%; max-width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: none; cursor: zoom-in; }
 .yohaku-portable-image__link img { transition: opacity var(--transition); }
 .yohaku-portable-image__link:hover img { opacity: 0.92; }
@@ -955,9 +949,6 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 @media (prefers-reduced-motion: reduce) {
 	.image-lightbox, .image-lightbox__frame, .image-lightbox[open] .image-lightbox__frame, .image-lightbox__caption { transition: none; }
 }
-.yohaku-portable-image.style-border img { border: 1px solid var(--rule); }
-.yohaku-portable-image.style-shadow img { box-shadow: 0 0.7rem 2rem color-mix(in srgb, var(--ink) 10%, transparent); }
-.yohaku-portable-image.style-none img { padding: 0; border: 0; background: transparent; box-shadow: none; }
 .yohaku-portable-image.align-left,
 .yohaku-portable-image.align-right { width: fit-content; max-width: 50%; }
 .yohaku-portable-image.align-left { float: left; margin: 0 var(--space-5) var(--space-4) 0; }

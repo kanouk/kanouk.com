@@ -46,9 +46,7 @@ const alt = candidateAlt && !looksLikeSourceFilename(candidateAlt)
 	: displayTitle || (typeof safePhoto?.data.caption === "string" ? safePhoto.data.caption.trim() : "");
 const requestedWidth = Number(node.displayWidth);
 const displayWidth = Number.isFinite(requestedWidth) ? Math.max(240, Math.min(1600, requestedWidth)) : 480;
-const frame = ["photo-frame", "border", "shadow", "none"].includes(String(node.frame))
-	? String(node.frame)
-	: "photo-frame";
+const frame = typeof node.frame === "string" ? node.frame : undefined;
 const liveImage = safePhoto?.data.image && typeof safePhoto.data.image === "object"
 	? safePhoto.data.image as Record<string, unknown>
 	: {};
@@ -68,7 +66,7 @@ const imageUrl = typeof liveImage.src === "string"
 			caption,
 			displayWidth,
 			alignment: "center",
-			visualStyle: frame as "photo-frame" | "border" | "shadow" | "none",
+			visualStyle: frame,
 			link: href,
 		}}
 	/>
