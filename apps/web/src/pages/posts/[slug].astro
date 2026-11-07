@@ -295,7 +295,6 @@ const titleSegments = Array.from(
 					<details class="toc-details" open>
 						<summary class="toc-summary">
 							<span class="toc-title">目次</span>
-							<span class="toc-count" data-toc-count></span>
 							<ChevronDown class="toc-chevron" size={16} strokeWidth={1.75} aria-hidden="true" />
 						</summary>
 						<div class="toc-content" id="toc-content">
@@ -449,8 +448,6 @@ const titleSegments = Array.from(
 
 			const toc = tocContainer.closest(".toc") as HTMLElement | null;
 			const details = toc?.querySelector("details");
-			const count = toc?.querySelector("[data-toc-count]");
-			if (count) count.textContent = `${headings.length}項目`;
 			// A long contents list pushes the body below the first screen: start it closed on
 			// narrow screens, and on wide screens once it has more than eight entries.
 			const wide = window.matchMedia("(min-width: 48rem)").matches;
