@@ -37,3 +37,7 @@ Googleへの移転通知のため、旧URLから対応する新URLへ301転送�
 切り替え前のnameserverとDNS全件を書き戻せる状態で保全する。問題があれば旧nameserverへ戻す。専用Workerはブログの配信と独立しているため、転送の変更で記事データを書き換えない。
 
 根拠: [Googleのサイト移転ガイド](https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes)、[Search Consoleのアドレス変更](https://support.google.com/webmasters/answer/9370220)。301の設置後に申請し、申請受付とGoogleの検索結果への反映を区別する。
+
+## 移転先の正規URLの修正
+
+Google向け検査で、EmDash 1.4のSEO panel overlayが旧slugのcanonicalを再適用する問題を検出した。PR #131で既存のpage:metadata hookから正規URL・og:url・BlogPostingのURLを現在の記事IDへ統一し、本番反映した。記事データは変更していない。Worker `2329544c-bf7f-4c44-8b42-c7ca586a9637`の100%配信、実HTMLの一致、Googlebot許可、blog/photos/stagingの代表検査18/14/18件を確認済み。転送用Workerの1,450件の301・Location・確認用noindexも全件合格、専用CIも合格した。旧ドメイン接続とSearch Console申請は未実施。
