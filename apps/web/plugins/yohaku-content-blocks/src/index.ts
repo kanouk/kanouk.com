@@ -3,6 +3,7 @@ import type { PluginDescriptor } from "emdash";
 import { linkPreviewRoutes } from "./link-preview-route";
 import { embedBlocks } from "./embed-blocks";
 import { relatedMediaBlocks, relatedMediaRoutes } from "./related-media";
+import { postCanonicalMetadata } from "./post-canonical.mjs";
 
 export function yohakuContentBlocks(): PluginDescriptor {
 	return {
@@ -24,6 +25,8 @@ export function createPlugin() {
 		capabilities: ["content:read", "network:request:unrestricted"],
 		hooks: {
 			"page:metadata": ({ page }) => {
+				const postMetadata = postCanonicalMetadata(page);
+				if (postMetadata) return postMetadata;
 				if (!page.canonical) return null;
 				const schemaType = page.pageType === "collection"
 					? "CollectionPage"
