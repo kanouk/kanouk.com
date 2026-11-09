@@ -1,0 +1,26 @@
+name: Verify kanolog redirects
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/kanolog-redirect/**"
+      - ".github/workflows/verify-kanolog-redirect.yml"
+  pull_request:
+    paths:
+      - "apps/kanolog-redirect/**"
+      - ".github/workflows/verify-kanolog-redirect.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify published URL mappings and redirect behavior
+        run: node --test apps/kanolog-redirect/worker.test.mjs
