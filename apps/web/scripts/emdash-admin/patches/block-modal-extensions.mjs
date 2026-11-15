@@ -19,7 +19,7 @@ export default {
         "\tconst blockModalContributionsRef = React$1.useRef([]);\n\tReact$1.useEffect(() => {\n\t\tif (block) {\n\t\t\tconst nextValues = buildPluginBlockFormValues(block, initialValues ?? defaultValues);\n\t\t\tsetFormValues(nextValues);\n\t\t\tfor (const contribution of blockModalContributionsRef.current) contribution.onOpen?.(nextValues);",
       );
       scope.replace(
-        "\t}, [block, initialValues]);\n\tconst handleSubmit = (e) => {",
+        "\t}, [block, initialValues]);\n\tconst problems = pluginBlockProblems(block, formValues);",
         `\t}, [block, initialValues, defaultValues]);
 \tconst blockEditorExtensions = useBlockEditorExtensions();
 \tconst blockModalContributions = blockEditorExtensions.map((extension) => extension.useModal ? extension.useModal({
@@ -35,41 +35,52 @@ export default {
 \tconst extensionAllowsSubmit = extensionSubmitVotes.every(Boolean);
 \tconst renderBlockFieldAddon = (props) => blockModalContributions.map((contribution, index) => contribution.fieldAddon ? /* @__PURE__ */ jsx(Fragment, { children: contribution.fieldAddon(props) }, index) : null);
 \tconst transformBlockField = (field) => blockModalContributions.reduce((next, contribution) => contribution.transformField ? contribution.transformField(next) : next, field);
-\tconst handleSubmit = (e) => {`,
+\tconst problems = pluginBlockProblems(block, formValues);`,
       );
       scope.replace(
-        "\t\te.stopPropagation();\n\t\tif (block?.fields && block.fields.length > 0) onInsert(formValues);",
-        "\t\te.stopPropagation();\n\t\tif (!extensionAllowsSubmit) return;\n\t\tif (block?.fields && block.fields.length > 0) onInsert(formValues);",
+        "\t\te.stopPropagation();\n\t\tconst form = e.currentTarget;",
+        "\t\te.stopPropagation();\n\t\tif (!extensionAllowsSubmit) return;\n\t\tconst form = e.currentTarget;",
       );
       scope.replace(
         "\t\t\t[actionId]: value\n\t\t}));\n\t};\n",
         "\t\t\t[actionId]: value\n\t\t}));\n\t};\n\tconst handleFormPatch = (values) => {\n\t\tsetFormValues((prev) => ({ ...prev, ...values }));\n\t};\n",
       );
-      scope.replace("\tconst canSubmit = hasFields ? ", "\tconst canSubmit = extensionSubmitVotes.length > 0 ? extensionAllowsSubmit : hasFields ? ");
       scope.replace(
-        `/* @__PURE__ */ jsx("div", {
-\t\t\t\t\tclassName: "py-4 space-y-4 max-h-[70vh] overflow-y-auto -mx-1 px-1",
-\t\t\t\t\tchildren: hasFields ? block.fields.map((field) => /* @__PURE__ */ jsx(BlockKitField, {
-\t\t\t\t\t\tfield,
-\t\t\t\t\t\tpluginId: block.pluginId,
-\t\t\t\t\t\tvalue: formValues[field.action_id],
-\t\t\t\t\t\tonChange: handleFieldChange
-\t\t\t\t\t}, field.action_id)) : /* @__PURE__ */ jsx(Input, {`,
-        `/* @__PURE__ */ jsxs("div", {
-\t\t\t\t\tclassName: "py-4 space-y-4 max-h-[70vh] overflow-y-auto -mx-1 px-1",
-\t\t\t\t\tchildren: [...blockModalContributions.map((contribution, index) => contribution.before ? /* @__PURE__ */ jsx(Fragment, { children: contribution.before }, \`before:\${index}\`) : null), hasFields ? block.fields.map((field) => /* @__PURE__ */ jsx(BlockKitField, {
-\t\t\t\t\t\tfield: transformBlockField(field),
-\t\t\t\t\t\tpluginId: block.pluginId,
-\t\t\t\t\t\tvalue: formValues[field.action_id],
-\t\t\t\t\t\tformValues,
-\t\t\t\t\t\tonPatch: handleFormPatch,
-\t\t\t\t\t\trenderFieldAddon: renderBlockFieldAddon,
-\t\t\t\t\t\tonChange: handleFieldChange
-\t\t\t\t\t}, field.action_id)) : /* @__PURE__ */ jsx(Input, {`,
+        "\t\t\t\t\t\ttype: \"submit\",\n\t\t\t\t\t\tform: formId,",
+        "\t\t\t\t\t\ttype: \"submit\",\n\t\t\t\t\t\tform: formId,\n\t\t\t\t\t\tdisabled: !extensionAllowsSubmit,",
       );
       scope.replace(
-        "\t\t\t\t\t\tonChange: (e) => handleFieldChange(\"id\", e.target.value)\n\t\t\t\t\t})\n\t\t\t\t}),",
-        "\t\t\t\t\t\tonChange: (e) => handleFieldChange(\"id\", e.target.value)\n\t\t\t\t\t}), ...blockModalContributions.map((contribution, index) => contribution.after ? /* @__PURE__ */ jsx(Fragment, { children: contribution.after }, `after:${index}`) : null)]\n\t\t\t\t}),",
+        `children: [/* @__PURE__ */ jsx("div", {
+\t\t\t\t\t\tclassName: "grid gap-5",
+\t\t\t\t\t\t"data-field-invalid": formError ? true : void 0,
+\t\t\t\t\t\tchildren: hasFields ? block.fields.map((field) => {`,
+        `children: [/* @__PURE__ */ jsxs("div", {
+\t\t\t\t\t\tclassName: "grid gap-5",
+\t\t\t\t\t\t"data-field-invalid": formError ? true : void 0,
+\t\t\t\t\t\tchildren: [...blockModalContributions.map((contribution, index) => contribution.before ? /* @__PURE__ */ jsx(Fragment, { children: contribution.before }, \`before:\${index}\`) : null), hasFields ? block.fields.map((field) => {`,
+      );
+      scope.replace(
+        `children: [/* @__PURE__ */ jsx(BlockKitField, {
+\t\t\t\t\t\t\t\t\tfield,
+\t\t\t\t\t\t\t\t\tpluginId: block.pluginId,
+\t\t\t\t\t\t\t\t\tvalue: formValues[field.action_id],
+\t\t\t\t\t\t\t\t\tonChange: handleFieldChange,
+\t\t\t\t\t\t\t\t\terrorId
+\t\t\t\t\t\t\t\t}),`,
+        `children: [/* @__PURE__ */ jsx(BlockKitField, {
+\t\t\t\t\t\t\t\t\tfield: transformBlockField(field),
+\t\t\t\t\t\t\t\t\tpluginId: block.pluginId,
+\t\t\t\t\t\t\t\t\tvalue: formValues[field.action_id],
+\t\t\t\t\t\t\t\t\tformValues,
+\t\t\t\t\t\t\t\t\tonPatch: handleFormPatch,
+\t\t\t\t\t\t\t\t\trenderFieldAddon: renderBlockFieldAddon,
+\t\t\t\t\t\t\t\t\tonChange: handleFieldChange,
+\t\t\t\t\t\t\t\t\terrorId
+\t\t\t\t\t\t\t\t}),`,
+      );
+      scope.replace(
+        "\t\t\t\t\t\t\t\"aria-invalid\": urlError ? true : void 0\n\t\t\t\t\t\t})\n\t\t\t\t\t}), /* @__PURE__ */ jsx(DialogError, {",
+        "\t\t\t\t\t\t\t\"aria-invalid\": urlError ? true : void 0\n\t\t\t\t\t\t}), ...blockModalContributions.map((contribution, index) => contribution.after ? /* @__PURE__ */ jsx(Fragment, { children: contribution.after }, `after:${index}`) : null)]\n\t\t\t\t\t}), /* @__PURE__ */ jsx(DialogError, {",
       );
     });
   },

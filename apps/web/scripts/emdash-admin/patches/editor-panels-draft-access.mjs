@@ -14,12 +14,13 @@ export default {
         "function ContentSettingsPanel({ collection, item, isNew, manifest, entryLocale, slug,",
         "function ContentSettingsPanel({ collection, item, isNew, manifest, entryLocale, draftData, onDraftFieldChange, slug,",
       );
+      // 1.5 resolves plugin panels as editor sections; new entries keep the trusted ones that opt in.
       scope.replace(
-        "\tconst trustedExtensionPanels = React$1.useMemo(() => !isNew && item ? resolveContentEditorPanels(pluginAdmins, collection, currentUser?.role ?? 0, manifest?.plugins) : [], [",
-        "\tconst trustedExtensionPanels = React$1.useMemo(() => {\n\t\tconst resolved = resolveContentEditorPanels(pluginAdmins, collection, currentUser?.role ?? 0, manifest?.plugins);\n\t\treturn isNew || !item ? resolved.filter(({ extension }) => extension.supportsNew === true) : resolved;\n\t}, [",
+        "\tconst extensionSections = React$1.useMemo(() => !isNew && item ? resolveEditorExtensionSections(pluginAdmins, manifest?.plugins, collection, currentUser?.role ?? 0) : [], [",
+        "\tconst extensionSections = React$1.useMemo(() => {\n\t\tconst resolved = resolveEditorExtensionSections(pluginAdmins, manifest?.plugins, collection, currentUser?.role ?? 0);\n\t\treturn isNew || !item ? resolved.filter((section) => section.kind === \"trusted\" && section.panel.extension.supportsNew === true) : resolved;\n\t}, [",
       );
-      // Sandboxed panels remain saved-entry only (their list is empty for new entries).
-      scope.replace("\t\t\t\titem && extensionPanels.map(({ kind, pluginId, panel }) => {", "\t\t\t\textensionPanels.map(({ kind, pluginId, panel }) => {");
+      // Sandboxed panels remain saved-entry only (filtered out above for new entries).
+      scope.replace("\t\t\t\titem && extensionSections.map(({ kind, id: sectionId, pluginId, panel }) => {", "\t\t\t\textensionSections.map(({ kind, id: sectionId, pluginId, panel }) => {");
       scope.replace(
         `\t\t\t\t\t\t\t\t\tchildren: /* @__PURE__ */ jsx(Panel, {
 \t\t\t\t\t\t\t\t\t\tcollection,
@@ -41,7 +42,8 @@ export default {
     });
 
     editor.within("function ContentEditor({ collection,", "\nfunction ", (scope) => {
-      scope.within("jsx(ContentSettingsPanel, {", "})", (call) => {
+      // 1.5 renders the settings panel through RoomContentSettingsPanel, which passes its props on.
+      scope.within("jsx(RoomContentSettingsPanel, {", "})", (call) => {
         call.replace("\tisNew,\n\t\t\t\t\t\t\t\t\t\t\tmanifest,\n", "\tisNew,\n\t\t\t\t\t\t\t\t\t\t\tmanifest,\n\t\t\t\t\t\t\t\t\t\t\tdraftData: formData,\n\t\t\t\t\t\t\t\t\t\t\tonDraftFieldChange: handleFieldChange,\n");
       });
     });

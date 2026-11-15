@@ -202,7 +202,8 @@ function authenticateMediaRequest(
 	env: HandlerEnv,
 	context: HandlerContext,
 ): Promise<boolean> {
-	return verifyAuthenticatedMediaRead(request, (probe) =>
+	// Since EmDash 1.5 the handler may answer without a promise.
+	return verifyAuthenticatedMediaRead(request, async (probe) =>
 		handler.fetch(probe as HandlerRequest, env, context));
 }
 

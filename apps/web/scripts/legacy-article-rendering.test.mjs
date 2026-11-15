@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 import { parseXPostUrl } from '../plugins/yohaku-content-blocks/src/x-post-url.mjs';
 import { parseEmbedUrl } from '../plugins/yohaku-content-blocks/src/embed-url.mjs';
 import { linkCardText } from '../plugins/yohaku-content-blocks/src/link-card-text.mjs';
 import { createEditor } from './emdash-admin/patch-kit.mjs';
 import imagePresentationAttrs from './emdash-admin/patches/image-presentation-attrs.mjs';
+import { adminChunkPaths } from './emdash-admin/apply.mjs';
+import { pathToFileURL } from 'node:url';
 
 test('legacy placeholder yields to OGP while actual manual titles remain', () => {
   assert.equal(linkCardText(' 関連記事 '), '');
@@ -37,32 +38,27 @@ test('legacy blocks reach provider renderers, and compact tracks reserve only 80
   assert.match(image, /href=\{link\.href\}/);
   assert.match(image, /link\.blank \? "_blank"/);
 });
-test('actual installed editor converters preserve frames and links through the image schema', () => {
-  const source = readFileSync(new URL('../node_modules/@emdash-cms/admin/dist/index.js', import.meta.url), 'utf8');
+test('actual installed editor converters preserve frames and links through the image schema', async () => {
+  // Since EmDash 1.5 the image schema and the Portable Text converters live in the
+  // shared convert chunk, an ES module that runs on its own; import the patched copy.
+  const chunk = await adminChunkPaths('convert');
+  const source = readFileSync(chunk.bundle, 'utf8');
   assert.match(source, /visualStyle: \{ default: null \}/);
-  assert.throws(() => imagePresentationAttrs.apply(createEditor(imagePresentationAttrs.id, 'upstream changed')));
-  const marks = source.slice(source.indexOf('const SUPPORTED_PORTABLE_TEXT_DECORATORS'), source.indexOf('//#endregion', source.indexOf('const SUPPORTED_PORTABLE_TEXT_DECORATORS')));
-  const converters = source.slice(source.indexOf('function generateKey()'), source.indexOf('function insertHtmlBlock('));
-  const schemaStart = source.indexOf('addAttributes()', source.indexOf('draggable: true,', source.indexOf('//#region src/components/editor/Image')));
-  const attrsStart = source.indexOf('src: { default: null },', schemaStart);
-  const attrsEnd = source.indexOf('\n\t\t};', attrsStart);
-  const attrs = vm.runInNewContext(`({${source.slice(attrsStart, attrsEnd)}})`);
-  // Since EmDash 0.40 the converters sit next to TipTap extension/mark definitions.
-  // EmDash 1.2 also defines its TipTap StarterKit extension in that range.
-  const ctx = vm.createContext({ Extension: { create: (config) => config }, Mark: { create: (config) => config }, StarterKit: { extend: (config) => config } });
-  const mediaUtilsStart = source.indexOf('//#region src/lib/media-utils.ts');
-  const mediaUtils = mediaUtilsStart < 0 ? '' : source.slice(mediaUtilsStart, source.indexOf('//#endregion', mediaUtilsStart));
-  vm.runInContext(mediaUtils + '\n' + marks + '\n' + converters, ctx);
+  assert.throws(() => imagePresentationAttrs.chunks.convert(createEditor(imagePresentationAttrs.id, 'upstream changed')));
+  const exported = Object.fromEntries([...source.matchAll(/(\w+) as (\$|\w+)/g)].filter(([, name]) => ['portableTextToProsemirror', 'prosemirrorToPortableText', 'ImageNode'].includes(name)).map(([, name, alias]) => [name, alias]));
+  const module = await import(pathToFileURL(chunk.bundle).href);
+  const toProsemirror = module[exported.portableTextToProsemirror];
+  const toPortableText = module[exported.prosemirrorToPortableText];
+  const attrs = module[exported.ImageNode].config.addAttributes.call({ parent: () => ({}) });
   for (const visualStyle of ['photo-frame', 'border', 'shadow', 'none', 'rounded', undefined]) {
-    ctx.blocks = [{ _type:'image', _key:'original', asset:{_ref:'media',url:'/photo.jpg'}, caption:'caption', displayWidth:600, alignment:'center', visualStyle, link:'https://photos.kanouk.com/p/example' }];
-    const doc = vm.runInContext('portableTextToProsemirror(blocks)', ctx);
+    const blocks = [{ _type:'image', _key:'original', asset:{_ref:'media',url:'/photo.jpg'}, caption:'caption', displayWidth:600, alignment:'center', visualStyle, link:'https://photos.kanouk.com/p/example' }];
+    const doc = toProsemirror(blocks);
     // TipTap drops unknown attributes. Apply the actual image schema as well.
     doc.content[0].attrs = Object.fromEntries(Object.entries(doc.content[0].attrs).filter(([key]) => key in attrs));
-    ctx.doc = doc;
-    const [saved] = vm.runInContext('prosemirrorToPortableText(doc)', ctx);
+    const [saved] = toPortableText(doc);
     assert.equal(saved.visualStyle, visualStyle);
     // EmDash 0.40 owns image links and normalizes the legacy string form.
-    assert.deepEqual(JSON.parse(JSON.stringify(saved.link)), { href: ctx.blocks[0].link });
+    assert.deepEqual(JSON.parse(JSON.stringify(saved.link)), { href: blocks[0].link });
     assert.equal(saved.displayWidth, 600);
     assert.equal(saved.caption, 'caption');
   }
