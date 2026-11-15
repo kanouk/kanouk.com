@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
 
-import { adminPackagePaths, PATCH_MARKER, patchAdminSource } from "./emdash-admin/apply.mjs";
+import { adminChunkPaths, adminPackagePaths, PATCH_MARKER, patchAdminChunk, patchAdminSource, patchedChunkNames } from "./emdash-admin/apply.mjs";
 import { AdminPatchError, createEditor } from "./emdash-admin/patch-kit.mjs";
 import blockEditorRuntime, { RUNTIME_MARKER } from "./emdash-admin/patches/block-editor-runtime.mjs";
 import { adminPatches, VERIFIED_ADMIN_VERSION } from "./emdash-admin/registry.mjs";
@@ -49,7 +49,7 @@ test("upstream now resolves {id} URL patterns for preview, live view and list li
   const pristine = await read(paths.pristine);
   const start = pristine.indexOf("const DATE_TOKEN$1 =");
   const end = pristine.indexOf("/** Matches http:// or https:// URLs */");
-  const context = vm.createContext({ LEADING_SLASHES: /^\/+/ });
+  const context = vm.createContext({ LEADING_SLASHES: /^\/+/, URL });
   vm.runInContext(`${pristine.slice(start, end)}\nglobalThis.contentUrl = contentUrl;`, context);
   const options = { id: "01M1CRQMF21R7TK33CH7XW60KH", locale: "ja", i18n: { defaultLocale: "ja" } };
   assert.equal(context.contentUrl("posts", "fukuoka-trip-2026-03", "/posts/{id}", options), "/posts/01M1CRQMF21R7TK33CH7XW60KH");
@@ -58,7 +58,7 @@ test("upstream now resolves {id} URL patterns for preview, live view and list li
   // Every caller passes the entry ID, so the old local contentUrl patch is gone.
   const calls = [...pristine.matchAll(/contentUrl\([^)]*urlPattern, \{([^}]*)\}/g)];
   assert.ok(calls.length >= 5);
-  for (const [, options] of calls) assert.match(options, /\bid: item\??\.id\b/);
+  for (const [, options] of calls) assert.match(options, /\bid: (?:item|entry)\??\.id\b/);
 });
 
 function runtimeContext(pluginAdmins) {
@@ -102,6 +102,7 @@ test("the installed bundle wires each extension point where upstream renders it"
   assert.match(source, /function PluginBlockModal\(\{ block, initialValues, defaultValues, onClose, onInsert \}\)/);
   assert.match(source, /extension\.useModal \? extension\.useModal\(\{/);
   assert.match(source, /if \(!extensionAllowsSubmit\) return;/);
+  assert.match(source, /disabled: !extensionAllowsSubmit,/);
   assert.match(source, /field: transformBlockField\(field\)/);
   assert.match(source, /renderFieldAddon\(\{ field, options, value, select: selectOption \}\)/);
   // Hooks run after the dialog's reset effect so their effects keep that order.
@@ -114,7 +115,7 @@ test("the installed bundle wires each extension point where upstream renders it"
   const select = source.slice(source.indexOf("function DynamicSelect("), source.indexOf("\nconst WORDS_PER_MINUTE"));
   assert.match(select, /const labelId = React\$1\.useId\(\)/);
   assert.match(select, /"aria-labelledby": labelId/);
-  assert.match(source, /pluginBlocks = EMPTY_PLUGIN_BLOCKS, documentData,/);
+  assert.match(source, /pluginBlocks: externalPluginBlocks = EMPTY_PLUGIN_BLOCKS, documentData,/);
   assert.match(source, /canEditUrl && isEditing &&/);
   // Insert defaults with the entry draft.
   assert.match(source, /documentData: formData,/);
@@ -125,4 +126,16 @@ test("the installed bundle wires each extension point where upstream renders it"
   // Editor panels on new entries with draft access.
   assert.match(source, /extension\.supportsNew === true/);
   assert.match(source, /draftData: formData,\n\t*onDraftFieldChange: handleFieldChange/);
+});
+
+test("shared chunks are patched from their pristine copies; the image keeps its presentation", async () => {
+  assert.deepEqual(patchedChunkNames(), ["convert"]);
+  const chunk = await adminChunkPaths("convert", paths);
+  const [installed, pristine] = await Promise.all([read(chunk.bundle), read(chunk.pristine)]);
+  assert.ok(!pristine.includes(PATCH_MARKER));
+  assert.equal(installed, patchAdminChunk("convert", pristine));
+  // Schema attribute and both Portable Text converters.
+  assert.match(installed, /visualStyle: \{ default: null \}/);
+  assert.match(installed, /visualStyle: attrStr\(attrs\.visualStyle\)/);
+  assert.match(installed, /visualStyle: imageBlock\.visualStyle/);
 });

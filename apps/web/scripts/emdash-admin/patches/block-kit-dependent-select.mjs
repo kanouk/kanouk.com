@@ -11,10 +11,10 @@ export default {
   summary: "Dependent Block Kit selects (depends_on / clear_fields / option values) and a field addon slot.",
   upstream: "Propose depends_on / clear_fields / option values for Block Kit select upstream.",
   apply(editor) {
-    editor.within("function BlockKitField({ field, pluginId, value, onChange }) {", "\nfunction ", (scope) => {
+    editor.within("function BlockKitField({ field, pluginId, value, onChange, errorId }) {", "\nfunction ", (scope) => {
       scope.replace(
-        "function BlockKitField({ field, pluginId, value, onChange }) {",
-        "function BlockKitField({ field, pluginId, value, onChange, formValues, onPatch = () => {}, renderFieldAddon }) {",
+        "function BlockKitField({ field, pluginId, value, onChange, errorId }) {",
+        "function BlockKitField({ field, pluginId, value, onChange, errorId, formValues, onPatch = () => {}, renderFieldAddon }) {",
       );
       scope.replace(
         `\t\tcase "select": return /* @__PURE__ */ jsx(DynamicSelect, {

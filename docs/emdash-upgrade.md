@@ -1,6 +1,6 @@
 # EmDash の更新とカスタマイズの構成
 
-`apps/web` は EmDash（現在 1.4.0、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
+`apps/web` は EmDash（現在 1.5.0、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
 
 1. **拡張ポイント層**（`apps/web/scripts/emdash-admin/`）: EmDash 管理画面に汎用の差し込み口だけを足す小さなパッチ。サイト固有の UI は置かない。
 2. **プラグイン層**: 実際の振る舞い。信頼済みプラグインの管理画面モジュール（descriptor の `adminEntry`）が拡張ポイントを使う。
@@ -87,6 +87,40 @@ python3 scripts/cloudflare/check_emdash_reference_fields.py --remote
 ローカルでは、0.40.1 のデータ入り D1 に 1.1.0 を起動し、6 本が自動適用されること、移行されたリンクが 0 件であること、編集シナリオが 0.40.1・1.0.1 と同じ結果になること、旧記事と画像リンクがそのまま開けることを確認した。
 
 管理画面の初期 JS は 1,212,120 bytes（gzip）になった。内訳と予算の変更は `docs/performance/README.md` を参照。1.1.0 で追加された HTML ブロック用のコードエディタ（CodeMirror）は遅延読み込み。
+
+### 1.5.0 への更新（2026-11-16）
+
+`emdash` と `@emdash-cms/cloudflare` を 1.5.0、Forms を 0.2.13 に更新した。1.5 の管理画面と Forms は、どちらも `@cloudflare/kumo` 2.15.0 を必要とする。`npm install <pkg>@1.5.0` は、ロックファイルに残った 1.4.0 の記録と peer dependency がぶつかり ERESOLVE で止まった。そのため、ロックファイルから EmDash 関連と TipTap の項目を外して解決し直した。TipTap は EmDash が固定する 3.32.0 に揃えている（1.4.0 のときは 3.32.2 が混在していた）。`bun.lock` は `bun install --lockfile-only` で同期した。
+
+**マイグレーション**は6本追加された（`092`〜`097`）。
+
+- `092_plugin_kv_options`: sandboxed プラグインの KV（`_plugin_storage` の `__kv`）を `options` に複製する。本番は該当 0 件。写真の並び順（`settings` コレクション）は対象外で、元の行も消えない。
+- `093_menu_item_orphans`: 親のないメニュー項目を最上位へ移す。本番は該当 0 件。
+- `094_media_usage_file_url_reindex`: 本文中のメディアの「使用箇所」を作り直す予約だけをする。
+- `095_plugin_storage_unique_scope`: プラグイン保存領域の一意インデックスを作り直す。本番は Forms の `slug` だけで、行は 0 件。
+- `096_revision_kind_and_editors`: `revisions` に `kind` と `edited_by` を追加する。既存の行はどちらも NULL のまま。
+- `097_room_storage`: 共同編集用のテーブルを作る。共同編集（`coEditing`）は使っていない。
+
+このバージョンのマイグレーションを適用すると、それ以前の EmDash からはサイトの書き出し・取り込みができなくなる。デプロイ前に D1 Time Travel の復元点を記録した（2026-11-15T15:15Z、bookmark `000004c5-00000e96-00005124-1cc3ebca4ba8064ee347ce2e09d59cf9`）。
+
+**管理画面の拡張ポイント**は 7 本とも引き続き必要。1.5 で上流が大きく変わったため、5 本を合わせ直した。
+
+- `block-kit-dependent-select`: `BlockKitField` に `errorId` が増えた。
+- `block-modal-extensions`: ブロックのダイアログが `LayerDialog` と入力チェック（`pluginBlockProblems`）に作り直された。前後のプレビュー、項目の変換、選択肢の下の補助表示を新しい構造に差し込む。`canSubmit` がなくなったため、プラグインの送信可否は挿入ボタンの `disabled` と送信処理の両方で効かせる。
+- `block-insert-defaults`: エディターが共同編集に対応し、挿入位置が `{ position }` のオブジェクトに、編集中のブロックが位置ではなくブロックそのものになった。本文エディターは 2 か所で描画されるため、どちらにも `documentData` を渡す。
+- `editor-panels-draft-access`: プラグインのパネルが「エディターのセクション」（`resolveEditorExtensionSections`）として扱われるようになった。新規記事では、`supportsNew` の trusted パネルだけを残す。設定パネルは `RoomContentSettingsPanel` 経由で描画されるため、下書きの受け渡しもそこで行う。
+- `image-presentation-attrs`: 画像のスキーマと Portable Text の変換が共有チャンク `dist/convert-<hash>.js` に移った。拡張ポイントの仕組みを、`index.js` 以外のチャンクも同じ手順（`.pristine` から適用）で書き換えられるようにした（パッチの `chunks: { convert(editor) {} }`）。
+
+`scripts/legacy-article-rendering.test.mjs` は、管理画面のバンドルから変換関数を切り出す方式をやめ、パッチ済みの convert チャンクを ES モジュールとしてそのまま読み込んで確かめる。1.5 の Worker の `fetch` は Promise を返さないことがあるため、`src/worker.ts` の呼び出しを `async` で包んだ。
+
+Node 22（CI と同じ）でクリーンな `npm ci`、拡張ポイントの適用確認、移行・管理機能テスト 169 件、公開 UX テスト 135 件、Python テスト 191 件、型チェック（エラー・警告 0）、ビルド、サイズ予算チェックが合格した。管理画面の初期 JS は 1,321,563 bytes（gzip）、管理画面 CSS は 48,747 bytes、公開 CSS は 28,432 bytes。
+
+091 まで適用済みのローカル D1 に 1.5.0 を起動し、6 本が自動で適用されることを確認した。ローカルの架空データで、次の動作を確かめた。
+
+- 公開ページ（トップ、アルバム、写真、写真検索、記事一覧、アーカイブ）
+- 新規記事での関連アルバムのパネル
+- 「アルバムの写真」ブロック：関連アルバムが既定値として入る、アルバムに連動して写真の選択肢と補助表示が出る、写真を選ぶとキャプション・代替テキスト・画像が入る、挿入後の表示、下書き保存
+- 写真整理画面（アルバム、ライブラリ、アルバムの並び順）
 
 ### 1.4.0 への更新（2026-11-01）
 

@@ -7,10 +7,15 @@ export default {
   id: "image-presentation-attrs",
   summary: "Preserves image presentation and exposes image editing hooks.",
   upstream: "Propose image attribute passthrough and toolbar/preview hooks upstream.",
+  // Since 1.5 the image schema and both converters live in the shared convert chunk.
+  chunks: {
+    convert(editor) {
+      editor.replace("\t\t\talignment: { default: null },\n\t\t\tlink: { default: null }", "\t\t\talignment: { default: null },\n\t\t\tvisualStyle: { default: null },\n\t\t\tlink: { default: null }");
+      editor.replace("\t\t\t\talignment: attrStr(attrs.alignment),\n\t\t\t\tlink\n", "\t\t\t\talignment: attrStr(attrs.alignment),\n\t\t\t\tvisualStyle: attrStr(attrs.visualStyle),\n\t\t\t\tlink\n");
+      editor.replace("\t\t\t\t\talignment: imageBlock.alignment,\n\t\t\t\t\tlink: normalizeImageLink(imageBlock.link)", "\t\t\t\t\talignment: imageBlock.alignment,\n\t\t\t\t\tvisualStyle: imageBlock.visualStyle,\n\t\t\t\t\tlink: normalizeImageLink(imageBlock.link)");
+    },
+  },
   apply(editor) {
-    editor.replace("\t\t\talignment: { default: null },\n\t\t\tlink: { default: null }", "\t\t\talignment: { default: null },\n\t\t\tvisualStyle: { default: null },\n\t\t\tlink: { default: null }");
-    editor.replace("\t\t\t\talignment: attrStr(attrs.alignment),\n\t\t\t\tlink\n", "\t\t\t\talignment: attrStr(attrs.alignment),\n\t\t\t\tvisualStyle: attrStr(attrs.visualStyle),\n\t\t\t\tlink\n");
-    editor.replace("\t\t\t\t\talignment: imageBlock.alignment,\n\t\t\t\t\tlink: normalizeImageLink(imageBlock.link)", "\t\t\t\t\talignment: imageBlock.alignment,\n\t\t\t\t\tvisualStyle: imageBlock.visualStyle,\n\t\t\t\t\tlink: normalizeImageLink(imageBlock.link)");
     editor.within("function ImageBubbleMenu({ editor, appendTo,", "\nfunction ", (scope) => {
       scope.insertBefore("\tconst menuRef = React$1.useRef(null);", "\tconst imageExtensions = useBlockEditorExtensions();\n");
       scope.insertBefore("\t\t\t\talt: typeof attrs?.alt", "\t\t\t\tvisualStyle: attrs?.visualStyle ?? null,\n");

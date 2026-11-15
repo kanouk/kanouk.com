@@ -8,7 +8,7 @@ export default {
   upstream: "Propose insert defaults for plugin blocks (with access to the entry draft) upstream.",
   apply(editor) {
     editor.within("function PortableTextEditor({ value, onChange,", "\nfunction ", (scope) => {
-      scope.replace("pluginBlocks = EMPTY_PLUGIN_BLOCKS, focusMode: controlledFocusMode,", "pluginBlocks = EMPTY_PLUGIN_BLOCKS, documentData, focusMode: controlledFocusMode,");
+      scope.replace("pluginBlocks: externalPluginBlocks = EMPTY_PLUGIN_BLOCKS, focusMode: controlledFocusMode,", "pluginBlocks: externalPluginBlocks = EMPTY_PLUGIN_BLOCKS, documentData, focusMode: controlledFocusMode,");
       scope.replace(
         "\tconst [pluginBlockInitialValues, setPluginBlockInitialValues] = React$1.useState(void 0);\n",
         `\tconst [pluginBlockInitialValues, setPluginBlockInitialValues] = React$1.useState(void 0);
@@ -22,7 +22,7 @@ export default {
       scope.replace(
         "\t\t\t\teditor.chain().focus().deleteRange(range).run();\n\t\t\t\tsetPluginBlockModal(block);",
         `\t\t\t\teditor.chain().focus().deleteRange(range).run();
-\t\t\t\tconst insertPos = pendingBlockInsertPosRef.current ?? range.from;
+\t\t\t\tconst insertPos = pendingBlockInsertPosRef.current?.position ?? range.from;
 \t\t\t\tsetPluginBlockDefaultValues(resolveBlockInsertDefaults(blockInsertExtensionsRef.current, {
 \t\t\t\t\tblock,
 \t\t\t\t\teditor,
@@ -32,12 +32,12 @@ export default {
 \t\t\t\tsetPluginBlockModal(block);`,
       );
       scope.replace(
-        "\t\t\teditingBlockPosRef.current = attrs.pos;\n\t\t\tsetPluginBlockInitialValues({",
-        "\t\t\teditingBlockPosRef.current = attrs.pos;\n\t\t\tsetPluginBlockDefaultValues(void 0);\n\t\t\tsetPluginBlockInitialValues({",
+        "\t\t\teditingBlockRef.current = block;\n",
+        "\t\t\teditingBlockRef.current = block;\n\t\t\tsetPluginBlockDefaultValues(void 0);\n",
       );
       scope.replace(
-        "\t\tsetPluginBlockInitialValues(void 0);\n\t\teditingBlockPosRef.current = null;\n\t}, [editor, pluginBlockModal]);",
-        "\t\tsetPluginBlockInitialValues(void 0);\n\t\tsetPluginBlockDefaultValues(void 0);\n\t\teditingBlockPosRef.current = null;\n\t}, [editor, pluginBlockModal]);",
+        "\t\tsetPluginBlockInitialValues(void 0);\n\t\teditingBlockRef.current = null;\n\t}, [editor, pluginBlockModal]);",
+        "\t\tsetPluginBlockInitialValues(void 0);\n\t\tsetPluginBlockDefaultValues(void 0);\n\t\teditingBlockRef.current = null;\n\t}, [editor, pluginBlockModal]);",
       );
       scope.replace(
         "\t\t\t\t\t\tinitialValues: pluginBlockInitialValues,\n\t\t\t\t\t\tonClose: () => {\n\t\t\t\t\t\t\tpendingBlockInsertPosRef.current = null;\n\t\t\t\t\t\t\tsetPluginBlockModal(null);\n\t\t\t\t\t\t\tsetPluginBlockInitialValues(void 0);",
@@ -47,13 +47,14 @@ export default {
 
     editor.within("function FieldRenderer({ name, field, value, onChange,", "\nfunction ", (scope) => {
       scope.replace("onEditorReady, minimal, pluginBlocks, onBlockSidebarOpen,", "onEditorReady, minimal, pluginBlocks, documentData, onBlockSidebarOpen,");
-      scope.replace("\t\t\t\t\tpluginBlocks,\n\t\t\t\t\tonEditorReady,\n", "\t\t\t\t\tpluginBlocks,\n\t\t\t\t\tdocumentData,\n\t\t\t\t\tonEditorReady,\n");
+      // 1.5 renders the body editor twice (document body and boxed field); both get the draft.
+      scope.replace("\t\t\t\t\tpluginBlocks,\n\t\t\t\t\tonEditorReady,\n", "\t\t\t\t\tpluginBlocks,\n\t\t\t\t\tdocumentData,\n\t\t\t\t\tonEditorReady,\n", 2);
     });
 
     editor.within("function ContentEditor({ collection,", "\nfunction ", (scope) => {
       scope.replace(
-        "\t\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
-        "\t\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdocumentData: formData,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
+        "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
+        "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tpluginBlocks,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdocumentData: formData,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tonBlockSidebarOpen: field.kind === \"portableText\" ? handleBlockSidebarOpen : void 0,",
       );
     });
   },
