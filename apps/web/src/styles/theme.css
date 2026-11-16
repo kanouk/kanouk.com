@@ -165,6 +165,8 @@ img, video { height: auto; }
 .yohaku-picture { display: contents; }
 .yohaku-picture[data-reserve-space="true"] { margin-inline: auto; }
 .yohaku-picture[data-reserve-space="true"] > .yohaku-image { width: 100%; height: 100%; object-fit: contain; }
+/* Body images stop at 82vh tall; the reserved box narrows with them, or a tall photo is letterboxed inside its frame with a gap below. */
+:is(.article-content, .page-content) .yohaku-picture[data-reserve-space="true"] { max-width: calc(82vh * var(--yohaku-image-ratio)); }
 .yohaku-image { aspect-ratio: var(--yohaku-image-ratio, auto); }
 button, input, textarea, select { color: inherit; font: inherit; }
 button { cursor: pointer; }
@@ -940,41 +942,56 @@ main:focus { outline: none; }
 .yohaku-portable-image__link { display: block; width: 100%; max-width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: none; cursor: zoom-in; }
 .yohaku-portable-image__link img { transition: opacity var(--transition); }
 .yohaku-portable-image__link:hover img { opacity: 0.92; }
-.image-lightbox { --focus: #bfc7ff; --lightbox-chrome: 5.5rem; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; overflow: hidden auto; border: 0; background: #0b0b0d; color: #f4f4f5; color-scheme: dark; cursor: zoom-out; opacity: 0; transition: opacity 180ms ease, overlay 180ms allow-discrete, display 180ms allow-discrete; }
+/* A translucent scrim keeps the article in view behind, so the photo reads as an enlargement on the same page. */
+.image-lightbox { --focus: #bfc7ff; --lightbox-chrome: 5.5rem; --lightbox-mat: 0.6rem; --lightbox-edge: calc(2 * var(--lightbox-mat) + 2px); --lightbox-fit: calc(100dvh - 2 * var(--lightbox-chrome) - var(--lightbox-edge)); width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; overflow: hidden auto; overscroll-behavior: contain; border: 0; background: rgb(0 0 0 / 76%); color: #f4f4f5; color-scheme: dark; cursor: zoom-out; opacity: 0; transition: opacity 180ms ease, overlay 180ms allow-discrete, display 180ms allow-discrete; }
 /* Equal rows above and below keep the image at the true centre of the screen. */
 .image-lightbox[open] { display: grid; grid-template-rows: minmax(min-content, 1fr) auto minmax(min-content, 1fr); opacity: 1; transition-duration: 260ms; }
 @starting-style { .image-lightbox[open] { opacity: 0; } }
 html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .image-lightbox::backdrop { background: transparent; }
 .image-lightbox :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.image-lightbox__bar { display: flex; align-items: flex-start; justify-content: flex-end; gap: 0.5rem; padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.75rem; }
-.image-lightbox__close { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 50%; background: rgb(255 255 255 / 8%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%); color: rgb(255 255 255 / 88%); cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms ease; }
-.image-lightbox__close:hover { background: rgb(255 255 255 / 16%); color: #fff; }
-.image-lightbox__close:active { transform: scale(0.95); }
+.image-lightbox__bar { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.75rem max(0.75rem, env(safe-area-inset-left)); }
+.image-lightbox__bar form { margin-left: auto; }
+.image-lightbox__counter { display: flex; align-items: center; height: 2.75rem; margin: 0; padding-inline: 0.5rem; color: rgb(255 255 255 / 72%); font-size: 0.8125rem; font-variant-numeric: tabular-nums; letter-spacing: 0.04em; cursor: default; }
+.image-lightbox__close, .image-lightbox__nav { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 50%; background: rgb(255 255 255 / 10%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 14%); color: rgb(255 255 255 / 90%); cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms ease; }
+.image-lightbox__close:hover, .image-lightbox__nav:hover { background: rgb(255 255 255 / 18%); color: #fff; }
+.image-lightbox__close:active, .image-lightbox__nav:active { transform: scale(0.95); }
+/* The arrows stay at the screen edges, beside the photo on wide screens. */
+.image-lightbox__nav { position: fixed; top: 50%; translate: 0 -50%; }
+.image-lightbox__nav--previous { left: max(0.75rem, env(safe-area-inset-left)); }
+.image-lightbox__nav--next { right: max(0.75rem, env(safe-area-inset-right)); }
 .image-lightbox__stage { display: grid; place-items: center; padding-inline: clamp(0rem, 3vw, 2.5rem); }
-/* Sized from the ratio, so the frame hugs the photo; caption and link hang off its edges. */
-.image-lightbox__frame { position: relative; width: min(100%, var(--lightbox-width), calc((100dvh - 2 * var(--lightbox-chrome)) * var(--lightbox-ratio))); max-width: 100%; transform: scale(0.97); transition: transform 180ms ease; }
+.image-lightbox.has-nav .image-lightbox__stage { padding-inline: 4.75rem; }
+/* Sized from the ratio plus the mount, so the frame hugs the photo; caption and link hang off its edges. */
+.image-lightbox__frame { position: relative; width: min(100%, calc(var(--lightbox-width) + var(--lightbox-edge)), calc(var(--lightbox-fit) * var(--lightbox-ratio) + var(--lightbox-edge))); max-width: 100%; transform: scale(0.97); transition: transform 180ms ease; }
 .image-lightbox[open] .image-lightbox__frame { transform: none; transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1); }
 @starting-style { .image-lightbox[open] .image-lightbox__frame { transform: scale(0.97); } }
-.image-lightbox__photo, .image-lightbox__photo picture { display: contents; }
-.image-lightbox__stage img { display: block; width: 100%; max-width: 100%; height: auto; max-height: calc(100dvh - 2 * var(--lightbox-chrome)); margin: 0; padding: 0; border: 0; border-radius: 3px; background-size: 100% 100%; box-shadow: 0 0 0 1px rgb(255 255 255 / 7%), 0 1.5rem 5rem rgb(0 0 0 / 55%); cursor: default; object-fit: contain; transform: none; }
-/* The article already shows the caption, so here it stays out of the photo until asked for. */
-.image-lightbox__caption { position: absolute; inset: auto 0 0; margin: 0; padding: 2.75rem 1rem 0.8rem; border-radius: 0 0 3px 3px; background: linear-gradient(to top, rgb(0 0 0 / 68%), rgb(0 0 0 / 38%) 55%, transparent); color: #fff; font-size: 0.8125rem; letter-spacing: 0.02em; line-height: 1.6; opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+/* A light paper mount, like the article's framed photos, whatever the page theme. */
+.image-lightbox__photo { display: block; padding: var(--lightbox-mat); border: 1px solid #e2e2dc; border-radius: 2px; background: #fcfcfa; box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 22%), 0 1.5rem 5rem rgb(0 0 0 / 55%); cursor: default; }
+.image-lightbox__photo picture { display: contents; }
+.image-lightbox__stage img { display: block; width: 100%; max-width: 100%; height: auto; max-height: var(--lightbox-fit); margin: 0; padding: 0; border: 0; border-radius: 0; background-size: 100% 100%; box-shadow: none; cursor: default; object-fit: contain; transform: none; }
+/* The article already shows the caption, so here it stays out of the photo until asked for, inside the mount. */
+.image-lightbox__caption { position: absolute; inset: auto calc(var(--lightbox-mat) + 1px) calc(var(--lightbox-mat) + 1px); margin: 0; padding: 2.75rem 1rem 0.8rem; background: linear-gradient(to top, rgb(0 0 0 / 68%), rgb(0 0 0 / 38%) 55%, transparent); color: #fff; font-size: 0.8125rem; letter-spacing: 0.02em; line-height: 1.6; opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
 .image-lightbox__frame.is-caption-shown .image-lightbox__caption,
 .image-lightbox__frame:focus-visible .image-lightbox__caption { opacity: 1; }
 @media (hover: hover) { .image-lightbox__frame:has(img:hover) .image-lightbox__caption { opacity: 1; } }
-.image-lightbox__link { position: absolute; top: 100%; right: 0; display: inline-flex; align-items: center; gap: 0.4rem; max-width: calc(100vw - 1.5rem); height: 2.75rem; color: rgb(255 255 255 / 72%); font-size: 0.8125rem; letter-spacing: 0.02em; text-decoration: none; cursor: pointer; transition: color 160ms ease; }
+.image-lightbox__link { position: absolute; top: 100%; right: 0; display: inline-flex; align-items: center; gap: 0.4rem; max-width: calc(100vw - 1.5rem); height: 2.75rem; color: rgb(255 255 255 / 76%); font-size: 0.8125rem; letter-spacing: 0.02em; text-decoration: none; cursor: pointer; transition: color 160ms ease; }
 .image-lightbox__link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .image-lightbox__link svg { flex: none; }
 .image-lightbox__link:hover { color: #fff; }
 .image-lightbox [hidden] { display: none; }
 @media (max-width: 48rem) {
-	.image-lightbox__stage img { border-radius: 0; box-shadow: 0 1rem 3rem rgb(0 0 0 / 50%); }
-	.image-lightbox__caption { border-radius: 0; }
+	.image-lightbox { --lightbox-mat: 0.3rem; }
+	.image-lightbox.has-nav .image-lightbox__stage { padding-inline: clamp(0rem, 3vw, 2.5rem); }
+	.image-lightbox__photo { box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 22%), 0 1rem 3rem rgb(0 0 0 / 50%); }
+	/* On phones the arrows sit over the photo's edges, darker so they read on light photos. */
+	.image-lightbox__nav { background: rgb(0 0 0 / 40%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 22%); }
+	.image-lightbox__nav--previous { left: max(0.375rem, env(safe-area-inset-left)); }
+	.image-lightbox__nav--next { right: max(0.375rem, env(safe-area-inset-right)); }
 	.image-lightbox__link { right: 0.75rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-	.image-lightbox, .image-lightbox__frame, .image-lightbox[open] .image-lightbox__frame, .image-lightbox__caption { transition: none; }
+	.image-lightbox, .image-lightbox__frame, .image-lightbox[open] .image-lightbox__frame, .image-lightbox__caption, .image-lightbox__close, .image-lightbox__nav { transition: none; }
 }
 .yohaku-portable-image.align-left,
 .yohaku-portable-image.align-right { width: fit-content; max-width: 50%; }
@@ -1027,10 +1044,18 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 /* Search */
 
 .search-page { max-width: calc(var(--measure) + 2 * var(--gutter)); }
-.search-form { display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-6); }
-.search-input { min-width: 0; min-height: 3rem; padding: 0.55rem 0; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; background: transparent; }
-.search-button { min-width: 6.5rem; min-height: 3rem; padding-inline: var(--space-4); border: 1px solid var(--ink); border-radius: 0; background: var(--ink); color: var(--paper); font-size: var(--step--1); font-weight: 600; }
-.search-button:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+/* One field: icon, input and a quiet button share a single border, and focus darkens that border instead of adding a second box. */
+.search-form,
+.photo-search-form { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; border: 1px solid var(--rule); border-radius: 0.375rem; background: var(--paper-raised); transition: border-color var(--transition), box-shadow var(--transition); }
+.search-form { margin-top: var(--space-6); }
+:is(.search-form, .photo-search-form):focus-within { border-color: var(--accent-strong); box-shadow: 0 0 0 1px var(--accent-strong); }
+:is(.search-form, .photo-search-form) > svg { margin-left: var(--space-4); color: var(--ink-muted); }
+:is(.search-form, .photo-search-form) input { min-width: 0; min-height: 3.25rem; padding: 0.55rem var(--space-3); border: 0; border-radius: 0; background: transparent; color: var(--ink); }
+:is(.search-form, .photo-search-form) input:focus,
+:is(.search-form, .photo-search-form) input:focus-visible { outline: 0; }
+:is(.search-form, .photo-search-form) button { align-self: stretch; min-width: 4.5rem; padding-inline: var(--space-4); border: 0; border-left: 1px solid var(--rule-soft); border-radius: 0 0.375rem 0.375rem 0; background: transparent; color: var(--ink-soft); font-size: var(--step--1); font-weight: 600; cursor: pointer; }
+:is(.search-form, .photo-search-form) button:hover { color: var(--accent-strong); }
+:is(.search-form, .photo-search-form) button:focus-visible { outline-offset: -3px; }
 .search-summary { padding-bottom: var(--space-4); border-bottom: 1px solid var(--rule); }
 .search-results { list-style: none; }
 .search-result { border-bottom: 1px solid var(--rule-soft); }
@@ -1075,12 +1100,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .photo-search-page > :is(.page-header, .photo-search-form, .photo-search-summary) { max-width: var(--measure); }
 .photo-search-page .page-header h1 { margin-top: var(--space-3); font-size: var(--heading-page); }
 .photo-search-page .page-header > p:last-child { margin-top: var(--space-4); color: var(--ink-soft); }
-.photo-search-form { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); margin-top: var(--space-7); border-bottom: 1px solid var(--ink); }
-.photo-search-form svg { color: var(--accent-strong); }
-.photo-search-form input { min-width: 0; min-height: 3.5rem; border: 0; background: transparent; color: var(--ink); }
-.photo-search-form input:focus { outline: 0; }
-.photo-search-form input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.photo-search-form button { min-height: 2.5rem; padding-inline: var(--space-4); border: 0; background: var(--ink); color: var(--paper); font-size: var(--step--1); font-weight: 600; }
+.photo-search-form { margin-top: var(--space-7); }
 .photo-search-summary { margin-top: var(--space-5); color: var(--ink-muted); font-size: var(--step--1); }
 /* Results: albums as rows with their cover, photos as a grid of pictures (as on an album page). */
 .photo-search-section { margin-top: var(--space-6); }
@@ -1389,15 +1409,11 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 	.article-title { font-size: var(--heading-page); }
 	.article-content,
 	.page-content { line-height: 1.88; }
-	.search-form { grid-template-columns: 1fr; }
-	.search-button { width: 100%; }
 	.photo-header { align-items: flex-start; padding-block: var(--space-3); }
 	.site-switcher { gap: 0; }
 	.site-switcher a { min-width: 2.75rem; justify-content: center; padding-inline: 0.4rem; }
 	.site-switcher a::after { inset-inline: 0.4rem; }
 	.photo-search-link span { display: none; }
-	.photo-search-form { grid-template-columns: auto minmax(0, 1fr); }
-	.photo-search-form button { grid-column: 1 / -1; margin-bottom: var(--space-3); }
 }
 
 /*

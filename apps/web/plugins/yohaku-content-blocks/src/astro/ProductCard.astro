@@ -32,11 +32,14 @@ const displayPrice = Number.isFinite(numericPrice) && numericPrice > 0
 	</aside>
 )}
 <style>
-	.yohaku-product-card { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.25rem; align-items: center; margin: 2.5rem 0; padding: 1.25rem 0; border-block: 1px solid var(--color-border); }
-	img { width: 7rem; height: 7rem; object-fit: contain; background: #fff; }
-	.product-title { margin: 0 0 0.45rem; font-family: var(--font-heading); font-weight: 600; }
-	.product-price { margin: 0 0 0.65rem; color: var(--color-text-secondary); font-size: 0.76rem; font-variant-numeric: tabular-nums; }
-	ul { display: flex; flex-wrap: wrap; gap: 0.55rem 1rem; margin: 0; padding: 0; list-style: none; }
-	a { font-size: 0.78rem; }
+	.yohaku-product-card { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.25rem; align-items: start; margin: 2.5rem 0; padding: 1.25rem 0; border-block: 1px solid var(--color-border); }
+	/* No backing colour: a white box behind the cover shows as bars on the page's paper tone. */
+	img { width: 7rem; height: 7rem; object-fit: contain; object-position: top; }
+	.product-title { margin: 0 0 0.35rem; font-family: var(--font-heading); font-weight: 600; }
+	.product-price { margin: 0 0 0.25rem; color: var(--color-text-secondary); font-size: 0.76rem; font-variant-numeric: tabular-nums; }
+	ul { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.25rem; margin: 0; padding: 0; list-style: none; }
+	/* Article lists space every item after the first; here the items sit side by side. */
+	.yohaku-product-card li { margin: 0; }
+	a { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: 0.875rem; }
 	@media (max-width: 30rem) { .yohaku-product-card { grid-template-columns: 5rem minmax(0, 1fr); } img { width: 5rem; height: 5rem; } }
 </style>

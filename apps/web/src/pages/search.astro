@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import { getEmDashCollection, search } from "emdash";
+import { Search } from "lucide-astro";
 import Base from "../layouts/Base.astro";
 import { siteDateLabel } from "../utils/photo-date.mjs";
 import { getPostExcerpt } from "../utils/reading-time";
@@ -71,6 +72,7 @@ const sortHref = (value: "relevance" | "new") => {
 		<h1 class="search-title">検索</h1>
 
 		<form method="get" action="/search" class="search-form">
+			<Search size={18} strokeWidth={1.7} aria-hidden="true" />
 			<label class="sr-only" for="search-query">検索語</label>
 			<input
 				id="search-query"
