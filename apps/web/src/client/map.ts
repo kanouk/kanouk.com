@@ -82,8 +82,9 @@ export async function showMarkers(canvas: HTMLElement, markers: MapMarker[], col
 		return GOOGLE_DRAWN;
 	}
 	const L = await loadLeaflet();
-	const map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
-	L.tileLayer(OSM_TILES, { attribution: OSM_ATTRIBUTION, maxZoom: 19 }).addTo(map);
+	const map = L.map(canvas, { scrollWheelZoom: false, attributionControl: false, zoomControl: true });
+	L.control.attribution({ prefix: false }).addAttribution(OSM_ATTRIBUTION).addTo(map);
+	L.tileLayer(OSM_TILES, { maxZoom: 19 }).addTo(map);
 	const bounds = L.latLngBounds([]);
 	markers.forEach((marker) => {
 		const point = L.latLng(marker.latitude, marker.longitude);

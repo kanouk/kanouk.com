@@ -226,7 +226,7 @@ const exifDetails = [
 			<aside id="photo-info-panel" class="photo-info-panel" data-photo-info-panel data-viewer-part="info" aria-label="写真情報" hidden>
 				<header class="photo-info-panel__header">
 					<div>
-						{displayTitle && <p class="photo-info-panel__title">{displayTitle}</p>}
+						<p class="photo-info-panel__title">{displayTitle || "写真の情報"}</p>
 						{displayCaption && displayCaption !== displayTitle && <p class="photo-info-panel__caption">{displayCaption}</p>}
 					</div>
 					<button type="button" data-photo-info-close aria-label="写真情報を閉じる">
@@ -234,10 +234,11 @@ const exifDetails = [
 					</button>
 				</header>
 				<div class="photo-info-panel__body">
-					<div class="photo-info-context">
-						<span>{navigation?.position ?? 1} / {navigation?.total ?? 1}</span>
-						{formattedDate && <time datetime={photo.data.captured_at}>{formattedDate}</time>}
-					</div>
+					{formattedDate && (
+						<div class="photo-info-context">
+							<time datetime={photo.data.captured_at}>{formattedDate}</time>
+						</div>
+					)}
 					{exifDetails.length > 0 && (
 						<section class="photo-info-section photo-info-exif" aria-labelledby="exif-title">
 							<h2 id="exif-title">

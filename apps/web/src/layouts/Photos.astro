@@ -20,11 +20,13 @@ interface Props {
 	content?: { collection: string; id: string; slug?: string | null };
 	/** The album of the photo shown, for the admin bar's organizer link. */
 	adminAlbumId?: string | null;
+	/** Which header link marks the current page. By default "写真" for photo pages and "検索" on search; `null` marks none (error pages). */
+	currentNav?: "photos" | "search" | null;
 	/** The full-screen photo viewer: no site header or footer around it. */
 	viewer?: boolean;
 }
 
-const { title, description, image, pageType = "website", content, adminAlbumId, viewer = false, canonicalPath: canonicalOverride, canonical: canonicalProp, robots } = Astro.props;
+const { title, description, image, pageType = "website", content, adminAlbumId, viewer = false, currentNav: currentNavProp, canonicalPath: canonicalOverride, canonical: canonicalProp, robots } = Astro.props;
 const SITE_NAME = "カノログ フォト";
 const fullTitle = `${title} — ${SITE_NAME}`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
@@ -32,6 +34,8 @@ const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 const canonicalPath = canonicalOverride ?? (Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname);
 const isSearchPage = Astro.url.pathname === "/photo-search" || Astro.url.pathname === "/search";
+const inPhotoSection = /^\/(albums|p|photos)(\/|$)/.test(Astro.url.pathname);
+const currentNav = currentNavProp !== undefined ? currentNavProp : isSearchPage ? "search" : inPhotoSection ? "photos" : null;
 const canonical = canonicalProp === false ? null : new URL(canonicalPath, "https://photos.kanouk.com").toString();
 const absoluteImage = image ? new URL(image, "https://photos.kanouk.com").toString() : null;
 const pageCtx = createPublicPageContext({
@@ -71,8 +75,8 @@ const pageCtx = createPublicPageContext({
 				<span class="photo-brand__copy">{SITE_NAME}</span>
 			</a>
 			<nav class="site-switcher" aria-label="サイト切り替え">
-				<a aria-current={!isSearchPage ? "page" : undefined} href="/albums" data-astro-prefetch="hover">写真</a>
-				<a class="photo-search-link" href={searchUrl} data-astro-prefetch="hover" aria-label="写真を検索" aria-current={isSearchPage ? "page" : undefined}>
+				<a aria-current={currentNav === "photos" ? "page" : undefined} href="/albums" data-astro-prefetch="hover">写真</a>
+				<a class="photo-search-link" href={searchUrl} data-astro-prefetch="hover" aria-label="写真を検索" aria-current={currentNav === "search" ? "page" : undefined}>
 					<Search size={16} strokeWidth={1.75} aria-hidden="true" />
 					<span>検索</span>
 				</a>
