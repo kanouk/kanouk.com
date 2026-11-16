@@ -59,7 +59,7 @@ const meaningfulTitle = (title: string | null | undefined) =>
 		</form>
 
 		{query && (
-			<p class="photo-search-summary" aria-live="polite">
+			<p class:list={["photo-search-summary", albumHits.length + photoHits.length > 0 && "sr-only"]} aria-live="polite">
 				{albumHits.length + photoHits.length === 0
 					? `「${query}」に一致する公開写真はありませんでした。`
 					: `${(albumHits.length + photoHits.length).toLocaleString("ja-JP")}件見つかりました`}

@@ -15,7 +15,7 @@ const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 
 {
 	photoSite ? (
-		<Photos title="ページが見つかりません" canonical={false} robots="noindex, follow">
+		<Photos title="ページが見つかりません" canonical={false} robots="noindex, follow" currentNav={null}>
 			<div class="not-found">
 				<h1>404</h1>
 				<p>お探しのページは移動したか、存在しません。</p>
