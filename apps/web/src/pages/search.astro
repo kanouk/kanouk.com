@@ -5,7 +5,7 @@ import { getEmDashCollection, search } from "emdash";
 import { Search } from "lucide-astro";
 import Base from "../layouts/Base.astro";
 import { siteDateLabel } from "../utils/photo-date.mjs";
-import { getPostExcerpt } from "../utils/reading-time";
+import { getPostExcerpt, getReadingTime } from "../utils/reading-time";
 import {
 	normalizeSearchSort,
 	searchCountLabel,
@@ -50,6 +50,8 @@ const rows = sortSearchResults(
 			date,
 			dateIso: date?.toISOString(),
 			dateLabel: date ? siteDateLabel(date) : null,
+			// The content is already loaded with the dates: no extra query.
+			readingTime: post ? getReadingTime(post.data.content) : null,
 			snippet: excerpt ? undefined : result.snippet,
 			excerpt: excerpt && !snippetRepeatsTitle(excerpt, title) ? excerpt : undefined,
 		};
@@ -69,7 +71,11 @@ const sortHref = (value: "relevance" | "new") => {
 	description="ブログ内の記事を検索"
 >
 	<section class="search-page">
-		<h1 class="search-title">検索</h1>
+		<!-- Same title block as the archive pages, so the heading and the profile rail sit at one height on every list. -->
+		<header class="archive-header search-header">
+			<p class="archive-label"><Search size={14} strokeWidth={1.7} aria-hidden="true" /> 記事をキーワードから探す</p>
+			<h1 class="archive-title search-title">検索</h1>
+		</header>
 
 		<form method="get" action="/search" class="search-form">
 			<Search size={18} strokeWidth={1.7} aria-hidden="true" />
@@ -111,8 +117,13 @@ const sortHref = (value: "relevance" | "new") => {
 					{rows.map((row) => (
 						<li class="search-result">
 							<a href={row.href} class="result-link">
+								{(row.dateLabel || row.readingTime) && (
+									<div class="card-meta result-meta">
+										{row.dateLabel && <time datetime={row.dateIso}>{row.dateLabel}</time>}
+										{row.readingTime && <span>{row.readingTime}分で読む</span>}
+									</div>
+								)}
 								<h2 class="result-title">{row.title}</h2>
-								{row.dateLabel && <time class="result-date" datetime={row.dateIso}>{row.dateLabel}</time>}
 								{row.snippet && <p class="result-snippet" set:html={row.snippet} />}
 								{row.excerpt && <p class="result-snippet">{row.excerpt}</p>}
 							</a>

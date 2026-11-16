@@ -54,7 +54,7 @@ test("album header keeps the article link short and the photos close", async () 
 	assert.doesNotMatch(album, /album-head__action-title|album-related-posts/);
 	assert.match(album, /aria-controls=\{mapPanelId\}/);
 	assert.match(album, /displayTitle && !looksLikeSourceFilename\(displayTitle\)/, "file-name captions stay out of the grid");
-	assert.equal(album.match(/<nav class="album-pagination"/g)?.length, 1, "pagination only below the photos");
+	assert.equal(album.match(/<nav class="album-pagination archive-pagination"/g)?.length, 1, "pagination only below the photos, built from the blog's pagination parts");
 });
 
 test("album and photo patterns have stable responsive defaults", async () => {

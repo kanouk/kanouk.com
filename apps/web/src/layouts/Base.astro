@@ -69,6 +69,7 @@ const isArticleSurface = !isSearchPage && (
 	currentPath.startsWith("/archives") ||
 	currentPath.startsWith("/category/") ||
 	currentPath.startsWith("/tag/") ||
+	currentPath.startsWith("/topics") ||
 	currentPath.startsWith("/pages/")
 );
 const isPostDetail = /^\/posts\/[^/]+\/?$/.test(currentPath);
@@ -115,7 +116,16 @@ const pageCtx = createPublicPageContext({
 						alt={siteTitle}
 						width="360"
 						height="72"
-						class="site-brand__image"
+						class="site-brand__image site-brand__image--light"
+					/>
+					<!-- The same logo recoloured from the dark tokens (accent #aeb7f0, glasses in paper #121318); theme.css shows one of the two. -->
+					<img
+						src="/kanolog-logo-dark.webp?v=1"
+						alt=""
+						width="360"
+						height="72"
+						loading="lazy"
+						class="site-brand__image site-brand__image--dark"
 					/>
 				</a>
 

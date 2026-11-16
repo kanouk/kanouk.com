@@ -162,6 +162,9 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote { margin: 0;
 ul, ol { padding: 0; }
 img, svg, video, canvas, iframe { display: block; max-width: 100%; }
 img, video { height: auto; }
+/* lucide-astro ignores a `strokeWidth` prop (it only reads `stroke-width`) and writes stroke-width="2";
+   one weight for every interface icon, set here, beats that attribute. */
+svg.lucide { stroke-width: 1.7; }
 .yohaku-picture { display: contents; }
 .yohaku-picture[data-reserve-space="true"] { margin-inline: auto; }
 .yohaku-picture[data-reserve-space="true"] > .yohaku-image { width: 100%; height: 100%; object-fit: contain; }
@@ -345,6 +348,14 @@ a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
 .site-brand__name { font-size: 1rem; font-weight: 600; letter-spacing: 0.045em; line-height: 1.4; }
 .site-brand__tagline { color: var(--ink-muted); font-size: 0.66rem; font-weight: 400; letter-spacing: 0.075em; line-height: 1.5; white-space: nowrap; }
 .site-brand__image { width: auto; height: 1.4rem; max-height: none; border: 0; background: transparent; object-fit: contain; }
+/* The logo is a fixed-colour image: dark themes swap in the copy recoloured from the dark tokens. */
+.site-brand__image--dark { display: none; }
+:root[data-theme="dark"] .site-brand__image--light { display: none; }
+:root[data-theme="dark"] .site-brand__image--dark { display: block; }
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .site-brand__image--light { display: none; }
+	:root:not([data-theme="light"]) .site-brand__image--dark { display: block; }
+}
 
 .site-nav { display: flex; align-items: center; justify-content: center; gap: clamp(0.9rem, 1.8vw, 1.6rem); min-width: 0; }
 .site-nav a {
@@ -387,11 +398,13 @@ main:focus { outline: none; }
 /* Footer: one shared structure for both sites — who this is, where to go, the sister site, display setting. */
 .site-footer { margin-top: var(--space-6); /* pages already end with --page-space */ border-top: 1px solid var(--rule); }
 .site-footer__inner { display: grid; grid-template-columns: minmax(12rem, 1fr) auto auto; align-items: start; gap: var(--space-6) var(--space-8); width: min(100%, var(--wide)); margin-inline: auto; padding: var(--space-7) var(--gutter) var(--space-7); }
-.site-footer__brand { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--ink); font-size: var(--step-0); font-weight: 600; text-decoration: none; }
+/* The first line of every column (name, group labels, sister-site link) is one 2.5rem row with its text centred,
+   so the three columns start on one line; each label then sits closer to its links than they sit to each other. */
+.site-footer__brand { display: inline-flex; align-items: center; min-height: 2.5rem; color: var(--ink); font-size: var(--step-0); font-weight: 600; text-decoration: none; }
 .site-footer__tagline { margin-top: var(--space-1); color: var(--ink-muted); font-size: var(--step--1); }
 .site-footer__nav { display: flex; gap: var(--space-8); }
-.site-footer__label { color: var(--ink-muted); font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.06em; }
-.site-footer__group ul { display: grid; gap: 0.1rem; margin-top: var(--space-2); list-style: none; }
+.site-footer__label { display: flex; align-items: center; min-height: 2.5rem; color: var(--ink-muted); font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.06em; }
+.site-footer__group ul { display: grid; gap: 0; margin-top: calc(-1 * var(--space-1)); list-style: none; }
 .site-footer__group a,
 .site-footer__cross { display: inline-flex; align-items: center; min-width: 2.75rem; min-height: 2.5rem; color: var(--ink-soft); font-size: var(--step--1); text-decoration: none; }
 .site-footer__group a:hover,
@@ -500,11 +513,6 @@ main:focus { outline: none; }
 .profile-card__social a { display: grid; width: 2.5rem; height: 2.5rem; border: 1px solid var(--rule-soft); color: var(--ink-soft); place-items: center; text-decoration: none; }
 .profile-card__social a:hover { border-color: var(--accent); color: var(--accent-strong); }
 .home-sidebar { min-width: 0; padding-top: calc(var(--control-height) - var(--heading-page) * 1.09); } /* link height − (1.42 line box − 0.33 cap inset); see .page-with-profile */
-/* The no-image placeholder is a light PNG; keep it from glowing in dark mode (hue preserved). */
-:root[data-theme="dark"] img[src$="/kanolog-no-image.png"] { filter: invert(0.88) hue-rotate(180deg); }
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme="light"]) img[src$="/kanolog-no-image.png"] { filter: invert(0.88) hue-rotate(180deg); }
-}
 .home-sidebar__widgets { margin-top: var(--space-7); }
 
 .page-with-profile {
@@ -521,7 +529,7 @@ main:focus { outline: none; }
 	margin-inline: 0;
 	padding-inline: 0;
 }
-.page-with-profile__main > .posts-page { max-width: var(--measure); }
+.page-with-profile__main > .page-article { max-width: 44rem; } /* prose keeps the article's reading width (.article-main); lists fill the column */
 /* A boxed sidebar starts level with the cap height of the main column's title, not with the small
    label or date above it (a framed box otherwise reads as sitting higher). 0.33 / 0.38 = half-leading
    plus the glyph's internal top space for line-heights 1.42 / 1.52. */
@@ -580,8 +588,20 @@ main:focus { outline: none; }
 .card-media { position: relative; min-width: 0; }
 .card-image { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--paper-muted); }
 /* Pinned to the box so no image (small, odd ratio, picture-wrapped) leaves bands. */
-.card-image img { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; aspect-ratio: auto; object-fit: cover; transition: transform 420ms cubic-bezier(.2,.65,.25,1); }
+.card-image img { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; aspect-ratio: auto; object-fit: cover; transition: transform 420ms cubic-bezier(.2,.65,.25,1), filter var(--transition); }
 .card-link:hover .card-image img { transform: scale(1.018); }
+/* A post without a cover: a quiet tinted field with its year, in token colours for both themes (no logo image). */
+.card-image--empty { display: grid; place-items: center; box-shadow: inset 0 0 0 1px var(--rule-soft); }
+.card-image__year { color: var(--ink-muted); font-size: var(--text-micro); font-variant-numeric: tabular-nums; letter-spacing: 0.14em; }
+/* Dark themes: white or pale covers would glow against the dark paper, so thumbnails sit a step down until pointed at. */
+:root[data-theme="dark"] .card-image img { filter: brightness(0.86); }
+:root[data-theme="dark"] .card-image img[src*=".png"] { background: var(--paper-raised); }
+:root[data-theme="dark"] .card-link:hover .card-image img { filter: none; }
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .card-image img { filter: brightness(0.86); }
+	:root:not([data-theme="light"]) .card-image img[src*=".png"] { background: var(--paper-raised); }
+	:root:not([data-theme="light"]) .card-link:hover .card-image img { filter: none; }
+}
 .card-body { padding-top: var(--space-4); }
 .card-title { margin-top: 0.25rem; font-size: var(--step-1); line-height: 1.52; overflow-wrap: anywhere; }
 .card-link:hover .card-title { color: var(--accent-strong); }
@@ -593,7 +613,7 @@ main:focus { outline: none; }
 .post-card--list { padding-block: clamp(1.25rem, 2.8vw, 1.65rem); border-bottom: 1px solid var(--rule-soft); }
 .post-card--list .card-link { display: grid; grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr); gap: clamp(1rem, 2.5vw, 1.55rem); align-items: start; }
 .post-card--list .card-body { padding-top: 0; }
-.post-card--list .card-title { font-size: clamp(1rem, 0.96rem + 0.2vw, 1.14rem); line-height: 1.55; }
+.post-card--list .card-title { font-size: clamp(1rem, 0.96rem + 0.2vw, 1.14rem); line-height: 1.55; text-wrap: pretty; } /* fill lines first: balance left a half-empty first line in narrow cards */
 .post-card--list .card-excerpt { margin-top: var(--space-2); font-size: 0.84rem; line-height: 1.72; -webkit-line-clamp: 2; }
 .post-card--list .card-taxonomies { margin-top: 0.55rem; }
 .post-card--list .card-taxonomies .card-tag { font-size: var(--step--1); }
@@ -630,7 +650,6 @@ main:focus { outline: none; }
 .meta-tag:hover,
 .tag:hover { border-color: var(--accent); color: var(--accent-strong); }
 
-.posts-page { max-width: calc(var(--measure) + 2 * var(--gutter)); }
 .posts-list { border-top: 1px solid var(--rule); }
 .post-item { padding-block: clamp(1.5rem, 4vw, 2.5rem); border-bottom: 1px solid var(--rule-soft); }
 .post-link { display: block; color: inherit; text-decoration: none; }
@@ -686,17 +705,23 @@ main:focus { outline: none; }
 }
 .archive-pagination__link--next { justify-self: end; }
 .archive-pagination__link:hover { color: var(--accent-strong); }
+/* The current page: a tinted dot like the calendar's post days, at the same type size as its neighbours. */
 .archive-pagination__current {
 	display: grid;
-	width: 2.75rem;
-	height: 2.75rem;
+	width: 2.25rem;
+	height: 2.25rem;
+	margin: 0.25rem; /* keeps the 2.75rem cell of the other numbers */
 	place-items: center;
-	border: 1px solid var(--rule);
 	border-radius: 50%;
-	color: var(--ink-soft);
+	background: var(--accent-soft);
+	color: var(--accent-strong);
 	font-family: var(--font-body); font-variant-numeric: tabular-nums;
-	font-size: var(--text-micro);
+	font-size: var(--step--1);
+	font-weight: 600;
 }
+/* "3 / 7ページ" where there are no page numbers to list (album pages). */
+.archive-pagination__status { grid-column: 1 / -1; order: -1; color: var(--ink-muted); font-size: var(--step--1); font-variant-numeric: tabular-nums; text-align: center; }
+@media (min-width: 40rem) { .archive-pagination__status { grid-column: auto; order: 0; } }
 
 /* Article */
 
@@ -780,30 +805,41 @@ main:focus { outline: none; }
 .sidebar-widgets :where(.widget-categories__link, .widget-tags__link):hover { color: var(--accent-strong); }
 .sidebar-widgets .widget__more { margin-top: var(--space-3); font-size: var(--text-micro); }
 .sidebar-widgets .widget__more a { color: var(--accent-strong); text-decoration: none; }
-.archive-select { width: 100%; min-height: 2.5rem; padding: 0.35rem 0.5rem; border: 1px solid var(--rule); border-radius: 0; background: var(--paper); color: var(--ink-soft); font-size: var(--text-micro); }
+/* Month select drawn like the other controls; the chevron is lucide's, painted in a token colour. */
+.archive-select-label { position: relative; display: block; }
+.archive-select-label::after { position: absolute; top: 50%; right: 0.75rem; width: 0.875rem; height: 0.875rem; background: var(--ink-muted); content: ""; pointer-events: none; transform: translateY(-50%); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat; }
+.archive-select { width: 100%; min-height: var(--control-height); padding: 0.35rem 2.25rem 0.35rem 0.75rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper); color: var(--ink-soft); font-size: var(--step--1); cursor: pointer; appearance: none; transition: border-color var(--transition); }
+.archive-select:hover,
+.archive-select:focus-visible { border-color: var(--accent); }
 .post-calendar { display: table; width: 100%; margin-top: 0; border-collapse: collapse; table-layout: fixed; font-size: var(--text-micro); text-align: center; }
 .post-calendar caption { margin-bottom: var(--space-2); color: var(--ink-soft); font-weight: 600; text-align: left; }
 .post-calendar caption a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: none; }
 .post-calendar :where(th, td) { min-width: 0; padding: 0.15rem 0; border: 0; text-align: center; }
 .post-calendar th { color: var(--ink-muted); font-weight: 500; }
-.post-calendar td { color: var(--ink-muted); }
+.post-calendar td { height: 2.3rem; color: var(--ink-muted); vertical-align: middle; } /* the 2rem post dot + padding: weeks without posts keep the same height */
 .post-calendar td a { display: grid; width: 2rem; height: 2rem; margin-inline: auto; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-weight: 600; text-decoration: none; place-items: center; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .archive-label { display: flex; align-items: center; gap: 0.45rem; }
-.month-navigation { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--rule-soft); }
+.month-navigation { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-5); } /* the last card's rule closes the list, as above .archive-pagination */
 .month-navigation a { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.75rem; color: var(--ink-soft); font-size: var(--step--1); font-weight: 600; text-decoration: none; }
 .month-navigation .arrow-next { transform: rotate(180deg); }
-.archive-years { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8) clamp(2rem, 5vw, 5rem); }
-.archive-year h2 { padding-bottom: var(--space-3); color: var(--ink-soft); font-family: var(--font-body); font-variant-numeric: tabular-nums; font-size: var(--step-1); font-weight: 500; letter-spacing: 0.02em; }
-.archive-year ul { list-style: none; border-top: 1px solid var(--rule); }
-.archive-year li { border-bottom: 1px solid var(--rule-soft); }
-.archive-year a { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: 2.8rem; color: var(--ink-soft); font-size: var(--step--1); text-decoration: none; }
-.archive-year small { color: var(--ink-muted); font-family: var(--font-body); font-variant-numeric: tabular-nums; font-size: var(--text-micro); }
-.topics-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8) clamp(2rem, 5vw, 5rem); }
-.topics-groups h2 { display: flex; align-items: center; gap: 0.45rem; padding-bottom: var(--space-3); color: var(--ink-soft); font-size: var(--step-1); }
+/* Years flow down balanced columns: short and long years stack without the holes a grid row leaves. */
+.archive-years { columns: 3; column-gap: clamp(2rem, 5vw, 5rem); }
+.archive-year { padding-bottom: var(--space-7); break-inside: avoid; }
+/* Categories, then topics in two balanced columns: neither leaves half the page empty beside the other. */
+.topics-groups { display: grid; gap: var(--space-7); }
+.topics-groups ul { columns: 2; column-gap: clamp(2rem, 5vw, 5rem); }
+.topics-groups li { break-inside: avoid; }
+/* One heading and list style for both index pages. */
+.archive-year h2,
+.topics-groups h2 { display: flex; align-items: center; gap: 0.45rem; padding-bottom: var(--space-3); color: var(--ink-soft); font-size: var(--step-1); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.archive-year ul,
 .topics-groups ul { list-style: none; border-top: 1px solid var(--rule); }
+.archive-year li,
 .topics-groups li { border-bottom: 1px solid var(--rule-soft); }
+.archive-year a,
 .topics-groups a { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: 2.8rem; color: var(--ink-soft); font-size: var(--step--1); text-decoration: none; }
+.archive-year small,
 .topics-groups small { flex: none; color: var(--ink-muted); font-family: var(--font-body); font-variant-numeric: tabular-nums; font-size: var(--text-micro); }
 .article-footer-tags { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: var(--space-2) var(--space-4); margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid var(--rule-soft); }
 .article-footer-tags__label { flex: none; color: var(--ink-muted); font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.08em; }
@@ -858,6 +894,8 @@ main:focus { outline: none; }
 }
 .article-content > :first-child,
 .page-content > :first-child { margin-top: 0; }
+/* The page already ends with --page-space; the last block's own margin (e.g. a quiz's 3rem) must not add to it. */
+.page-article .page-content > :last-child { margin-bottom: 0; }
 .article-content :where(p, ul, ol, blockquote, pre, table, figure),
 .page-content :where(p, ul, ol, blockquote, pre, table, figure) { margin-block: 1.45em; }
 .article-content :where(ul, ol),
@@ -1008,8 +1046,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .page-content :where(th, td) { min-width: 7rem; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--rule-soft); text-align: left; vertical-align: top; }
 .article-content th,
 .page-content th { border-bottom-color: var(--rule); color: var(--ink-soft); font-weight: 600; }
-.page-article { max-width: calc(var(--measure) + 2 * var(--gutter)); }
-.page-article .page-header { margin-bottom: var(--space-7); padding-bottom: var(--space-6); border-bottom: 1px solid var(--rule); }
+.page-article .page-header { max-width: none; margin-bottom: var(--space-7); padding-bottom: var(--space-6); border-bottom: 1px solid var(--rule); } /* the rule under the title spans the body width */
 
 /* Article-to-album summary shared by Portable Text and explicit relations. */
 .album-feature-card {
@@ -1043,11 +1080,9 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 
 /* Search */
 
-.search-page { max-width: calc(var(--measure) + 2 * var(--gutter)); }
 /* One field: icon, input and a quiet button share a single border, and focus darkens that border instead of adding a second box. */
 .search-form,
 .photo-search-form { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; border: 1px solid var(--rule); border-radius: 0.375rem; background: var(--paper-raised); transition: border-color var(--transition), box-shadow var(--transition); }
-.search-form { margin-top: var(--space-6); }
 :is(.search-form, .photo-search-form):focus-within { border-color: var(--accent-strong); box-shadow: 0 0 0 1px var(--accent-strong); }
 :is(.search-form, .photo-search-form) > svg { margin-left: var(--space-4); color: var(--ink-muted); }
 :is(.search-form, .photo-search-form) input { min-width: 0; min-height: 3.25rem; padding: 0.55rem var(--space-3); border: 0; border-radius: 0; background: transparent; color: var(--ink); }
@@ -1060,11 +1095,14 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .search-results { list-style: none; }
 .search-result { border-bottom: 1px solid var(--rule-soft); }
 .result-link { display: block; padding-block: var(--space-5); color: inherit; text-decoration: none; }
-.result-title { font-size: var(--step-1); }
-.result-snippet { margin-top: var(--space-2); color: var(--ink-soft); font-size: var(--step--1); }
-.result-date { display: block; margin-top: var(--space-1); color: var(--ink-muted); font-size: var(--step--1); font-variant-numeric: tabular-nums; }
-.search-sort { display: flex; gap: var(--space-4); padding-block: var(--space-3); border-bottom: 1px solid var(--rule-soft); font-size: var(--step--1); }
-.search-sort a { color: var(--ink-muted); text-decoration: none; }
+/* A result reads like a list card: date and reading time above, the card's title and excerpt type. */
+.result-meta { margin-bottom: 0.15rem; }
+.result-title { margin-top: 0.25rem; font-size: clamp(1rem, 0.96rem + 0.2vw, 1.14rem); line-height: 1.55; text-wrap: pretty; }
+.result-link:hover .result-title { color: var(--accent-strong); }
+.result-snippet { margin-top: var(--space-2); color: var(--ink-soft); font-size: 0.84rem; line-height: 1.72; }
+/* One rule, under the count; the sort links are full-height targets without a second rule of their own. */
+.search-sort { display: flex; gap: var(--space-5); font-size: var(--step--1); }
+.search-sort a { display: inline-flex; align-items: center; min-height: var(--control-height); color: var(--ink-muted); text-decoration: none; }
 .search-sort a:hover { color: var(--accent-strong); }
 .search-sort a[aria-current="true"] { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--accent-strong); text-underline-offset: 0.3em; }
 
@@ -1309,7 +1347,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 
 /* 404 */
 
-.not-found { max-width: calc(var(--measure) + 2 * var(--gutter)); min-height: 60vh; }
+.not-found { min-height: 60vh; } /* same container as every page: text starts at the logo's left edge */
 .not-found h1 { color: var(--ink-soft); font-family: var(--font-body); font-size: var(--step-5); letter-spacing: -0.08em; }
 .not-found p { margin-top: var(--space-4); color: var(--ink-soft); }
 .not-found a { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: var(--space-5); }
@@ -1322,8 +1360,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 	.article-sidebar { display: none; }
 	.posts-grid,
 	.more-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-	.archive-years { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-	.topics-groups { grid-template-columns: 1fr; }
+	.archive-years { columns: 2; }
 }
 
 @media (max-width: 64rem) {
@@ -1331,11 +1368,16 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 }
 
 @media (max-width: 60rem) {
-	.home-shell { grid-template-columns: minmax(0, 1fr); }
-	.home-sidebar { display: grid; grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr); gap: var(--space-7); margin-top: var(--space-5); align-items: start; }
-	.home-sidebar__widgets { margin-top: 0; }
-	.home-sidebar { padding-top: 0; }
-	.page-with-profile { grid-template-columns: minmax(0, 1fr); }
+	/* From the end of the list to the profile: --page-space on the home page and on every other page. */
+	.home-shell { grid-template-columns: minmax(0, 1fr); row-gap: var(--page-space); }
+	/* Profile and widgets flow down two balanced columns, so the short profile leaves no hole beside the long widgets. */
+	.home-sidebar { display: block; columns: 2; column-gap: clamp(2rem, 5vw, 4rem); padding-top: 0; }
+	.home-sidebar__widgets { display: contents; }
+	/* Spacing, not rules, between the blocks: a rule would open whichever column a widget happens to start. */
+	.home-sidebar .profile-card,
+	.home-sidebar .widget { margin-bottom: var(--space-7); break-inside: avoid; }
+	.home-sidebar .widget ~ .widget { margin-top: 0; padding-top: 0; border-top: 0; }
+	.page-with-profile { grid-template-columns: minmax(0, 1fr); row-gap: 0; } /* main already ends with --page-space */
 	.page-with-profile__aside { padding-top: 0; }
 	.page-with-profile__aside .profile-card { width: min(100%, 22rem); }
 }
@@ -1382,7 +1424,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 	.yohaku-portable-image.align-right { float: none; width: 100%; max-width: 100%; margin-inline: 0; }
 	.posts-grid,
 	.more-grid { gap-block: var(--space-7); }
-	.home-sidebar { grid-template-columns: 1fr; }
+	.home-sidebar { columns: 1; }
 	.profile-card { width: min(100%, 22rem); }
 	.home-sidebar__widgets { margin-top: 0; }
 }
@@ -1405,7 +1447,8 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 	.album-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; }
 	.post-card--list .card-link { grid-template-columns: minmax(6rem, 7rem) minmax(0, 1fr); gap: var(--space-3); }
 	.post-card--list .card-body { padding-top: 0; }
-	.archive-years { grid-template-columns: 1fr; }
+	.archive-years { columns: 1; }
+	.topics-groups ul { columns: 1; }
 	.article-title { font-size: var(--heading-page); }
 	.article-content,
 	.page-content { line-height: 1.88; }
@@ -1457,5 +1500,4 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 	a { color: inherit; text-decoration: underline; }
 }
 
-.album-pagination { display:flex; align-items:center; justify-content:center; gap:1.5rem; margin-block:1rem; }
-.album-pagination a { padding:.6rem; }
+.album-pagination { margin-top: var(--space-6); } /* parts and type come from .archive-pagination */

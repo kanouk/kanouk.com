@@ -59,8 +59,10 @@ export function getPostExcerpt(
 
 	const text = extractText(content).replace(WHITESPACE_REGEX, " ").trim();
 	if (!text) return undefined;
-	if (text.length <= maxLength) return text;
-	return `${text.slice(0, maxLength).trimEnd()}…`;
+	// Count and cut by code point, not UTF-16 unit, so an emoji (a surrogate pair) is never split in half.
+	const characters = Array.from(text);
+	if (characters.length <= maxLength) return text;
+	return `${characters.slice(0, maxLength).join("").trimEnd()}…`;
 }
 
 /**

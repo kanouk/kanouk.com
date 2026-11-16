@@ -47,17 +47,8 @@ const formattedDate = date ? siteDateLabel(date) : null;
 						<YohakuImage image={featuredImage} alt="" crop priority={priority} sizes={imageSizes} />
 					</div>
 				) : (
-					<div class="card-image">
-						<img
-							src="/kanolog-no-image.png"
-							alt=""
-							width="768"
-							height="403"
-							loading={priority ? "eager" : "lazy"}
-							fetchpriority={priority ? "high" : undefined}
-							decoding="async"
-							class="card-no-image"
-						/>
+					<div class="card-image card-image--empty" aria-hidden="true">
+						{formattedDate && <span class="card-image__year">{formattedDate.slice(0, 4)}</span>}
 					</div>
 				)
 			}
