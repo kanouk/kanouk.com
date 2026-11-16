@@ -5,6 +5,11 @@ img.yohaku-image-preview.style-photo-frame {
 	background: var(--paper-raised, var(--color-kumo-base, Canvas));
 	box-shadow: 0 0.7rem 2rem color-mix(in srgb, var(--ink, currentColor) 8%, transparent);
 }
+/* The mat is padding inside a box sized to the photo's own ratio, so the space left for the photo is
+   a little off that ratio; "contain" then letterboxes it and one side of the mat grows. Filling that
+   space keeps the mat even on every side (it trims well under 1% of the photo). */
+.yohaku-portable-image.style-photo-frame img,
+.yohaku-portable-image.style-photo-frame .yohaku-picture > .yohaku-image { object-fit: cover; }
 .yohaku-portable-image.style-border img,
 img.yohaku-image-preview.style-border { border: 1px solid var(--rule, var(--color-kumo-line, GrayText)); }
 .yohaku-portable-image.style-shadow img,

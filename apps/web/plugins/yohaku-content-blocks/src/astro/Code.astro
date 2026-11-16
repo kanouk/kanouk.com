@@ -1,0 +1,29 @@
+---
+/**
+ * Code block in place of EmDash's, which hard-codes a dark panel with large
+ * rounded corners. Same markup and class names, no styles of its own: the
+ * site's theme draws code blocks from its tokens in light and dark alike.
+ */
+interface Props {
+	node: {
+		_type: "code";
+		_key?: string;
+		code?: string;
+		language?: string;
+		filename?: string;
+	};
+}
+
+const { node } = Astro.props;
+const code = typeof node?.code === "string" ? node.code : "";
+const language = typeof node?.language === "string" ? node.language.replace(/[^\w+#-]/g, "") : "";
+const languageClass = language ? `language-${language}` : undefined;
+const filename = typeof node?.filename === "string" ? node.filename.trim() : "";
+---
+
+{code && (
+	<div class="emdash-code">
+		{filename && <div class="emdash-code-filename">{filename}</div>}
+		<pre class={languageClass}><code class={languageClass}>{code}</code></pre>
+	</div>
+)}

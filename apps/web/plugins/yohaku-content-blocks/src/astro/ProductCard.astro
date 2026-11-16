@@ -1,4 +1,6 @@
 ---
+import { ArrowUpRight } from "lucide-astro";
+
 const { id, url, title, imageUrl, price, label = "商品を見る", links = [] } = Astro.props.node;
 const href = id || url;
 const actions = Array.isArray(links) && links.length > 0
@@ -24,7 +26,7 @@ const displayPrice = Number.isFinite(numericPrice) && numericPrice > 0
 			{actions.length > 0 && (
 				<ul aria-label="購入先">
 					{actions.map((action) => (
-						<li><a href={action.url} rel="nofollow sponsored">{action.label || label} ↗</a></li>
+						<li><a href={action.url} rel="nofollow sponsored">{action.label || label}<ArrowUpRight size={13} stroke-width={1.7} aria-hidden="true" /></a></li>
 					))}
 				</ul>
 			)}
@@ -40,6 +42,7 @@ const displayPrice = Number.isFinite(numericPrice) && numericPrice > 0
 	ul { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.25rem; margin: 0; padding: 0; list-style: none; }
 	/* Article lists space every item after the first; here the items sit side by side. */
 	.yohaku-product-card li { margin: 0; }
-	a { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: 0.875rem; }
+	a { display: inline-flex; align-items: center; gap: 0.2rem; min-height: 2.75rem; font-size: 0.875rem; }
+	a :global(svg) { flex: none; }
 	@media (max-width: 30rem) { .yohaku-product-card { grid-template-columns: 5rem minmax(0, 1fr); } img { width: 5rem; height: 5rem; } }
 </style>
