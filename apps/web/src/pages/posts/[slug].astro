@@ -30,6 +30,7 @@ import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { calculateAge } from "../../utils/author-age.mjs";
 import { siteDateLabel } from "../../utils/photo-date.mjs";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
+import { titlePhrases } from "../../utils/title-phrases.mjs";
 import { routeSlugCandidates } from "../../utils/route-slug";
 import { env } from "virtual:emdash/env";
 import { articlePhotoLinks } from "../../utils/article-photo-links.mjs";
@@ -266,10 +267,12 @@ const otherPostsWithTags = otherPosts.map((p) => {
 });
 
 const publishDate = post.data.publishedAt ? siteDateLabel(post.data.publishedAt) : null;
-const titleSegments = Array.from(
-	new Intl.Segmenter("ja", { granularity: "word" }).segment(post.data.title),
-	({ segment }) => segment,
-);
+// Phrases, not words: a particle or closing bracket never starts a line of the title.
+const titleSegments = titlePhrases(post.data.title);
+const olderCover = olderPost ? otherCovers.get(olderPost.data.id) : undefined;
+const newerCover = newerPost ? otherCovers.get(newerPost.data.id) : undefined;
+// Thumbnails only when every card in the pager has one, so the two cards keep the same shape.
+const showPagerThumbs = Boolean((!olderPost || olderCover) && (!newerPost || newerCover));
 ---
 
 <Base
@@ -385,7 +388,7 @@ const titleSegments = Array.from(
 					<nav class="article-pager" aria-label="前後の記事">
 						{olderPost && (
 							<a href={`/posts/${olderPost.data.id}`} rel="prev" class="article-pager__link article-pager__link--older">
-								{otherCovers.get(olderPost.data.id) && <span class="article-pager__thumb"><YohakuImage image={otherCovers.get(olderPost.data.id)} alt="" crop sizes="6rem" /></span>}
+								{showPagerThumbs && <span class="article-pager__thumb"><YohakuImage image={olderCover} alt="" crop sizes="6rem" /></span>}
 								<span class="article-pager__text">
 									<span class="article-pager__label"><ArrowLeft size={14} strokeWidth={1.7} aria-hidden="true" />前の記事</span>
 									<span class="article-pager__title">{olderPost.data.title}</span>
@@ -398,10 +401,32 @@ const titleSegments = Array.from(
 									<span class="article-pager__label">次の記事<ArrowRight size={14} strokeWidth={1.7} aria-hidden="true" /></span>
 									<span class="article-pager__title">{newerPost.data.title}</span>
 								</span>
-								{otherCovers.get(newerPost.data.id) && <span class="article-pager__thumb"><YohakuImage image={otherCovers.get(newerPost.data.id)} alt="" crop sizes="6rem" /></span>}
+								{showPagerThumbs && <span class="article-pager__thumb"><YohakuImage image={newerCover} alt="" crop sizes="6rem" /></span>}
 							</a>
 						)}
 					</nav>
+				)}
+
+				{/* Related posts follow the article in its own column, so a short article is not followed by
+				   an empty column beside the long sidebar. Same list cards as the other blog lists. */}
+				{otherPostsWithTags.length > 0 && (
+					<section class="more-posts" aria-labelledby="more-posts-title">
+						<h2 class="more-title" id="more-posts-title">続けて読む</h2>
+						<div class="post-list">
+							{otherPostsWithTags.map(({ post: p, tags: postTags }) => (
+								<PostCard
+									title={p.data.title}
+									excerpt={getPostExcerpt(p.data.excerpt, p.data.content)}
+									featuredImage={otherCovers.get(p.data.id)}
+									href={`/posts/${p.data.id}`}
+									date={p.data.publishedAt ?? undefined}
+									readingTime={getReadingTime(p.data.content)}
+									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}
+									variant="list"
+								/>
+							))}
+						</div>
+					</section>
 				)}
 
 				<div class="article-comments">
@@ -439,31 +464,6 @@ const titleSegments = Array.from(
 			</aside>
 		</div>
 	</article>
-
-	{
-		otherPostsWithTags.length > 0 && (
-			<section class="more-posts">
-				<div class="more-inner">
-					<h2 class="more-title">続けて読む</h2>
-					<div class="more-grid">
-						{otherPostsWithTags.map(
-							({ post: p, tags: postTags }) => (
-								<PostCard
-									title={p.data.title}
-									excerpt={getPostExcerpt(p.data.excerpt, p.data.content)}
-									featuredImage={otherCovers.get(p.data.id)}
-									href={`/posts/${p.data.id}`}
-									date={p.data.publishedAt ?? undefined}
-									readingTime={getReadingTime(p.data.content)}
-									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}
-								/>
-							)
-						)}
-					</div>
-				</div>
-			</section>
-		)
-	}
 
 	<div class="article-float" data-article-float>
 		<button type="button" class="article-float__button" popovertarget="article-index" aria-label="目次を開く" hidden data-article-index-button>

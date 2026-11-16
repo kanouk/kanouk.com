@@ -1,6 +1,6 @@
 ---
 import { getEmDashEntry } from "emdash";
-import { ArrowLeft, ArrowUpRight, BookOpen, CirclePlay, Grid2x2, Grid3x3, MapPinned } from "lucide-astro";
+import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, CirclePlay, Grid2x2, Grid3x3, MapPinned } from "lucide-astro";
 import { env } from "virtual:emdash/env";
 import AlbumMap from "../../components/AlbumMap.astro";
 import YohakuImage from "../../components/YohakuImage.astro";
@@ -146,11 +146,15 @@ const mapPanelId = "album-map-panel";
 		)}
 
 		{result.pageCount > 1 && (
-		<nav class="album-pagination" aria-label="アルバムのページ">
-            {result.page > 1 && <a href={pageHref(result.page - 1)} rel="prev">前の50件</a>}
-            <span>{result.page} / {result.pageCount}ページ</span>
-            {result.page < result.pageCount && <a href={pageHref(result.page + 1)} rel="next">次の50件</a>}
-        </nav>
+		<nav class="album-pagination archive-pagination" aria-label="アルバムのページ">
+			{result.page > 1 ? (
+				<a class="archive-pagination__link archive-pagination__link--prev" href={pageHref(result.page - 1)} rel="prev"><ArrowLeft size={16} aria-hidden="true" /><span>前の50件</span></a>
+			) : <span class="archive-pagination__link archive-pagination__link--prev" aria-hidden="true" />}
+			<span class="archive-pagination__status">{result.page} / {result.pageCount}ページ</span>
+			{result.page < result.pageCount ? (
+				<a class="archive-pagination__link archive-pagination__link--next" href={pageHref(result.page + 1)} rel="next"><span>次の50件</span><ArrowRight size={16} aria-hidden="true" /></a>
+			) : <span class="archive-pagination__link archive-pagination__link--next" aria-hidden="true" />}
+		</nav>
 		)}
 
 	</article>

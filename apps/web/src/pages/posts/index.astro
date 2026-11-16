@@ -1,5 +1,6 @@
 ---
 import { getEmDashCollection, getTermsForEntries } from "emdash";
+import { List } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import ArchivePagination from "../../components/ArchivePagination.astro";
 import PostCard from "../../components/PostCard.astro";
@@ -42,9 +43,10 @@ const postsWithTags = posts.map((post) => ({
 
 <Base title="すべての記事" description="公開している記事の一覧">
 	<div class="posts-page">
-		<header class="page-header">
-			<h1 class="page-title">すべての記事</h1>
-			<p class="page-description">
+		<header class="archive-header">
+			<p class="archive-label"><List size={14} strokeWidth={1.7} aria-hidden="true" /> 記事を新しい順に読む</p>
+			<h1 class="archive-title">すべての記事</h1>
+			<p class="archive-count">
 				{total != null ? rangeLabel(total, page, PAGE_SIZE, posts.length) : `${posts.length.toLocaleString("ja-JP")}件を表示`}
 			</p>
 		</header>

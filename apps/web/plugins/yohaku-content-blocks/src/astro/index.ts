@@ -1,6 +1,7 @@
 import Accordion from "./Accordion.astro";
 import Album from "./Album.astro";
 import Callout from "./Callout.astro";
+import Code from "./Code.astro";
 import Dialogue from "./Dialogue.astro";
 import Embed from "./Embed.astro";
 import LegacyEmbed from "./LegacyEmbed.astro";
@@ -19,6 +20,8 @@ export const blockComponents = {
 	"yohaku.accordion": Accordion,
 	"yohaku.album": Album,
 	"yohaku.callout": Callout,
+	// EmDash's code block hard-codes a dark panel; this one is drawn by the site theme.
+	code: Code,
 	"yohaku.dialogue": Dialogue,
 	"yohaku.embed": Embed,
 	embed: LegacyEmbed,
