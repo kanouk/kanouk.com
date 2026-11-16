@@ -1,8 +1,18 @@
 ---
 export const prerender = false;
 
-import { search } from "emdash";
+import { getEmDashCollection, search } from "emdash";
 import Base from "../layouts/Base.astro";
+import { siteDateLabel } from "../utils/photo-date.mjs";
+import { getPostExcerpt } from "../utils/reading-time";
+import {
+	normalizeSearchSort,
+	searchCountLabel,
+	snippetRepeatsTitle,
+	sortSearchResults,
+} from "../utils/search-results.mjs";
+
+const SEARCH_LIMIT = 30;
 
 const query = Astro.url.searchParams.get("q")?.trim() || "";
 
@@ -11,8 +21,46 @@ const query = Astro.url.searchParams.get("q")?.trim() || "";
 // results, and handles tokenization/stemming. Templates that grep all
 // post bodies in JS quickly become unusable past a few hundred posts.
 const { items: results } = query
-	? await search(query, { collections: ["posts"], limit: 30 })
+	? await search(query, { collections: ["posts"], limit: SEARCH_LIMIT })
 	: { items: [] };
+const sort = normalizeSearchSort(Astro.url.searchParams.get("sort"));
+
+// search() carries no dates, so read them (and an excerpt) for every hit in
+// ONE batched query rather than one query per result.
+const { entries: matched } = results.length
+	? await getEmDashCollection("posts", { where: { id: results.map((result) => result.id) }, limit: SEARCH_LIMIT })
+	: { entries: [] };
+const postsById = new Map(matched.map((entry) => [entry.data.id, entry]));
+
+const rows = sortSearchResults(
+	results.map((result) => {
+		const post = postsById.get(result.id);
+		const title = result.title ?? post?.data.title ?? "無題";
+		const date = post?.data.publishedAt ?? undefined;
+		// A snippet that only repeats the title says nothing: fall back to the body.
+		const excerpt = snippetRepeatsTitle(result.snippet, title)
+			? getPostExcerpt(post?.data.excerpt, post?.data.content, 120)
+			: undefined;
+		return {
+			id: result.id,
+			// The ULID, as every other list links posts (the stable canonical URL).
+			href: `/posts/${result.id}`,
+			title,
+			date,
+			dateIso: date?.toISOString(),
+			dateLabel: date ? siteDateLabel(date) : null,
+			snippet: excerpt ? undefined : result.snippet,
+			excerpt: excerpt && !snippetRepeatsTitle(excerpt, title) ? excerpt : undefined,
+		};
+	}),
+	sort,
+);
+// The query is user input: build links with URLSearchParams (Astro escapes the attribute).
+const sortHref = (value: "relevance" | "new") => {
+	const params = new URLSearchParams({ q: query });
+	if (value === "new") params.set("sort", "new");
+	return `/search?${params}`;
+};
 ---
 
 <Base
@@ -39,28 +87,32 @@ const { items: results } = query
 		{
 			query && (
 				<p class="search-summary">
-					{results.length === 0
+					{rows.length === 0
 						? `「${query}」に一致する記事はありませんでした。`
-						: `「${query}」の検索結果：${results.length.toLocaleString("ja-JP")}件`}
+						: `「${query}」の検索結果：${searchCountLabel(rows.length, SEARCH_LIMIT)}`}
 				</p>
 			)
 		}
 
 		{
-			results.length > 0 && (
+			rows.length > 1 && (
+				<nav class="search-sort" aria-label="並べ替え">
+					<a href={sortHref("relevance")} aria-current={sort === "relevance" ? "true" : undefined}>関連順</a>
+					<a href={sortHref("new")} aria-current={sort === "new" ? "true" : undefined}>新しい順</a>
+				</nav>
+			)
+		}
+
+		{
+			rows.length > 0 && (
 				<ol class="search-results">
-					{results.map((result) => (
+					{rows.map((row) => (
 						<li class="search-result">
-							<a
-								href={`/posts/${result.id}`}
-								class="result-link"
-							>
-								<h2 class="result-title">
-									{result.title ?? "無題"}
-								</h2>
-								{result.snippet && (
-									<p class="result-snippet" set:html={result.snippet} />
-								)}
+							<a href={row.href} class="result-link">
+								<h2 class="result-title">{row.title}</h2>
+								{row.dateLabel && <time class="result-date" datetime={row.dateIso}>{row.dateLabel}</time>}
+								{row.snippet && <p class="result-snippet" set:html={row.snippet} />}
+								{row.excerpt && <p class="result-snippet">{row.excerpt}</p>}
 							</a>
 						</li>
 					))}

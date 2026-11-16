@@ -4,6 +4,8 @@ import Base from "../../layouts/Base.astro";
 import ArchivePagination from "../../components/ArchivePagination.astro";
 import PostCard from "../../components/PostCard.astro";
 import { postCoverImages } from "../../utils/post-covers";
+import { countPublishedPosts } from "../../utils/post-count";
+import { rangeLabel } from "../../utils/pagination.mjs";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 
 const PAGE_SIZE = 24;
@@ -12,11 +14,14 @@ const page = Number.isSafeInteger(requestedPage) && requestedPage > 0 ? requeste
 
 // Sort in the database rather than in JS — lets the DB use its index on
 // published_at and avoids a full-table scan on the client.
+// One COUNT(*) started alongside the page query, so it adds no round-trip of latency.
+const totalPromise = countPublishedPosts().catch(() => null);
 const { entries: posts, hasMore = false, cacheHint } = await getEmDashCollection("posts", {
 	orderBy: { published_at: "desc" },
 	limit: PAGE_SIZE,
 	offset: (page - 1) * PAGE_SIZE,
 });
+const total = (await totalPromise) ?? (hasMore ? null : (page - 1) * PAGE_SIZE + posts.length);
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums"] });
@@ -40,7 +45,7 @@ const postsWithTags = posts.map((post) => ({
 		<header class="page-header">
 			<h1 class="page-title">すべての記事</h1>
 			<p class="page-description">
-				{page > 1 ? `${page}ページ目・` : ""}{posts.length.toLocaleString("ja-JP")}件を表示
+				{total != null ? rangeLabel(total, page, PAGE_SIZE, posts.length) : `${posts.length.toLocaleString("ja-JP")}件を表示`}
 			</p>
 		</header>
 
@@ -65,6 +70,6 @@ const postsWithTags = posts.map((post) => ({
 				</div>
 			)
 		}
-		<ArchivePagination page={page} hasMore={hasMore} basePath="/posts" />
+		<ArchivePagination page={page} hasMore={hasMore} basePath="/posts" total={total} pageSize={PAGE_SIZE} />
 	</div>
 </Base>

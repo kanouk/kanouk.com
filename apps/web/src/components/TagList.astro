@@ -1,10 +1,13 @@
 ---
+import { visibleTags } from "../utils/hidden-tags.mjs";
+
 interface Props {
   tags: Array<{ slug: string; label: string }>;
   class?: string;
 }
 
-const { tags, class: className } = Astro.props;
+const { tags: allTags, class: className } = Astro.props;
+const tags = visibleTags(allTags);
 ---
 
 {tags.length > 0 && (

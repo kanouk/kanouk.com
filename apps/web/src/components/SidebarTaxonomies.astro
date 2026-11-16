@@ -2,6 +2,7 @@
 import type { getTaxonomyTerms } from "emdash";
 import { Folder, Tags } from "lucide-astro";
 import { sharedBlogQuery } from "../utils/shared-queries";
+import { isHiddenTag } from "../utils/hidden-tags.mjs";
 
 type SidebarTerm = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
 
@@ -29,7 +30,7 @@ const categories = flattenTerms(categoryTerms)
 		return leftOrder - rightOrder || left.label.localeCompare(right.label, "ja");
 	});
 const allTags = flattenTerms(tagTerms)
-	.filter((term) => (term.count ?? 0) > 0)
+	.filter((term) => (term.count ?? 0) > 0 && !isHiddenTag(term))
 	.sort((left, right) => (right.count ?? 0) - (left.count ?? 0) || left.label.localeCompare(right.label, "ja"));
 const tags = allTags.slice(0, 24);
 ---

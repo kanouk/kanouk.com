@@ -10,6 +10,10 @@ import "../styles/theme.css";
 interface Props {
 	title: string;
 	canonicalPath?: string;
+	/** `false` omits the canonical link (error pages). */
+	canonical?: false;
+	/** Overrides the robots directive, e.g. "noindex, follow". */
+	robots?: string | null;
 	description?: string | null;
 	image?: string | null;
 	pageType?: "website" | "collection" | "image" | "video";
@@ -20,7 +24,7 @@ interface Props {
 	viewer?: boolean;
 }
 
-const { title, description, image, pageType = "website", content, adminAlbumId, viewer = false, canonicalPath: canonicalOverride } = Astro.props;
+const { title, description, image, pageType = "website", content, adminAlbumId, viewer = false, canonicalPath: canonicalOverride, canonical: canonicalProp, robots } = Astro.props;
 const SITE_NAME = "カノログ フォト";
 const fullTitle = `${title} — ${SITE_NAME}`;
 const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
@@ -28,7 +32,7 @@ const blogUrl = isPreviewHost ? "/" : "https://blog.kanouk.com";
 const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 const canonicalPath = canonicalOverride ?? (Astro.url.pathname === "/photo-search" ? "/search" : Astro.url.pathname);
 const isSearchPage = Astro.url.pathname === "/photo-search" || Astro.url.pathname === "/search";
-const canonical = new URL(canonicalPath, "https://photos.kanouk.com").toString();
+const canonical = canonicalProp === false ? null : new URL(canonicalPath, "https://photos.kanouk.com").toString();
 const absoluteImage = image ? new URL(image, "https://photos.kanouk.com").toString() : null;
 const pageCtx = createPublicPageContext({
 	Astro,
@@ -40,7 +44,7 @@ const pageCtx = createPublicPageContext({
 	canonical,
 	image: absoluteImage,
 	content,
-	seo: { ogImage: absoluteImage },
+	seo: { ogImage: absoluteImage, robots },
 	siteName: SITE_NAME,
 });
 ---

@@ -39,6 +39,13 @@ import {
 	normalizeLegacyAlbumCards,
 } from "../../utils/legacy-album-cards.mjs";
 import { startSharedBlogQueries } from "../../utils/shared-queries";
+import { visibleTags } from "../../utils/hidden-tags.mjs";
+import {
+	pickRelatedPosts,
+	relatedCandidateLimit,
+	relatedTagSlugs,
+	termSlugs,
+} from "../../utils/related-posts.mjs";
 
 const slugCandidates = routeSlugCandidates(Astro.params.slug);
 const slug = slugCandidates[0];
@@ -82,12 +89,46 @@ const adjacentPost = async (direction: "older" | "newer") => {
 	});
 	return entries[0];
 };
+// getEmDashEntry folds the article's terms into its own query and primes the
+// request cache, so these resolve without another D1 round trip. The related
+// candidates below can therefore start now, in parallel with each other and
+// with the rest of the sidebar data, instead of after it.
+const tagTermsPromise = getEntryTerms("posts", post.data.id, "tag");
+const categoryTermsPromise = getEntryTerms("posts", post.data.id, "category");
+const relatedLimit = relatedCandidateLimit();
+const relatedByTagPromise = tagTermsPromise.then(async (terms) => {
+	// Hidden housekeeping tags never make posts "related"; no tags, no query.
+	const slugs = relatedTagSlugs(terms);
+	if (slugs.length === 0) return [];
+	const result = await getEmDashCollection("posts", {
+		status: "published",
+		where: { tag: slugs },
+		orderBy: { published_at: "desc" },
+		limit: relatedLimit,
+	});
+	if (Astro.cache?.enabled) Astro.cache.set(result.cacheHint);
+	return result.entries;
+});
+const relatedByCategoryPromise = categoryTermsPromise.then(async (terms) => {
+	const slugs = termSlugs(terms);
+	if (slugs.length === 0) return [];
+	const result = await getEmDashCollection("posts", {
+		status: "published",
+		where: { category: slugs },
+		orderBy: { published_at: "desc" },
+		limit: relatedLimit,
+	});
+	if (Astro.cache?.enabled) Astro.cache.set(result.cacheHint);
+	return result.entries;
+});
 const sidebarDataPromise = Promise.all([
-	getEntryTerms("posts", post.data.id, "tag"),
-	getEmDashCollection("posts", { orderBy: { published_at: "desc" }, limit: 4 }),
-	getEntryTerms("posts", post.data.id, "category"),
+	tagTermsPromise,
+	getEmDashCollection("posts", { status: "published", orderBy: { published_at: "desc" }, limit: relatedLimit }),
+	categoryTermsPromise,
 	adjacentPost("older"),
 	adjacentPost("newer"),
+	relatedByTagPromise,
+	relatedByCategoryPromise,
 ]);
 
 const legacyAlbumContent = await normalizeLegacyAlbumCards(
@@ -146,7 +187,7 @@ const firstImageDimensionsPromise =
 
 // Social images must resolve to a currently public media source. In particular,
 // a stale WordPress SEO URL never bypasses the published-media boundary.
-const [articleSocial, siteSettings, firstImageDimensions, imagePhotoLinks, [tags, recentPostsResult, categories, olderPost, newerPost]] = await Promise.all([
+const [articleSocial, siteSettings, firstImageDimensions, imagePhotoLinks, sidebarData] = await Promise.all([
 	resolveArticleSocial(socialDatabase, {
 		id: post.id,
 		data: { ...post.data, content: articleContent },
@@ -156,6 +197,8 @@ const [articleSocial, siteSettings, firstImageDimensions, imagePhotoLinks, [tags
 	articlePhotoLinks(env.DB, articleContent),
 	sidebarDataPromise,
 ]);
+const [allTags, recentPostsResult, categories, olderPost, newerPost, relatedByTag, relatedByCategory] = sidebarData;
+const tags: typeof allTags = visibleTags(allTags);
 const { siteTitle } = resolveBlogSiteIdentity(siteSettings);
 
 // Generate SEO meta from content
@@ -204,8 +247,12 @@ const prioritizedContent = articleContent.map((block) => {
 });
 
 if (Astro.cache?.enabled) Astro.cache.set(recentPostsResult.cacheHint);
-const recentPosts = recentPostsResult.entries;
-const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);
+// 「続けて読む」: posts sharing a tag first (tags are specific here), then the
+// same category (categories are broad), then the newest posts as filler.
+const otherPosts = pickRelatedPosts({
+	current: post,
+	tiers: [relatedByTag, relatedByCategory, recentPostsResult.entries],
+});
 
 // Single batched query for related-posts tags, rather than one
 // getEntryTerms() call per related post.
@@ -213,10 +260,10 @@ const [otherTagsByEntry, otherCovers] = await Promise.all([
 	getTermsForEntries("posts", otherPosts.map((p) => p.data.id), "tag"),
 	postCoverImages([...otherPosts, ...(olderPost ? [olderPost] : []), ...(newerPost ? [newerPost] : [])]),
 ]);
-const otherPostsWithTags = otherPosts.map((p) => ({
-	post: p,
-	tags: otherTagsByEntry.get(p.data.id) ?? [],
-}));
+const otherPostsWithTags = otherPosts.map((p) => {
+	const postTags: typeof allTags = visibleTags(otherTagsByEntry.get(p.data.id) ?? []);
+	return { post: p, tags: postTags };
+});
 
 const publishDate = post.data.publishedAt ? siteDateLabel(post.data.publishedAt) : null;
 const titleSegments = Array.from(
