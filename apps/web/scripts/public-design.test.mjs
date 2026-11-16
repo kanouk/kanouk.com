@@ -48,6 +48,27 @@ test("articles keep the old blog's way around: breadcrumb, older and newer posts
 	assert.match(nav, /:is\(h2, h3, h4\)/);
 });
 
+test("article titles break between phrases, never before a particle or closing bracket", async () => {
+	const { titlePhrases } = await import("../src/utils/title-phrases.mjs");
+	const phrases = titlePhrases("AIエージェントのアーキテクチャから見つめ直す、システム設計と「人間」のマネジメント");
+	assert.equal(phrases.join(""), "AIエージェントのアーキテクチャから見つめ直す、システム設計と「人間」のマネジメント");
+	assert.ok(phrases.includes("「人間」の"), "a particle stays with the bracketed word before it");
+	assert.ok(phrases.every((phrase) => !/^[のとをにはがで」、。）]/u.test(phrase)), JSON.stringify(phrases));
+	assert.deepEqual(titlePhrases("京都旅行、そしてまた京都").slice(-2), ["そしてまた", "京都"], "hiragana after 、 starts a new phrase");
+});
+
+test("code blocks are drawn by the site theme, not EmDash's dark panel", async () => {
+	const [blocks, code, theme] = await Promise.all([
+		read("plugins/yohaku-content-blocks/src/astro/index.ts"),
+		read("plugins/yohaku-content-blocks/src/astro/Code.astro"),
+		read("src/styles/theme.css"),
+	]);
+	assert.match(blocks, /\bcode: Code,/);
+	assert.match(code, /class="emdash-code"/);
+	assert.doesNotMatch(code, /<style|#1e1e1e/);
+	assert.match(theme, /\.page-content pre \{[^}]*background: var\(--paper-raised\);/);
+});
+
 test("album header keeps the article link short and the photos close", async () => {
 	const album = await read("src/pages/albums/[slug].astro");
 	assert.match(album, /<span>ブログ記事を読む\{/);

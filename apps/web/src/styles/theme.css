@@ -742,6 +742,10 @@ main:focus { outline: none; }
 .article-sidebar {
 	grid-column: 2;
 	grid-row: 1 / 4;
+	/* The rail sits at the end of its (full-height) grid area; see .sidebar-sticky. */
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 	/* Level with the title's cap height: date line + its margin + title inset (see .page-with-profile). */
 	padding-top: calc(var(--text-micro) * 1.5 + var(--space-5) + var(--heading-page) * 1.12 * 0.34);
 }
@@ -753,11 +757,14 @@ main:focus { outline: none; }
 .article-meta { margin-top: var(--space-3); }
 .article-meta a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 0.18em; }
 .article-meta a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
-.article-excerpt { margin-top: var(--space-4); color: var(--ink-soft); font-family: var(--font-body); font-size: 1rem; font-weight: 400; line-height: 1.9; }
+.article-excerpt { margin-top: var(--space-4); color: var(--ink-soft); font-family: var(--font-body); font-size: 1rem; font-feature-settings: "palt" 0, "kern" 1; font-weight: 400; letter-spacing: 0.025em; line-break: strict; line-height: 1.9; }
 .article-meta-col,
 .article-sidebar { min-width: 0; }
-.meta-sticky,
-.sidebar-sticky { position: sticky; top: calc(var(--header-offset) + var(--space-6)); }
+.meta-sticky { position: sticky; top: calc(var(--header-offset) + var(--space-6)); }
+/* The rail is taller than the screen. Stuck by its bottom edge from the end of its area, it scrolls
+   with the page until its last widget is in view and then stays, so nothing is out of reach and the
+   column beside a long article never runs empty; it never rises above the title it starts level with. */
+.sidebar-sticky { position: sticky; bottom: var(--space-6); }
 .meta-block { padding-block: var(--space-4); border-top: 1px solid var(--rule-soft); }
 .meta-block:first-child { border-top-color: var(--rule); }
 .meta-value,
@@ -841,11 +848,13 @@ main:focus { outline: none; }
 .topics-groups a { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: 2.8rem; color: var(--ink-soft); font-size: var(--step--1); text-decoration: none; }
 .archive-year small,
 .topics-groups small { flex: none; color: var(--ink-muted); font-family: var(--font-body); font-variant-numeric: tabular-nums; font-size: var(--text-micro); }
-.article-footer-tags { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: var(--space-2) var(--space-4); margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid var(--rule-soft); }
+.article-footer-tags { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: var(--space-2) var(--space-4); margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: var(--space-4); border-top: 1px solid var(--rule-soft); }
 .article-footer-tags__label { flex: none; color: var(--ink-muted); font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.08em; }
 .article-footer-tags__list { display: flex; flex-wrap: wrap; gap: 0.35rem 0.85rem; min-width: 0; }
 .article-footer-tag { color: var(--ink-muted); font-size: var(--text-micro); line-height: 1.6; text-decoration: none; }
 .article-footer-tag:hover { color: var(--accent-strong); }
+/* An article that ends with a ruled block (product card, note) already has a rule there: no second one. */
+.article-main:has(> .article-content > :is(.yohaku-product-card, .yohaku-callout):nth-last-child(1 of :not(script))) .article-footer-tags { margin-top: var(--space-5); padding-top: 0; border-top: 0; }
 .article-pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin-top: var(--space-6); }
 .article-pager__link { display: flex; align-items: center; gap: var(--space-3); min-width: 0; padding: var(--space-3); border: 1px solid var(--rule); color: inherit; text-decoration: none; transition: border-color var(--transition), background-color var(--transition); }
 .article-pager__link:hover { border-color: var(--ink-muted); background: var(--paper-raised); }
@@ -856,12 +865,12 @@ main:focus { outline: none; }
 .article-pager__text { display: grid; gap: 0.2rem; min-width: 0; }
 .article-pager__label { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--ink-muted); font-size: var(--text-micro); }
 .article-pager__link--newer .article-pager__label { justify-content: flex-end; }
-.article-pager__title { display: -webkit-box; overflow: hidden; font-size: var(--step--1); font-weight: 500; line-height: 1.55; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.article-pager__title { display: -webkit-box; overflow: hidden; font-size: var(--step--1); font-weight: 500; line-height: 1.55; text-wrap: pretty; word-break: auto-phrase; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .article-footer-tags + .article-comments,
 .article-pager + .article-comments { margin-top: var(--space-7); }
 .article-float { position: fixed; z-index: 80; right: max(var(--space-4), env(safe-area-inset-right)); bottom: max(var(--space-4), env(safe-area-inset-bottom)); display: grid; gap: var(--space-2); opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
 .article-float.is-visible { opacity: 1; pointer-events: auto; }
-.article-float__button { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--rule); border-radius: 50%; background: var(--paper-raised); color: var(--ink-soft); cursor: pointer; transition: color var(--transition), border-color var(--transition); }
+.article-float__button { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--rule); border-radius: 50%; background: color-mix(in srgb, var(--paper-raised) 88%, transparent); color: var(--ink-soft); cursor: pointer; transition: color var(--transition), border-color var(--transition); }
 .article-float__button[hidden] { display: none; }
 .article-float__button:hover { border-color: var(--ink-muted); color: var(--ink); }
 .article-index { position: fixed; inset: auto max(var(--space-4), env(safe-area-inset-right)) calc(max(var(--space-4), env(safe-area-inset-bottom)) + 6.5rem) auto; width: min(20rem, calc(100vw - 2rem)); max-height: min(60dvh, 28rem); margin: 0; padding: var(--space-4); overflow-y: auto; border: 1px solid var(--rule); background: var(--paper-raised); color: var(--ink); box-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--ink) 12%, transparent); }
@@ -874,14 +883,16 @@ main:focus { outline: none; }
 .article-content :is(h2, h3, h4) { scroll-margin-top: calc(var(--header-offset) + 2rem); }
 @media (max-width: 48rem) {
 	.article-pager { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
-	.article-pager__link--newer { grid-column: auto; }
+	/* Stacked, both cards read the same way: thumbnail, then text, from the left. */
+	.article-pager__link--newer { grid-column: auto; justify-content: flex-start; text-align: left; }
+	.article-pager__link--newer .article-pager__label { justify-content: flex-start; }
+	.article-pager__link--newer .article-pager__thumb { order: -1; }
 }
 .article-comments { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--rule); }
 /* Comments disabled: only EmDash's form script is rendered, so drop the empty rule and space. */
 .article-comments:not(:has(:not(script))) { display: none; }
-.more-posts { margin-top: clamp(2.5rem, 5vw, 4rem); padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--rule); }
-.more-inner { width: min(100%, var(--wide)); margin-inline: auto; padding-inline: var(--gutter); }
-.more-title { margin-bottom: var(--space-6); font-size: var(--heading-section); }
+.more-posts { margin-top: clamp(3rem, 6vw, 4.5rem); }
+.more-title { margin-bottom: var(--space-4); font-size: var(--heading-section); }
 
 .article-content,
 .page-content {
@@ -906,7 +917,7 @@ main:focus { outline: none; }
 .page-content > :where(h2, h3, h4) { scroll-margin-top: calc(var(--header-offset) + 2rem); }
 .article-content > h2,
 .page-content > h2 {
-	margin: 2.65em 0 1em;
+	margin: 2.65em 0 0.9em;
 	padding: 0.08em 0 0.08em 0.85em;
 	border: 0;
 	box-shadow: inset 3px 0 0 var(--accent);
@@ -918,7 +929,7 @@ main:focus { outline: none; }
 .article-content > h3,
 .page-content > h3 {
 	position: relative;
-	margin: 2.3em 0 0.85em;
+	margin: 2.3em 0 0.9em;
 	padding-bottom: 0.55em;
 	border-bottom: 1px solid var(--rule);
 	font-size: var(--heading-body-3);
@@ -932,7 +943,7 @@ main:focus { outline: none; }
 }
 .article-content > h4,
 .page-content > h4 {
-	margin: 2em 0 0.7em;
+	margin: 2.2em 0 0.5em;
 	padding: 0 0 0.45em;
 	border: 0;
 	text-decoration: underline;
@@ -950,6 +961,10 @@ main:focus { outline: none; }
 .page-content > h4::before {
 	content: none;
 }
+/* A heading belongs to what follows it: the block after it starts at the heading's own bottom margin
+   instead of its usual (larger) top margin. [class] also reaches the scoped content blocks. */
+:is(.article-content, .page-content) > :is(h2, h3, h4) + *,
+:is(.article-content, .page-content) > :is(h2, h3, h4) + [class] { margin-top: 0; }
 .article-content a,
 .page-content a { color: var(--accent-strong); text-decoration-line: underline; }
 .article-content a.yohaku-link-card,
@@ -959,7 +974,15 @@ main:focus { outline: none; }
 .article-content :where(code),
 .page-content :where(code) { padding: 0.12em 0.3em; background: var(--paper-muted); font-family: var(--font-code); font-size: 0.86em; letter-spacing: 0; }
 .article-content pre,
-.page-content pre { max-width: 100%; padding: var(--space-5); overflow-x: auto; border: 1px solid var(--rule); background: var(--paper-raised); font-family: var(--font-code); font-size: var(--step--1); line-height: 1.7; }
+.page-content pre { max-width: 100%; padding: var(--space-5); overflow-x: auto; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-raised); color: var(--ink); font-family: var(--font-code); font-size: var(--step--1); line-height: 1.7; }
+:is(.article-content, .page-content) .emdash-code { margin-block: 1.45em; }
+:is(.article-content, .page-content) .emdash-code > pre { margin: 0; }
+:is(.article-content, .page-content) .emdash-code-filename { padding: 0.45rem var(--space-5); border: 1px solid var(--rule); border-bottom: 0; border-radius: var(--radius) var(--radius) 0 0; background: var(--paper-muted); color: var(--ink-muted); font-family: var(--font-code); font-size: var(--text-micro); letter-spacing: 0; }
+:is(.article-content, .page-content) .emdash-code-filename + pre { border-radius: 0 0 var(--radius) var(--radius); }
+/* Migrated posts can open with a rule or repeat one; the article lead already ends with a rule. */
+:is(.article-content, .page-content) > hr.emdash-break-line:first-child,
+:is(.article-content, .page-content) hr.emdash-break-line + hr.emdash-break-line { display: none; }
+:is(.article-content, .page-content) > hr.emdash-break-line:first-child + * { margin-top: 0; }
 .article-content pre code,
 .page-content pre code { padding: 0; background: none; }
 .article-content :where(img, video),
@@ -981,14 +1004,16 @@ main:focus { outline: none; }
 .yohaku-portable-image__link img { transition: opacity var(--transition); }
 .yohaku-portable-image__link:hover img { opacity: 0.92; }
 /* A translucent scrim keeps the article in view behind, so the photo reads as an enlargement on the same page. */
-.image-lightbox { --focus: #bfc7ff; --lightbox-chrome: 5.5rem; --lightbox-mat: 0.6rem; --lightbox-edge: calc(2 * var(--lightbox-mat) + 2px); --lightbox-fit: calc(100dvh - 2 * var(--lightbox-chrome) - var(--lightbox-edge)); width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; overflow: hidden auto; overscroll-behavior: contain; border: 0; background: rgb(0 0 0 / 76%); color: #f4f4f5; color-scheme: dark; cursor: zoom-out; opacity: 0; transition: opacity 180ms ease, overlay 180ms allow-discrete, display 180ms allow-discrete; }
+.image-lightbox { --focus: #bfc7ff; --lightbox-chrome: 5.5rem; --lightbox-mat: 0.6rem; --lightbox-edge: calc(2 * var(--lightbox-mat) + 2px); --lightbox-fit: calc(100dvh - 2 * var(--lightbox-chrome) - var(--lightbox-edge)); width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; overflow: hidden auto; overscroll-behavior: contain; border: 0; background: rgb(0 0 0 / 76%); color: #f4f4f5; color-scheme: dark; cursor: zoom-out; opacity: 0; transition: opacity 180ms ease, overlay 180ms allow-discrete, display 180ms allow-discrete; }
 /* Equal rows above and below keep the image at the true centre of the screen. */
 .image-lightbox[open] { display: grid; grid-template-rows: minmax(min-content, 1fr) auto minmax(min-content, 1fr); opacity: 1; transition-duration: 260ms; }
 @starting-style { .image-lightbox[open] { opacity: 0; } }
-html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
+/* The page keeps its scrollbar gutter so nothing shifts; the gutter takes the scrim's colour (paper under 76% black). */
+html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; background: color-mix(in srgb, var(--paper) 24%, #000); }
 .image-lightbox::backdrop { background: transparent; }
 .image-lightbox :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.image-lightbox__bar { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.75rem max(0.75rem, env(safe-area-inset-left)); }
+/* A soft shade from the top keeps the counter and × readable over the page behind. */
+.image-lightbox__bar { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; background: linear-gradient(rgb(0 0 0 / 62%), transparent 7rem); padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.75rem max(0.75rem, env(safe-area-inset-left)); }
 .image-lightbox__bar form { margin-left: auto; }
 .image-lightbox__counter { display: flex; align-items: center; height: 2.75rem; margin: 0; padding-inline: 0.5rem; color: rgb(255 255 255 / 72%); font-size: 0.8125rem; font-variant-numeric: tabular-nums; letter-spacing: 0.04em; cursor: default; }
 .image-lightbox__close, .image-lightbox__nav { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 50%; background: rgb(255 255 255 / 10%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 14%); color: rgb(255 255 255 / 90%); cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms ease; }
@@ -1013,7 +1038,9 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .image-lightbox__frame.is-caption-shown .image-lightbox__caption,
 .image-lightbox__frame:focus-visible .image-lightbox__caption { opacity: 1; }
 @media (hover: hover) { .image-lightbox__frame:has(img:hover) .image-lightbox__caption { opacity: 1; } }
-.image-lightbox__link { position: absolute; top: 100%; right: 0; display: inline-flex; align-items: center; gap: 0.4rem; max-width: calc(100vw - 1.5rem); height: 2.75rem; color: rgb(255 255 255 / 76%); font-size: 0.8125rem; letter-spacing: 0.02em; text-decoration: none; cursor: pointer; transition: color 160ms ease; }
+/* A dark pill keeps the link legible over the page behind; ::after keeps the tap target 44px tall. */
+.image-lightbox__link { position: absolute; top: 100%; right: 0; display: inline-flex; align-items: center; gap: 0.4rem; max-width: calc(100vw - 1.5rem); height: 2rem; margin-top: 0.375rem; padding-inline: 0.75rem; border-radius: 999px; background: rgb(0 0 0 / 42%); color: rgb(255 255 255 / 80%); font-size: 0.8125rem; letter-spacing: 0.02em; text-decoration: none; cursor: pointer; transition: color 160ms ease; }
+.image-lightbox__link::after { position: absolute; inset: -0.375rem 0; content: ""; }
 .image-lightbox__link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .image-lightbox__link svg { flex: none; }
 .image-lightbox__link:hover { color: #fff; }
@@ -1024,9 +1051,9 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 	.image-lightbox__photo { box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 22%), 0 1rem 3rem rgb(0 0 0 / 50%); }
 	/* On phones the arrows sit over the photo's edges, darker so they read on light photos. */
 	.image-lightbox__nav { background: rgb(0 0 0 / 40%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 22%); }
-	.image-lightbox__nav--previous { left: max(0.375rem, env(safe-area-inset-left)); }
-	.image-lightbox__nav--next { right: max(0.375rem, env(safe-area-inset-right)); }
-	.image-lightbox__link { right: 0.75rem; }
+	/* Inside the photo, 0.75rem from its edge (stage gutter + mat + 1px rule), not across the mat. */
+	.image-lightbox__nav--previous { left: max(calc(clamp(0rem, 3vw, 2.5rem) + var(--lightbox-mat) + 1px + 0.75rem), env(safe-area-inset-left)); }
+	.image-lightbox__nav--next { right: max(calc(clamp(0rem, 3vw, 2.5rem) + var(--lightbox-mat) + 1px + 0.75rem), env(safe-area-inset-right)); }
 }
 @media (prefers-reduced-motion: reduce) {
 	.image-lightbox, .image-lightbox__frame, .image-lightbox[open] .image-lightbox__frame, .image-lightbox__caption, .image-lightbox__close, .image-lightbox__nav { transition: none; }
@@ -1046,6 +1073,12 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .page-content :where(th, td) { min-width: 7rem; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--rule-soft); text-align: left; vertical-align: top; }
 .article-content th,
 .page-content th { border-bottom-color: var(--rule); color: var(--ink-soft); font-weight: 600; }
+/* EmDash's table draws every cell edge and stripes even rows (from these colours); rows here are
+   separated by one soft rule, like the lists on the rest of the site. The full path to the cell
+   outranks EmDash's scoped cell rule. */
+:is(.article-content, .page-content) .emdash-table { --color-bg-subtle: transparent; margin: 0; --color-surface: transparent; line-height: 1.6; }
+:is(.article-content, .page-content) .emdash-table-wrapper > .emdash-table > :is(thead, tbody) > tr > :is(th, td) { padding: 0.6rem 0.8rem; border: 0; border-bottom: 1px solid var(--rule-soft); }
+:is(.article-content, .page-content) .emdash-table-wrapper > .emdash-table > :is(thead, tbody):first-child > tr:first-child > :is(th, td) { border-top: 1px solid var(--rule-soft); }
 .page-article .page-header { max-width: none; margin-bottom: var(--space-7); padding-bottom: var(--space-6); border-bottom: 1px solid var(--rule); } /* the rule under the title spans the body width */
 
 /* Article-to-album summary shared by Portable Text and explicit relations. */

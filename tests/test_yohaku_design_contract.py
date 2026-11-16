@@ -258,7 +258,9 @@ class YohakuDesignContractTests(unittest.TestCase):
         self.assertLess(body, tags)
         self.assertNotIn('class="article-hero"', article)
         self.assertIn("word-break: auto-phrase", theme)
-        self.assertIn('new Intl.Segmenter("ja", { granularity: "word" })', article)
+        phrases = (WEB_ROOT / "src/utils/title-phrases.mjs").read_text()
+        self.assertIn("titleSegments = titlePhrases(post.data.title)", article)
+        self.assertIn('new Intl.Segmenter("ja", { granularity: "word" })', phrases)
         self.assertIn(".article-title__segment { white-space: nowrap; }", theme)
 
     def test_gallery_image_styles_are_scoped_away_from_the_site_logo(self) -> None:

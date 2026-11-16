@@ -1,4 +1,5 @@
 ---
+import { ArrowUpRight } from "lucide-astro";
 import { env } from "virtual:emdash/env";
 import { linkCardText } from "../link-card-text.mjs";
 import { resolveInternalLinkPreview } from "../../../../src/utils/article-social";
@@ -92,7 +93,7 @@ const eyebrow = linkCardText(caption);
 			<strong data-link-preview-title>{meaningfulTitle}</strong>
 			<small data-link-preview-description hidden={!description}>{description}</small>
 		</span>
-		<em aria-hidden="true">{host} ↗</em>
+		<em aria-hidden="true">{host}<ArrowUpRight size={12} stroke-width={1.7} /></em>
 	</a>
 )}
 
@@ -136,7 +137,9 @@ const eyebrow = linkCardText(caption);
 	strong, small { display: block; }
 	strong { font-family: var(--font-heading); font-size: 1rem; line-height: 1.45; overflow-wrap: anywhere; }
 	small { display: -webkit-box; margin-top: 0.35rem; overflow: hidden; color: var(--color-text-secondary); font-size: 0.78rem; line-height: 1.55; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-	em { align-self: end; color: var(--color-muted); font: 500 0.65rem/1 var(--font-mono), monospace; font-style: normal; white-space: nowrap; }
+	/* The domain in the body face, with the same arrow icon as the site's other outbound links. */
+	em { display: inline-flex; align-items: center; gap: 0.2rem; align-self: end; color: var(--color-muted); font-size: 0.72rem; font-style: normal; font-weight: 500; line-height: 1; white-space: nowrap; }
+	em :global(svg) { flex: none; }
 
 	@media (max-width: 34rem) {
 		.yohaku-link-card,

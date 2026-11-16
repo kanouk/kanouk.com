@@ -1,4 +1,6 @@
 ---
+import { Check, RotateCcw } from "lucide-astro";
+
 const { title = "クイズ", description, questions = [], sourceQuizId = "quiz" } = Astro.props.node;
 const safeQuestions = Array.isArray(questions) ? questions : [];
 ---
@@ -26,8 +28,8 @@ const safeQuestions = Array.isArray(questions) ? questions : [];
 			</fieldset>
 		))}
 		<div class="actions">
-			<button type="submit">答え合わせ</button>
-			<button type="reset">やり直す</button>
+			<button type="submit"><Check size={14} stroke-width={1.7} aria-hidden="true" />答え合わせ</button>
+			<button type="reset"><RotateCcw size={14} stroke-width={1.7} aria-hidden="true" />やり直す</button>
 		</div>
 		<p class="score" data-score aria-live="polite"></p>
 	</form>
@@ -80,25 +82,37 @@ const safeQuestions = Array.isArray(questions) ? questions : [];
 </script>
 
 <style>
-	.yohaku-quiz { margin: 3rem 0; padding: clamp(1.25rem, 4vw, 2.25rem); border: 1px solid var(--color-border); }
-	header { margin-bottom: 2rem; }
+	.yohaku-quiz { margin: 3rem 0; padding: clamp(1rem, 4vw, 2.25rem); border: 1px solid var(--color-border); }
+	header { margin-bottom: 1.5rem; }
 	.kicker { margin: 0 0 .5rem; color: var(--color-brand); font: 600 .68rem/1 var(--font-mono), monospace; letter-spacing: .14em; }
 	h2 { margin: 0; font-size: clamp(1.35rem, 4vw, 1.8rem); }
 	header > p:last-child:not(.kicker) { color: var(--color-text-secondary); }
-	fieldset { margin: 0; padding: 1.7rem 0; border: 0; border-top: 1px solid var(--color-border); }
-	legend { width: 100%; padding: 0; font-family: var(--font-heading); font-weight: 600; line-height: 1.75; }
+	/* Each question is ruled off from the one before and keeps its answers close: question → answers
+	   0.75rem, answers 0.25rem apart, 2rem between questions. */
+	fieldset { margin: 0; padding: 2rem 0; border: 0; border-top: 1px solid var(--color-border); }
+	/* A floated legend is laid out inside the fieldset like any block, so the rule above it shows and the
+	   fieldset's top padding goes above the question instead of between it and its answers. */
+	legend { float: left; width: 100%; padding: 0; font-family: var(--font-heading); font-weight: 600; line-height: 1.7; }
 	legend span { display: block; margin-bottom: .35rem; color: var(--color-muted); font: 500 .68rem/1 var(--font-mono), monospace; }
-	.answers { display: grid; gap: .45rem; margin-top: 1rem; }
-	label { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: .65rem; align-items: start; min-height: 44px; padding: .65rem .75rem; border: 1px solid transparent; cursor: pointer; }
+	/* Radios line up with the question's left edge; the label's hover outline reaches past it. */
+	.answers { display: grid; clear: both; gap: .25rem; margin: 0 -.5rem; padding-top: .75rem; }
+	label { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); gap: .6rem; align-items: start; min-height: 44px; padding: .4rem .5rem; border: 1px solid transparent; border-radius: var(--radius, .18rem); line-height: 1.6; cursor: pointer; }
 	label:hover { border-color: var(--color-border); }
-	input { margin-top: .3rem; accent-color: var(--color-brand); }
+	/* A quiet round mark centred on the first line, tinted with the accent when chosen. */
+	input { width: 1.1rem; height: 1.1rem; margin: calc((1lh - 1.1rem) / 2) 0 0; border: 1.5px solid var(--color-muted); border-radius: 50%; background: transparent; appearance: none; cursor: pointer; transition: border-color 150ms ease, box-shadow 150ms ease; }
+	input:checked { border-color: var(--color-brand); background: var(--color-brand); box-shadow: inset 0 0 0 .2rem var(--color-bg); }
+	label:hover input:not(:checked) { border-color: var(--color-text-secondary); }
 	.feedback, .explanation { margin: .75rem 0 0; font-size: .9rem; }
 	.feedback[data-result="correct"] { color: var(--color-brand); }
 	.feedback[data-result="incorrect"] { color: var(--color-danger); }
 	.explanation { color: var(--color-text-secondary); }
 	.actions { display: flex; flex-wrap: wrap; gap: .75rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
-	button { min-height: 44px; padding: .65rem 1rem; border: 1px solid var(--color-text); background: var(--color-text); color: var(--color-bg); font: inherit; cursor: pointer; }
-	button[type="reset"] { background: transparent; color: var(--color-text); }
-	.score { min-height: 1.5em; margin-bottom: 0; font-family: var(--font-heading); font-weight: 600; }
+	/* Quiet controls: a tinted primary, an outlined reset, never a filled black block. */
+	button { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .5rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius, .18rem); background: transparent; color: var(--color-text-secondary); font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease; }
+	button :global(svg) { flex: none; }
+	button[type="submit"] { border-color: color-mix(in srgb, var(--color-brand) 35%, transparent); background: var(--accent-soft, transparent); color: var(--accent-strong, var(--color-brand)); }
+	button:hover { border-color: var(--color-brand); color: var(--accent-strong, var(--color-brand)); }
+	.score { margin: .75rem 0 0; font-family: var(--font-heading); font-weight: 600; }
+	.score:empty { display: none; }
 	[hidden] { display: none; }
 </style>

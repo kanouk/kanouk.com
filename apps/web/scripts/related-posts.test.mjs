@@ -120,7 +120,10 @@ describe("related tag and category slugs", () => {
 
 test("post page ranks 「続けて読む」 by tag, then category, then newest, with hidden tags removed", async () => {
 	const page = await readFile(new URL("../src/pages/posts/[slug].astro", import.meta.url), "utf8");
-	assert.match(page, /<h2 class="more-title">続けて読む<\/h2>/);
+	assert.match(page, /<h2 class="more-title"[^>]*>続けて読む<\/h2>/);
+	// It follows the article in the main column (before the sidebar), as list cards.
+	assert.ok(page.indexOf('class="more-posts"') < page.indexOf('class="article-sidebar"'));
+	assert.match(page, /class="more-posts"[\s\S]*variant="list"/);
 	assert.match(page, /tiers: \[relatedByTag, relatedByCategory, recentPostsResult\.entries\]/);
 	assert.match(page, /where: \{ tag: slugs \}/);
 	assert.match(page, /where: \{ category: slugs \}/);

@@ -5,9 +5,35 @@ const index = document.getElementById("article-index");
 const list = document.querySelector("[data-article-index]");
 
 if (float && lead) {
+	// Shown once the title has scrolled away, never over the footer. On phones the buttons sit over the
+	// text column, so they only come back while the reader scrolls up (looking for the way back).
+	const narrow = matchMedia("(max-width: 48rem)");
+	const footer = document.querySelector(".site-footer");
+	let pastLead = false;
+	let footerInView = false;
+	let scrollingUp = false;
+	let lastY = scrollY;
+	const update = () => {
+		float.classList.toggle("is-visible", pastLead && !footerInView && (!narrow.matches || scrollingUp));
+	};
 	new IntersectionObserver(([entry]) => {
-		float.classList.toggle("is-visible", !entry?.isIntersecting);
+		pastLead = !entry?.isIntersecting;
+		update();
 	}).observe(lead);
+	if (footer) {
+		new IntersectionObserver(([entry]) => {
+			footerInView = Boolean(entry?.isIntersecting);
+			update();
+		}).observe(footer);
+	}
+	addEventListener("scroll", () => {
+		const y = scrollY;
+		if (Math.abs(y - lastY) < 12) return;
+		scrollingUp = y < lastY;
+		lastY = y;
+		update();
+	}, { passive: true });
+	narrow.addEventListener("change", update);
 }
 
 document.querySelector("[data-article-top]")?.addEventListener("click", () => {
