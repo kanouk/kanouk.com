@@ -797,9 +797,15 @@ main:focus { outline: none; }
 .sidebar-widgets .widget__title { display: flex; align-items: center; gap: 0.4rem; }
 .sidebar-widgets .widget__content { margin-top: var(--space-4); }
 .sidebar-widgets .widget-archive .widget__content { display: grid; gap: var(--space-4); }
-.sidebar-widgets .widget-search { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-.sidebar-widgets .widget-search__input { min-width: 0; min-height: 2.75rem; padding: 0.4rem 0.55rem; border: 1px solid var(--rule); border-right: 0; border-radius: 0; background: transparent; font-size: 0.75rem; }
-.sidebar-widgets .widget-search__button { display: grid; min-width: 2.75rem; min-height: 2.75rem; place-items: center; padding: 0; border: 1px solid var(--ink); border-radius: 0; background: var(--ink); color: var(--paper); }
+/* The same single-border field as the search page: focus changes that border, the button stays quiet. */
+.sidebar-widgets .widget-search { display: grid; grid-template-columns: minmax(0, 1fr) auto; border: 1px solid var(--rule); border-radius: 0.375rem; background: var(--paper-raised); transition: border-color var(--transition), box-shadow var(--transition); }
+.sidebar-widgets .widget-search:focus-within { border-color: var(--accent-strong); box-shadow: 0 0 0 1px var(--accent-strong); }
+.sidebar-widgets .widget-search__input { min-width: 0; min-height: 2.75rem; padding: 0.4rem 0.75rem; border: 0; border-radius: 0; background: transparent; color: var(--ink); font-size: var(--step--1); }
+.sidebar-widgets .widget-search__input:focus,
+.sidebar-widgets .widget-search__input:focus-visible { outline: 0; }
+.sidebar-widgets .widget-search__button { display: grid; min-width: 2.75rem; min-height: 2.75rem; place-items: center; padding: 0; border: 0; border-radius: 0 0.375rem 0.375rem 0; background: transparent; color: var(--ink-muted); cursor: pointer; }
+.sidebar-widgets .widget-search__button:hover { color: var(--accent-strong); }
+.sidebar-widgets .widget-search__button:focus-visible { outline-offset: -3px; }
 .sidebar-widgets :where(.widget-categories, .widget-tags__cloud) { list-style: none; }
 .sidebar-widgets .widget-categories { padding: 0; }
 .sidebar-widgets .widget-categories > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2); align-items: center; border-bottom: 1px solid var(--rule-soft); }
