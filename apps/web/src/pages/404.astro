@@ -1,11 +1,37 @@
 ---
 import Base from "../layouts/Base.astro";
+import Photos from "../layouts/Photos.astro";
+import { isPhotoHost } from "../utils/site-host.mjs";
+
+// Pages redirect unknown slugs here, so make the status honest.
+Astro.response.status = 404;
+// Never cache: the shared edge cache must not hand one host's 404 to the other.
+Astro.cache?.set(false);
+
+const photoSite = isPhotoHost(Astro.url.hostname);
+const isPreviewHost = Astro.url.hostname.endsWith("workers.dev") || ["localhost", "127.0.0.1"].includes(Astro.url.hostname);
+const searchUrl = isPreviewHost ? "/photo-search" : "/search";
 ---
 
-<Base title="ページが見つかりません" canonical={false} robots="noindex, follow">
-	<div class="not-found">
-		<h1>404</h1>
-		<p>お探しのページは移動したか、存在しません。</p>
-		<a href="/">ホームへ戻る</a>
-	</div>
-</Base>
+{
+	photoSite ? (
+		<Photos title="ページが見つかりません" canonical={false} robots="noindex, follow">
+			<div class="not-found">
+				<h1>404</h1>
+				<p>お探しのページは移動したか、存在しません。</p>
+				<nav class="not-found__links" aria-label="移動先">
+					<a href="/albums">アルバム一覧へ戻る</a>
+					<a href={searchUrl}>写真を検索</a>
+				</nav>
+			</div>
+		</Photos>
+	) : (
+		<Base title="ページが見つかりません" canonical={false} robots="noindex, follow">
+			<div class="not-found">
+				<h1>404</h1>
+				<p>お探しのページは移動したか、存在しません。</p>
+				<a href="/">ホームへ戻る</a>
+			</div>
+		</Base>
+	)
+}

@@ -3,6 +3,7 @@ import type { MediaValue } from "emdash";
 import YohakuImage from "./YohakuImage.astro";
 import { resolveImageSource } from "../utils/image-source";
 import { siteDateLabel } from "../utils/photo-date.mjs";
+import { visibleTags } from "../utils/hidden-tags.mjs";
 
 interface Props {
 	title: string;
@@ -23,7 +24,7 @@ const {
 	href,
 	date,
 	readingTime,
-	tags,
+	tags: allTags,
 	variant = "card",
 	priority = false,
 } = Astro.props;
@@ -33,6 +34,7 @@ const imageSizes =
 		? "(max-width: 719px) calc(100vw - 2rem), 15rem"
 		: "(max-width: 719px) calc(100vw - 2rem), (max-width: 1100px) 50vw, 22rem";
 
+const tags = visibleTags(allTags);
 const formattedDate = date ? siteDateLabel(date) : null;
 ---
 

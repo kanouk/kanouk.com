@@ -1,38 +1,64 @@
 ---
 import { ArrowLeft, ArrowRight } from "lucide-astro";
+import { pageWindow, totalPages } from "../utils/pagination.mjs";
 
 interface Props {
 	page: number;
 	hasMore: boolean;
 	basePath: string;
+	/** Total number of items in the list, when known. */
+	total?: number | null;
+	pageSize?: number;
 }
 
-const { page, hasMore, basePath } = Astro.props;
+const { page, hasMore, basePath, total = null, pageSize = 24 } = Astro.props;
 const hrefFor = (targetPage: number) =>
 	targetPage <= 1 ? basePath : `${basePath}?page=${targetPage}`;
+const last = total != null ? totalPages(total, pageSize) : 0;
+// Without a total, fall back to previous / next only.
+const items = last > 1 ? pageWindow(page, last) : [];
+const showPrev = page > 1;
+// `hasMore` comes from the page query itself, so it wins when the stored count lags behind.
+const showNext = hasMore || (last > 0 && page < last);
 ---
 
 {
-	(page > 1 || hasMore) && (
+	(showPrev || showNext || items.length > 1) && (
 		<nav class="archive-pagination" aria-label="記事一覧のページ送り">
-			{page > 1 ? (
-				<a class="archive-pagination__link" href={hrefFor(page - 1)} rel="prev">
+			{showPrev ? (
+				<a class="archive-pagination__link archive-pagination__link--prev" href={hrefFor(page - 1)} rel="prev">
 					<ArrowLeft size={16} strokeWidth={1.7} aria-hidden="true" />
 					<span>前のページ</span>
 				</a>
 			) : (
-				<span />
+				<span class="archive-pagination__link archive-pagination__link--prev" aria-hidden="true" />
 			)}
-			<span class="archive-pagination__current" aria-current="page">
-				{page}
-			</span>
-			{hasMore ? (
-				<a class="archive-pagination__link" href={hrefFor(page + 1)} rel="next">
+			{items.length > 1 ? (
+				<ol class="archive-pagination__pages">
+					{items.map((item) =>
+						item.type === "gap" ? (
+							<li class="archive-pagination__gap" aria-hidden="true">…</li>
+						) : item.page === page ? (
+							<li>
+								<span class="archive-pagination__current" aria-current="page" aria-label={`${item.page}ページ目`}>{item.page}</span>
+							</li>
+						) : (
+							<li>
+								<a class="archive-pagination__num" href={hrefFor(item.page)} aria-label={`${item.page}ページ目`}>{item.page}</a>
+							</li>
+						),
+					)}
+				</ol>
+			) : (
+				<span class="archive-pagination__current" aria-current="page">{page}</span>
+			)}
+			{showNext ? (
+				<a class="archive-pagination__link archive-pagination__link--next" href={hrefFor(page + 1)} rel="next">
 					<span>次のページ</span>
 					<ArrowRight size={16} strokeWidth={1.7} aria-hidden="true" />
 				</a>
 			) : (
-				<span />
+				<span class="archive-pagination__link archive-pagination__link--next" aria-hidden="true" />
 			)}
 		</nav>
 	)

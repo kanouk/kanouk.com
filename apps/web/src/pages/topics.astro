@@ -2,6 +2,7 @@
 import { getTaxonomyTerms } from "emdash";
 import { Folder, Tags } from "lucide-astro";
 import Base from "../layouts/Base.astro";
+import { isHiddenTag } from "../utils/hidden-tags.mjs";
 
 type Term = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
 
@@ -19,7 +20,7 @@ const categories = flattenTerms(categoryTerms)
 	.filter((term) => (term.count ?? 0) > 0)
 	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
 const tags = flattenTerms(tagTerms)
-	.filter((term) => (term.count ?? 0) > 0)
+	.filter((term) => (term.count ?? 0) > 0 && !isHiddenTag(term))
 	.sort((left, right) => left.label.localeCompare(right.label, "ja"));
 ---
 

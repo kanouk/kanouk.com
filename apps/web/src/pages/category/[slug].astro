@@ -10,7 +10,11 @@ import PostCard from "../../components/PostCard.astro";
 import { postCoverImages } from "../../utils/post-covers";
 import { getPostExcerpt, getReadingTime } from "../../utils/reading-time";
 import { routeSlugCandidates } from "../../utils/route-slug";
+import { sharedBlogQuery } from "../../utils/shared-queries";
+import { rangeLabel } from "../../utils/pagination.mjs";
 
+// Term counts come from the sidebar's shared query (started now, awaited below): no extra round-trip.
+const termsPromise = sharedBlogQuery(Astro.locals, "categoryTerms");
 const slugCandidates = routeSlugCandidates(Astro.params.slug);
 let term = slugCandidates[0] ? await getTerm("category", slugCandidates[0]) : null;
 for (const legacySlug of slugCandidates.slice(1)) {
@@ -52,6 +56,17 @@ const filteredPosts = posts.map((post) => ({
 	post,
 	tags: tagsByEntry.get(post.data.id) ?? [],
 }));
+
+type TermNode = { id?: string; slug: string; count?: number; children?: TermNode[] };
+const findTerm = (nodes: TermNode[]): TermNode | undefined => {
+	for (const node of nodes) {
+		if (node.id === term.id || node.slug === term.slug) return node;
+		const hit = findTerm(node.children ?? []);
+		if (hit) return hit;
+	}
+};
+const counted = await termsPromise.then((terms) => findTerm(terms as TermNode[])?.count).catch(() => undefined);
+const total = typeof counted === "number" ? counted : hasMore ? null : (page - 1) * PAGE_SIZE + posts.length;
 ---
 
 <Base title={`${term.label}の記事`} description={`${term.label}カテゴリーの記事一覧`}>
@@ -60,7 +75,7 @@ const filteredPosts = posts.map((post) => ({
 			<span class="archive-label">カテゴリー</span>
 			<h1 class="archive-title">{term.label}</h1>
 			<p class="archive-count">
-				{page > 1 ? `${page}ページ目・` : ""}{filteredPosts.length.toLocaleString("ja-JP")}件を表示
+				{total != null ? rangeLabel(total, page, PAGE_SIZE, filteredPosts.length) : `${filteredPosts.length.toLocaleString("ja-JP")}件を表示`}
 			</p>
 		</header>
 
@@ -85,6 +100,6 @@ const filteredPosts = posts.map((post) => ({
 				</div>
 			)
 		}
-		<ArchivePagination page={page} hasMore={hasMore} basePath={basePath} />
+		<ArchivePagination page={page} hasMore={hasMore} basePath={basePath} total={total} pageSize={PAGE_SIZE} />
 	</section>
 </Base>
