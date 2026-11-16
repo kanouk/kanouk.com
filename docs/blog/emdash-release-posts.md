@@ -58,7 +58,9 @@ python3 scripts/cloudflare/run_emdash_release_posts_kanouk.py --provision
 
 まず `content create posts --draft --file <payload.json> --slug <slug> --locale ja --json` で下書きを作成する。`content` はMarkdown文字列で渡すとCLIがPortable Textへ変換する。本文先頭のH1はtitleへ分け、本文には重ねない。`published_on` は実際の公開時刻、`source_id` は `emdash-release:<version>`、`source_metadata` には種類 `emdash-release`・版・公式出典・適用の確認情報を記録する。
 
-APIから下書きを読み戻し、検査済みの本文とカバーが一致することを確かめる。予定していない差分があれば公開しない。一致したら `content publish posts <id> --json` で公開する。公開後は同じレコードを `--published` で読み戻す。
+下書きにはカテゴリー「カノログ」（slug `stream`）を付ける。2026-11-17にユーザーが「すべての記事にカテゴリーを付ける」と決めた。カテゴリーのない記事は、記事ページのパンくずが「ホーム」だけになる。1.4.0と1.5.0の記事はカテゴリーなしで公開されていたため、同日に付け直した。
+
+APIから下書きを読み戻し、検査済みの本文とカバー、カテゴリーが一致することを確かめる。予定していない差分があれば公開しない。一致したら `content publish posts <id> --json` で公開する。公開後は同じレコードを `--published` で読み戻す。
 
 ## 公開後
 
