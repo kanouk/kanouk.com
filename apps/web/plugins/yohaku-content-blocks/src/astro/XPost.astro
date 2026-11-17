@@ -2,8 +2,23 @@
 interface Props { post: { id: string; url: string }; caption?: string }
 const { post, caption } = Astro.props;
 ---
-<figure class="yohaku-x-post" data-x-post={post.id}>
+<figure class="yohaku-x-post" data-x-post={post.id} data-x-post-state="idle">
 	<div data-x-post-stage>
+		<!-- A post-shaped placeholder: still while waiting, shimmering while X loads. -->
+		<div class="yohaku-x-post__skeleton" aria-hidden="true">
+			<div class="yohaku-x-post__head">
+				<span class="yohaku-x-post__mark">
+					<svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+				</span>
+				<span class="yohaku-x-post__names"><i></i><i></i></span>
+			</div>
+			<i class="yohaku-x-post__line"></i>
+			<i class="yohaku-x-post__line"></i>
+			<i class="yohaku-x-post__line yohaku-x-post__line--short"></i>
+		</div>
+		<p class="yohaku-x-post__status" role="status" aria-live="polite">
+			<span data-x-post-message>Xにつないでいます</span><span class="yohaku-x-post__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+		</p>
 		<button type="button" data-x-post-load>Xの投稿を読み込む</button>
 		<p class="yohaku-x-post__hint">この位置まで読み進めると、Xに接続して投稿を表示します。</p>
 	</div>
@@ -31,29 +46,47 @@ const { post, caption } = Astro.props;
 		const theme = document.documentElement.dataset.theme;
 		return theme === "dark" || (theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
 	};
+	// What the status line says while X loads; it moves on every couple of seconds and stops at the last one.
+	const MESSAGES = ["Xにつないでいます", "投稿を探しています", "もうすぐです"];
 	async function load(figure: HTMLElement) {
 		const button = figure.querySelector<HTMLButtonElement>("[data-x-post-load]");
 		const stage = figure.querySelector<HTMLElement>("[data-x-post-stage]");
+		const message = figure.querySelector<HTMLElement>("[data-x-post-message]");
 		const id = figure.dataset.xPost;
 		if (!button || !stage || !id || button.disabled) return;
 		button.disabled = true;
-		button.textContent = "読み込み中…";
+		figure.dataset.xPostState = "loading";
+		let step = 0;
+		if (message) message.textContent = MESSAGES[0];
+		const ticker = setInterval(() => {
+			if (!message || step >= MESSAGES.length - 1) return;
+			step += 1;
+			message.dataset.swap = "";
+			message.textContent = MESSAGES[step];
+			// Restart the small fade-up on every change.
+			void message.offsetWidth;
+			delete message.dataset.swap;
+		}, 1800);
 		const target = document.createElement("div");
+		target.className = "yohaku-x-post__embed";
 		stage.append(target);
 		try {
 			const api = await widgets();
 			const rendered = await api.widgets.createTweet(id, target, { dnt: true, lang: "ja", align: "center", theme: isDark() ? "dark" : "light" });
 			if (!rendered) throw new Error("Post unavailable");
-			button.remove();
-			stage.querySelector(".yohaku-x-post__hint")?.remove();
-			// The post brings its own card: drop our frame so it is not boxed twice.
+			// The post brings its own card: drop our frame and placeholder so it is not boxed twice.
+			stage.querySelectorAll(".yohaku-x-post__skeleton, .yohaku-x-post__status, .yohaku-x-post__hint, [data-x-post-load]").forEach(node => node.remove());
+			figure.dataset.xPostState = "loaded";
 			figure.dataset.xPostLoaded = "";
 		} catch {
 			target.remove();
 			button.disabled = false;
 			button.textContent = "もう一度読み込む";
+			figure.dataset.xPostState = "error";
 			const hint = stage.querySelector(".yohaku-x-post__hint");
 			if (hint) hint.textContent = "投稿を表示できませんでした。元の投稿をXで確認できます。";
+		} finally {
+			clearInterval(ticker);
 		}
 	}
 	// The button stays as the retry and the no-observer path.
@@ -81,9 +114,59 @@ const { post, caption } = Astro.props;
 </script>
 <style>
 	.yohaku-x-post { margin: 2rem auto; max-width: 550px; }
-	[data-x-post-loaded] [data-x-post-stage] { min-height: 0; padding: 0; border: 0; }
-	[data-x-post-stage] { min-height: 120px; padding: .75rem; border: 1px solid var(--color-border); border-radius: .65rem; }
-	button { display: block; margin: .5rem auto; padding: .6rem 1rem; font: inherit; color: var(--color-text); background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: .35rem; cursor: pointer; }
+	[data-x-post-stage] { position: relative; min-height: 120px; padding: 1rem 1.1rem; border: 1px solid var(--color-border); border-radius: .65rem; overflow: hidden; }
+	[data-x-post-loaded] [data-x-post-stage] { min-height: 0; padding: 0; border: 0; overflow: visible; }
+
+	/* Placeholder shaped like a post. */
+	.yohaku-x-post__skeleton { display: grid; gap: .55rem; }
+	.yohaku-x-post__head { display: flex; align-items: center; gap: .7rem; margin-bottom: .25rem; }
+	.yohaku-x-post__mark { display: grid; flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; color: var(--color-text-secondary); background: var(--color-bg-subtle); place-items: center; }
+	.yohaku-x-post__names { display: grid; flex: 1; gap: .4rem; }
+	.yohaku-x-post__names i,
+	.yohaku-x-post__line { display: block; height: .6rem; border-radius: 999px; background: var(--color-bg-subtle); }
+	.yohaku-x-post__names i:first-child { width: 38%; }
+	.yohaku-x-post__names i:last-child { width: 24%; height: .5rem; }
+	.yohaku-x-post__line--short { width: 62%; }
+
+	.yohaku-x-post__status { display: none; margin-top: .9rem; color: var(--color-text-secondary); font-size: .8rem; text-align: center; }
+	[data-x-post-message] { display: inline-block; }
+	.yohaku-x-post__dots { display: inline-flex; gap: .18rem; margin-left: .25rem; vertical-align: .15em; }
+	.yohaku-x-post__dots i { width: .25rem; height: .25rem; border-radius: 50%; background: currentColor; }
+
+	/* While X loads: a light sweeps across the placeholder, the mark breathes, the dots hop. */
+	[data-x-post-state="loading"] .yohaku-x-post__status { display: block; }
+	[data-x-post-state="loading"] [data-x-post-load],
+	[data-x-post-state="loading"] .yohaku-x-post__hint { display: none; }
+	[data-x-post-state="error"] .yohaku-x-post__skeleton { display: none; }
+	/* The embed box is created by the script, so it carries no scoped attribute. */
+	:global(.yohaku-x-post__embed:empty) { display: none; }
+	[data-x-post-state="loading"] :global(.yohaku-x-post__embed) { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+	[data-x-post-state="loaded"] :global(.yohaku-x-post__embed) { animation: yohaku-x-post-in .45s ease-out both; }
+
+	@media (prefers-reduced-motion: no-preference) {
+		[data-x-post-state="loading"] .yohaku-x-post__skeleton::after {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--color-text) 7%, transparent) 50%, transparent 70%);
+			background-size: 220% 100%;
+			animation: yohaku-x-post-sweep 1.4s ease-in-out infinite;
+			content: "";
+		}
+		[data-x-post-state="loading"] .yohaku-x-post__mark { animation: yohaku-x-post-breathe 1.6s ease-in-out infinite; }
+		[data-x-post-state="loading"] .yohaku-x-post__dots i { animation: yohaku-x-post-hop 1s ease-in-out infinite; }
+		.yohaku-x-post__dots i:nth-child(2) { animation-delay: .15s; }
+		.yohaku-x-post__dots i:nth-child(3) { animation-delay: .3s; }
+		[data-x-post-message]:not([data-swap]) { animation: yohaku-x-post-in .35s ease-out; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		[data-x-post-state="loaded"] :global(.yohaku-x-post__embed) { animation: none; }
+	}
+	@keyframes yohaku-x-post-sweep { from { background-position: 120% 0; } to { background-position: -20% 0; } }
+	@keyframes yohaku-x-post-breathe { 0%, 100% { transform: scale(1); color: var(--color-text-secondary); } 50% { transform: scale(1.08); color: var(--color-text); } }
+	@keyframes yohaku-x-post-hop { 0%, 60%, 100% { transform: translateY(0); opacity: .45; } 30% { transform: translateY(-.25rem); opacity: 1; } }
+	@keyframes yohaku-x-post-in { from { opacity: 0; transform: translateY(.3rem); } to { opacity: 1; transform: none; } }
+
+	button { display: block; margin: .9rem auto .4rem; padding: .6rem 1rem; font: inherit; color: var(--color-text); background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: .35rem; cursor: pointer; }
 	button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
 	.yohaku-x-post__hint, figcaption { color: var(--color-text-secondary); font-size: .8rem; text-align: center; }
 	a { display: block; margin-top: .5rem; text-align: right; font-size: .75rem; }

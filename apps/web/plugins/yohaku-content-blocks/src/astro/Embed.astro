@@ -20,6 +20,7 @@ const linkCardNode = { ...node, caption: "" };
 ) : parsed.ok ? (
 	<figure
 		class:list={["yohaku-embed", `yohaku-embed--${parsed.provider}`]}
+		data-yohaku-embed-auto={parsed.provider === "spotify" ? "" : undefined}
 		style={`--yohaku-embed-height: ${parsed.height}px`}
 	>
 		<div class="yohaku-embed__stage" data-yohaku-embed-stage>
@@ -33,7 +34,9 @@ const linkCardNode = { ...node, caption: "" };
 			>
 				<span class="yohaku-embed__play" aria-hidden="true">▶</span>
 				<strong>{parsed.providerLabel}プレーヤーを読み込む</strong>
-				<small>クリックするまで外部コンテンツは読み込まれません</small>
+				{parsed.provider === "spotify"
+					? <small>この位置まで読み進めると、Spotifyに接続してプレーヤーを表示します</small>
+					: <small>クリックするまで外部コンテンツは読み込まれません</small>}
 			</button>
 			<noscript>
 				<p>プレーヤーの表示にはJavaScriptが必要です。</p>
@@ -60,17 +63,12 @@ const linkCardNode = { ...node, caption: "" };
 )}
 
 <script>
-	document.addEventListener("click", (event) => {
-		const target = event.target;
-		const button = target instanceof Element
-			? target.closest("[data-yohaku-embed-load]")
-			: null;
-		if (!(button instanceof HTMLButtonElement)) return;
+	function loadEmbed(button: HTMLButtonElement, { focus }: { focus: boolean }) {
 		const stage = button.closest("[data-yohaku-embed-stage]");
 		const src = button.dataset.embedSrc;
 		const title = button.dataset.embedTitle;
 		const provider = button.dataset.embedProvider;
-		if (!(stage instanceof HTMLElement) || !src || !title) return;
+		if (!(stage instanceof HTMLElement) || !src || !title || stage.dataset.state) return;
 
 		const frame = document.createElement("iframe");
 		frame.src = src;
@@ -81,9 +79,38 @@ const linkCardNode = { ...node, caption: "" };
 			? "encrypted-media; fullscreen; picture-in-picture"
 			: "fullscreen";
 		frame.allowFullscreen = true;
+		// The placeholder shimmers until the player has drawn, then the player fades in.
+		stage.dataset.state = "loading";
+		frame.addEventListener("load", () => { stage.dataset.state = "loaded"; }, { once: true });
 		stage.replaceChildren(frame);
-		frame.focus();
+		if (focus) frame.focus();
+	}
+
+	document.addEventListener("click", (event) => {
+		const target = event.target;
+		const button = target instanceof Element
+			? target.closest("[data-yohaku-embed-load]")
+			: null;
+		if (button instanceof HTMLButtonElement) loadEmbed(button, { focus: true });
 	}, { passive: true });
+
+	// Spotify loads by itself once the reader scrolls near it; the button stays for browsers without an observer.
+	if ("IntersectionObserver" in window) {
+		const observer = new IntersectionObserver((entries) => {
+			for (const entry of entries) {
+				if (!entry.isIntersecting) continue;
+				observer.unobserve(entry.target);
+				const button = entry.target.querySelector("[data-yohaku-embed-load]");
+				if (button instanceof HTMLButtonElement) loadEmbed(button, { focus: false });
+			}
+		}, { rootMargin: "400px 0px" });
+		const watch = () => document.querySelectorAll<HTMLElement>("[data-yohaku-embed-auto]:not([data-yohaku-embed-watched])").forEach((figure) => {
+			figure.dataset.yohakuEmbedWatched = "";
+			observer.observe(figure);
+		});
+		watch();
+		document.addEventListener("astro:page-load", watch);
+	}
 </script>
 
 <style>
@@ -121,6 +148,37 @@ const linkCardNode = { ...node, caption: "" };
 		height: 100%;
 		border: 0;
 	}
+
+	/* The frame is drawn inside the 1px border, so it would be 2px short and scroll.
+	   Once a player is in, it brings its own card: drop our border and background. */
+	.yohaku-embed__stage[data-state] {
+		border-color: transparent;
+	}
+	.yohaku-embed--spotify .yohaku-embed__stage[data-state] {
+		border: 0;
+		border-radius: 12px;
+	}
+	.yohaku-embed--spotify .yohaku-embed__stage[data-state="loaded"] {
+		background: transparent;
+	}
+	.yohaku-embed__stage[data-state="loading"] :global(iframe) { opacity: 0; }
+	.yohaku-embed__stage[data-state="loaded"] :global(iframe) { animation: yohaku-embed-in .4s ease-out both; }
+
+	@media (prefers-reduced-motion: no-preference) {
+		.yohaku-embed__stage[data-state="loading"]::after {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--color-text) 7%, transparent) 50%, transparent 70%);
+			background-size: 220% 100%;
+			animation: yohaku-embed-sweep 1.4s ease-in-out infinite;
+			content: "";
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.yohaku-embed__stage[data-state="loaded"] :global(iframe) { animation: none; }
+	}
+	@keyframes yohaku-embed-sweep { from { background-position: 120% 0; } to { background-position: -20% 0; } }
+	@keyframes yohaku-embed-in { from { opacity: 0; } to { opacity: 1; } }
 
 	.yohaku-embed__load {
 		position: absolute;
