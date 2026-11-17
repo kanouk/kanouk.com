@@ -460,7 +460,9 @@ main:focus { outline: none; }
 
 .section-header { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--head-gap); }
 .section-title { font-size: var(--step-1); letter-spacing: 0.015em; }
-.home-section-header .section-title { font-size: var(--heading-page); }
+/* Home: a quiet section label sitting on the list's first rule — the posts are the page, not the heading. */
+.home-section-header .section-title { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--step-1); letter-spacing: 0.04em; }
+.home-section-header .section-title svg { flex: none; color: var(--ink-muted); }
 .section-link,
 .back { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--ink-soft); font-size: var(--step--1); font-weight: 600; text-decoration: none; }
 .section-link { gap: 0.45rem; padding-bottom: 0.05rem; }
@@ -476,7 +478,7 @@ main:focus { outline: none; }
 	align-items: start;
 }
 .home-main { min-width: 0; }
-.home-section-header { margin-bottom: var(--head-gap); } /* same title → first rule distance as the list pages */
+.home-section-header { align-items: baseline; margin-bottom: var(--space-1); } /* label and link share a baseline, just above the rule */
 .home-posts,
 .post-list { display: grid; border-top: 1px solid var(--rule); }
 
@@ -516,7 +518,7 @@ main:focus { outline: none; }
 .profile-card__social { display: flex; justify-content: center; gap: var(--space-2); margin-top: var(--space-5); }
 .profile-card__social a { display: grid; width: 2.5rem; height: 2.5rem; border: 1px solid var(--rule-soft); border-radius: 50%; color: var(--ink-soft); place-items: center; text-decoration: none; }
 .profile-card__social a:hover { border-color: var(--accent); color: var(--accent-strong); }
-.home-sidebar { min-width: 0; padding-top: calc(var(--control-height) - var(--heading-page) * 1.09); } /* link height − (1.42 line box − 0.33 cap inset); see .page-with-profile */
+.home-sidebar { min-width: 0; } /* the profile card starts level with the section label row */
 .home-sidebar__widgets { margin-top: var(--space-7); }
 
 .page-with-profile {
