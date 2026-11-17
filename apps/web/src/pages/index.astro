@@ -1,5 +1,6 @@
 ---
 import { getEmDashCollection, getTermsForEntries, getSiteSettings } from "emdash";
+import { PenLine } from "lucide-astro";
 import BlogSidebar from "../components/BlogSidebar.astro";
 import PostCard from "../components/PostCard.astro";
 import Base from "../layouts/Base.astro";
@@ -49,7 +50,7 @@ const [tagsByEntry, covers] = await Promise.all([
 				<div class="home-shell">
 					<section class="home-main" aria-labelledby="latest-posts-title">
 						<header class="section-header home-section-header">
-							<h1 class="section-title" id="latest-posts-title">新着記事</h1>
+							<h1 class="section-title" id="latest-posts-title"><PenLine size={16} aria-hidden="true" />新着記事</h1>
 							{hasMorePosts && <a href="/posts" class="section-link">すべての記事 <span aria-hidden="true">→</span></a>}
 						</header>
 						<div class="home-posts">

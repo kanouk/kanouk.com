@@ -1,4 +1,5 @@
 ---
+import { promoteXPostLinks } from "../../utils/x-post-links.mjs";
 import { getEmDashEntry } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
@@ -37,7 +38,7 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 		<div class="page-content">
 			<PortableText
-				value={page.data.content}
+				value={promoteXPostLinks(page.data.content)}
 				components={{ type: { image: YohakuPortableImage } }}
 			/>
 		</div>
