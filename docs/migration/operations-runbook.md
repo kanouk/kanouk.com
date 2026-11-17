@@ -2,6 +2,12 @@
 
 対象は `blog.kanouk.com` / `photos.kanouk.com` と、統合ステージングです。DNS切替はユーザーから明示承認済みです。旧WordPress停止、SmugMug解約はこのrunbookの対象外です。
 
+## Node のバージョン
+
+Node はリポジトリ直下の `.node-version`（24.21.0）を使う。nodenv ならこのリポジトリ内で自動的に切り替わり、CI も同じファイルを読む。EmDash 1.5 は Node 22.16 以上、Astro は 22.12 以上が必要で、ホームの `~/.node-version`（22.6.0）では `node:sqlite` がない・TypeScript を読めないなどでテストやビルドが失敗する。
+
+`npm ci` は必ずこの Node で実行する。別の Node で入れ直した `node_modules` のままビルドすると、`Cannot find native binding` で止まることがある（2026-11-15 の 1.5.0 デプロイで発生）。その場合は正しい Node で `npm ci` をやり直す。
+
 ## 毎回のdeploy後
 
 ```sh
