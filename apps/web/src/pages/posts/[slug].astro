@@ -1,4 +1,5 @@
 ---
+import { promoteXPostLinks } from "../../utils/x-post-links.mjs";
 import {
 	getEmDashEntry,
 	getEmDashCollection,
@@ -155,7 +156,8 @@ const legacyAlbumContent = await normalizeLegacyAlbumCards(
 		return uniqueMatches.size === 1 ? uniqueMatches.values().next().value?.data.id ?? "" : "";
 	},
 );
-const articleContent = legacyAlbumContent.content as NonNullable<typeof post.data.content>;
+// A bare X post URL on its own line renders as the post (render-time only; stored content is untouched).
+const articleContent = promoteXPostLinks(legacyAlbumContent.content) as NonNullable<typeof post.data.content>;
 if (!env?.DB) throw new Error("Cloudflare D1 binding DB is unavailable");
 const socialDatabase = env.DB as ArticleSocialDatabase;
 

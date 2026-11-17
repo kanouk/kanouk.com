@@ -5,7 +5,7 @@ const { post, caption } = Astro.props;
 <figure class="yohaku-x-post" data-x-post={post.id}>
 	<div data-x-post-stage>
 		<button type="button" data-x-post-load>Xの投稿を読み込む</button>
-		<p class="yohaku-x-post__hint">クリックするとXに接続して投稿を表示します。</p>
+		<p class="yohaku-x-post__hint">この位置まで読み進めると、Xに接続して投稿を表示します。</p>
 	</div>
 	{caption && <figcaption>{caption}</figcaption>}
 	<a href={post.url} target="_blank" rel="noopener noreferrer">Xで開く ↗</a>
@@ -27,11 +27,14 @@ const { post, caption } = Astro.props;
 		}).catch(error => { widgetPromise = undefined; throw error; });
 		return widgetPromise;
 	}
-	document.addEventListener("click", async event => {
-		const button = event.target instanceof Element ? event.target.closest<HTMLButtonElement>("[data-x-post-load]") : null;
-		const figure = button?.closest<HTMLElement>("[data-x-post]");
-		const stage = figure?.querySelector<HTMLElement>("[data-x-post-stage]");
-		const id = figure?.dataset.xPost;
+	const isDark = () => {
+		const theme = document.documentElement.dataset.theme;
+		return theme === "dark" || (theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+	};
+	async function load(figure: HTMLElement) {
+		const button = figure.querySelector<HTMLButtonElement>("[data-x-post-load]");
+		const stage = figure.querySelector<HTMLElement>("[data-x-post-stage]");
+		const id = figure.dataset.xPost;
 		if (!button || !stage || !id || button.disabled) return;
 		button.disabled = true;
 		button.textContent = "読み込み中…";
@@ -39,10 +42,12 @@ const { post, caption } = Astro.props;
 		stage.append(target);
 		try {
 			const api = await widgets();
-			const rendered = await api.widgets.createTweet(id, target, { dnt: true, lang: "ja", align: "center", theme: document.documentElement.dataset.theme === "dark" ? "dark" : "light" });
+			const rendered = await api.widgets.createTweet(id, target, { dnt: true, lang: "ja", align: "center", theme: isDark() ? "dark" : "light" });
 			if (!rendered) throw new Error("Post unavailable");
 			button.remove();
 			stage.querySelector(".yohaku-x-post__hint")?.remove();
+			// The post brings its own card: drop our frame so it is not boxed twice.
+			figure.dataset.xPostLoaded = "";
 		} catch {
 			target.remove();
 			button.disabled = false;
@@ -50,10 +55,33 @@ const { post, caption } = Astro.props;
 			const hint = stage.querySelector(".yohaku-x-post__hint");
 			if (hint) hint.textContent = "投稿を表示できませんでした。元の投稿をXで確認できます。";
 		}
+	}
+	// The button stays as the retry and the no-observer path.
+	document.addEventListener("click", event => {
+		const button = event.target instanceof Element ? event.target.closest("[data-x-post-load]") : null;
+		const figure = button?.closest<HTMLElement>("[data-x-post]");
+		if (figure) void load(figure);
 	});
+	// Nothing connects to X on page load: a post loads once the reader scrolls near it.
+	if ("IntersectionObserver" in window) {
+		const observer = new IntersectionObserver(entries => {
+			for (const entry of entries) {
+				if (!entry.isIntersecting) continue;
+				observer.unobserve(entry.target);
+				void load(entry.target as HTMLElement);
+			}
+		}, { rootMargin: "400px 0px" });
+		const watch = () => document.querySelectorAll<HTMLElement>("[data-x-post]:not([data-x-post-watched])").forEach(figure => {
+			figure.dataset.xPostWatched = "";
+			observer.observe(figure);
+		});
+		watch();
+		document.addEventListener("astro:page-load", watch);
+	}
 </script>
 <style>
 	.yohaku-x-post { margin: 2rem auto; max-width: 550px; }
+	[data-x-post-loaded] [data-x-post-stage] { min-height: 0; padding: 0; border: 0; }
 	[data-x-post-stage] { min-height: 120px; padding: .75rem; border: 1px solid var(--color-border); border-radius: .65rem; }
 	button { display: block; margin: .5rem auto; padding: .6rem 1rem; font: inherit; color: var(--color-text); background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: .35rem; cursor: pointer; }
 	button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
