@@ -139,7 +139,7 @@ test("photos are public only with a published album, and search shows them as pi
 	assert.match(images, /a\.status = 'published' AND a\.deleted_at IS NULL/);
 	assert.match(search, /class="photo-search-photos"/);
 	assert.match(search, /images\.has\(result\.id\)/);
-	// Pages end with --page-space; the footer adds only a small margin (no 200px gap on phones).
-	assert.match(theme, /\.site-footer \{ margin-top: var\(--space-6\);/);
+	// Pages end with --page-space; the footer adds no margin of its own (no double-counted gap).
+	assert.match(theme, /\.site-footer \{ margin-top: 0;/);
 	assert.doesNotMatch(theme, /room for the floating size control/);
 });
