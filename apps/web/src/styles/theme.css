@@ -1494,7 +1494,8 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; ba
 	.posts-grid,
 	.more-grid { gap-block: var(--space-7); }
 	.home-sidebar { columns: 1; }
-	.profile-card { width: min(100%, 22rem); }
+	/* One column on phones: the profile spans it, edge to edge with the widgets below. */
+	.page-with-profile__aside .profile-card { width: auto; }
 	.home-sidebar__widgets { margin-top: 0; }
 }
 
