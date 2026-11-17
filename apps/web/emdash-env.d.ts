@@ -3,22 +3,25 @@
 
 /// <reference types="emdash/locals" />
 
-import type { ContentBylineCredit, TaxonomyTerm, PortableTextBlock } from "emdash";
+import type { BylineSummary, ContentBylineCredit, TaxonomyTerm, PortableTextBlock } from "emdash";
 
 export interface Post {
   id: string;
   slug: string | null;
   status: string;
   title: string;
-  featured_image?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; provider?: string; previewUrl?: string; meta?: Record<string, unknown> };
+  featured_image?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
   content?: PortableTextBlock[];
+  related_album?: string;
   excerpt?: string;
+  published_on?: string;
   source_url?: string;
   source_id?: string;
   source_metadata?: unknown;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
+  byline?: BylineSummary | null;
   bylines?: ContentBylineCredit[];
   terms?: Record<string, TaxonomyTerm[]>;
 }
@@ -29,9 +32,13 @@ export interface Page {
   status: string;
   title: string;
   content?: PortableTextBlock[];
+  source_url?: string;
+  source_id?: string;
+  source_metadata?: unknown;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
+  byline?: BylineSummary | null;
   bylines?: ContentBylineCredit[];
   terms?: Record<string, TaxonomyTerm[]>;
 }
@@ -42,7 +49,7 @@ export interface Album {
   status: string;
   title: string;
   description?: string;
-  cover_image?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; provider?: string; previewUrl?: string; meta?: Record<string, unknown> };
+  cover_image?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
   captured_from?: string;
   captured_to?: string;
   sort_method?: string;
@@ -54,6 +61,7 @@ export interface Album {
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
+  byline?: BylineSummary | null;
   bylines?: ContentBylineCredit[];
   terms?: Record<string, TaxonomyTerm[]>;
 }
@@ -63,25 +71,26 @@ export interface Photo {
   slug: string | null;
   status: string;
   title: string;
-  image: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; provider?: string; previewUrl?: string; meta?: Record<string, unknown> };
+  image: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
+  kind: "image" | "video";
+  video?: { id: string; url?: string; src?: string; filename?: string; mimeType?: string; size?: number; provider?: string; meta?: Record<string, unknown> };
   alt: string;
   caption?: string;
   album: string;
   position: number;
   captured_at?: string;
+  latitude?: number;
+  longitude?: number;
+  altitude?: number;
   source_system: string;
   source_id: string;
   source_url?: string;
   original_sha256?: string;
   source_metadata?: unknown;
-  latitude?: number;
-  longitude?: number;
-  altitude?: number;
-  kind: "image" | "video";
-  video?: { id: string; url?: string; src?: string; filename?: string; mimeType?: string; size?: number; provider?: string; meta?: Record<string, unknown> };
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
+  byline?: BylineSummary | null;
   bylines?: ContentBylineCredit[];
   terms?: Record<string, TaxonomyTerm[]>;
 }
@@ -100,6 +109,7 @@ export interface UrlMapping {
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
+  byline?: BylineSummary | null;
   bylines?: ContentBylineCredit[];
   terms?: Record<string, TaxonomyTerm[]>;
 }
