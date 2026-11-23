@@ -3,11 +3,14 @@
 //   node scripts/emdash-admin/apply.mjs          patch node_modules (postinstall)
 //   node scripts/emdash-admin/apply.mjs --check  verify only, write nothing
 //
-// The untouched upstream bundle is kept next to it as `index.js.pristine`, so
-// re-running after editing a patch always starts from upstream code. Since 1.5
-// some editor code lives in shared chunks (`dist/convert-<hash>.js`); a patch
-// edits those through `chunks: { convert(editor) {} }`, with the same pristine copy.
+// Since 1.6 the admin app lives in `dist/App-<hash>.js`; `dist/index.js` only
+// re-exports it. The untouched upstream chunk is kept next to it as
+// `App-<hash>.js.pristine`, so re-running after editing a patch always starts
+// from upstream code. Some editor code lives in other shared chunks
+// (`dist/schema-<hash>.js`, `convert-<hash>.js` in 1.5); a patch edits those
+// through `chunks: { schema(editor) {} }`, with the same pristine copy.
 
+import { readdirSync } from "node:fs";
 import { copyFile, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -47,7 +50,7 @@ export function patchAdminChunk(name, source, patches = adminPatches) {
   return `/* ${PATCH_MARKER}: ${applied.join(", ")} */\n${current}`;
 }
 
-/** Chunk names the patches edit, e.g. ["convert"]. */
+/** Chunk names the patches edit, e.g. ["schema"]. */
 export function patchedChunkNames(patches = adminPatches) {
   return [...new Set(patches.flatMap((patch) => Object.keys(patch.chunks ?? {})))].sort();
 }
@@ -63,9 +66,19 @@ export async function adminChunkPaths(name, paths = adminPackagePaths()) {
   return { bundle, pristine: `${bundle}.pristine` };
 }
 
+/** The admin app chunk, `dist/App-<hash>.js`, inside an admin package directory. */
+export function adminAppBundle(packageDirectory) {
+  const dist = path.join(packageDirectory, "dist");
+  const files = readdirSync(dist).filter((file) => /^App-[\w-]+\.js$/.test(file));
+  if (files.length !== 1) {
+    throw new Error(`[emdash-admin] expected one App-*.js chunk in ${dist}, found ${files.length}; re-check docs/emdash-upgrade.md.`);
+  }
+  return path.join(dist, files[0]);
+}
+
 export function adminPackagePaths(root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")) {
   const packageDirectory = path.join(root, "node_modules/@emdash-cms/admin");
-  const bundle = path.join(packageDirectory, "dist/index.js");
+  const bundle = adminAppBundle(packageDirectory);
   return { packageJson: path.join(packageDirectory, "package.json"), bundle, pristine: `${bundle}.pristine` };
 }
 

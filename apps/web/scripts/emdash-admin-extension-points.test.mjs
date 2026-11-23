@@ -129,11 +129,11 @@ test("the installed bundle wires each extension point where upstream renders it"
 });
 
 test("shared chunks are patched from their pristine copies; the image keeps its presentation", async () => {
-  assert.deepEqual(patchedChunkNames(), ["convert"]);
-  const chunk = await adminChunkPaths("convert", paths);
+  assert.deepEqual(patchedChunkNames(), ["schema"]);
+  const chunk = await adminChunkPaths("schema", paths);
   const [installed, pristine] = await Promise.all([read(chunk.bundle), read(chunk.pristine)]);
   assert.ok(!pristine.includes(PATCH_MARKER));
-  assert.equal(installed, patchAdminChunk("convert", pristine));
+  assert.equal(installed, patchAdminChunk("schema", pristine));
   // Schema attribute and both Portable Text converters.
   assert.match(installed, /visualStyle: \{ default: null \}/);
   assert.match(installed, /visualStyle: attrStr\(attrs\.visualStyle\)/);

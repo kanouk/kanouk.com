@@ -37,7 +37,8 @@ export function lazyAdminBlocks() {
   enforce: 'pre',
   apply: 'build',
   transform(source, id) {
-   if (!id.replaceAll('\\\\','/').endsWith('/@emdash-cms/admin/dist/index.js')) return;
+   // Since 1.6 the admin app is the App-<hash>.js chunk; index.js only re-exports it.
+   if (!/\/@emdash-cms\/admin\/dist\/App-[\w-]+\.js$/.test(id.replaceAll('\\\\','/'))) return;
    return { code: deferAdminBlocks(source), map: null };
   },
  };

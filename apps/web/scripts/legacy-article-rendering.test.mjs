@@ -41,10 +41,10 @@ test('legacy blocks reach provider renderers, and compact tracks reserve only 80
 test('actual installed editor converters preserve frames and links through the image schema', async () => {
   // Since EmDash 1.5 the image schema and the Portable Text converters live in the
   // shared convert chunk, an ES module that runs on its own; import the patched copy.
-  const chunk = await adminChunkPaths('convert');
+  const chunk = await adminChunkPaths('schema');
   const source = readFileSync(chunk.bundle, 'utf8');
   assert.match(source, /visualStyle: \{ default: null \}/);
-  assert.throws(() => imagePresentationAttrs.chunks.convert(createEditor(imagePresentationAttrs.id, 'upstream changed')));
+  assert.throws(() => imagePresentationAttrs.chunks.schema(createEditor(imagePresentationAttrs.id, 'upstream changed')));
   const exported = Object.fromEntries([...source.matchAll(/(\w+) as (\$|\w+)/g)].filter(([, name]) => ['portableTextToProsemirror', 'prosemirrorToPortableText', 'ImageNode'].includes(name)).map(([, name, alias]) => [name, alias]));
   const module = await import(pathToFileURL(chunk.bundle).href);
   const toProsemirror = module[exported.portableTextToProsemirror];

@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {deferAdminBlocks} from './lazy-admin-blocks.mjs';
+import {adminPackagePaths} from './emdash-admin/apply.mjs';
 import {directPhosphorImports} from './direct-phosphor-imports.mjs';
 test('optional declarative blocks preserve their API behind a Suspense boundary',()=>{
- const source=readFileSync(new URL('../node_modules/@emdash-cms/admin/dist/index.js',import.meta.url),'utf8');
+ const source=readFileSync(adminPackagePaths().bundle,'utf8');
  const next=deferAdminBlocks(source);
  assert.ok(!/import \{[^}]*\} from "@emdash-cms\/blocks";/.test(next),'no eager import of the renderer entry');
  assert.match(next,/import \{ isSafePluginPagePath, normalizePluginPagePath \} from "@emdash-cms\/blocks\/server";/);
@@ -31,6 +32,6 @@ test('the admin icon namespace keeps its API with only the icons it reads',async
  for(const match of result.matchAll(/import \{ (\w+) as [\w$]+ \} from "([^"]+)"/g)) assert.ok((await import(match[2]))[match[1]],match[2]);
  assert.throws(()=>directPhosphorNamespace('import * as Icons from "@phosphor-icons/react"; Icons[name];'),/dynamic use/);
  assert.throws(()=>directPhosphorNamespace('import * as Icons from "@phosphor-icons/react"; render(Icons);'),/dynamic use/);
- const installed=readFileSync(new URL('../node_modules/@emdash-cms/admin/dist/index.js',import.meta.url),'utf8');
+ const installed=readFileSync(adminPackagePaths().bundle,'utf8');
  assert.ok(!directPhosphorImports(installed).includes('from "@phosphor-icons/react"'));
 });
