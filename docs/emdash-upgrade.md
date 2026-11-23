@@ -103,7 +103,7 @@ python3 scripts/cloudflare/check_emdash_reference_fields.py --remote
 - 1.6 は信頼済みパネルに公式の `editorDraft`（下書きの読み取りと書き換え）を渡すようになった。ただし保存済みの記事だけで、新規記事ではパネル自体が出ない。そのため、新規記事でパネルを出して `draftData` と `onFieldChange` を渡す拡張は残し、公式の `editorDraft` もそのまま渡す。
 - 1.6 の `isVisible` によるパネルの表示判定は、`isVisible` を持たないパネルを常に表示する。このサイトのパネルは `isVisible` を使っていないので、新規記事でも表示される。
 
-**マイグレーション**は 1 本（`098_user_last_login`）。`users` に `last_login_at` 列を足すだけで、既存の行は書き換えない。
+**マイグレーション**は 1 本（`098_user_last_login`）。`users` に `last_login_at` 列を足すだけで、既存の行は書き換えない。本番の未適用は 098 だけだった。デプロイ前に D1 Time Travel の復元点を記録した（2026-11-23T23:02Z、bookmark `000004eb-00000104-0000512c-b831b99d3be9475077d098b42f3ac856`）。
 
 **このサイトへの影響を確認したこと**
 
