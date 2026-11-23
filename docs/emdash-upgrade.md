@@ -1,6 +1,6 @@
 # EmDash の更新とカスタマイズの構成
 
-`apps/web` は EmDash（現在 1.5.0、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
+`apps/web` は EmDash（現在 1.6.0、`package.json` で完全固定）を使う。管理画面の使い勝手は、次の 2 層に分けて実装している。
 
 1. **拡張ポイント層**（`apps/web/scripts/emdash-admin/`）: EmDash 管理画面に汎用の差し込み口だけを足す小さなパッチ。サイト固有の UI は置かない。
 2. **プラグイン層**: 実際の振る舞い。信頼済みプラグインの管理画面モジュール（descriptor の `adminEntry`）が拡張ポイントを使う。
@@ -44,7 +44,7 @@ npm run test:migration && npm run test:ux && npm run typecheck && npm run build 
 
 `emdash-admin:check` が失敗したら、エラーに出る id の拡張ポイントを見直す。
 
-1. 上流の該当コードを `node_modules/@emdash-cms/admin/dist/index.js.pristine` で確認する（適用前の原本）。
+1. 上流の該当コードを `node_modules/@emdash-cms/admin/dist/App-<hash>.js.pristine` で確認する（適用前の原本）。1.5 までは `dist/index.js.pristine`。
 2. 上流に同等の機能が入っていれば、そのパッチを `registry.mjs` から外して削除し、プラグイン側を公式 API に移す。
 3. 入っていなければ、アンカーを新しいコードに合わせる。汎用の差し込み口だけを保ち、サイト固有の処理はプラグインに置く。
 4. `registry.mjs` の `VERIFIED_ADMIN_VERSION` を更新する。
@@ -87,6 +87,42 @@ python3 scripts/cloudflare/check_emdash_reference_fields.py --remote
 ローカルでは、0.40.1 のデータ入り D1 に 1.1.0 を起動し、6 本が自動適用されること、移行されたリンクが 0 件であること、編集シナリオが 0.40.1・1.0.1 と同じ結果になること、旧記事と画像リンクがそのまま開けることを確認した。
 
 管理画面の初期 JS は 1,212,120 bytes（gzip）になった。内訳と予算の変更は `docs/performance/README.md` を参照。1.1.0 で追加された HTML ブロック用のコードエディタ（CodeMirror）は遅延読み込み。
+
+### 1.6.0 への更新（2026-11-24）
+
+`emdash` と `@emdash-cms/cloudflare` を 1.6.0、Forms を 0.2.14 に更新した。1.6 の管理画面と Forms は、どちらも `@cloudflare/kumo` 2.19.0 を必要とする。1.5.0 のときと同じく、`npm install` はロックファイルに残った旧版と peer dependency がぶつかって ERESOLVE で止まった。そのため、ロックファイルから EmDash 関連・kumo・TipTap の項目を外して解決し直した。TipTap は 3.32.0 のまま。`bun.lock` は `bun install --lockfile-only` で同期した。
+
+**管理画面の配布ファイルの構成が変わった。**
+
+- 本体が `dist/index.js` から `dist/App-<hash>.js` に移り、`index.js` はそれを読み直すだけの約 9KB のファイルになった。
+- 拡張ポイントの適用先（`apply.mjs` の `adminPackagePaths`）と、ビルド時の変換（`scripts/lazy-admin-blocks.mjs`）の対象を `App-<hash>.js` に変えた。原本は `App-<hash>.js.pristine` に置く。
+- 1.5 の共有チャンク `convert-<hash>.js` は `schema-<hash>.js` に名前が変わった。`image-presentation-attrs` のチャンク名も `schema` にした。
+
+**拡張ポイント**は 7 本とも引き続き必要。合わせ直したのは `editor-panels-draft-access` の 1 本だけで、ほかの 6 本は場所が変わっただけで、そのまま当たった。
+
+- 1.6 は信頼済みパネルに公式の `editorDraft`（下書きの読み取りと書き換え）を渡すようになった。ただし保存済みの記事だけで、新規記事ではパネル自体が出ない。そのため、新規記事でパネルを出して `draftData` と `onFieldChange` を渡す拡張は残し、公式の `editorDraft` もそのまま渡す。
+- 1.6 の `isVisible` によるパネルの表示判定は、`isVisible` を持たないパネルを常に表示する。このサイトのパネルは `isVisible` を使っていないので、新規記事でも表示される。
+
+**マイグレーション**は 1 本（`098_user_last_login`）。`users` に `last_login_at` 列を足すだけで、既存の行は書き換えない。
+
+**このサイトへの影響を確認したこと**
+
+- 画像の元ファイル（`/_emdash/api/media/file/`）の 1 年キャッシュ：`cacheCloudflare()` を使っているので対象になる。ただし `src/middleware.ts` が `/_emdash/` 以下の応答で最後に `context.cache.set(false)` を呼ぶ。Astro は最後の指定を使うので、画像は共有キャッシュに入らない。下書き画像の非公開はこれまでどおり。`/_image` の変換キャッシュは、`imageService: "passthrough"` なので対象外。
+- 記事が見つからないときの 404 キャッシュ：このサイトは `/404` への rewrite ではなく redirect なので、挙動は変わらない。
+- 検索スコアの正規化：スコアの値を使う処理はない。
+- 同じ `getEmDashEntry()` の結果の共有：取得したデータを書き換える処理はない。
+- 予約公開：`createScheduledHandler()` を使っているので、1.6 の待ち合わせ（最大 70 秒）が自動で効く。
+
+Node 24.21.0 で、拡張ポイントの適用確認、移行・管理機能テスト 169 件、公開 UX テスト 185 件、Python テスト 191 件、型チェック（エラー・警告 0）、ビルド、サイズ予算チェックが合格した。管理画面の初期 JS は 1,333,304 bytes（gzip）、管理画面 CSS は 48,389 bytes、公開 CSS は 31,245 bytes。
+
+097 まで適用済みのローカル D1 に 1.6.0 を起動し、098 が自動で適用されることを確認した。ローカルの架空データで、次の動作を確かめた。
+
+- 公開ページ（トップ、記事一覧、記事、アーカイブ、トピック、検索、カテゴリー、写真サイトのトップ・アルバム・検索）
+- 新規記事での関連アルバムのパネル
+- 「アルバムの写真」ブロック：関連アルバムが既定値として入る、写真の選択肢とサムネイルが出る、写真を選ぶとキャプション・代替テキストが入る、挿入後の表示、下書き保存（関連アルバムとブロックの内容が保存される）
+- 写真整理画面のアルバム一覧
+
+**デプロイ後にすること**：1.6 は本文中のリンクからメディアの「使用箇所」を数えるようになったが、既存の記事は自動では数え直されない。必要なら管理者として `npx emdash media repair-usage --all` を一度実行する（未実施）。
 
 ### 1.5.0 への更新（2026-11-16）
 

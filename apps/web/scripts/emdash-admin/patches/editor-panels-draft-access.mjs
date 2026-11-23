@@ -21,11 +21,13 @@ export default {
       );
       // Sandboxed panels remain saved-entry only (filtered out above for new entries).
       scope.replace("\t\t\t\titem && extensionSections.map(({ kind, id: sectionId, pluginId, panel }) => {", "\t\t\t\textensionSections.map(({ kind, id: sectionId, pluginId, panel }) => {");
+      // 1.6 passes the official `editorDraft` (saved entries only); keep it and add ours.
       scope.replace(
         `\t\t\t\t\t\t\t\t\tchildren: /* @__PURE__ */ jsx(Panel, {
 \t\t\t\t\t\t\t\t\t\tcollection,
 \t\t\t\t\t\t\t\t\t\tentry: item,
-\t\t\t\t\t\t\t\t\t\tlocale: item.locale ?? entryLocale ?? void 0
+\t\t\t\t\t\t\t\t\t\tlocale: item.locale ?? entryLocale ?? void 0,
+\t\t\t\t\t\t\t\t\t\teditorDraft
 \t\t\t\t\t\t\t\t\t})
 \t\t\t\t\t\t\t\t})
 \t\t\t\t\t\t\t}, \`\${collection}:\${item.id}\`)]`,
@@ -33,6 +35,7 @@ export default {
 \t\t\t\t\t\t\t\t\t\tcollection,
 \t\t\t\t\t\t\t\t\t\tentry: item ?? void 0,
 \t\t\t\t\t\t\t\t\t\tlocale: item?.locale ?? entryLocale ?? void 0,
+\t\t\t\t\t\t\t\t\t\teditorDraft,
 \t\t\t\t\t\t\t\t\t\tdraftData,
 \t\t\t\t\t\t\t\t\t\tonFieldChange: onDraftFieldChange
 \t\t\t\t\t\t\t\t\t})
