@@ -29,6 +29,16 @@ test("WordPress query IDs resolve only to explicitly mapped published items", as
 	for (const path of ["/?p=999999999", "/?p=__proto__", "/?p=1&p=2", "/?p=1&page_id=2", "/?p=-1", "/?p=", "/?attachment_id=1"]) assert.equal((await fetch(path)).status, 404);
 });
 
+test("the housekeeping tag hidden on the new blog is not redirected to a page that answers 404", async () => {
+	const hidden = "%e4%b8%80%e8%a6%a7%e9%9d%9e%e8%a1%a8%e7%a4%ba";
+	assert.ok(!JSON.stringify(mapping).includes(hidden));
+	for (const path of [`/tag/${hidden}`, `/?tag=${hidden}`, "/?tag_id=191"]) {
+		const response = await fetch(path);
+		assert.equal(response.status, 404, path);
+		assert.equal(response.headers.get("Location"), null);
+	}
+});
+
 test("unknown paths, prefixes and encoded separators never redirect to home or arbitrary destinations", async () => {
 	const firstPath = Object.keys(mapping.paths).find((path) => path !== "/");
 	for (const path of ["/not-a-real-post", "/wp-admin/", "/__proto__", `${firstPath}/extra`, "/stream%2f8831", "/%5cstream/8831", "/%zz", "/%00", "/?p=https://example.org/"]) {
