@@ -1,4 +1,5 @@
 ---
+import { contentUnavailable, redirectNotFound } from "../../utils/route-guards";
 import { promoteXPostLinks } from "../../utils/x-post-links.mjs";
 import {
 	getEmDashEntry,
@@ -53,7 +54,7 @@ const slugCandidates = routeSlugCandidates(Astro.params.slug);
 const slug = slugCandidates[0];
 
 if (!slug) {
-	return Astro.redirect("/404");
+	return redirectNotFound(Astro);
 }
 
 // Footer pages, sidebar taxonomies and archive months do not depend on the
@@ -64,10 +65,10 @@ for (const legacySlug of slugCandidates.slice(1)) {
 	if (postResult.entry) break;
 	postResult = await getEmDashEntry("posts", legacySlug);
 }
-const { entry: post, cacheHint, isPreview } = postResult;
+const { entry: post, cacheHint, isPreview, error: postError } = postResult;
 
 if (!post) {
-	return Astro.redirect("/404");
+	return postError ? contentUnavailable(Astro, postError) : redirectNotFound(Astro);
 }
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);

@@ -1,4 +1,5 @@
 ---
+import { contentUnavailable, redirectNotFound } from "../../utils/route-guards";
 import {
 	getTerm,
 	getEmDashCollection,
@@ -24,7 +25,7 @@ for (const legacySlug of slugCandidates.slice(1)) {
 }
 
 if (!term || isHiddenTag(term)) {
-	return Astro.redirect("/404");
+	return redirectNotFound(Astro);
 }
 
 const PAGE_SIZE = 24;
@@ -32,12 +33,13 @@ const requestedPage = Number.parseInt(Astro.url.searchParams.get("page") ?? "1",
 const page = Number.isSafeInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
 const basePath = `/tag/${encodeURIComponent(Astro.params.slug ?? term.slug)}`;
 
-const { entries: posts, hasMore = false, cacheHint } = await getEmDashCollection("posts", {
+const { entries: posts, hasMore = false, cacheHint, error: postsError } = await getEmDashCollection("posts", {
 	where: { tag: term.slug },
 	orderBy: { published_at: "desc" },
 	limit: PAGE_SIZE,
 	offset: (page - 1) * PAGE_SIZE,
 });
+if (postsError) return contentUnavailable(Astro, postsError);
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums"] });
