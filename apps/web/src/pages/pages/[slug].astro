@@ -1,4 +1,5 @@
 ---
+import { contentUnavailable, redirectNotFound } from "../../utils/route-guards";
 import { promoteXPostLinks } from "../../utils/x-post-links.mjs";
 import { getEmDashEntry } from "emdash";
 import { PortableText } from "emdash/ui";
@@ -10,7 +11,7 @@ const slugCandidates = routeSlugCandidates(Astro.params.slug);
 const slug = slugCandidates[0];
 
 if (!slug) {
-	return Astro.redirect("/404");
+	return redirectNotFound(Astro);
 }
 
 let pageResult = await getEmDashEntry("pages", slug);
@@ -18,10 +19,10 @@ for (const legacySlug of slugCandidates.slice(1)) {
 	if (pageResult.entry) break;
 	pageResult = await getEmDashEntry("pages", legacySlug);
 }
-const { entry: page, cacheHint } = pageResult;
+const { entry: page, cacheHint, error: pageError } = pageResult;
 
 if (!page) {
-	return Astro.redirect("/404");
+	return pageError ? contentUnavailable(Astro, pageError) : redirectNotFound(Astro);
 }
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);

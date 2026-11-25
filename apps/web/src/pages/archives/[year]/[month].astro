@@ -1,4 +1,5 @@
 ---
+import { contentUnavailable, redirectNotFound } from "../../../utils/route-guards";
 import { getEmDashCollection } from "emdash";
 import { ArrowLeft, CalendarDays } from "lucide-astro";
 import PostCard from "../../../components/PostCard.astro";
@@ -10,10 +11,10 @@ import { getPostArchiveMonths, japanDateParts, japanMonthRange } from "../../../
 const year = Number(Astro.params.year);
 const month = Number(Astro.params.month);
 if (!Number.isInteger(year) || year < 2000 || year > 2100 || !Number.isInteger(month) || month < 1 || month > 12) {
-	return Astro.redirect("/404");
+	return redirectNotFound(Astro);
 }
 const { start, end } = japanMonthRange(year, month);
-const [{ entries: posts, cacheHint }, archives] = await Promise.all([
+const [{ entries: posts, cacheHint, error: postsError }, archives] = await Promise.all([
 	getEmDashCollection("posts", {
 		status: "published",
 		where: { published_at: { gte: start.toISOString(), lt: end.toISOString() } },
@@ -22,9 +23,10 @@ const [{ entries: posts, cacheHint }, archives] = await Promise.all([
 	}),
 	getPostArchiveMonths(240),
 ]);
+if (postsError) return contentUnavailable(Astro, postsError);
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["albums"] });
-if (posts.length === 0) return Astro.redirect("/404");
+if (posts.length === 0) return redirectNotFound(Astro);
 const covers = await postCoverImages(posts);
 const title = `${year}年${month}月の記事`;
 const archiveIndex = archives.findIndex((archive) => archive.year === year && archive.month === month);
