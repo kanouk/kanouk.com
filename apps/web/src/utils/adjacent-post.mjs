@@ -17,7 +17,7 @@ export const NEWER_POST_QUERY = `
 `;
 
 /**
- * @param {{ prepare(sql: string): { bind(...values: unknown[]): { first<T>(): Promise<T | null> } } }} database
+ * @param {any} database D1 binding (`env.DB` is untyped in pages)
  * @param {string} publishedAt ISO timestamp of the current post
  * @param {"older" | "newer"} direction
  * @returns {Promise<string | undefined>}
