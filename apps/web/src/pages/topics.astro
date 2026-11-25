@@ -1,8 +1,9 @@
 ---
-import { getTaxonomyTerms } from "emdash";
+import type { getTaxonomyTerms } from "emdash";
 import { Folder, Tags } from "lucide-astro";
 import Base from "../layouts/Base.astro";
 import { isHiddenTag } from "../utils/hidden-tags.mjs";
+import { sharedBlogQuery } from "../utils/shared-queries";
 
 type Term = Awaited<ReturnType<typeof getTaxonomyTerms>>[number];
 
@@ -11,8 +12,8 @@ function flattenTerms(terms: Term[]): Term[] {
 }
 
 const [categoryTerms, tagTerms] = await Promise.all([
-	getTaxonomyTerms("category", { includeCounts: true }),
-	getTaxonomyTerms("tag", { includeCounts: true }),
+	sharedBlogQuery(Astro.locals, "categoryTerms"),
+	sharedBlogQuery(Astro.locals, "tagTerms"),
 ]);
 if (Astro.cache?.enabled) Astro.cache.set({ tags: ["posts"] });
 

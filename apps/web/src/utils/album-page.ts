@@ -4,6 +4,8 @@ import { looksLikeCameraNumber, looksLikeSourceFilename } from "./photo-display.
 
 
 export const ALBUM_PAGE_SIZE = 50;
+// p.album mirrors the live revision (EmDash keeps drafts in revisions), so it
+// narrows the read to one album via kanouk_ec_photos_album; the JSON check stays.
 const publicPhotos = (album: string) => sql`SELECT p.id,p.slug,live.data,
  json_extract(live.data,'$.captured_at') AS captured_at,
  coalesce(json_extract(live.data,'$.position'),0) AS position,
@@ -11,7 +13,7 @@ const publicPhotos = (album: string) => sql`SELECT p.id,p.slug,live.data,
  json_extract(live.data,'$.caption') AS caption,
  p.created_at AS created_at, p.updated_at AS updated_at
  FROM ec_photos p JOIN revisions live ON live.id=p.live_revision_id
- WHERE p.status='published' AND p.deleted_at IS NULL
+ WHERE p.album=${album} AND p.status='published' AND p.deleted_at IS NULL
  AND json_extract(live.data,'$.album')=${album}`;
 export type AlbumPhotoSort = { method?: unknown; direction?: unknown };
 const SORT_COLUMNS = { captured: "unixepoch(captured_at)", position: "position", filename: "filename", caption: "caption", created: "created_at", updated: "updated_at", id: "id" };

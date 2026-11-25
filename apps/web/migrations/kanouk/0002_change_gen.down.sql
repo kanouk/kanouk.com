@@ -1,0 +1,14 @@
+DROP INDEX IF EXISTS kanouk_ec_photos_album;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_ct_insert;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_ct_update;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_ct_delete;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_tax_insert;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_tax_update;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_tax_delete;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_def_insert;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_def_update;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_def_delete;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_posts_insert;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_posts_update;
+DROP TRIGGER IF EXISTS kanouk_gen_terms_posts_delete;
+DROP TABLE IF EXISTS kanouk_change_gen;

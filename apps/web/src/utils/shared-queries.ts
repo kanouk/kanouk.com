@@ -1,10 +1,18 @@
 import { getEmDashCollection, getTaxonomyTerms } from "emdash";
+import { env } from "virtual:emdash/env";
 import { getPostArchiveMonths } from "./post-archives";
-import { edgeMemo } from "./edge-memo.mjs";
+import { stampedMemo } from "./change-gen.mjs";
 
-// Sidebar aggregates recount the whole site; a few minutes of staleness is harmless.
-const SIDEBAR_TTL_SECONDS = 300;
 const nonEmpty = (value: unknown) => Array.isArray(value) && value.length > 0;
+
+/**
+ * Term lists with counts recount every tag assignment (~5k D1 rows). They are
+ * cached until a post, term or assignment changes (the "terms" change stamp),
+ * so a cold render reads one stamp row instead of recounting.
+ */
+export function termsWithCounts(taxonomy: "category" | "tag"): ReturnType<typeof getTaxonomyTerms> {
+	return stampedMemo(env?.DB, "terms", `sidebar:${taxonomy}-terms`, () => getTaxonomyTerms(taxonomy, { includeCounts: true }), { cacheable: nonEmpty });
+}
 
 /**
  * Queries shared by the blog layout and sidebar, started once per request.
@@ -35,8 +43,8 @@ function store(locals: object): SharedQueryStore {
 
 const starters: { [K in SharedQueryName]: () => SharedBlogQueries[K] } = {
 	footerPages: () => getEmDashCollection("pages", { status: "published", orderBy: { published_at: "desc" }, limit: 8 }),
-	categoryTerms: () => edgeMemo("sidebar:category-terms", SIDEBAR_TTL_SECONDS, () => getTaxonomyTerms("category", { includeCounts: true }), { cacheable: nonEmpty }),
-	tagTerms: () => edgeMemo("sidebar:tag-terms", SIDEBAR_TTL_SECONDS, () => getTaxonomyTerms("tag", { includeCounts: true }), { cacheable: nonEmpty }),
+	categoryTerms: () => termsWithCounts("category"),
+	tagTerms: () => termsWithCounts("tag"),
 	archiveMonths: () => getPostArchiveMonths(24),
 };
 
