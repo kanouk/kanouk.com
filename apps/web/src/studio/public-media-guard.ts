@@ -1,3 +1,5 @@
+import { mediaAccessFromIndex } from "../utils/ref-index.mjs";
+
 const RAW_MEDIA_ROUTE = /^\/_emdash\/api\/media\/file\/(.*)$/;
 const PHOTO_HOSTS = new Set(["photos.kanouk.com", "photos-staging.kanouk.com"]);
 const BLOG_HOSTS = new Set(["blog.kanouk.com", "blog-staging.kanouk.com"]);
@@ -29,6 +31,8 @@ export interface MediaReadClassification {
 
 export interface ClassifyMediaReadOptions {
 	authenticate?: (request: Request) => Promise<boolean>;
+	/** Called when the reference index has pending changes (schedule a drain). */
+	onIndexDirty?: () => void;
 }
 
 /**
@@ -57,12 +61,25 @@ export async function classifyMediaRead(
 	}
 
 	if (PUBLIC_HOSTS.has(url.hostname) || VERSION_PREVIEW_HOST.test(url.hostname)) {
+		// The reference index answers with a few key lookups. It is consulted
+		// only when no write is pending (src/utils/ref-index.mjs); otherwise, or
+		// if the index is unavailable, the full scan below decides.
+		let indexed: "public" | "denied" | "dirty" | "unavailable" = "unavailable";
 		try {
-			if (await isCurrentPublicMedia(database, storageKey)) {
-				return { access: "public", storageKey };
-			}
+			indexed = await mediaAccessFromIndex(database, storageKey);
 		} catch {
-			// Projection/schema/database failures must never turn into public access.
+			// Missing tables or a read failure: fall through to the full check.
+		}
+		if (indexed === "public") return { access: "public", storageKey };
+		if (indexed !== "denied") {
+			if (indexed === "dirty") options.onIndexDirty?.();
+			try {
+				if (await isCurrentPublicMedia(database, storageKey)) {
+					return { access: "public", storageKey };
+				}
+			} catch {
+				// Projection/schema/database failures must never turn into public access.
+			}
 		}
 	}
 

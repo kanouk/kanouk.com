@@ -1,0 +1,21 @@
+-- Reverts 0001_ref_index.up.sql. Readers fall back to the full scan when the tables are gone.
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_posts_insert;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_posts_update;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_posts_delete;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_pages_insert;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_pages_update;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_pages_delete;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_albums_insert;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_albums_update;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_albums_delete;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_photos_insert;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_photos_update;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_photos_delete;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_revision_insert;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_revision_update;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_revision_delete;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_options_insert;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_options_update;
+DROP TRIGGER IF EXISTS kanouk_ref_dirty_options_delete;
+DROP TABLE IF EXISTS kanouk_ref_dirty;
+DROP TABLE IF EXISTS kanouk_ref_index;

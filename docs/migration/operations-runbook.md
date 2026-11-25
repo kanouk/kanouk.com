@@ -254,6 +254,21 @@ WXR、SmugMug manifest、WordPress media ledger、旧新URL ledgerはR2 backup�
 - D1 migration、content import、media import、deployを同時に走らせず、各readback合格後に次へ進む。
 - PATは全importと最終readbackが終わるまでrevokeしない。
 
+## 参照インデックス（D1の追加表）
+
+公開画像の確認、記事内の写真リンク、アルバムの関連記事は、全記事のJSONを毎回読む代わりに `kanouk_ref_index` を引く（`apps/web/src/utils/ref-index.mjs`）。表とトリガーは `apps/web/migrations/kanouk/0001_ref_index.up.sql` で追加し、`0001_ref_index.down.sql` で取り除ける。
+
+- 記事・固定ページ・アルバム・写真の公開状態、ゴミ箱、版の切り替え、版の中身、`site:seo` が変わると、トリガーが同じ書き込みの中でその項目を `kanouk_ref_dirty` に入れる。
+- `kanouk_ref_dirty` に1件でも残っている間は、従来の全件確認で判定する。位置情報の確認待ちに戻した写真や非公開にした記事の画像は、次の読み取りから拒否される。
+- 残った項目はcron（毎分）と画像の読み取り時に作り直す。作り直しの途中に書き込みがあった項目は上書きせず、次回に回す。
+- 表を消しても（down）、読み取りは自動で従来の全件確認に戻る。
+
+```bash
+cd apps/web
+python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote --file migrations/kanouk/0001_ref_index.up.sql
+python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote --command "SELECT count(*) FROM kanouk_ref_dirty"
+```
+
 ## コストの測り方
 
 価格は実行時に公式ページを再確認します。

@@ -6,6 +6,7 @@ import {
 import handler, { createScheduledHandler, PluginBridge } from "@emdash-cms/cloudflare/worker";
 import { needsLocationReview } from "./studio/domain";
 import { adminThumbnailRequest } from "./utils/admin-thumbnail.mjs";
+import { drainRefIndexSafely } from "./utils/ref-index.mjs";
 import {
 	applyMediaAccessHeaders,
 	authenticationHeaders,
@@ -197,6 +198,17 @@ async function transformStoredImage(
 	}
 }
 
+// One drain at a time per isolate; the cron drains whatever is left.
+let refIndexDrain: Promise<void> | null = null;
+function scheduleRefIndexDrain(env: HandlerEnv, context: HandlerContext) {
+	if (refIndexDrain) return;
+	const database = (env as HandlerEnv & { DB: Parameters<typeof drainRefIndexSafely>[0] }).DB;
+	refIndexDrain = drainRefIndexSafely(database).finally(() => {
+		refIndexDrain = null;
+	});
+	context.waitUntil(refIndexDrain);
+}
+
 function authenticateMediaRequest(
 	request: Request,
 	env: HandlerEnv,
@@ -246,6 +258,7 @@ async function servePreview(
 	const originalEtagPromise: Promise<string | null> = bucket.head(mediaKey).then((head: { httpEtag: string } | null) => head?.httpEtag ?? null, () => null);
 	const classification = await classifyMediaRead(sourceRequest, database, {
 		authenticate: (candidate) => authenticateMediaRequest(candidate, env, context),
+		onIndexDirty: () => scheduleRefIndexDrain(env, context),
 	});
 	const guardMs = performance.now() - started;
 	const delivery = mediaPreviewDelivery(classification.access);
@@ -307,6 +320,8 @@ async function blockUnreviewedPhotoPublish(
 	});
 }
 
+const emdashScheduled = createScheduledHandler();
+
 export default {
 	...handler,
 	async fetch(request: HandlerRequest, env: HandlerEnv, context: HandlerContext) {
@@ -315,7 +330,10 @@ export default {
 		const originalAccess = await classifyMediaRead(
 			request,
 			database,
-			{ authenticate: (candidate) => authenticateMediaRequest(candidate, env, context) },
+			{
+				authenticate: (candidate) => authenticateMediaRequest(candidate, env, context),
+				onIndexDirty: () => scheduleRefIndexDrain(env, context),
+			},
 		);
 		if (originalAccess.access === "denied") return deniedMediaResponse();
 		if (originalAccess.access === "public" || originalAccess.access === "authenticated") {
@@ -409,5 +427,11 @@ export default {
 
 		return handler.fetch(request, env, context);
 	},
-	scheduled: createScheduledHandler(),
+	async scheduled(...args: Parameters<typeof emdashScheduled>) {
+		const [, env, context] = args as [unknown, HandlerEnv, HandlerContext];
+		const database = (env as HandlerEnv & { DB?: Parameters<typeof drainRefIndexSafely>[0] }).DB;
+		// Keep the reference index current (and finish the initial backfill).
+		if (database) context.waitUntil(drainRefIndexSafely(database, { maxRounds: 10 }));
+		return emdashScheduled(...args);
+	},
 };

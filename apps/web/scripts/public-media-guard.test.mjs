@@ -1,11 +1,41 @@
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
-import test from "node:test";
+import nodeTest from "node:test";
+import { d1, REF_INDEX_UP } from "./d1-fixture.mjs";
 
 const {
-	classifyMediaRead,
+	classifyMediaRead: classifyWithGuard,
 	guardPublicOriginalRead,
 } = await import("../src/studio/public-media-guard.ts");
+const { drainRefIndex } = await import("../src/utils/ref-index.mjs");
+
+// Every scenario runs three ways:
+//   legacy          no reference index tables (full scan only)
+//   index-pending   index installed but never drained: every write leaves the
+//                   index dirty, so the full scan must still decide
+//   index           index drained before each read: the index alone decides
+//                   and the full scan must not run
+const MODES = ["legacy", "index-pending", "index"];
+let mode = "legacy";
+const test = (name, fn) => {
+	for (const each of MODES) {
+		nodeTest(`${name} [${each}]`, async () => {
+			mode = each;
+			await fn();
+		});
+	}
+};
+const fullScans = new WeakMap();
+
+async function classifyMediaRead(request, database, options) {
+	if (mode === "index") {
+		while ((await drainRefIndex(database)).processed > 0);
+		fullScans.set(database, 0);
+	}
+	const result = await classifyWithGuard(request, database, options);
+	if (mode === "index") assert.equal(fullScans.get(database), 0, "the index must answer without the full scan");
+	return result;
+}
 
 function fixtureDatabase() {
 	const sqlite = new DatabaseSync(":memory:");
@@ -27,19 +57,13 @@ function fixtureDatabase() {
 		);
 		CREATE TABLE options (name TEXT PRIMARY KEY, value TEXT NOT NULL);
 	`);
-	return {
-		sqlite,
-		database: {
-			prepare(query) {
-				const statement = sqlite.prepare(query);
-				return {
-					bind(...values) {
-						return { first: async () => statement.get(...values) ?? null };
-					},
-				};
-			},
+	if (mode !== "legacy") sqlite.exec(REF_INDEX_UP);
+	const database = d1(sqlite, {
+		onPrepare(sql) {
+			if (sql.includes("requested_media")) fullScans.set(database, (fullScans.get(database) ?? 0) + 1);
 		},
-	};
+	});
+	return { sqlite, database };
 }
 
 function addMedia(sqlite, id, storageKey) {
