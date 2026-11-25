@@ -1,4 +1,5 @@
 import { edgeMemo } from "./edge-memo.mjs";
+import { refIndexIsClean } from "./ref-index.mjs";
 import {
 	comparableAlbumHref,
 	normalizeLegacyAlbumCards,
@@ -62,6 +63,78 @@ export const ALBUM_ARTICLES_QUERY = `
 	LIMIT 100
 `;
 
+// The same query, but only posts whose indexed related_album / id / url / href
+// values name this album are read (src/utils/ref-index.mjs); every condition
+// above is re-checked on the live rows.
+export const INDEXED_ALBUM_ARTICLES_QUERY = `
+	WITH target_base AS (
+		SELECT album.id, album.slug, json_extract(album_live.data, '$.source_url') AS source_url
+		FROM ec_albums AS album
+		JOIN revisions AS album_live ON album_live.id = album.live_revision_id
+		WHERE album.id = ?1 AND album.status = 'published' AND album.deleted_at IS NULL
+	), target_album AS (
+		SELECT target_base.*,
+			(SELECT count(*)
+			 FROM ec_albums AS candidate
+			 JOIN revisions AS candidate_live ON candidate_live.id = candidate.live_revision_id
+			 WHERE candidate.status = 'published' AND candidate.deleted_at IS NULL
+				AND rtrim(json_extract(candidate_live.data, '$.source_url'), '/') = rtrim(target_base.source_url, '/')
+			) AS source_url_matches
+		FROM target_base
+	)
+	SELECT
+		post.id,
+		json_extract(live.data, '$.title') AS title,
+		json_extract(live.data, '$.content') AS content,
+		json_extract(live.data, '$.related_album') AS related_album_id,
+		target_album.slug AS album_slug,
+		target_album.source_url AS album_source_url,
+		target_album.source_url_matches
+	FROM target_album
+	JOIN (
+		SELECT DISTINCT ref.source_id
+		FROM target_album
+		JOIN kanouk_ref_index AS ref
+			ON ref.kind = 'album:ref' AND ref.source = 'posts'
+			AND ref.value IN (
+				target_album.id,
+				target_album.source_url,
+				rtrim(target_album.source_url, '/') || '/',
+				'https://photos.kanouk.com/albums/' || target_album.slug,
+				'https://photos.kanouk.com/albums/' || target_album.slug || '/',
+				'https://photos.kanouk.com/albums/' || target_album.id,
+				'https://photos.kanouk.com/albums/' || target_album.id || '/'
+			)
+	) AS candidate
+	JOIN ec_posts AS post ON post.id = candidate.source_id
+	JOIN revisions AS live ON live.id = post.live_revision_id
+	WHERE post.status = 'published' AND post.deleted_at IS NULL
+		AND post.locale = ?2
+		AND (
+			json_extract(live.data, '$.related_album') = ?1
+			OR
+			EXISTS (
+				SELECT 1 FROM json_each(live.data, '$.content') AS block
+				WHERE json_extract(block.value, '$._type') = 'yohaku.album'
+					AND json_extract(block.value, '$.id') = ?1
+			)
+			OR EXISTS (
+				SELECT 1 FROM json_tree(live.data, '$.content') AS reference
+				WHERE reference.key IN ('id', 'url', 'href')
+					AND reference.atom IN (
+						target_album.source_url,
+						rtrim(target_album.source_url, '/') || '/',
+						'https://photos.kanouk.com/albums/' || target_album.slug,
+						'https://photos.kanouk.com/albums/' || target_album.slug || '/',
+						'https://photos.kanouk.com/albums/' || target_album.id,
+						'https://photos.kanouk.com/albums/' || target_album.id || '/'
+					)
+			)
+		)
+	ORDER BY post.published_at DESC, post.id ASC
+	LIMIT 100
+`;
+
 function parsedContent(value) {
 	if (Array.isArray(value)) return value;
 	if (typeof value !== "string") return [];
@@ -73,11 +146,23 @@ function parsedContent(value) {
 	}
 }
 
+async function albumArticleRows(database, albumId, locale) {
+	if (await refIndexIsClean(database)) {
+		try {
+			return (await database.prepare(INDEXED_ALBUM_ARTICLES_QUERY).bind(albumId, locale).all()).results;
+		} catch {
+			// Fall back to the full scan below.
+		}
+	}
+	return (await database.prepare(ALBUM_ARTICLES_QUERY).bind(albumId, locale).all()).results;
+}
+
 /** @returns {Promise<Array<{id: string, title: string}>>} */
 export async function relatedAlbumArticles(database, albumId, locale = "ja") {
-	// Scans every published post (~240k rows); share the rows for a few minutes.
-	const results = await edgeMemo(`album-articles:${albumId}:${locale}`, 300, async () =>
-		(await database.prepare(ALBUM_ARTICLES_QUERY).bind(albumId, locale).all()).results, { scope: database });
+	// The full query scans every published post (~240k rows); the indexed one
+	// reads only candidate posts. Share the rows for a few minutes either way.
+	const results = await edgeMemo(`album-articles:${albumId}:${locale}`, 300,
+		() => albumArticleRows(database, albumId, locale), { scope: database });
 	const related = [];
 	for (const row of results) {
 		if (typeof row.id !== "string" || typeof row.title !== "string" || !row.title.trim()) continue;
