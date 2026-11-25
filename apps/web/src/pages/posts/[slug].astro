@@ -42,6 +42,8 @@ import {
 	normalizeLegacyAlbumCards,
 } from "../../utils/legacy-album-cards.mjs";
 import { startSharedBlogQueries } from "../../utils/shared-queries";
+import { sharedPostList, termListKey } from "../../utils/post-list-memo.mjs";
+import { adjacentPostId } from "../../utils/adjacent-post.mjs";
 import { visibleTags } from "../../utils/hidden-tags.mjs";
 import {
 	pickRelatedPosts,
@@ -82,20 +84,19 @@ if (!isPreview && slug !== post.data.id) {
 // the body-dependent ones below (each D1 round trip adds latency on a cold page).
 const siteSettingsPromise = getSiteSettings();
 const adjacentPost = async (direction: "older" | "newer") => {
-	if (!post.data.publishedAt) return undefined;
-	const publishedAt = post.data.publishedAt.toISOString();
-	const { entries } = await getEmDashCollection("posts", {
-		status: "published",
-		where: { published_at: direction === "older" ? { lt: publishedAt } : { gt: publishedAt } },
-		orderBy: { published_at: direction === "older" ? "desc" : "asc" },
-		limit: 1,
-	});
-	return entries[0];
+	if (!post.data.publishedAt || !env?.DB) return undefined;
+	// Find the neighbour with one index row, then load only that entry.
+	const neighbourId = await adjacentPostId(env.DB, post.data.publishedAt.toISOString(), direction);
+	if (!neighbourId) return undefined;
+	const { entry } = await getEmDashEntry("posts", neighbourId);
+	return entry?.data.status === "published" ? entry : undefined;
 };
 // getEmDashEntry folds the article's terms into its own query and primes the
 // request cache, so these resolve without another D1 round trip. The related
 // candidates below can therefore start now, in parallel with each other and
-// with the rest of the sidebar data, instead of after it.
+// with the rest of the sidebar data, instead of after it. The candidate lists
+// do not depend on this article, so articles sharing a tag or category share
+// one read for a few minutes (sharedPostList).
 const tagTermsPromise = getEntryTerms("posts", post.data.id, "tag");
 const categoryTermsPromise = getEntryTerms("posts", post.data.id, "category");
 const relatedLimit = relatedCandidateLimit();
@@ -103,30 +104,30 @@ const relatedByTagPromise = tagTermsPromise.then(async (terms) => {
 	// Hidden housekeeping tags never make posts "related"; no tags, no query.
 	const slugs = relatedTagSlugs(terms);
 	if (slugs.length === 0) return [];
-	const result = await getEmDashCollection("posts", {
+	const result = await sharedPostList(termListKey("tag", slugs, relatedLimit), () => getEmDashCollection("posts", {
 		status: "published",
 		where: { tag: slugs },
 		orderBy: { published_at: "desc" },
 		limit: relatedLimit,
-	});
+	}));
 	if (Astro.cache?.enabled) Astro.cache.set(result.cacheHint);
 	return result.entries;
 });
 const relatedByCategoryPromise = categoryTermsPromise.then(async (terms) => {
 	const slugs = termSlugs(terms);
 	if (slugs.length === 0) return [];
-	const result = await getEmDashCollection("posts", {
+	const result = await sharedPostList(termListKey("category", slugs, relatedLimit), () => getEmDashCollection("posts", {
 		status: "published",
 		where: { category: slugs },
 		orderBy: { published_at: "desc" },
 		limit: relatedLimit,
-	});
+	}));
 	if (Astro.cache?.enabled) Astro.cache.set(result.cacheHint);
 	return result.entries;
 });
 const sidebarDataPromise = Promise.all([
 	tagTermsPromise,
-	getEmDashCollection("posts", { status: "published", orderBy: { published_at: "desc" }, limit: relatedLimit }),
+	sharedPostList(`recent:${relatedLimit}`, () => getEmDashCollection("posts", { status: "published", orderBy: { published_at: "desc" }, limit: relatedLimit })),
 	categoryTermsPromise,
 	adjacentPost("older"),
 	adjacentPost("newer"),
