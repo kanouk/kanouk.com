@@ -283,6 +283,18 @@ python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-conten
 python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote --command "SELECT * FROM kanouk_change_gen"
 ```
 
+### 記事の変更スタンプ（0003）
+
+`apps/web/migrations/kanouk/0003_posts_gen.up.sql`（0002が前提）で追加し、`0003_posts_gen.down.sql` で取り除ける。
+
+- アーカイブの月一覧とカレンダーの日別件数は、`kanouk_change_gen` の `posts` スタンプをキーにして6時間キャッシュする。記事の公開・非公開・ゴミ箱・公開日の変更でスタンプが替わる。
+- スタンプがないときは、従来どおり5分のキャッシュで数える。
+
+```bash
+cd apps/web
+python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote --file migrations/kanouk/0003_posts_gen.up.sql
+```
+
 ## コストの測り方
 
 価格は実行時に公式ページを再確認します。

@@ -87,3 +87,38 @@ test("album reads use the album index, and the down migration removes everything
 	sqlite.exec(UP);
 	sqlite.exec(UP); // idempotent
 });
+
+const POSTS_UP = readFileSync(new URL("../migrations/kanouk/0003_posts_gen.up.sql", import.meta.url), "utf8");
+const POSTS_DOWN = readFileSync(new URL("../migrations/kanouk/0003_posts_gen.down.sql", import.meta.url), "utf8");
+
+test("the posts stamp turns over when the published set or a publication date changes", async () => {
+	const { sqlite, db } = fixture();
+	sqlite.exec(POSTS_UP);
+	const changes = [
+		"UPDATE ec_posts SET published_at = '2026-03-03'",
+		"UPDATE ec_posts SET status = 'draft'",
+		"UPDATE ec_posts SET status = 'published'",
+		"UPDATE ec_posts SET deleted_at = 'now'",
+		"INSERT INTO ec_posts VALUES ('p2', 'two', 'published', NULL, 'p2', 'ja', '2026-04-04', NULL)",
+		"DELETE FROM ec_posts WHERE id = 'p2'",
+	];
+	let before = await changeGeneration(db, "posts");
+	assert.match(before, /^[0-9a-f]{16}$/);
+	for (const change of changes) {
+		sqlite.exec(change);
+		const after = await changeGeneration(db, "posts");
+		assert.notEqual(after, before, change);
+		before = after;
+	}
+	// Title edits, draft saves and tag changes keep the archive cache.
+	sqlite.exec("UPDATE ec_posts SET title = 'edited', draft_revision_id = 'r9'");
+	sqlite.exec("INSERT INTO content_taxonomies VALUES ('posts', 'p1', 't1')");
+	assert.equal(await changeGeneration(db, "posts"), before);
+
+	sqlite.exec(POSTS_DOWN);
+	assert.equal(await changeGeneration(db, "posts"), null);
+	assert.deepEqual(sqlite.prepare("SELECT name FROM sqlite_master WHERE name LIKE 'kanouk_gen_posts_%'").all(), []);
+	assert.match(await changeGeneration(db, "terms"), /^[0-9a-f]{16}$/);
+	sqlite.exec(POSTS_UP);
+	sqlite.exec(POSTS_UP); // idempotent
+});

@@ -1,7 +1,7 @@
 import { sql } from "kysely";
 import { getDb } from "emdash/runtime";
 import { env } from "virtual:emdash/env";
-import { edgeMemo } from "./edge-memo.mjs";
+import { stampedMemo } from "./change-gen.mjs";
 
 export interface PostArchiveMonth {
 	year: number;
@@ -33,8 +33,10 @@ function postsDatabase(): D1DatabaseLike {
 
 export async function getPostArchiveMonths(limit = 36): Promise<PostArchiveMonth[]> {
 	const bounded = Math.max(1, Math.min(240, Math.trunc(limit)));
-	return edgeMemo(`archive-months:${bounded}`, 300, () => loadPostArchiveMonths(bounded), {
-		cacheable: (months) => months.length > 0,
+	// Cached until a post is published, unpublished, trashed or re-dated (the
+	// "posts" change stamp); without the stamp table, for five minutes.
+	return stampedMemo(env?.DB, "posts", `archive-months:${bounded}`, () => loadPostArchiveMonths(bounded), {
+		cacheable: (months: PostArchiveMonth[]) => months.length > 0,
 	});
 }
 
@@ -89,9 +91,15 @@ export function japanDateParts(date: Date) {
 
 /** Calendar needs day counts, never post bodies or media hydration. */
 export async function getPostCalendarDays(start: Date, end: Date): Promise<Map<number,number>> {
+ const key = `calendar-days:${start.toISOString()}:${end.toISOString()}`;
+ const days = await stampedMemo(env?.DB, "posts", key, () => loadPostCalendarDays(start, end));
+ return new Map(days);
+}
+
+async function loadPostCalendarDays(start: Date, end: Date): Promise<[number, number][]> {
  const db = await getDb();
  const result = await sql<{day:number;count:number}>`SELECT cast(strftime('%d',published_at,'+9 hours') AS INTEGER) AS day, count(*) AS count
  FROM ec_posts WHERE status='published' AND deleted_at IS NULL AND published_at>=${start.toISOString()} AND published_at<${end.toISOString()}
  GROUP BY day`.execute(db);
- return new Map(result.rows.map(row=>[Number(row.day),Number(row.count)]));
+ return result.rows.map((row): [number, number] => [Number(row.day), Number(row.count)]);
 }
