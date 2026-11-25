@@ -1,6 +1,7 @@
 import { sql } from "kysely";
 import { getDb } from "emdash/runtime";
 import { env } from "virtual:emdash/env";
+import { edgeMemo } from "./edge-memo.mjs";
 
 export interface PostArchiveMonth {
 	year: number;
@@ -31,6 +32,13 @@ function postsDatabase(): D1DatabaseLike {
 }
 
 export async function getPostArchiveMonths(limit = 36): Promise<PostArchiveMonth[]> {
+	const bounded = Math.max(1, Math.min(240, Math.trunc(limit)));
+	return edgeMemo(`archive-months:${bounded}`, 300, () => loadPostArchiveMonths(bounded), {
+		cacheable: (months) => months.length > 0,
+	});
+}
+
+async function loadPostArchiveMonths(bounded: number): Promise<PostArchiveMonth[]> {
 	const result = await postsDatabase()
 		.prepare(`
 			SELECT strftime('%Y-%m', published_at, '+9 hours') AS month_key,
@@ -43,7 +51,7 @@ export async function getPostArchiveMonths(limit = 36): Promise<PostArchiveMonth
 			ORDER BY month_key DESC
 			LIMIT ?1
 		`)
-		.bind(Math.max(1, Math.min(240, Math.trunc(limit))))
+		.bind(bounded)
 		.all<ArchiveRow>();
 
 	return result.results.flatMap((row: ArchiveRow) => {
