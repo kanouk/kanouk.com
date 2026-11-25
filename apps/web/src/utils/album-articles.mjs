@@ -65,7 +65,8 @@ export const ALBUM_ARTICLES_QUERY = `
 
 // The same query, but only posts whose indexed related_album / id / url / href
 // values name this album are read (src/utils/ref-index.mjs); every condition
-// above is re-checked on the live rows.
+// above is re-checked on the live rows. Refs are looked up by (kind, value)
+// only, so SQLite uses the primary key rather than reading every post ref.
 export const INDEXED_ALBUM_ARTICLES_QUERY = `
 	WITH target_base AS (
 		SELECT album.id, album.slug, json_extract(album_live.data, '$.source_url') AS source_url
@@ -95,7 +96,7 @@ export const INDEXED_ALBUM_ARTICLES_QUERY = `
 		SELECT DISTINCT ref.source_id
 		FROM target_album
 		JOIN kanouk_ref_index AS ref
-			ON ref.kind = 'album:ref' AND ref.source = 'posts'
+			ON ref.kind = 'album:ref'
 			AND ref.value IN (
 				target_album.id,
 				target_album.source_url,
@@ -106,8 +107,8 @@ export const INDEXED_ALBUM_ARTICLES_QUERY = `
 				'https://photos.kanouk.com/albums/' || target_album.id || '/'
 			)
 	) AS candidate
-	JOIN ec_posts AS post ON post.id = candidate.source_id
-	JOIN revisions AS live ON live.id = post.live_revision_id
+	CROSS JOIN ec_posts AS post ON post.id = candidate.source_id
+	CROSS JOIN revisions AS live ON live.id = post.live_revision_id
 	WHERE post.status = 'published' AND post.deleted_at IS NULL
 		AND post.locale = ?2
 		AND (

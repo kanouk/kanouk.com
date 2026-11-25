@@ -10,17 +10,21 @@ export const ARTICLE_PHOTO_LINKS_QUERY = `
 
 // Same answer, but only photos whose live image id is indexed are read
 // (src/utils/ref-index.mjs); every condition is re-checked on the live rows.
+// Look refs up by (kind, value) only: a source condition lets SQLite pick the
+// per-source index and read every photo ref (~4k rows) instead. CROSS JOIN
+// fixes the join order (requested ids, then their photos): D1's planner
+// otherwise starts from every published photo (~4.4k rows).
 export const INDEXED_ARTICLE_PHOTO_LINKS_QUERY = `
 	SELECT photo.id, json_extract(live.data, '$.image.id') AS media_id
 	FROM (
 		SELECT DISTINCT ref.source_id
 		FROM json_each(?1) AS wanted
-		JOIN kanouk_ref_index AS ref
-			ON ref.kind = 'photo:image' AND ref.value = wanted.value AND ref.source = 'photos'
+		CROSS JOIN kanouk_ref_index AS ref
+			ON ref.kind = 'photo:image' AND ref.value = wanted.value
 	) AS candidate
-	JOIN ec_photos AS photo ON photo.id = candidate.source_id
-	JOIN revisions AS live ON live.id = photo.live_revision_id
-	JOIN ec_albums AS album ON album.id = json_extract(live.data, '$.album')
+	CROSS JOIN ec_photos AS photo ON photo.id = candidate.source_id
+	CROSS JOIN revisions AS live ON live.id = photo.live_revision_id
+	CROSS JOIN ec_albums AS album ON album.id = json_extract(live.data, '$.album')
 	WHERE photo.status = 'published' AND photo.deleted_at IS NULL
 		AND album.status = 'published' AND album.deleted_at IS NULL
 		AND json_extract(live.data, '$.image.id') IN (SELECT value FROM json_each(?1))
