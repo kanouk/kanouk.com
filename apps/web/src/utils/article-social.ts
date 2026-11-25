@@ -135,13 +135,22 @@ async function mediaStorageKey(
 	reference: string,
 ): Promise<string> {
 	if (!reference) return "";
-	const row = await database.prepare(`
+	// `id = ?1 OR storage_key = ?1` cannot use the primary key and scanned every
+	// ready media row. References are almost always ids: look that up first.
+	const byId = await database.prepare(`
 		SELECT storage_key
 		FROM media
-		WHERE status = 'ready' AND (id = ?1 OR storage_key = ?1)
+		WHERE id = ?1 AND status = 'ready'
 		LIMIT 1
 	`).bind(reference).first<{ storage_key: string }>();
-	return text(row?.storage_key);
+	if (byId?.storage_key) return text(byId.storage_key);
+	const byStorageKey = await database.prepare(`
+		SELECT storage_key
+		FROM media
+		WHERE storage_key = ?1 AND status = 'ready'
+		LIMIT 1
+	`).bind(reference).first<{ storage_key: string }>();
+	return text(byStorageKey?.storage_key);
 }
 
 async function mappedLegacyMediaUrl(

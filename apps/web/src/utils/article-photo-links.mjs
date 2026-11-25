@@ -8,11 +8,17 @@ export const ARTICLE_PHOTO_LINKS_QUERY = `
 		AND json_extract(live.data, '$.image.id') IN (SELECT value FROM json_each(?1))
 `;
 
+import { digestKey, edgeMemo } from "./edge-memo.mjs";
+
 export async function articlePhotoLinks(database, content) {
 	const mediaIds = [...new Set((content ?? []).filter(block => block?._type === "image")
 		.map(block => block.asset?._ref).filter(id => typeof id === "string" && id.length > 0))];
 	if (mediaIds.length === 0) return new Map();
-	const { results } = await database.prepare(ARTICLE_PHOTO_LINKS_QUERY).bind(JSON.stringify(mediaIds)).all();
+	const idList = JSON.stringify([...mediaIds].sort());
+	// The query scans every published photo; a few minutes of staleness only
+	// delays a new photo link, so the rows are shared across renders.
+	const results = await edgeMemo(`article-photo-links:${await digestKey(idList)}`, 300, async () =>
+		(await database.prepare(ARTICLE_PHOTO_LINKS_QUERY).bind(idList).all()).results, { scope: database });
 	const candidates = new Map();
 	for (const row of results) {
 		if (typeof row.media_id !== "string" || typeof row.id !== "string") continue;

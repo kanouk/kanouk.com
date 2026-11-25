@@ -1,5 +1,10 @@
 import { getEmDashCollection, getTaxonomyTerms } from "emdash";
 import { getPostArchiveMonths } from "./post-archives";
+import { edgeMemo } from "./edge-memo.mjs";
+
+// Sidebar aggregates recount the whole site; a few minutes of staleness is harmless.
+const SIDEBAR_TTL_SECONDS = 300;
+const nonEmpty = (value: unknown) => Array.isArray(value) && value.length > 0;
 
 /**
  * Queries shared by the blog layout and sidebar, started once per request.
@@ -30,8 +35,8 @@ function store(locals: object): SharedQueryStore {
 
 const starters: { [K in SharedQueryName]: () => SharedBlogQueries[K] } = {
 	footerPages: () => getEmDashCollection("pages", { status: "published", orderBy: { published_at: "desc" }, limit: 8 }),
-	categoryTerms: () => getTaxonomyTerms("category", { includeCounts: true }),
-	tagTerms: () => getTaxonomyTerms("tag", { includeCounts: true }),
+	categoryTerms: () => edgeMemo("sidebar:category-terms", SIDEBAR_TTL_SECONDS, () => getTaxonomyTerms("category", { includeCounts: true }), { cacheable: nonEmpty }),
+	tagTerms: () => edgeMemo("sidebar:tag-terms", SIDEBAR_TTL_SECONDS, () => getTaxonomyTerms("tag", { includeCounts: true }), { cacheable: nonEmpty }),
 	archiveMonths: () => getPostArchiveMonths(24),
 };
 

@@ -1,3 +1,4 @@
+import { edgeMemo } from "./edge-memo.mjs";
 import {
 	comparableAlbumHref,
 	normalizeLegacyAlbumCards,
@@ -74,7 +75,9 @@ function parsedContent(value) {
 
 /** @returns {Promise<Array<{id: string, title: string}>>} */
 export async function relatedAlbumArticles(database, albumId, locale = "ja") {
-	const { results } = await database.prepare(ALBUM_ARTICLES_QUERY).bind(albumId, locale).all();
+	// Scans every published post (~240k rows); share the rows for a few minutes.
+	const results = await edgeMemo(`album-articles:${albumId}:${locale}`, 300, async () =>
+		(await database.prepare(ALBUM_ARTICLES_QUERY).bind(albumId, locale).all()).results, { scope: database });
 	const related = [];
 	for (const row of results) {
 		if (typeof row.id !== "string" || typeof row.title !== "string" || !row.title.trim()) continue;
