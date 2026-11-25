@@ -269,6 +269,20 @@ python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-conten
 python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote --command "SELECT count(*) FROM kanouk_ref_dirty"
 ```
 
+### 変更スタンプとアルバム索引（0002）
+
+`apps/web/migrations/kanouk/0002_change_gen.up.sql` で追加し、`0002_change_gen.down.sql` で取り除ける。
+
+- サイドバーと `/topics` のタグ・カテゴリー一覧（件数つき）は、`kanouk_change_gen` の `terms` スタンプをキーにして6時間キャッシュする（`apps/web/src/utils/change-gen.mjs`）。記事の公開状態・ゴミ箱・言語、タグの付け外し、タグ自体の変更があると、トリガーがスタンプを替えるので、次の表示から数え直す。
+- 表がない、または読めないときは、従来どおり5分のキャッシュで数える。
+- `kanouk_ec_photos_album` は、アルバムページと写真の前後移動が1つのアルバムの写真だけを読むための索引。
+
+```bash
+cd apps/web
+python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote --file migrations/kanouk/0002_change_gen.up.sql
+python3 ../../scripts/cloudflare/run_wrangler_kanouk.py d1 execute kanouk-content-staging --remote --command "SELECT * FROM kanouk_change_gen"
+```
+
 ## コストの測り方
 
 価格は実行時に公式ページを再確認します。
