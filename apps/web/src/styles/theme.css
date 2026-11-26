@@ -24,6 +24,9 @@
 	--photo-stage: #0d0e0d;
 	--photo-stage-ink: #f4f5f4;
 	--danger: #984f42;
+	--code-inline-bg: #f1f1ef;
+	--code-inline-border: #e1e1dc;
+	--code-inline-ink: #c7254e;
 
 	--font-body: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", Meiryo, sans-serif;
 	--font-mono: "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
@@ -67,6 +70,8 @@
 	--line-heading: 1.42;
 	--transition: 160ms ease;
 	--radius: 0.18rem;
+	/* lucide "quote" (same paths as lucide-astro) for plain blockquotes, which have no icon markup. */
+	--icon-quote: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z'/%3E%3Cpath d='M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z'/%3E%3C/svg%3E");
 	--control-height: 2.75rem;
 	--page-space: clamp(2.75rem, 6vw, 5.5rem);
 
@@ -108,6 +113,9 @@
 		--focus: #bfc7ff;
 		--photo-stage: #080908;
 		--danger: #e0a090;
+		--code-inline-bg: #2a2b32;
+		--code-inline-border: #3a3b43;
+		--code-inline-ink: #ff8fa8;
 	}
 }
 
@@ -127,6 +135,9 @@
 	--focus: #bfc7ff;
 	--photo-stage: #080908;
 	--danger: #e0a090;
+	--code-inline-bg: #2a2b32;
+	--code-inline-border: #3a3b43;
+	--code-inline-ink: #ff8fa8;
 }
 
 :root[data-theme="light"] { color-scheme: light; }
@@ -895,7 +906,7 @@ main:focus { outline: none; }
 .article-index__item a:hover { color: var(--accent-strong); }
 .article-index__item--h3 { padding-left: var(--space-3); }
 .article-index__item--h4 { padding-left: var(--space-5); }
-.article-content :is(h2, h3, h4) { scroll-margin-top: calc(var(--header-offset) + 2rem); }
+.article-content :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: calc(var(--header-offset) + 2rem); }
 @media (max-width: 48rem) {
 	.article-pager { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
 	/* Stacked, both cards read the same way: thumbnail, then text, from the left. */
@@ -928,10 +939,12 @@ main:focus { outline: none; }
 .page-content :where(ul, ol) { padding-left: 1.35em; }
 .article-content li + li,
 .page-content li + li { margin-top: 0.35em; }
-.article-content > :where(h2, h3, h4),
-.page-content > :where(h2, h3, h4) { scroll-margin-top: calc(var(--header-offset) + 2rem); }
+.article-content > :where(h1, h2, h3, h4, h5, h6),
+.page-content > :where(h1, h2, h3, h4, h5, h6) { scroll-margin-top: calc(var(--header-offset) + 2rem); }
 .article-content > h2,
-.page-content > h2 {
+.page-content > h2,
+.article-content > h1,
+.page-content > h1 {
 	margin: 2.65em 0 0.9em;
 	padding: 0.08em 0 0.08em 0.85em;
 	border: 0;
@@ -956,38 +969,60 @@ main:focus { outline: none; }
 .page-content > h3::after {
 	display: none;
 }
+/* h4-h6 never drop below body size: weight, a small accent mark and tone carry the hierarchy. */
 .article-content > h4,
 .page-content > h4 {
-	margin: 2.2em 0 0.5em;
-	padding: 0 0 0.45em;
-	border: 0;
-	text-decoration: underline;
-	text-decoration-color: var(--rule);
-	text-decoration-thickness: 2px;
-	text-underline-offset: 0.4em;
-	text-decoration-skip-ink: none;
-	font-family: var(--font-body);
-	font-size: var(--step-0);
-	font-weight: 600;
-	letter-spacing: 0;
-	line-height: 1.65;
+	margin: 2.1em 0 0.7em;
+	font-size: calc(var(--step-0) * 1.06);
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	line-height: 1.6;
 }
 .article-content > h4::before,
 .page-content > h4::before {
-	content: none;
+	content: "";
+	display: inline-block;
+	width: 0.42em;
+	height: 0.42em;
+	margin-right: 0.55em;
+	border-radius: 2px;
+	background: var(--accent);
+	vertical-align: 0.16em;
+}
+.article-content > h5,
+.page-content > h5 {
+	margin: 1.9em 0 0.6em;
+	font-size: var(--step-0);
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	line-height: 1.65;
+}
+.article-content > h6,
+.page-content > h6 {
+	margin: 1.8em 0 0.55em;
+	color: var(--ink-soft);
+	font-size: var(--step-0);
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	line-height: 1.65;
 }
 /* A heading belongs to what follows it: the block after it starts at the heading's own bottom margin
    instead of its usual (larger) top margin. [class] also reaches the scoped content blocks. */
-:is(.article-content, .page-content) > :is(h2, h3, h4) + *,
-:is(.article-content, .page-content) > :is(h2, h3, h4) + [class] { margin-top: 0; }
+:is(.article-content, .page-content) > :is(h1, h2, h3, h4, h5, h6) + *,
+:is(.article-content, .page-content) > :is(h1, h2, h3, h4, h5, h6) + [class] { margin-top: 0; }
 .article-content a,
 .page-content a { color: var(--accent-strong); text-decoration-line: underline; }
 .article-content a.yohaku-link-card,
 .page-content a.yohaku-link-card { color: inherit; text-decoration: none; }
-.article-content blockquote,
-.page-content blockquote { padding: 0.15rem 0 0.15rem 1.25rem; border-left: 2px solid var(--accent); color: var(--ink-soft); font-family: var(--font-body); font-size: var(--step-1); }
+/* Plain blockquotes match the yohaku.quote block: a quiet panel with the lucide "quote" mark beside the first line. */
+.article-content blockquote:not(.yohaku-quote__body),
+.page-content blockquote:not(.yohaku-quote__body) { position: relative; padding: 0.95rem 1.25rem 0.95rem calc(1rem + 1.125rem + 0.8rem); border-radius: var(--radius); background: var(--paper-muted); color: var(--ink-soft); font-family: var(--font-body); font-size: var(--step-0); line-height: var(--line-body); }
+.article-content blockquote:not(.yohaku-quote__body)::before,
+.page-content blockquote:not(.yohaku-quote__body)::before { content: ""; position: absolute; top: calc(0.95rem + (var(--line-body) * 1em - 1.125rem) / 2); left: 1rem; width: 1.125rem; height: 1.125rem; background: var(--accent); opacity: 0.7; -webkit-mask: var(--icon-quote) center / contain no-repeat; mask: var(--icon-quote) center / contain no-repeat; }
+:is(.article-content, .page-content) blockquote > :first-child { margin-top: 0; }
+:is(.article-content, .page-content) blockquote > :last-child { margin-bottom: 0; }
 .article-content :where(code),
-.page-content :where(code) { padding: 0.12em 0.3em; background: var(--paper-muted); font-family: var(--font-code); font-size: 0.86em; letter-spacing: 0; }
+.page-content :where(code) { padding: 0.12em 0.36em; border: 1px solid var(--code-inline-border); border-radius: 4px; background: var(--code-inline-bg); color: var(--code-inline-ink); font-family: var(--font-code); font-size: 0.86em; letter-spacing: 0; overflow-wrap: anywhere; }
 .article-content pre,
 .page-content pre { max-width: 100%; padding: var(--space-5); overflow-x: auto; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-raised); color: var(--ink); font-family: var(--font-code); font-size: var(--step--1); line-height: 1.7; }
 :is(.article-content, .page-content) .emdash-code { margin-block: 1.45em; }
@@ -998,8 +1033,9 @@ main:focus { outline: none; }
 :is(.article-content, .page-content) > hr.emdash-break-line:first-child,
 :is(.article-content, .page-content) hr.emdash-break-line + hr.emdash-break-line { display: none; }
 :is(.article-content, .page-content) > hr.emdash-break-line:first-child + * { margin-top: 0; }
+:is(.article-content, .page-content) a :where(code) { color: inherit; }
 .article-content pre code,
-.page-content pre code { padding: 0; background: none; }
+.page-content pre code { padding: 0; border: 0; border-radius: 0; background: none; color: inherit; overflow-wrap: normal; }
 .article-content :where(img, video),
 .page-content :where(img, video) { width: auto; max-height: 82vh; margin-inline: auto; }
 .yohaku-portable-image {
