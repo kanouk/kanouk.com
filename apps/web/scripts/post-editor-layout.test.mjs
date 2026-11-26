@@ -28,8 +28,8 @@ function fakeClient(fields) {
 	};
 }
 
-test("the editor reads in article order: title, featured image, excerpt, body, then the rest unchanged", () => {
-	assert.deepEqual(desiredOrder(live()), ["title", "featured_image", "excerpt", "content", "related_album", "published_on"]);
+test("the editor runs title, featured image, body, then the excerpt, with the rest unchanged", () => {
+	assert.deepEqual(desiredOrder(live()), ["title", "featured_image", "content", "excerpt", "related_album", "published_on"]);
 });
 
 test("dry run plans every change without writing", async () => {
@@ -72,7 +72,7 @@ test("the compact featured image widget is registered and stores EmDash's own im
 	const posts = seed.collections.find((collection) => collection.slug === "posts");
 	assert.deepEqual(posts.fields.slice(0, 4).map((field) => field.slug), POST_EDITOR_LAYOUT.leading);
 	assert.equal(posts.fields[1].widget, POST_EDITOR_LAYOUT.featuredWidget);
-	assert.equal(posts.fields[2].options.rows, POST_EDITOR_LAYOUT.excerptRows);
+	assert.equal(posts.fields[3].options.rows, POST_EDITOR_LAYOUT.excerptRows);
 	for (const field of posts.fields) if (POST_EDITOR_LAYOUT.labels[field.slug]) assert.equal(field.label, POST_EDITOR_LAYOUT.labels[field.slug], field.slug);
 });
 
