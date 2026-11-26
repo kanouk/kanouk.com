@@ -70,6 +70,8 @@
 	--line-heading: 1.42;
 	--transition: 160ms ease;
 	--radius: 0.18rem;
+	/* Thumbnails: just enough to take the raw edge off; album photo grids stay square. */
+	--radius-thumb: 4px;
 	/* lucide "quote" (same paths as lucide-astro) for plain blockquotes, which have no icon markup. */
 	--icon-quote: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z'/%3E%3Cpath d='M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z'/%3E%3C/svg%3E");
 	--control-height: 2.75rem;
@@ -603,10 +605,10 @@ main:focus { outline: none; }
 .post-card { min-width: 0; }
 .card-link { display: block; color: inherit; text-decoration: none; }
 .card-media { position: relative; min-width: 0; }
-.card-image { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--paper-muted); }
+.card-image { position: relative; aspect-ratio: 16 / 9; overflow: hidden; isolation: isolate; border-radius: var(--radius-thumb); background: var(--paper-muted); }
 /* A hairline keeps white-ground covers from melting into the paper. */
 /* A hairline keeps white-backed thumbnails (logos, screenshots) from melting into the page. */
-.card-image:not(.card-image--empty)::after { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent); content: ""; pointer-events: none; }
+.card-image:not(.card-image--empty)::after { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent); content: ""; pointer-events: none; }
 /* Pinned to the box so no image (small, odd ratio, picture-wrapped) leaves bands. */
 .card-image img { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; aspect-ratio: auto; object-fit: cover; transition: transform 420ms cubic-bezier(.2,.65,.25,1), filter var(--transition); }
 .card-link:hover .card-image img { transform: scale(1.018); }
@@ -893,7 +895,7 @@ main:focus { outline: none; }
 .article-pager__link { display: flex; align-items: center; gap: var(--space-3); min-width: 0; padding: var(--space-3); border: 1px solid var(--rule); color: inherit; text-decoration: none; transition: border-color var(--transition), background-color var(--transition); }
 .article-pager__link:hover { border-color: var(--ink-muted); background: var(--paper-raised); }
 .article-pager__link--newer { grid-column: 2; justify-content: flex-end; text-align: right; }
-.article-pager__thumb { flex: none; width: 4.5rem; aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-muted); }
+.article-pager__thumb { flex: none; width: 4.5rem; aspect-ratio: 16 / 10; overflow: hidden; isolation: isolate; border-radius: var(--radius-thumb); background: var(--paper-muted); }
 .article-pager__thumb .yohaku-picture { display: contents; }
 .article-pager__thumb img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
 .article-pager__text { display: grid; gap: 0.2rem; min-width: 0; }
