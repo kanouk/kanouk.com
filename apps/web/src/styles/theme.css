@@ -608,7 +608,7 @@ main:focus { outline: none; }
 .card-image { position: relative; aspect-ratio: 16 / 9; overflow: hidden; isolation: isolate; border-radius: var(--radius-thumb); background: var(--paper-muted); }
 /* A hairline keeps white-ground covers from melting into the paper. */
 /* A hairline keeps white-backed thumbnails (logos, screenshots) from melting into the page. */
-.card-image:not(.card-image--empty)::after { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent); content: ""; pointer-events: none; }
+.card-image:not(.card-image--empty)::after { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 7%, transparent); content: ""; pointer-events: none; }
 /* Pinned to the box so no image (small, odd ratio, picture-wrapped) leaves bands. */
 .card-image img { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; aspect-ratio: auto; object-fit: cover; transition: transform 420ms cubic-bezier(.2,.65,.25,1), filter var(--transition); }
 .card-link:hover .card-image img { transform: scale(1.018); }
