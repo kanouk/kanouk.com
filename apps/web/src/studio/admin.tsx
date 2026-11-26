@@ -2368,10 +2368,13 @@ function CompactFeaturedImageField({ value, onChange, label, id }: FieldWidgetPr
 		<div className="featured-compact__row">
 			{current ? <Preview value={current} size={160} /> : <span className="photo-tools-thumb photo-tools-thumb--empty">未設定</span>}
 			<div className="featured-compact__body">
-				{current && <input id={id} type="text" value={alt} placeholder="代替テキスト（任意）" aria-label="アイキャッチ画像の代替テキスト" onChange={(event) => onChange({ ...current, alt: event.target.value })} />}
-				<div className="photo-tools-panel-actions">
+				{current && <label className="featured-compact__alt">
+					<span>代替テキスト</span>
+					<input id={id} type="text" value={alt} placeholder="画像の内容を短く（任意）" onChange={(event) => onChange({ ...current, alt: event.target.value })} />
+				</label>}
+				<div className="featured-compact__actions">
 					<button type="button" className="photo-tools-button" onClick={() => setOpen(true)}>{current ? "画像を変える" : "画像を選ぶ"}</button>
-					{current && <button type="button" className="photo-tools-button" onClick={() => onChange(null)}>外す</button>}
+					{current && <button type="button" className="photo-tools-button photo-tools-button--ghost featured-compact__remove" onClick={() => onChange(null)}>外す</button>}
 				</div>
 			</div>
 		</div>

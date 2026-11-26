@@ -34,7 +34,8 @@ const displayPrice = Number.isFinite(numericPrice) && numericPrice > 0
 	</aside>
 )}
 <style>
-	.yohaku-product-card { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.25rem; align-items: start; margin: 2.5rem 0; padding: 1.25rem 0; border-block: 1px solid var(--color-border); }
+	.yohaku-product-card { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.25rem; align-items: start; margin: 2.5rem 0; padding: 1rem 1.25rem; border-radius: calc(var(--radius-thumb, 4px) + 2px); background: var(--color-bg-subtle); }
+	/* A soft panel, not two rules: next to section dividers, rules read as more dividers. */
 	/* No backing colour: a white box behind the cover shows as bars on the page's paper tone. */
 	img { width: 7rem; height: 7rem; object-fit: contain; object-position: top; }
 	.product-title { margin: 0 0 0.35rem; font-family: var(--font-heading); font-weight: 600; text-spacing-trim: trim-start; text-wrap: pretty; word-break: auto-phrase; }
@@ -44,5 +45,5 @@ const displayPrice = Number.isFinite(numericPrice) && numericPrice > 0
 	.yohaku-product-card li { margin: 0; }
 	a { display: inline-flex; align-items: center; gap: 0.2rem; min-height: 2.75rem; font-size: 0.875rem; }
 	a :global(svg) { flex: none; }
-	@media (max-width: 30rem) { .yohaku-product-card { grid-template-columns: 5rem minmax(0, 1fr); } img { width: 5rem; height: 5rem; } }
+	@media (max-width: 30rem) { .yohaku-product-card { grid-template-columns: 5rem minmax(0, 1fr); gap: 1rem; padding: 0.9rem 1rem; } img { width: 5rem; height: 5rem; } }
 </style>
