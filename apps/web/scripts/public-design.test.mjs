@@ -29,8 +29,13 @@ test("profile identity, article hierarchy, and media styles retain distinct cont
 	assert.match(theme, /\.profile-card__copy \{[\s\S]*border-top: 1px solid var\(--rule\);[\s\S]*text-align: left;/);
 	assert.match(theme, /\.article-content > h2,[\s\S]*box-shadow: inset 3px 0 0 var\(--accent\);/);
 	assert.match(theme, /\.article-content > h3,[\s\S]*border-bottom: 1px solid var\(--rule\);/);
-	assert.match(theme, /\.article-content > h4,[\s\S]*text-decoration: underline;[\s\S]*text-decoration-thickness: 2px;/);
-	assert.match(theme, /\.article-content > h4::before,[\s\S]*content: none;/);
+	assert.match(theme, /\.article-content > h4,\n\.page-content > h4 \{[^}]*font-size: calc\(var\(--step-0\) \* 1\.06\);[^}]*font-weight: 700;/);
+	assert.match(theme, /\.article-content > h4::before,\n\.page-content > h4::before \{[^}]*background: var\(--accent\);/);
+	// Migrated posts use h5/h6 as section labels; they must never fall below body text size.
+	for (const level of ["h5", "h6"]) {
+		assert.match(theme, new RegExp(`\\.article-content > ${level},\\n\\.page-content > ${level} \\{[^}]*font-size: var\\(--step-0\\);`));
+	}
+	assert.match(theme, /\.article-content > h1,\n\.page-content > h1 \{[^}]*box-shadow: inset 3px 0 0 var\(--accent\);/);
 	assert.match(theme, /--image-display-width, 30rem/);
 	assert.match(image, /node\.displayWidth \? `--image-display-width:\$\{node\.displayWidth\}px`/);
 	assert.match(image, /resolveArticleImageStyle\(node\.visualStyle\)/);
@@ -69,6 +74,8 @@ test("code blocks are drawn by the site theme, not EmDash's dark panel", async (
 	assert.match(code, /class="emdash-code"/);
 	assert.doesNotMatch(code, /<style|#1e1e1e/);
 	assert.match(theme, /\.page-content pre \{[^}]*background: var\(--paper-raised\);/);
+	assert.match(theme, /\.page-content :where\(code\) \{[^}]*background: var\(--code-inline-bg\);[^}]*color: var\(--code-inline-ink\);/);
+	assert.match(theme, /\.page-content pre code \{[^}]*border: 0;[^}]*background: none;[^}]*color: inherit;/);
 });
 
 test("album header keeps the article link short and the photos close", async () => {
