@@ -66,7 +66,7 @@ function parseArgs(argv) {
 	return result;
 }
 
-function checkedOrigin(value, label) {
+export function checkedOrigin(value, label) {
 	let parsed;
 	try { parsed = new URL(value); } catch { throw new Error(`${label} must be an absolute URL`); }
 	if (parsed.pathname !== "/" || parsed.search || parsed.hash || parsed.username || parsed.password) {
@@ -114,7 +114,7 @@ export async function loadBackupManifest(manifestPath, origin) {
 	};
 }
 
-class ApiClient {
+export class ApiClient {
 	constructor(origin, token) {
 		this.origin = origin;
 		this.token = token;
@@ -139,6 +139,7 @@ class ApiClient {
 
 	get(pathname) { return this.request(pathname); }
 	post(pathname, body) { return this.request(pathname, { method: "POST", body: JSON.stringify(body) }); }
+	put(pathname, body) { return this.request(pathname, { method: "PUT", body: JSON.stringify(body) }); }
 }
 
 async function main() {

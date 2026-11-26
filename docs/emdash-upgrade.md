@@ -23,6 +23,11 @@ EmDash 本体に同等の機能が入った拡張ポイントは削除し、プ�
 
 API の詳細は `apps/web/scripts/emdash-admin/patches/block-editor-runtime.mjs` の冒頭コメントを参照。
 
+パッチを使わず、公式 API だけで差し込んでいるもの:
+
+- 記事のアイキャッチ画像欄（`posts.featured_image` の widget `yohaku-photo-tools:featured-image-compact`）。`@emdash-cms/admin` が公開する `MediaPickerModal` を使い、本文の上に1行の欄として表示する。保存する値は本体の `mediaItemToImageFieldValue` と同じ形にそろえている（`apps/web/src/studio/admin.tsx` の `imageFieldValueFromMedia`）。更新時は、本体のこの関数の形が変わっていないかを確認する。
+- 記事編集画面の項目の順序（タイトル → アイキャッチ → 抜粋 → 本文）と抜粋の行数（3行）。スキーマの設定で、`python3 scripts/cloudflare/run_post_editor_layout_kanouk.py` で適用する（D1 バックアップ後に `--apply --backup-manifest … --receipt …`）。
+
 0.35 からの移行で削除したもの:
 
 - 公開ページ URL の `{id}` 置換: 0.40 で本体が対応した。
