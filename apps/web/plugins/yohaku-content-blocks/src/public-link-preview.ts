@@ -12,6 +12,7 @@ import {
 	type LinkPreviewLease,
 	type LinkPreviewMetadata,
 } from "./link-preview.ts";
+import { promoteStandaloneLinks } from "../../../src/utils/x-post-links.mjs";
 
 export type PublicLinkPreviewCollection = "posts" | "pages";
 
@@ -129,7 +130,8 @@ export async function findPublishedLinkCard(
 	let data: Record<string, unknown> | null = null;
 	try { data = record(JSON.parse(row.data)); } catch { return null; }
 	if (!data || !Array.isArray(data.content)) return null;
-	const matches = data.content.flatMap((block) => {
+	// Bare URLs on their own line render as cards too; match them by the same render-time keys.
+	const matches = promoteStandaloneLinks(data.content as unknown[]).flatMap((block) => {
 		const url = recognizedCard(block, blockKey);
 		return url ? [url] : [];
 	});

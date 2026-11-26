@@ -109,6 +109,24 @@ test("lookup returns only an exact top-level card in the current published live 
 	sqlite.close();
 });
 
+test("a bare URL alone in a paragraph is found by the same key the page renders its card with", async () => {
+	const { sqlite, database } = fixtureDatabase();
+	const bare = (key, href, text = href) => ({
+		_type: "block", _key: key, style: "normal",
+		markDefs: [{ _type: "link", _key: `${key}-m`, href }],
+		children: [{ _type: "span", _key: `${key}-s`, text, marks: [`${key}-m`] }],
+	});
+	addEntry(sqlite, "posts", {
+		id: "post-2",
+		slug: "bare",
+		content: [bare("p1", "https://example.org/bare"), bare("p2", "https://example.org/worded", "この記事")],
+	});
+	assert.equal((await findPublishedLinkCard(database, "posts", "bare", "p1:c0"))?.url, "https://example.org/bare");
+	assert.equal(await findPublishedLinkCard(database, "posts", "bare", "p2:c0"), null, "a worded link stays a link");
+	assert.equal(await findPublishedLinkCard(database, "posts", "bare", "p1"), null, "the paragraph itself is not a card");
+	sqlite.close();
+});
+
 test("cold external lookup fetches once, then shares its 24-hour cache by URL", async () => {
 	const { sqlite, database } = fixtureDatabase();
 	const cache = createD1LinkPreviewCache(database);
