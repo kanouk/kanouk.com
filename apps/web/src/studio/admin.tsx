@@ -59,6 +59,7 @@ import {
 import { readPhotoMetadata, type PhotoMetadata } from "./photo-metadata";
 import { looksLikeSourceFilename } from "../utils/photo-display.mjs";
 import { normalizePhotoSort, photoComparator } from "../utils/photo-sort.mjs";
+import { ensurePostEditorLayout, readPostEditorLayout } from "../utils/post-editor-layout.mjs";
 // Inlined and injected by the admin itself: a plain CSS import would be linked
 // on every public page too, since the plugin registry is part of the site bundle.
 import studioCss from "./studio.css?inline";
@@ -2264,6 +2265,37 @@ function RelatedAlbumPanel({ entry, draftData, onFieldChange }: RelatedAlbumPane
 	</div>;
 }
 
+/** The owner's session does the schema change; no API token needed. */
+const schemaClient = {
+	get: async (path: string) => parseApiResponse(await apiFetch(path), "記事の項目設定を確認できませんでした。"),
+	put: async (path: string, body: unknown) => parseApiResponse(await apiFetch(path, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }), "記事の項目設定を変更できませんでした。管理者権限を確認してください。"),
+	post: async (path: string, body: unknown) => parseApiResponse(await apiFetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }), "記事の項目の並びを変更できませんでした。管理者権限を確認してください。"),
+};
+
+/** Shown only until the post editor is in reading order; one click, then reload. */
+function PostEditorLayoutPanel() {
+	const [state, setState] = useState<"idle" | "applying" | "done">("idle");
+	const [error, setError] = useState<unknown>(null);
+	const apply = async () => {
+		setState("applying"); setError(null);
+		try { await ensurePostEditorLayout(schemaClient, { apply: true }); setState("done"); }
+		catch (cause) { setError(cause); setState("idle"); }
+	};
+	if (state === "done") return <div className="photo-tools-panel photo-tools-alert" role="status">
+		<p>並びを変更しました。保存していない編集がないことを確かめてから、ページを再読込してください。</p>
+		<button type="button" className="photo-tools-button photo-tools-button--primary" onClick={() => window.location.reload()}>ページを再読込</button>
+	</div>;
+	return <div className="photo-tools-panel">
+		<p>編集画面を記事と同じ順（タイトル → アイキャッチ → 抜粋 → 本文）にし、アイキャッチを1行の欄に、抜粋を3行にします。記事の内容は変わりません。</p>
+		<ErrorBox error={error} />
+		<div className="photo-tools-panel-actions">
+			<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={state === "applying"} onClick={() => void apply()}>{state === "applying" ? "変更しています…" : "記事の順に整える"}</button>
+		</div>
+	</div>;
+}
+
+const postEditorLayoutPending = async () => (await readPostEditorLayout(schemaClient)).status === "pending";
+
 function HiddenRelatedAlbumField() {
 	return null;
 }
@@ -2385,6 +2417,7 @@ export const contentListColumns: readonly ContentListColumnExtension[] = [
 type ContentEditorPanelWithNewEntry = ContentEditorPanelExtension & { supportsNew?: boolean };
 
 export const contentEditorPanels: readonly ContentEditorPanelWithNewEntry[] = [
+	{ id: "post-editor-layout", title: "編集画面の並び", collections: ["posts"], order: -40, isVisible: postEditorLayoutPending, component: PostEditorLayoutPanel },
 	{ id: "post-related-album", title: "関連アルバム", collections: ["posts"], order: -30, supportsNew: true, component: RelatedAlbumPanel },
 	{ id: "album-photos", title: "アルバムの写真", collections: ["albums"], order: -20, supportsNew: true, component: AlbumPhotoPanel },
 	{ id: "photo-organizer", title: "アルバムで整理", collections: ["photos"], order: -20, component: PhotoOrganizerPanel },

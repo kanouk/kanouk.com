@@ -73,3 +73,10 @@ test("the compact featured image widget is registered and stores EmDash's own im
 	assert.equal(posts.fields[1].widget, POST_EDITOR_LAYOUT.featuredWidget);
 	assert.equal(posts.fields[2].options.rows, POST_EDITOR_LAYOUT.excerptRows);
 });
+
+test("the admin offers the same layout change as a one-click panel, only while it is pending", async () => {
+	const admin = await readFile(new URL("../src/studio/admin.tsx", import.meta.url), "utf8");
+	assert.match(admin, /import \{ ensurePostEditorLayout, readPostEditorLayout \} from "\.\.\/utils\/post-editor-layout\.mjs";/);
+	assert.match(admin, /id: "post-editor-layout"[^}]*isVisible: postEditorLayoutPending[^}]*component: PostEditorLayoutPanel/);
+	assert.match(admin, /ensurePostEditorLayout\(schemaClient, \{ apply: true \}\)/);
+});
