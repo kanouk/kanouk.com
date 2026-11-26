@@ -605,7 +605,8 @@ main:focus { outline: none; }
 .card-media { position: relative; min-width: 0; }
 .card-image { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--paper-muted); }
 /* A hairline keeps white-ground covers from melting into the paper. */
-.card-image:not(.card-image--empty)::after { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent); content: ""; pointer-events: none; }
+/* A hairline keeps white-backed thumbnails (logos, screenshots) from melting into the page. */
+.card-image:not(.card-image--empty)::after { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent); content: ""; pointer-events: none; }
 /* Pinned to the box so no image (small, odd ratio, picture-wrapped) leaves bands. */
 .card-image img { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; aspect-ratio: auto; object-fit: cover; transition: transform 420ms cubic-bezier(.2,.65,.25,1), filter var(--transition); }
 .card-link:hover .card-image img { transform: scale(1.018); }
@@ -630,7 +631,7 @@ main:focus { outline: none; }
 .card-excerpt { display: -webkit-box; margin-top: var(--space-3); overflow: hidden; overflow-wrap: anywhere; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.72; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 .card-body .card-meta { margin-block: 0 0.15rem; }
 .post-card--list { padding-block: clamp(1.25rem, 2.8vw, 1.65rem); border-bottom: 1px solid var(--rule-soft); }
-.post-card--list .card-link { display: grid; grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr); gap: clamp(1rem, 2.5vw, 1.55rem); align-items: start; }
+.post-card--list .card-link { display: grid; grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr); gap: clamp(1.25rem, 3.2vw, 2rem); align-items: start; }
 .post-card--list .card-body { padding-top: 0; }
 .post-card--list .card-title { font-size: clamp(1rem, 0.96rem + 0.2vw, 1.14rem); line-height: 1.55; text-wrap: pretty; } /* fill lines first: balance left a half-empty first line in narrow cards */
 .post-card--list .card-excerpt { margin-top: var(--space-2); font-size: 0.84rem; line-height: 1.72; -webkit-line-clamp: 2; }
@@ -1524,7 +1525,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; ba
 	.post-card--list .card-image,
 	.post-card--list .card-body { width: 100%; min-width: 0; }
 	.home-section-header .section-link { flex: none; white-space: nowrap; }
-	.post-card--list .card-link { grid-template-columns: minmax(7rem, 9rem) minmax(0, 1fr); gap: var(--space-4); }
+	.post-card--list .card-link { grid-template-columns: minmax(7rem, 9rem) minmax(0, 1fr); gap: 1.25rem; }
 	.featured-grid { grid-template-columns: 1fr; gap: var(--space-5); }
 	.featured-content { padding-block: 0; }
 	.featured-title { font-size: var(--heading-section); }
@@ -1565,7 +1566,7 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; ba
 	.posts-grid,
 	.more-grid { grid-template-columns: 1fr; }
 	.album-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; }
-	.post-card--list .card-link { grid-template-columns: minmax(6rem, 7rem) minmax(0, 1fr); gap: var(--space-3); }
+	.post-card--list .card-link { grid-template-columns: minmax(6rem, 7rem) minmax(0, 1fr); gap: var(--space-4); }
 	.post-card--list .card-body { padding-top: 0; }
 	.archive-years { columns: 1; }
 	.archive-year a,
