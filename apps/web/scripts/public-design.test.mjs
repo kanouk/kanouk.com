@@ -41,6 +41,8 @@ test("profile identity, article hierarchy, and media styles retain distinct cont
 	assert.match(theme, /\.card-image \{[^}]*border-radius: var\(--radius-thumb\);/);
 	assert.match(theme, /a:is\(\.yohaku-link-card, \.album-feature-card\) \{ color: inherit; text-decoration: none; \}/, "album cards do not inherit the body-link underline");
 	assert.match(theme, /\.article-pager__link \{[^}]*border-radius: calc\(var\(--radius-thumb\) \+ 2px\);/);
+	const postPage = await readFile(new URL("../src/pages/posts/[slug].astro", import.meta.url), "utf8");
+	assert.doesNotMatch(postPage, /article-excerpt/, "the excerpt is for lists, RSS and share text, not a lead on the post page");
 	assert.match(theme, /\.card-image:not\(\.card-image--empty\)::after \{[^}]*border-radius: inherit;/);
 	assert.match(theme, /--image-display-width, 30rem/);
 	assert.match(image, /node\.displayWidth \? `--image-display-width:\$\{node\.displayWidth\}px`/);
