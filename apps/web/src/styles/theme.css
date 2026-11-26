@@ -1022,8 +1022,8 @@ main:focus { outline: none; }
 :is(.article-content, .page-content) > :is(h1, h2, h3, h4, h5, h6) + [class] { margin-top: 0; }
 .article-content a,
 .page-content a { color: var(--accent-strong); text-decoration-line: underline; }
-.article-content a.yohaku-link-card,
-.page-content a.yohaku-link-card { color: inherit; text-decoration: none; }
+/* Cards are links too, but their own type carries them; the body-link underline would mark every line. */
+:is(.article-content, .page-content) a:is(.yohaku-link-card, .album-feature-card) { color: inherit; text-decoration: none; }
 /* Plain blockquotes match the yohaku.quote block: a quiet panel with the lucide "quote" mark beside the first line. */
 .article-content blockquote:not(.yohaku-quote__body),
 .page-content blockquote:not(.yohaku-quote__body) { position: relative; padding: 0.95rem 1.25rem 0.95rem calc(1rem + 1.125rem + 0.8rem); border-radius: var(--radius); background: var(--paper-muted); color: var(--ink-soft); font-family: var(--font-body); font-size: var(--step-0); line-height: var(--line-body); }
@@ -1159,14 +1159,14 @@ html:has(.image-lightbox[open]) { overflow: hidden; scrollbar-gutter: stable; ba
 	padding: 0.7rem;
 	overflow: hidden;
 	border: 1px solid var(--rule);
-	border-radius: var(--radius);
+	border-radius: calc(var(--radius-thumb) + 2px);
 	background: var(--paper-raised);
 	color: var(--ink);
 	text-decoration: none;
 }
 .album-feature-card:hover { border-color: var(--accent); color: var(--ink); box-shadow: 0 0.35rem 1rem rgb(24 25 31 / 5%); }
 .album-feature-card__cover,
-.album-feature-image { display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: calc(var(--radius) / 2); background: var(--paper-muted); object-fit: cover; }
+.album-feature-image { display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-thumb); background: var(--paper-muted); object-fit: cover; }
 .album-feature-card__cover :where(img, .yohaku-image) { width: 100%; height: 100%; object-fit: cover; }
 .album-feature-card__copy,
 .album-feature-copy { display: grid; min-width: 0; gap: 0.35rem; }
