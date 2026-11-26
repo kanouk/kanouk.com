@@ -13,6 +13,7 @@
 - Preserve deliberate card copy and fill missing values from metadata. External cards may use previously fetched metadata from the cache; public visits do not initiate arbitrary external fetches.
 - Prefer explicitly selected article SEO images, then article cover/body imagery, then a local fallback. Translate old WordPress image references only through exact migration identities; do not guess by filename.
 - Never expose draft-only or location-unreviewed photo media through social previews.
+- A bare http(s) URL alone on its line (the link text is the URL itself) renders as a link card at render time; X post URLs keep rendering as the post. Stored content is untouched. The public metadata refresh recognises these cards by running the same promotion over the published content, so they refresh exactly like authored cards.
 
 ## Fetch boundary
 

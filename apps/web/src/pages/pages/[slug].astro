@@ -1,6 +1,6 @@
 ---
 import { contentUnavailable, redirectNotFound } from "../../utils/route-guards";
-import { promoteXPostLinks } from "../../utils/x-post-links.mjs";
+import { promoteStandaloneLinks } from "../../utils/x-post-links.mjs";
 import { getEmDashEntry } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
@@ -39,7 +39,7 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 		<div class="page-content">
 			<PortableText
-				value={promoteXPostLinks(page.data.content)}
+				value={promoteStandaloneLinks(page.data.content)}
 				components={{ type: { image: YohakuPortableImage } }}
 			/>
 		</div>
