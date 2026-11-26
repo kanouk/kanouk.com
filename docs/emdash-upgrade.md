@@ -26,7 +26,7 @@ API の詳細は `apps/web/scripts/emdash-admin/patches/block-editor-runtime.mjs
 パッチを使わず、公式 API だけで差し込んでいるもの:
 
 - 記事のアイキャッチ画像欄（`posts.featured_image` の widget `yohaku-photo-tools:featured-image-compact`）。`@emdash-cms/admin` が公開する `MediaPickerModal` を使い、本文の上に1行の欄として表示する。保存する値は本体の `mediaItemToImageFieldValue` と同じ形にそろえている（`apps/web/src/studio/admin.tsx` の `imageFieldValueFromMedia`）。更新時は、本体のこの関数の形が変わっていないかを確認する。
-- 記事編集画面の項目の順序（タイトル → アイキャッチ → 抜粋 → 本文）と抜粋の行数（3行）。スキーマの設定で、`python3 scripts/cloudflare/run_post_editor_layout_kanouk.py` で適用する（D1 バックアップ後に `--apply --backup-manifest … --receipt …`）。
+- 記事編集画面の項目の順序（タイトル → アイキャッチ → 抜粋 → 本文）と抜粋の行数（3行）。スキーマの設定で変える。D1 をバックアップしてから、管理者として既存の記事を開き、右の「編集画面の並び」の「記事の順に整える」を押す（設定が済むとこの欄は出なくなる）。有効な管理者トークンがあれば `python3 scripts/cloudflare/run_post_editor_layout_kanouk.py` でも適用できる（`--apply --backup-manifest … --receipt …`）。
 
 0.35 からの移行で削除したもの:
 
