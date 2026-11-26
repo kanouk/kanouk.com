@@ -2286,7 +2286,7 @@ function PostEditorLayoutPanel() {
 		<button type="button" className="photo-tools-button photo-tools-button--primary" onClick={() => window.location.reload()}>ページを再読込</button>
 	</div>;
 	return <div className="photo-tools-panel">
-		<p>編集画面を記事と同じ順（タイトル → アイキャッチ → 抜粋 → 本文）にし、アイキャッチを1行の欄に、抜粋を3行にします。記事の内容は変わりません。</p>
+		<p>編集画面を記事と同じ順（タイトル → アイキャッチ → 抜粋 → 本文）にし、アイキャッチを1行の欄に、抜粋を3行に、項目の見出しを日本語にします。済んでいる設定はそのままです。記事の内容は変わりません。</p>
 		<ErrorBox error={error} />
 		<div className="photo-tools-panel-actions">
 			<button type="button" className="photo-tools-button photo-tools-button--primary" disabled={state === "applying"} onClick={() => void apply()}>{state === "applying" ? "変更しています…" : "記事の順に整える"}</button>
