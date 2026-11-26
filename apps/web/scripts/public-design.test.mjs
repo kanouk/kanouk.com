@@ -36,6 +36,10 @@ test("profile identity, article hierarchy, and media styles retain distinct cont
 		assert.match(theme, new RegExp(`\\.article-content > ${level},\\n\\.page-content > ${level} \\{[^}]*font-size: var\\(--step-0\\);`));
 	}
 	assert.match(theme, /\.article-content > h1,\n\.page-content > h1 \{[^}]*box-shadow: inset 3px 0 0 var\(--accent\);/);
+	// Thumbnails get a small radius; the inset hairline follows it.
+	assert.match(theme, /--radius-thumb: 4px;/);
+	assert.match(theme, /\.card-image \{[^}]*border-radius: var\(--radius-thumb\);/);
+	assert.match(theme, /\.card-image:not\(\.card-image--empty\)::after \{[^}]*border-radius: inherit;/);
 	assert.match(theme, /--image-display-width, 30rem/);
 	assert.match(image, /node\.displayWidth \? `--image-display-width:\$\{node\.displayWidth\}px`/);
 	assert.match(image, /resolveArticleImageStyle\(node\.visualStyle\)/);
