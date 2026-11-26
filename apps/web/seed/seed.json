@@ -21,8 +21,8 @@
 			"fields": [
 				{ "slug": "title", "label": "タイトル", "type": "string", "required": true, "searchable": true },
 				{ "slug": "featured_image", "label": "アイキャッチ画像", "type": "image", "widget": "yohaku-photo-tools:featured-image-compact" },
-				{ "slug": "excerpt", "label": "抜粋", "type": "text", "options": { "rows": 3 } },
 				{ "slug": "content", "label": "本文", "type": "portableText", "searchable": true },
+				{ "slug": "excerpt", "label": "抜粋", "type": "text", "options": { "rows": 3 } },
 				{
 					"slug": "related_album",
 					"label": "関連アルバム",

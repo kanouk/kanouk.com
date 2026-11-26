@@ -1,11 +1,12 @@
-// Post editor in reading order: title, featured image (compact), excerpt (3 rows), body,
+// Post editor: title, featured image (compact), body, then the excerpt (3 rows). The excerpt is the
+// summary used outside the post (lists, RSS, share text), so it sits after the body it summarises;
 // with Japanese field labels to match the rest of the admin.
 // Shared by the admin's one-click setup panel and the guarded CLI. Changes only field order,
 // the featured image widget, the excerpt's rows, and labels; never content rows.
 // `client` is { get(path), put(path, body), post(path, body) } returning parsed JSON.
 
 export const POST_EDITOR_LAYOUT = Object.freeze({
-	leading: Object.freeze(["title", "featured_image", "excerpt", "content"]),
+	leading: Object.freeze(["title", "featured_image", "content", "excerpt"]),
 	featuredWidget: "yohaku-photo-tools:featured-image-compact",
 	excerptRows: 3,
 	// Only fields present in the live schema are relabelled; a missing one is not an error.
