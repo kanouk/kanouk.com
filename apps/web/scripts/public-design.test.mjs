@@ -56,6 +56,8 @@ test("articles keep the old blog's way around: breadcrumb, older and newer posts
 	assert.match(page, /adjacentPost\("older"\)/);
 	assert.match(page, /adjacentPost\("newer"\)/);
 	assert.match(page, /data-article-top/);
+	// Meta row order: date, reading time, then the author, each with its own icon.
+	assert.match(page, /<CalendarDays[\s\S]*<Clock3[\s\S]*分で読む[\s\S]*article-meta-byline">\s*<UserRound/);
 	assert.match(nav, /:is\(h2, h3, h4\)/);
 });
 

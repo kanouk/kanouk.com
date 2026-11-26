@@ -15,7 +15,7 @@ import {
 	PortableText,
 } from "emdash/ui";
 import { Comments, CommentForm } from "emdash/ui/comments";
-import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, ChevronRight, ChevronUp, Clock3, List, Search } from "lucide-astro";
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, ChevronRight, ChevronUp, Clock3, List, Search, UserRound } from "lucide-astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import PostArchiveNav from "../../components/PostArchiveNav.astro";
@@ -317,22 +317,25 @@ const showPagerThumbs = Boolean((!olderPost || olderCover) && (!newerPost || new
 						</span>
 					)
 				}
-				{
-					showByline && (
-						<span class="article-meta__item article-meta-byline">
-							{bylines.map((credit, i) => (
-								<>
-									{i > 0 && ", "}
-									{i === 0 ? `${credit.byline.displayName}（${authorAgeAtPublication}歳）` : credit.byline.displayName}
-								</>
-							))}
-						</span>
-					)
-				}
 				<span class="article-meta__item">
 					<Clock3 size={14} stroke-width={1.6} aria-hidden="true" />
 					<span>{readingTime}分で読む</span>
 				</span>
+				{
+					showByline && (
+						<span class="article-meta__item article-meta-byline">
+							<UserRound size={14} stroke-width={1.6} aria-hidden="true" />
+							<span>
+								{bylines.map((credit, i) => (
+									<>
+										{i > 0 && ", "}
+										{i === 0 ? `${credit.byline.displayName}（${authorAgeAtPublication}歳）` : credit.byline.displayName}
+									</>
+								))}
+							</span>
+						</span>
+					)
+				}
 			</div>
 			{
 				post.data.excerpt && (
