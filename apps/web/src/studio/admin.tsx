@@ -7,6 +7,7 @@ import type {
 	ContentListColumnExtension,
 } from "@emdash-cms/admin";
 import { apiFetch, parseApiResponse } from "@emdash-cms/admin";
+import { MediaPickerModal } from "@emdash-cms/admin";
 import {
 	allContent,
 	albumCounts, photoPage, albumPhotosForOperation, type AlbumCount, albumOrder, saveAlbumOrder, contentPage,
@@ -2289,6 +2290,68 @@ function AlbumPickerField({ value, onChange, label, id }: FieldWidgetProps) {
 	</div>;
 }
 
+type PickedMedia = {
+	id: string; provider?: string; url?: string; alt?: string; caption?: string; width?: number; height?: number;
+	focalX?: number | null; focalY?: number | null; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string;
+	storageKey?: string; meta?: Record<string, unknown>;
+};
+
+/** The value EmDash's own image field stores for a picked item (mirrors its mediaItemToImageFieldValue). */
+export function imageFieldValueFromMedia(item: PickedMedia, previous?: Record<string, unknown> | null): Record<string, unknown> {
+	const provider = !item.provider ? "local" : item.provider === "external-url" ? "external" : item.provider;
+	const local = provider === "local";
+	const direct = provider === "external";
+	const metaText = (key: string) => typeof item.meta?.[key] === "string" ? item.meta[key] as string : undefined;
+	const caption = item.caption ?? metaText("caption");
+	const meta = local ? { ...item.meta, storageKey: item.storageKey } : item.meta;
+	const value: Record<string, unknown> = {
+		id: item.id,
+		provider,
+		src: direct ? item.url : undefined,
+		previewUrl: !local && !direct ? item.url : undefined,
+		alt: item.alt || "",
+		caption,
+		width: item.width,
+		height: item.height,
+		focalX: item.focalX ?? undefined,
+		focalY: item.focalY ?? undefined,
+		filename: item.filename,
+		mimeType: item.mimeType,
+		blurhash: item.blurhash ?? metaText("blurhash"),
+		dominantColor: item.dominantColor ?? metaText("dominantColor"),
+		meta: caption !== undefined && meta && Object.hasOwn(meta, "caption") ? { ...meta, caption } : meta,
+	};
+	// A dark-mode variant set in the standard editor stays with the post.
+	if (previous && typeof previous.darkVariant === "object" && previous.darkVariant) value.darkVariant = previous.darkVariant;
+	return value;
+}
+
+/** Featured image as one compact row above the body, instead of the full-width hero picker. */
+function CompactFeaturedImageField({ value, onChange, label, id }: FieldWidgetProps) {
+	const [open, setOpen] = useState(false);
+	const current = value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : null;
+	const alt = typeof current?.alt === "string" ? current.alt : "";
+	return <div className="photo-tools-panel photo-tools-field featured-compact">
+		<span className="photo-tools-field__label" id={id ? `${id}-label` : undefined}>{label ?? "アイキャッチ画像"}</span>
+		<div className="featured-compact__row">
+			{current ? <Preview value={current} size={160} /> : <span className="photo-tools-thumb photo-tools-thumb--empty">未設定</span>}
+			<div className="featured-compact__body">
+				{current && <input id={id} type="text" value={alt} placeholder="代替テキスト（任意）" aria-label="アイキャッチ画像の代替テキスト" onChange={(event) => onChange({ ...current, alt: event.target.value })} />}
+				<div className="photo-tools-panel-actions">
+					<button type="button" className="photo-tools-button" onClick={() => setOpen(true)}>{current ? "画像を変える" : "画像を選ぶ"}</button>
+					{current && <button type="button" className="photo-tools-button" onClick={() => onChange(null)}>外す</button>}
+				</div>
+			</div>
+		</div>
+		<MediaPickerModal
+			open={open}
+			onOpenChange={setOpen}
+			title="アイキャッチ画像を選ぶ"
+			onSelect={(item) => { onChange(imageFieldValueFromMedia(item as unknown as PickedMedia, current)); setOpen(false); }}
+		/>
+	</div>;
+}
+
 /** Internal fields (order, import source, checksums) shown but not editable in the standard editor. */
 function ReadonlyField({ value, label }: FieldWidgetProps) {
 	const text = value === undefined || value === null || value === ""
@@ -2327,6 +2390,6 @@ export const contentEditorPanels: readonly ContentEditorPanelWithNewEntry[] = [
 	{ id: "photo-organizer", title: "アルバムで整理", collections: ["photos"], order: -20, component: PhotoOrganizerPanel },
 ];
 
-export const fields = { "related-album-hidden": HiddenRelatedAlbumField, "album-picker": AlbumPickerField, readonly: ReadonlyField };
+export const fields = { "related-album-hidden": HiddenRelatedAlbumField, "featured-image-compact": CompactFeaturedImageField, "album-picker": AlbumPickerField, readonly: ReadonlyField };
 export const widgets = { "organize-shortcut": OrganizeShortcutWidget };
 export const pages = { "/organize": PhotoOrganizerPage };

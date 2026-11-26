@@ -20,7 +20,8 @@
 			"dateField": "published_on",
 			"fields": [
 				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
-				{ "slug": "featured_image", "label": "Featured Image", "type": "image" },
+				{ "slug": "featured_image", "label": "Featured Image", "type": "image", "widget": "yohaku-photo-tools:featured-image-compact" },
+				{ "slug": "excerpt", "label": "Excerpt", "type": "text", "options": { "rows": 3 } },
 				{ "slug": "content", "label": "Content", "type": "portableText", "searchable": true },
 				{
 					"slug": "related_album",
@@ -30,7 +31,6 @@
 					"widget": "yohaku-photo-tools:related-album-hidden",
 					"indexed": true
 				},
-				{ "slug": "excerpt", "label": "Excerpt", "type": "text" },
 				{ "slug": "published_on", "label": "Published On", "type": "datetime", "indexed": true },
 				{ "slug": "source_url", "label": "Source URL", "type": "string", "indexed": true },
 				{ "slug": "source_id", "label": "Source ID", "type": "string", "indexed": true },

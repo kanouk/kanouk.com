@@ -429,3 +429,10 @@
 @media (prefers-reduced-motion: reduce) {
 	.photo-tools-shell *, .photo-tools-shell *::before, .photo-tools-shell *::after { transition-duration: 0.01ms !important; }
 }
+
+/* Featured image above the body: one compact row, not the full-width hero picker. */
+.featured-compact__row { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 0.85rem; align-items: center; }
+.featured-compact__row > .photo-tools-thumb { width: 8rem; height: auto; aspect-ratio: 16 / 9; border-radius: 4px; }
+.featured-compact__body { display: grid; gap: 0.5rem; min-width: 0; }
+.featured-compact__body input { width: 100%; }
+@media (max-width: 30rem) { .featured-compact__row { grid-template-columns: 6rem minmax(0, 1fr); } .featured-compact__row > .photo-tools-thumb { width: 6rem; } }
