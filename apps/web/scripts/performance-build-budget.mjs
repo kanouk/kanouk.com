@@ -31,12 +31,13 @@ assert.ok(performanceEntry,'Web vitals entry must exist');
 const vitals=await eagerBytes(performanceEntry);
 // Owner decision (2026-10-17): the admin is used only by the owner, so its
 // budgets are loose guards against runaway growth; visitor-facing budgets are tight.
-const budgets={admin:2000000,adminCss:80000,publicCss:32000,vitals:15000};
+// Owner decision (2026-11-26): public CSS budget raised from 32 KB to 40 KB for article typography work.
+const budgets={admin:2000000,adminCss:80000,publicCss:40000,vitals:15000};
 const result={adminEagerGzip:admin,adminCssGzip:adminCss,publicCssGzip:publicCss,publicVitalsGzip:vitals,budgets};
 console.log(JSON.stringify(result));
 // EmDash 0.40.1 admin itself is ~165 KB gzip larger than 0.35, and 1.1.0 pulls
 // react-dom/client into the measured graph (docs/performance/README.md).
 assert.ok(admin<=budgets.admin,'Admin eager JavaScript exceeds 2,000 KB gzip; check optional chart and icon imports');
 assert.ok(adminCss<=budgets.adminCss,'Admin CSS exceeds 80 KB gzip');
-assert.ok(publicCss<=budgets.publicCss,'Public-site CSS exceeds 32 KB gzip');
+assert.ok(publicCss<=budgets.publicCss,'Public-site CSS exceeds 40 KB gzip');
 assert.ok(vitals<=15000,'Public measurement script exceeds 15 KB gzip');
