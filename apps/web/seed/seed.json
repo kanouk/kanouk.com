@@ -19,10 +19,10 @@
 			"sortOrder": 10,
 			"dateField": "published_on",
 			"fields": [
-				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
-				{ "slug": "featured_image", "label": "Featured Image", "type": "image", "widget": "yohaku-photo-tools:featured-image-compact" },
-				{ "slug": "excerpt", "label": "Excerpt", "type": "text", "options": { "rows": 3 } },
-				{ "slug": "content", "label": "Content", "type": "portableText", "searchable": true },
+				{ "slug": "title", "label": "タイトル", "type": "string", "required": true, "searchable": true },
+				{ "slug": "featured_image", "label": "アイキャッチ画像", "type": "image", "widget": "yohaku-photo-tools:featured-image-compact" },
+				{ "slug": "excerpt", "label": "抜粋", "type": "text", "options": { "rows": 3 } },
+				{ "slug": "content", "label": "本文", "type": "portableText", "searchable": true },
 				{
 					"slug": "related_album",
 					"label": "関連アルバム",
@@ -31,10 +31,10 @@
 					"widget": "yohaku-photo-tools:related-album-hidden",
 					"indexed": true
 				},
-				{ "slug": "published_on", "label": "Published On", "type": "datetime", "indexed": true },
-				{ "slug": "source_url", "label": "Source URL", "type": "string", "indexed": true },
-				{ "slug": "source_id", "label": "Source ID", "type": "string", "indexed": true },
-				{ "slug": "source_metadata", "label": "Source Metadata", "type": "json" }
+				{ "slug": "published_on", "label": "公開日", "type": "datetime", "indexed": true },
+				{ "slug": "source_url", "label": "元記事のURL", "type": "string", "indexed": true },
+				{ "slug": "source_id", "label": "元記事のID", "type": "string", "indexed": true },
+				{ "slug": "source_metadata", "label": "元記事の情報", "type": "json" }
 			]
 		},
 		{
