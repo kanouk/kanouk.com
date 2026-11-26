@@ -441,7 +441,6 @@
 .featured-compact__remove { color: var(--pt-muted); }
 @media (max-width: 30rem) { .featured-compact__row { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; } .featured-compact__row > .photo-tools-thumb { width: 6.5rem; } }
 
-/* Post editor: the body reads as an input like the fields above it, and starts a little apart from them.
-   #field-content is EmDash's own id for the `content` field; the editor keeps its document styling inside. */
+/* Post editor: a little more room between the excerpt and the body. The body keeps EmDash's own
+   document styling; a framed box around it broke the toolbar and block handles (reverted 2026-11-26). */
 #field-content { padding-top: 1.5rem; }
-#field-content > [class~="group/editor"] { padding: 0.25rem 1rem 1rem; border-radius: 8px; background: var(--color-kumo-control); box-shadow: 0 0 0 1px var(--color-kumo-line); }
