@@ -793,36 +793,26 @@ main:focus { outline: none; }
 .byline-role { display: block; color: var(--ink-muted); font-size: var(--text-micro); }
 .meta-tags { margin-top: 0.55rem; }
 .toc[hidden] { display: none; }
-.toc-title { color: var(--ink-muted); font-family: var(--font-body); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; }
-.toc-list { margin-top: var(--space-3); list-style: none; }
-.toc-item { margin-top: 0.35rem; }
-.toc-item--nested { padding-left: var(--space-3); }
-.toc-link { display: block; padding-block: 0.2rem; color: var(--ink-muted); font-size: var(--text-micro); line-height: 1.5; text-decoration: none; }
-.toc-link:hover,
-.toc-link.active { color: var(--accent-strong); }
 /* Article contents: no box and no extra rule under the lead's rule. A hairline guide holds the
    list, h2 entries carry a quiet number, and the current section marks the guide in the accent. */
 .article-toc { margin-bottom: clamp(2.25rem, 4.5vw, 3rem); counter-reset: toc; }
-.article-toc .toc-summary { display: flex; align-items: center; gap: 0.45rem; width: fit-content; min-height: 2.25rem; color: var(--ink-muted); cursor: pointer; list-style: none; }
-.article-toc .toc-summary:hover { color: var(--ink); }
+.toc-summary { display: flex; align-items: center; gap: 0.45rem; width: fit-content; min-height: 2.25rem; color: var(--ink-muted); cursor: pointer; list-style: none; }
+.toc-summary:hover { color: var(--ink); }
 .toc-summary::-webkit-details-marker { display: none; }
-.article-toc .toc-title { color: inherit; font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.14em; }
-.toc-icon { flex: none; }
-.toc-chevron { flex: none; color: inherit; transition: transform var(--transition); }
-.toc-details[open] .toc-chevron { transform: rotate(180deg); }
 .toc-summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-.article-toc .toc-list { display: grid; gap: 0; margin: var(--space-2) 0 0; padding: 0; border-left: 1px solid var(--rule); }
-.article-toc .toc-item { margin: 0; }
-.article-toc .toc-link { position: relative; display: flex; gap: 0.75rem; width: auto; padding: 0.38rem 0 0.38rem 1rem; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.6; transition: color var(--transition); }
-.article-toc .toc-item:not(.toc-item--nested) { counter-increment: toc; }
-.article-toc .toc-item:not(.toc-item--nested) > .toc-link::before { content: counter(toc, decimal-leading-zero); flex: none; min-width: 1.25rem; color: var(--ink-muted); font-family: var(--font-code); font-size: 0.86em; font-variant-numeric: tabular-nums; line-height: 1.86; }
-.article-toc .toc-item--nested { padding-left: 0; }
-.article-toc .toc-item--nested > .toc-link { padding-left: calc(1rem + 1.25rem + 0.75rem); color: var(--ink-muted); font-size: var(--text-micro); }
-.article-toc .toc-link::after { content: ""; position: absolute; top: 0.3rem; bottom: 0.3rem; left: -1px; width: 2px; border-radius: 1px; background: transparent; transition: background-color var(--transition); }
-.article-toc .toc-link:hover { color: var(--ink); }
-.article-toc .toc-link.active { color: var(--accent-strong); }
-.article-toc .toc-link.active::after { background: var(--accent); }
-.article-toc .toc-link.active::before { color: inherit; }
+.toc-title { font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.14em; }
+.toc-chevron { transition: transform var(--transition); }
+.toc-details[open] .toc-chevron { transform: rotate(180deg); }
+.toc-list { margin-top: var(--space-2); border-left: 1px solid var(--rule); list-style: none; }
+.toc-link { position: relative; display: flex; gap: 0.75rem; padding: 0.38rem 0 0.38rem 1rem; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.6; text-decoration: none; transition: color var(--transition); }
+.toc-item:not(.toc-item--nested) { counter-increment: toc; }
+.toc-item:not(.toc-item--nested) > .toc-link::before { content: counter(toc, decimal-leading-zero); min-width: 1.25rem; color: var(--ink-muted); font-family: var(--font-code); font-size: 0.86em; font-variant-numeric: tabular-nums; line-height: 1.86; }
+.toc-item--nested > .toc-link { padding-left: 3rem; color: var(--ink-muted); font-size: var(--text-micro); }
+.toc-link::after { content: ""; position: absolute; inset: 0.3rem auto 0.3rem -1px; width: 2px; border-radius: 1px; transition: background-color var(--transition); }
+.toc-link:hover { color: var(--ink); }
+.toc-link.active { color: var(--accent-strong); }
+.toc-link.active::after { background: var(--accent); }
+.toc-link.active::before { color: inherit; }
 .sidebar-widgets { margin-top: var(--space-6); color: var(--ink-muted); font-size: var(--step--1); }
 .sidebar-widgets .widget ~ .widget { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--rule-soft); }
 .sidebar-widgets .widget__title { color: var(--ink-soft); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; }
@@ -1048,29 +1038,8 @@ main:focus { outline: none; }
 :is(.article-content, .page-content) > hr.emdash-break-line:first-child + * { margin-top: 0; }
 /* A scene break, not a page rule: a pause that lets the reader shift gears. Generous space on both
    sides, fine lines that fade toward the edges, and a small accent diamond (the h4 mark, turned). */
-:is(.article-content, .page-content) hr.emdash-break-line {
-	position: relative;
-	width: min(9rem, 40%);
-	height: 0.75rem;
-	margin: clamp(3.25rem, 7vw, 4.5rem) auto;
-	overflow: visible;
-	border: 0;
-	background:
-		linear-gradient(to right, transparent, var(--rule) 70%) left center / calc(50% - 0.9rem) 1px no-repeat,
-		linear-gradient(to left, transparent, var(--rule) 70%) right center / calc(50% - 0.9rem) 1px no-repeat;
-}
-:is(.article-content, .page-content) hr.emdash-break-line::before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0.32rem;
-	height: 0.32rem;
-	border-radius: 1px;
-	background: var(--accent);
-	opacity: 0.8;
-	transform: translate(-50%, -50%) rotate(45deg);
-}
+:is(.article-content, .page-content) hr.emdash-break-line { position: relative; width: min(9rem, 40%); height: 0.75rem; margin: clamp(3.25rem, 7vw, 4.5rem) auto; overflow: visible; border: 0; background: linear-gradient(to right, transparent, var(--rule) 70%) left / calc(50% - 0.9rem) 1px no-repeat, linear-gradient(to left, transparent, var(--rule) 70%) right / calc(50% - 0.9rem) 1px no-repeat; }
+:is(.article-content, .page-content) hr.emdash-break-line::before { content: ""; position: absolute; inset: 50% auto auto 50%; width: 0.32rem; height: 0.32rem; border-radius: 1px; background: var(--accent); opacity: 0.8; transform: translate(-50%, -50%) rotate(45deg); }
 :is(.article-content, .page-content) .emdash-break-dots { margin: 3em 0; color: var(--ink-muted); font-size: var(--text-micro); letter-spacing: 0.9em; text-indent: 0.9em; text-align: center; }
 :is(.article-content, .page-content) .emdash-break-space { height: 2.5em; margin: 0; }
 :is(.article-content, .page-content) a :where(code) { color: inherit; }
